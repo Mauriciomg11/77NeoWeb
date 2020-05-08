@@ -1,0 +1,17 @@
+﻿body {
+    background: url("../images/77Fondo.jpg") no-repeat fixed center;
+
+}
+
+.ImagenFondoLoging {
+    background: url("../images/ImagenLogin.jpg") no-repeat fixed center;
+    -webkit-background-size: cover;
+    -webkit-backgr -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    /*text-align: center;*/
+    color: black;
+    font-weight: 800;
+}

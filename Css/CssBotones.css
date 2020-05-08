@@ -1,0 +1,9 @@
+﻿.BotonRegresar {
+    position: absolute;
+    background-image: url("../Images/RegresarV1.png");
+    background-size: cover;
+    width: 36px;
+    height: 35px;
+    left: 95%;
+    top: 1%;
+}

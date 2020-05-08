@@ -1,0 +1,32 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterTransac.master.cs" Inherits="_77NeoWeb.MasterTransac" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="Css/CssBotones.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <style type="text/css">
+        .TextoSuperior {
+            background-color: cadetblue; /*bg-info text-center*/
+            text-align: center;
+            color: aliceblue;
+            font-size: 1em;
+        }
+    </style>
+    <div class="TextoSuperior">
+        <asp:ContentPlaceHolder ID="head" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>    
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <asp:ImageButton ID="IbnRegresar" runat="server" CssClass="BotonRegresar" ToolTip="Regresar" OnClick="IbnRegresar_Click" OnClientClick="return confirm('¿Desea regresar al menú principal?');"></asp:ImageButton>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
