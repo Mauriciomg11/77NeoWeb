@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Inicio</title>
-    <h1>77NeoWeb</h1>
+    
     <style type="text/css">
         .Posmenu {
             float: left;
@@ -13,7 +13,7 @@
             width: 36px;
             height: 35px;
             left: 95%;
-            top: 1%;
+            top: 1%;            
         }
 
         .primaryStaticMenu {
@@ -83,10 +83,15 @@
             color: #800000;
             background: #f0e7d7;
         }
+
+        
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:ImageButton ID="IbnSalir" runat="server" CssClass="menuSalir" ImageUrl="~/Images/ExitV1.png" ToolTip="Salir" OnClick="IbnSalir_Click" OnClientClick="return confirm('¿Desea cerrar la sesión?');"></asp:ImageButton>
+    <div class="TextoSuperior">
+    <h1>77NeoWeb</h1>    
+        </div>
+    <asp:ImageButton ID="IbnSalir" runat="server" CssClass="menuSalir" ImageUrl="~/images/ExitV1.png"  ToolTip="Salir" OnClick="IbnSalir_Click" OnClientClick="return confirm('¿Desea cerrar la sesión?');"></asp:ImageButton>
     <div class="Posmenu">
         <asp:Menu ID="MyMenu" runat="server" Font-Names="Verdana" Font-Size="0.8em" ForeColor="#069" StaticSubMenuIndent="10px" Orientation="Vertical" BackColor="#F7F6F3"
             MaximumDynamicDisplayLevels="4" StaticEnableDefaultPopOutImage="false" StaticDisplayLevels="1">

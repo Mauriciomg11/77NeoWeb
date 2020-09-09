@@ -1,4 +1,5 @@
-﻿.BotonRegresar {
+﻿
+.BotonRegresar {
     position: absolute;
     background-image: url("../Images/RegresarV1.png");
     background-size: cover;
@@ -6,4 +7,188 @@
     height: 35px;
     left: 95%;
     top: 1%;
+}
+
+.BotonCerrarPagExportar {
+    position: absolute;
+    background-image: url("../Images/ExitV2.png");
+    background-size: cover;
+    width: 36px;
+    height: 35px;
+    left: 95%;
+    top: 1%;
+}
+.BtnSalirSistema {
+    display: block;
+    padding: 4px 18px 4px 18px;
+    float: left;
+    background-image: url("../Images/ExitV1.png")  ;
+    background: transparent url('~/Images/ExitV1.png') no-repeat;
+    */ color: Black;
+    font-weight: bold;
+    width: 1000px;
+    height: 100px;
+    /*    background: transparent url('~/Images/ExitV1.png') no-repeat;*/
+    /*position: absolute;
+background-image: url("~/Images/ExitV1.png");
+background-size: cover;
+    width: 36px;
+    height: 35px;
+    left: 95%;
+    top: 1%;*/
+}
+
+.BotonIr {
+    position: absolute;
+    background-image: url("../Images/FlechaIrV1.png");
+    background-size: cover;
+    top: 18%;
+    left: 92%;
+    width: 100px;
+    height: 100px;
+}
+
+.BotonVolver {
+    position: absolute;
+    background-image: url("../Images/FlechaRegresarV1.png");
+    background-size: cover;
+    top: 18%;
+    left: 2%;
+    width: 100px;
+    height: 100px;
+}
+
+.BtnAsingarPerfil {
+    position: absolute;
+    left: 93%;
+    background-image: url("../Images/Save.png");
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+}
+
+.BtnEdicion {
+    height: 33px;
+    white-space: normal;
+    /*    width: 100%;*/
+}
+
+.BtnAceptar {
+    background-image: url("../Images/Save.png");
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+}
+
+.BtnCancelar {
+    background-image: url("../Images/Cancel.png");
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+}
+
+.BtnSignosFrml {
+    width: 40px;
+    height: 40px;
+}
+
+.BtnCerrar {
+    background-image: url("../Images/CerrarV1.png");
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+.BtnImagenAdd {
+    position: absolute;
+    background-image: url("../Images/AddNew.png");
+    margin-top: -10px;
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+.BtnImagenUpdate {
+    position: absolute;
+    background-image: url("../Images/Edit.png");
+    margin-top: -10px;
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+.BtnImagenFind {
+    position: absolute;
+    background-image: url("../Images/FindV1.png");
+    margin-top: -10px;
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+.BtnImagenPrint {
+    position: absolute;
+    background-image: url("../Images/PrintV1.png");
+    margin-top: -10px;
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+.BtnImagenDelete {
+    position: absolute;
+    background-image: url("../Images/deleteV1.png");
+    margin-top: -10px;
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+.BtnImagenSave {
+    position: absolute;
+    background-image: url("../Images/Save.png");
+    margin-top: -10px;
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+.BtnImagenSavePpal {
+    position: absolute;
+    background-image: url("../Images/SaveV2.png");
+    margin-top: -10px;
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+.BtnImagenManoObra {
+    position: absolute;
+    background-image: url("../Images/ManoObraV1.png");
+    margin-top: -10px;
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+.BtnImagenGenerarOT {
+    position: absolute;
+    background-image: url("../Images/WorkOrder.png");
+    margin-top: -10px;
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+.BtnImagenCalender {
+    background-image: url("../Images/calendar.png");
+    /*    ImageUrl ="~/Images/calendar.png" margin-top: -10px;*/
+    background-size: cover;
+}
+
+.BtnImagenAuxiliar {
+    background-image: url('../images/ReportsV2.png');
+    background-size: cover;
+    width: 30px;
+    height: 30px;
 }

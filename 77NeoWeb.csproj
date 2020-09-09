@@ -1,5 +1,4 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -43,7 +42,57 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=20.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <HintPath>packages\AjaxControlToolkit.20.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>packages\Portable.BouncyCastle.1.8.6\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML, Version=0.95.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ClosedXML.0.95.3\lib\net46\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.11.3.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>packages\DocumentFormat.OpenXml.2.11.3\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>packages\ExcelNumberFormat.1.0.10\lib\net20\ExcelNumberFormat.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.2.0.246, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>packages\SharpZipLib.1.2.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.WebDesign.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.Packaging.4.7.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -60,33 +109,221 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
-      <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="bin\AjaxControlToolkit.dll" />
     <Content Include="Css\CssBotones.css" />
+    <Content Include="Css\CssConsultar.css" />
     <Content Include="Css\CssPagePpal.css" />
-    <Content Include="Forms\Seguridad\FrmAcceso.aspx" />
+    <Content Include="Css\CssPagTrans.css" />
+    <Content Include="Css\GridViewDiseño.css" />
+    <Content Include="Css\CssCampos.css" />
+    <Content Include="Forms\Configuracion\FrmCicloDiscosMotor.aspx" />
+    <Content Include="Forms\Configuracion\FrmContador.aspx" />
+    <Content Include="Forms\Configuracion\FrmEstadoAeronave.aspx" />
+    <Content Include="Forms\Configuracion\FrmModelo.aspx" />
+    <Content Include="Forms\Configuracion\FrmPlantillaMaestra.aspx" />
+    <Content Include="Forms\Configuracion\FrmPosicion.aspx" />
+    <Content Include="Forms\Configuracion\FrmRazonRemocion.aspx" />
+    <Content Include="Forms\Configuracion\FrmTaller.aspx" />
+    <Content Include="Forms\Configuracion\FrmTipoAeronave.aspx" />
+    <Content Include="Forms\FrmExportar.aspx" />
+    <Content Include="Forms\Ingenieria\FrmLibroVueloAC.aspx" />
+    <Content Include="Forms\Ingenieria\FrmServicioManto.aspx" />
+    <Content Include="Forms\InventariosCompras\FrmElemento.aspx" />
+    <Content Include="Forms\InventariosCompras\FrmReferencia.aspx" />
+    <Content Include="Forms\Manto\FrmReporte.aspx" />
+    <Content Include="Forms\Seguridad\FrmConfigPantalla.aspx" />
+    <Content Include="FrmAcceso.aspx" />
     <Content Include="Forms\Seguridad\FrmInicio.aspx" />
     <Content Include="Forms\Seguridad\FrmMenu.aspx" />
+    <Content Include="Forms\Seguridad\FrmPerfil.aspx" />
+    <Content Include="Forms\Seguridad\FrmSeguPefiles.aspx" />
     <Content Include="Forms\Seguridad\FrmUsuario.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="images\77Fondo.jpg" />
+    <Content Include="images\AddNew.png" />
+    <Content Include="images\addnewV1.png" />
+    <Content Include="images\AddNewV2.png" />
+    <Content Include="images\calendar.png" />
+    <Content Include="images\Calendario.png" />
+    <Content Include="images\Cancel.png" />
+    <Content Include="images\cancelV1.png" />
+    <Content Include="images\CerrarV1.png" />
+    <Content Include="images\Delete.png" />
+    <Content Include="images\deleteV1.png" />
+    <Content Include="images\DeleteV2.png" />
+    <Content Include="images\DeleteV3.png" />
+    <Content Include="images\Descargar.png" />
+    <Content Include="images\Edit.png" />
+    <Content Include="images\editV1.png" />
+    <Content Include="images\ExcelV1.png" />
     <Content Include="images\ExitV1.png" />
-    <Content Include="images\FondoNEOSin.jpg" />
+    <Content Include="images\ExitV2.png" />
+    <Content Include="images\FindV1.png" />
+    <Content Include="images\FindV2.png" />
+    <Content Include="images\FlechaIr.png" />
+    <Content Include="images\FlechaIrV1.png" />
+    <Content Include="images\FlechaRegresar.png" />
+    <Content Include="images\FlechaRegresarV1.png" />
+    <Content Include="images\FondoNEOSin.jpeg" />
+    <Content Include="images\FormulaV1.png" />
+    <Content Include="images\FormulaV2.png" />
+    <Content Include="images\HCT.png" />
     <Content Include="images\ImagenLogin.jpg" />
+    <Content Include="images\IrV1.png" />
+    <Content Include="images\IrV2.png" />
+    <Content Include="images\Logo77Neo.png" />
+    <Content Include="images\ManoObraV1.png" />
+    <Content Include="images\ManoObraV2.png" />
+    <Content Include="images\PrintV1.png" />
     <Content Include="images\RegresarV1.png" />
+    <Content Include="images\ReportsV2.png" />
+    <Content Include="images\ReportV1.png" />
+    <Content Include="images\Save.png" />
+    <Content Include="images\saveV1.png" />
+    <Content Include="images\SaveV2.png" />
+    <Content Include="images\SubirCarga.png" />
+    <Content Include="images\WorkOrder.png" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web.config" />
-    <Content Include="WebForm2.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\Seguridad\FrmAcceso.aspx.cs">
+    <Compile Include="DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmCicloDiscosMotor.aspx.cs">
+      <DependentUpon>FrmCicloDiscosMotor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmCicloDiscosMotor.aspx.designer.cs">
+      <DependentUpon>FrmCicloDiscosMotor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmContador.aspx.cs">
+      <DependentUpon>FrmContador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmContador.aspx.designer.cs">
+      <DependentUpon>FrmContador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmEstadoAeronave.aspx.cs">
+      <DependentUpon>FrmEstadoAeronave.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmEstadoAeronave.aspx.designer.cs">
+      <DependentUpon>FrmEstadoAeronave.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmModelo.aspx.cs">
+      <DependentUpon>FrmModelo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmModelo.aspx.designer.cs">
+      <DependentUpon>FrmModelo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmPlantillaMaestra.aspx.cs">
+      <DependentUpon>FrmPlantillaMaestra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmPlantillaMaestra.aspx.designer.cs">
+      <DependentUpon>FrmPlantillaMaestra.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmPosicion.aspx.cs">
+      <DependentUpon>FrmPosicion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmPosicion.aspx.designer.cs">
+      <DependentUpon>FrmPosicion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmRazonRemocion.aspx.cs">
+      <DependentUpon>FrmRazonRemocion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmRazonRemocion.aspx.designer.cs">
+      <DependentUpon>FrmRazonRemocion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmTaller.aspx.cs">
+      <DependentUpon>FrmTaller.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmTaller.aspx.designer.cs">
+      <DependentUpon>FrmTaller.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmTipoAeronave.aspx.cs">
+      <DependentUpon>FrmTipoAeronave.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmTipoAeronave.aspx.designer.cs">
+      <DependentUpon>FrmTipoAeronave.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmExportar.aspx.cs">
+      <DependentUpon>FrmExportar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmExportar.aspx.designer.cs">
+      <DependentUpon>FrmExportar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmLibroVueloAC.aspx.cs">
+      <DependentUpon>FrmLibroVueloAC.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmLibroVueloAC.aspx.designer.cs">
+      <DependentUpon>FrmLibroVueloAC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmServicioManto.aspx.cs">
+      <DependentUpon>FrmServicioManto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmServicioManto.aspx.designer.cs">
+      <DependentUpon>FrmServicioManto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\FrmElemento.aspx.cs">
+      <DependentUpon>FrmElemento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\FrmElemento.aspx.designer.cs">
+      <DependentUpon>FrmElemento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\FrmReferencia.aspx.cs">
+      <DependentUpon>FrmReferencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\FrmReferencia.aspx.designer.cs">
+      <DependentUpon>FrmReferencia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Manto\FrmReporte.aspx.cs">
+      <DependentUpon>FrmReporte.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Manto\FrmReporte.aspx.designer.cs">
+      <DependentUpon>FrmReporte.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Seguridad\FrmConfigPantalla.aspx.cs">
+      <DependentUpon>FrmConfigPantalla.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Seguridad\FrmConfigPantalla.aspx.designer.cs">
+      <DependentUpon>FrmConfigPantalla.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FrmAcceso.aspx.cs">
       <DependentUpon>FrmAcceso.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Forms\Seguridad\FrmAcceso.aspx.designer.cs">
+    <Compile Include="FrmAcceso.aspx.designer.cs">
       <DependentUpon>FrmAcceso.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Seguridad\FrmInicio.aspx.cs">
@@ -103,12 +340,29 @@
     <Compile Include="Forms\Seguridad\FrmMenu.aspx.designer.cs">
       <DependentUpon>FrmMenu.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Seguridad\FrmPerfil.aspx.cs">
+      <DependentUpon>FrmPerfil.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Seguridad\FrmPerfil.aspx.designer.cs">
+      <DependentUpon>FrmPerfil.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Seguridad\FrmSeguPefiles.aspx.cs">
+      <DependentUpon>FrmSeguPefiles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Seguridad\FrmSeguPefiles.aspx.designer.cs">
+      <DependentUpon>FrmSeguPefiles.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Seguridad\FrmUsuario.aspx.cs">
       <DependentUpon>FrmUsuario.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Forms\Seguridad\FrmUsuario.aspx.designer.cs">
       <DependentUpon>FrmUsuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="MasterPpal.Master.cs">
       <DependentUpon>MasterPpal.Master</DependentUpon>
@@ -117,6 +371,13 @@
     <Compile Include="MasterPpal.Master.designer.cs">
       <DependentUpon>MasterPpal.Master</DependentUpon>
     </Compile>
+    <Compile Include="MasterReport.Master.cs">
+      <DependentUpon>MasterReport.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterReport.Master.designer.cs">
+      <DependentUpon>MasterReport.Master</DependentUpon>
+    </Compile>
     <Compile Include="MasterTransac.Master.cs">
       <DependentUpon>MasterTransac.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -124,21 +385,38 @@
     <Compile Include="MasterTransac.Master.designer.cs">
       <DependentUpon>MasterTransac.Master</DependentUpon>
     </Compile>
+    <Compile Include="MuDatabaseEntities.cs" />
     <Compile Include="Prg\ClsConexion.cs" />
     <Compile Include="Prg\ClsPermisos.cs" />
+    <Compile Include="Prg\PrgIngenieria\CsTypSubirReserva.cs" />
+    <Compile Include="Prg\PrgIngenieria\ClsTypLvDetalleManto.cs" />
+    <Compile Include="Prg\PrgIngenieria\CsTypDetalleLibroVuelo.cs" />
+    <Compile Include="Prg\PrgIngenieria\CsTypLibroVuelo.cs" />
+    <Compile Include="Prg\PrgIngenieria\CsTypeServicioManto.cs" />
+    <Compile Include="Prg\PrgIngenieria\TypeContSrvPn.cs" />
+    <Compile Include="Prg\PrgIngenieria\CsTypContaSrvMant.cs" />
+    <Compile Include="Prg\PrgLogistica\CsTTPN.cs" />
+    <Compile Include="Prg\PrgLogistica\CsTypeReferencia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebForm2.aspx.cs">
-      <DependentUpon>WebForm2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebForm2.aspx.designer.cs">
-      <DependentUpon>WebForm2.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="MasterPpal.Master" />
     <Content Include="MasterTransac.Master" />
+    <Content Include="MasterReport.Master" />
+    <Content Include="DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSet1.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\77NeoWeb26Jul2020.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -146,7 +424,13 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\Ingenieria\Informe\LibroVueloDetalle.rdlc" />
+    <EmbeddedResource Include="Forms\Ingenieria\Informe\ReporteV2.rdlc" />
+    <EmbeddedResource Include="Forms\Ingenieria\Informe\CumplimientoSvc.rdlc" />
+    <EmbeddedResource Include="Forms\Ingenieria\Informe\LibroVueloGnral.rdlc" />
+    <EmbeddedResource Include="Forms\Ingenieria\Informe\ServiciosActivos.rdlc" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -172,12 +456,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

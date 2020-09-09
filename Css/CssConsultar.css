@@ -1,0 +1,34 @@
+﻿.LblTextoBusq {
+    color: cadetblue;
+    font-size: 100%;
+}
+
+.TablaBusqueda {
+    margin: 0 auto;
+    text-align: left;
+    /*left: 30%;*/
+    width: 30%;
+    height: 3%;
+}
+
+.BtnImagenBusqueda {
+    background-image: url("../Images/FindV2.png");
+    background-size: cover;
+    width: 32px;
+    height: 30px;
+    left: 95%;
+    top: 1%;
+}
+
+.BtnExpExcel {
+    background-image: url("../Images/ExcelV1.png");
+    background-size: cover;
+    width: 32px;
+    height: 30px;
+    left: 95%;
+    top: 1%;
+}
+
+.CentrarTable {
+    text-align: center;
+}

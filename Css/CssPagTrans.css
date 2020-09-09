@@ -1,0 +1,28 @@
+﻿body {
+    background: url("../images/77Fondo.jpg") no-repeat fixed center;
+}
+
+.LblCiaTrans {
+    position: absolute;
+    left: 2px;
+    top: 12px;
+    font-size: 12px;
+    color: antiquewhite;
+}
+
+.LblEtiquet {
+    color: cadetblue;
+    font-size: 80%;
+}
+
+.TituloDos {
+    background-color: cadetblue; /*bg-info text-center*/
+    text-align: center;
+    color: aliceblue;
+    /* font-size: 18px;*/
+}
+
+.Prueba {
+    width: 70%;
+}
+

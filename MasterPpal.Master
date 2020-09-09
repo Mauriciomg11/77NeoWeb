@@ -1,16 +1,20 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPpal.master.cs" Inherits="_77NeoWeb.MasterPpal" %>
 
-<!DOCTYPE html>
+<%--<!DOCTYPE html>--%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<%--<html>--%>
 <head runat="server">
+    <title>Página sin título</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="Css/CssPagePpal.css" rel="stylesheet" type="text/css" />
+    <link href="Css/CssBotones.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="stylesheet.css" title="default" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
-    <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>--%>
-    <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>--%>
-    <%--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>--%>
-    <%--<script src="http://code.jquery.com/jquery-1.11.1.min.js" type="text/javaScript"> </script>--%>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet" />
+
     <style type="text/css">
         .TextoSuperior {
             background-color: cadetblue; /*bg-info text-center*/
@@ -19,13 +23,13 @@
             font-size: 1em;
         }
     </style>
-    <div class="TextoSuperior">
-        <asp:ContentPlaceHolder ID="head" runat="server">
-        </asp:ContentPlaceHolder>
-    </div>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
 </head>
-<body class="ImagenFondoLoging">
+<body onload="myFuncionddlP()" class="ImagenFondoLoging">
     <form id="form1" runat="server">
+        <asp:Label ID="LblCia" runat="server" Text="Cia" CssClass="LblCia"></asp:Label>
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnableScriptGlobalization="true" EnableScriptLocalization="true"></asp:ScriptManager>
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
     </form>

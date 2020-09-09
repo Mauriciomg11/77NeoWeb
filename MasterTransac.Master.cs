@@ -11,7 +11,7 @@ namespace _77NeoWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            LblCia.Text = Session["SigCia"].ToString()+" - "+ Session["N77U"].ToString();
         }
         protected void IbnRegresar_Click(object sender, ImageClickEventArgs e)
         {

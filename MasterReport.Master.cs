@@ -7,11 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace _77NeoWeb
 {
-    public partial class WebForm2 : System.Web.UI.Page
+    public partial class MasterReport : System.Web.UI.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-        }
+            LblCia.Text = Session["SigCia"].ToString();
+        }       
     }
 }

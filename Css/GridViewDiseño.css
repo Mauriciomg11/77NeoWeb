@@ -1,0 +1,83 @@
+﻿.DivContendorGrid {
+    /*overflow: scroll;*/
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.BotonDeleteGrid {
+    background-image: url("../Images/deleteV3.png");
+    background-size: cover;
+    width: 14px;
+    height: 20px;
+}
+
+.BotonEditGrid {
+    background-image: url("../Images/Edit.png");
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+}
+
+.BotonNewGrid {
+    background-image: url("../Images/AddNew.png");
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+}
+
+.BotonUpdateGrid {
+    background-image: url("../Images/Save.png");
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+}
+
+.BotonCancelGrid {
+    background-image: url("../Images/Cancel.png");
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+}
+
+.DiseñoGrid {
+    background-color: white; /*Color del fondo*/
+    font-family: Arial;
+    font-size: 11px;
+    color: midnightblue; /*Color del texto*/
+    padding: 1px;
+}
+
+.GridRowStyle {
+    height: 25px;
+}
+
+.GridFilasIntercaladas {
+    height: 25px;
+    background-color: #cae4ff;
+}
+
+.GridFooterStyle {
+    background-color: #6699ff;
+    height: 25px;
+}
+
+.GridCabecera {
+    /*position: absolute;*/
+    position: relative;
+    top: expression(this.offsetParent.scrollTop-3);
+    background-color: #0000ff;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    height: 25px;
+}
+
+.DivGridCamRef {
+    position: absolute;
+    OVERFLOW: auto;
+    width: 98%;
+    height: 73%;
+    top: 27%;
+    left: 1%;
+    margin-top: 0px;
+}

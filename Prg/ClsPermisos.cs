@@ -18,8 +18,6 @@ namespace _77NeoWeb.prg
         private int CE5;
         private int CE6;
         private int AccesoFrm;
-
-
         public ClsPermisos()
         {
             this.Ingresar = 0;
@@ -34,19 +32,20 @@ namespace _77NeoWeb.prg
             this.CE5 = 0;
             this.CE6 = 0;
             this.AccesoFrm = 0;
-
         }
-        public void Acceder(string ClsUsu,string ClsNomF)
+        public void Acceder(string ClsUsu, string ClsNomF)
         {
-            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDB"].ConnectionString))
+            ClsConexion Cnx = new ClsConexion();
+            //Cnx.BaseDatos(System.Web.HttpContext.Current.Session["D[BX"].ToString(), System.Web.HttpContext.Current.Session["$VR"].ToString(), System.Web.HttpContext.Current.Session["V$U@"].ToString(), System.Web.HttpContext.Current.Session["P@$"].ToString());
+            Cnx.SelecBD();
+            using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
-                string datoGrid = "EXEC SP_ValidaMaestras 16,'"+ ClsNomF + "','','','',''," + ClsUsu + ",0,0,0,'01-01-01','02-01-01','03-01-01'";
+                string datoGrid = "EXEC SP_ConfiguracionV2_ 1,'" + ClsNomF + "','" + ClsUsu + "','','','',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
 
                 try
                 {
                     SqlCommand Comando = new SqlCommand(datoGrid, sqlCon);
-                sqlCon.Open();
-               
+                    sqlCon.Open();
                     SqlDataReader registro = Comando.ExecuteReader();
                     if (registro.Read())
                     {
@@ -61,15 +60,30 @@ namespace _77NeoWeb.prg
                         this.CE3 = Convert.ToInt32(registro["CasoEspecial3"]);
                         this.CE4 = Convert.ToInt32(registro["CasoEspecial4"]);
                         this.CE5 = Convert.ToInt32(registro["CasoEspecial5"]);
-                        this.CE6 = Convert.ToInt32(registro["CasoEspecial6"]);
+                        this.CE6 = Convert.ToInt32(registro["CasoEspecial6"]);                        
                     }
-                    sqlCon.Close();
+                    //sqlCon.Close();
                 }
                 catch (Exception ex)
-                {                   
+                {
                     //ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('"+ ex.Message+"')", true);
                 }
 
+            }
+            using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+            {
+                if(this.AccesoFrm == 1)
+                {
+                    sqlCon.Open();
+                    string VbVersion, VbAct, TxSql;
+                    VbVersion = System.Web.HttpContext.Current.Session["77Version"].ToString();
+
+                    VbAct = System.Web.HttpContext.Current.Session["77Act"].ToString();
+                    TxSql = "INSERT INTO tblUsrControlAccesoFrmHist(nomFormulario, CodUsuario, FechaIngreso, FechaSalida, VersionActualAH, NumActualizacionAH, TerminalCSFH)" +
+                        "VALUES('" + ClsNomF + "','" + ClsUsu + "', GETDATE(),NULL,'" + VbVersion + "'," + VbAct + ",'WEB')";
+                    SqlCommand sqlCmd = new SqlCommand(TxSql, sqlCon);
+                    sqlCmd.ExecuteNonQuery();
+                }
             }
         }
         public int GetAccesoFrm()

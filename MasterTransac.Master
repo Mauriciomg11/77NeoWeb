@@ -1,12 +1,22 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterTransac.master.cs" Inherits="_77NeoWeb.MasterTransac" %>
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <title>Página sin título</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="Css/CssBotones.css" rel="stylesheet" type="text/css" />
+    <link href="Css/GridViewDiseño.css" rel="stylesheet" type="text/css" />
+    <link href="Css/CssPagTrans.css" rel="stylesheet" />
+    <link href="Css/CssConsultar.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
     <style type="text/css">
         .TextoSuperior {
             background-color: cadetblue; /*bg-info text-center*/
@@ -15,18 +25,22 @@
             font-size: 1em;
         }
     </style>
-    <div class="TextoSuperior">
-        <asp:ContentPlaceHolder ID="head" runat="server">
-        </asp:ContentPlaceHolder>
-    </div>    
+
+    <asp:ContentPlaceHolder ID="EncScriptDdl" runat="server">
+    </asp:ContentPlaceHolder>
+
 </head>
-<body>
+<body onload="myFuncionddl()">
     <form id="form1" runat="server">
-        <div>
-            <asp:ImageButton ID="IbnRegresar" runat="server" CssClass="BotonRegresar" ToolTip="Regresar" OnClick="IbnRegresar_Click" OnClientClick="return confirm('¿Desea regresar al menú principal?');"></asp:ImageButton>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        <div class="TextoSuperior">
+            <asp:ContentPlaceHolder ID="TituloPagina" runat="server">
             </asp:ContentPlaceHolder>
         </div>
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnableScriptGlobalization="true" EnableScriptLocalization="true"></asp:ScriptManager>
+        <asp:Label ID="LblCia" runat="server" Text="" CssClass="LblCiaTrans"></asp:Label>
+        <asp:ImageButton ID="IbnRegresar" runat="server" CssClass="BotonRegresar" ImageUrl="~/images/RegresarV1.png" ToolTip="Regresar al menú principal" OnClick="IbnRegresar_Click" OnClientClick="return confirm('¿Desea regresar al menú principal?');"></asp:ImageButton>
+        <asp:ContentPlaceHolder ID="CuerpoPagina" runat="server">
+        </asp:ContentPlaceHolder>
     </form>
 </body>
 </html>
