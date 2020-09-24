@@ -129,6 +129,8 @@
     <Content Include="Forms\Configuracion\FrmTaller.aspx" />
     <Content Include="Forms\Configuracion\FrmTipoAeronave.aspx" />
     <Content Include="Forms\FrmExportar.aspx" />
+    <Content Include="Forms\Ingenieria\FrmAeronave.aspx" />
+    <Content Include="Forms\Ingenieria\FrmAeronaveVirtualNew.aspx" />
     <Content Include="Forms\Ingenieria\FrmLibroVueloAC.aspx" />
     <Content Include="Forms\Ingenieria\FrmServicioManto.aspx" />
     <Content Include="Forms\InventariosCompras\FrmElemento.aspx" />
@@ -277,6 +279,20 @@
     <Compile Include="Forms\FrmExportar.aspx.designer.cs">
       <DependentUpon>FrmExportar.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Ingenieria\FrmAeronave.aspx.cs">
+      <DependentUpon>FrmAeronave.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmAeronave.aspx.designer.cs">
+      <DependentUpon>FrmAeronave.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmAeronaveVirtualNew.aspx.cs">
+      <DependentUpon>FrmAeronaveVirtualNew.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmAeronaveVirtualNew.aspx.designer.cs">
+      <DependentUpon>FrmAeronaveVirtualNew.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Ingenieria\FrmLibroVueloAC.aspx.cs">
       <DependentUpon>FrmLibroVueloAC.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -388,6 +404,9 @@
     <Compile Include="MuDatabaseEntities.cs" />
     <Compile Include="Prg\ClsConexion.cs" />
     <Compile Include="Prg\ClsPermisos.cs" />
+    <Compile Include="Prg\PrgIngenieria\ClsTypAeronaveVirtual.cs" />
+    <Compile Include="Prg\PrgLogistica\ClsTypSolicitudPedido.cs" />
+    <Compile Include="Prg\PrgIngenieria\CsTypAeronave.cs" />
     <Compile Include="Prg\PrgIngenieria\CsTypSubirReserva.cs" />
     <Compile Include="Prg\PrgIngenieria\ClsTypLvDetalleManto.cs" />
     <Compile Include="Prg\PrgIngenieria\CsTypDetalleLibroVuelo.cs" />

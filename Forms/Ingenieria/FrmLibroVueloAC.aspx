@@ -183,13 +183,13 @@
                         </asp:TableHeaderRow>
                         <asp:TableRow>
                             <asp:TableCell Width="1%">
-                                <asp:Label ID="LblFecha" runat="server" CssClass="LblEtiquet" Text="Fecha:"></asp:Label>
+                                <asp:Label ID="LblFecha" runat="server" CssClass="LblEtiquet" Text="Fecha:"/>
                             </asp:TableCell>
                             <asp:TableCell Width="1%">
                                 <asp:ImageButton ID="IbtFecha" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" Enabled="false" />
                             </asp:TableCell>
                             <asp:TableCell Width="5%">
-                                <asp:TextBox ID="TxtFecha" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="90%" OnTextChanged="TxtFecha_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                <asp:TextBox ID="TxtFecha" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="90%" OnTextChanged="TxtFecha_TextChanged" AutoPostBack="true"/>
                                 <ajaxToolkit:CalendarExtender ID="CalFecha" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFecha" TargetControlID="TxtFecha" Format="dd/MM/yyyy" />
                             </asp:TableCell>
                             <asp:TableCell Width="1%">

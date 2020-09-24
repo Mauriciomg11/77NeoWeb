@@ -223,25 +223,7 @@ namespace _77NeoWeb.Forms.Manto
         }
         protected void PerfilesGrid()
         {
-            /* foreach (GridViewRow Row in GrdTray.Rows)
-             {
-                 if ((int)ViewState["VblModMS"] == 0)
-                 {
-                     ImageButton imgE = Row.FindControl("IbtEdit") as ImageButton;
-                     if (imgE != null)
-                     {
-                         Row.Cells[8].Controls.Remove(imgE);
-                     }
-                 }
-                 if ((int)ViewState["VblEliMS"] == 0)
-                 {
-                     ImageButton imgD = Row.FindControl("IbtDelete") as ImageButton;
-                     if (imgD != null)
-                     {
-                         Row.Cells[8].Controls.Remove(imgD);
-                     }
-                 }
-             }
+          
              foreach (GridViewRow Row in GrdRecursoF.Rows)
              {
                  if ((int)ViewState["VblModMSRte"] == 0)
@@ -318,10 +300,8 @@ namespace _77NeoWeb.Forms.Manto
                      }
                  }
              }
-             */
         }
-        //******************************************  Reporte de mantenimiento *********************************************************
-
+        //******************************************  Reporte de mantenimiento *********************************************************//
 
         protected void BindBDdlBusqRte()
         {

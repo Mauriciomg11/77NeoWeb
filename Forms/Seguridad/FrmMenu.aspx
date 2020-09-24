@@ -57,9 +57,9 @@
                         <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                 </tr>
             </table>
-            <div class="DivGrid DivContendorGrid">
+          <%--  <div class="DivGrid DivContendorGrid">--%>
                 <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodIdFormulario,RutaFormulario"
-                    CellPadding="3" CssClass="GridDis DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8" OnPageIndexChanging="GrdDatos_PageIndexChanging"
+                    CellPadding="3" CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8" OnPageIndexChanging="GrdDatos_PageIndexChanging"
                     OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit"
                     OnRowDeleting="GrdDatos_RowDeleting" OnSelectedIndexChanged="GrdDatos_SelectedIndexChanged" OnRowDataBound="GrdDatos_RowDataBound">
                     <FooterStyle CssClass="GridFooterStyle" />
@@ -170,7 +170,7 @@
                     </Columns>
                     <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
                 </asp:GridView>
-            </div>
+           <%-- </div>--%>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

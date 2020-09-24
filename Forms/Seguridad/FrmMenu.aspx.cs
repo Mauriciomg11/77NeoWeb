@@ -86,35 +86,60 @@ namespace _77NeoWeb.Forms
         }
         void BindData(string VbDesmenu)
         {
-            DataTable dtbl = new DataTable();
-            Cnx.BaseDatos(Session["D[BX"].ToString(), Session["$VR"].ToString(), Session["V$U@"].ToString(), Session["P@$"].ToString());
+            DataTable dtbl = new DataTable();           
+            Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
                 string VbTxtSql = "EXEC SP_ConfiguracionV2_ 3,'" + VbDesmenu + "','" + Session["C77U"].ToString() + "','','',''," + ViewState["VblIngMS"].ToString() + ",0,0,0,'01-01-1','02-01-1','03-01-1'";
                 sqlCon.Open();
                 SqlDataAdapter sqlDa = new SqlDataAdapter(VbTxtSql, sqlCon);
                 sqlDa.Fill(dtbl);
+                if (dtbl.Rows.Count > 0)
+                {
+                    GrdDatos.DataSource = dtbl;
+                    GrdDatos.DataBind();
+                }
+                else
+                {
+                    dtbl.Rows.Add(dtbl.NewRow());
+                    GrdDatos.DataSource = dtbl;
+                    GrdDatos.DataBind();
+                    GrdDatos.Rows[0].Cells.Clear();
+                    GrdDatos.Rows[0].Cells.Add(new TableCell());
+                    GrdDatos.Rows[0].Cells[0].Text = "No existen registros ..!";
+                    GrdDatos.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                }
             }
-            if (dtbl.Rows.Count > 0)
+           
+        }
+        protected void PerfilesGrid()
+        {
+            
+            foreach (GridViewRow Row in GrdDatos.Rows)
             {
-                GrdDatos.DataSource = dtbl;
-                GrdDatos.DataBind();
-            }
-            else
-            {
-                dtbl.Rows.Add(dtbl.NewRow());
-                GrdDatos.DataSource = dtbl;
-                GrdDatos.DataBind();
-                GrdDatos.Rows[0].Cells.Clear();
-                GrdDatos.Rows[0].Cells.Add(new TableCell());
-                GrdDatos.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
-                GrdDatos.Rows[0].Cells[0].Text = "No existen registros ..!";
-                GrdDatos.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-            }
+
+                if ((int)ViewState["VblModMS"] == 0)
+                {
+                    ImageButton imgE = Row.FindControl("IbtEdit") as ImageButton;
+                    if (imgE != null)
+                    {
+                        Row.Cells[10].Controls.Remove(imgE);
+                    }
+                }
+                if ((int)ViewState["VblEliMS"] == 0)
+                {
+                    ImageButton imgD = Row.FindControl("IbtDelete") as ImageButton;
+                    if (imgD != null)
+                    {
+                        Row.Cells[10].Controls.Remove(imgD);
+                    }
+                }
+            }            
         }
         protected void IbtConsultar_Click(object sender, ImageClickEventArgs e)
         {
             BindData(TxtBusqueda.Text);
+            PerfilesGrid();
         }
         protected void GrdDatos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -230,6 +255,7 @@ namespace _77NeoWeb.Forms
             {
                 Response.Redirect(VbOpenForm);
             }
+            PerfilesGrid();
         }
         protected void GrdDatos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
