@@ -11,7 +11,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
     public class ClsTypAeronaveVirtual
     {
         static public string PMensj;
-
+        static public string borrar;
         public string TipoEvento { get; set; }
         public int CodAeronave { get; set; }
         public string NivelElemento { get; set; }
@@ -35,9 +35,27 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         public int CodIdContaSrvManto { get; set; }
         public string NumReporte { get; set; }
         public double ValorUltCump { get; set; }
+        public string GeneraHist { get; set; }        
+
+        //-------------  Compensacion --------------------
+
+        public int ID { get; set; }
+        public int OK { get; set; }
+        public string CodlibroVuelo { get; set; }
+        public DateTime FechaLibroVuelo { get; set; }
+        public DateTime HoraDespegue { get; set; }
+        public int CompensInicioDia { get; set; }        
+        public double HorasAcum { get; set; }
+        public double CiclosAcum { get; set; }
+        public double HorasRemain { get; set; }
+        public double CiclosRemain { get; set; }
+        public string TipoComponente { get; set; }
+        public string PosicionCE { get; set; }
+        public string Compensacion { get; set; }
+
 
         ClsConexion Cnx = new ClsConexion();
-        public void Alimentar(IEnumerable<ClsTypAeronaveVirtual> AeronaveVirtual, IEnumerable<ClsTypAeronaveVirtual> ServicioManto)
+        public void Alimentar(IEnumerable<ClsTypAeronaveVirtual> AeronaveVirtual, IEnumerable<ClsTypAeronaveVirtual> ServicioManto, IEnumerable<ClsTypAeronaveVirtual> Compensacion)
         {
             DataTable TblAeronaveVirtual = new DataTable();
             TblAeronaveVirtual.Columns.Add("TipoEvento", typeof(string));
@@ -52,7 +70,6 @@ namespace _77NeoWeb.Prg.PrgIngenieria
             TblAeronaveVirtual.Columns.Add("Posicion", typeof(string));
             TblAeronaveVirtual.Columns.Add("Usu", typeof(string));
             TblAeronaveVirtual.Columns.Add("MotivoRemocion", typeof(string));
-
 
             foreach (var Campo in AeronaveVirtual)
             {
@@ -73,7 +90,6 @@ namespace _77NeoWeb.Prg.PrgIngenieria
             }
 
             DataTable TblServicios = new DataTable();
-
             TblServicios.Columns.Add("CodIdContadorElem", typeof(int));
             TblServicios.Columns.Add("CodElementoSvc", typeof(string));
             TblServicios.Columns.Add("FechaVence", typeof(DateTime));
@@ -83,8 +99,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
             TblServicios.Columns.Add("CodIdContaSrvManto", typeof(int));
             TblServicios.Columns.Add("NumReporte", typeof(string));
             TblServicios.Columns.Add("ValorUltCump", typeof(double));
-
-
+            TblServicios.Columns.Add("GeneraHist", typeof(string));
 
             foreach (var CampoSvc in ServicioManto)
             {
@@ -98,6 +113,41 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                     CampoSvc.CodIdContaSrvManto,
                     CampoSvc.NumReporte,
                     CampoSvc.ValorUltCump,
+                    CampoSvc.GeneraHist,
+                });
+            }
+
+            DataTable TblCompensacion = new DataTable();
+            TblCompensacion.Columns.Add("ID", typeof(int));
+            TblCompensacion.Columns.Add("OK", typeof(int));
+            TblCompensacion.Columns.Add("CodlibroVuelo", typeof(string));
+            TblCompensacion.Columns.Add("FechaLibroVuelo", typeof(DateTime));
+            TblCompensacion.Columns.Add("HoraDespegue", typeof(DateTime));
+            TblCompensacion.Columns.Add("CompensInicioDia", typeof(int));            
+            TblCompensacion.Columns.Add("HorasAcum", typeof(double));
+            TblCompensacion.Columns.Add("CiclosAcum", typeof(double));
+            TblCompensacion.Columns.Add("HorasRemain", typeof(double));
+            TblCompensacion.Columns.Add("CiclosRemain", typeof(double));
+            TblCompensacion.Columns.Add("TipoComponente", typeof(string));
+            TblCompensacion.Columns.Add("PosicionCE", typeof(string));
+            TblCompensacion.Columns.Add("Compensacion", typeof(string));
+
+            foreach (var CampoCmpsc in Compensacion)
+            {
+                TblCompensacion.Rows.Add(new object[] {
+                   CampoCmpsc.ID,
+                   CampoCmpsc.OK,
+                   CampoCmpsc.CodlibroVuelo,
+                   CampoCmpsc.FechaLibroVuelo,
+                   CampoCmpsc.HoraDespegue,
+                   CampoCmpsc.CompensInicioDia,
+                   CampoCmpsc.HorasAcum,
+                   CampoCmpsc.CiclosAcum,
+                   CampoCmpsc.HorasRemain,
+                   CampoCmpsc.CiclosRemain,
+                   CampoCmpsc.TipoComponente,
+                   CampoCmpsc.PosicionCE,
+                   CampoCmpsc.Compensacion,
                 });
             }
 
@@ -115,6 +165,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                             SC.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = SC.Parameters.AddWithValue("@CurAeroVirtual", TblAeronaveVirtual);
                             SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@CurServManto", TblServicios);
+                            SqlParameter Prmtrs3 = SC.Parameters.AddWithValue("@CurCompensac", TblCompensacion);
                             Prmtrs.SqlDbType = SqlDbType.Structured;                          
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())
@@ -124,7 +175,9 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                                 string UN = SDR["UN"].ToString().Trim();
                                 string CodRef = SDR["CodRef"].ToString().Trim();                                
                                 string NivelSuperior = SDR["NivelSuperior"].ToString().Trim();
-                                string Borrar = SDR["Borrar"].ToString().Trim();
+                                string MensjServicios = SDR["MensjServicios"].ToString().Trim();
+                                string MensjCompensac = SDR["MensjCompensac"].ToString().Trim();
+                                borrar = SDR["MensjCorrCont"].ToString().Trim();
                             }
                             SDR.Close();
                             transaction.Commit();
@@ -147,6 +200,10 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         public string GetMensj()
         {
             return PMensj;
-        }       
+        }
+        public string GetBorrar()
+        {
+            return borrar;
+        }
     }
 }

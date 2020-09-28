@@ -13,6 +13,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         ClsConexion Cnx = new ClsConexion();
         static public string PMensj;
         static public string PTTHLV,PHrMn;
+        static public int PTtlVuelos;
         public int CodIdDetLibroVuelo { get; set; }
         public string CodLibroVuelo { get; set; }
         public string CodOrigen { get; set; }
@@ -98,6 +99,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                                 PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 PTTHLV = SDR["TTH"].ToString();
                                 PHrMn = HttpUtility.HtmlDecode(SDR["Hr_Mn"].ToString().Trim());
+                                PTtlVuelos = Convert.ToInt32(SDR["TtlVuelos"].ToString());
                             }
                             SDR.Close();
                             transaction.Commit();
@@ -131,5 +133,10 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         {
             return PHrMn;
         }
+        public int GetTtlVuelos()
+        {
+            return PTtlVuelos;
+        }
+        
     }
 }

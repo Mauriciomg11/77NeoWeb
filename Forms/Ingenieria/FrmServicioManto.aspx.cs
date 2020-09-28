@@ -1192,7 +1192,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         CodReferenciaSrv = "",
                         Catalogo = Session["PllaSrvManto"].ToString(),
                         ValidarRecurso = CkbBloqRec.Checked == true ? 1 : 0,
-                        VisualizarStatus = CkbVisuStat.Checked == true ? 1 : 0,
+                        VisualizarStatus = 1,//CkbVisuStat.Checked == true ? 1 : 0,
                         ServicioMayor = "",
                         Accion = "INSERT",
                         Aplicabilidad = ViewState["TIPO"].ToString(),
@@ -3006,8 +3006,10 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { VblPN = (GrdRecursoF.FooterRow.FindControl("TxtPNRFPP") as TextBox).Text.Trim(); }
                     VblFase = (GrdRecursoF.FooterRow.FindControl("TxtFaseRFPP") as TextBox).Text.Trim().Equals("") ? 0 : Convert.ToInt32((GrdRecursoF.FooterRow.FindControl("TxtFaseRFPP") as TextBox).Text.Trim());
                     VblTxtCant = (GrdRecursoF.FooterRow.FindControl("TxtCantRFPP") as TextBox).Text.Trim().Equals("") ? "0" : (GrdRecursoF.FooterRow.FindControl("TxtCantRFPP") as TextBox).Text.Trim();
-                    VblTxtCant = VblTxtCant.Replace(".", ",");
-                    VblCant = (GrdRecursoF.FooterRow.FindControl("TxtCantRFPP") as TextBox).Text.Trim().Length == 0 ? 1 : Convert.ToDouble(VblTxtCant);
+                   // VblTxtCant = VblTxtCant.Replace(".", ",");
+                   // VblCant = (GrdRecursoF.FooterRow.FindControl("TxtCantRFPP") as TextBox).Text.Trim().Length == 0 ? 1 : Convert.ToDouble(VblTxtCant);
+                   CultureInfo Culture = new CultureInfo("en-US");                   
+                    VblCant = VblTxtCant.Length == 0 ? 0 : Convert.ToDouble(VblTxtCant, Culture);
                     VblCond = (GrdRecursoF.FooterRow.FindControl("CkbCondicPP") as CheckBox).Checked == true ? 1 : 0;
                     VbDesc = (GrdRecursoF.FooterRow.FindControl("TxtDesRFPP") as TextBox).Text.Trim();
                     Cnx.SelecBD();

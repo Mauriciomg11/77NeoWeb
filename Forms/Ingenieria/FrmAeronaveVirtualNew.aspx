@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmAeronaveVirtualNew.aspx.cs" Inherits="_77NeoWeb.Forms.Ingenieria.FrmAeronaveVirtualNew" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" CodeBehind="FrmAeronaveVirtualNew.aspx.cs" Inherits="_77NeoWeb.Forms.Ingenieria.FrmAeronaveVirtualNew" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Manto</title>
@@ -63,6 +63,8 @@
             $('#<%=DdlAeroInsElem.ClientID%>').chosen();
             $('#<%=DdlPosicInsElem.ClientID%>').chosen();
             $('#<%=DdlHkConsAeroVirtual.ClientID%>').chosen();
+            $('#<%=DdlAeroRemElem.ClientID%>').chosen();
+            $('#<%=DdlPosicRemElem.ClientID%>').chosen();
         }
     </script>
 </asp:Content>
@@ -89,9 +91,8 @@
             <br />
         </ContentTemplate>
         <Triggers>
-            <%-- <asp:PostBackTrigger ControlID="BtnDatos" />
-            <asp:PostBackTrigger ControlID="BtnVuelos" />
-            <asp:PostBackTrigger ControlID="BtnManto" />--%>
+            <asp:PostBackTrigger ControlID="BtnInsElem" />
+            <asp:PostBackTrigger ControlID="BtnRemElem" />
         </Triggers>
     </asp:UpdatePanel>
     <asp:MultiView ID="MultVw" runat="server">
@@ -121,9 +122,9 @@
                     <asp:ImageButton ID="IbtFechaInsElem" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
                     <asp:TextBox ID="TxtFechaInsElem" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="8%" OnTextChanged="TxtFechaInsElem_TextChanged" AutoPostBack="true" />
                     <ajaxToolkit:CalendarExtender ID="CalFechaInsElem" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFechaInsElem" TargetControlID="TxtFechaInsElem" Format="dd/MM/yyyy" />
+                    <asp:Button ID="BtnCompensac" CssClass="btn btn-success" runat="server" Height="18px" Width="15px" Text="" ToolTip="Libros de vuelo para la compensación" OnClick="BtnCompensac_Click" OnClientClick="return confirm('¿Desea realizar la compensación?');" Visible="false" />
                     <asp:Label ID="LblMotivInsElem" runat="server" CssClass="LblEtiquet" Text="Motivo:" />
                     <asp:TextBox ID="TxtMotivInsElem" runat="server" CssClass="form-control-sm" TextMode="MultiLine" MaxLength="240" Width="15%" Height="1%" />
-
                     <br />
                     <br />
                     <asp:Table ID="TblInsElem" runat="server">
@@ -142,7 +143,7 @@
                                 </div>
                             </asp:TableCell>
                             <asp:TableCell Width="80%" VerticalAlign="Top">
-                                 <h6 class="TextoSuperior">
+                                <h6 class="TextoSuperior">
                                     <asp:Label ID="TxtTitServicios" runat="server" Text="Elementos disponibles" /></h6>
                                 <div class="DivGrid DivContendorGrid">
                                     <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" DataKeyNames="CodElemento"
@@ -215,6 +216,11 @@
                                                     <asp:TextBox ID="TxtCumpHist" runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Generar Histórico" HeaderStyle-Width="6%">
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="CkbGenerarHist" runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                         </Columns>
                                         <FooterStyle CssClass="GridFooterStyle" />
                                         <HeaderStyle CssClass="GridCabecera" />
@@ -228,6 +234,8 @@
                 </ContentTemplate>
                 <Triggers>
                     <asp:PostBackTrigger ControlID="BtnAKVirtualInsElem" />
+                    <asp:PostBackTrigger ControlID="BtnCompensac" />
+                    <asp:AsyncPostBackTrigger ControlID="TxtFechaInsElem" EventName="TextChanged" />
                 </Triggers>
             </asp:UpdatePanel>
         </asp:View>
@@ -255,14 +263,157 @@
                 </Triggers>
             </asp:UpdatePanel>
         </asp:View>
-         <asp:View ID="Vw2Compensacion" runat="server">
-              <asp:UpdatePanel ID="UplCompensacion" runat="server" UpdateMode="Conditional">
-                  <ContentTemplate>
-                       <h6 class="TextoSuperior">
+        <asp:View ID="Vw2Compensacion" runat="server">
+            <asp:UpdatePanel ID="UplCompensacion" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
+                    <h6 class="TextoSuperior">
                         <asp:Label ID="TxtTitCompensacion" runat="server" Text="Compensación" /></h6>
-                       <asp:ImageButton ID="IbtCerrarCompensacion" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarAeroVirtual_Click" ImageAlign="Right" />
-                  </ContentTemplate>
-              </asp:UpdatePanel>
-         </asp:View>
+                    <asp:ImageButton ID="IbtCerrarCompensacion" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarCompensacion_Click" ImageAlign="Right" />
+                    <asp:Button ID="BtnCompensReinicio" CssClass="btn btn-success" runat="server" Text="Limpiar" OnClick="BtnCompensReinicio_Click" ToolTip="volver a marcar el trayecto para la compensación" OnClientClick="return confirm('¿Desea limpiar y volver a marcar el trayecto para la compensación?');" /><br />
+                    <br />
+                    <asp:CheckBox ID="CkbCompensInicioDia" runat="server" CssClass="LblEtiquet" Text="Evento realizado antes del primer vuelo del día" Font-Size="15px" Font-Bold="true" OnCheckedChanged="CkbCompensInicioDia_CheckedChanged" AutoPostBack="true" /><br />
+                    <asp:Label ID="Label1" runat="server" CssClass="LblEtiquet" Text="Marcar el trayecto que finaliza antes del evento" />
+                    <div class="DivContendorGrid">
+                        <asp:GridView ID="GrdCompensLv" runat="server" EmptyDataText="Sin libro de vuelo..!" AutoGenerateColumns="False" AutoGenerateSelectButton="False"
+                            CssClass="DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" DataKeyNames="ID,FechaReporte,HoraDespegue"
+                            OnRowDataBound="GrdCompensLv_RowDataBound" OnRowCommand="GrdCompensLv_RowCommand">
+                            <Columns>
+                                <asp:TemplateField HeaderText="">
+                                    <ItemTemplate>
+                                        <asp:Button ID="BtnSelect" CssClass="btn btn-success" runat="server" CommandName="Select" ToolTip="Seleccionar" Width="20px" Height="20px" OnClientClick="return confirm('¿Desea seleccionar este registro para la compensación?');" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="">
+                                    <ItemTemplate>
+                                        <asp:CheckBox ID="CkbOK" Checked='<%# Eval("OK").ToString()=="1" ? true : false %>' runat="server" Enabled="false" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Libro de Vuelo">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblCodLV" Text='<%# Eval("CodLibroVuelo") %>' runat="server" Enabled="false" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Origen">
+                                    <ItemTemplate>
+                                        <asp:Label Text='<%# Eval("CodOrigen") %>' runat="server" Enabled="false" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Destino">
+                                    <ItemTemplate>
+                                        <asp:Label Text='<%# Eval("CodDestino") %>' runat="server" Enabled="false" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Horas">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Horas" Text='<%# Eval("NumHoraCiclo") %>' runat="server" Enabled="false" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Horas Acumuladas">
+                                    <ItemTemplate>
+                                        <asp:Label ID="HoraAcum" Text='<%# Eval("HorasAcum") %>' runat="server" Enabled="false" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Ciclos Acumulados">
+                                    <ItemTemplate>
+                                        <asp:Label ID="CicloAcum" Text='<%# Eval("CiclosAcum") %>' runat="server" Enabled="false" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Horas Remanente">
+                                    <ItemTemplate>
+                                        <asp:Label ID="HoraRemain" Text='<%# Eval("HorasAcumResta") %>' runat="server" Enabled="false" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Ciclos Remanente">
+                                    <ItemTemplate>
+                                        <asp:Label ID="CicloRemain" Text='<%# Eval("CiclosAcumResta") %>' runat="server" Enabled="false" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <FooterStyle CssClass="GridFooterStyle" />
+                            <HeaderStyle CssClass="GridCabecera" />
+                            <RowStyle CssClass="GridRowStyle" />
+                            <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                        </asp:GridView>
+                    </div>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:PostBackTrigger ControlID="IbtCerrarCompensacion" />
+                </Triggers>
+            </asp:UpdatePanel>
+        </asp:View>
+        <asp:View ID="Vw3RemElem" runat="server">
+            <asp:UpdatePanel ID="UplRemElem" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
+                    <h6 class="TextoSuperior">
+                        <asp:Label ID="LblTitRemElel" runat="server" Text="Remoción de un elemento" /></h6>
+                    <asp:Label ID="LblAeroRemElem" runat="server" CssClass="LblEtiquet" Text="Aeronave:" />
+                    <asp:DropDownList ID="DdlAeroRemElem" runat="server" CssClass="heightCampo" Width="8%" OnTextChanged="DdlAeroRemElem_TextChanged" AutoPostBack="true" />
+                    <asp:Label ID="LblBusRemEle" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" />
+                    <asp:TextBox ID="TxtRemBusqueda" runat="server" Width="15%" CssClass="form-control-sm heightCampo" placeholder="Ingrese el dato a consultar" />
+                    <asp:Button ID="BtnPNRemElem" CssClass="btn btn-primary" runat="server" Height="33px" Text="P/N" OnClick="BtnPNRemElem_Click" />&nbsp
+                    <asp:Button ID="BtnSNRemElem" CssClass="btn btn-primary" runat="server" Height="33px" Text="S/N" OnClick="BtnSNRemElem_Click" />&nbsp
+                    <asp:Button ID="BtnUltNivRemElem" CssClass="btn btn-primary" runat="server" Height="33px" Text="U/N" OnClick="BtnUltNivRemElem_Click" ToolTip="Ultimo Nivel" />&nbsp
+                    <asp:Button ID="BtnAKVirtualRemElem" CssClass="btn btn-primary" runat="server" Height="33px" Text="Visualizar" OnClick="BtnAKVirtualRemElem_Click" ToolTip="Visualizar elementos instalados y ubicaciones pendientes" />&nbsp&nbsp&nbsp
+                    <asp:Button ID="BtnGuardarRemElem" CssClass="btn btn-success" runat="server" Text="Remover" OnClick="BtnGuardarRemElem_Click" ToolTip="Realizar la remoción" OnClientClick="return confirm('¿Desea realizar la remoción?');" /><br />
+                    <asp:Label ID="LblPnRemElem" runat="server" Text="P/N: " CssClass="LblTextoBusq" />
+                    <asp:TextBox ID="TxtPnRemElem" runat="server" Width="12%" CssClass="form-control-sm heightCampo" Enabled="false" />
+                    <asp:Label ID="LblSnRemElem" runat="server" Text="S/N: " CssClass="LblTextoBusq" />
+                    <asp:TextBox ID="TxtSnRemElem" runat="server" Width="12%" CssClass="form-control-sm heightCampo" Enabled="false" />
+                    <asp:Label ID="LblUbiTecRemElem" runat="server" CssClass="LblEtiquet" Text="Ubicación Técnica:" />
+                    <asp:TextBox ID="TxtUbiTecRemElem" runat="server" Width="5%" CssClass="form-control-sm heightCampo" Enabled="false" />
+                    <asp:Label ID="LblPosicRemElem" runat="server" CssClass="LblEtiquet" Text="Posicion:" />
+                    <asp:DropDownList ID="DdlPosicRemElem" runat="server" CssClass="heightCampo" Width="10%" Enabled="false"/>
+                    <asp:Label ID="LblFechaRemElem" runat="server" CssClass="LblEtiquet" Text="Fecha:" />
+                    <asp:ImageButton ID="IbtFechaRemElem" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
+                    <asp:TextBox ID="TxtFechaRemElem" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="8%" OnTextChanged="TxtFechaRemElem_TextChanged" AutoPostBack="true" />
+                    <ajaxToolkit:CalendarExtender ID="CalFechaRemElem" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFechaRemElem" TargetControlID="TxtFechaRemElem" Format="dd/MM/yyyy" />
+                    <asp:Button ID="BtnRemCompensac" CssClass="btn btn-success" runat="server" Height="18px" Width="15px" Text="" ToolTip="Libros de vuelo para la compensación" OnClick="BtnRemCompensac_Click" OnClientClick="return confirm('¿Desea realizar la compensación?');" Visible="false" />
+                    <asp:Label ID="LblMotivRemElem" runat="server" CssClass="LblEtiquet" Text="Motivo:" />
+                    <asp:TextBox ID="TxtMotivRemElem" runat="server" CssClass="form-control-sm" TextMode="MultiLine" MaxLength="240" Width="15%" Height="1%" />
+                    <br />
+                    <br />
+                    <asp:Table ID="TblRemElem" runat="server">
+                        <asp:TableRow VerticalAlign="Top">
+                            <asp:TableCell Width="10%">
+                                <h6 class="TextoSuperior">
+                                    <asp:Label ID="TxtTitRemContadores" runat="server" Text="Contadores" /></h6>
+                                <div class="DivContendorGrid">
+                                    <asp:GridView ID="GrdHisContRemElem" runat="server" EmptyDataText="Sin histórico..!"
+                                        CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true">
+                                        <FooterStyle CssClass="GridFooterStyle" />
+                                        <HeaderStyle CssClass="GridCabecera" />
+                                        <RowStyle CssClass="GridRowStyle" />
+                                        <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                                    </asp:GridView>
+                                </div>
+                            </asp:TableCell>
+                            <asp:TableCell Width="80%" VerticalAlign="Top">
+                                <h6 class="TextoSuperior">
+                                    <asp:Label ID="TxtTitRemServicios" runat="server" Text="Elementos disponibles" /></h6>
+                                <div class="DivGrid DivContendorGrid">
+                                    <asp:GridView ID="GrdRemBusqElem" runat="server" EmptyDataText="No existen elementos con el dato seleccionado ..!" DataKeyNames="CodElemento,CodUbicacionSuperior"
+                                        CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="11"
+                                        OnSelectedIndexChanged="GrdRemBusqElem_SelectedIndexChanged" OnPageIndexChanging="GrdRemBusqElem_PageIndexChanging" OnRowDataBound="GrdRemBusqElem_RowDataBound">
+                                        <FooterStyle CssClass="GridFooterStyle" />
+                                        <HeaderStyle CssClass="GridCabecera" />
+                                        <RowStyle CssClass="GridRowStyle" />
+                                        <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                                        <Columns>
+                                            <asp:CommandField HeaderText="Selección" SelectText="Subir" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                                        </Columns>
+                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                    </asp:GridView>
+                                </div>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:PostBackTrigger ControlID="BtnAKVirtualRemElem" />
+                    <asp:PostBackTrigger ControlID="BtnRemCompensac" />
+                    <asp:AsyncPostBackTrigger ControlID="TxtFechaRemElem" EventName="TextChanged" />
+                </Triggers>
+            </asp:UpdatePanel>
+        </asp:View>
     </asp:MultiView>
 </asp:Content>

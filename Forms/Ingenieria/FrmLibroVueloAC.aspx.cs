@@ -1537,6 +1537,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     }
                     string HrMn = DetLibroVuelo.GetTHrMn();
                     // string TtlHrasVoldas = DetLibroVuelo.GetTtlHorasLV();
+                    if (ViewState["HabilitaVuelos"].Equals("N"))
+                    { TxtNumVuelo.Text = DetLibroVuelo.GetTtlVuelos().ToString(); }                    
                     LblTrayectos.Text = "Trayectos" + " [" + TxtNumLv.Text.Trim() + "   Total Horas: " + HrMn + "]";
                     ViewState["UltimoDestino"] = VbDest;
                     BindDTrayectos();
@@ -1626,6 +1628,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 string HrMn = DetLibroVuelo.GetTHrMn();
                 LblTrayectos.Text = "Trayectos" + " [" + TxtNumLv.Text.Trim() + "   Total Horas: " + HrMn + "]";
                 ViewState["UltimoDestino"] = VbDest;
+                if (ViewState["HabilitaVuelos"].Equals("N"))
+                { TxtNumVuelo.Text = DetLibroVuelo.GetTtlVuelos().ToString(); }
                 GrdTray.EditIndex = -1;
                 BindDTrayectos();
                 PerfilesGrid();
