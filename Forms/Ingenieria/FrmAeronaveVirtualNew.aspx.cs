@@ -45,8 +45,10 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["ValidaFechaSvc"] = "N";
                 ViewState["TieneCompensacion"] = "N";
                 CalFechaInsElem.EndDate = DateTime.Now;
+                CalFechaRemElem.EndDate = DateTime.Now;
                 MultVw.ActiveViewIndex = 0;
                 BindDDdl();
+                BtnInsElem.CssClass = "btn btn-primary";
                 /* 
                  CldFecDet.EndDate = DateTime.Now;
                  CldFecCump.EndDate = DateTime.Now;
@@ -80,6 +82,12 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlAeroRemElem.DataValueField = "CodAeronave";
             DdlAeroRemElem.DataBind();
 
+            DdlAeroInsMay.DataSource = Cnx.DSET(LtxtSql);
+            DdlAeroInsMay.DataMember = "Datos";
+            DdlAeroInsMay.DataTextField = "Matricula";
+            DdlAeroInsMay.DataValueField = "CodAeronave";
+            DdlAeroInsMay.DataBind();
+
             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','PosR',0,0,0,0,'01-01-1','02-01-1','03-01-1'");
             DdlPosicRemElem.DataSource = Cnx.DSET(LtxtSql);
             DdlPosicRemElem.DataMember = "Datos";
@@ -91,48 +99,134 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void BtnInsElem_Click(object sender, EventArgs e)
         {
             LimparCampoHK("InsEle");
+            BtnInsElem.CssClass = "btn btn-primary";
             MultVw.ActiveViewIndex = 0;
         }
         protected void BtnRemElem_Click(object sender, EventArgs e)
         {
             LimparCampoHK("RemEle");
             MultVw.ActiveViewIndex = 3;
+            BtnRemElem.CssClass = "btn btn-primary";
         }
         protected void BtnInsMayor_Click(object sender, EventArgs e)
         {
-
+            LimparCampoHK("InsMay");
+            MultVw.ActiveViewIndex = 5;
+            BtnInsMayor.CssClass = "btn btn-primary";
         }
-
+        protected void BtnRemMayor_Click(object sender, EventArgs e)
+        {
+            LimparCampoHK("RemMay");
+            // MultVw.ActiveViewIndex = 3;
+            BtnRemMayor.CssClass = "btn btn-primary";
+        }
         protected void BtnInsSubC_Click(object sender, EventArgs e)
         {
-
+            LimparCampoHK("InsSub");
+            // MultVw.ActiveViewIndex = 3;
+            BtnInsSubC.CssClass = "btn btn-primary";
         }
-
         protected void BtnRemSubC_Click(object sender, EventArgs e)
         {
-
+            LimparCampoHK("RemSub");
+            // MultVw.ActiveViewIndex = 3;
+            BtnRemSubC.CssClass = "btn btn-primary";
         }
-
         protected void BtnCrearElem_Click(object sender, EventArgs e)
         {
-
+            LimparCampoHK("");
+        }
+        protected void AplicarCssClassBtn()
+        {
+            BtnInsElem.CssClass = "btn btn-outline-primary";
+            BtnRemElem.CssClass = "btn btn-outline-primary";
+            BtnInsMayor.CssClass = "btn btn-outline-primary";
+            BtnRemMayor.CssClass = "btn btn-outline-primary";
+            BtnInsSubC.CssClass = "btn btn-outline-primary";
+            BtnRemSubC.CssClass = "btn btn-outline-primary";
         }
         protected void LimparCampoHK(string TipoMov)
         {
-
+            AplicarCssClassBtn();
+            ViewState["TieneCompensacion"] = "N";
             switch (TipoMov.Trim())
             {
                 case "InsEle":
                     DdlAeroRemElem.Text = "0";
+                    BtnRemCompensac.Visible = false;
+                    DdlAeroInsMay.Text = "0";
+                    BtnCompensacInsMay.Visible = false;
+                    GrdSvcInsMay.DataSource = null;
+                    GrdSvcInsMay.DataBind();
                     break;
                 case "RemEle":
                     DdlAeroInsElem.Text = "0";
+                    BtnCompensac.Visible = false;
+                    GrdSvcInsElem.DataSource = null;
+                    GrdSvcInsElem.DataBind();
+                    DdlAeroInsMay.Text = "0";
+                    BtnCompensacInsMay.Visible = false;
+                    GrdSvcInsMay.DataSource = null;
+                    GrdSvcInsMay.DataBind();
+
+                    break;
+                case "InsMay":
+                    DdlAeroRemElem.Text = "0";
+                    BtnRemCompensac.Visible = false;
+                    DdlAeroInsElem.Text = "0";
+                    BtnCompensac.Visible = false;
+                    GrdSvcInsElem.DataSource = null;
+                    GrdSvcInsElem.DataBind();
+                    break;
+                case "RemMay":
+                    DdlAeroRemElem.Text = "0";
+                    BtnRemCompensac.Visible = false;
+                    DdlAeroInsElem.Text = "0";
+                    BtnCompensac.Visible = false;
+                    GrdSvcInsElem.DataSource = null;
+                    GrdSvcInsElem.DataBind();
+                    DdlAeroInsMay.Text = "0";
+                    BtnCompensacInsMay.Visible = false;
+                    GrdSvcInsMay.DataSource = null;
+                    GrdSvcInsMay.DataBind();
+                    break;
+                case "InsSub":
+                    DdlAeroRemElem.Text = "0";
+                    BtnRemCompensac.Visible = false;
+                    DdlAeroInsElem.Text = "0";
+                    BtnCompensac.Visible = false;
+                    GrdSvcInsElem.DataSource = null;
+                    GrdSvcInsElem.DataBind();
+                    DdlAeroInsMay.Text = "0";
+                    BtnCompensacInsMay.Visible = false;
+                    GrdSvcInsMay.DataSource = null;
+                    GrdSvcInsMay.DataBind();
+                    break;
+                case "RemSub":
+                    DdlAeroRemElem.Text = "0";
+                    BtnRemCompensac.Visible = false;
+                    DdlAeroInsElem.Text = "0";
+                    BtnCompensac.Visible = false;
+                    GrdSvcInsElem.DataSource = null;
+                    GrdSvcInsElem.DataBind();
+                    DdlAeroInsMay.Text = "0";
+                    BtnCompensacInsMay.Visible = false;
+                    GrdSvcInsMay.DataSource = null;
+                    GrdSvcInsMay.DataBind();
                     break;
                 default:
-
+                    DdlAeroRemElem.Text = "0";
+                    BtnRemCompensac.Visible = false;
+                    DdlAeroInsElem.Text = "0";
+                    BtnCompensac.Visible = false;
+                    GrdSvcInsElem.DataSource = null;
+                    GrdSvcInsElem.DataBind();
+                    DdlAeroInsMay.Text = "0";
+                    BtnCompensacInsMay.Visible = false;
+                    GrdSvcInsMay.DataSource = null;
+                    GrdSvcInsMay.DataBind();
                     break;
             }
-
         }
 
         //******************************************  INSTALAR COMPONENTE *********************************************************
@@ -349,10 +443,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
-                    string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,'','','','',@CodA,0,0,0,@FE,'01-01-1900','01-01-1900'";
+                    string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,@UBR,'','','',@CodA,0,0,0,@FE,'01-01-1900','01-01-1900'";
                     SqlCommand SC = new SqlCommand(VBQuery, sqlCon);
                     SC.Parameters.AddWithValue("@CodA", DdlAeroInsElem.Text);
                     SC.Parameters.AddWithValue("@FE", TxtFechaInsElem.Text);
+                    SC.Parameters.AddWithValue("@UBR", TxtUbiTecInsElem.Text);
                     SqlDataReader SDR = SC.ExecuteReader();
                     if (SDR.Read())
                     {
@@ -511,9 +606,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                     };
                     ObjCompensacion.Add(TypCompensac);
                 }
-
+                List<ClsTypAeronaveVirtual> ObjOT = new List<ClsTypAeronaveVirtual>();
                 ClsTypAeronaveVirtual AeronaveVirtual = new ClsTypAeronaveVirtual();
-                AeronaveVirtual.Alimentar(ObjInsElemento, ObjServcManto, ObjCompensacion);
+                AeronaveVirtual.Alimentar(ObjInsElemento, ObjServcManto, ObjCompensacion, ObjOT);
                 string Mensj = AeronaveVirtual.GetMensj();
                 if (!Mensj.Trim().Equals(""))
                 {
@@ -525,6 +620,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 BIndDSvcInsElem("", "", "0");
                 ViewState["TieneCompensacion"] = "N";
                 GrdSvcInsElem.Visible = false;
+                BtnCompensac.Visible = false;
                 // ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + AeronaveVirtual.GetBorrar() + "')", true);
                 ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('Proceso exitoso')", true);
             }
@@ -776,7 +872,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             if (DdlAeroRemElem.Text.Equals("0"))
             { return; }
-            GrdBusq.Visible = true;
+            GrdRemBusqElem.Visible = true;
             DataTable DtB = new DataTable();
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
@@ -886,12 +982,204 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnGuardarRemElem_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (DdlAeroRemElem.Text.Equals("0"))
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar una aeronave')", true);
+                    return;
+                }
+                if (TxtPnRemElem.Text.Equals("") || TxtSnRemElem.Text.Equals("") || ViewState["CodElemento"].Equals(""))
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar un elemento')", true);
+                    return;
+                }
+                if (TxtUbiTecRemElem.Text.Equals(""))
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar una ubicación técnica')", true);
+                    return;
+                }
+                if (DdlPosicRemElem.Text.Equals("") && DdlPosicInsElem.Enabled == true)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar una posición')", true);
+                    return;
+                }
+                if (TxtFechaRemElem.Text.Equals(""))
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar una fecha')", true);
+                    return;
+                }
+                if (TxtMotivRemElem.Text.Equals(""))
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar un motivo')", true);
+                    return;
+                }
 
+                List<ClsTypAeronaveVirtual> ObjRemElemento = new List<ClsTypAeronaveVirtual>();
+                var TypRemElemento = new ClsTypAeronaveVirtual()
+                {
+                    TipoEvento = "RC",
+                    CodAeronave = Convert.ToInt32(DdlAeroRemElem.Text.Trim()),
+                    NivelElemento = "C",
+                    UltimoNivel = TxtUbiTecRemElem.Text.Trim(),
+                    CodMayor = "",
+                    CodElemento = ViewState["CodElemento"].ToString().Trim(),
+                    Pn = TxtPnRemElem.Text.Trim(),
+                    Sn = TxtSnRemElem.Text.Trim(),
+                    FechaEvento = Convert.ToDateTime(TxtFechaRemElem.Text),
+                    Posicion = DdlPosicRemElem.Text.Trim(),
+                    Usu = Session["C77U"].ToString(),
+                    MotivoRemocion = TxtMotivRemElem.Text.Trim(),
+                };
+                ObjRemElemento.Add(TypRemElemento);
+
+                List<ClsTypAeronaveVirtual> ObjServcManto = new List<ClsTypAeronaveVirtual>();
+
+                List<ClsTypAeronaveVirtual> ObjCompensacion = new List<ClsTypAeronaveVirtual>();
+                foreach (GridViewRow Row in GrdCompensLv.Rows)
+                {
+                    int VbidC = Convert.ToInt32(GrdCompensLv.DataKeys[Row.RowIndex].Values[0].ToString().Trim());
+                    DateTime VbFechaLV = Convert.ToDateTime(GrdCompensLv.DataKeys[Row.RowIndex].Values[1].ToString().Trim());
+                    DateTime VbFechaDespeg = Convert.ToDateTime(GrdCompensLv.DataKeys[Row.RowIndex].Values[2].ToString().Trim());
+                    string StrHAcum, StrCAcum, StrHRemain, StrCRemain;
+                    double VbHAcum, VbCAcum, VbHRemain, VbCRemain;
+
+                    CultureInfo Culture = new CultureInfo("en-US");
+                    StrHAcum = (Row.FindControl("HoraAcum") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("HoraAcum") as Label).Text.Trim();
+                    VbHAcum = StrHAcum.Length == 0 ? 0 : Convert.ToDouble(StrHAcum, Culture);
+
+                    StrCAcum = (Row.FindControl("CicloAcum") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("CicloAcum") as Label).Text.Trim();
+                    VbCAcum = StrCAcum.Length == 0 ? 0 : Convert.ToDouble(StrCAcum, Culture);
+                    Boolean borrarb = (Row.FindControl("CkbOK") as CheckBox).Checked;
+                    int borrar = (Row.FindControl("CkbOK") as CheckBox).Checked == true ? 1 : 0;
+                    StrHRemain = (Row.FindControl("HoraRemain") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("HoraRemain") as Label).Text.Trim();
+                    VbHRemain = StrHRemain.Length == 0 ? 0 : Convert.ToDouble(StrHRemain, Culture);
+
+                    StrCRemain = (Row.FindControl("CicloRemain") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("CicloRemain") as Label).Text.Trim();
+                    VbCRemain = StrCRemain.Length == 0 ? 0 : Convert.ToDouble(StrCRemain, Culture);
+
+                    var TypCompensac = new ClsTypAeronaveVirtual()
+                    {
+
+                        ID = Convert.ToInt32(GrdCompensLv.DataKeys[Row.RowIndex].Values[0].ToString().Trim()),
+                        OK = (Row.FindControl("CkbOK") as CheckBox).Checked == true ? 1 : 0,
+                        CodlibroVuelo = (Row.FindControl("LblCodLV") as Label).Text.Trim(),
+                        FechaLibroVuelo = VbFechaLV,
+                        HoraDespegue = VbFechaDespeg,
+                        CompensInicioDia = CkbCompensInicioDia.Checked == true ? 1 : 0,
+                        HorasAcum = VbHAcum,
+                        CiclosAcum = VbCAcum,
+                        HorasRemain = VbHRemain,
+                        CiclosRemain = VbCRemain,
+                        TipoComponente = "N", //M=mayor, N= componenente, S=Subcomp
+                        PosicionCE = DdlPosicRemElem.Text,
+                        Compensacion = ViewState["TieneCompensacion"].ToString(),
+                    };
+                    ObjCompensacion.Add(TypCompensac);
+                }
+
+                List<ClsTypAeronaveVirtual> ObjOT = new List<ClsTypAeronaveVirtual>();
+                foreach (GridViewRow Row in GrdOtCerrar.Rows)
+                {
+                    DateTime? VbFechaI;
+                    string VbCcosto = GrdOtCerrar.DataKeys[Row.RowIndex].Values[0].ToString().Trim();
+                    string VbFIText = GrdOtCerrar.DataKeys[Row.RowIndex].Values[1].ToString().Trim();
+                    if (VbFIText.Equals("")) { VbFechaI = Convert.ToDateTime(TxtFechaRemElem.Text); }
+                    else { VbFechaI = Convert.ToDateTime(VbFIText); }
+
+                    var TypOT = new ClsTypAeronaveVirtual()
+                    {
+                        CodNumOrdenTrab = Convert.ToInt32((Row.FindControl("LblCodOT") as Label).Text.Trim()),
+                        Descripcion = "",
+                        CodEstOrdTrab1 = "0002",
+                        CodEstOrdTrab2 = "",
+                        Aplicabilidad = TxtSnRemElem.Text.Trim(),
+                        CodCapitulo = "",
+                        CodUbicaTecn = "",
+                        CodBase = "",
+                        CodTaller = "",
+                        CodPlanManto = "",
+                        CentroCosto = GrdOtCerrar.DataKeys[Row.RowIndex].Values[0].ToString().Trim(),
+                        FechaInicio = VbFechaI,
+                        FechaFinal = Convert.ToDateTime(TxtFechaRemElem.Text),
+                        FechaReg = Convert.ToDateTime((Row.FindControl("LblFechaReg") as Label).Text.Trim()),
+                        IdentificadorCorrPrev = 1,
+                        CodPrioridad = "",
+                        CodIdLvDetManto = 0,
+                        CodIdDetSrvManto = 0,
+                        BanCerrado = 1,
+                        HorasProyectadas = 0,
+                        FechaProyectada = null,
+                        FechaVencimiento = null,
+                        UsuOT = Session["C77U"].ToString(),
+                        Referencia = "",
+                        AccionParcial = (Row.FindControl("TxtMotivo") as TextBox).Text.Trim(),
+                        CodTipoCodigo = "",
+                        CodInspectorCierre = "",
+                        LicenciaInspCierre = "",
+                        PNOT = "",
+                        BloquearDetalle = 0,
+                        CodResponsable = Session["C77U"].ToString(),
+                        OTSN = 0,
+                        OTSO = 0,
+                        OTSR = 0,
+                        OCSN = 0,
+                        OCSO = 0,
+                        OCSR = 0,
+                        EjecPasos = Convert.ToInt32(GrdOtCerrar.DataKeys[Row.RowIndex].Values[2].ToString().Trim()),
+                        CancelOT = 0,
+                        WS = "",
+                        OKOT = (Row.FindControl("CkbOk") as CheckBox).Checked == true ? 1 : 0,
+                        AccionOT = "",
+                    };
+                    ObjOT.Add(TypOT);
+                }
+                ClsTypAeronaveVirtual AeronaveVirtual = new ClsTypAeronaveVirtual();
+                AeronaveVirtual.Alimentar(ObjRemElemento, ObjServcManto, ObjCompensacion, ObjOT);
+                string Mensj = AeronaveVirtual.GetMensj();
+                if (!Mensj.Trim().Equals(""))
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                    return;
+                }
+                BIndDHisContRemElem(ViewState["CodElemento"].ToString().Trim());
+                LimpiarCamposRemElem("TODOS");
+                ViewState["TieneCompensacion"] = "N";
+                BtnAbrirOTCerrar.Visible = false;
+                BtnRemCompensac.Visible = false;
+                //ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + AeronaveVirtual.GetBorrar() + "')", true);
+                ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('Proceso exitoso')", true);
+            }
+            catch (Exception Ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('Inconveniente en la instalación')", true);
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Remover Componente", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                DdlAeroRemElem.Text = "0";
+            }
         }
-
         protected void TxtFechaRemElem_TextChanged(object sender, EventArgs e)
         {
-            ViewState["ValidaFechaSvc"] = "N";
+            if (!DdlAeroRemElem.Text.Equals("0") && !TxtSnRemElem.Text.Equals(""))
+            {
+                Cnx.SelecBD();
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+                {
+                    sqlCon.Open();
+                    string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,'','','','',@CodA,0,0,0,@FE,'01-01-1900','01-01-1900'";
+                    SqlCommand SC = new SqlCommand(VBQuery, sqlCon);
+                    SC.Parameters.AddWithValue("@CodA", DdlAeroRemElem.Text);
+                    SC.Parameters.AddWithValue("@FE", TxtFechaRemElem.Text);
+                    SqlDataReader SDR = SC.ExecuteReader();
+                    if (SDR.Read())
+                    {
+                        if (Convert.ToInt32(SDR["TieneLV"].ToString()) > 0)
+                        { BtnRemCompensac.Visible = true; }
+                        else
+                        { BtnRemCompensac.Visible = false; }
+                    }
+                }
+            }
         }
         protected void BtnRemCompensac_Click(object sender, EventArgs e)
         {
@@ -925,8 +1213,10 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtSnRemElem.Text = HttpUtility.HtmlDecode(GrdRemBusqElem.SelectedRow.Cells[2].Text.Trim());
             ViewState["CodElemento"] = GrdRemBusqElem.DataKeys[this.GrdRemBusqElem.SelectedIndex][0].ToString();
             TxtUbiTecRemElem.Text = HttpUtility.HtmlDecode(GrdRemBusqElem.SelectedRow.Cells[5].Text.Trim());
-            DdlPosicRemElem.Text= HttpUtility.HtmlDecode(GrdRemBusqElem.SelectedRow.Cells[7].Text.Trim());
+            DdlPosicRemElem.Text = HttpUtility.HtmlDecode(GrdRemBusqElem.SelectedRow.Cells[7].Text.Trim());
             BIndDHisContRemElem(ViewState["CodElemento"].ToString().Trim());
+            BIndDOCerrarOT(ViewState["CodElemento"].ToString().Trim());
+            GrdRemBusqElem.Visible = false;
         }
         protected void GrdRemBusqElem_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
@@ -945,6 +1235,311 @@ namespace _77NeoWeb.Forms.Ingenieria
                 e.Row.Cells[13].Visible = false;
                 e.Row.Cells[14].Visible = false;
             }
+        }
+
+        //******************************************  OT para cerrar *********************************************************
+        protected void BIndDOCerrarOT(string CodElem)
+        {
+            DataTable DtB = new DataTable();
+            Cnx.SelecBD();
+            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+            {
+                string VbTxtSql = "";
+                VbTxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 21,@CE,'','','',0,0,0,0,'01-01-01','01-01-01','01-01-01'");
+                sqlConB.Open();
+                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                {
+                    SC.Parameters.AddWithValue("@CE", CodElem);
+
+                    using (SqlDataAdapter DAB = new SqlDataAdapter())
+                    {
+                        DAB.SelectCommand = SC;
+                        DAB.Fill(DtB);
+
+                        if (DtB.Rows.Count > 0)
+                        {
+                            GrdOtCerrar.DataSource = DtB;
+                            GrdOtCerrar.DataBind();
+                            BtnAbrirOTCerrar.Visible = true;
+                            ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('El componente tiene ordenes de trabajo abierta(s)')", true);
+                        }
+                        else
+                        {
+                            GrdOtCerrar.DataSource = null;
+                            GrdOtCerrar.DataBind();
+                            BtnAbrirOTCerrar.Visible = false;
+                        }
+                    }
+                }
+            }
+        }
+        protected void BtnAbrirOTCerrar_Click(object sender, EventArgs e)
+        {
+            ViewState["Ventana"] = MultVw.ActiveViewIndex;
+            MultVw.ActiveViewIndex = 4;
+        }
+        protected void IbtCerrarOTcierre_Click(object sender, ImageClickEventArgs e)
+        {
+            MultVw.ActiveViewIndex = (int)ViewState["Ventana"];
+        }
+
+        //******************************************  INSTALAR MAYOR *********************************************************
+        protected void BIndDBusqInsMay()
+        {
+            if (DdlAeroInsMay.Text.Equals("0"))
+            { return; }
+            GrdSvcInsMay.Visible = false;
+            GrdBusqMayDisp.Visible = true;
+            TxtTitSvcInsMay.Text = "Mayores Disponibles";
+            DataTable DtB = new DataTable();
+            Cnx.SelecBD();
+            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+            {
+                string VbTxtSql = "", VbOpcion = "";
+                VbTxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 23,@SN,@PN,@UN,'M',@CodHK,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                sqlConB.Open();
+                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                {
+
+                    SC.Parameters.AddWithValue("@SN", ViewState["PNSN"].Equals("SN") ? TxtBusqInsMay.Text.Trim() : "");
+                    SC.Parameters.AddWithValue("@PN", ViewState["PNSN"].Equals("PN") ? TxtBusqInsMay.Text.Trim() : "");
+                    SC.Parameters.AddWithValue("@UN", ViewState["PNSN"].Equals("UN") ? TxtBusqInsMay.Text.Trim() : "");
+                    SC.Parameters.AddWithValue("@Opc", VbOpcion.Trim());
+                    SC.Parameters.AddWithValue("@CodHK", DdlAeroInsMay.Text);
+                    using (SqlDataAdapter DAB = new SqlDataAdapter())
+                    {
+                        DAB.SelectCommand = SC;
+                        DAB.Fill(DtB);
+
+                        if (DtB.Rows.Count > 0)
+                        {
+                            GrdBusqMayDisp.DataSource = DtB;
+                            GrdBusqMayDisp.DataBind();
+                            ViewState["ValidaFechaSvc"] = "S";
+                        }
+                        else
+                        {
+                            GrdBusqMayDisp.DataSource = null;
+                            GrdBusqMayDisp.DataBind();
+                        }
+                    }
+                }
+            }
+        }
+        protected void BIndDHisElemInsMay(string CodElem)
+        {
+            if (DdlAeroInsMay.Text.Equals("0"))
+            { return; }
+            TxtTitHisContInsMay.Text = "S/N: " + TxtSnInsMay.Text;
+            DataTable DtB = new DataTable();
+            Cnx.SelecBD();
+            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+            {
+                string VbTxtSql = "";
+                VbTxtSql = string.Format(" EXEC SP_PANTALLA_AeronaveVirtual 1,@CodElem,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                sqlConB.Open();
+                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                {
+                    SC.Parameters.AddWithValue("@CodElem", CodElem.Trim());
+                    using (SqlDataAdapter DAB = new SqlDataAdapter())
+                    {
+                        DAB.SelectCommand = SC;
+                        DAB.Fill(DtB);
+
+                        if (DtB.Rows.Count > 0)
+                        {
+                            GrdHisContInsMay.DataSource = DtB;
+                            GrdHisContInsMay.DataBind();
+                        }
+                        else
+                        {
+                            GrdHisContInsMay.DataSource = null;
+                            GrdHisContInsMay.DataBind();
+                        }
+                    }
+                }
+            }
+        }
+        protected void BIndDSvcInsMay(string CodElem, string Modelo, string CodHK)
+        {
+            if (DdlAeroInsMay.Text.Equals("0"))
+            { return; }
+            TxtTitSvcInsMay.Text = "Servicios Asignados";
+            DataTable DTM = new DataTable();
+            Cnx.SelecBD();
+            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+            {
+                string VbTxtSql = "";
+                VbTxtSql = string.Format("EXEC Consultas_General_Ingenieria 4,'MAYOR',@CoEl,@Mo,@CHk,2,3,'01-01-1900','01-01-1900'");
+                sqlConB.Open();
+                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                {
+                    try
+                    {
+                        SC.Parameters.AddWithValue("@CoEl", CodElem.Trim());
+                        SC.Parameters.AddWithValue("@Mo", Modelo.Trim());
+                        SC.Parameters.AddWithValue("@CHk", CodHK.Trim());
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            SDA.SelectCommand = SC;
+                            SDA.Fill(DTM);
+
+                            if (DTM.Rows.Count > 0)
+                            {
+                                GrdSvcInsMay.DataSource = DTM;
+                                GrdSvcInsMay.DataBind();
+                            }
+                            else
+                            {
+                               GrdSvcInsMay.DataSource = null;
+                               GrdSvcInsMay.DataBind();
+                            }
+                        }
+                    }
+                    catch (Exception Ex)
+                    {
+                        string borrar = Ex.ToString();
+                    }
+                }
+            }
+        }
+        protected void LimpiarCamposInsMay(string Campos)
+        {
+            if (Campos.Equals("TODOS"))
+            { DdlAeroInsMay.Text = "0"; }
+            TxtPnInsMay.Text = "";
+            TxtSnInsMay.Text = "";
+            ViewState["CodElemento"] = "";
+            ViewState["CodModelo"] = "";
+            TxtUbiTecInsMay.Text = "";
+            DdlPosicInsMay.Text = "";
+            TxtFechaInsMay.Text = "";
+            TxtMotivInsMay.Text = "";
+        }
+        protected void DdlAeroInsMay_TextChanged(object sender, EventArgs e)
+        {
+            LimpiarCamposInsMay("");
+            BIndDBusqInsMay();
+        }
+        protected void BtnPNInsMay_Click(object sender, EventArgs e)
+        {
+            ViewState["PNSN"] = "PN";
+            BIndDBusqInsMay();
+        }
+        protected void BtnSNInsMay_Click(object sender, EventArgs e)
+        {
+            ViewState["PNSN"] = "SN";
+            BIndDBusqInsMay();
+        }
+        protected void BtnUltNivInsMay_Click(object sender, EventArgs e)
+        {
+            ViewState["PNSN"] = "UN";
+            BIndDBusqInsMay();
+        }
+        protected void BtnAKVirtualInsMay_Click(object sender, EventArgs e)
+        {
+            ViewState["Ventana"] = MultVw.ActiveViewIndex;
+            MultVw.ActiveViewIndex = 1;
+            DdlHkConsAeroVirtual.Text = DdlAeroInsMay.Text;
+            BIndDConsAeroVirtual(DdlAeroInsMay.Text);
+        }
+        protected void BtnGuardarInsMay_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void TxtFechaInsMay_TextChanged(object sender, EventArgs e)
+        {
+            if (!DdlAeroInsMay.Text.Equals("0") && !TxtSnInsMay.Text.Equals(""))
+            {
+                Cnx.SelecBD();
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+                {
+                    sqlCon.Open();
+                    string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,@UBR,'','','',@CodA,0,0,0,@FE,'01-01-1900','01-01-1900'";
+                    SqlCommand SC = new SqlCommand(VBQuery, sqlCon);
+                    SC.Parameters.AddWithValue("@CodA", DdlAeroInsMay.Text);
+                    SC.Parameters.AddWithValue("@FE", TxtFechaInsMay.Text);
+                    SC.Parameters.AddWithValue("@UBR", TxtUbiTecInsMay.Text);
+                    SqlDataReader SDR = SC.ExecuteReader();
+                    if (SDR.Read())
+                    {
+                        if (Convert.ToInt32(SDR["TieneLV"].ToString()) > 0)
+                        { BtnCompensacInsMay.Visible = true; }
+                        else
+                        { BtnCompensacInsMay.Visible = false; }
+                    }
+                }
+            }
+        }
+        protected void BtnCompensacInsMay_Click(object sender, EventArgs e)
+        {
+            if (ViewState["TieneCompensacion"].Equals("N"))
+            {
+                BIndDCompesacLV(DdlAeroInsMay.Text, TxtFechaInsMay.Text);
+                GrdCompensLv.Enabled = true;
+                CkbCompensInicioDia.Checked = false;
+                CkbCompensInicioDia.Enabled = true;
+            }
+            else
+            {
+                GrdCompensLv.Enabled = false;
+                CkbCompensInicioDia.Enabled = false;
+            }
+            ViewState["Ventana"] = MultVw.ActiveViewIndex;
+            MultVw.ActiveViewIndex = 2;
+        }
+        protected void GrdBusqMayDisp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LimpiarCamposInsMay("");
+            ViewState["CodModelo"] = HttpUtility.HtmlDecode(GrdBusqMayDisp.SelectedRow.Cells[11].Text.Trim());
+            string VbApu_Ref = HttpUtility.HtmlDecode(GrdBusqMayDisp.SelectedRow.Cells[7].Text.Trim());
+            string VbApu_Elem = HttpUtility.HtmlDecode(GrdBusqMayDisp.SelectedRow.Cells[8].Text.Trim());
+            if (!VbApu_Ref.Equals(VbApu_Elem))
+            {
+                ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('La S/N no se encuentra marcada como APU, debe realizar el cambio en la pantalla [Elemento]')", true);
+                return;
+            }
+            TxtPnInsMay.Text = HttpUtility.HtmlDecode(GrdBusqMayDisp.SelectedRow.Cells[1].Text.Trim());
+            TxtSnInsMay.Text = HttpUtility.HtmlDecode(GrdBusqMayDisp.SelectedRow.Cells[2].Text.Trim());
+            ViewState["CodElemento"] = GrdBusqMayDisp.DataKeys[this.GrdBusqMayDisp.SelectedIndex][0].ToString();
+            TxtUbiTecInsMay.Text = HttpUtility.HtmlDecode(GrdBusqMayDisp.SelectedRow.Cells[5].Text.Trim());
+            string PoscElem = HttpUtility.HtmlDecode(GrdBusqMayDisp.SelectedRow.Cells[10].Text.Trim());
+            BIndDHisElemInsMay(ViewState["CodElemento"].ToString().Trim());
+            if (PoscElem.Equals("S"))
+            {
+                DdlPosicInsMay.Enabled = true;
+                string LtxtSql = string.Format("EXEC Consultas_General_Ingenieria 2,'{0}','{1}','',0, 0,0,'01-01-1','01-01-1'", TxtUbiTecInsMay.Text, ViewState["CodModelo"].ToString().Trim());
+                DdlPosicInsMay.DataSource = Cnx.DSET(LtxtSql);
+                DdlPosicInsMay.DataMember = "Datos";
+                DdlPosicInsMay.DataTextField = "Descripcion";
+                DdlPosicInsMay.DataValueField = "Codigo";
+                DdlPosicInsMay.DataBind();
+            }
+            else
+            { DdlPosicInsMay.Enabled = false; }
+            GrdBusqMayDisp.Visible = false;
+            BIndDSvcInsMay(ViewState["CodElemento"].ToString().Trim(), ViewState["CodModelo"].ToString().Trim(), DdlAeroInsMay.Text);
+            GrdSvcInsMay.Visible = true;
+        }
+        protected void GrdBusqMayDisp_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+
+        }
+
+        protected void GrdBusqMayDisp_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
+        }
+
+        protected void GrdSvcInsMay_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
+        }
+
+        protected void TxtFecUltCumplMay_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 
