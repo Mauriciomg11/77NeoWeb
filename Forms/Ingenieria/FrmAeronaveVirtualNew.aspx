@@ -73,6 +73,8 @@
             $('#<%=DdlPosicRemElem.ClientID%>').chosen();
             $('#<%=DdlAeroInsMay.ClientID%>').chosen();
             $('#<%=DdlPosicInsMay.ClientID%>').chosen();
+            $('#<%=DdlPnVisualMay.ClientID%>').chosen();
+            $('#<%=DdlSnVisualMay.ClientID%>').chosen();
         }
     </script>
 </asp:Content>
@@ -102,6 +104,10 @@
             <asp:PostBackTrigger ControlID="BtnInsElem" />
             <asp:PostBackTrigger ControlID="BtnRemElem" />
             <asp:PostBackTrigger ControlID="BtnInsMayor" />
+            <asp:PostBackTrigger ControlID="BtnRemMayor" />
+            <asp:PostBackTrigger ControlID="BtnInsSubC" />
+            <asp:PostBackTrigger ControlID="BtnRemSubC" />
+            <asp:PostBackTrigger ControlID="BtnCrearElem" />
         </Triggers>
     </asp:UpdatePanel>
     <asp:MultiView ID="MultVw" runat="server">
@@ -491,8 +497,9 @@
                     <asp:TextBox ID="TxtBusqInsMay" runat="server" Width="15%" CssClass="form-control-sm heightCampo" placeholder="Ingrese el dato a consultar" />
                     <asp:Button ID="BtnPNInsMay" CssClass="btn btn-primary" runat="server" Height="33px" Text="P/N" OnClick="BtnPNInsMay_Click" />&nbsp
                     <asp:Button ID="BtnSNInsMay" CssClass="btn btn-primary" runat="server" Height="33px" Text="S/N" OnClick="BtnSNInsMay_Click" />&nbsp
-                    <asp:Button ID="BtnUltNivInsMay" CssClass="btn btn-primary" runat="server" Height="33px" Text="U/N" OnClick="BtnUltNivInsMay_Click" ToolTip="Ultimo Nivel" />&nbsp
-                    <asp:Button ID="BtnAKVirtualInsMay" CssClass="btn btn-primary" runat="server" Height="33px" Text="Visualizar" OnClick="BtnAKVirtualInsMay_Click" ToolTip="Visualizar elementos instalados y ubicaciones pendientes" />&nbsp&nbsp&nbsp
+                    <asp:Button ID="BtnUltNivInsMay" CssClass="btn btn-primary" runat="server" Height="33px" Text="U/N" OnClick="BtnUltNivInsMay_Click" ToolTip="Ultimo Nivel" />&nbsp&nbsp&nbsp
+                    <asp:Button ID="BtnAKVirtualInsMay" CssClass="btn btn-primary" runat="server" Height="33px" Text="Visualizar" OnClick="BtnAKVirtualInsMay_Click" ToolTip="Visualizar elementos instalados y ubicaciones pendientes" />&nbsp
+                    <asp:Button ID="BtnVisualizarMay" CssClass="btn btn-primary" runat="server" Height="33px" Text="Mayores" OnClick="BtnVisualizarMay_Click" ToolTip="Visualizar mayores y los subcomponentes" />&nbsp&nbsp&nbsp
                     <asp:Button ID="BtnGuardarInsMay" CssClass="btn btn-success" runat="server" Text="Instalar" OnClick="BtnGuardarInsMay_Click" ToolTip="Realizar la instalación" OnClientClick="return confirm('¿Desea realizar la instalación?');" /><br />
                     <asp:Label ID="LblPnInsMay" runat="server" Text="P/N: " CssClass="LblTextoBusq" />
                     <asp:TextBox ID="TxtPnInsMay" runat="server" Width="12%" CssClass="form-control-sm heightCampo" Enabled="false" />
@@ -616,11 +623,40 @@
                         </asp:TableRow>
                     </asp:Table>
                 </ContentTemplate>
-                  <Triggers>
+                <Triggers>
                     <asp:PostBackTrigger ControlID="BtnAKVirtualInsMay" />
                     <asp:PostBackTrigger ControlID="BtnCompensacInsMay" />
+                    <asp:PostBackTrigger ControlID="BtnVisualizarMay" />
                     <asp:AsyncPostBackTrigger ControlID="TxtFechaInsMay" EventName="TextChanged" />
-                </Triggers>                
+                </Triggers>
+            </asp:UpdatePanel>
+        </asp:View>
+        <asp:View ID="Vw6VisualizarMay" runat="server">
+            <asp:UpdatePanel ID="UplVisualizarMay" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
+                    <h6 class="TextoSuperior">
+                        <asp:Label ID="LblTitVisualizarMay" runat="server" Text="Mayores / Sub - Componentes" /></h6>
+                    <asp:ImageButton ID="IbtCerrarVisualMay" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarVisualMay_Click" ImageAlign="Right" />
+                    <asp:Label ID="LblPNVisualMay" runat="server" CssClass="LblEtiquet" Text="P/N:" />
+                    <asp:DropDownList ID="DdlPnVisualMay" runat="server" CssClass="heightCampo" Width="8%" OnTextChanged="DdlPnVisualMay_TextChanged" AutoPostBack="true" />
+                     <asp:Label ID="LblSNVisualMay" runat="server" CssClass="LblEtiquet" Text="S/N:" />
+                    <asp:DropDownList ID="DdlSnVisualMay" runat="server" CssClass="heightCampo" Width="8%" OnTextChanged="DdlSnVisualMay_TextChanged" AutoPostBack="true" />
+                     <div class="DivContendorGrid DivGridAVirtual">
+                        <asp:GridView ID="GrdVisualMay" runat="server" EmptyDataText="Sin configurar..!"
+                            CssClass="DiseñoGrid table table-sm" GridLines="Both"
+                            OnRowDataBound="GrdVisualMay_RowDataBound">
+                            <FooterStyle CssClass="GridFooterStyle" />
+                            <HeaderStyle CssClass="GridCabecera" />
+                            <RowStyle CssClass="GridRowStyle" />
+                            <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                        </asp:GridView>
+                    </div>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:PostBackTrigger ControlID="IbtCerrarVisualMay" />
+                    <asp:AsyncPostBackTrigger ControlID="DdlPnVisualMay" EventName="TextChanged" />
+                    <asp:AsyncPostBackTrigger ControlID="DdlSnVisualMay" EventName="TextChanged" />
+                </Triggers>
             </asp:UpdatePanel>
         </asp:View>
     </asp:MultiView>

@@ -226,11 +226,11 @@
                             <td width="5%">
                                 <asp:ImageButton ID="IbtGenerOT" runat="server" CssClass="BtnImagenGenerarOT" ImageUrl="~/images/WorkOrder.png" OnClick="IbtGenerOT_Click" ToolTip="Generar orden de trabajo" /></td>
                             <td>
-                                <asp:Button ID="BtnAK" runat="server" CssClass="btn-info" OnClick="BtnAK_Click" Text="Aeronave" /></td>
+                                <asp:Button ID="BtnAK" runat="server" CssClass="btn btn-outline-primary" OnClick="BtnAK_Click" Font-Size="14px" Font-Bold="true" Text="Aeronave" /></td>
                             <td>
-                                <asp:Button ID="BtnPN" runat="server" CssClass="btn-info" OnClick="BtnPN_Click" Text="P/N" /></td>
+                                <asp:Button ID="BtnPN" runat="server" CssClass="btn btn-outline-primary" OnClick="BtnPN_Click" Font-Size="14px" Font-Bold="true" Text="P/N" /></td>
                             <td>
-                                <asp:Button ID="BtnSN" runat="server" CssClass="btn-info" OnClick="BtnSN_Click" Text="S/N" /></td>
+                                <asp:Button ID="BtnSN" runat="server" CssClass="btn btn-outline-primary" OnClick="BtnSN_Click" Font-Size="14px" Font-Bold="true" Text="S/N" /></td>
                             <td width="15%">
                                 <asp:CheckBox ID="CkbVisuStat" runat="server" CssClass="LblEtiquet" Text="Visualizar en Status" Enabled="false" /></td>
                         </tr>

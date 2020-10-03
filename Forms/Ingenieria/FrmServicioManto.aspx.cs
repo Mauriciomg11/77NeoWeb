@@ -58,8 +58,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["PN"] = "";
                 ViewState["SN"] = "";
                 ViewState["CodElem"] = "";
-                BtnAK.Font.Bold = true;
-                BtnAK.Font.Size = 14;
+                BtnAK.CssClass = "btn btn-primary";                
                 BindDDdlBusq("");
                 BindDDdl();
                 BindDAK();
@@ -1073,16 +1072,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnAK_Click(object sender, EventArgs e)
         {
-            BtnAK.Font.Bold = true;
-            BtnAK.Font.Size = 15;
+            BtnAK.CssClass = "btn btn-primary";
+            BtnPN.CssClass = "btn btn-outline-primary";
+            BtnSN.CssClass = "btn btn-outline-primary";
             ViewState["TIPO"] = "A";
             ViewState["PN"] = "";
             ViewState["SN"] = "";
-            BindDDdlBusq("");
-            BtnPN.Font.Bold = false;
-            BtnPN.Font.Size = 13;
-            BtnSN.Font.Bold = false;
-            BtnSN.Font.Size = 13;
+            BindDDdlBusq("");           
             GrdAeron.Visible = true;
             GrdPN.Visible = false;
             GrdSN.Visible = false;
@@ -1095,16 +1091,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnPN_Click(object sender, EventArgs e)
         {
-            BtnPN.Font.Bold = true;
-            BtnPN.Font.Size = 15;
+            BtnAK.CssClass = "btn btn-outline-primary";
+            BtnPN.CssClass = "btn btn-primary";
+            BtnSN.CssClass = "btn btn-outline-primary";
             ViewState["TIPO"] = "P";
             ViewState["PN"] = "";
             ViewState["SN"] = "";
-            BindDDdlBusq(ViewState["TIPO"].ToString());
-            BtnAK.Font.Bold = false;
-            BtnAK.Font.Size = 13;
-            BtnSN.Font.Bold = false;
-            BtnSN.Font.Size = 13;
+            BindDDdlBusq(ViewState["TIPO"].ToString());           
             GrdAeron.Visible = false;
             GrdPN.Visible = true;
             GrdSN.Visible = false;
@@ -1117,16 +1110,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnSN_Click(object sender, EventArgs e)
         {
-            BtnSN.Font.Bold = true;
-            BtnSN.Font.Size = 15;
+            BtnAK.CssClass = "btn btn-outline-primary";
+            BtnPN.CssClass = "btn btn-outline-primary";
+            BtnSN.CssClass = "btn btn-primary";
             ViewState["TIPO"] = "S";
             ViewState["PN"] = "";
             ViewState["SN"] = "";
-            BindDDdlBusq("P");
-            BtnPN.Font.Bold = false;
-            BtnPN.Font.Size = 13;
-            BtnAK.Font.Bold = false;
-            BtnAK.Font.Size = 13;
+            BindDDdlBusq("P");           
             GrdAeron.Visible = false;
             GrdPN.Visible = false;
             GrdSN.Visible = true;

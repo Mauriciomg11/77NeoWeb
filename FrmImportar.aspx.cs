@@ -24,7 +24,7 @@ namespace _77NeoWeb
             {
                 /*Session["C77U"] = ""; */
                 Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";
+                Session["D[BX"] = "DbNeoAda";
                 Session["$VR"] = "77NEO01";
                 Session["V$U@"] = "sa";
                 Session["P@$"] = "admindemp";
@@ -188,9 +188,9 @@ namespace _77NeoWeb
 
                
                         //StSql = "EXEC SP_PANTALLA_Reporte_Manto2 6,'','','','','',@SubOT,0,0,0,'01-01-1','02-01-1','03-01-1'";
-                        VbNomRpt = "Recurso";
+                        VbNomRpt = "Histcont_Elemento";
                      
-                       StSql = "EXEC SP_PANTALLA_Reporte_Manto 4,'','','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                       StSql = "EXEC ProyectoUsa";
                        // VbNomRpt = "Reportes_Mantenimiento";
                        
                 Cnx.SelecBD();
@@ -199,10 +199,7 @@ namespace _77NeoWeb
                     using (SqlCommand SC = new SqlCommand(StSql, con))
                     {
                         SC.CommandTimeout = 90000000;
-                        SC.Parameters.AddWithValue("@SubOT", 2084);// solo cuando es para la reserva (recurso)
-                        SC.Parameters.AddWithValue("@Prmtr", 1029); // solo cuando es para el reporte
-                        SC.Parameters.AddWithValue("@Opc", 0);// solo cuando es para el reporte
-                        SC.Parameters.AddWithValue("@CodlV", "020120");// solo cuando es para el reporte
+                        SC.Parameters.AddWithValue("@SubOT", 2084);// solo cuando es para la reserva (recurso)                      
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             SC.Connection = con;
@@ -211,7 +208,7 @@ namespace _77NeoWeb
                             {
                                 sda.Fill(ds);
 
-                                ds.Tables[0].TableName = "Tabla";
+                                ds.Tables[0].TableName = VbNomRpt;
                                 using (XLWorkbook wb = new XLWorkbook())
                                 {
                                     foreach (DataTable dt in ds.Tables)
@@ -240,6 +237,39 @@ namespace _77NeoWeb
             {
                 string ble = Ex.ToString();
             }
+        }
+
+        protected void BtnExportar2_Click(object sender, EventArgs e)
+        {
+            //Create the data set and table 
+            DataSet ds = new DataSet("New_DataSet");
+            DataTable dt = new DataTable("New_DataTable");
+
+            //Set the locale for each 
+            ds.Locale = System.Threading.Thread.CurrentThread.CurrentCulture;
+            dt.Locale = System.Threading.Thread.CurrentThread.CurrentCulture;
+
+            //Open a DB connection (in this example with OleDB) 
+            Cnx.SelecBD();
+            //SqlConnection con = new SqlConnection(Cnx.GetConex());
+            OleDbConnection con = new OleDbConnection(Cnx.GetConex());
+            con.Open();
+
+            //Create a query and fill the data table with the data from the DB 
+            string sql = "SELECT Whatever FROM MyDBTable;";
+            OleDbCommand cmd = new OleDbCommand(sql, con);
+            OleDbDataAdapter adptr = new OleDbDataAdapter();
+
+            adptr.SelectCommand = cmd;
+            adptr.Fill(dt);
+            con.Close();
+
+            //Add the table to the data set 
+            ds.Tables.Add(dt);
+
+            //Here's the easy part. Create the Excel worksheet from the data set 
+            ExcelLibrary.DataSetHelper.CreateWorkbook("MyExcelFile.xls", ds);
+
         }
     }
 }
