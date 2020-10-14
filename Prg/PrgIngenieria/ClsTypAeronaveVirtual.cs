@@ -14,7 +14,9 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         static public string borrar;
         public string TipoEvento { get; set; }
         public int CodAeronave { get; set; }
+        public string CodModelo  { get; set; }
         public string NivelElemento { get; set; }
+        public string Motor { get; set; }
         public string UltimoNivel { get; set; }
         public string CodMayor { get; set; }
         public string CodElemento { get; set; }
@@ -105,7 +107,9 @@ namespace _77NeoWeb.Prg.PrgIngenieria
             DataTable TblAeronaveVirtual = new DataTable();
             TblAeronaveVirtual.Columns.Add("TipoEvento", typeof(string));
             TblAeronaveVirtual.Columns.Add("CodAeronave", typeof(int));
+            TblAeronaveVirtual.Columns.Add("CodModelo", typeof(string));
             TblAeronaveVirtual.Columns.Add("NivelElemento", typeof(string));
+            TblAeronaveVirtual.Columns.Add("Motor", typeof(string));
             TblAeronaveVirtual.Columns.Add("UltimoNivel", typeof(string));
             TblAeronaveVirtual.Columns.Add("CodMayor", typeof(string));
             TblAeronaveVirtual.Columns.Add("CodElemento", typeof(string));
@@ -120,7 +124,9 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                 TblAeronaveVirtual.Rows.Add(new object[]{
                     Campo.TipoEvento,
                     Campo.CodAeronave,
+                    Campo.CodModelo,
                     Campo.NivelElemento,
+                    Campo.Motor,
                     Campo.UltimoNivel,
                     Campo.CodMayor,
                     Campo.CodElemento,
@@ -294,6 +300,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                     string VBQuery = "INS_UPD_AeroVirtual";
                     using (SqlCommand SC = new SqlCommand(VBQuery, SCX, transaction))
                     {
+                        PMensj = "Inconveniente en el movimiento";
                         try
                         {
                             SC.CommandType = CommandType.StoredProcedure;
@@ -313,7 +320,10 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                                 string MensjServicios = SDR["MensjServicios"].ToString().Trim();
                                 string MensjCompensac = SDR["MensjCompensac"].ToString().Trim();
                                 string MensjCorrCont = SDR["MensjCorrCont"].ToString().Trim();
-                                borrar = SDR["MensjOT"].ToString().Trim();
+                                string MensjOT = SDR["MensjOT"].ToString().Trim();
+                                string MensInsMayor = SDR["MensInsMayor"].ToString().Trim();
+                                string MensjCorrerContSubC= SDR["MensjCorrerContSubC"].ToString().Trim();
+                                borrar = SDR["MensRemMayor"].ToString().Trim(); 
                             }
                             SDR.Close();
                             transaction.Commit();

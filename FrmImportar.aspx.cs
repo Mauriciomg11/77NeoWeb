@@ -20,6 +20,8 @@ namespace _77NeoWeb
         ClsConexion Cnx = new ClsConexion();
         protected void Page_Load(object sender, EventArgs e)
         {
+            ViewState["NomBtnExp"] = "Orden_Trabajo";
+            BtnExportar.Text = "Exportar " + ViewState["NomBtnExp"].ToString();
             if (Session["C77U"] == null)
             {
                 /*Session["C77U"] = ""; */
@@ -30,7 +32,7 @@ namespace _77NeoWeb
                 Session["P@$"] = "admindemp";
                 Session["N77U"] = "UsuPrueba";
                 Session["Nit77Cia"] = "811035879-1"; /**/
-                ViewState["Validar"] = "S";
+                ViewState["Validar"] = "S";               
             }
         }
 
@@ -52,7 +54,7 @@ namespace _77NeoWeb
             }
 
             // 
-            conexion = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Asus Pro\Downloads\"+ FileName + ";Extended Properties='Excel 12.0 Xml;HDR=YES;'";
+            conexion = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Asus Pro\Downloads\" + FileName + ";Extended Properties='Excel 12.0 Xml;HDR=YES;'";
 
             using (OleDbConnection cnn = new OleDbConnection(conexion))
             {
@@ -186,13 +188,13 @@ namespace _77NeoWeb
             {
                 string StSql, VbNomRpt;
 
-               
-                        //StSql = "EXEC SP_PANTALLA_Reporte_Manto2 6,'','','','','',@SubOT,0,0,0,'01-01-1','02-01-1','03-01-1'";
-                        VbNomRpt = "Histcont_Elemento";
-                     
-                       StSql = "EXEC ProyectoUsa";
-                       // VbNomRpt = "Reportes_Mantenimiento";
-                       
+
+                //StSql = "EXEC SP_PANTALLA_Reporte_Manto2 6,'','','','','',@SubOT,0,0,0,'01-01-1','02-01-1','03-01-1'";
+               // VbNomRpt = "Reporte_Manto";
+
+                StSql = "EXEC ProyectoUsa";
+                // VbNomRpt = "Reportes_Mantenimiento";
+              
                 Cnx.SelecBD();
                 using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
                 {
@@ -208,7 +210,7 @@ namespace _77NeoWeb
                             {
                                 sda.Fill(ds);
 
-                                ds.Tables[0].TableName = VbNomRpt;
+                                ds.Tables[0].TableName = ViewState["NomBtnExp"].ToString();
                                 using (XLWorkbook wb = new XLWorkbook())
                                 {
                                     foreach (DataTable dt in ds.Tables)
@@ -218,7 +220,7 @@ namespace _77NeoWeb
                                     Response.Clear();
                                     Response.Buffer = true;
                                     Response.ContentType = "application/ms-excel";
-                                    Response.AddHeader("content-disposition", string.Format("attachment;filename={0}.xlsx", VbNomRpt));
+                                    Response.AddHeader("content-disposition", string.Format("attachment;filename={0}.xlsx", ViewState["NomBtnExp"].ToString()));
                                     Response.Charset = "";
                                     using (MemoryStream MyMemoryStream = new MemoryStream())
                                     {
@@ -241,34 +243,7 @@ namespace _77NeoWeb
 
         protected void BtnExportar2_Click(object sender, EventArgs e)
         {
-            //Create the data set and table 
-            DataSet ds = new DataSet("New_DataSet");
-            DataTable dt = new DataTable("New_DataTable");
 
-            //Set the locale for each 
-            ds.Locale = System.Threading.Thread.CurrentThread.CurrentCulture;
-            dt.Locale = System.Threading.Thread.CurrentThread.CurrentCulture;
-
-            //Open a DB connection (in this example with OleDB) 
-            Cnx.SelecBD();
-            //SqlConnection con = new SqlConnection(Cnx.GetConex());
-            OleDbConnection con = new OleDbConnection(Cnx.GetConex());
-            con.Open();
-
-            //Create a query and fill the data table with the data from the DB 
-            string sql = "SELECT Whatever FROM MyDBTable;";
-            OleDbCommand cmd = new OleDbCommand(sql, con);
-            OleDbDataAdapter adptr = new OleDbDataAdapter();
-
-            adptr.SelectCommand = cmd;
-            adptr.Fill(dt);
-            con.Close();
-
-            //Add the table to the data set 
-            ds.Tables.Add(dt);
-
-            //Here's the easy part. Create the Excel worksheet from the data set 
-            ExcelLibrary.DataSetHelper.CreateWorkbook("MyExcelFile.xls", ds);
 
         }
     }

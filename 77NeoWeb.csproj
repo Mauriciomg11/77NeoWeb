@@ -143,6 +143,7 @@
     <Content Include="Forms\Seguridad\FrmPerfil.aspx" />
     <Content Include="Forms\Seguridad\FrmSeguPefiles.aspx" />
     <Content Include="Forms\Seguridad\FrmUsuario.aspx" />
+    <Content Include="FrmImportar.aspx" />
     <Content Include="Global.asax" />
     <Content Include="images\77Fondo.jpg" />
     <Content Include="images\AddNew.png" />
@@ -377,6 +378,12 @@
     <Compile Include="Forms\Seguridad\FrmUsuario.aspx.designer.cs">
       <DependentUpon>FrmUsuario.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FrmImportar.aspx.cs">
+      <DependentUpon>FrmImportar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FrmImportar.aspx.designer.cs">
+      <DependentUpon>FrmImportar.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -404,6 +411,7 @@
     <Compile Include="MuDatabaseEntities.cs" />
     <Compile Include="Prg\ClsConexion.cs" />
     <Compile Include="Prg\ClsPermisos.cs" />
+    <Compile Include="Prg\PrgIngenieria\ClsTypAeronaveVirtualCrearElem.cs" />
     <Compile Include="Prg\PrgIngenieria\ClsTypAeronaveVirtual.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypSolicitudPedido.cs" />
     <Compile Include="Prg\PrgIngenieria\CsTypAeronave.cs" />
