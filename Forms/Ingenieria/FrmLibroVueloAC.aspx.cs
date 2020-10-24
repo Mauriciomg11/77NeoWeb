@@ -27,20 +27,27 @@ namespace _77NeoWeb.Forms.Ingenieria
         private DateTime FechaD = DateTime.Today;
         private DateTime FechaLv, FechaMax, FechaI, FechaF, FechaCompletaI, FechaCompletaF;
         private TimeSpan TtalHoras;
+        private byte[] imagenLV;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
             {
                 Response.Redirect("~/FrmAcceso.aspx");
-            } /**/
+            }  /**/
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo    
 
             Page.Title = string.Format("Libro de Vuelo");
             if (Session["C77U"] == null)
             {
-                Session["C77U"] = "";  
-                ViewState["Validar"] = "S";
+                Session["C77U"] = "";
+                /*Session["C77U"] = "00000082";
+                Session["D[BX"] = "DbNeoDempV2";
+                Session["$VR"] = "77NEO01";
+                Session["V$U@"] = "sa";
+                Session["P@$"] = "admindemp";
+                Session["N77U"] = "UsuPrueba";
+                Session["Nit77Cia"] = "811035879-1"; */
             }
             if (!IsPostBack)
             {
@@ -86,6 +93,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["VblIngMS"] = 0;
                 IbtAdd.Visible = false;
                 GrdTray.ShowFooter = false;
+                FileUpCLV.Visible = false; cargarLV.Visible = false;
             }
             if (ClsP.GetModificar() == 0)
             {
@@ -512,9 +520,96 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlAeroRte.DataValueField = "CodAeronave";
             DdlAeroRte.DataBind();
         }
+        protected void cargarLV_Click(object sender, EventArgs e)
+        {
+            if (FileUpCLV != null && !TxtNumLv.Text.Equals(""))
+            {
+                if (FileUpCLV.HasFile)
+                {
+                    string VblRuta = FileUpCLV.FileName;
+                    string VblExt = Path.GetExtension(VblRuta);
+                    string VblType = FileUpCLV.PostedFile.ContentType;
 
+
+                    VblExt = VblExt.Substring(VblExt.LastIndexOf(".") + 1).ToLower();
+                    string[] formatos = new string[] { "jpg", "jpeg", "bmp", "png", "gif", "pdf" };
+                    if (Array.IndexOf(formatos, VblExt) < 0)
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "IdntificadorBloqueScript", "alert('Formato de imagen inválido.')", true);
+                        return;
+                    }
+                    imagenLV = new byte[FileUpCLV.PostedFile.InputStream.Length];
+                    FileUpCLV.PostedFile.InputStream.Read(imagenLV, 0, imagenLV.Length);
+
+                    Cnx.SelecBD();
+                    using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+                    {
+                        string VBQuery = "";
+
+                        sqlCon.Open();
+                        if (LkbDescargarLV.Text.Trim().Equals(""))
+                        {
+                            VBQuery = string.Format("INSERT INTO TblAdjuntos(IdProceso,CodProceso,Proceso,Descripcion,Ruta,ArchivoAdj,Extension,UsuCrea,UsuMod,FechaCrea,FechaMod,TipoArchivo)  " +
+                               "VALUES(@Id,'LV','LIBROVUELO',@Des,@Rt,@Image,@Ex,@Us,@Us,GETDATE(),GETDATE(),@Typ)");
+                        }
+                        else
+                        {
+                            VBQuery = string.Format("UPDATE TblAdjuntos SET Descripcion=@Des,Ruta=@Rt,ArchivoAdj=@Image,Extension=@Ex,UsuMod=@Us,FechaMod =GETDATE(),TipoArchivo= @Typ " +
+                                "WHERE IdProceso=@Id AND CodProceso='LV'");
+                        }
+                        using (SqlCommand SqlCmd = new SqlCommand(VBQuery, sqlCon))
+                        {
+                            try
+                            {
+                                SqlCmd.Parameters.AddWithValue("@Id", ViewState["IdLibroVuelo"]);
+                                SqlCmd.Parameters.AddWithValue("@Des", TxtNumLv.Text.Trim());
+                                SqlCmd.Parameters.AddWithValue("@Rt", VblRuta.Trim());
+                                SqlCmd.Parameters.AddWithValue("@Image", imagenLV);
+                                SqlCmd.Parameters.AddWithValue("@Ex", VblExt.Trim());
+                                SqlCmd.Parameters.AddWithValue("@Us", Session["C77U"]);
+                                SqlCmd.Parameters.AddWithValue("@Typ", VblType.Trim());
+                                SqlCmd.ExecuteNonQuery();
+
+                                LkbDescargarLV.Text = VblRuta.Trim();
+                            }
+                            catch (Exception ex)
+                            {
+                                ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "IdntificadorBloqueScript", "alert('Error en el ingreso')", true);
+                                Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString(), "INSERT Adjunto LV", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar un archivo')", true);
+                    return;
+                }
+            }
+        }
+        protected void LkbDescargarLV_Click(object sender, EventArgs e)
+        {
+            Cnx.SelecBD();
+            using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
+            {
+                Cnx2.Open();
+                string LtxtSql = string.Format("EXEC SP_PANTALLA_LibroVuelo 24,'','','','',{0},0,0,0,'01-1-2009','01-01-1900','01-01-1900'", ViewState["IdLibroVuelo"]);
+                SqlCommand SC = new SqlCommand(LtxtSql, Cnx2);
+                SqlDataReader SDR = SC.ExecuteReader();
+                if (SDR.Read())
+                {
+                    string VblType = HttpUtility.HtmlDecode(SDR["TipoArchivo"].ToString().Trim());
+                    imagenLV = (byte[])SDR["ArchivoAdj"];
+                    string VblRuta = HttpUtility.HtmlDecode(SDR["Nombre"].ToString().Trim());
+                    //Response.AppendHeader("Content-Disposition", "filename=" + e.CommandArgument);
+                    Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", VblRuta));
+                    Response.ContentType = VblType;
+                    //finalmente escribimos los bytes en la respuesta de la página web
+                    Response.BinaryWrite(imagenLV);
+                }
+            }
+        }
         //****************************************<Datos Generales> ******************************************
-
         protected void ValidarCampos(string Accion)
         {
             try
@@ -596,6 +691,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                         ViewState["UltimoDestino"] = SDR["UltimoDestino"].ToString();
                         ViewState["Procesado"] = SDR["Procesado"].ToString();
                         CkbProcesado.Checked = ViewState["Procesado"].Equals("S") ? true : false;
+                        if (CkbProcesado.Checked == false)
+                        { FileUpCLV.Enabled = true; cargarLV.Enabled = true; }
+                        else { FileUpCLV.Enabled = false; cargarLV.Enabled = false; }
                         ViewState["TotalPasSal"] = SDR["TotalPasSal"].ToString();
                         ViewState["SNApu"] = HttpUtility.HtmlDecode(SDR["CodBase"].ToString().Trim());
                         ViewState["HraMin"] = HttpUtility.HtmlDecode(SDR["Hr_Mn"].ToString().Trim());
@@ -614,6 +712,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             LblAterrCorr.Visible = true;
                             TxtAterrCorr.Visible = true;
                         }
+                        LkbDescargarLV.Text = HttpUtility.HtmlDecode(SDR["Adjunto"].ToString().Trim());
                         BindDMotor(TxtNumLv.Text.Trim(), -1);
                         UpPnlBtnPpl.Update();
                         LimpiarCamposRte();
@@ -695,6 +794,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtTat.Text = "0";
             TxtMach.Text = "0";
             BindDMotor("-1", -1);
+            LkbDescargarLV.Text = "";
         }
         protected void ActivarCamGridMot(bool Etd)
         {
@@ -1538,7 +1638,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     string HrMn = DetLibroVuelo.GetTHrMn();
                     // string TtlHrasVoldas = DetLibroVuelo.GetTtlHorasLV();
                     if (ViewState["HabilitaVuelos"].Equals("N"))
-                    { TxtNumVuelo.Text = DetLibroVuelo.GetTtlVuelos().ToString(); }                    
+                    { TxtNumVuelo.Text = DetLibroVuelo.GetTtlVuelos().ToString(); }
                     LblTrayectos.Text = "Trayectos" + " [" + TxtNumLv.Text.Trim() + "   Total Horas: " + HrMn + "]";
                     ViewState["UltimoDestino"] = VbDest;
                     BindDTrayectos();

@@ -20,7 +20,7 @@ namespace _77NeoWeb
         ClsConexion Cnx = new ClsConexion();
         protected void Page_Load(object sender, EventArgs e)
         {
-            ViewState["NomBtnExp"] = "Orden_Trabajo";
+            ViewState["NomBtnExp"] = "Datos_HK";
             BtnExportar.Text = "Exportar " + ViewState["NomBtnExp"].ToString();
             if (Session["C77U"] == null)
             {

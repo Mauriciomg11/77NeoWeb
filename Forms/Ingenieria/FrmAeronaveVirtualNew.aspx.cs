@@ -17,23 +17,24 @@ namespace _77NeoWeb.Forms.Ingenieria
         ClsConexion Cnx = new ClsConexion();
         protected void Page_Load(object sender, EventArgs e)
         {
-            /* if (Session["Login77"] == null)
-             {
-                 Response.Redirect("~/FrmAcceso.aspx");
-             } */
+            if (Session["Login77"] == null)
+            {
+                Response.Redirect("~/FrmAcceso.aspx");
+            }/**/
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo    
             Page.Title = string.Format("Aeronave Virtual");
             if (Session["C77U"] == null)
             {
-                /*Session["C77U"] = "";*/
+                Session["C77U"] = "";
+                /*
                 Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda
+                Session["D[BX"] = "DbNeoHCT";//|DbNeoDempV2  |DbNeoAda
                 Session["$VR"] = "77NEO01";
                 Session["V$U@"] = "sa";
                 Session["P@$"] = "admindemp";
                 Session["N77U"] = "UsuPrueba";
                 Session["Nit77Cia"] = "811035879-1";
-                ViewState["Validar"] = "S";
+                ViewState["Validar"] = "S";*/
             }
             if (!IsPostBack)
             {
@@ -58,13 +59,98 @@ namespace _77NeoWeb.Forms.Ingenieria
                 MultVw.ActiveViewIndex = 0;
                 BindDDdl();
                 BtnInsElem.CssClass = "btn btn-primary";
-                /* 
-                
-                 ModSeguridad();
-
-              */
+                ModSeguridad();
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
+        }
+        protected void ModSeguridad()
+        {
+            ViewState["VblIngMS"] = 1;
+            ViewState["VblModMS"] = 1;
+            ClsPermisos ClsP = new ClsPermisos();
+            ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
+            if (ClsP.GetAccesoFrm() == 0)
+            {
+                Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx");
+            }
+            if (ClsP.GetIngresar() == 0)
+            {
+                ViewState["VblIngMS"] = 0;
+                BtnGuardarInsElem.Visible = false;
+                BtnGuardarRemElem.Visible = false;
+                BtnGuardarInsMay.Visible = false;
+                BtnGuardarRemMay.Visible = false;
+                BtnGuardarInsSubC.Visible = false;
+                BtnGuardarRemSubC.Visible = false;
+                BtnCrearElem.Visible = false;
+                DdlAeroInsElem.Visible = false;
+                DdlAeroRemElem.Visible = false;
+                DdlAeroInsMay.Visible = false;
+                DdlAeroRemMay.Visible = false;
+                DdlPNInsSubC.Visible = false;
+                DdlPNRemSubC.Visible = false;
+            }
+            if (ClsP.GetModificar() == 0)
+            {
+                ViewState["VblModMS"] = 0;
+            }
+            if (ClsP.GetConsultar() == 0)
+            {
+            }
+            if (ClsP.GetImprimir() == 0)
+            {
+
+            }
+            if (ClsP.GetEliminar() == 0)
+            {
+            }
+            if (ClsP.GetCE1() == 0)
+            {
+
+            }
+            if (ClsP.GetCE2() == 0)
+            {
+            }
+            if (ClsP.GetCE3() == 0)
+            {
+
+            }
+            if (ClsP.GetCE4() == 0)
+            {
+
+            }
+            if (ClsP.GetCE5() == 0)
+            {
+
+            }
+            if (ClsP.GetCE6() == 0)
+            {
+
+            }
+
+            Cnx.SelecBD();
+            using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+            {
+                string VbAplica;
+                int VbCaso;
+                string TxQry = string.Format("EXEC SP_HabilitarCampos @Nit,@F,1,'',0,'',0,'',0,'',0,'',0,'',0,'',0,'',0");
+                SqlCommand SC = new SqlCommand(TxQry, sqlCon);
+                SC.Parameters.AddWithValue("@Nit", Session["Nit77Cia"].ToString());
+                SC.Parameters.AddWithValue("@F", "MRO");
+                sqlCon.Open();
+                SqlDataReader Regs = SC.ExecuteReader();
+                while (Regs.Read())
+                {
+                    VbCaso = Convert.ToInt32(Regs["CASO"]);
+                    VbAplica = Regs["EjecutarCodigo"].ToString();
+                    if (VbCaso == 1 && VbAplica.Equals("N"))
+                    {
+                        //Botones de propiedad 
+                        BtnPropiedad.Visible = false;
+                        BtnCliente.Visible = false;
+                    }
+                }
+            }
         }
         protected void BindDDdl()
         {
@@ -200,7 +286,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void LimparCampoHK(string TipoMov)
         {
-            AplicarCssClassBtn();          
+            AplicarCssClassBtn();
             ViewState["TieneCompensacion"] = "N";
             switch (TipoMov.Trim())
             {
@@ -511,16 +597,14 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtUbiTecInsElem.Text = HttpUtility.HtmlDecode(GrdBusq.SelectedRow.Cells[5].Text.Trim());
             string PoscElem = HttpUtility.HtmlDecode(GrdBusq.SelectedRow.Cells[10].Text.Trim());
             BIndDHisElemInsElem(ViewState["CodElemento"].ToString().Trim());
+            string LtxtSql = string.Format("EXEC Consultas_General_Ingenieria 2,'{0}','{1}','',0, 0,0,'01-01-1','01-01-1'", TxtUbiTecInsElem.Text, ViewState["CodModelo"].ToString().Trim());
+            DdlPosicInsElem.DataSource = Cnx.DSET(LtxtSql);
+            DdlPosicInsElem.DataMember = "Datos";
+            DdlPosicInsElem.DataTextField = "Descripcion";
+            DdlPosicInsElem.DataValueField = "Codigo";
+            DdlPosicInsElem.DataBind();
             if (PoscElem.Equals("S"))
-            {
-                DdlPosicInsElem.Enabled = true;
-                string LtxtSql = string.Format("EXEC Consultas_General_Ingenieria 2,'{0}','{1}','',0, 0,0,'01-01-1','01-01-1'", TxtUbiTecInsElem.Text, ViewState["CodModelo"].ToString().Trim());
-                DdlPosicInsElem.DataSource = Cnx.DSET(LtxtSql);
-                DdlPosicInsElem.DataMember = "Datos";
-                DdlPosicInsElem.DataTextField = "Descripcion";
-                DdlPosicInsElem.DataValueField = "Codigo";
-                DdlPosicInsElem.DataBind();
-            }
+            { DdlPosicInsElem.Enabled = true; }
             else
             { DdlPosicInsElem.Enabled = false; }
             GrdBusq.Visible = false;
@@ -731,7 +815,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["TieneCompensacion"] = "N";
                 GrdSvcInsElem.Visible = false;
                 BtnCompensac.Visible = false;
-                // ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + AeronaveVirtual.GetBorrar() + "')", true);
+                GrdCompensLv.DataSource = null;
+                GrdCompensLv.DataBind();
                 ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('Proceso exitoso')", true);
             }
             catch (Exception Ex)
@@ -1259,7 +1344,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["TieneCompensacion"] = "N";
                 BtnAbrirOTCerrar.Visible = false;
                 BtnRemCompensac.Visible = false;
-                //ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + AeronaveVirtual.GetBorrar() + "')", true);
+                GrdCompensLv.DataSource = null;
+                GrdCompensLv.DataBind();
                 ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('Proceso exitoso')", true);
             }
             catch (Exception Ex)
@@ -1325,7 +1411,8 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtSnRemElem.Text = HttpUtility.HtmlDecode(GrdRemBusqElem.SelectedRow.Cells[2].Text.Trim());
             ViewState["CodElemento"] = GrdRemBusqElem.DataKeys[this.GrdRemBusqElem.SelectedIndex][0].ToString();
             TxtUbiTecRemElem.Text = HttpUtility.HtmlDecode(GrdRemBusqElem.SelectedRow.Cells[5].Text.Trim());
-            DdlPosicRemElem.Text = HttpUtility.HtmlDecode(GrdRemBusqElem.SelectedRow.Cells[7].Text.Trim());
+            string vbPos = HttpUtility.HtmlDecode(GrdRemBusqElem.SelectedRow.Cells[7].Text.Trim());
+            DdlPosicRemElem.Text = vbPos.Trim();
             BIndDHisContRemElem(ViewState["CodElemento"].ToString().Trim());
             BIndDOCerrarOT(ViewState["CodElemento"].ToString().Trim(), "C");
             GrdRemBusqElem.Visible = false;
@@ -1745,7 +1832,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["TieneCompensacion"] = "N";
                 GrdSvcInsMay.Visible = false;
                 BtnCompensacInsMay.Visible = false;
-                //ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('" + AeronaveVirtual.GetBorrar() + "')", true);
+                GrdCompensLv.DataSource = null;
+                GrdCompensLv.DataBind();
                 ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('Proceso exitoso')", true);
             }
             catch (Exception Ex)
@@ -1828,18 +1916,16 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtUbiTecInsMay.Text = HttpUtility.HtmlDecode(GrdBusqMayDisp.SelectedRow.Cells[5].Text.Trim());
             string PoscElem = HttpUtility.HtmlDecode(GrdBusqMayDisp.SelectedRow.Cells[10].Text.Trim());
             BIndDHisElemInsMay(ViewState["CodElemento"].ToString().Trim());
+            string LtxtSql = string.Format("EXEC Consultas_General_Ingenieria 2,'{0}','{1}','',0, 0,0,'01-01-1','01-01-1'", TxtUbiTecInsMay.Text, ViewState["CodModelo"].ToString().Trim());
+            DdlPosicInsMay.DataSource = Cnx.DSET(LtxtSql);
+            DdlPosicInsMay.DataMember = "Datos";
+            DdlPosicInsMay.DataTextField = "Descripcion";
+            DdlPosicInsMay.DataValueField = "Codigo";
+            DdlPosicInsMay.DataBind();
             if (PoscElem.Equals("S"))
-            {
-                DdlPosicInsMay.Enabled = true;
-                string LtxtSql = string.Format("EXEC Consultas_General_Ingenieria 2,'{0}','{1}','',0, 0,0,'01-01-1','01-01-1'", TxtUbiTecInsMay.Text, ViewState["CodModelo"].ToString().Trim());
-                DdlPosicInsMay.DataSource = Cnx.DSET(LtxtSql);
-                DdlPosicInsMay.DataMember = "Datos";
-                DdlPosicInsMay.DataTextField = "Descripcion";
-                DdlPosicInsMay.DataValueField = "Codigo";
-                DdlPosicInsMay.DataBind();
-            }
+            { DdlPosicInsMay.Enabled = true; }
             else
-            { DdlPosicInsMay.Enabled = false; }
+            { DdlPosicInsMay.Enabled = false; } /**/
             GrdBusqMayDisp.Visible = false;
             BIndDSvcInsMay(ViewState["CodElemento"].ToString().Trim(), ViewState["CodModelo"].ToString().Trim(), DdlAeroInsMay.Text);
             GrdSvcInsMay.Visible = true;
@@ -2157,7 +2243,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar una ubicación técnica')", true);
                     return;
                 }
-                if (DdlPosicRemMay.Text.Equals("") && DdlPosicInsMay.Enabled == true)
+                if (DdlPosicRemMay.Text.Equals("") && DdlPosicRemMay.Enabled == true)
                 {
                     ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar una posición')", true);
                     return;
@@ -2307,7 +2393,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["TieneCompensacion"] = "N";
                 BtnAbrirOTCerrarRemMay.Visible = false;
                 BtnRemMayCompensac.Visible = false;
-                //ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('" + AeronaveVirtual.GetBorrar() + "')", true);
+                GrdCompensLv.DataSource = null;
+                GrdCompensLv.DataBind();
                 ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('Proceso exitoso')", true);
             }
             catch (Exception Ex)
@@ -2373,7 +2460,8 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtSnRemMay.Text = HttpUtility.HtmlDecode(GrdBusqRemMay.SelectedRow.Cells[2].Text.Trim());
             ViewState["CodElemento"] = GrdBusqRemMay.DataKeys[this.GrdBusqRemMay.SelectedIndex][0].ToString();
             TxtUbiTecRemMay.Text = HttpUtility.HtmlDecode(GrdBusqRemMay.SelectedRow.Cells[5].Text.Trim());
-            DdlPosicRemMay.Text = HttpUtility.HtmlDecode(GrdBusqRemMay.SelectedRow.Cells[7].Text.Trim());
+            string vbPos = HttpUtility.HtmlDecode(GrdBusqRemMay.SelectedRow.Cells[7].Text.Trim());
+            DdlPosicRemMay.Text = vbPos.Trim();
             BIndDHisContRemMay(ViewState["CodElemento"].ToString().Trim());
             BIndDOCerrarOT(ViewState["CodElemento"].ToString().Trim(), "M");
             GrdBusqRemMay.Visible = false;
@@ -2709,6 +2797,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 BIndDSvcInsSubC("", "", "0");
                 ViewState["TieneCompensacion"] = "N";
                 GrdSvcInsSubC.Visible = false;
+                GrdCompensLv.DataSource = null;
+                GrdCompensLv.DataBind();
                 ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('Proceso exitoso')", true);
             }
             catch (Exception Ex)
@@ -2738,16 +2828,14 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtUbiTecInsSubC.Text = HttpUtility.HtmlDecode(GrdBusqInsSubC.SelectedRow.Cells[5].Text.Trim());
             string PoscElem = HttpUtility.HtmlDecode(GrdBusqInsSubC.SelectedRow.Cells[10].Text.Trim());
             BIndDHisElemInsSubC(ViewState["CodElemento"].ToString().Trim());
+            string LtxtSql = string.Format("EXEC Consultas_General_Ingenieria 2,'{0}','{1}','',0, 0,0,'01-01-1','01-01-1'", TxtUbiTecInsSubC.Text, DdlModelInsSubC.Text.Trim());
+            DdlPosicInsSubC.DataSource = Cnx.DSET(LtxtSql);
+            DdlPosicInsSubC.DataMember = "Datos";
+            DdlPosicInsSubC.DataTextField = "Descripcion";
+            DdlPosicInsSubC.DataValueField = "Codigo";
+            DdlPosicInsSubC.DataBind();
             if (PoscElem.Equals("S"))
-            {
-                DdlPosicInsSubC.Enabled = true;
-                string LtxtSql = string.Format("EXEC Consultas_General_Ingenieria 2,'{0}','{1}','',0, 0,0,'01-01-1','01-01-1'", TxtUbiTecInsSubC.Text, DdlModelInsSubC.Text.Trim());
-                DdlPosicInsSubC.DataSource = Cnx.DSET(LtxtSql);
-                DdlPosicInsSubC.DataMember = "Datos";
-                DdlPosicInsSubC.DataTextField = "Descripcion";
-                DdlPosicInsSubC.DataValueField = "Codigo";
-                DdlPosicInsSubC.DataBind();
-            }
+            { DdlPosicInsSubC.Enabled = true; }
             else
             { DdlPosicInsSubC.Enabled = false; }
             GrdBusqInsSubC.Visible = false;
@@ -2945,7 +3033,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar una ubicación técnica')", true);
                     return;
                 }
-                if (DdlPosicRemSubC.Text.Equals("") && DdlPosicInsSubC.Enabled == true)
+                if (DdlPosicRemSubC.Text.Equals("") && DdlPosicRemSubC.Enabled == true)
                 {
                     ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar una posición')", true);
                     return;
@@ -3094,7 +3182,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 LimpiarCamposRemSubC("TODOS");
                 ViewState["TieneCompensacion"] = "N";
                 BtnAbrirOTCerrarRemSubC.Visible = false;
-                //ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('" + AeronaveVirtual.GetBorrar() + "')", true);
+                GrdCompensLv.DataSource = null;
+                GrdCompensLv.DataBind();
                 ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('Proceso exitoso')", true);
             }
             catch (Exception Ex)
@@ -3123,7 +3212,8 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtSnRemSubC.Text = HttpUtility.HtmlDecode(GrdBusqRemSubC.SelectedRow.Cells[2].Text.Trim());
             ViewState["CodElemento"] = GrdBusqRemSubC.DataKeys[this.GrdBusqRemSubC.SelectedIndex][0].ToString();
             TxtUbiTecRemSubC.Text = HttpUtility.HtmlDecode(GrdBusqRemSubC.SelectedRow.Cells[5].Text.Trim());
-            DdlPosicRemSubC.Text = HttpUtility.HtmlDecode(GrdBusqRemSubC.SelectedRow.Cells[7].Text.Trim());
+            string vbPos = HttpUtility.HtmlDecode(GrdBusqRemSubC.SelectedRow.Cells[7].Text.Trim());
+            DdlPosicRemSubC.Text = vbPos.Trim();
             BIndDHisContRemSubC(ViewState["CodElemento"].ToString().Trim());
             BIndDOCerrarOT(ViewState["CodElemento"].ToString().Trim(), "S");
             GrdBusqRemSubC.Visible = false;
@@ -3159,7 +3249,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string  VbTxtSql = string.Format("EXEC SP_PANTALLA_Elemento 6,@P,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                string VbTxtSql = string.Format("EXEC SP_PANTALLA_Elemento 6,@P,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
@@ -3172,7 +3262,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         if (DtB.Rows.Count > 0)
                         {
                             GrdCrearECont.DataSource = DtB;
-                            GrdCrearECont.DataBind();                           
+                            GrdCrearECont.DataBind();
                         }
                         else
                         {
@@ -3216,20 +3306,20 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void DdlCrearElemPn_TextChanged(object sender, EventArgs e)
         {
             BIndDCrearElemContad();
-        }  
+        }
         protected void GrdCrearECont_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 DataRowView dr = e.Row.DataItem as DataRowView;
-                LblTitCrearEDatosE.Text = "Datos del elemento: "+ dr["Descripcion"].ToString();
+                LblTitCrearEDatosE.Text = "Datos del elemento: " + dr["Descripcion"].ToString();
 
             }
         }
         protected void BtnCrearElemGuardar_Click(object sender, EventArgs e)
         {
             try
-            {                
+            {
                 if (DdlCrearElemPn.Text.Equals(""))
                 {
                     ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar un P/N')", true);
@@ -3239,7 +3329,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar una S/N')", true);
                     return;
-                }               
+                }
                 if (TxtCrearElemFechRec.Text.Equals(""))
                 {
                     ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar una fecha de recibo')", true);
@@ -3254,12 +3344,12 @@ namespace _77NeoWeb.Forms.Ingenieria
                 var TypCrearElem = new ClsTypAeronaveVirtualCrearElem()
                 {
                     TipoEvento = "",
-                    CodAeronave =(int)ViewState["Propiedad"],
+                    CodAeronave = (int)ViewState["Propiedad"],
                     CodModelo = "",
                     NivelElemento = "",
                     Motor = "",
                     UltimoNivel = "",
-                    CodMayor ="",
+                    CodMayor = "",
                     CodElemento = "",
                     Pn = DdlCrearElemPn.Text.Trim(),
                     Sn = TxtCrearElemSn.Text.Trim(),
@@ -3278,7 +3368,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     CultureInfo Culture = new CultureInfo("en-US");
                     StrUC = (Row.FindControl("TxtCumpHist") as TextBox).Text.Trim().Equals("") ? "0" : (Row.FindControl("TxtCumpHist") as TextBox).Text.Trim();
                     VbUC = StrUC.Length == 0 ? 0 : Convert.ToDouble(StrUC, Culture);
-                   
+
                     var TypContadores = new ClsTypAeronaveVirtualCrearElem()
                     {
                         CodIdContadorElem = 0,
@@ -3287,10 +3377,10 @@ namespace _77NeoWeb.Forms.Ingenieria
                         FechaVenceAnt = null,
                         Resetear = 0,
                         CodOT = 0,
-                        CodIdContaSrvManto =0,
+                        CodIdContaSrvManto = 0,
                         NumReporte = (Row.FindControl("LblCodContador") as Label).Text.Trim(),
                         ValorUltCump = Convert.ToDouble(VbUC),
-                        GeneraHist ="",
+                        GeneraHist = "",
                     };
                     ObjContadores.Add(TypContadores);
                 }

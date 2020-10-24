@@ -132,6 +132,7 @@
     <Content Include="Forms\Ingenieria\FrmAeronave.aspx" />
     <Content Include="Forms\Ingenieria\FrmAeronaveVirtualNew.aspx" />
     <Content Include="Forms\Ingenieria\FrmLibroVueloAC.aspx" />
+    <Content Include="Forms\Ingenieria\FrmOrdenTrabajo.aspx" />
     <Content Include="Forms\Ingenieria\FrmServicioManto.aspx" />
     <Content Include="Forms\InventariosCompras\FrmElemento.aspx" />
     <Content Include="Forms\InventariosCompras\FrmReferencia.aspx" />
@@ -301,6 +302,13 @@
     <Compile Include="Forms\Ingenieria\FrmLibroVueloAC.aspx.designer.cs">
       <DependentUpon>FrmLibroVueloAC.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Ingenieria\FrmOrdenTrabajo.aspx.cs">
+      <DependentUpon>FrmOrdenTrabajo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmOrdenTrabajo.aspx.designer.cs">
+      <DependentUpon>FrmOrdenTrabajo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Ingenieria\FrmServicioManto.aspx.cs">
       <DependentUpon>FrmServicioManto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -453,6 +461,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\Ingenieria\Informe\LibroVueloDetalle.rdlc" />
+    <EmbeddedResource Include="Forms\Ingenieria\Informe\OrdenTrabajoMRO.rdlc" />
     <EmbeddedResource Include="Forms\Ingenieria\Informe\ReporteV2.rdlc" />
     <EmbeddedResource Include="Forms\Ingenieria\Informe\CumplimientoSvc.rdlc" />
     <EmbeddedResource Include="Forms\Ingenieria\Informe\LibroVueloGnral.rdlc" />

@@ -648,7 +648,7 @@
                                             <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
                                         </asp:GridView>
                                         <asp:GridView ID="GrdSN" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" DataKeyNames="CodIdContaSrvManto,CodElem,Matricula,IdCodElem,Pn,Sn"
-                                            CssClass=" GridControl DiseñoGrid table CsGridHK table-sm" GridLines="Both" AllowPaging="true" PageSize="4" Visible="false"
+                                            CssClass=" GridControl DiseñoGrid CsGridHK table-sm" GridLines="Both" AllowPaging="true" PageSize="4" Visible="false"
                                             OnSelectedIndexChanged="GrdSN_SelectedIndexChanged" OnRowEditing="GrdSN_RowEditing"
                                             OnRowUpdating="GrdSN_RowUpdating" OnRowCancelingEdit="GrdSN_RowCancelingEdit" OnRowDeleting="GrdSN_RowDeleting"
                                             OnRowDataBound="GrdSN_RowDataBound" OnPageIndexChanging="GrdSN_PageIndexChanging">
@@ -765,7 +765,7 @@
                                     </td>
                                     <td width="25%">
                                         <asp:GridView ID="GrdAdj" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdAdjuntos,Ruta"
-                                            CssClass="GridControl DiseñoGrid table TablaAdj table-sm" GridLines="Both" AllowPaging="true" PageSize="3"
+                                            CssClass="GridControl DiseñoGrid TablaAdj table-sm" GridLines="Both" AllowPaging="true" PageSize="3"
                                             OnRowCommand="GrdAdj_RowCommand" OnRowEditing="GrdAdj_RowEditing"
                                             OnRowUpdating="GrdAdj_RowUpdating" OnRowCancelingEdit="GrdAdj_RowCancelingEdit"
                                             OnRowDeleting="GrdAdj_RowDeleting" OnPageIndexChanging="GrdAdj_PageIndexChanging">
@@ -794,10 +794,10 @@
                                                         </asp:UpdatePanel>
                                                     </ItemTemplate>
                                                     <EditItemTemplate>
-                                                        <asp:FileUpload ID="FileUp" runat="server" Width="100%" />
+                                                        <asp:FileUpload ID="FileUp" runat="server" Width="100%" Font-Size="7px" />
                                                     </EditItemTemplate>
                                                     <FooterTemplate>
-                                                        <asp:FileUpload ID="FileUpPP" runat="server" Width="100%" />
+                                                        <asp:FileUpload ID="FileUpPP" runat="server" Width="100%"  Font-Size="7px"/>
                                                     </FooterTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField FooterStyle-Width="10%">

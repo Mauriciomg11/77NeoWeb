@@ -52,7 +52,7 @@ namespace _77NeoWeb
             Session["CodTipoCodigoInicial"] = "01";
             Session["PllaSrvManto"] = "SERVICIO"; // "SERVICIO"  "REPARACION"
             Session["LogoPpal"] = "Logo77Neo.png";
-
+            Session["77IDM"] = "ES";
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

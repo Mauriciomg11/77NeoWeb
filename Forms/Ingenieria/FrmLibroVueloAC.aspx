@@ -123,19 +123,19 @@
         <ContentTemplate>
             <asp:Table ID="TblBtnPpal" runat="server">
                 <asp:TableRow>
-                    <asp:TableCell width="2%" >
+                    <asp:TableCell Width="2%">
                         <asp:Button ID="BtnDatos" CssClass="btn btn-primary" runat="server" Text="Datos Generales" OnClick="BtnDatos_Click" />
                         <asp:Button ID="BtnVuelos" CssClass="btn btn-primary" runat="server" Text="Trayectos" OnClick="BtnVuelos_Click" />
                         <asp:Button ID="BtnManto" CssClass="btn btn-primary" runat="server" Text="Mantenimiento" OnClick="BtnManto_Click" />
                     </asp:TableCell>
-                    <asp:TableCell width="1%">
+                    <asp:TableCell Width="1%">
                         <asp:CheckBox ID="CkbProcesado" runat="server" Text="Procesado" CssClass="LblEtiquet" Enabled="false" />
                     </asp:TableCell>
-                    <asp:TableCell width="1%">
+                    <asp:TableCell Width="1%">
                         <asp:Label ID="LblNumLVTit" runat="server" CssClass="LblEtiquet" Font-Size="X-Large" Text="Número"></asp:Label></td>
                     </asp:TableCell>
                 </asp:TableRow>
-          </asp:Table>            
+            </asp:Table>
             <br />
         </ContentTemplate>
         <Triggers>
@@ -169,6 +169,18 @@
                                             <asp:ImageButton ID="IbtAuxiliar" runat="server" CssClass="BtnImagenAuxiliar" ImageUrl="~/images/ReportsV2.png" OnClick="IbtAuxiliar_Click" ToolTip="Informes" /></td>
                                     </tr>
                                 </table>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <asp:LinkButton ID="LkbDescargarLV" runat="server" OnClick="LkbDescargarLV_Click"  Font-Size="10px" />
+                                        </td>
+                                        <td></div>                                            
+                                            <asp:Button ID="cargarLV" runat="server" Text="Cargar LV" CssClass=" btn btn-success botones BtnEdicion" OnClick="cargarLV_Click" Height="25px" Font-Size="10px" Enabled="false"  />
+                                            <asp:FileUpload ID="FileUpCLV" runat="server" Font-Size="9px" Enabled="false" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                                 <br />
                             </asp:TableHeaderCell>
                         </asp:TableHeaderRow>
@@ -183,13 +195,13 @@
                         </asp:TableHeaderRow>
                         <asp:TableRow>
                             <asp:TableCell Width="1%">
-                                <asp:Label ID="LblFecha" runat="server" CssClass="LblEtiquet" Text="Fecha:"/>
+                                <asp:Label ID="LblFecha" runat="server" CssClass="LblEtiquet" Text="Fecha:" />
                             </asp:TableCell>
                             <asp:TableCell Width="1%">
                                 <asp:ImageButton ID="IbtFecha" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" Enabled="false" />
                             </asp:TableCell>
                             <asp:TableCell Width="5%">
-                                <asp:TextBox ID="TxtFecha" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="90%" OnTextChanged="TxtFecha_TextChanged" AutoPostBack="true"/>
+                                <asp:TextBox ID="TxtFecha" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="90%" OnTextChanged="TxtFecha_TextChanged" AutoPostBack="true" />
                                 <ajaxToolkit:CalendarExtender ID="CalFecha" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFecha" TargetControlID="TxtFecha" Format="dd/MM/yyyy" />
                             </asp:TableCell>
                             <asp:TableCell Width="1%">
@@ -423,6 +435,8 @@
                     <asp:AsyncPostBackTrigger ControlID="TxtFecha" EventName="TextChanged" />
                     <asp:PostBackTrigger ControlID="IbtFind" />
                     <asp:PostBackTrigger ControlID="IbtAuxiliar" />
+                    <asp:PostBackTrigger ControlID="cargarLV" />
+                    <asp:PostBackTrigger ControlID="LkbDescargarLV" />
                 </Triggers>
             </asp:UpdatePanel>
         </asp:View>
@@ -455,7 +469,6 @@
                                 </ItemTemplate>
                                 <EditItemTemplate>
                                     <asp:DropDownList ID="DdlDest" runat="server" Width="100%" Height="28px" />
-                                    <%--Text='<%# Eval("CodDestino") %>'--%>
                                 </EditItemTemplate>
                                 <FooterTemplate>
                                     <asp:DropDownList ID="DdlDestPP" runat="server" Width="100%" Height="28px" />

@@ -63,7 +63,8 @@ namespace _77NeoWeb
                         Session["P@$"] = tbl["Clve"].ToString();
                         Session["NomCiaPpal"] = tbl["RazonSocial"].ToString();
                         Session["SigCia"] = tbl["SiglaCia"].ToString();
-                        Session["LogoPpal"] = tbl["Logo"].ToString(); 
+                        Session["LogoPpal"] = tbl["Logo"].ToString();
+                        Session["77IDM"] = tbl["Logo"].ToString(); //Idiioma
                     }
                     else
                     {

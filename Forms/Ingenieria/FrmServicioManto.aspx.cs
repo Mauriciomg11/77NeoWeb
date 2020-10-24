@@ -315,8 +315,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                     }
 
                 }
-                GrdRecursoF.FooterRow.Enabled = false;
-                GrdRecursoF.FooterRow.ToolTip = "El recurso se encuentra bloqueado";
+                
+                //GrdRecursoF.FooterRow.Enabled = false;
+                //GrdRecursoF.FooterRow.ToolTip = "El recurso se encuentra bloqueado";
             }
             foreach (GridViewRow Row in GrdLicen.Rows)
             {
@@ -1427,6 +1428,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                 BindDLicencia();
                 PnlCampos.Visible = false;
                 PnlRecursos.Visible = true;
+                if (CkbBloqRec.Checked == true)
+                {
+                    GrdRecursoF.FooterRow.Enabled = false;
+                    GrdRecursoF.FooterRow.ToolTip = "El recurso se encuentra bloqueado";
+                }                   
             }
         }
         protected void IbtGenerOT_Click(object sender, ImageClickEventArgs e)
