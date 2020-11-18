@@ -419,8 +419,11 @@
     <Compile Include="MuDatabaseEntities.cs" />
     <Compile Include="Prg\ClsConexion.cs" />
     <Compile Include="Prg\ClsPermisos.cs" />
+    <Compile Include="Prg\PrgIngenieria\ClsTypOrdenTrabajo.cs" />
     <Compile Include="Prg\PrgIngenieria\ClsTypAeronaveVirtualCrearElem.cs" />
     <Compile Include="Prg\PrgIngenieria\ClsTypAeronaveVirtual.cs" />
+    <Compile Include="Prg\PrgIngenieria\CsTypPasosOT.cs" />
+    <Compile Include="Prg\PrgIngenieria\CsTypExportarIdioma.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypSolicitudPedido.cs" />
     <Compile Include="Prg\PrgIngenieria\CsTypAeronave.cs" />
     <Compile Include="Prg\PrgIngenieria\CsTypSubirReserva.cs" />

@@ -14,7 +14,7 @@
             <br />
             <asp:Button ID="BtnImportarV1" runat="server" Text="Importar" OnClick="BtnImportarV1_Click" />
             <asp:Button ID="BtnExportar" runat="server" Text="Exportar Excel" OnClick="BtnExportar_Click" />
-            <asp:Button ID="BtnExportar2" runat="server" Text="Exportar Excel2" OnClick="BtnExportar2_Click" />
+            <asp:Button ID="BtnExportar2" runat="server" Text="Cursor" OnClick="BtnExportar2_Click" />
             <br />
             <asp:FileUpload ID="FileUpload1" runat="server" ToolTip="" />
             <asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick="btnUpload_Click" />

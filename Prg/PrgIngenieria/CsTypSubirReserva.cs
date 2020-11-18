@@ -78,8 +78,6 @@ namespace _77NeoWeb.Prg
                             SC.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = SC.Parameters.AddWithValue("@CurSubRvaMax", TblRsva);
                             Prmtrs.SqlDbType = SqlDbType.Structured;
-                            //sqlCmd.ExecuteNonQuery();
-                            //PMensj = (string)SC.ExecuteScalar();
                             SqlDataReader SDR = SC.ExecuteReader();
                             while (SDR.Read())
                             {

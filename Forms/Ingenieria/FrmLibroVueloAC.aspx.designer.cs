@@ -699,13 +699,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.TextBox TxtOtSec;
 
         /// <summary>
-        /// Control Label4.
+        /// Control LblTitRteManto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label LblTitRteManto;
 
         /// <summary>
         /// Control LblNroRte.
@@ -1167,13 +1167,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label lblProgr;
 
         /// <summary>
-        /// Control Label2.
+        /// Control LblPgSi.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label LblPgSi;
 
         /// <summary>
         /// Control RdbPgSi.
@@ -1426,6 +1426,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DdlTecDif;
+
+        /// <summary>
+        /// Control LblTitDatosVer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblTitDatosVer;
 
         /// <summary>
         /// Control LblVerif.
@@ -1752,13 +1761,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.UpdatePanel UpPnlRecursoRte;
 
         /// <summary>
-        /// Control Label10.
+        /// Control LblRecFRte.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label10;
+        protected global::System.Web.UI.WebControls.Label LblRecFRte;
 
         /// <summary>
         /// Control TxtRecurNumRte.
@@ -1770,13 +1779,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.TextBox TxtRecurNumRte;
 
         /// <summary>
-        /// Control Label6.
+        /// Control LblRecFSubOt.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
+        protected global::System.Web.UI.WebControls.Label LblRecFSubOt;
 
         /// <summary>
         /// Control TxtRecurSubOt.
@@ -1824,13 +1833,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.ImageButton IbtCerrarRec;
 
         /// <summary>
-        /// Control Label5.
+        /// Control LblOtRecurBusq.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
+        protected global::System.Web.UI.WebControls.Label LblOtRecurBusq;
 
         /// <summary>
         /// Control TxtConsulPnRecurRte.
@@ -1932,13 +1941,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.UpdatePanel UpPnlCargaMasiva;
 
         /// <summary>
-        /// Control Label8.
+        /// Control LblCargaMasRte.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label8;
+        protected global::System.Web.UI.WebControls.Label LblCargaMasRte;
 
         /// <summary>
         /// Control TxtCargaMasiRte.
@@ -1950,13 +1959,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.TextBox TxtCargaMasiRte;
 
         /// <summary>
-        /// Control Label9.
+        /// Control LblCargaMasOt.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label9;
+        protected global::System.Web.UI.WebControls.Label LblCargaMasOt;
 
         /// <summary>
         /// Control TxtCargaMasiOT.
@@ -1977,13 +1986,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.ImageButton IbtCerrarSubMaxivo;
 
         /// <summary>
-        /// Control Label7.
+        /// Control LblTitOTCargMasiv.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label7;
+        protected global::System.Web.UI.WebControls.Label LblTitOTCargMasiv;
 
         /// <summary>
         /// Control IbtSubirCargaMax.
@@ -2076,13 +2085,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.UpdatePanel UplSnOnOff;
 
         /// <summary>
-        /// Control Label11.
+        /// Control LblSnONOfNumRte.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label11;
+        protected global::System.Web.UI.WebControls.Label LblSnONOfNumRte;
 
         /// <summary>
         /// Control TxtSnOnOffNumRte.
@@ -2103,13 +2112,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.ImageButton IbtCerrarSnOnOff;
 
         /// <summary>
-        /// Control Label12.
+        /// Control LlTitSnOnOff.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label12;
+        protected global::System.Web.UI.WebControls.Label LlTitSnOnOff;
 
         /// <summary>
         /// Control GrdSnOnOff.

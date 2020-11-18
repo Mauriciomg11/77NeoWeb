@@ -747,9 +747,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtObserv.Enabled = Edi;
 
             if (ViewState["Procesado"].ToString().Equals("N"))
-            {
-                try
-                {
+            {               
                     IbtFecha.Enabled = Edi;
                     DdlMatri.Enabled = (int)ViewState["TtlRtes"] == 0 ? Edi : false;
                     DdlMatri.ToolTip = (int)ViewState["TtlRtes"] == 0 ? "" : "El libro de vuelo tiene reportes asignados";
@@ -766,11 +764,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     TxtTat.Enabled = Edi;
                     TxtMach.Enabled = Edi;
                     ActivarCamGridMot(Edi);
-                }
-                catch (Exception Ex)
-                {
-
-                }
             }
         }
         protected void LimpiarCampos()
@@ -2942,7 +2935,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     }
                 }
             }
-
         }
 
         //******************************************  Opciones de busqueda *********************************************************

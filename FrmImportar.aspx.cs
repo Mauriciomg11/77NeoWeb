@@ -1,4 +1,5 @@
 ﻿using _77NeoWeb.prg;
+using _77NeoWeb.Prg.PrgIngenieria;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System;
@@ -26,7 +27,7 @@ namespace _77NeoWeb
             {
                 /*Session["C77U"] = ""; */
                 Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoAda";
+                Session["D[BX"] = "DbNeoDempV2"; //DbNeoAda
                 Session["$VR"] = "77NEO01";
                 Session["V$U@"] = "sa";
                 Session["P@$"] = "admindemp";
@@ -243,7 +244,8 @@ namespace _77NeoWeb
 
         protected void BtnExportar2_Click(object sender, EventArgs e)
         {
-
+            CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
+            CursorIdioma.Alimentar("CURRESERVA","5");
 
         }
     }
