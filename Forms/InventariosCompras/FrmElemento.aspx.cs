@@ -18,20 +18,20 @@ namespace _77NeoWeb.Forms.InventariosCompras
         private DateTime FechaD = DateTime.Today;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null)
+           if (Session["Login77"] == null)
             {
                 Response.Redirect("~/FrmAcceso.aspx");
-            } /**/
+            }  /**/
             if (Session["C77U"] == null)
             {
-                Session["C77U"] = "";/* */
-                /*Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";
+                Session["C77U"] = "";/*
+               Session["C77U"] = "00000082";
+                Session["D[BX"] = "DbNeoHCT"; //DbNeoHCT | DbNeoDempV2
                 Session["$VR"] = "77NEO01";
                 Session["V$U@"] = "sa";
                 Session["P@$"] = "admindemp";
                 Session["N77U"] = "UsuPrueba";
-                Session["Nit77Cia"] = "811035879-1"; */
+                Session["Nit77Cia"] = "811035879-1";  */
             }
             if (!IsPostBack)
             {
@@ -140,6 +140,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         RdbInactivo.Enabled = Edi;
                         break;
                 }
+
             }
             if (ViewState["FechaVenceE"].Equals("S"))
             {
@@ -206,7 +207,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         ViewState["CodBodegaE"] = HttpUtility.HtmlDecode(SDR["CodBodega"].ToString().Trim());
                         ViewState["IdentificadorE"] = HttpUtility.HtmlDecode(SDR["Identificador"].ToString().Trim());
                         BIndDataCntdr(TxtCod.Text);
-
                     }
                 }
             }

@@ -34,12 +34,12 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 Session["C77U"] = "";
                 Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda
+                Session["D[BX"] = "DbNeoHCT";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
                 Session["$VR"] = "77NEO01";
                 Session["V$U@"] = "sa";
                 Session["P@$"] = "admindemp";
-                Session["N77U"] = "UsuPrueba";
-                Session["Nit77Cia"] = "811035879-1";
+                Session["N77U"] = Session["D[BX"];// "UsuPrueba";
+                Session["Nit77Cia"] = "860064038-4"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                 Session["77IDM"] = "5"; // 4 español | 5 ingles               
             }
             if (!IsPostBack)
@@ -48,7 +48,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 MlVwOT.ActiveViewIndex = 0;
                 BindBDdlBusqOT();
                 BindDdlOTCondicional("", "", "", "", "");
-                DdlLicInsp("", "");
+                DdlLicInsp("", ""); /**/
                 ViewState["EstadoOT"] = "";
                 ViewState["Index"] = 0;
                 ViewState["CodPrioridad"] = "NORMAL";
@@ -62,7 +62,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["OrigRte"] = "PA"; // PA=Paso | OT= desde OT
                 ModSeguridad();
                 PerfilesGrid();
-                BindDdlRte();
+                BindDdlRte();/**/
                 CalPasoFechI.EndDate = DateTime.Now;
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
@@ -806,7 +806,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CkbOtBloqDet.Enabled = false;
                 DdlMroTaller.Enabled = false;
                 DdlOtCCosto.Enabled = false;
-                DdlOTAero.Enabled = Edi; TxtTSN.Enabled = Edi; TxtTSO.Enabled = Edi; TxtTSR.Enabled = Edi; TxtCSN.Enabled = Edi; TxtCSO.Enabled = Edi; TxtCSR.Enabled = Edi;
+                DdlOTAero.Enabled = Edi;
+                if (Convert.ToInt32(ViewState["VblCE5"]) == 1)// // Asignar Aeronave / Tiempos
+                { TxtTSN.Enabled = Edi; TxtTSO.Enabled = Edi; TxtTSR.Enabled = Edi; TxtCSN.Enabled = Edi; TxtCSO.Enabled = Edi; TxtCSR.Enabled = Edi; }
                 IbtOTFechVenc.Enabled = Edi;
                 DdlOtInsp.Enabled = Edi;
                 DdlOtLicInsp.Enabled = Edi;
@@ -956,7 +958,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlBusqOT.DataMember = "Datos";
             DdlBusqOT.DataTextField = "Descripcion";
             DdlBusqOT.DataValueField = "Codigo";
-            DdlBusqOT.DataBind();
+            DdlBusqOT.DataBind(); /**/
 
             LtxtSql = string.Format("EXEC SP_PANTALLA_OrdenTrabajo2 5,'','','','','HK',0,0,0,0,'01-01-01','01-01-01','01-01-01'");
             DdlOTAero.DataSource = Cnx.DSET(LtxtSql);
@@ -982,7 +984,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlOtEstaSec.DataMember = "Datos";
             DdlOtEstaSec.DataTextField = "Descripcion";
             DdlOtEstaSec.DataValueField = "Codigo";
-            DdlOtEstaSec.DataBind();
+            DdlOtEstaSec.DataBind();/**/
         }
         protected void BindDdlOTCondicional(string CT, string CB, string INSP, string RSP, string CC)
         {
@@ -1062,14 +1064,48 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void DdlOtEstado_TextChanged(object sender, EventArgs e)
         {
+            if (Convert.ToInt32(ViewState["VblCE5"]) == 1 && DdlOtEstado.Text.Trim().Equals("0002"))// Asignar Aeronave / Tiempos
+            {
+                if (Convert.ToInt32(ViewState["VblCE2"]) == 1)/// CERRAR/CANCEL
+                {
+                    Idioma = (DataTable)ViewState["TablaIdioma"];
 
+                    if (TxtOTFechFin.Text.Trim().Equals(""))
+                    {
+                        DataRow[] Result = Idioma.Select("Objeto= 'Mens43OT'");
+                        foreach (DataRow row in Result)
+                        { ScriptManager.RegisterClientScriptBlock(this.UplOT, UplOT.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar al menos un técnico con su respectiva fecha de trabajo.
+                        return;
+                    }
+                    Cnx.SelecBD();
+                    using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
+                    {
+                        Cnx2.Open();
+                        string LtxtSql = "EXEC SP_PANTALLA_OrdenTrabajo2 10,@P,@S,'','','',0,0,0,0,@F,'01-01-01','01-01-01'";
+                        SqlCommand SqlC = new SqlCommand(LtxtSql, Cnx2);
+                        SqlC.Parameters.AddWithValue("@P", TxtOtPN.Text.Trim());
+                        SqlC.Parameters.AddWithValue("@S", TxtAplicab.Text.Trim());
+                        SqlC.Parameters.AddWithValue("@F", TxtOTFechFin.Text.Trim());
+                        SqlDataReader SDR = SqlC.ExecuteReader();
+                        if (SDR.Read())
+                        {
+                            TxtTSN.Text = SDR["TSN"].ToString().Trim(); TxtTSO.Text = SDR["TSO"].ToString().Trim(); TxtTSR.Text = SDR["TSR"].ToString().Trim();
+                            TxtCSN.Text = SDR["CSN"].ToString().Trim(); TxtCSO.Text = SDR["CSO"].ToString().Trim(); TxtCSR.Text = SDR["CSR"].ToString().Trim();
+                        }
+                        if (Convert.ToDouble(TxtTSN.Text)>0 || Convert.ToDouble(TxtTSO.Text) > 0 || Convert.ToDouble(TxtCSN.Text) > 0 || Convert.ToDouble(TxtCSO.Text) > 0)
+                        {
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensOT56'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.UplOT, this.UplOT.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); } //Por favor verifique los tiempos que el sistema carga en la OT.
+                        }
+                    }
+                }
+            }
         }
-
         protected void DdlOtInsp_TextChanged(object sender, EventArgs e)
         {
-
+            DdlLicInsp(DdlOtInsp.Text.Trim(), "");
         }
-
         //******************************************  Botones edicion OT *********************************************************       
         protected void BtnOtModificar_Click(object sender, EventArgs e)
         {
@@ -1080,6 +1116,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 { return; }
                 if (ViewState["Accion"].Equals(""))
                 {
+                    TraerDatosBusqOT(Convert.ToInt32(TxtOt.Text));
                     string VbCodTall = DdlMroTaller.Text.Trim();
                     string VbCodBase = DdlOTBase.Text.Trim();
                     string VbInsp = DdlOtInsp.Text.Trim();
@@ -1111,7 +1148,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     ValidarOT("UPDATE");
                     if (ViewState["Validar"].Equals("N"))
-                    { return; }
+                    {
+                        ActivarBtnOT(true, true, true, true, true);
+                        DataRow[] Result4 = Idioma.Select("Objeto= 'BotonMod'");
+                        foreach (DataRow row in Result4)
+                        { BtnOtModificar.Text = row["Texto"].ToString().Trim(); }
+                        ActivarCampOT(false, false, "UPDATE");
+                        DdlBusqOT.Enabled = true;
+                        TraerDatosBusqOT(Convert.ToInt32(TxtOt.Text));
+                        BtnOtModificar.OnClientClick = "";
+                        return;
+                    }
                     DateTime? FecFin; DateTime? fecVenc;
                     if (TxtOTFechFin.Text.Equals(""))
                     { FecFin = null; }
@@ -1182,7 +1229,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         foreach (DataRow row in Result2)
                         { Mensj = row["Texto"].ToString(); }
                         ScriptManager.RegisterClientScriptBlock(this.UplOT, UplOT.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
-                        return;
+                        UplOT.Update();
                     }
                     ActivarBtnOT(true, true, true, true, true);
                     DataRow[] Result3 = Idioma.Select("Objeto= 'BotonMod'");
@@ -1261,6 +1308,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             GrdOTBusq.DataSource = null;
             GrdOTBusq.DataBind();
             ViewState["VentanaBusq"] = MlVwOT.ActiveViewIndex;
+            RdbOTBusqNumOT.Checked = true;
             MlVwOT.ActiveViewIndex = 4;
         }
         protected void BtnOTImprimir_Click(object sender, EventArgs e)
@@ -2655,7 +2703,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
-                    SC.Parameters.AddWithValue("@Prmtr", VbOpcion.Equals("OT") ? TxtOt.Text : TxtOTBusq.Text.Trim()); ;
+                    SC.Parameters.AddWithValue("@Prmtr", TxtOTBusq.Text.Trim()); ;// VbOpcion.Equals("OT") ? TxtOt.Text : TxtOTBusq.Text.Trim()
                     SC.Parameters.AddWithValue("@Opc", VbOpcion.Trim());
                     SC.Parameters.AddWithValue("@OTMst", TxtOt.Text.Trim());
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
@@ -3064,7 +3112,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     BtnMroAccCorr.CssClass = "btn btn-secondary";
                     break;
                 case "04":
-                    BtnMroAccCorr.CssClass = "btn btnwarning"; break;
+                    BtnMroAccCorr.CssClass = "btn btn-warning"; break;
                 case "05":
                     BtnMroAccCorr.CssClass = "btn btn-info"; break;
             }
