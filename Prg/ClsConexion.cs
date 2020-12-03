@@ -151,8 +151,16 @@ namespace _77NeoWeb.prg
                 this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString);
             }
             else
-            {
-                this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDB"].ConnectionString, VblNomSrv, VbNomBD, VbUsu, VblPass);
+            {                
+                switch (VbNomBD.Substring(0,3))
+                {
+                    case "Web":
+                        this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["WebPConexDB"].ConnectionString, "", VbNomBD, "", "");
+                        break;
+                    default:
+                        this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDB"].ConnectionString, VblNomSrv, VbNomBD, VbUsu, VblPass);
+                        break;
+                }
             }
         }
         public string GetConex()

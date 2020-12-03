@@ -130,7 +130,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
                                 }
                                 transaction.Commit();
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
                                 transaction.Rollback();
                             }

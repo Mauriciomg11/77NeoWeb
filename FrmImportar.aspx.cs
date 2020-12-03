@@ -187,7 +187,7 @@ namespace _77NeoWeb
         {
             try
             {
-                string StSql, VbNomRpt;
+                string StSql;
 
 
                 //StSql = "EXEC SP_PANTALLA_Reporte_Manto2 6,'','','','','',@SubOT,0,0,0,'01-01-1','02-01-1','03-01-1'";

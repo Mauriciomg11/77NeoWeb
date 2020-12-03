@@ -24,23 +24,23 @@ namespace _77NeoWeb.Forms.Ingenieria
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            /* if (Session["Login77"] == null)
-             {
-                 Response.Redirect("~/FrmAcceso.aspx");
-             }*/
+            if (Session["Login77"] == null)
+            {
+                Response.Redirect("~/FrmAcceso.aspx");
+            }/**/
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo    
             Page.Title = string.Format("Orden de Trabajo");
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                Session["C77U"] = "00000082";
+                /*Session["C77U"] = "00000082";
                 Session["D[BX"] = "DbNeoHCT";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
                 Session["$VR"] = "77NEO01";
                 Session["V$U@"] = "sa";
                 Session["P@$"] = "admindemp";
                 Session["N77U"] = Session["D[BX"];// "UsuPrueba";
                 Session["Nit77Cia"] = "860064038-4"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["77IDM"] = "5"; // 4 español | 5 ingles               
+                Session["77IDM"] = "5"; // 4 español | 5 ingles  */
             }
             if (!IsPostBack)
             {
@@ -202,7 +202,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 while (tbl.Read())  //Todos los objetos
                 {
                     Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());
-                    Page.Title = tbl["Objeto"].ToString().Trim().Equals("TituloOT") ? tbl["Texto"].ToString().Trim() : Page.Title;
+                    if (tbl["Objeto"].ToString().Trim().Equals("TituloOT"))
+                    { Page.Title = tbl["Texto"].ToString().Trim();  }
                     TitForm.Text = tbl["Objeto"].ToString().Trim().Equals("CaptionOT") ? tbl["Texto"].ToString().Trim() : TitForm.Text;
                     LblTitoTGral.Text = tbl["Objeto"].ToString().Trim().Equals("LblTitoTGral") ? tbl["Texto"].ToString().Trim() : LblTitoTGral.Text;
                     LblOt.Text = tbl["Objeto"].ToString().Trim().Equals("LblOt") ? tbl["Texto"].ToString().Trim() : LblOt.Text;
@@ -227,6 +228,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     CkbEjePasos.Text = tbl["Objeto"].ToString().Trim().Equals("CkbEjePasos") ? tbl["Texto"].ToString().Trim() : CkbEjePasos.Text;
                     LblMroCliente.Text = tbl["Objeto"].ToString().Trim().Equals("LblMroCliente") ? tbl["Texto"].ToString().Trim() : LblMroCliente.Text;
                     BtnOTAbiertas8PasCump.Text = tbl["Objeto"].ToString().Trim().Equals("BtnOTAbiertas8PasCump") ? tbl["Texto"].ToString().Trim() : BtnOTAbiertas8PasCump.Text;
+                    BtnOTAbiertas8PasCump.ToolTip = tbl["Objeto"].ToString().Trim().Equals("BtnOTAbiertas8PasCumpToolTip") ? tbl["Texto"].ToString().Trim() : BtnOTAbiertas8PasCump.ToolTip;
                     BtnOTDetTec.Text = tbl["Objeto"].ToString().Trim().Equals("BtnOTDetTec") ? tbl["Texto"].ToString().Trim() : BtnOTDetTec.Text;
                     BtnOTEliminar.Text = tbl["Objeto"].ToString().Trim().Equals("BtnOTEliminar") ? tbl["Texto"].ToString().Trim() : BtnOTEliminar.Text;
                     BtNOTExportar.Text = tbl["Objeto"].ToString().Trim().Equals("BtNOTExportar") ? tbl["Texto"].ToString().Trim() : BtNOTExportar.Text;
@@ -845,7 +847,16 @@ namespace _77NeoWeb.Forms.Ingenieria
                             { BtnOTReserva.ToolTip = row["Texto"].ToString(); } // La reserva se debe realizar desde la pantalla reporte";                        
                         }
                         else
-                        { BtnOTReserva.Enabled = true; BtnOTReserva.ToolTip = "Recurso físico"; }
+                        {
+                            BtnOTReserva.Enabled = true;
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensOT63'");
+
+                            foreach (DataRow row in Result)
+                            {
+                                string b1 = row["Texto"].ToString();
+                                BtnOTReserva.ToolTip = row["Texto"].ToString();
+                            } //
+                        }
                         if (Convert.ToInt32(TxtOtReporte.Text) > 0 || !TxtOtRepacion.Text.Equals(""))
                         {
                             BtnOTReporte.Enabled = false; ;
@@ -1092,7 +1103,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             TxtTSN.Text = SDR["TSN"].ToString().Trim(); TxtTSO.Text = SDR["TSO"].ToString().Trim(); TxtTSR.Text = SDR["TSR"].ToString().Trim();
                             TxtCSN.Text = SDR["CSN"].ToString().Trim(); TxtCSO.Text = SDR["CSO"].ToString().Trim(); TxtCSR.Text = SDR["CSR"].ToString().Trim();
                         }
-                        if (Convert.ToDouble(TxtTSN.Text)>0 || Convert.ToDouble(TxtTSO.Text) > 0 || Convert.ToDouble(TxtCSN.Text) > 0 || Convert.ToDouble(TxtCSO.Text) > 0)
+                        if (Convert.ToDouble(TxtTSN.Text) > 0 || Convert.ToDouble(TxtTSO.Text) > 0 || Convert.ToDouble(TxtCSN.Text) > 0 || Convert.ToDouble(TxtCSO.Text) > 0)
                         {
                             DataRow[] Result = Idioma.Select("Objeto= 'MensOT56'");
                             foreach (DataRow row in Result)

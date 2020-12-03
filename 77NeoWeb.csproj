@@ -388,6 +388,7 @@
     </Compile>
     <Compile Include="FrmImportar.aspx.cs">
       <DependentUpon>FrmImportar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="FrmImportar.aspx.designer.cs">
       <DependentUpon>FrmImportar.aspx</DependentUpon>
@@ -454,7 +455,13 @@
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Content>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\77NeoWeb - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\77NeoWeb - ReadOnly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\77NeoWeb - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\77NeoWeb - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\77NeoWeb - Web Deploy2.pubxml" />
     <None Include="Properties\PublishProfiles\77NeoWeb26Jul2020.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

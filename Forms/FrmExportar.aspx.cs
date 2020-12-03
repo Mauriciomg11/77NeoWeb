@@ -138,7 +138,7 @@ namespace _77NeoWeb.Forms
             }*/
             try
             {
-                string StSql, VbNomRpt, VbOpcion = ""; VbPrmtrAnt="";
+                string StSql, VbPrmtrAnt="";
                 switch (Request.QueryString["TT"].ToString())
                 {
                     case "Exportar Referencias":

@@ -110,8 +110,6 @@ namespace _77NeoWeb.Forms.Ingenieria
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
-                string VbAplica;
-                int VbCaso;
                 string TxQry = string.Format("EXEC SP_HabilitarCampos @Nit,@F,2,@F,3,@F,4,@F,6,@F,7,@F,8,@F,12,@F,13,@F,14");
                 /*  SqlCommand SC = new SqlCommand(TxQry, sqlCon);
                   SC.Parameters.AddWithValue("@Nit", Session["Nit77Cia"].ToString());
@@ -517,7 +515,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                string StSql, VbNomRpt, VbOpcion = "";
+                string StSql, VbNomRpt;
                 StSql = "EXEC SP_PANTALLA_Aeronave 4,'','','','',0,0,0,0,'01/01/01','01/01/01','01/01/01'";
                 VbNomRpt = "Aeronaves";                
                 Cnx.SelecBD();

@@ -64,7 +64,7 @@ namespace _77NeoWeb.prg
                     }
                     //sqlCon.Close();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('"+ ex.Message+"')", true);
                 }

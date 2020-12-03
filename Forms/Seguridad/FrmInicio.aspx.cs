@@ -14,6 +14,7 @@ namespace _77NeoWeb.Forms
     public partial class FrmInicio : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
+        DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
             Page.Title = string.Format("Inicio");
@@ -35,6 +36,36 @@ namespace _77NeoWeb.Forms
             if (!IsPostBack)
             {
                 BindMenuControl();
+                IdiomaControles();
+            }
+        }
+        protected void IdiomaControles()
+        {
+            Idioma.Columns.Add("Objeto", typeof(string));
+            Idioma.Columns.Add("Texto", typeof(string));
+            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+            {
+                string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
+                SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
+                SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
+                SC.Parameters.AddWithValue("@F1", "0");
+                SC.Parameters.AddWithValue("@F2", "");
+                SC.Parameters.AddWithValue("@F3", "");
+                SC.Parameters.AddWithValue("@F4", "");
+                sqlCon.Open();
+                SqlDataReader tbl = SC.ExecuteReader();
+                while (tbl.Read())  //Todos los objetos
+                {
+                    string b1 = tbl["Objeto"].ToString();
+                    string b2 = tbl["Texto"].ToString();
+                    Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());
+                    IbnSalir.ToolTip = b1.Trim().Equals("IbnSalir") ? b2.Trim() : IbnSalir.ToolTip;                   
+                }
+                DataRow[] Result = Idioma.Select("Objeto= 'IbnSalirOnClick'");
+                foreach (DataRow row in Result)
+                { IbnSalir.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }             
+               
+                ViewState["TablaIdioma"] = Idioma;
             }
         }
         protected void BindMenuControl()

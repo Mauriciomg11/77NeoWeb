@@ -38,20 +38,25 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="TextoSuperior">
-        <h1>Acceso 77NeoWeb</h1>
+        <h1>
+            <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" Text="Acceso 77NeoWeb" /></h1>
     </div>
     <div class="centrarCuadroSCV">
         <div class="text">
             <h2>77NeoWeb system</h2>
-            <h3>Sistema de gestión aeronautico</h3>
-            <h3>Cuidamos sus datos</h3>
-            <h3>Volamos con ellos...</h3>
+            <h5>
+                <asp:Label ID="LblText1" runat="server"  Text="Sistema de gestión aeronautico" /></h5>
+            <h5>
+                <asp:Label ID="LblText2" runat="server" CssClass="CsTitulo" Text="Cuidamos sus datos"/></h5>
+            <h5>
+                <asp:Label ID="LblText3" runat="server" CssClass="CsTitulo" Text="Volamos con ellos..."/></h5>
         </div>
     </div>
     <div class="ContenedorLogin">
         <div>
             <div class="btn-info">
-                <h2>Inicio</h2>
+                <h2>
+                    <asp:Label ID="LblInicio" runat="server" CssClass="CsTitulo" Text="Inicio" /></h2>
             </div>
         </div>
         <asp:UpdatePanel ID="UpPnlCampos" runat="server" UpdateMode="Conditional">
