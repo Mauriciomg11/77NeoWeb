@@ -134,6 +134,7 @@
     <Content Include="Forms\Ingenieria\FrmLibroVueloAC.aspx" />
     <Content Include="Forms\Ingenieria\FrmOrdenTrabajo.aspx" />
     <Content Include="Forms\Ingenieria\FrmServicioManto.aspx" />
+    <Content Include="Forms\Ingenieria\FrmStatusReportAtas.aspx" />
     <Content Include="Forms\InventariosCompras\FrmElemento.aspx" />
     <Content Include="Forms\InventariosCompras\FrmReferencia.aspx" />
     <Content Include="Forms\Manto\FrmReporte.aspx" />
@@ -316,6 +317,13 @@
     <Compile Include="Forms\Ingenieria\FrmServicioManto.aspx.designer.cs">
       <DependentUpon>FrmServicioManto.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Ingenieria\FrmStatusReportAtas.aspx.cs">
+      <DependentUpon>FrmStatusReportAtas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmStatusReportAtas.aspx.designer.cs">
+      <DependentUpon>FrmStatusReportAtas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\InventariosCompras\FrmElemento.aspx.cs">
       <DependentUpon>FrmElemento.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -470,12 +478,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\Ingenieria\Informe\LibroVueloDetalle.rdlc" />
-    <EmbeddedResource Include="Forms\Ingenieria\Informe\OrdenTrabajoMRO.rdlc" />
-    <EmbeddedResource Include="Forms\Ingenieria\Informe\ReporteV2.rdlc" />
-    <EmbeddedResource Include="Forms\Ingenieria\Informe\CumplimientoSvc.rdlc" />
-    <EmbeddedResource Include="Forms\Ingenieria\Informe\LibroVueloGnral.rdlc" />
-    <EmbeddedResource Include="Forms\Ingenieria\Informe\ServiciosActivos.rdlc" />
+    <EmbeddedResource Include="Report\Ing\Status_Grupos.rdlc" />
+    <EmbeddedResource Include="Report\Ing\Status_Compr.rdlc" />
+    <EmbeddedResource Include="Report\Ing\Status_Std.rdlc" />
+    <EmbeddedResource Include="Report\Ing\LibroVueloDetalle.rdlc" />
+    <EmbeddedResource Include="Report\Ing\OrdenTrabajoMRO.rdlc" />
+    <EmbeddedResource Include="Report\Ing\ReporteV2.rdlc" />
+    <EmbeddedResource Include="Report\Ing\CumplimientoSvc.rdlc" />
+    <EmbeddedResource Include="Report\Ing\LibroVueloGnral.rdlc" />
+    <EmbeddedResource Include="Report\Ing\ServiciosActivos.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

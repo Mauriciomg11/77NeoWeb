@@ -1377,7 +1377,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             SDA.SelectCommand = SC;
                             SDA.Fill(ds);
                             RvwInfLV.LocalReport.EnableExternalImages = true;
-                            RvwInfLV.LocalReport.ReportPath = "Forms/Ingenieria/Informe/LibroVueloGnral.rdlc";
+                            RvwInfLV.LocalReport.ReportPath = "Report/Ing/LibroVueloGnral.rdlc";
                             RvwInfLV.LocalReport.DataSources.Clear();
                             RvwInfLV.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
                             RvwInfLV.LocalReport.SetParameters(parameters);
@@ -1429,7 +1429,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             SDA.SelectCommand = SC;
                             SDA.Fill(ds);
                             RvwInfLV.LocalReport.EnableExternalImages = true;
-                            RvwInfLV.LocalReport.ReportPath = "Forms/Ingenieria/Informe/LibroVueloDetalle.rdlc";
+                            RvwInfLV.LocalReport.ReportPath = "Report/Ing/LibroVueloDetalle.rdlc";
                             RvwInfLV.LocalReport.DataSources.Clear();
                             RvwInfLV.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
                             RvwInfLV.LocalReport.SetParameters(parameters);
@@ -4007,7 +4007,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         SDA.SelectCommand = SC;
                         SDA.Fill(ds);
                         RvwReporte.LocalReport.EnableExternalImages = true;
-                        RvwReporte.LocalReport.ReportPath = "Forms/Ingenieria/Informe/ReporteV2.rdlc";
+                        RvwReporte.LocalReport.ReportPath = "Report/Ing/ReporteV2.rdlc";
                         RvwReporte.LocalReport.DataSources.Clear();
                         RvwReporte.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
                         RvwReporte.LocalReport.SetParameters(parameters);

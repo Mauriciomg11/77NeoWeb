@@ -1,0 +1,760 @@
+﻿using _77NeoWeb.prg;
+using _77NeoWeb.Prg.PrgIngenieria;
+using ClosedXML.Excel;
+using Microsoft.Reporting.WebForms;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace _77NeoWeb.Forms.Ingenieria
+{
+    public partial class FrmStatusReportAtas : System.Web.UI.Page
+    {
+        ClsConexion Cnx = new ClsConexion();
+        DataTable Idioma = new DataTable();
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            /* if (Session["Login77"] == null)
+             {
+                 Response.Redirect("~/FrmAcceso.aspx");
+             }*/
+            ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
+            if (Session["C77U"] == null)
+            {
+                Session["C77U"] = "";
+                Session["C77U"] = "00000082";
+                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                Session["$VR"] = "77NEO01";
+                Session["V$U@"] = "sa";
+                Session["P@$"] = "admindemp";
+                Session["N77U"] = Session["D[BX"];
+                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                Session["77IDM"] = "5"; // 4 español | 5 ingles  /* */
+            }
+            if (!IsPostBack)
+            {
+                MlVwSt.ActiveViewIndex = 0;
+                ModSeguridad();
+                BindBDdlAK();
+                ViewState["CONSULTA"] = "N";
+                Page.Title = "Status Report";
+            }
+            ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
+        }
+        protected void ModSeguridad()
+        {
+            ViewState["VblIngMS"] = 1;
+            ViewState["VblModMS"] = 1;
+            ViewState["VblEliMS"] = 1;
+            ViewState["VblImpMS"] = 1;
+            ViewState["VblCE1"] = 1;
+            ViewState["VblCE2"] = 1;
+            ViewState["VblCE3"] = 1;
+            ViewState["VblCE4"] = 1;
+            ClsPermisos ClsP = new ClsPermisos();
+            ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
+
+            if (ClsP.GetAccesoFrm() == 0)
+            {
+                Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx");
+            }
+            if (ClsP.GetIngresar() == 0)
+            { ViewState["VblIngMS"] = 0; }
+            if (ClsP.GetModificar() == 0)
+            { ViewState["VblModMS"] = 0; }
+            if (ClsP.GetConsultar() == 0)
+            { }
+            if (ClsP.GetImprimir() == 0)
+            { ViewState["VblImpMS"] = 0; BtnStsExport.Visible = false; BtnStsImp.Visible = false; }
+            if (ClsP.GetEliminar() == 0)
+            { ViewState["VblEliMS"] = 0; }
+            if (ClsP.GetCE1() == 0)//MODIF DIA PROYecc
+            { ViewState["VblCE1"] = 0; BtnModifDiaProy.Visible = false; LblModifDiaProy.Visible = false; }
+            if (ClsP.GetCE2() == 0)
+            { }
+            if (ClsP.GetCE3() == 0)//ORDEN IMPR GRUPO 
+            { ViewState["VblCE3"] = 0; BtnStsOrdenar.Visible = false; }
+            if (ClsP.GetCE4() == 0)//ASIG OT A PROPUESTA
+            { ViewState["VblCE4"] = 0; BtnStsAsigOT.Visible = false; }
+            if (ClsP.GetCE5() == 0)
+            { }
+            if (ClsP.GetCE6() == 0)
+            { }
+
+            Cnx.SelecBD();
+            using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+            {
+                string TxQry = string.Format("EXEC SP_HabilitarCampos @Nit,@F,0,'',0,'',0,'',0,'',0,'',0,'',0,'',0,'',0");
+                SqlCommand SC = new SqlCommand(TxQry, sqlCon);
+                SC.Parameters.AddWithValue("@Nit", Session["Nit77Cia"].ToString());
+                SC.Parameters.AddWithValue("@F", ViewState["PFileName"]);
+                sqlCon.Open();
+                SqlDataReader Regs = SC.ExecuteReader();
+                while (Regs.Read())
+                {
+                    int VbCaso = Convert.ToInt32(Regs["CASO"]);
+                    string VbAplica = Regs["EjecutarCodigo"].ToString();
+                    if (VbCaso == 2 && VbAplica.Equals("S"))
+                    {
+
+                    }
+                }
+            }
+            IdiomaControles();
+        }
+        protected void IdiomaControles()
+        {
+            Idioma.Columns.Add("Objeto", typeof(string));
+            Idioma.Columns.Add("Texto", typeof(string));
+            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+            {
+                string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
+                SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
+                SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
+                SC.Parameters.AddWithValue("@F1", ViewState["PFileName"].ToString().Trim());
+                SC.Parameters.AddWithValue("@F2", "CurStatus");
+                SC.Parameters.AddWithValue("@F3", "0");
+                SC.Parameters.AddWithValue("@F4", "");
+                sqlCon.Open();
+                SqlDataReader tbl = SC.ExecuteReader();
+                while (tbl.Read())  //Todos los objetos
+                {
+                    string b1 = tbl["Objeto"].ToString();
+                    string b2 = tbl["Texto"].ToString();
+                    Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());
+                    LblStsHK.Text = b1.Trim().Equals("LblStsHK") ? b2.Trim() : LblStsHK.Text;
+                    LblStsModelo.Text = b1.Trim().Equals("LblStsModelo") ? b2.Trim() : LblStsModelo.Text;
+                    LblStsFecCarga.Text = b1.Trim().Equals("LblStsFecCarga") ? b2.Trim() : LblStsFecCarga.Text;
+                    LblStsTSN.Text = b1.Trim().Equals("LblStsTSN") ? b2.Trim() : LblStsTSN.Text;
+                    LblStsCSN.Text = b1.Trim().Equals("LblStsCSN") ? b2.Trim() : LblStsCSN.Text;
+                    LblStsDiaProy.Text = b1.Trim().Equals("LblStsDiaProy") ? b2.Trim() : LblStsDiaProy.Text;
+                    LblModifDiaProy.Text = b1.Trim().Equals("LblModifDiaProy") ? b2.Trim() : LblModifDiaProy.Text;
+                    LblStsUtilDiaHr.Text = b1.Trim().Equals("LblStsUtilDiaHr") ? b2.Trim() : LblStsUtilDiaHr.Text;
+                    LblStsUtilDiaCc.Text = b1.Trim().Equals("LblStsUtilDiaCc") ? b2.Trim() : LblStsUtilDiaCc.Text;
+                    LblStsUtilDiaAPU.Text = b1.Trim().Equals("LblStsUtilDiaAPU") ? b2.Trim() : LblStsUtilDiaAPU.Text;
+                    BtnStsImp.Text = b1.Trim().Equals("BtnStsImp") ? b2.Trim() : BtnStsImp.Text;
+                    BtnStsImp.ToolTip = b1.Trim().Equals("BtnStsImpToolT") ? b2.Trim() : BtnStsImp.ToolTip;
+                    BtnStsExport.Text = b1.Trim().Equals("BtnStsExport") ? b2.Trim() : BtnStsExport.Text;
+                    BtnStsOrdenar.Text = b1.Trim().Equals("BtnStsOrdenar") ? b2.Trim() : BtnStsOrdenar.Text;
+                    BtnStsOrdenar.ToolTip = b1.Trim().Equals("BtnStsOrdenarToolT") ? b2.Trim() : BtnStsOrdenar.ToolTip;
+                    BtnStsAsigOT.Text = b1.Trim().Equals("BtnStsAsigOT") ? b2.Trim() : BtnStsAsigOT.Text;
+                    BtnStsAsigOT.ToolTip = b1.Trim().Equals("BtnStsAsigOTToolT") ? b2.Trim() : BtnStsAsigOT.ToolTip;
+                    BtnStsliberOT.Text = b1.Trim().Equals("BtnStsliberOT") ? b2.Trim() : BtnStsliberOT.Text;
+                    BtnStsliberOT.ToolTip = b1.Trim().Equals("BtnStsliberOTToolT") ? b2.Trim() : BtnStsliberOT.ToolTip;
+                    LblStsGrupo.Text = b1.Trim().Equals("LblStsGrupo") ? b2.Trim() : LblStsGrupo.Text;
+                    LblStsOrder.Text = b1.Trim().Equals("LblStsOrder") ? b2.Trim() : LblStsOrder.Text;
+                    RdbStsAta.Text = b1.Trim().Equals("RdbStsAta") ? b2.Trim() : RdbStsAta.Text;
+                    RdbStsProy.Text = b1.Trim().Equals("RdbStsProy") ? b2.Trim() : RdbStsProy.Text;
+                    RdbStsDescrip.Text = b1.Trim().Equals("RdbStsDescrip") ? b2.Trim() : RdbStsDescrip.Text;
+                    BtnStsConsult.Text = b1.Trim().Equals("BtnStsConsult") ? b2.Trim() : BtnStsConsult.Text;
+                    LblTitImpresion.Text = b1.Trim().Equals("LblTitImpresion") ? b2.Trim() : LblTitImpresion.Text;
+                    IbtCerrarPrint.ToolTip = b1.Trim().Equals("CerrarVentana") ? b2.Trim() : IbtCerrarPrint.ToolTip;
+                    ViewState["RTEMATRIC"] = b1.Trim().Equals("RTEMATRIC") ? b2.Trim() : ViewState["RTEMATRIC"];
+                    ViewState["RTEModelo"] = b1.Trim().Equals("RTEModelo") ? b2.Trim() : ViewState["RTEModelo"];
+                    ViewState["RTEUDH"] = b1.Trim().Equals("RTEUDH") ? b2.Trim() : ViewState["RTEUDH"];
+                    ViewState["RTEUDC"] = b1.Trim().Equals("RTEUDC") ? b2.Trim() : ViewState["RTEUDC"];
+                    ViewState["RTEActualiado"] = b1.Trim().Equals("RTEActualiado") ? b2.Trim() : ViewState["RTEActualiado"];
+                    ViewState["RTEFec"] = b1.Trim().Equals("RTEFec") ? b2.Trim() : ViewState["RTEFec"];
+                    ViewState["RTEPAG"] = b1.Trim().Equals("RTEPAG") ? b2.Trim() : ViewState["RTEPAG"];
+                    ViewState["RTEDE"] = b1.Trim().Equals("RTEDE") ? b2.Trim() : ViewState["RTEDE"];
+                    ViewState["RTEDE"] = b1.Trim().Equals("RTEDE") ? b2.Trim() : ViewState["RTEDE"];
+                    ViewState["RteDesc"] = b1.Trim().Equals("RdbStsDescrip") ? b2.Trim() : ViewState["RteDesc"];
+                    ViewState["RteNroDoc"] = b1.Trim().Equals("C03") ? b2.Trim() : ViewState["RteNroDoc"];
+                    ViewState["RteFechCum"] = b1.Trim().Equals("RteFechCum") ? b2.Trim() : ViewState["RteFechCum"];
+                    ViewState["RteFechIns"] = b1.Trim().Equals("RteFechIns") ? b2.Trim() : ViewState["RteFechIns"];
+                    ViewState["RteFrec"] = b1.Trim().Equals("RteFrec") ? b2.Trim() : ViewState["RteFrec"];
+                    ViewState["RteUnM"] = b1.Trim().Equals("RteUnM") ? b2.Trim() : ViewState["RteUnM"];
+                    ViewState["RteFrD"] = b1.Trim().Equals("RteFrD") ? b2.Trim() : ViewState["RteFrD"];
+                    ViewState["RteTipS"] = b1.Trim().Equals("RteTipS") ? b2.Trim() : ViewState["RteTipS"];
+                    ViewState["RteVrCu"] = b1.Trim().Equals("RteVrCu") ? b2.Trim() : ViewState["RteVrCu"];
+                    ViewState["RteAcum"] = b1.Trim().Equals("RteAcum") ? b2.Trim() : ViewState["RteAcum"];
+                    ViewState["RteProS"] = b1.Trim().Equals("RteProS") ? b2.Trim() : ViewState["RteProS"];
+                    ViewState["RteProF"] = b1.Trim().Equals("RteProF") ? b2.Trim() : ViewState["RteProF"];
+                    ViewState["RteRmn"] = b1.Trim().Equals("RteRmn") ? b2.Trim() : ViewState["RteRmn"];
+                    ViewState["RteRmnD"] = b1.Trim().Equals("RteRmnD") ? b2.Trim() : ViewState["RteRmnD"];
+                    ViewState["RteOT"] = b1.Trim().Equals("C18") ? b2.Trim() : ViewState["RteOT"];
+                    ViewState["RteProy"] = b1.Trim().Equals("RteProy") ? b2.Trim() : ViewState["RteProy"];
+                    BtnImpStsStdr.Text = b1.Trim().Equals("BtnImpStsStdr") ? b2.Trim() : BtnImpStsStdr.Text;
+                    BtnImpStsCompr.Text = b1.Trim().Equals("BtnImpStsCompr") ? b2.Trim() : BtnImpStsCompr.Text;
+                    BtnImpStsGrupos.Text = b1.Trim().Equals("BtnImpStsGrupos") ? b2.Trim() : BtnImpStsGrupos.Text;
+                    BtnImpStsStdr.ToolTip = b1.Trim().Equals("BtnImpStsStdrTT") ? b2.Trim() : BtnImpStsStdr.ToolTip;
+                    BtnImpStsCompr.ToolTip = b1.Trim().Equals("BtnImpStsComprTT") ? b2.Trim() : BtnImpStsCompr.ToolTip;
+                    BtnImpStsGrupos.ToolTip = b1.Trim().Equals("BtnImpStsGruposTT") ? b2.Trim() : BtnImpStsGrupos.ToolTip;
+                    LblTitOrdenarGrupImpr.Text = b1.Trim().Equals("LblTitOrdenarGrupImpr") ? b2.Trim() : LblTitOrdenarGrupImpr.Text;
+                    IbtCerrarOrder.ToolTip = b1.Trim().Equals("CerrarVentana") ? b2.Trim() : IbtCerrarOrder.ToolTip;
+                    GrdOrderGrup.Columns[0].HeaderText = b1.Trim().Equals("GrdOrderGrup0") ? b2.Trim() : GrdOrderGrup.Columns[0].HeaderText;
+                    GrdOrderGrup.Columns[1].HeaderText = b1.Trim().Equals("GrdOrderGrup1") ? b2.Trim() : GrdOrderGrup.Columns[1].HeaderText;
+                    GrdOrderGrup.Columns[2].HeaderText = b1.Trim().Equals("GrdOrderGrup2") ? b2.Trim() : GrdOrderGrup.Columns[2].HeaderText;
+                    //if (tbl["Objeto"].ToString().Trim().Equals("TituloSt"))
+                    //{ Page.Title = tbl["Texto"].ToString().Trim(); }
+                    TitForm.Text = tbl["Objeto"].ToString().Trim().Equals("Caption") ? tbl["Texto"].ToString().Trim() : TitForm.Text;
+                }
+                sqlCon.Close();
+                /* DataRow[] Result = Idioma.Select("Objeto= 'IbnSalirOnClick'");
+                 foreach (DataRow row in Result)
+                 { IbnSalir.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }*/
+
+                ViewState["TablaIdioma"] = Idioma;
+            }
+        }
+        protected void BindBDdlAK()
+        {
+            string LtxtSql = "EXEC SP_PANTALLA_Status 11,'','','','HK',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+            DdlStsHK.DataSource = Cnx.DSET(LtxtSql);
+            DdlStsHK.DataMember = "Datos";
+            DdlStsHK.DataTextField = "Matricula";
+            DdlStsHK.DataValueField = "CodAeronave";
+            DdlStsHK.DataBind();
+
+            LtxtSql = "EXEC SP_PANTALLA_Status 11,'','','','GRU',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+            DdlStsGrupo.DataSource = Cnx.DSET(LtxtSql);
+            DdlStsGrupo.DataMember = "Datos";
+            DdlStsGrupo.DataTextField = "Descripcion";
+            DdlStsGrupo.DataValueField = "CodPatronManto";
+            DdlStsGrupo.DataBind();
+        }
+        protected void ConsulStatus()
+        {
+            DataTable DtB = new DataTable();
+            Cnx.SelecBD();
+            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+            {
+                CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
+
+                CursorIdioma.Alimentar("CurStatus", Session["77IDM"].ToString().Trim());
+                string VbTxtSql = "EXEC SP_StatusReport_WEB @CodHk,@UltFech,'NO',@PromUtlH,@PromUtlC,@PromUtlAPU,@Usu,'CurStatus',@Grupo,@Order,''";
+                sqlConB.Open();
+                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                {
+                    string VbOrden = "";
+                    if (RdbStsAta.Checked == true) { VbOrden = "ATA"; }
+                    if (RdbStsProy.Checked == true) { VbOrden = "PROYECCION"; }
+                    if (RdbStsDescrip.Checked == true) { VbOrden = "DESCRIPCION"; }
+                    SC.Parameters.AddWithValue("@CodHk", DdlStsHK.Text);
+                    SC.Parameters.AddWithValue("@UltFech", TxtStsFecCarga.Text.Trim());
+                    SC.Parameters.AddWithValue("@PromUtlH", TxtStsUtilDiaHr.Text);
+                    SC.Parameters.AddWithValue("@PromUtlC", TxtStsUtilDiaCc.Text);
+                    SC.Parameters.AddWithValue("@PromUtlAPU", TxtStsUtilDiaAPU.Text);
+                    SC.Parameters.AddWithValue("@Usu", Session["C77U"]);
+                    SC.Parameters.AddWithValue("@Grupo", DdlStsGrupo.Text.Trim());
+                    SC.Parameters.AddWithValue("@Order", VbOrden);
+                    using (SqlDataAdapter DAB = new SqlDataAdapter())
+                    {
+                        DAB.SelectCommand = SC;
+                        DAB.Fill(DtB);
+
+                        if (DtB.Rows.Count > 0)
+                        {
+                            GrdStatusReport.DataSource = DtB;
+                            GrdStatusReport.DataBind();
+                        }
+                        else
+                        {
+                            GrdStatusReport.DataSource = null;
+                            GrdStatusReport.DataBind();
+                        }
+                    }
+                    ViewState["CONSULTA"] = "S";
+                }
+            }
+        }
+        protected void Traerdatos(string Prmtr)
+        {
+            try
+            {
+                Cnx.SelecBD();
+                using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
+                {
+                    Cnx2.Open();
+                    string LtxtSql = string.Format(" EXEC SP_PANTALLA_Status 12,'','','','',@Prmtr,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                    SqlCommand SC = new SqlCommand(LtxtSql, Cnx2);
+                    SC.Parameters.AddWithValue("@Prmtr", Prmtr);
+                    SqlDataReader SDR = SC.ExecuteReader();
+                    if (SDR.Read())
+                    {
+                        TxtStsSn.Text = HttpUtility.HtmlDecode(SDR["SN"].ToString().Trim());
+                        TxtStsModelo.Text = HttpUtility.HtmlDecode(SDR["NomModelo"].ToString().Trim());
+                        TxtStsFecCarga.Text = HttpUtility.HtmlDecode(SDR["UltFechaProces"].ToString().Trim());
+                        TxtStsTSN.Text = HttpUtility.HtmlDecode(SDR["TSN"].ToString().Trim());
+                        TxtStsCSN.Text = HttpUtility.HtmlDecode(SDR["CSN"].ToString().Trim());
+                        TxtStsDiaProy.Text = HttpUtility.HtmlDecode(SDR["NroDiaProy"].ToString().Trim());
+                        TxtStsUtilDiaHr.Text = HttpUtility.HtmlDecode(SDR["HrasProm"].ToString().Trim());
+                        TxtStsUtilDiaCc.Text = HttpUtility.HtmlDecode(SDR["CclProm"].ToString().Trim());
+                        TxtStsUtilDiaAPU.Text = HttpUtility.HtmlDecode(SDR["APUsProm"].ToString().Trim());
+                    }
+                    SDR.Close();
+                    Cnx2.Close();
+                }
+            }
+            catch (Exception Ex)
+            {
+                string VbMEns = Ex.ToString().Trim().Substring(1, 50);
+                ScriptManager.RegisterClientScriptBlock(this.UplPpal, UplPpal.GetType(), "IdntificadorBloqueScript", "alert('Inconveniente con la consulta');", true);
+            }
+        }
+        protected void DdlStsHK_TextChanged(object sender, EventArgs e)
+        {
+            Traerdatos(DdlStsHK.Text);
+            RdbStsAta.Checked = true;
+            TblOpciones.Visible = true;
+            GrdStatusReport.Visible = false;
+            ViewState["CONSULTA"] = "N";
+        }
+        protected void BtnModifDiaProy_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void BtnStsImp_Click(object sender, EventArgs e)
+        {
+            if (ViewState["CONSULTA"].ToString().Equals("N")) { return; }
+            MlVwSt.ActiveViewIndex = 1;
+        }
+        protected void BtnStsExport_Click(object sender, EventArgs e)
+        {
+            if (ViewState["CONSULTA"].ToString().Equals("N")) { return; }
+            CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
+            CursorIdioma.Alimentar("CurStatus", Session["77IDM"].ToString().Trim());
+            string VbTxtSql = "EXEC SP_StatusReport_WEB @CodHk,@UltFech,'NO',@PromUtlH,@PromUtlC,@PromUtlAPU,@Usu,'CurStatus',@Grupo,@Order,''";
+            string VbNomRpt = "Status";
+
+            Cnx.SelecBD();
+            using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
+            {
+                using (SqlCommand SC = new SqlCommand(VbTxtSql, con))
+                {
+                    SC.CommandTimeout = 90000000;
+                    string VbOrden = "";
+                    if (RdbStsAta.Checked == true) { VbOrden = "ATA"; }
+                    if (RdbStsProy.Checked == true) { VbOrden = "PROYECCION"; }
+                    if (RdbStsDescrip.Checked == true) { VbOrden = "DESCRIPCION"; }
+                    SC.Parameters.AddWithValue("@CodHk", DdlStsHK.Text);
+                    SC.Parameters.AddWithValue("@UltFech", TxtStsFecCarga.Text.Trim());
+                    SC.Parameters.AddWithValue("@PromUtlH", TxtStsUtilDiaHr.Text);
+                    SC.Parameters.AddWithValue("@PromUtlC", TxtStsUtilDiaCc.Text);
+                    SC.Parameters.AddWithValue("@PromUtlAPU", TxtStsUtilDiaAPU.Text);
+                    SC.Parameters.AddWithValue("@Usu", Session["C77U"]);
+                    SC.Parameters.AddWithValue("@Grupo", DdlStsGrupo.Text.Trim());
+                    SC.Parameters.AddWithValue("@Order", VbOrden);
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        SC.Connection = con;
+                        sda.SelectCommand = SC;
+                        using (DataSet ds = new DataSet())
+                        {
+                            sda.Fill(ds);
+
+                            ds.Tables[0].TableName = "77NeoWeb";
+                            using (XLWorkbook wb = new XLWorkbook())
+                            {
+                                foreach (DataTable dt in ds.Tables)
+                                {
+                                    wb.Worksheets.Add(dt);
+                                }
+                                Response.Clear();
+                                Response.Buffer = true;
+                                Response.ContentType = "application/ms-excel";
+                                Response.AddHeader("content-disposition", string.Format("attachment;filename={0}.xlsx", VbNomRpt));
+                                Response.Charset = "";
+                                using (MemoryStream MyMemoryStream = new MemoryStream())
+                                {
+                                    wb.SaveAs(MyMemoryStream);
+                                    MyMemoryStream.WriteTo(Response.OutputStream);
+                                    Response.Flush();
+                                    Response.End();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        protected void BtnStsAsigOT_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void BtnStsliberOT_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void BtnStsConsult_Click(object sender, EventArgs e)
+        {
+            ConsulStatus();
+            TblOpciones.Visible = false;
+            GrdStatusReport.Visible = true;
+        }
+        //**************************** IMPRIMIR *******************************
+        protected void IbtCerrarPrint_Click(object sender, ImageClickEventArgs e)
+        {
+            MlVwSt.ActiveViewIndex = 0;
+        }
+        protected void BtnImpStsStdr_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ViewState["CONSULTA"].ToString().Equals("N")) { return; }
+                string StSql = "";
+                string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
+                DataSet ds = new DataSet();
+                Cnx.SelecBD();
+                using (SqlConnection SCnx1 = new SqlConnection(Cnx.GetConex()))
+                {
+                    ReportParameter[] parameters = new ReportParameter[35];
+
+                    parameters[0] = new ReportParameter("PrmCia", Session["NomCiaPpal"].ToString().Trim());
+                    parameters[1] = new ReportParameter("PrmNit", Session["Nit77Cia"].ToString().Trim());
+                    parameters[2] = new ReportParameter("PrmImg", VbLogo, true);
+                    parameters[3] = new ReportParameter("PrmFechAct", TxtStsFecCarga.Text);
+                    parameters[4] = new ReportParameter("HK", DdlStsHK.SelectedItem.Text);
+                    parameters[5] = new ReportParameter("SN", TxtStsSn.Text.Trim(), true);
+                    parameters[6] = new ReportParameter("Model", TxtStsModelo.Text);
+                    parameters[7] = new ReportParameter("TSN", TxtStsTSN.Text);
+                    parameters[8] = new ReportParameter("CSN", TxtStsCSN.Text.Trim(), true);
+                    parameters[9] = new ReportParameter("UDH", TxtStsUtilDiaHr.Text);
+                    parameters[10] = new ReportParameter("UDC", TxtStsUtilDiaCc.Text);
+                    parameters[11] = new ReportParameter("RTEMATRIC", ViewState["RTEMATRIC"].ToString());
+                    parameters[12] = new ReportParameter("RTEModelo", ViewState["RTEModelo"].ToString());
+                    parameters[13] = new ReportParameter("RTEUDH", ViewState["RTEUDH"].ToString());
+                    parameters[14] = new ReportParameter("RTEUDC", ViewState["RTEUDC"].ToString());
+                    parameters[15] = new ReportParameter("RTEActualiado", ViewState["RTEActualiado"].ToString());
+                    parameters[16] = new ReportParameter("RTEFec", ViewState["RTEFec"].ToString());
+                    parameters[17] = new ReportParameter("RTEPAG", ViewState["RTEPAG"].ToString());
+                    parameters[18] = new ReportParameter("RTEDE", ViewState["RTEDE"].ToString());
+                    parameters[19] = new ReportParameter("RteDesc", ViewState["RteDesc"].ToString());
+                    parameters[20] = new ReportParameter("RteNroDoc", ViewState["RteNroDoc"].ToString());
+                    parameters[21] = new ReportParameter("RteFecCu", ViewState["RteFechCum"].ToString());
+                    parameters[22] = new ReportParameter("RteFecIn", ViewState["RteFechIns"].ToString());
+                    parameters[23] = new ReportParameter("RteFrec", ViewState["RteFrec"].ToString());
+                    parameters[24] = new ReportParameter("RteUnM", ViewState["RteUnM"].ToString());
+                    parameters[25] = new ReportParameter("RteFrD", ViewState["RteFrD"].ToString());
+                    parameters[26] = new ReportParameter("RteTipS", ViewState["RteTipS"].ToString());
+                    parameters[27] = new ReportParameter("RteVrCu", ViewState["RteVrCu"].ToString());
+                    parameters[28] = new ReportParameter("RteAcum", ViewState["RteAcum"].ToString());
+                    parameters[29] = new ReportParameter("RteProS", ViewState["RteProS"].ToString());
+                    parameters[30] = new ReportParameter("RteProF", ViewState["RteProF"].ToString());
+                    parameters[31] = new ReportParameter("RteRmn", ViewState["RteRmn"].ToString());
+                    parameters[32] = new ReportParameter("RteRmnD", ViewState["RteRmnD"].ToString());
+                    parameters[33] = new ReportParameter("RteOT", ViewState["RteOT"].ToString());
+                    parameters[34] = new ReportParameter("RteProy", ViewState["RteProy"].ToString());
+
+                    StSql = "EXEC SP_StatusReport_WEB @CodHk,@UltFech,'NO',@PromUtlH,@PromUtlC,@PromUtlAPU,@Usu,'',@Grupo,@Order,'I'";
+                    using (SqlCommand SC = new SqlCommand(StSql, SCnx1))
+                    {
+                        string VbOrden = "";
+                        if (RdbStsAta.Checked == true) { VbOrden = "ATA"; }
+                        if (RdbStsProy.Checked == true) { VbOrden = "PROYECCION"; }
+                        if (RdbStsDescrip.Checked == true) { VbOrden = "DESCRIPCION"; }
+                        SC.Parameters.AddWithValue("@CodHk", DdlStsHK.Text);
+                        SC.Parameters.AddWithValue("@UltFech", TxtStsFecCarga.Text.Trim());
+                        SC.Parameters.AddWithValue("@PromUtlH", TxtStsUtilDiaHr.Text);
+                        SC.Parameters.AddWithValue("@PromUtlC", TxtStsUtilDiaCc.Text);
+                        SC.Parameters.AddWithValue("@PromUtlAPU", TxtStsUtilDiaAPU.Text);
+                        SC.Parameters.AddWithValue("@Usu", Session["C77U"]);
+                        SC.Parameters.AddWithValue("@Grupo", DdlStsGrupo.Text.Trim());
+                        SC.Parameters.AddWithValue("@Order", VbOrden);
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            SDA.SelectCommand = SC;
+                            SDA.Fill(ds);
+                            RvwPrint.LocalReport.EnableExternalImages = true;
+                            RvwPrint.LocalReport.ReportPath = Server.MapPath("~/Report/Ing/Status_Std.rdlc");   //"Forms /Ingenieria/Informe/Status_Std.rdlc";
+                            RvwPrint.LocalReport.DataSources.Clear();
+                            RvwPrint.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
+                            RvwPrint.LocalReport.SetParameters(parameters);
+                            RvwPrint.LocalReport.Refresh();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            { }
+        }
+        protected void BtnImpStsCompr_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ViewState["CONSULTA"].ToString().Equals("N")) { return; }
+                string StSql = "";
+                string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
+                DataSet ds = new DataSet();
+                Cnx.SelecBD();
+                using (SqlConnection SCnx1 = new SqlConnection(Cnx.GetConex()))
+                {
+                    ReportParameter[] parameters = new ReportParameter[31];
+                    parameters[0] = new ReportParameter("PrmCia", Session["NomCiaPpal"].ToString().Trim());
+                    parameters[1] = new ReportParameter("PrmNit", Session["Nit77Cia"].ToString().Trim());
+                    parameters[2] = new ReportParameter("PrmImg", VbLogo, true);
+                    parameters[3] = new ReportParameter("PrmFechAct", TxtStsFecCarga.Text);
+                    parameters[4] = new ReportParameter("HK", DdlStsHK.SelectedItem.Text);
+                    parameters[5] = new ReportParameter("SN", TxtStsSn.Text.Trim(), true);
+                    parameters[6] = new ReportParameter("Model", TxtStsModelo.Text);
+                    parameters[7] = new ReportParameter("TSN", TxtStsTSN.Text);
+                    parameters[8] = new ReportParameter("CSN", TxtStsCSN.Text.Trim(), true);
+                    parameters[9] = new ReportParameter("UDH", TxtStsUtilDiaHr.Text);
+                    parameters[10] = new ReportParameter("UDC", TxtStsUtilDiaCc.Text);
+                    parameters[11] = new ReportParameter("RTEMATRIC", ViewState["RTEMATRIC"].ToString());
+                    parameters[12] = new ReportParameter("RTEModelo", ViewState["RTEModelo"].ToString());
+                    parameters[13] = new ReportParameter("RTEUDH", ViewState["RTEUDH"].ToString());
+                    parameters[14] = new ReportParameter("RTEUDC", ViewState["RTEUDC"].ToString());
+                    parameters[15] = new ReportParameter("RTEActualiado", ViewState["RTEActualiado"].ToString());
+                    parameters[16] = new ReportParameter("RTEFec", ViewState["RTEFec"].ToString());
+                    parameters[17] = new ReportParameter("RTEPAG", ViewState["RTEPAG"].ToString());
+                    parameters[18] = new ReportParameter("RTEDE", ViewState["RTEDE"].ToString());
+                    parameters[19] = new ReportParameter("RteDesc", ViewState["RteDesc"].ToString());
+                    parameters[20] = new ReportParameter("RteNroDoc", ViewState["RteNroDoc"].ToString());
+                    parameters[21] = new ReportParameter("RteFecCu", ViewState["RteFechCum"].ToString());
+                    parameters[22] = new ReportParameter("RteFecIn", ViewState["RteFechIns"].ToString());
+                    parameters[23] = new ReportParameter("RteFrec", ViewState["RteFrec"].ToString());
+                    parameters[24] = new ReportParameter("RteUnM", ViewState["RteUnM"].ToString());
+                    parameters[25] = new ReportParameter("RteFrD", ViewState["RteFrD"].ToString());
+                    parameters[26] = new ReportParameter("RteAcum", ViewState["RteAcum"].ToString());
+                    parameters[27] = new ReportParameter("RteRmn", ViewState["RteRmn"].ToString());
+                    parameters[28] = new ReportParameter("RteRmnD", ViewState["RteRmnD"].ToString());
+                    parameters[29] = new ReportParameter("RteOT", ViewState["RteOT"].ToString());
+                    parameters[30] = new ReportParameter("RteProy", ViewState["RteProy"].ToString());
+
+                    StSql = "EXEC SP_StatusReport_WEB @CodHk,@UltFech,'NO',@PromUtlH,@PromUtlC,@PromUtlAPU,@Usu,'',@Grupo,@Order,'I'";
+                    using (SqlCommand SC = new SqlCommand(StSql, SCnx1))
+                    {
+                        string VbOrden = "";
+                        if (RdbStsAta.Checked == true) { VbOrden = "ATA"; }
+                        if (RdbStsProy.Checked == true) { VbOrden = "PROYECCION"; }
+                        if (RdbStsDescrip.Checked == true) { VbOrden = "DESCRIPCION"; }
+                        SC.Parameters.AddWithValue("@CodHk", DdlStsHK.Text);
+                        SC.Parameters.AddWithValue("@UltFech", TxtStsFecCarga.Text.Trim());
+                        SC.Parameters.AddWithValue("@PromUtlH", TxtStsUtilDiaHr.Text);
+                        SC.Parameters.AddWithValue("@PromUtlC", TxtStsUtilDiaCc.Text);
+                        SC.Parameters.AddWithValue("@PromUtlAPU", TxtStsUtilDiaAPU.Text);
+                        SC.Parameters.AddWithValue("@Usu", Session["C77U"]);
+                        SC.Parameters.AddWithValue("@Grupo", DdlStsGrupo.Text.Trim());
+                        SC.Parameters.AddWithValue("@Order", VbOrden);
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            SDA.SelectCommand = SC;
+                            SDA.Fill(ds);
+                            RvwPrint.LocalReport.EnableExternalImages = true;
+                            RvwPrint.LocalReport.ReportPath = Server.MapPath("~/Report/Ing/Status_Compr.rdlc");
+                            RvwPrint.LocalReport.DataSources.Clear();
+                            RvwPrint.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
+                            RvwPrint.LocalReport.SetParameters(parameters);
+                            RvwPrint.LocalReport.Refresh();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            { }
+        }
+        protected void BtnImpStsGrupos_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ViewState["CONSULTA"].ToString().Equals("N")) { return; }
+                string StSql = "";
+                string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
+                DataSet ds = new DataSet();
+                Cnx.SelecBD();
+                using (SqlConnection SCnx1 = new SqlConnection(Cnx.GetConex()))
+                {
+                    ReportParameter[] parameters = new ReportParameter[35];
+                    parameters[0] = new ReportParameter("PrmCia", Session["NomCiaPpal"].ToString().Trim());
+                    parameters[1] = new ReportParameter("PrmNit", Session["Nit77Cia"].ToString().Trim());
+                    parameters[2] = new ReportParameter("PrmImg", VbLogo, true);
+                    parameters[3] = new ReportParameter("PrmFechAct", TxtStsFecCarga.Text);
+                    parameters[4] = new ReportParameter("HK", DdlStsHK.SelectedItem.Text);
+                    parameters[5] = new ReportParameter("SN", TxtStsSn.Text.Trim(), true);
+                    parameters[6] = new ReportParameter("Model", TxtStsModelo.Text);
+                    parameters[7] = new ReportParameter("TSN", TxtStsTSN.Text);
+                    parameters[8] = new ReportParameter("CSN", TxtStsCSN.Text.Trim(), true);
+                    parameters[9] = new ReportParameter("UDH", TxtStsUtilDiaHr.Text);
+                    parameters[10] = new ReportParameter("UDC", TxtStsUtilDiaCc.Text);
+                    parameters[11] = new ReportParameter("RTEMATRIC", ViewState["RTEMATRIC"].ToString());
+                    parameters[12] = new ReportParameter("RTEModelo", ViewState["RTEModelo"].ToString());
+                    parameters[13] = new ReportParameter("RTEUDH", ViewState["RTEUDH"].ToString());
+                    parameters[14] = new ReportParameter("RTEUDC", ViewState["RTEUDC"].ToString());
+                    parameters[15] = new ReportParameter("RTEActualiado", ViewState["RTEActualiado"].ToString());
+                    parameters[16] = new ReportParameter("RTEFec", ViewState["RTEFec"].ToString());
+                    parameters[17] = new ReportParameter("RTEPAG", ViewState["RTEPAG"].ToString());
+                    parameters[18] = new ReportParameter("RTEDE", ViewState["RTEDE"].ToString());
+                    parameters[19] = new ReportParameter("RteDesc", ViewState["RteDesc"].ToString());
+                    parameters[20] = new ReportParameter("RteNroDoc", ViewState["RteNroDoc"].ToString());
+                    parameters[21] = new ReportParameter("RteFecCu", ViewState["RteFechCum"].ToString());
+                    parameters[22] = new ReportParameter("RteFecIn", ViewState["RteFechIns"].ToString());
+                    parameters[23] = new ReportParameter("RteFrec", ViewState["RteFrec"].ToString());
+                    parameters[24] = new ReportParameter("RteUnM", ViewState["RteUnM"].ToString());
+                    parameters[25] = new ReportParameter("RteFrD", ViewState["RteFrD"].ToString());
+                    parameters[26] = new ReportParameter("RteTipS", ViewState["RteTipS"].ToString());
+                    parameters[27] = new ReportParameter("RteVrCu", ViewState["RteVrCu"].ToString());
+                    parameters[28] = new ReportParameter("RteAcum", ViewState["RteAcum"].ToString());
+                    parameters[29] = new ReportParameter("RteProS", ViewState["RteProS"].ToString());
+                    parameters[30] = new ReportParameter("RteProF", ViewState["RteProF"].ToString());
+                    parameters[31] = new ReportParameter("RteRmn", ViewState["RteRmn"].ToString());
+                    parameters[32] = new ReportParameter("RteRmnD", ViewState["RteRmnD"].ToString());
+                    parameters[33] = new ReportParameter("RteOT", ViewState["RteOT"].ToString());
+                    parameters[34] = new ReportParameter("RteProy", ViewState["RteProy"].ToString());
+
+                    StSql = "EXEC SP_StatusReport_WEB @CodHk,@UltFech,'NO',@PromUtlH,@PromUtlC,@PromUtlAPU,@Usu,'',@Grupo,@Order,'I'";
+                    using (SqlCommand SC = new SqlCommand(StSql, SCnx1))
+                    {
+                        string VbOrden = "GRUPOS";
+                        SC.Parameters.AddWithValue("@CodHk", DdlStsHK.Text);
+                        SC.Parameters.AddWithValue("@UltFech", TxtStsFecCarga.Text.Trim());
+                        SC.Parameters.AddWithValue("@PromUtlH", TxtStsUtilDiaHr.Text);
+                        SC.Parameters.AddWithValue("@PromUtlC", TxtStsUtilDiaCc.Text);
+                        SC.Parameters.AddWithValue("@PromUtlAPU", TxtStsUtilDiaAPU.Text);
+                        SC.Parameters.AddWithValue("@Usu", Session["C77U"]);
+                        SC.Parameters.AddWithValue("@Grupo", DdlStsGrupo.Text.Trim());
+                        SC.Parameters.AddWithValue("@Order", VbOrden);
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            SDA.SelectCommand = SC;
+                            SDA.Fill(ds);
+                            RvwPrint.LocalReport.EnableExternalImages = true;
+                            RvwPrint.LocalReport.ReportPath = Server.MapPath("~/Report/Ing/Status_Grupos.rdlc");   //"Forms /Ingenieria/Informe/Status_Std.rdlc";
+                            RvwPrint.LocalReport.DataSources.Clear();
+                            RvwPrint.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
+                            RvwPrint.LocalReport.SetParameters(parameters);
+                            RvwPrint.LocalReport.Refresh();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            { }
+        }
+        //**************************** ORdernar *******************************
+        protected void BindDOrdenar()
+        {
+            try
+            {
+                DataTable DT = new DataTable();
+                Cnx.SelecBD();
+                using (SqlConnection SCX2 = new SqlConnection(Cnx.GetConex()))
+                {
+                    string VbTxtSql = string.Format("EXEC SP_PANTALLA_Status 1,'','','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, SCX2))
+                    {
+                        SCX2.Open();
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            SDA.SelectCommand = SC;
+                            SDA.Fill(DT);
+                            if (DT.Rows.Count > 0)
+                            {
+                                GrdOrderGrup.DataSource = DT;
+                                GrdOrderGrup.DataBind();
+                            }
+                            else
+                            {
+                                GrdOrderGrup.DataSource = null;
+                                GrdOrderGrup.DataBind();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "BindDHta OT", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
+        }
+        protected void BtnStsOrdenar_Click(object sender, EventArgs e)
+        {
+            BindDOrdenar();
+            MlVwSt.ActiveViewIndex = 2;
+        }
+        protected void IbtCerrarOrder_Click(object sender, ImageClickEventArgs e)
+        {
+            MlVwSt.ActiveViewIndex = 0;
+        }
+        protected void GrdOrderGrup_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GrdOrderGrup.EditIndex = e.NewEditIndex;
+            BindDOrdenar();
+        }
+        protected void GrdOrderGrup_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            string VblId = GrdOrderGrup.DataKeys[e.RowIndex].Value.ToString();
+            Cnx.SelecBD();
+            using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+            {
+                sqlCon.Open();
+                using (SqlTransaction Transac = sqlCon.BeginTransaction())
+                {
+                    string VBQuery = "UPDATE TblPatronManto SET OrdenImpresion=@Orden,UsuMod=@Usu,FechaMod=GETDATE() WHERE CodPatronManto=@I";
+
+                    using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
+                    {
+                        try
+                        {
+                            SC.Parameters.AddWithValue("@I", VblId);
+                            SC.Parameters.AddWithValue("@Orden", (GrdOrderGrup.Rows[e.RowIndex].FindControl("TxtPos") as Label).Text.Trim());
+                            SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
+
+                            SC.ExecuteNonQuery();
+                            GrdOrderGrup.EditIndex = -1;
+                            BindDOrdenar();
+                        }
+                        catch (Exception Ex)
+                        {
+                            Transac.Rollback();
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.UplOrder, UplOrder.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//
+                            string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE Ordenar impresión grupos", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                        }
+                    }
+                }
+            }
+        }
+        protected void GrdOrderGrup_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+
+        }
+
+        protected void GrdOrderGrup_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            try
+            {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                if ((e.Row.RowState & DataControlRowState.Edit) > 0)
+                {
+                    ImageButton IbtUpdate = (e.Row.FindControl("IbtUpdate") as ImageButton);
+                    DataRow[] Result = Idioma.Select("Objeto= 'IbtUpdate'");
+                    foreach (DataRow row in Result)
+                    { IbtUpdate.ToolTip = row["Texto"].ToString().Trim(); }
+                    ImageButton IbtCancel = (e.Row.FindControl("IbtCancel") as ImageButton);
+                    Result = Idioma.Select("Objeto= 'IbtCancel'");
+                    foreach (DataRow row in Result)
+                    { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
+
+                }
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+                    DataRow[] Result = Idioma.Select("Objeto='IbtEdit'");
+                    ImageButton IbtEdit = (e.Row.FindControl("IbtEdit") as ImageButton);
+                    if (IbtEdit != null)
+                    {
+                        foreach (DataRow RowIdioma in Result)
+                        { IbtEdit.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                    }
+                }
+            }
+            catch (Exception)
+            { }
+        }
+    }
+}

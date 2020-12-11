@@ -2374,7 +2374,7 @@ namespace _77NeoWeb.Forms.Manto
                         SDA.SelectCommand = SC;
                         SDA.Fill(ds);
                         RvwReporte.LocalReport.EnableExternalImages = true;
-                        RvwReporte.LocalReport.ReportPath = "Forms/Ingenieria/Informe/ReporteV2.rdlc";
+                        RvwReporte.LocalReport.ReportPath = "Report/Ing/ReporteV2.rdlc";
                         RvwReporte.LocalReport.DataSources.Clear();
                         RvwReporte.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
                         RvwReporte.LocalReport.SetParameters(parameters);

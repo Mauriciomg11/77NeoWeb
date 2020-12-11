@@ -179,13 +179,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void IdiomaControles()
         {
-            /*DataRow[] Result = Idioma.Select("Objeto= 'Titulo'");
-            foreach (DataRow row in Result)
-            {Page.Title = row["Texto"].ToString();}
-            Result = Idioma.Select("Objeto= 'Titulo'");
-            foreach (DataRow row in Result)
-            { TitForm.Text = row["Texto"].ToString(); }*/
-
             Idioma.Columns.Add("Objeto", typeof(string));
             Idioma.Columns.Add("Texto", typeof(string));
             using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
@@ -1362,7 +1355,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         switch (VbOpc)
                         {
                             case "OT_PREV":
-                                RvwOTPrint.LocalReport.ReportPath = "Forms/Ingenieria/Informe/OrdenTrabajoMRO.rdlc";
+                                RvwOTPrint.LocalReport.ReportPath = Server.MapPath("~/Report/Ing/OrdenTrabajoMRO.rdlc");// "~/Forms/Ingenieria/Informe/OrdenTrabajoMRO.rdlc";
                                 break;
                             default:
                                 VbOpc = "";
@@ -2694,7 +2687,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { VbOpcion = "PN"; }
                     if (RdbOTBusqHK.Checked == true)
                     { VbOpcion = "HK"; }
-                    VbTxtSql = string.Format("EXEC SP_PANTALLA_OrdenTrabajo2 8,@Prmtr,'CurBusqOT','','',@Opc,0,0,0,0,'01-01-01','01-01-01','01-01-01'");
+                    VbTxtSql = "EXEC SP_PANTALLA_OrdenTrabajo2 8,@Prmtr,'CurBusqOT','','',@Opc,0,0,0,0,'01-01-01','01-01-01','01-01-01'"; 
                 }
                 else
                 {  //busqueda Reporte
@@ -4905,7 +4898,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         SDA.SelectCommand = SC;
                         SDA.Fill(ds);
                         RvwReporte.LocalReport.EnableExternalImages = true;
-                        RvwReporte.LocalReport.ReportPath = "Forms/Ingenieria/Informe/ReporteV2.rdlc";
+                        RvwReporte.LocalReport.ReportPath = "Report/Ing/ReporteV2.rdlc";
                         RvwReporte.LocalReport.DataSources.Clear();
                         RvwReporte.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
                         RvwReporte.LocalReport.SetParameters(parameters);

@@ -3473,7 +3473,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 SqlDataAdapter da = new SqlDataAdapter(StSql, SC);
                 da.Fill(ds);
                 RprvSvcActivos.LocalReport.EnableExternalImages = true;
-                RprvSvcActivos.LocalReport.ReportPath = "Forms/Ingenieria/Informe/ServiciosActivos.rdlc";
+                RprvSvcActivos.LocalReport.ReportPath = "Report/Ing/ServiciosActivos.rdlc";
                 RprvSvcActivos.LocalReport.DataSources.Clear();
                 RprvSvcActivos.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
                 RprvSvcActivos.LocalReport.SetParameters(parameters);
@@ -3505,7 +3505,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     SqlDataAdapter da = new SqlDataAdapter(StSql, SC);
                     da.Fill(ds);
                     RprvSvcActivos.LocalReport.EnableExternalImages = true;
-                    RprvSvcActivos.LocalReport.ReportPath = "Forms/Ingenieria/Informe/CumplimientoSvc.rdlc";
+                    RprvSvcActivos.LocalReport.ReportPath = "Report/Ing/CumplimientoSvc.rdlc";
                     RprvSvcActivos.LocalReport.DataSources.Clear();
                     RprvSvcActivos.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
                     RprvSvcActivos.LocalReport.SetParameters(parameters);

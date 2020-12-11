@@ -25,4 +25,9 @@
 .Prueba {
     width: 70%;
 }
+.heightCampo {
+    height: 25px;
+    width: 95%;
+    font-size: 12px;
+}
 
