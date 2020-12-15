@@ -19,6 +19,12 @@
             border-width: 3px;
             /*BorderWidth="1px"*/
         }
+        .Scroll-table2 {
+            vertical-align: top;
+            overflow: auto;
+            width: 100%;
+            height: 400px
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="EncScriptDdl" runat="server">
@@ -44,9 +50,9 @@
                         <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                 </tr>
             </table>
-            <div class="DivGrid DivContendorGrid">
+            <div class="table-responsive Scroll-table2"">
                 <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodUsuario"
-                    CellPadding="3" CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8" OnPageIndexChanging="GrdDatos_PageIndexChanging"
+                    CellPadding="3" CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8" OnPageIndexChanging="GrdDatos_PageIndexChanging"
                     OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit"
                     OnRowDeleting="GrdDatos_RowDeleting" OnRowDataBound="GrdDatos_RowDataBound">
                     <FooterStyle CssClass="GridFooterStyle" />

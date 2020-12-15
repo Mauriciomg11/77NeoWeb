@@ -299,9 +299,7 @@
                                 <asp:ImageButton ID="IbtConsOTDetTec" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsOTDetTec_Click" /></td>
                         </tr>
                     </table>
-
                     <div id="GridOTDetTec">
-
                         <asp:GridView ID="GrdOTDetTec" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodIdDetTecniOT"
                             CssClass="DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="10" Width="95%"
                             OnRowCommand="GrdOTDetTec_RowCommand" OnRowEditing="GrdOTDetTec_RowEditing" OnRowUpdating="GrdOTDetTec_RowUpdating" OnRowCancelingEdit="GrdOTDetTec_RowCancelingEdit"

@@ -59,12 +59,16 @@ namespace _77NeoWeb.Forms
                     string b1 = tbl["Objeto"].ToString();
                     string b2 = tbl["Texto"].ToString();
                     Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());
-                    IbnSalir.ToolTip = b1.Trim().Equals("IbnSalir") ? b2.Trim() : IbnSalir.ToolTip;                   
+                    IbnSalir.ToolTip = b1.Trim().Equals("IbnSalir") ? b2.Trim() : IbnSalir.ToolTip;      
+                    LkbCambPass.Text = b1.Trim().Equals("LkbCambPass") ? b2.Trim() : LkbCambPass.Text;                   
                 }
                 DataRow[] Result = Idioma.Select("Objeto= 'IbnSalirOnClick'");
                 foreach (DataRow row in Result)
-                { IbnSalir.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }             
-               
+                { IbnSalir.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                DataRow[] Result1 = Idioma.Select("Objeto= 'LkbCambPassOnClick'");
+                foreach (DataRow row in Result1)
+                { LkbCambPass.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }/**/
+
                 ViewState["TablaIdioma"] = Idioma;
             }
         }
@@ -134,6 +138,11 @@ namespace _77NeoWeb.Forms
             System.Web.Security.FormsAuthentication.SignOut();
             Session.Abandon();
             Response.Redirect("~/FrmAcceso.aspx");
+        }
+
+        protected void LkbCambPass_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Forms/Seguridad/FrmCambioPass.aspx");
         }
     }
 }

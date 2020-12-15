@@ -138,6 +138,7 @@
     <Content Include="Forms\InventariosCompras\FrmElemento.aspx" />
     <Content Include="Forms\InventariosCompras\FrmReferencia.aspx" />
     <Content Include="Forms\Manto\FrmReporte.aspx" />
+    <Content Include="Forms\Seguridad\FrmCambioPass.aspx" />
     <Content Include="Forms\Seguridad\FrmConfigPantalla.aspx" />
     <Content Include="FrmAcceso.aspx" />
     <Content Include="Forms\Seguridad\FrmInicio.aspx" />
@@ -344,6 +345,13 @@
     </Compile>
     <Compile Include="Forms\Manto\FrmReporte.aspx.designer.cs">
       <DependentUpon>FrmReporte.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Seguridad\FrmCambioPass.aspx.cs">
+      <DependentUpon>FrmCambioPass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Seguridad\FrmCambioPass.aspx.designer.cs">
+      <DependentUpon>FrmCambioPass.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Seguridad\FrmConfigPantalla.aspx.cs">
       <DependentUpon>FrmConfigPantalla.aspx</DependentUpon>

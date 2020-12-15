@@ -83,8 +83,9 @@
             color: #800000;
             background: #f0e7d7;
         }
-
-        
+         .Passw {
+            text-align: right;
+        }        
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -92,7 +93,9 @@
     <h1>77NeoWeb</h1>    
         </div>
     <asp:ImageButton ID="IbnSalir" runat="server" CssClass="menuSalir" ImageUrl="~/images/ExitV1.png"  ToolTip="Salir" OnClick="IbnSalir_Click" OnClientClick="return confirm('¿Desea cerrar la sesión?');"></asp:ImageButton>
-    <div class="Posmenu">
+     <div class="Passw">
+        <asp:LinkButton ID="LkbCambPass" runat="server" CausesValidation="False" Text="Cambio contraseña..." OnClick="LkbCambPass_Click" OnClientClick="return confirm('¿Desea ralizar el cambio de contraseña?');" />
+    </div><div class="Posmenu">
         <asp:Menu ID="MyMenu" runat="server" Font-Names="Verdana" Font-Size="0.8em" ForeColor="#069" StaticSubMenuIndent="10px" Orientation="Vertical" BackColor="#F7F6F3"
             MaximumDynamicDisplayLevels="4" StaticEnableDefaultPopOutImage="false" StaticDisplayLevels="1">
             <StaticMenuStyle CssClass="primaryStaticMenu" />
