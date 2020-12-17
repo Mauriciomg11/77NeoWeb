@@ -1366,7 +1366,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     parameters[1] = new ReportParameter("PrmNit", Session["Nit77Cia"].ToString().Trim());
                     parameters[2] = new ReportParameter("PrmImg", VbLogo, true);
 
-                    string StSql = "EXEC SP_PANTALLA_LibroVuelo 1,@HK,'','','',2,0,0,0,@FI,@FF,'01-01-1900' ";
+                    string StSql = "SET DATEFORMAT DMY; EXEC SP_PANTALLA_LibroVuelo 1,@HK,'','','',2,0,0,0,@FI,@FF,'01-01-1900' ";
                     using (SqlCommand SC = new SqlCommand(StSql, SCnx1))
                     {
                         SC.Parameters.AddWithValue("@HK", DdlHkInfLV.Text.Equals("0") ? "" : DdlHkInfLV.SelectedItem.Text);
@@ -1417,11 +1417,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                     parameters[0] = new ReportParameter("PrmCia", Session["NomCiaPpal"].ToString().Trim());
                     parameters[1] = new ReportParameter("PrmNit", Session["Nit77Cia"].ToString().Trim());
                     parameters[2] = new ReportParameter("PrmImg", VbLogo, true);
-                    string StSql = "EXEC SP_PANTALLA_LibroVuelo 4,@HK,'','','',0,0,0,0,@FI,@FF,'01-01-1900'";
+                    string StSql = "SET DATEFORMAT DMY; EXEC SP_PANTALLA_LibroVuelo 4,@HK,'','','',0,0,0,0,@FI,@FF,'01-01-1900'";
                     using (SqlCommand SC = new SqlCommand(StSql, SCnx1))
                     {
 
-                        SC.Parameters.AddWithValue("@HK", DdlHkInfLV.Text);
+                        SC.Parameters.AddWithValue("@HK", DdlHkInfLV.SelectedItem.Text.Trim());
                         SC.Parameters.AddWithValue("@FI", TxtFIInfLV.Text);
                         SC.Parameters.AddWithValue("@FF", TxtFFInfLV.Text);
                         using (SqlDataAdapter SDA = new SqlDataAdapter())
@@ -2594,9 +2594,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                     CldFecPry.StartDate = Convert.ToDateTime(TxtFecDet.Text);
                     CldFecCump.StartDate = Convert.ToDateTime(TxtFecDet.Text);
                     ActivarCampRte(true, true, "Ingresar");
-                    string vbleUsuGe = ViewState["UsuDefecto"].Equals("S") ? Session["C77U"].ToString() : DdlGenerado.SelectedValue;
-                    DdlGenerado.SelectedValue = vbleUsuGe;
-                    BindDdlRteCondicional(1, 1, "", "", "", "", "", "", "", vbleUsuGe, "", "", "");
+                    string vbleUsuGe = ViewState["UsuDefecto"].Equals("S") ? Session["C77U"].ToString() : DdlGenerado.SelectedValue;                   
+                    BindDdlRteCondicional(1, 1, "", "", "", "", "", "", "", vbleUsuGe.Trim(), "", "", "");
+                    DdlGenerado.SelectedValue = vbleUsuGe.Trim();
                     DdlBusqRte.SelectedValue = "0";
                     DdlBusqRte.Enabled = false;
                     ViewState["PasoOT"] = "";

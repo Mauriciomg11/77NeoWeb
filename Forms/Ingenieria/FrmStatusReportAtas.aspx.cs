@@ -537,8 +537,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     }
                 }
             }
-            catch (Exception)
-            { }
+            catch (Exception Ex)
+            { string b1 = Ex.ToString(); }
         }
         protected void BtnImpStsCompr_Click(object sender, EventArgs e)
         {

@@ -24,14 +24,14 @@ namespace _77NeoWeb.Forms
              }/**/
             if (Session["C77U"] == null)
             {
-                /*Session["C77U"] = ""; */
-                Session["C77U"] = "00000082";
+                Session["C77U"] = "";
+                 /*Session["C77U"] = "00000082";
                 Session["D[BX"] = "DbNeoDempV2";
                 Session["$VR"] = "77NEO01";
                 Session["V$U@"] = "sa";
                 Session["P@$"] = "admindemp";
                 Session["N77U"] = "UsuPrueba";
-                Session["Nit77Cia"] = "811035879-1"; /**/
+                Session["Nit77Cia"] = "811035879-1";*/
             }
             if (!IsPostBack)
             {
@@ -60,7 +60,8 @@ namespace _77NeoWeb.Forms
                     string b2 = tbl["Texto"].ToString();
                     Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());
                     IbnSalir.ToolTip = b1.Trim().Equals("IbnSalir") ? b2.Trim() : IbnSalir.ToolTip;      
-                    LkbCambPass.Text = b1.Trim().Equals("LkbCambPass") ? b2.Trim() : LkbCambPass.Text;                   
+                    LkbCambPass.Text = b1.Trim().Equals("LkbCambPass") ? b2.Trim() : LkbCambPass.Text;
+                    LkbMenu.Text = b1.Trim().Equals("LkbMenu") ? b2.Trim() : LkbMenu.Text;
                 }
                 DataRow[] Result = Idioma.Select("Objeto= 'IbnSalirOnClick'");
                 foreach (DataRow row in Result)
@@ -139,10 +140,13 @@ namespace _77NeoWeb.Forms
             Session.Abandon();
             Response.Redirect("~/FrmAcceso.aspx");
         }
-
         protected void LkbCambPass_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Forms/Seguridad/FrmCambioPass.aspx");
+        }
+        protected void LkbMenu_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Forms/Seguridad/FrmMenu.aspx");
         }
     }
 }

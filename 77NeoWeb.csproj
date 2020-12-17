@@ -135,6 +135,7 @@
     <Content Include="Forms\Ingenieria\FrmOrdenTrabajo.aspx" />
     <Content Include="Forms\Ingenieria\FrmServicioManto.aspx" />
     <Content Include="Forms\Ingenieria\FrmStatusReportAtas.aspx" />
+    <Content Include="Forms\Ingenieria\FrmWorkSheet.aspx" />
     <Content Include="Forms\InventariosCompras\FrmElemento.aspx" />
     <Content Include="Forms\InventariosCompras\FrmReferencia.aspx" />
     <Content Include="Forms\Manto\FrmReporte.aspx" />
@@ -324,6 +325,13 @@
     </Compile>
     <Compile Include="Forms\Ingenieria\FrmStatusReportAtas.aspx.designer.cs">
       <DependentUpon>FrmStatusReportAtas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmWorkSheet.aspx.cs">
+      <DependentUpon>FrmWorkSheet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmWorkSheet.aspx.designer.cs">
+      <DependentUpon>FrmWorkSheet.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\InventariosCompras\FrmElemento.aspx.cs">
       <DependentUpon>FrmElemento.aspx</DependentUpon>

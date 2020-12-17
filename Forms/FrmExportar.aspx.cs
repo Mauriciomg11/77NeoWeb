@@ -39,6 +39,7 @@ namespace _77NeoWeb.Forms
                 //string bnllrr = Request.QueryString["ToolT"].ToString();
                 TxtBusqueda.ToolTip = Request.QueryString["ToolT"].ToString();
                 LblTitulo.Text = Request.QueryString["TT"].ToString();
+                ViewState["PFileName"] = "FrmExportar";
                 if (Request.QueryString["TT"].ToString().Equals("Exportar Referencias"))
                 {
                     Lbl1.Text = "Verificación";

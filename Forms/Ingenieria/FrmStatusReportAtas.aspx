@@ -123,7 +123,7 @@
                         </div>
                         <div class="col-sm-1">
                             <asp:Label ID="LblModifDiaProy" runat="server" CssClass="LblEtiquet" Text="Actualizar" /><br />
-                            <asp:Button ID="BtnModifDiaProy" runat="server" CssClass=" btn btn-success heightCampo" OnClick="BtnModifDiaProy_Click" ToolTip="Modificar dias proyección"/>
+                            <asp:Button ID="BtnModifDiaProy" runat="server" CssClass="btn btn-success heightCampo" OnClick="BtnModifDiaProy_Click" ToolTip="Modificar dias proyección"/>
                         </div>
                     </div>
                     <div class="row">

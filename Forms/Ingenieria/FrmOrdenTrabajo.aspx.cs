@@ -2677,7 +2677,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 string VbTxtSql = "", VbOpcion = "OT";
                 if ((int)ViewState["VentanaBusq"] == 0) // OT  ViewState["VentanaBusq"]
                 {
-
                     CursorIdioma.Alimentar("CurBusqOT", Session["77IDM"].ToString().Trim());
                     if (RdbOTBusqNumOT.Checked == true)
                     { VbOpcion = "OT"; }
