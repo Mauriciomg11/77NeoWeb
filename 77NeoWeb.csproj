@@ -136,6 +136,7 @@
     <Content Include="Forms\Ingenieria\FrmServicioManto.aspx" />
     <Content Include="Forms\Ingenieria\FrmStatusReportAtas.aspx" />
     <Content Include="Forms\Ingenieria\FrmWorkSheet.aspx" />
+    <Content Include="Forms\Ingenieria\Frm_InfIngenieria.aspx" />
     <Content Include="Forms\InventariosCompras\FrmElemento.aspx" />
     <Content Include="Forms\InventariosCompras\FrmReferencia.aspx" />
     <Content Include="Forms\Manto\FrmReporte.aspx" />
@@ -179,6 +180,7 @@
     <Content Include="images\FormulaV2.png" />
     <Content Include="images\HCT.png" />
     <Content Include="images\ImagenLogin.jpg" />
+    <Content Include="images\InventarioV1.png" />
     <Content Include="images\IrV1.png" />
     <Content Include="images\IrV2.png" />
     <Content Include="images\Logo77Neo.png" />
@@ -332,6 +334,13 @@
     </Compile>
     <Compile Include="Forms\Ingenieria\FrmWorkSheet.aspx.designer.cs">
       <DependentUpon>FrmWorkSheet.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\Frm_InfIngenieria.aspx.cs">
+      <DependentUpon>Frm_InfIngenieria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\Frm_InfIngenieria.aspx.designer.cs">
+      <DependentUpon>Frm_InfIngenieria.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\InventariosCompras\FrmElemento.aspx.cs">
       <DependentUpon>FrmElemento.aspx</DependentUpon>
@@ -494,6 +503,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Report\Ing\WSRecurso.rdlc" />
+    <EmbeddedResource Include="Report\Ing\WSTrabajos.rdlc" />
     <EmbeddedResource Include="Report\Ing\Status_Grupos.rdlc" />
     <EmbeddedResource Include="Report\Ing\Status_Compr.rdlc" />
     <EmbeddedResource Include="Report\Ing\Status_Std.rdlc" />
@@ -504,6 +515,7 @@
     <EmbeddedResource Include="Report\Ing\LibroVueloGnral.rdlc" />
     <EmbeddedResource Include="Report\Ing\ServiciosActivos.rdlc" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
