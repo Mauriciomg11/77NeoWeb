@@ -131,6 +131,8 @@
     <Content Include="Forms\FrmExportar.aspx" />
     <Content Include="Forms\Ingenieria\FrmAeronave.aspx" />
     <Content Include="Forms\Ingenieria\FrmAeronaveVirtualNew.aspx" />
+    <Content Include="Forms\Ingenieria\FrmControlContadoresGeneral.aspx" />
+    <Content Include="Forms\Ingenieria\FrmHistoricosContadores.aspx" />
     <Content Include="Forms\Ingenieria\FrmLibroVueloAC.aspx" />
     <Content Include="Forms\Ingenieria\FrmOrdenTrabajo.aspx" />
     <Content Include="Forms\Ingenieria\FrmServicioManto.aspx" />
@@ -171,6 +173,7 @@
     <Content Include="images\ExitV2.png" />
     <Content Include="images\FindV1.png" />
     <Content Include="images\FindV2.png" />
+    <Content Include="images\FindV3.png" />
     <Content Include="images\FlechaIr.png" />
     <Content Include="images\FlechaIrV1.png" />
     <Content Include="images\FlechaRegresar.png" />
@@ -299,6 +302,20 @@
     </Compile>
     <Compile Include="Forms\Ingenieria\FrmAeronaveVirtualNew.aspx.designer.cs">
       <DependentUpon>FrmAeronaveVirtualNew.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmControlContadoresGeneral.aspx.cs">
+      <DependentUpon>FrmControlContadoresGeneral.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmControlContadoresGeneral.aspx.designer.cs">
+      <DependentUpon>FrmControlContadoresGeneral.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmHistoricosContadores.aspx.cs">
+      <DependentUpon>FrmHistoricosContadores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmHistoricosContadores.aspx.designer.cs">
+      <DependentUpon>FrmHistoricosContadores.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Ingenieria\FrmLibroVueloAC.aspx.cs">
       <DependentUpon>FrmLibroVueloAC.aspx</DependentUpon>

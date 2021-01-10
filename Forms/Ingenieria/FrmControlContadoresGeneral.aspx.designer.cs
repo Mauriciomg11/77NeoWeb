@@ -11,7 +11,7 @@ namespace _77NeoWeb.Forms.Ingenieria
 {
 
 
-    public partial class Frm_InfIngenieria
+    public partial class FrmControlContadoresGeneral
     {
 
         /// <summary>
@@ -24,84 +24,129 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label TitForm;
 
         /// <summary>
-        /// Control MlVw.
+        /// Control UplBtnes.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.MultiView MlVw;
+        protected global::System.Web.UI.UpdatePanel UplBtnes;
 
         /// <summary>
-        /// Control Vw0Principal.
+        /// Control BtnProceLibrV.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.View Vw0Principal;
+        protected global::System.Web.UI.WebControls.Button BtnProceLibrV;
 
         /// <summary>
-        /// Control UplRteIngPpl.
+        /// Control BtnAjusExceso.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UplRteIngPpl;
+        protected global::System.Web.UI.WebControls.Button BtnAjusExceso;
 
         /// <summary>
-        /// Control BtnAdvice.
+        /// Control BtnAjusDefect.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnAdvice;
+        protected global::System.Web.UI.WebControls.Button BtnAjusDefect;
 
         /// <summary>
-        /// Control BtnInsRemElem.
+        /// Control BtnAjusDefectMyr.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnInsRemElem;
+        protected global::System.Web.UI.WebControls.Button BtnAjusDefectMyr;
 
         /// <summary>
-        /// Control BtnInsRemSubC.
+        /// Control BtnAjusConve.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnInsRemSubC;
+        protected global::System.Web.UI.WebControls.Button BtnAjusConve;
 
         /// <summary>
-        /// Control BtnPnPlanti.
+        /// Control MlVPI.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnPnPlanti;
+        protected global::System.Web.UI.WebControls.MultiView MlVPI;
 
         /// <summary>
-        /// Control BtnHistCont.
+        /// Control Vw0CorrerContadores.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnHistCont;
+        protected global::System.Web.UI.WebControls.View Vw0CorrerContadores;
 
         /// <summary>
-        /// Control BtnProcIngeni.
+        /// Control UplOTDetTec.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnProcIngeni;
+        protected global::System.Web.UI.UpdatePanel UplOTDetTec;
+
+        /// <summary>
+        /// Control LblTitProcCont.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblTitProcCont;
+
+        /// <summary>
+        /// Control LblSubTitCorreContLVSinProc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblSubTitCorreContLVSinProc;
+
+        /// <summary>
+        /// Control LbxLibrosSinProc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox LbxLibrosSinProc;
+
+        /// <summary>
+        /// Control LblSubTitCorrContHK.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblSubTitCorrContHK;
+
+        /// <summary>
+        /// Control DdlCorrContHK.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DdlCorrContHK;
     }
 }

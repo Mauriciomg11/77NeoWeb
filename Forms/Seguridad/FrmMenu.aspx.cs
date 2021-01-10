@@ -20,11 +20,18 @@ namespace _77NeoWeb.Forms
             if (Session["Login77"] == null)
             {
                 Response.Redirect("~/FrmAcceso.aspx");
-            }
+            }/**/
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                // Session["C77U"] = "00000082";
+                /* Session["C77U"] = "00000082"; //00000133
+                 Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                 Session["$VR"] = "77NEO01";
+                 Session["V$U@"] = "sa";
+                 Session["P@$"] = "admindemp";
+                 Session["N77U"] = Session["D[BX"];
+                 Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                 Session["77IDM"] = "5"; // 4 español | 5 ingles  */
             }
             if (!IsPostBack)
             {
@@ -86,7 +93,7 @@ namespace _77NeoWeb.Forms
         }
         void BindData(string VbDesmenu)
         {
-            DataTable dtbl = new DataTable();           
+            DataTable dtbl = new DataTable();
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
@@ -110,11 +117,9 @@ namespace _77NeoWeb.Forms
                     GrdDatos.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
                 }
             }
-           
         }
         protected void PerfilesGrid()
         {
-            
             foreach (GridViewRow Row in GrdDatos.Rows)
             {
 
@@ -134,7 +139,7 @@ namespace _77NeoWeb.Forms
                         Row.Cells[10].Controls.Remove(imgD);
                     }
                 }
-            }            
+            }
         }
         protected void IbtConsultar_Click(object sender, ImageClickEventArgs e)
         {
@@ -164,7 +169,16 @@ namespace _77NeoWeb.Forms
                         sqlCmd.ExecuteNonQuery();
                         BindData(TxtBusqueda.Text);
                     }
-                }               
+                }
+                if (e.CommandName.Equals("Abrir"))
+                {
+                    GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                    string VbIdx = GrdDatos.DataKeys[gvr.RowIndex].Values["RutaFormulario"].ToString();
+                    if (VbIdx != String.Empty && !VbIdx.Equals("#"))
+                    {
+                        Response.Redirect(VbIdx);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -212,8 +226,6 @@ namespace _77NeoWeb.Forms
             }
             catch (Exception ex)
             {
-                //ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "IdntificadorBloqueScript", "alert('Error en el proceso de edición')", true);
-
                 ClsConexion ClsUE = new ClsConexion();
                 ClsUE.UpdateError(Session["C77U"].ToString(), "FrmMenu", "Update", "0", ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
             }
@@ -230,7 +242,6 @@ namespace _77NeoWeb.Forms
                 Cnx.BaseDatos(Session["D[BX"].ToString(), Session["$VR"].ToString(), Session["V$U@"].ToString(), Session["P@$"].ToString());
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
-
                     sqlCon.Open();
                     string query = "DELETE FROM TblUsrFormulario WHERE CodIdFormulario=@id";
                     SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
@@ -242,8 +253,6 @@ namespace _77NeoWeb.Forms
             }
             catch (Exception ex)
             {
-                // ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "IdntificadorBloqueScript", "alert('Error en el proceso de eliminación')", true);
-
                 ClsConexion ClsUE = new ClsConexion();
                 ClsUE.UpdateError(Session["C77U"].ToString(), "FrmMenu", "DELETE", "0", ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
             }
@@ -291,7 +300,6 @@ namespace _77NeoWeb.Forms
                     e.Row.Cells[10].Controls.Remove(imgD);
                 }
             }
-
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 int sangr = Convert.ToInt32(DataBinder.Eval(e.Row.DataItem, "Sangria").ToString());
@@ -343,6 +351,8 @@ namespace _77NeoWeb.Forms
         {
             GrdDatos.PageIndex = e.NewPageIndex;
             BindData(TxtBusqueda.Text);
-        }
+        }             
+        protected void IbtAbrir_Click(object sender, ImageClickEventArgs e)
+        {}
     }
 }

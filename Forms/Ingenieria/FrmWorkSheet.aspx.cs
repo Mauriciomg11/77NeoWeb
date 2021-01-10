@@ -317,9 +317,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             DataTable DtB = new DataTable();
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
-            {
-                CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
-                CursorIdioma.Alimentar("CurGridWS", Session["77IDM"].ToString().Trim());
+            {                
                 string VbTxtSql = "EXEC SP_PANTALLA_WorkSheet 7,'','','','',@Prmtr,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
