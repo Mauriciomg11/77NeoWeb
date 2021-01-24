@@ -695,7 +695,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         { FileUpCLV.Enabled = true; cargarLV.Enabled = true; }
                         else { FileUpCLV.Enabled = false; cargarLV.Enabled = false; }
                         ViewState["TotalPasSal"] = SDR["TotalPasSal"].ToString();
-                        ViewState["SNApu"] = HttpUtility.HtmlDecode(SDR["CodBase"].ToString().Trim());
+                        ViewState["SNApu"] = HttpUtility.HtmlDecode(SDR["SNAPU"].ToString().Trim());
                         ViewState["HraMin"] = HttpUtility.HtmlDecode(SDR["Hr_Mn"].ToString().Trim());
                         ViewState["TtlRtes"] = Convert.ToInt32(SDR["TtlRtes"].ToString());
                         if (SDR["Tipo"].ToString().Trim().Equals("AF"))
@@ -1780,7 +1780,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 Transac.Rollback();
                                 Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString(), "DELETE DETLLE LIBRO VUELO", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                             }
-
                         }
                     }
                 }

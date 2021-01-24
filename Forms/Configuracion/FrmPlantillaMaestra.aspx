@@ -82,7 +82,7 @@
         function myFuncionddl() {
             $('#<%=DdlFlota.ClientID%>').chosen();
             $('[id*=DdlPscPP],[id*=DdlPnPP]').chosen();
-           
+
         }
     </script>
 </asp:Content>
@@ -103,10 +103,57 @@
                             <asp:ImageButton ID="IbtExpExcel" runat="server" ToolTip="Exportar" CssClass=" BtnExpExcel" ImageUrl="~/images/ExcelV1.png" OnClick="IbtExpExcel_Click" /></td>
                 </tr>
             </table>
-            <asp:Label ID="LblNumMot" runat="server" Text="ATAS" CssClass="LblATA LblTextoBusq"></asp:Label>
-            <asp:ListBox ID="LstCapitulo" runat="server" CssClass="ListCap" Font-Size="10px" OnSelectedIndexChanged="LstCapitulo_SelectedIndexChanged" AutoPostBack="True"></asp:ListBox>
+            <asp:Label ID="LblNumMot" runat="server" Text="ATAS" CssClass="LblATA LblTextoBusq"/>
+            <asp:ListBox ID="LstCapitulo" runat="server" CssClass="ListCap" Font-Size="10px" OnSelectedIndexChanged="LstCapitulo_SelectedIndexChanged" AutoPostBack="True"/>
             <div class="DivGrid DivContendorGrid">
                 <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdSubCapituloN3,SubCapitulo"
+                    CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="3"
+                    OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit"
+                     OnRowDeleting="GrdDatos_RowDeleting" OnPageIndexChanging="GrdDatos_PageIndexChanging" OnRowDataBound="GrdDatos_RowDataBound" OnSelectedIndexChanged="GrdDatos_SelectedIndexChanged">
+                    <Columns>
+                        <asp:TemplateField HeaderText="SubATA">
+                            <ItemTemplate>
+                                <asp:Label Text='<%# Eval("CodSubCapituloN3") %>' runat="server" />
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="TxtCodSubN3" Text='<%# Eval("CodSubCapituloN3") %>' runat="server" Enabled="false" Width="40px" />
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                <asp:TextBox ID="TxtCodSubN3PP" runat="server" MaxLength="2" Width="40px" />
+                            </FooterTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Descripción">
+                            <ItemTemplate>
+                                <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" />
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="TxtDesc" Text='<%# Eval("Descripcion") %>' runat="server" Width="200px" />
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                <asp:TextBox ID="TxtDescPP" runat="server" Width="200px" />
+                            </FooterTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField FooterStyle-Width="13%">
+                            <ItemTemplate>
+                                <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />
+                                <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:ImageButton ID="IbtUpdate" CssClass="BotonUpdateGrid" ImageUrl="~/images/Save.png" runat="server" CommandName="Update" ToolTip="Actualizar" />
+                                <asp:ImageButton ID="IbtCancel" CssClass="BotonCancelGrid" ImageUrl="~/images/Cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancelar" />
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                <asp:ImageButton ID="IbtAddNew" CssClass="BotonNewGrid" ImageUrl="~/images/AddNew.png" runat="server" CommandName="AddNew" ToolTip="Nuevo" />
+                            </FooterTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                    <FooterStyle CssClass="GridFooterStyle" />
+                    <HeaderStyle CssClass="GridCabecera" />
+                    <RowStyle CssClass="GridRowStyle" />
+                    <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
+                </asp:GridView>
+                <%--<asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdSubCapituloN3,SubCapitulo"
                     CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="3"
                     OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit"
                     OnRowDeleting="GrdDatos_RowDeleting" OnRowDataBound="GrdDatos_RowDataBound" OnPageIndexChanging="GrdDatos_PageIndexChanging"
@@ -161,11 +208,12 @@
                     <RowStyle CssClass="GridRowStyle" />
                     <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                     <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
-                </asp:GridView>
+                </asp:GridView>--%>
             </div>
         </ContentTemplate>
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="LstCapitulo" EventName="SelectedIndexChanged" />
+            <asp:PostBackTrigger ControlID="IbtExpExcel" />
         </Triggers>
     </asp:UpdatePanel>
     <asp:UpdatePanel ID="UpPn2" runat="server" UpdateMode="Conditional">
@@ -210,7 +258,7 @@
                                 <asp:TextBox ID="TxtNumEPP" runat="server" Width="20px" OnKeyPress="javascript:return solonumeros(event)" />
                             </FooterTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField FooterStyle-Width="10%">
+                        <asp:TemplateField FooterStyle-Width="13%">
                             <ItemTemplate>
                                 <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />
                                 <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
@@ -228,7 +276,7 @@
                     <HeaderStyle CssClass="GridCabecera" />
                     <RowStyle CssClass="GridRowStyle" />
                     <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
                 </asp:GridView>
             </div>
             <div class="DivGridPsc DivContendorGrid">
@@ -288,7 +336,7 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField FooterStyle-Width="30px">
-                             <ItemTemplate>
+                            <ItemTemplate>
                                 <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
                             </ItemTemplate>
                             <FooterTemplate>
