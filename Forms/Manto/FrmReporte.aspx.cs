@@ -656,7 +656,7 @@ namespace _77NeoWeb.Forms.Manto
             TxtOtSec.Text = "0";
             TxtNroRte.Text = "0";
             TxtConsTall.Text = "";
-            DdlTipRte.Text = "0";
+            DdlTipRte.Text = "7777";
             DdlFuente.Text = "";
             TxtCas.Text = "";
             DdlTall.Text = "";
@@ -711,7 +711,7 @@ namespace _77NeoWeb.Forms.Manto
                     ViewState["Validar"] = "N";
                     return;
                 }
-                if (DdlTipRte.Text.Trim().Equals("0"))
+                if (DdlTipRte.Text.Trim().Equals("7777"))
                 {
                     ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar un tipo reporte')", true);
                     ViewState["Validar"] = "N";

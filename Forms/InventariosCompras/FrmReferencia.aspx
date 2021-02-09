@@ -102,7 +102,8 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1>Configuración de Referencias</h1>
+    <h1>
+        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo"></asp:Label></h1>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPnlCampos" runat="server">
@@ -131,20 +132,27 @@
                             </td>
                             <td width="30%" rowspan="6">
                                 <asp:Panel ID="Panel2" runat="server" CssClass="PanelMaestroArt">
-                                    <h6 class="TituloMA">Maestro de artículo</h6>
+                                    <%--<h6 class="TituloMA">Maestro de artículo</h6>--%>
+                                    <h6 class="TextoSuperior">
+                                        <asp:Label ID="LblTitMaesArt" runat="server" Text="Maestro de artículo" /></h6>
                                     <table width="100%">
                                         <tr>
-                                            <td width="5%" class="LblEtiquet">Stock Min:</td>
-                                            <td width="50%">
+                                            <td width="5%">
+                                                <asp:Label ID="LblStokMin" runat="server" CssClass="LblEtiquet" Text="Stock Min:" /></td>
+                                            <td width="10%">
                                                 <asp:TextBox ID="TxtStockM" runat="server" CssClass="form-control Campos" Enabled="false" Width="100%" /></td>
-                                            <td width="25%" class="LblEtiquet">Verificado:</td>
+                                            <td width="45%">
+                                                <asp:CheckBox ID="CkbVerif" runat="server" CssClass="LblEtiquet" Text="Verificado" Enabled="false" />
+                                            </td>
+                                            <%-- <td width="25%" class="LblEtiquet">Verificado:</td>
                                             <td width="20%">
-                                                <asp:CheckBox ID="CkbVerif" runat="server" Enabled="false" /></td>
+                                                <asp:CheckBox ID="CkbVerif" runat="server" Enabled="false" /></td>--%>
                                         </tr>
                                         <tr>
-                                            <td class="LblEtiquet">Categoría:</td>
+                                            <td>
+                                                <asp:Label ID="LblCateg" runat="server" CssClass="LblEtiquet" Text="Categoría:" /></td>
                                             <td colspan="3">
-                                                <asp:DropDownList ID="DdlCat" runat="server" CssClass="form-control Campos" Font-Size="10px" Enabled="false" Width="100%"></asp:DropDownList></td>
+                                                <asp:DropDownList ID="DdlCat" runat="server" CssClass="form-control Campos" Font-Size="10px" Enabled="false" Width="100%" /></td>
                                             <td>
                                         </tr>
                                     </table>
@@ -174,44 +182,51 @@
                                         <HeaderStyle CssClass="GridCabecera" />
                                         <RowStyle CssClass="GridRowStyle" />
                                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                     </asp:GridView>
                                 </asp:Panel>
                             </td>
                         </tr>
                         <tr>
-                            <td class="LblEtiquet">Modelo:</td>
+                            <td>
+                                <asp:Label ID="LblModelo" runat="server" CssClass="LblEtiquet" Text="Modelo:" /></td>
                             <td>
                                 <asp:DropDownList ID="DdlMod" runat="server" CssClass="form-control Campos" Font-Size="10px" Enabled="false" OnTextChanged="DdlMod_TextChanged" AutoPostBack="true"></asp:DropDownList></td>
-                            <td class="LblEtiquet">U. M. Despacho:</td>
                             <td>
-                                <asp:DropDownList ID="DdlUM" runat="server" CssClass="form-control Campos" Font-Size="10px" Enabled="false"></asp:DropDownList></td>
-                            <td class="LblEtiquet">Ident. Elemento:</td>
+                                <asp:Label ID="LblUndDesp" runat="server" CssClass="LblEtiquet" Text="U. M. Despacho:" /></td>
                             <td>
-                                <asp:DropDownList ID="DdlIdent" runat="server" CssClass="form-control Campos" Font-Size="10px" Enabled="false"></asp:DropDownList></td>
+                                <asp:DropDownList ID="DdlUM" runat="server" CssClass="form-control Campos" Font-Size="10px" Enabled="false" /></td>
+                            <td>
+                                <asp:Label ID="LblIdentElem" runat="server" CssClass="LblEtiquet" Text="Ident. Elemento:" /></td>
+                            <td>
+                                <asp:DropDownList ID="DdlIdent" runat="server" CssClass="form-control Campos" Font-Size="10px" Enabled="false" /></td>
                         </tr>
                         <tr>
-                            <td class="LblEtiquet">Descripcion:</td>
-                            <td colspan="3">
-                                <asp:TextBox ID="TxtDesc" runat="server" CssClass="form-control Campos" MaxLength="240" Enabled="false"></asp:TextBox></td>
-                            <td class="LblEtiquet">Tipo:</td>
                             <td>
-                                <asp:DropDownList ID="DdlTipo" runat="server" CssClass="form-control Campos" Font-Size="10px" Enabled="false"></asp:DropDownList></td>
+                                <asp:Label ID="LblDescripc" runat="server" CssClass="LblEtiquet" Text="Descripcion:" /></td>
+                            <td colspan="3">
+                                <asp:TextBox ID="TxtDesc" runat="server" CssClass="form-control Campos" MaxLength="240" Enabled="false" /></td>
+                            <td>
+                                <asp:Label ID="LblTipo" runat="server" CssClass="LblEtiquet" Text="Tipo:" /></td>
+                            <td>
+                                <asp:DropDownList ID="DdlTipo" runat="server" CssClass="form-control Campos" Font-Size="10px" Enabled="false" /></td>
                         </tr>
                         <tr>
-                            <td class="LblEtiquet">Descripcion Español:</td>
-                            <td colspan="3">
-                                <asp:TextBox ID="TxtDescEsp" runat="server" CssClass="form-control Campos" TextMode="MultiLine" MaxLength="240" Enabled="false"></asp:TextBox></td>
-                            <td class="LblEtiquet">Información adicional:</td>
                             <td>
-                                <asp:TextBox ID="TxtInfAd" runat="server" CssClass="form-control Campos" TextMode="MultiLine" MaxLength="200" Enabled="false"></asp:TextBox></td>
+                                <asp:Label ID="LblDescEsp" runat="server" CssClass="LblEtiquet" Text="Descripcion Español:" /></td>
+                            <td colspan="3">
+                                <asp:TextBox ID="TxtDescEsp" runat="server" CssClass="form-control Campos" TextMode="MultiLine" MaxLength="240" Enabled="false" /></td>
+                            <td>
+                                <asp:Label ID="LblInfoAdic" runat="server" CssClass="LblEtiquet" Text="Información adicional:" /></td>
+                            <td>
+                                <asp:TextBox ID="TxtInfAd" runat="server" CssClass="form-control Campos" TextMode="MultiLine" MaxLength="200" Enabled="false" /></td>
                         </tr>
                         <tr>
                             <td>
                                 <table>
                                     <tr>
                                         <td>
-                                            <asp:Label ID="Label1" runat="server" CssClass="LblEtiquet" Text="Reparable"></asp:Label></td>
+                                            <asp:Label ID="LblReparab" runat="server" CssClass="LblEtiquet" Text="Reparable" /></td>
                                     </tr>
                                 </table>
                             </td>
@@ -219,11 +234,11 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <asp:Label ID="LblSi" runat="server" CssClass="LblEtiquet" Text="Sí"></asp:Label></td>
+                                            <asp:Label ID="LblSi" runat="server" CssClass="LblEtiquet" Text="Sí" /></td>
                                         <td>
                                             <asp:RadioButton ID="RdbSi" runat="server" TextAlign="Left" GroupName="Repa" Enabled="false" /></td>
                                         <td>
-                                            <asp:Label ID="LblNo" runat="server" CssClass="LblEtiquet" Text="No"></asp:Label></td>
+                                            <asp:Label ID="LblNo" runat="server" CssClass="LblEtiquet" Text="No" /></td>
                                         <td>
                                             <asp:RadioButton ID="RdbNo" runat="server" TextAlign="Left" GroupName="Repa" Enabled="false" /></td>
                                     </tr>
@@ -241,9 +256,9 @@
                                         <td>
                                             <asp:CheckBox ID="CkbMay" runat="server" CssClass="LblEtiquet" Text="Mayor" Enabled="false" /></td>
                                         <td>
-                                            <asp:CheckBox ID="CkbApu" runat="server" CssClass="LblEtiquet" Text="Apu" Enabled="false" /></td>
+                                            <asp:CheckBox ID="CkbApu" runat="server" CssClass="LblEtiquet" Text="&nbsp Apu" Enabled="false" /></td>
                                         <td>
-                                            <asp:CheckBox ID="CkbSub" runat="server" CssClass="LblEtiquet" Text="Sub Comp" Enabled="false" /></td>
+                                            <asp:CheckBox ID="CkbSub" runat="server" CssClass="LblEtiquet" Text="&nbsp Sub Comp" Enabled="false" /></td>
                                         <td>
                                             <asp:CheckBox ID="CkbNiF" runat="server" Text="Activo Nif: " ForeColor="#990000" TextAlign="Left" Enabled="false" Visible="false" /></td>
                                     </tr>
@@ -387,7 +402,7 @@
                                     <HeaderStyle CssClass="GridCabecera" />
                                     <RowStyle CssClass="GridRowStyle" />
                                     <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                 </asp:GridView>
                             </td>
                             <td>
@@ -417,7 +432,7 @@
                                     <HeaderStyle CssClass="GridCabecera" />
                                     <RowStyle CssClass="GridRowStyle" />
                                     <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                 </asp:GridView>
                             </td>
                         </tr>
@@ -425,29 +440,24 @@
                 </div>
             </asp:Panel>
             <asp:Panel ID="PnlBusq" runat="server" Visible="false">
-                <h6 class="TextoSuperior">Opciones de búsqueda</h6>
+                <h6 class="TextoSuperior">
+                    <asp:Label ID="LblTitOpcBusq" runat="server" Text="Opciones de búsqueda" /></h6>
                 <table class="TablaBusqueda">
-                    <tr>
+                    <tr>                       
                         <td width="10%">
-                            <asp:Label ID="Label3" runat="server" CssClass="LblEtiquet" Text="Referencia"></asp:Label></td>
+                            <asp:RadioButton ID="RdbBusqR" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="Referencia"/></td>                       
                         <td width="10%">
-                            <asp:RadioButton ID="RdbBusqR" runat="server" GroupName="Busq" /></td>
-                        <td width="5%">
-                            <asp:Label ID="Label4" runat="server" CssClass="LblEtiquet" Text="P/N"></asp:Label></td>
+                            <asp:RadioButton ID="RdbBusqP" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="&nbsp P/N"/></td>                      
                         <td width="10%">
-                            <asp:RadioButton ID="RdbBusqP" runat="server" GroupName="Busq" /></td>
-                        <td width="10%">
-                            <asp:Label ID="Label5" runat="server" CssClass="LblEtiquet" Text="Descripción"></asp:Label></td>
-                        <td width="10%">
-                            <asp:RadioButton ID="RdbBusqD" runat="server" GroupName="Busq" /></td>
+                            <asp:RadioButton ID="RdbBusqD" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="Descripción"/></td>
                     </tr>
                 </table>
                 <table class="TablaBusqueda">
                     <tr>
                         <td>
-                            <asp:Label ID="Label2" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
+                            <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
                         <td>
-                            <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
+                            <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
                         <td>
                             <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                         <td>
@@ -463,21 +473,23 @@
                         <RowStyle CssClass="GridRowStyle" />
                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                         <Columns>
-                            <asp:CommandField HeaderText="Asignar" SelectText="Asignar" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                            <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
                         </Columns>
-                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                     </asp:GridView>
                 </div>
             </asp:Panel>
         </ContentTemplate>
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="DdlGrupo" EventName="TextChanged" />
+            <asp:PostBackTrigger ControlID="BtnInformes" />
         </Triggers>
     </asp:UpdatePanel>
     <asp:UpdatePanel ID="UpPnlUndCompra" runat="server">
         <ContentTemplate>
             <asp:Panel ID="PnlUnidadCompra" runat="server" Visible="false">
-                <h6 class="TextoSuperior">Asignar unidad de compra</h6>
+                <h6 class="TextoSuperior">
+                    <asp:Label ID="LblTitAsigUndMed" runat="server" Text="Asignar unidad de compra" /></h6>
                 <asp:ImageButton ID="IbtCerrarUMC" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarUMC_Click" ImageAlign="Right" />
                 <div class=" DivUndCom DivContendorGrid">
                     <asp:Label ID="LblCambioPN" runat="server" CssClass="LblEtiquet" Font-Bold="true" Font-Size="16px"></asp:Label>
@@ -543,33 +555,30 @@
                 </div>
             </asp:Panel>
             <asp:Panel ID="PnlCambioRef" runat="server" Visible="false">
-                <h6 class="TextoSuperior">Cambio de referencia</h6>
+                <h6 class="TextoSuperior">
+                    <asp:Label ID="LblTitCambRef" runat="server" Text="Cambio de referencia" /></h6>
                 <table class="TablaBusqueda">
-                    <tr>
+                    <tr>                     
                         <td width="10%">
-                            <asp:Label ID="LblRefCRef" runat="server" CssClass="LblEtiquet" Text="Referencia"></asp:Label></td>
+                            <asp:RadioButton ID="RdbRefCRef" runat="server" CssClass="LblEtiquet" GroupName="CambRef" Text="Referencia"/></td>
                         <td width="10%">
-                            <asp:RadioButton ID="RdbRefCRef" runat="server" GroupName="CambRef" /></td>
-                        <td width="5%">
-                            <asp:Label ID="LblRBPNCRef" runat="server" CssClass="LblEtiquet" Text="P/N"></asp:Label></td>
-                        <td width="10%">
-                            <asp:RadioButton ID="RdbPnCRef" runat="server" GroupName="CambRef" /></td>
+                            <asp:RadioButton ID="RdbPnCRef" runat="server" CssClass="LblEtiquet" GroupName="CambRef" Text="&nbsp P/N"/></td>
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <asp:Label ID="LblPNCRef" runat="server" CssClass="LblEtiquet" Font-Bold="true" Font-Size="16px"></asp:Label></td>
+                            <asp:Label ID="LblPNCRef" runat="server" CssClass="LblEtiquet" Font-Bold="true" Font-Size="16px" /></td>
                     </tr>
                 </table>
                 <table class="TablaBusqueda">
                     <tr>
                         <td>
-                            <asp:Label ID="Label6" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
+                            <asp:Label ID="LblBusqCambRef" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
                         <td>
-                            <asp:TextBox ID="TxtCambRef" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
+                            <asp:TextBox ID="TxtCambRef" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
                         <td>
                             <asp:ImageButton ID="IbtConsultarCambRef" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultarCambRef_Click" /></td>
                         <td>
-                            <asp:ImageButton ID="IbtApliarCambRef" runat="server" ToolTip="Aplicar" CssClass="BtnAceptar" OnClick="IbtApliarCambRef_Click" OnClientClick="javascript:return confirm('Desea asignar el P/N a la nueva referencia?');" /></td>
+                            <asp:ImageButton ID="IbtApliarCambRef" runat="server" ToolTip=" " CssClass="BtnAceptar"  ImageUrl="~/images/Save.png" OnClick="IbtApliarCambRef_Click" OnClientClick="javascript:return confirm('Desea asignar el P/N a la nueva referencia?');" /></td>
                         <td>
                             <asp:ImageButton ID="IbtCerrarCambRef" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarCambRef_Click" /></td>
                     </tr>
@@ -578,15 +587,15 @@
                     <asp:Label ID="LblRefCambRef" runat="server" CssClass="LblEtiquet" Font-Bold="true" Font-Size="24px"></asp:Label><br />
                     <asp:GridView ID="GrdCambioRef" runat="server" EmptyDataText="No existen registros ..!"
                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="6"
-                        OnSelectedIndexChanged="GrdCambioRef_SelectedIndexChanged" OnPageIndexChanging="GrdCambioRef_PageIndexChanging" OnRowDataBound="GrdCambioRef_RowDataBound">
+                        OnSelectedIndexChanged="GrdCambioRef_SelectedIndexChanged" OnPageIndexChanging="GrdCambioRef_PageIndexChanging">
                         <FooterStyle CssClass="GridFooterStyle" />
                         <HeaderStyle CssClass="GridCabecera" />
                         <RowStyle CssClass="GridRowStyle" />
                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                         <Columns>
-                            <asp:CommandField HeaderText="Selección" SelectText="seleccionar" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                            <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
                         </Columns>
-                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                     </asp:GridView>
                 </div>
             </asp:Panel>

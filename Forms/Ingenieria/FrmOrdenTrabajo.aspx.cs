@@ -190,7 +190,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 SC.Parameters.AddWithValue("@F2", "FrmReporte");
                 SC.Parameters.AddWithValue("@F3", "0");
                 SC.Parameters.AddWithValue("@F4", "0");
-                sqlCon.Open();
+                sqlCon.Open();https://localhost:44350/Forms/Ingenieria/FrmOrdenTrabajo.aspx.cs
                 SqlDataReader tbl = SC.ExecuteReader();
                 while (tbl.Read())  //Todos los objetos
                 {
@@ -392,7 +392,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     LlTitSnOnOff.Text = tbl["Objeto"].ToString().Trim().Equals("LlTitSnOnOff") ? tbl["Texto"].ToString().Trim() : LlTitSnOnOff.Text;
                     GrdSnOnOff.Columns[0].HeaderText = tbl["Objeto"].ToString().Trim().Equals("Fecha") ? tbl["Texto"].ToString().Trim() : GrdSnOnOff.Columns[0].HeaderText;
                     GrdSnOnOff.Columns[1].HeaderText = tbl["Objeto"].ToString().Trim().Equals("RazonRemoc") ? tbl["Texto"].ToString().Trim() : GrdSnOnOff.Columns[1].HeaderText;
-                    GrdSnOnOff.Columns[2].HeaderText = tbl["Objeto"].ToString().Trim().Equals("Fecha") ? tbl["Texto"].ToString().Trim() : GrdSnOnOff.Columns[2].HeaderText;
+                    GrdSnOnOff.Columns[2].HeaderText = tbl["Objeto"].ToString().Trim().Equals("Posicion") ? tbl["Texto"].ToString().Trim() : GrdSnOnOff.Columns[2].HeaderText;
                     GrdSnOnOff.Columns[5].HeaderText = tbl["Objeto"].ToString().Trim().Equals("Descripcion") ? tbl["Texto"].ToString().Trim() : GrdSnOnOff.Columns[5].HeaderText;
                     GrdSnOnOff.Columns[8].HeaderText = tbl["Objeto"].ToString().Trim().Equals("Cantidad") ? tbl["Texto"].ToString().Trim() : GrdSnOnOff.Columns[8].HeaderText;
                     //****************************************************************** Herramienta ************************************************************
@@ -1483,7 +1483,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 GrdOTDetTec.DataBind();
                                 GrdOTDetTec.Rows[0].Cells.Clear();
                                 GrdOTDetTec.Rows[0].Cells.Add(new TableCell());
-                                GrdOTDetTec.Rows[0].Cells[0].Text = "Sin técnicos asignados!";
+                                GrdOTDetTec.Rows[0].Cells[0].Text = "";
                                 GrdOTDetTec.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
                             }
                         }
@@ -2212,7 +2212,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
                         VBQuery = string.Format("EXEC SP_TablasIngenieria 9,@PN,@Usu,@CodPri,@CodTipCod,@IPC,@DescPN,'','','UPDATE',@IdDetRsva,@OT,@Cant,@CodHK,@IdRte,0,'01-01-1','02-01-1','03-01-1'");
-
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
@@ -2615,6 +2614,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void IbtOTGuardarCargaMax_Click(object sender, ImageClickEventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
             string VbOTRva = "", VbCodHK = "", VbNumRte = "";
             if ((int)ViewState["VentanaRva"] == 0)
             { VbOTRva = TxtOt.Text; VbCodHK = DdlOTAero.Text; VbNumRte = "0"; }
@@ -4049,7 +4049,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtOtSec.Text = "0";
             TxtNroRte.Text = "0";
             TxtConsTall.Text = "";
-            DdlTipRte.Text = "0";
+            DdlTipRte.Text = "7777";
             DdlFuente.Text = "";
             TxtCas.Text = "";
             DdlTall.Text = "";
@@ -4109,7 +4109,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ViewState["Validar"] = "N";
                     return;
                 }
-                if (DdlTipRte.Text.Trim().Equals("0"))
+                if (DdlTipRte.Text.Trim().Equals("7777"))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens03'");
                     foreach (DataRow row in Result)
@@ -4730,7 +4730,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                             SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@Rte", Convert.ToInt32(TxtNroRte.Text));
                             SC.Parameters.AddWithValue("@HK", Convert.ToInt32(DdlAeroRte.Text));
-                            //string VbMensj = (string)SC.ExecuteScalar();
                             var VbMensj = SC.ExecuteScalar();
                             if (!VbMensj.Equals("S"))
                             {
@@ -4922,6 +4921,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
                 DataTable DT = new DataTable();
                 Cnx.SelecBD();
                 using (SqlConnection SCX2 = new SqlConnection(Cnx.GetConex()))
@@ -4947,7 +4947,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 GrdSnOnOff.DataBind();
                                 GrdSnOnOff.Rows[0].Cells.Clear();
                                 GrdSnOnOff.Rows[0].Cells.Add(new TableCell());
-                                GrdSnOnOff.Rows[0].Cells[0].Text = "Sin elementos!";
+                                DataRow[] Result = Idioma.Select("Objeto= 'SinRegistros'");
+                                foreach (DataRow row in Result)
+                                { GrdSnOnOff.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
                                 GrdSnOnOff.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
                             }
                         }
@@ -5140,7 +5142,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens30'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//Debe ingresar una P/N ON o OFF')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//Debe ingresar un P/N ON o OFF')", true);
                     return;
 
                 }
@@ -5228,6 +5230,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DataRow[] Result = Idioma.Select("Objeto= 'RteMens30'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//Debe ingresar una P/N ON o OFF')", true);
+                return;
             }
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
@@ -5278,6 +5281,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GrdSnOnOff_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
             string VBQuery;
             int Idx = e.RowIndex;
@@ -5484,6 +5488,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
                 DataTable DT = new DataTable();
                 Cnx.SelecBD();
                 using (SqlConnection SCX2 = new SqlConnection(Cnx.GetConex()))
@@ -5509,7 +5514,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 GrdHta.DataBind();
                                 GrdHta.Rows[0].Cells.Clear();
                                 GrdHta.Rows[0].Cells.Add(new TableCell());
-                                GrdHta.Rows[0].Cells[0].Text = "Sin herramientas!";
+                                DataRow[] Result = Idioma.Select("Objeto= 'SinRegistros'");
+                                foreach (DataRow row in Result)
+                                { GrdHta.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
                                 GrdHta.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
                             }
                         }
@@ -5683,6 +5690,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GrdHta_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
             int Idx = e.RowIndex;
             int VblId = Convert.ToInt32(GrdHta.DataKeys[Idx].Value.ToString());
@@ -5756,6 +5764,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GrdHta_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
             string VBQuery;
             int Idx = e.RowIndex;
@@ -5878,10 +5887,10 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     if (imgE != null)
                     {
-                        imgE.Enabled = true; DataRow[] Result = Idioma.Select("Objeto='IbtEdit'");
+                        imgE.Enabled = true; 
+                        DataRow[] Result = Idioma.Select("Objeto='IbtEdit'");
                         foreach (DataRow RowIdioma in Result)
                         { imgE.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
-
                     }
 
                     if (imgD != null)

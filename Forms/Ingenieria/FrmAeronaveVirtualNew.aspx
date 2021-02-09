@@ -167,8 +167,25 @@
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="TxtTitContadores" runat="server" Text="Contadores" /></h6>
                                 <div class="DivContendorGrid">
-                                    <asp:GridView ID="GrdHisContInsElem" runat="server" EmptyDataText="Sin histórico..!"
+                                    <asp:GridView ID="GrdHisContInsElem" runat="server" AutoGenerateColumns="False" EmptyDataText="Sin histórico..!"
                                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Contador" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblCodC" Text='<%# Eval("CodContador") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Fecha" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblFec" Text='<%# Eval("Fecha") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Valor" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblValor" Text='<%# Eval("Valor") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
                                         <FooterStyle CssClass="GridFooterStyle" />
                                         <HeaderStyle CssClass="GridCabecera" />
                                         <RowStyle CssClass="GridRowStyle" />
@@ -188,9 +205,9 @@
                                         <RowStyle CssClass="GridRowStyle" />
                                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                                         <Columns>
-                                            <asp:CommandField HeaderText="Selección" SelectText="Instalar" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                                            <asp:CommandField HeaderText="Select" SelectText="Install" ShowSelectButton="True" HeaderStyle-Width="33px" />
                                         </Columns>
-                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                     </asp:GridView>
                                 </div>
                                 <div class="DivContendorGrid">
@@ -279,12 +296,43 @@
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAeroVirtual" runat="server" Text="Ubicaciones con elementos instalados y pendientes por instalar" /></h6>
                     <asp:ImageButton ID="IbtCerrarAeroVirtual" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarAeroVirtual_Click" ImageAlign="Right" />
-                    <asp:Label ID="Label2" runat="server" CssClass="LblEtiquet" Text="Aeronave:" />
+                    <asp:Label ID="LblAeroVirtualHK" runat="server" CssClass="LblEtiquet" Text="Aeronave:" />
                     <asp:DropDownList ID="DdlHkConsAeroVirtual" runat="server" CssClass="heightCampo" Width="8%" OnTextChanged="DdlHkConsAeroVirtual_TextChanged" AutoPostBack="true" />
                     <div class="DivContendorGrid DivGridAVirtual">
-                        <asp:GridView ID="GrdListaAeroVirtual" runat="server" EmptyDataText="Sin configurar..!"
-                            CssClass="DiseñoGrid table table-sm" GridLines="Both"
-                            OnRowDataBound="GrdListaAeroVirtual_RowDataBound">
+                        <asp:GridView ID="GrdListaAeroVirtual" runat="server" EmptyDataText="Sin configurar..!" AutoGenerateColumns="False" DataKeyNames="Mayor"
+                            CssClass="DiseñoGrid table table-sm" GridLines="Both" OnRowDataBound="GrdListaAeroVirtual_RowDataBound">
+                            <Columns>
+                                <asp:TemplateField HeaderText="UltimoNivel" HeaderStyle-Width="3%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblUlNiv" Text='<%# Eval("UltimoNivel") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Descripcion" HeaderStyle-Width="10%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblDesc" Text='<%# Eval("Descripcion") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="P/N" HeaderStyle-Width="3%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblPn" Text='<%# Eval("PN") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="S/N" HeaderStyle-Width="3%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblSN" Text='<%# Eval("SN") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Desc_Elem" HeaderStyle-Width="10%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblDesElem" Text='<%# Eval("Desc_Ref") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Posición" HeaderStyle-Width="3%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblPos" Text='<%# Eval("Posicion") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
                             <FooterStyle CssClass="GridFooterStyle" />
                             <HeaderStyle CssClass="GridCabecera" />
                             <RowStyle CssClass="GridRowStyle" />
@@ -306,7 +354,7 @@
                     <asp:Button ID="BtnCompensReinicio" CssClass="btn btn-success" runat="server" Text="Limpiar" OnClick="BtnCompensReinicio_Click" ToolTip="volver a marcar el trayecto para la compensación" OnClientClick="return confirm('¿Desea limpiar y volver a marcar el trayecto para la compensación?');" /><br />
                     <br />
                     <asp:CheckBox ID="CkbCompensInicioDia" runat="server" CssClass="LblEtiquet" Text="Evento realizado antes del primer vuelo del día" Font-Size="15px" Font-Bold="true" OnCheckedChanged="CkbCompensInicioDia_CheckedChanged" AutoPostBack="true" /><br />
-                    <asp:Label ID="Label1" runat="server" CssClass="LblEtiquet" Text="Marcar el trayecto que finaliza antes del evento" />
+                    <asp:Label ID="LblMarcarTry" runat="server" CssClass="LblEtiquet" Text="Marcar el trayecto que finaliza antes del evento" />
                     <div class="DivContendorGrid">
                         <asp:GridView ID="GrdCompensLv" runat="server" EmptyDataText="Sin libro de vuelo..!" AutoGenerateColumns="False" AutoGenerateSelectButton="False"
                             CssClass="DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" DataKeyNames="ID,FechaReporte,HoraDespegue"
@@ -413,8 +461,25 @@
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="TxtTitRemContadores" runat="server" Text="Contadores" /></h6>
                                 <div class="DivContendorGrid">
-                                    <asp:GridView ID="GrdHisContRemElem" runat="server" EmptyDataText="Sin histórico..!"
+                                    <asp:GridView ID="GrdHisContRemElem" runat="server" EmptyDataText="Sin histórico..!" AutoGenerateColumns="False"
                                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Contador" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblCodC" Text='<%# Eval("CodContador") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Fecha" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblFec" Text='<%# Eval("Fecha") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Valor" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblValor" Text='<%# Eval("Valor") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
                                         <FooterStyle CssClass="GridFooterStyle" />
                                         <HeaderStyle CssClass="GridCabecera" />
                                         <RowStyle CssClass="GridRowStyle" />
@@ -434,9 +499,9 @@
                                         <RowStyle CssClass="GridRowStyle" />
                                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                                         <Columns>
-                                            <asp:CommandField HeaderText="Selección" SelectText="Remover" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                                            <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
                                         </Columns>
-                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                     </asp:GridView>
                                 </div>
                             </asp:TableCell>
@@ -553,8 +618,25 @@
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="TxtTitHisContInsMay" runat="server" Text="Contadores" /></h6>
                                 <div class="DivContendorGrid">
-                                    <asp:GridView ID="GrdHisContInsMay" runat="server" EmptyDataText="Sin histórico..!"
+                                    <asp:GridView ID="GrdHisContInsMay" runat="server" AutoGenerateColumns="False" EmptyDataText="Sin histórico..!"
                                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Contador" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblCodC" Text='<%# Eval("CodContador") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Fecha" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblFec" Text='<%# Eval("Fecha") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Valor" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblValor" Text='<%# Eval("Valor") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
                                         <FooterStyle CssClass="GridFooterStyle" />
                                         <HeaderStyle CssClass="GridCabecera" />
                                         <RowStyle CssClass="GridRowStyle" />
@@ -574,9 +656,9 @@
                                         <RowStyle CssClass="GridRowStyle" />
                                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                                         <Columns>
-                                            <asp:CommandField HeaderText="Selección" SelectText="Instalar" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                                            <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
                                         </Columns>
-                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                     </asp:GridView>
                                 </div>
                                 <div class="DivContendorGrid">
@@ -672,9 +754,41 @@
                     <asp:Label ID="LblSNVisualMay" runat="server" CssClass="LblEtiquet" Text="S/N:" />
                     <asp:DropDownList ID="DdlSnVisualMay" runat="server" CssClass="heightCampo" Width="15%" OnTextChanged="DdlSnVisualMay_TextChanged" AutoPostBack="true" />
                     <div class="DivContendorGrid DivGridAVirtual">
-                        <asp:GridView ID="GrdVisualMay" runat="server" EmptyDataText="Sin configurar..!"
+                        <asp:GridView ID="GrdVisualMay" runat="server" EmptyDataText="Sin configurar..!" AutoGenerateColumns="False"
                             CssClass="DiseñoGrid table table-sm" GridLines="Both"
                             OnRowDataBound="GrdVisualMay_RowDataBound">
+                            <Columns>
+                                <asp:TemplateField HeaderText="Ubicación Técnica" HeaderStyle-Width="3%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblUT" Text='<%# Eval("Ubica_Tecn") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="S/N" HeaderStyle-Width="3%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblSN" Text='<%# Eval("Sn") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="P/N" HeaderStyle-Width="3%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblPN" Text='<%# Eval("PN") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Descripción" HeaderStyle-Width="3%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblDesc" Text='<%# Eval("Descripcion") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Posición" HeaderStyle-Width="3%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblPosc" Text='<%# Eval("Posic") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Aeronave" HeaderStyle-Width="3%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblAK" Text='<%# Eval("Matricula") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
                             <FooterStyle CssClass="GridFooterStyle" />
                             <HeaderStyle CssClass="GridCabecera" />
                             <RowStyle CssClass="GridRowStyle" />
@@ -728,8 +842,25 @@
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="TxtTitRemMayContadores" runat="server" Text="Contadores" /></h6>
                                 <div class="DivContendorGrid">
-                                    <asp:GridView ID="GrdHisContRemMay" runat="server" EmptyDataText="Sin histórico..!"
+                                    <asp:GridView ID="GrdHisContRemMay" runat="server" EmptyDataText="Sin histórico..!" AutoGenerateColumns="False"
                                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Contador" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblCodC" Text='<%# Eval("CodContador") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Fecha" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblFec" Text='<%# Eval("Fecha") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Valor" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblValor" Text='<%# Eval("Valor") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
                                         <FooterStyle CssClass="GridFooterStyle" />
                                         <HeaderStyle CssClass="GridCabecera" />
                                         <RowStyle CssClass="GridRowStyle" />
@@ -739,7 +870,7 @@
                             </asp:TableCell>
                             <asp:TableCell Width="80%" VerticalAlign="Top">
                                 <h6 class="TextoSuperior">
-                                    <asp:Label ID="Label13" runat="server" Text="Mayores a Remover" /></h6>
+                                    <asp:Label ID="LblTitRemoMayor" runat="server" Text="Mayores a Remover" /></h6>
                                 <div class="DivGrid DivContendorGrid">
                                     <asp:GridView ID="GrdBusqRemMay" runat="server" EmptyDataText="No existen mayores con el dato seleccionado ..!" DataKeyNames="CodElemento,CodUbicacionSuperior"
                                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="11"
@@ -749,9 +880,9 @@
                                         <RowStyle CssClass="GridRowStyle" />
                                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                                         <Columns>
-                                            <asp:CommandField HeaderText="Selección" SelectText="Remover" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                                            <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
                                         </Columns>
-                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                     </asp:GridView>
                                 </div>
                             </asp:TableCell>
@@ -809,8 +940,25 @@
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="TxtTitContadoresInsSubC" runat="server" Text="Contadores" /></h6>
                                 <div class="DivContendorGrid">
-                                    <asp:GridView ID="GrdHisContInsSubC" runat="server" EmptyDataText="Sin histórico..!"
+                                    <asp:GridView ID="GrdHisContInsSubC" runat="server" EmptyDataText="Sin histórico..!" AutoGenerateColumns="False"
                                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Contador" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblCodC" Text='<%# Eval("CodContador") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Fecha" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblFec" Text='<%# Eval("Fecha") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Valor" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblValor" Text='<%# Eval("Valor") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
                                         <FooterStyle CssClass="GridFooterStyle" />
                                         <HeaderStyle CssClass="GridCabecera" />
                                         <RowStyle CssClass="GridRowStyle" />
@@ -830,9 +978,9 @@
                                         <RowStyle CssClass="GridRowStyle" />
                                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                                         <Columns>
-                                            <asp:CommandField HeaderText="Selección" SelectText="Instalar" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                                            <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
                                         </Columns>
-                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                     </asp:GridView>
                                 </div>
                                 <div class="DivContendorGrid">
@@ -963,8 +1111,25 @@
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="TxtTitContadoresRemSub" runat="server" Text="Contadores" /></h6>
                                 <div class="DivContendorGrid">
-                                    <asp:GridView ID="GrdHisContRemSubC" runat="server" EmptyDataText="Sin histórico..!"
+                                    <asp:GridView ID="GrdHisContRemSubC" runat="server" EmptyDataText="Sin histórico..!" AutoGenerateColumns="False"
                                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Contador" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblCodC" Text='<%# Eval("CodContador") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Fecha" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblFec" Text='<%# Eval("Fecha") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Valor" HeaderStyle-Width="3%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblValor" Text='<%# Eval("Valor") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
                                         <FooterStyle CssClass="GridFooterStyle" />
                                         <HeaderStyle CssClass="GridCabecera" />
                                         <RowStyle CssClass="GridRowStyle" />
@@ -984,9 +1149,9 @@
                                         <RowStyle CssClass="GridRowStyle" />
                                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                                         <Columns>
-                                            <asp:CommandField HeaderText="Selección" SelectText="Remover" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                                            <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
                                         </Columns>
-                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                     </asp:GridView>
                                 </div>
                             </asp:TableCell>

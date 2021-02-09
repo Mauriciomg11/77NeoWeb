@@ -15,7 +15,7 @@
             font-size: 12px;
         }
 
-        .TextMultiLine {
+        .TextMultiLine {01
             height: 80px;
             width: 98%;
             font-size: 11px;
@@ -154,7 +154,7 @@
                                 <table class="TablaBotones">
                                     <tr>
                                         <td width="10%">
-                                            <asp:DropDownList ID="DdlBusq" runat="server" CssClass="Campos" OnTextChanged="DdlBusq_TextChanged" AutoPostBack="true" Width="100%"></asp:DropDownList></td>
+                                            <asp:DropDownList ID="DdlBusq" runat="server" CssClass="Campos" OnTextChanged="DdlBusq_TextChanged" AutoPostBack="true" Width="100%" /></td>
                                         <td width="2%">
                                             <asp:ImageButton ID="IbtAdd" runat="server" CssClass="BtnImagenAdd" ImageUrl="~/images/AddNew.png" OnClick="IbtAdd_Click" ToolTip="Ingresar" /></td>
                                         <td width="2%">
@@ -162,9 +162,9 @@
                                         <td width="2%">
                                             <asp:ImageButton ID="IbtFind" runat="server" CssClass="BtnImagenFind" ImageUrl="~/images/FindV1.png" OnClick="IbtFind_Click" ToolTip="Otras consultas" /></td>
                                         <td width="2%">
-                                            <asp:ImageButton ID="IbtPrint" runat="server" CssClass="BtnImagenPrint" ImageUrl="~/images/PrintV1.png" OnClick="IbtPrint_Click" ToolTip="Imprimir" /></td>
+                                            <asp:ImageButton ID="IbtPrint" runat="server" CssClass="BtnImagenPrint" ImageUrl="~/images/PrintV1.png" OnClick="IbtPrint_Click" ToolTip="Imprimir" Visible="false" /></td>
                                         <td width="2%">
-                                            <asp:ImageButton ID="IbtDelete" runat="server" CssClass="BtnImagenDelete" ImageUrl="~/images/deleteV1.png" OnClick="IbtDelete_Click" ToolTip="Eliminar" OnClientClick="return confirm('¿Desea eliminar el registro?');" /></td>
+                                            <asp:ImageButton ID="IbtDelete" runat="server" CssClass="BtnImagenDelete" ImageUrl="~/images/deleteV1.png" OnClick="IbtDelete_Click" ToolTip="Eliminar" OnClientClick="return confirm('¿Desea eliminar el registro?');" Visible="false" /></td>
                                         <td width="2%">
                                             <asp:ImageButton ID="IbtAuxiliar" runat="server" CssClass="BtnImagenAuxiliar" ImageUrl="~/images/ReportsV2.png" OnClick="IbtAuxiliar_Click" ToolTip="Informes" /></td>
                                     </tr>
@@ -187,7 +187,7 @@
                         <asp:TableHeaderRow>
                             <asp:TableHeaderCell ColumnSpan="11">
                                 <h6 class="TextoSuperior">
-                                    <asp:Label ID="LblDatosGrales" runat="server" Text="Datos Generales"></asp:Label></h6>
+                                    <asp:Label ID="LblDatosGrales" runat="server" Text="Datos Generales" /></h6>
                             </asp:TableHeaderCell>
                         </asp:TableHeaderRow>
                         <asp:TableHeaderRow>
@@ -284,7 +284,10 @@
                             <asp:TableCell><br /></asp:TableCell>
                         </asp:TableRow>
                         <asp:TableHeaderRow>
-                            <asp:TableHeaderCell ColumnSpan="10"> <h6 class="TextoSuperior">Datos Motor</h6></asp:TableHeaderCell>
+                            <asp:TableHeaderCell ColumnSpan="10">
+                                <h6 class="TextoSuperior">
+                                    <asp:Label ID="LblTitDaMtr" runat="server" Text="Datos Motor" /></h6>
+                            </asp:TableHeaderCell>
                         </asp:TableHeaderRow>
                         <asp:TableHeaderRow>
                             <asp:TableHeaderCell ColumnSpan="10"><br /></asp:TableHeaderCell>
@@ -335,7 +338,7 @@
                         </asp:TableRow>
                         <asp:TableRow>
                             <asp:TableCell ID="DetMotor" ColumnSpan="10">
-                                <asp:GridView ID="GrdMotor" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" DataKeyNames="CodIDDLVM,CodElemMotorLV"
+                                <asp:GridView ID="GrdMotor" runat="server" EmptyDataText="Sin motores ..!" AutoGenerateColumns="False" AutoGenerateSelectButton="False" DataKeyNames="CodIDDLVM,CodElemMotorLV"
                                     CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="6" Width="100%"
                                     OnRowDataBound="GrdMotor_RowDataBound">
                                     <Columns>
@@ -444,9 +447,9 @@
             <asp:UpdatePanel ID="UpPnlTray" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
                     <h6 class="TextoSuperior">
-                        <asp:Label ID="LblTrayectos" runat="server" Text="Trayectos"></asp:Label></h6>
+                        <asp:Label ID="LblTrayectos" runat="server" Text="Trayectos"/></h6>
                     <br />
-                    <asp:GridView ID="GrdTray" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodIdDetLibroVuelo"
+                    <asp:GridView ID="GrdTray" runat="server" EmptyDataText="Sin trayectos ..!" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodIdDetLibroVuelo"
                         CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="12"
                         OnRowCommand="GrdTray_RowCommand" OnRowEditing="GrdTray_RowEditing"
                         OnRowUpdating="GrdTray_RowUpdating" OnRowCancelingEdit="GrdTray_RowCancelingEdit" OnRowDeleting="GrdTray_RowDeleting"
@@ -606,7 +609,7 @@
                         <HeaderStyle CssClass="GridCabecera" />
                         <RowStyle CssClass="GridRowStyle" />
                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                     </asp:GridView>
                 </ContentTemplate>
             </asp:UpdatePanel>
@@ -960,7 +963,7 @@
         </asp:View>
         <asp:View ID="Vw3Busq" runat="server">
             <h6 class="TextoSuperior">
-                <asp:Label ID="LblTitOpcBusqueda" runat="server" Text="Opciones de búsqueda "></asp:Label>
+                <asp:Label ID="LblTitOpcBusqueda" runat="server" Text="Opciones de búsqueda "/>
             </h6>
             <asp:Table ID="TblBusqRte" runat="server" class="TablaBusqueda" Visible="false" Width="65%">
                 <asp:TableRow>
@@ -1003,7 +1006,7 @@
             <table class="TablaBusqueda">
                 <tr>
                     <td>
-                        <asp:Label ID="Label1" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
+                        <asp:Label ID="LblOpcBusq" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
                     <td>
                         <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
                     <td>
@@ -1023,23 +1026,23 @@
                     <RowStyle CssClass="GridRowStyle" />
                     <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                     <Columns>
-                        <asp:CommandField HeaderText="Selección" SelectText="Enviar" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                        <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
                     </Columns>
-                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                 </asp:GridView>
             </div>
         </asp:View>
         <asp:View ID="Vw4RecursoRte" runat="server">
             <asp:UpdatePanel ID="UpPnlRecursoRte" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <asp:Label ID="LblRecFRte" runat="server" CssClass="LblEtiquet" Text="Reporte:"/>
+                    <asp:Label ID="LblRecFRte" runat="server" CssClass="LblEtiquet" Text="Reporte:" />
                     <asp:TextBox ID="TxtRecurNumRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
-                    <asp:Label ID="LblRecFSubOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:"/>
+                    <asp:Label ID="LblRecFSubOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:" />
                     <asp:TextBox ID="TxtRecurSubOt" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
-                    <asp:Label ID="LblPrioridadOT" runat="server" CssClass="LblEtiquet" Text="Prioridad:"/>
-                    <asp:DropDownList ID="DdlPrioridadOT" runat="server" CssClass="Campos" Width="15%"/>
+                    <asp:Label ID="LblPrioridadOT" runat="server" CssClass="LblEtiquet" Text="Prioridad:" />
+                    <asp:DropDownList ID="DdlPrioridadOT" runat="server" CssClass="Campos" Width="15%" />
                     <h6 class="TextoSuperior">
-                        <asp:Label ID="LblTtlRecursoRte" runat="server" Text="Recurso Físico y Licencias"/></h6>
+                        <asp:Label ID="LblTtlRecursoRte" runat="server" Text="Recurso Físico y Licencias" /></h6>
                     <asp:ImageButton ID="IbtCerrarRec" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarRec_Click" ImageAlign="Right" />
                     <table class="TablaBusqueda">
                         <tr>
@@ -1065,7 +1068,7 @@
                             </asp:TableCell>
                             <asp:TableCell Width="35%">
                                 <h6 class="TextoSuperior">
-                                    <asp:Label ID="LblTitLicencia" runat="server" Text="Licencias"/></h6>
+                                    <asp:Label ID="LblTitLicencia" runat="server" Text="Licencias" /></h6>
                             </asp:TableCell>
                         </asp:TableRow>
                         <asp:TableRow>
@@ -1086,7 +1089,7 @@
                                                 <asp:TextBox ID="TxtPosRFPP" runat="server" MaxLength="240" Width="100%" Enabled="false" />
                                             </FooterTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Parte número" HeaderStyle-Width="25%">
+                                        <asp:TemplateField HeaderText="P/N" HeaderStyle-Width="25%">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblPn" Text='<%# Eval("PN") %>' runat="server" />
                                             </ItemTemplate>
@@ -1163,7 +1166,7 @@
                                     <HeaderStyle CssClass="GridCabecera" />
                                     <RowStyle CssClass="GridRowStyle" />
                                     <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
                                 </asp:GridView>
                             </asp:TableCell>
                             <asp:TableCell VerticalAlign="Top">
@@ -1226,7 +1229,7 @@
                                     <HeaderStyle CssClass="GridCabecera" />
                                     <RowStyle CssClass="GridRowStyle" />
                                     <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                 </asp:GridView>
                             </asp:TableCell>
                         </asp:TableRow>
@@ -1242,13 +1245,13 @@
         <asp:View ID="Vw5CargaMasiva" runat="server">
             <asp:UpdatePanel ID="UpPnlCargaMasiva" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <asp:Label ID="LblCargaMasRte" runat="server" CssClass="LblEtiquet" Text="Reporte:"/>
+                    <asp:Label ID="LblCargaMasRte" runat="server" CssClass="LblEtiquet" Text="Reporte:" />
                     <asp:TextBox ID="TxtCargaMasiRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
-                    <asp:Label ID="LblCargaMasOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:"/>
+                    <asp:Label ID="LblCargaMasOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:" />
                     <asp:TextBox ID="TxtCargaMasiOT" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:ImageButton ID="IbtCerrarSubMaxivo" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarSubMaxivo_Click" ImageAlign="Right" />
                     <h6 class="TextoSuperior">
-                        <asp:Label ID="LblTitOTCargMasiv" runat="server" Text="Subir Evaluación"/></h6>
+                        <asp:Label ID="LblTitOTCargMasiv" runat="server" Text="Subir Evaluación" /></h6>
                     <asp:ImageButton ID="IbtSubirCargaMax" runat="server" ToolTip="Cargar archivo..." ImageUrl="~/images/SubirCarga.png" OnClick="IbtSubirCargaMax_Click" Width="30px" Height="30px" />
                     <asp:ImageButton ID="IbtGuardarCargaMax" runat="server" ToolTip="Guardar" ImageUrl="~/images/Descargar.png" OnClick="IbtGuardarCargaMax_Click" Width="30px" Height="30px" Enabled="false" OnClientClick="javascript:return confirm('¿Desea almacenar la información?', 'Mensaje de sistema')" />
                     <asp:GridView ID="GrdCargaMax" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="False"
@@ -1259,7 +1262,7 @@
                                     <asp:TextBox ID="TxtPosRF" Text='<%# Eval("Posicion") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Parte número" HeaderStyle-Width="25%">
+                            <asp:TemplateField HeaderText="P/N" HeaderStyle-Width="25%">
                                 <ItemTemplate>
                                     <asp:TextBox ID="TxtPNRF" Text='<%# Eval("PN") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
@@ -1454,7 +1457,7 @@
                         <HeaderStyle CssClass="GridCabecera" />
                         <RowStyle CssClass="GridRowStyle" />
                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                     </asp:GridView>
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitHta" runat="server" Text="Herramientas"></asp:Label></h6>
@@ -1531,7 +1534,7 @@
                         <HeaderStyle CssClass="GridCabecera" />
                         <RowStyle CssClass="GridRowStyle" />
                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                     </asp:GridView>
                 </ContentTemplate>
                 <Triggers>
@@ -1543,8 +1546,8 @@
             <asp:UpdatePanel ID="UplInfLV" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
                     <h6 class="TextoSuperior">
-                        <asp:Label ID="LblTitInfLV" runat="server" Text="Informes"></asp:Label></h6>
-                    <asp:Label ID="Label13" runat="server" CssClass="LblEtiquet" Text="Aeronave:"></asp:Label>
+                        <asp:Label ID="LblTitInfLV" runat="server" Text="Informes" /></h6>
+                    <asp:Label ID="LblAKInfLV" runat="server" CssClass="LblEtiquet" Text="Aeronave:"></asp:Label>
                     <asp:DropDownList ID="DdlHkInfLV" runat="server" CssClass="Campos" Width="8%"></asp:DropDownList>
                     <asp:Label ID="LblFechaIInfLV" runat="server" CssClass="LblEtiquet" Text="Fecha Inicial:" />
                     <asp:ImageButton ID="IbtFIInfLV" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="19px" Width="15px" />

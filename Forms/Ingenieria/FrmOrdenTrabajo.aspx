@@ -714,7 +714,7 @@
                     <Columns>
                         <asp:CommandField HeaderText="Selección" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
                     </Columns>
-                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
                 </asp:GridView>
             </div>
         </asp:View>
@@ -1288,7 +1288,7 @@
                         <HeaderStyle CssClass="GridCabecera" />
                         <RowStyle CssClass="GridRowStyle" />
                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                     </asp:GridView>
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitHta" runat="server" Text="Herramientas"></asp:Label></h6>
@@ -1365,7 +1365,7 @@
                         <HeaderStyle CssClass="GridCabecera" />
                         <RowStyle CssClass="GridRowStyle" />
                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                     </asp:GridView>
                 </ContentTemplate>
                 <Triggers>

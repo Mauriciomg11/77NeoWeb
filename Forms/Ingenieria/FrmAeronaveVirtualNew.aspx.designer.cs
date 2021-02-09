@@ -447,13 +447,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.ImageButton IbtCerrarAeroVirtual;
 
         /// <summary>
-        /// Control Label2.
+        /// Control LblAeroVirtualHK.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label LblAeroVirtualHK;
 
         /// <summary>
         /// Control DdlHkConsAeroVirtual.
@@ -528,13 +528,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.CheckBox CkbCompensInicioDia;
 
         /// <summary>
-        /// Control Label1.
+        /// Control LblMarcarTry.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label LblMarcarTry;
 
         /// <summary>
         /// Control GrdCompensLv.
@@ -1563,13 +1563,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.GridView GrdHisContRemMay;
 
         /// <summary>
-        /// Control Label13.
+        /// Control LblTitRemoMayor.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label13;
+        protected global::System.Web.UI.WebControls.Label LblTitRemoMayor;
 
         /// <summary>
         /// Control GrdBusqRemMay.

@@ -465,6 +465,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.TextBox TxtEveSimul;
 
         /// <summary>
+        /// Control LblTitDaMtr.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblTitDaMtr;
+
+        /// <summary>
         /// Control DatosMotor.
         /// </summary>
         /// <remarks>
@@ -1689,13 +1698,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.RadioButton RdbBusqLVloNroRte;
 
         /// <summary>
-        /// Control Label1.
+        /// Control LblOpcBusq.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label LblOpcBusq;
 
         /// <summary>
         /// Control TxtBusqueda.
@@ -2175,13 +2184,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label LblTitInfLV;
 
         /// <summary>
-        /// Control Label13.
+        /// Control LblAKInfLV.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label13;
+        protected global::System.Web.UI.WebControls.Label LblAKInfLV;
 
         /// <summary>
         /// Control DdlHkInfLV.
