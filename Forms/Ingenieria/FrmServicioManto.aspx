@@ -192,7 +192,7 @@
 </asp:Content>
 <asp:Content ID="TituloPagina" ContentPlaceHolderID="TituloPagina" runat="server">
     <h1>
-        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo"></asp:Label></h1>
+        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:Panel ID="PnlCampos" runat="server" Width="100%">
@@ -244,18 +244,20 @@
                             <table class="TablaCampos table table-sm">
                                 <tr>
                                     <td>
-                                        <asp:Label ID="LblCod" runat="server" CssClass="LblEtiquet" Text="Código:"></asp:Label></td>
+                                        <asp:Label ID="LblCod" runat="server" CssClass="LblEtiquet" Text="Código:" /></td>
                                     <td>
-                                        <asp:TextBox ID="TxtId" runat="server" CssClass=" form-control-sm Campos" Enabled="false" Width="30%"></asp:TextBox>
-                                        <asp:TextBox ID="TxtCod" runat="server" CssClass="form-control-sm Campos" Enabled="false" Width="65%"></asp:TextBox></td>
-                                    <td class="LblEtiquet">Desripción:</td>
+                                        <asp:TextBox ID="TxtId" runat="server" CssClass=" form-control-sm Campos" Enabled="false" Width="30%" />
+                                        <asp:TextBox ID="TxtCod" runat="server" CssClass="form-control-sm Campos" Enabled="false" Width="65%" /></td>
+                                    <td>
+                                        <asp:Label ID="LblDescrip" runat="server" CssClass="LblEtiquet" Text="Desripción:" /></td>
                                     <td colspan="3">
                                         <asp:TextBox ID="TxtDesc" runat="server" CssClass="form-control Campos" Enabled="false" TextMode="MultiLine" MaxLength="254"></asp:TextBox></td>
                                     <td rowspan="5" width="27%" align="right">
                                         <table class="TablaHKAsig">
                                             <tr>
                                                 <td>
-                                                    <h6 class="TituloHKAsig">Aeronaves Asingadas</h6>
+                                                    <h6 class="TextoSuperior">
+                                                        <asp:Label ID="LblAkAsing" runat="server" Text="Aeronaves Asingadas" /></h6>
                                                     <asp:GridView ID="GrdHKAsig" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdSrvMantoAeronave,CodAeronave"
                                                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="3" Visible="false"
                                                         OnRowCommand="GrdHKAsig_RowCommand" OnRowDeleting="GrdHKAsig_RowDeleting"
@@ -299,22 +301,22 @@
                                         <asp:Label ID="LblHoriz" runat="server" CssClass="LblEtiquet" Text="Horizonte" ToolTip="Horizonte de apertura"></asp:Label></td>
                                     <td>
                                         <asp:TextBox ID="TxtHoriz" runat="server" CssClass="Campos" Enabled="false" TextMode="Number" onkeypress="return solonumeros(event);" Text="0" Width="20%"></asp:TextBox>
-                                        <asp:Label ID="Label2" runat="server" CssClass="LblEtiquet" Text="%"></asp:Label>
-                                        <asp:Label ID="LblCumplimi" runat="server" CssClass="LblEtiquet" Text="Cumplimiento"></asp:Label>
+                                        <asp:Label ID="Label2" runat="server" CssClass="LblEtiquet" Text="%" />
+                                        <asp:Label ID="LblCumplimi" runat="server" CssClass="LblEtiquet" Text="Cumplimiento" />
                                     </td>
                                     <td>
-                                        <asp:Label ID="LblGrupo" runat="server" CssClass="LblEtiquet" Text="Grupo:"></asp:Label></td>
+                                        <asp:Label ID="LblGrupo" runat="server" CssClass="LblEtiquet" Text="Grupo:" /></td>
                                     <td colspan="2">
-                                        <asp:DropDownList ID="DdlGrupo" runat="server" CssClass="Campos" Enabled="false" OnTextChanged="DdlGrupo_TextChanged" AutoPostBack="true"></asp:DropDownList></td>
+                                        <asp:DropDownList ID="DdlGrupo" runat="server" CssClass="Campos" Enabled="false" OnTextChanged="DdlGrupo_TextChanged" AutoPostBack="true" /></td>
                                     <td align="left">
                                         <table class="TablaFase table-responsive">
                                             <tr>
                                                 <td>
-                                                    <asp:Label ID="LblEtapa" runat="server" CssClass="LblEtiquet" Text="Etapa"></asp:Label></td>
+                                                    <asp:Label ID="LblEtapa" runat="server" CssClass="LblEtiquet" Text="Etapa" /></td>
                                                 <td>
                                                     <asp:TextBox ID="TxtEtapa" runat="server" CssClass="form-control Campos" Enabled="false" Width="90%" TextMode="Number" onkeypress="return solonumeros(event);" Text="0"></asp:TextBox></td>
                                                 <td>
-                                                    <asp:Label ID="LblActual" runat="server" CssClass="LblEtiquet" Text="Actual"></asp:Label></td>
+                                                    <asp:Label ID="LblActual" runat="server" CssClass="LblEtiquet" Text="Actual" /></td>
                                                 <td>
                                                     <asp:TextBox ID="TxtActual" runat="server" CssClass="form-control Campos" Enabled="false" Width="90%" TextMode="Number" onkeypress="return solonumeros(event);" Text="0"></asp:TextBox></td>
                                             </tr>
@@ -323,13 +325,13 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <asp:Label ID="LblDoc" runat="server" CssClass="LblEtiquet" Text="Documento:"></asp:Label></td>
+                                        <asp:Label ID="LblDoc" runat="server" CssClass="LblEtiquet" Text="Documento:" /></td>
                                     <td>
-                                        <asp:TextBox ID="TxtDoc" runat="server" CssClass=" form-control Campos" MaxLength="60" Enabled="false"></asp:TextBox></td>
+                                        <asp:TextBox ID="TxtDoc" runat="server" CssClass=" form-control Campos" MaxLength="60" Enabled="false" /></td>
                                     <td>
-                                        <asp:Label ID="LblRefOT" runat="server" CssClass="LblEtiquet" Text="Refer. OT:" ToolTip="Referencia Orden de Trabajo"></asp:Label></td>
+                                        <asp:Label ID="LblRefOT" runat="server" CssClass="LblEtiquet" Text="Refer. OT:" ToolTip="Referencia Orden de Trabajo" /></td>
                                     <td colspan="3">
-                                        <asp:TextBox ID="TxtRefOT" runat="server" CssClass=" form-control Campos" MaxLength="200" Enabled="false"></asp:TextBox></td>
+                                        <asp:TextBox ID="TxtRefOT" runat="server" CssClass=" form-control Campos" MaxLength="200" Enabled="false" /></td>
                                 </tr>
                                 <tr>
                                     <td width="7%">
@@ -358,21 +360,21 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <asp:Label ID="LblAta" runat="server" CssClass="LblEtiquet" Text="Capítulo:"></asp:Label></td>
+                                                    <asp:Label ID="LblAta" runat="server" CssClass="LblEtiquet" Text="Capítulo:" /></td>
                                                 <td width="20%">
-                                                    <asp:DropDownList ID="DdlAta" runat="server" CssClass="Campos" Enabled="false"></asp:DropDownList></td>
+                                                    <asp:DropDownList ID="DdlAta" runat="server" CssClass="Campos" Enabled="false" /></td>
                                                 <td width="7%">
-                                                    <asp:Label ID="LblSubAta" runat="server" CssClass="LblEtiquet" Text="Sub Ata:"></asp:Label></td>
+                                                    <asp:Label ID="LblSubAta" runat="server" CssClass="LblEtiquet" Text="Sub Ata:" /></td>
                                                 <td>
-                                                    <asp:TextBox ID="TxtSubAta" runat="server" CssClass="form-control Campos" Enabled="false" onkeypress="return solonumeros(event);" OnTextChanged="TxtSubAta_TextChanged" AutoPostBack="true"></asp:TextBox></td>
+                                                    <asp:TextBox ID="TxtSubAta" runat="server" CssClass="form-control Campos" Enabled="false" onkeypress="return solonumeros(event);" OnTextChanged="TxtSubAta_TextChanged" AutoPostBack="true" /></td>
                                                 <td width="10%">
-                                                    <asp:Label ID="LblConsecAta" runat="server" CssClass="LblEtiquet" Text="Consec. Ata:"></asp:Label></td>
+                                                    <asp:Label ID="LblConsecAta" runat="server" CssClass="LblEtiquet" Text="Consec. Ata:" /></td>
                                                 <td>
-                                                    <asp:TextBox ID="TxtConsAta" runat="server" CssClass="form-control Campos" Enabled="false" TextMode="Number" onkeypress="return solonumeros(event);" Text="0"></asp:TextBox></td>
+                                                    <asp:TextBox ID="TxtConsAta" runat="server" CssClass="form-control Campos" Enabled="false" TextMode="Number" onkeypress="return solonumeros(event);" Text="0" /></td>
                                                 <td>
-                                                    <asp:Label ID="LblTipo" runat="server" CssClass="LblEtiquet" Text="Tipo:"></asp:Label></td>
+                                                    <asp:Label ID="LblTipo" runat="server" CssClass="LblEtiquet" Text="Tipo:" /></td>
                                                 <td width="30%">
-                                                    <asp:DropDownList ID="DdlTipo" runat="server" CssClass="Campos" Enabled="false"></asp:DropDownList></td>
+                                                    <asp:DropDownList ID="DdlTipo" runat="server" CssClass="Campos" Enabled="false" /></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -396,9 +398,9 @@
                             <table width="100%">
                                 <tr>
                                     <td width="70%">
-                                        <asp:TextBox ID="TxtHistorico" runat="server" Width="35%" Height="20px" CssClass="form-control-sm" MaxLength="200" placeholder="Ingrese el reporte para el histórico" Enabled="false"></asp:TextBox>
-                                        <asp:TextBox ID="TxtEstadoOT" runat="server" Width="30%" Height="20px" CssClass="form-control-sm TextoOTGenrda" placeholder="Estado O.T." Enabled="false"></asp:TextBox>
-                                        <asp:TextBox ID="TxtMatric" runat="server" Width="10%" Height="20px" CssClass="form-control-sm TextoOTGenrda" placeholder="Matrícula" Enabled="false"></asp:TextBox>
+                                        <asp:TextBox ID="TxtHistorico" runat="server" Width="35%" Height="20px" CssClass="form-control-sm" MaxLength="200" placeholder="Ingrese el reporte para el histórico" Enabled="false" />
+                                        <asp:TextBox ID="TxtEstadoOT" runat="server" Width="30%" Height="20px" CssClass="form-control-sm TextoOTGenrda" placeholder="Estado O.T." Enabled="false" />
+                                        <asp:TextBox ID="TxtMatric" runat="server" Width="10%" Height="20px" CssClass="form-control-sm TextoOTGenrda" placeholder="Matrícula" Enabled="false" />
                                         <asp:CheckBox ID="CkbBloqRec" runat="server" CssClass="LblEtiquet" Text="Bloquear Recurso" Enabled="false" ToolTip="Bloquea el recurso físico para que no sea editado" /></td>
                                     <td width="28%"></td>
                                 </tr>
@@ -534,7 +536,7 @@
                                                     </ItemTemplate>
                                                     <EditItemTemplate>
                                                         <asp:ImageButton ID="IbtUpdate" CssClass="BotonUpdateGrid" ImageUrl="~/images/Save.png" runat="server" CommandName="Update" ToolTip="Actualizar" />
-                                                        <asp:ImageButton CssClass="BotonCancelGrid" ImageUrl="~/images/Cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancelar" />
+                                                        <asp:ImageButton ID="IbtCancel" CssClass="BotonCancelGrid" ImageUrl="~/images/Cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancelar" />
                                                     </EditItemTemplate>
                                                     <FooterTemplate>
                                                         <asp:ImageButton ID="IbtAddNew" CssClass="BotonNewGrid" ImageUrl="~/images/AddNew.png" runat="server" CommandName="AddNew" ToolTip="Nuevo" />
@@ -545,7 +547,7 @@
                                             <HeaderStyle CssClass="GridCabecera" />
                                             <RowStyle CssClass="GridRowStyle" />
                                             <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                            <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                            <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                         </asp:GridView>
                                         <asp:GridView ID="GrdPN" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodidcodSrvPn,CodIdContadorPn,PN"
                                             CssClass=" GridControl DiseñoGrid table CsGridHK table-sm" GridLines="Both" AllowPaging="true" PageSize="4" Visible="false"
@@ -633,7 +635,7 @@
                                                     </ItemTemplate>
                                                     <EditItemTemplate>
                                                         <asp:ImageButton ID="IbtUpdate" CssClass="BotonUpdateGrid" ImageUrl="~/images/Save.png" runat="server" CommandName="Update" ToolTip="Actualizar" />
-                                                        <asp:ImageButton CssClass="BotonCancelGrid" ImageUrl="~/images/Cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancelar" />
+                                                        <asp:ImageButton ID="IbtCancel" CssClass="BotonCancelGrid" ImageUrl="~/images/Cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancelar" />
 
                                                     </EditItemTemplate>
                                                     <FooterTemplate>
@@ -645,7 +647,7 @@
                                             <HeaderStyle CssClass="GridCabecera" />
                                             <RowStyle CssClass="GridRowStyle" />
                                             <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                            <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                            <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                         </asp:GridView>
                                         <asp:GridView ID="GrdSN" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" DataKeyNames="CodIdContaSrvManto,CodElem,Matricula,IdCodElem,Pn,Sn"
                                             CssClass=" GridControl DiseñoGrid CsGridHK table-sm" GridLines="Both" AllowPaging="true" PageSize="4" Visible="false"
@@ -752,7 +754,7 @@
                                                     </ItemTemplate>
                                                     <EditItemTemplate>
                                                         <asp:ImageButton ID="IbtUpdate" CssClass="BotonUpdateGrid" ImageUrl="~/images/Save.png" runat="server" CommandName="Update" ToolTip="Actualizar" />
-                                                        <asp:ImageButton CssClass="BotonCancelGrid" ImageUrl="~/images/Cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancelar" />
+                                                        <asp:ImageButton ID="IbtCancel" CssClass="BotonCancelGrid" ImageUrl="~/images/Cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancelar" />
                                                     </EditItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -768,7 +770,7 @@
                                             CssClass="GridControl DiseñoGrid TablaAdj table-sm" GridLines="Both" AllowPaging="true" PageSize="3"
                                             OnRowCommand="GrdAdj_RowCommand" OnRowEditing="GrdAdj_RowEditing"
                                             OnRowUpdating="GrdAdj_RowUpdating" OnRowCancelingEdit="GrdAdj_RowCancelingEdit"
-                                            OnRowDeleting="GrdAdj_RowDeleting" OnPageIndexChanging="GrdAdj_PageIndexChanging">
+                                            OnRowDeleting="GrdAdj_RowDeleting" OnRowDataBound="GrdAdj_RowDataBound" OnPageIndexChanging="GrdAdj_PageIndexChanging">
                                             <Columns>
                                                 <asp:TemplateField HeaderText="Descripción" HeaderStyle-Width="30%">
                                                     <ItemTemplate>
@@ -797,7 +799,7 @@
                                                         <asp:FileUpload ID="FileUp" runat="server" Width="100%" Font-Size="7px" />
                                                     </EditItemTemplate>
                                                     <FooterTemplate>
-                                                        <asp:FileUpload ID="FileUpPP" runat="server" Width="100%"  Font-Size="7px"/>
+                                                        <asp:FileUpload ID="FileUpPP" runat="server" Width="100%" Font-Size="7px" />
                                                     </FooterTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField FooterStyle-Width="10%">
@@ -814,7 +816,7 @@
                                                                 <asp:PostBackTrigger ControlID="IbtUpdateAdj" />
                                                             </Triggers>
                                                         </asp:UpdatePanel>
-                                                        <asp:ImageButton CssClass="BotonCancelGrid" ImageUrl="~/images/Cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancelar" />
+                                                        <asp:ImageButton ID="IbtCancel" CssClass="BotonCancelGrid" ImageUrl="~/images/Cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancelar" />
                                                     </EditItemTemplate>
                                                     <FooterTemplate>
                                                         <asp:UpdatePanel runat="server" UpdateMode="Conditional" ID="updFU">
@@ -844,59 +846,42 @@
         </table>
     </asp:Panel>
     <asp:Panel ID="PnlBusq" runat="server" Visible="false">
-        <h6 class="TextoSuperior">Opciones de búsqueda</h6>
-        <asp:Table ID="TblBusqHK" runat="server" class="TablaBusqueda" Visible="false" Width="5%">
+        <h6 class="TextoSuperior">
+            <asp:Label ID="LbltitBusq" runat="server" CssClass="LblEtiquet" Text="Opciones de búsqueda" /></h6>
+        <asp:Table ID="TblBusqHK" runat="server" class="TablaBusqueda" Visible="false" Width="10%">
             <asp:TableRow>
-                <asp:TableCell Width="1%">
-                    <asp:Label ID="LblOpBusDesc" runat="server" CssClass="LblEtiquet" Text="Descripción"></asp:Label>
-                </asp:TableCell>
-                <asp:TableCell Width="1%">
-                    <asp:RadioButton ID="RdbBusqDes" runat="server" GroupName="BusqA" />
+                <asp:TableCell>
+                    <asp:RadioButton ID="RdbBusqDes" runat="server" GroupName="BusqA" CssClass="LblTextoBusq" Text="Descripción" />
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>
-        <asp:Table ID="TblBusqPN" runat="server" class="TablaBusqueda" Visible="false" Width="5%">
+        <asp:Table ID="TblBusqPN" runat="server" class="TablaBusqueda" Visible="false" Width="20%">
             <asp:TableRow>
-                <asp:TableCell Width="1%">
-                    <asp:Label ID="Label3" runat="server" CssClass="LblEtiquet" Text="Descripción"></asp:Label>
+                <asp:TableCell Width="10%">
+                    <asp:RadioButton ID="RdbBusqDesPN" runat="server" GroupName="BusqP" CssClass="LblTextoBusq" Text="Descripción" />
                 </asp:TableCell>
-                <asp:TableCell Width="1%">
-                    <asp:RadioButton ID="RdbBusqDesPN" runat="server" GroupName="BusqP" />
-                </asp:TableCell>
-                <asp:TableCell Width="1%">
-                    <asp:Label ID="Label6" runat="server" CssClass="LblEtiquet" Text="P/N"></asp:Label>
-                </asp:TableCell>
-                <asp:TableCell Width="1%">
-                    <asp:RadioButton ID="RdbBusqPnPN" runat="server" GroupName="BusqP" />
+                <asp:TableCell Width="10%">
+                    <asp:RadioButton ID="RdbBusqPnPN" runat="server" GroupName="BusqP" CssClass="LblTextoBusq" Text="&nbsp P/N" />
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>
-        <asp:Table ID="TblBusqSN" runat="server" class="TablaBusqueda" Visible="false" Width="5%">
+        <asp:Table ID="TblBusqSN" runat="server" class="TablaBusqueda" Visible="false" Width="30%">
             <asp:TableRow>
-                <asp:TableCell Width="1%">
-                    <asp:Label ID="Label7" runat="server" CssClass="LblEtiquet" Text="Descripción"></asp:Label>
+                <asp:TableCell Width="10%">
+                    <asp:RadioButton ID="RdbBusqDesSN" runat="server" GroupName="BusqS" CssClass="LblTextoBusq" Text="Descripción" />
                 </asp:TableCell>
-                <asp:TableCell Width="1%">
-                    <asp:RadioButton ID="RdbBusqDesSN" runat="server" GroupName="BusqS" />
+                <asp:TableCell Width="10%">
+                    <asp:RadioButton ID="RdbBusqPnSN" runat="server" GroupName="BusqS" CssClass="LblTextoBusq" Text="&nbsp P/N" />
                 </asp:TableCell>
-                <asp:TableCell Width="1%">
-                    <asp:Label ID="Label8" runat="server" CssClass="LblEtiquet" Text="P/N"></asp:Label>
-                </asp:TableCell>
-                <asp:TableCell Width="1%">
-                    <asp:RadioButton ID="RdbBusqPnSN" runat="server" GroupName="BusqS" />
-                </asp:TableCell>
-                <asp:TableCell Width="1%">
-                    <asp:Label ID="Label9" runat="server" CssClass="LblEtiquet" Text="S/N"></asp:Label>
-                </asp:TableCell>
-                <asp:TableCell Width="1%">
-                    <asp:RadioButton ID="RdbBusqSnSN" runat="server" GroupName="BusqS" />
+                <asp:TableCell Width="10%">
+                    <asp:RadioButton ID="RdbBusqSnSN" runat="server" GroupName="BusqS" CssClass="LblTextoBusq" Text="&nbsp S/N" />
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>
         <table class="TablaBusqueda">
             <tr>
                 <td>
-                    <asp:Label ID="Label1" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
+                    <asp:Label ID="LblBusq" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
                 <td>
                     <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
                 <td>
@@ -923,7 +908,8 @@
     <asp:Panel ID="PnlRecursos" runat="server" Visible="false">
         <asp:UpdatePanel ID="UpPnlRF" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <h6 class="TextoSuperior">Recurso Físico y Licencias</h6>               
+                <h6 class="TextoSuperior">
+                    <asp:Label ID="LblTitRecursoLice" runat="server" CssClass="LblEtiquet" Text="Recurso Físico y Licencias" /></h6>
                 <asp:ImageButton ID="IbtCerrarRec" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarRec_Click" ImageAlign="Right" />
                 <asp:Table ID="TblRecFis" runat="server" Width="90%">
                     <asp:TableRow>
@@ -1033,12 +1019,15 @@
                                 <HeaderStyle CssClass="GridCabecera" />
                                 <RowStyle CssClass="GridRowStyle" />
                                 <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                             </asp:GridView>
                         </asp:TableCell>
                     </asp:TableRow>
                     <asp:TableRow Width="60%">
-                        <asp:TableCell Width="60%"><h6 class="TextoSuperior SubTituloLicencia">Horas estimadas por licencia</h6></asp:TableCell>
+                        <asp:TableCell Width="60%">
+                            <h6 class="TextoSuperior SubTituloLicencia">
+                                <asp:Label ID="LblTitLicen" runat="server" CssClass="LblEtiquet" Text="Horas estimadas por licencia" /></h6>
+                        </asp:TableCell>
                     </asp:TableRow>
                     <asp:TableRow>
                         <asp:TableCell>
@@ -1099,7 +1088,7 @@
                                 <HeaderStyle CssClass="GridCabecera" />
                                 <RowStyle CssClass="GridRowStyle" />
                                 <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                             </asp:GridView>
                         </asp:TableCell>
                     </asp:TableRow>
@@ -1114,27 +1103,19 @@
         <asp:UpdatePanel ID="UpPnlInforme" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <h6 class="TextoSuperior">
-                    <asp:Label ID="TitInfSvc" runat="server" Text="Label"></asp:Label>
+                    <asp:Label ID="TitInfSvc" runat="server" Text="Label" />
                 </h6>
                 <asp:ImageButton ID="IbtCerrarInf" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarInf_Click" ImageAlign="Right" />
-
-                <asp:Table ID="Table1" runat="server">
-                    <asp:TableRow>
-                        <asp:TableCell>
-                            <asp:Button ID="BtnSvcAct" runat="server" CssClass="btn btn-primary" Text="Servicios activos" OnClick="BtnSvcAct_Click" />
-                        </asp:TableCell>
-                        <asp:TableCell>
-                            <asp:Button ID="BtnCumplim" runat="server" CssClass="btn btn-primary" Text="Cumplimientos" OnClick="BtnCumplim_Click" />
-                        </asp:TableCell>
-                        <asp:TableCell>
-                            <asp:ImageButton ID="IbtExpExcelSvcAplAK" runat="server" ToolTip="Exportar Servicios con aeronave asignadas" ImageUrl="~/images/ExcelV1.png" OnClick="IbtExpExcelSvcAplAK_Click" Width="20%" Height="35%" />
-                            <asp:ImageButton ID="IbtExpExcelSvcGnrl" runat="server" ToolTip="Exportar todos los servicios  de mantenimiento" ImageUrl="~/images/ExcelV1.png" OnClick="IbtExpExcelSvcGnrl_Click" Width="20%" Height="35%" />
-                        </asp:TableCell>
-                        <asp:TableCell>
-                          
-                        </asp:TableCell>
-                    </asp:TableRow>
-                </asp:Table>
+                <div class="row">
+                    <div class="row-sm-4">
+                        <asp:Button ID="BtnSvcAct" runat="server" CssClass="btn btn-primary" Text="Servicios activos" OnClick="BtnSvcAct_Click" />
+                        <asp:Button ID="BtnCumplim" runat="server" CssClass="btn btn-primary" Text="Cumplimientos" OnClick="BtnCumplim_Click" />
+                    </div>
+                    <div class="row-sm-4">
+                        <asp:ImageButton ID="IbtExpExcelSvcAplAK" runat="server" ToolTip="Exportar Servicios con aeronave asignadas" CssClass=" BtnExpExcel" ImageUrl="~/images/ExcelV1.png" OnClick="IbtExpExcelSvcAplAK_Click" Height="35px" />
+                        <asp:ImageButton ID="IbtExpExcelSvcGnrl" runat="server" ToolTip="Exportar todos los servicios  de mantenimiento" CssClass=" BtnExpExcel" ImageUrl="~/images/ExcelV1.png" OnClick="IbtExpExcelSvcGnrl_Click" Height="35px" />
+                    </div>
+                </div>
                 <rsweb:ReportViewer ID="RprvSvcActivos" runat="server" Width="95%"></rsweb:ReportViewer>
             </ContentTemplate>
             <Triggers>
