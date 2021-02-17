@@ -10,7 +10,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
 {
     public class ClsTypSolicitudPedido
     {
-        static public string PMensj, PCodPedido;
+        static public string PMensj, PCodPedido,PPN;
         static public int PIdPedido;
         public int IdPedido { get; set; }
         public string CodPedido { get; set; }
@@ -169,7 +169,8 @@ namespace _77NeoWeb.Prg.PrgLogistica
                             {
                                 PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 PIdPedido = Convert.ToInt32(SDR["IdPedido"].ToString().Trim());
-                                PCodPedido = HttpUtility.HtmlDecode(SDR["CodPedido"].ToString().Trim());                               
+                                PCodPedido = HttpUtility.HtmlDecode(SDR["CodPedido"].ToString().Trim());       
+                                PPN= HttpUtility.HtmlDecode(SDR["PN"].ToString().Trim());
                             }                           
                             SDR.Close();
                             transaction.Commit();
@@ -201,6 +202,9 @@ namespace _77NeoWeb.Prg.PrgLogistica
         {
             return PCodPedido;
         }
-        
+        public string GetPN()
+        {
+            return PPN;
+        }
     }
 }

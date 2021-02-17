@@ -4,6 +4,7 @@ using _77NeoWeb.Prg.PrgLogistica;
 using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -17,27 +18,34 @@ namespace _77NeoWeb.Forms.Ingenieria
     public partial class FrmAeronave : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
+        DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-             if (Session["Login77"] == null)
-             {
-                 Response.Redirect("~/FrmAcceso.aspx");
-             }/* */
+            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }/**/
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             Page.Title = string.Format("Datos Aeronave");
             TitForm.Text = "Datos Aeronave";
             if (Session["C77U"] == null)
             {
-                Session["C77U"] = "";             
+                Session["C77U"] = "";
+                /*Session["C77U"] = "00000082";
+                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                Session["$VR"] = "77NEO01";
+                Session["V$U@"] = "sa";
+                Session["P@$"] = "admindemp";
+                Session["N77U"] = Session["D[BX"];
+                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                Session["77IDM"] = "5"; // 4 español | 5 ingles  */
             }
             if (!IsPostBack)
             {
                 ViewState["Validar"] = "S";
+                ViewState["Accion"] = "";
                 ViewState["AC_Virtual"] = 0;
                 ModSeguridad();
                 MlVwCampos.ActiveViewIndex = 0;
                 BindBDdlBusq();
-                BindBDdl();               
+                BindBDdl();
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
@@ -127,6 +135,61 @@ namespace _77NeoWeb.Forms.Ingenieria
                       }                   
                   }*/
             }
+            IdiomaControles();
+        }
+        protected void IdiomaControles()
+        {
+            Idioma.Columns.Add("Objeto", typeof(string));
+            Idioma.Columns.Add("Texto", typeof(string));
+            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+            {
+                string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
+                SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
+                SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
+                SC.Parameters.AddWithValue("@F1", "FrmAeronave");
+                SC.Parameters.AddWithValue("@F2", "");
+                SC.Parameters.AddWithValue("@F3", "");
+                SC.Parameters.AddWithValue("@F4", "");
+                sqlCon.Open();
+                SqlDataReader tbl = SC.ExecuteReader();
+                while (tbl.Read())  //Todos los objetos
+                {
+                    string bO = tbl["Objeto"].ToString().Trim();
+                    string bT = tbl["Texto"].ToString().Trim();
+                    Idioma.Rows.Add(bO, bT);
+                    if (bO.Equals("Caption"))
+                    { Page.Title = bT; ViewState["PageTit"] = bT; }
+
+                    TitForm.Text = bO.Equals("LblTituloAk") ? bT : TitForm.Text;
+                    LblBusqHK.Text = bO.Equals("LblBusqHK") ? bT + ":" : LblBusqHK.Text;
+                    LblCodHK.Text = bO.Equals("LblCodHK") ? bT + ":" : LblCodHK.Text;
+                    LblTitCampos.Text = bO.Equals("LblTituloAk") ? bT + ":" : LblTitCampos.Text;
+                    LblMatr.Text = bO.Equals("LblMatr") ? bT + ":" : LblMatr.Text;
+                    LblCCosto.Text = bO.Equals("LblCCosto") ? bT + ":" : LblCCosto.Text;
+                    LblFecFabr.Text = bO.Equals("LblFecFabr") ? bT + ":" : LblFecFabr.Text;
+                    CkbAdmon.Text = bO.Equals("CkbAdmon") ? "&nbsp" + bT : CkbAdmon.Text;
+                    CkbPropiedad.Text = bO.Equals("CkbPropiedad") ? "&nbsp" + bT : CkbPropiedad.Text;
+                    LblModelo.Text = bO.Equals("LblModelo") ? bT + ":" : LblModelo.Text;
+                    LblTipo.Text = bO.Equals("LblTipo") ? bT + ":" : LblTipo.Text;
+                    LblPropie.Text = bO.Equals("LblPropie") ? bT + ":" : LblPropie.Text;
+                    LblEstado.Text = bO.Equals("LblEstado") ? bT + ":" : LblEstado.Text;
+                    LblTitContadores.Text = bO.Equals("LblTitContadores") ? bT : LblTitContadores.Text;
+                    LblFecIngr.Text = bO.Equals("LblFecIngr") ? bT + ":" : LblFecIngr.Text;
+                    LblDescri.Text = bO.Equals("LblDescri") ? bT + ":" : LblDescri.Text;
+                    BtnIngresar.Text = bO.Equals("BtnIngresar") ? bT : BtnIngresar.Text;
+                    BtnModificar.Text = bO.Equals("BtnModificar") ? bT : BtnModificar.Text;
+                    BtnExpor.Text = bO.Equals("BtnExpor") ? bT : BtnExpor.Text;
+                    BtnExpor.ToolTip = bO.Equals("BtnExporTT") ? bT : BtnExpor.ToolTip;
+                    BtnSolicitud.Text = bO.Equals("BtnSolicitud") ? bT : BtnSolicitud.Text;
+                    BtnSolicitud.ToolTip = bO.Equals("BtnSolicitudTT") ? bT : BtnSolicitud.ToolTip;
+                }
+                DataRow[] Result = Idioma.Select("Objeto= 'BtnSolicitudOnC'");
+                foreach (DataRow row in Result)
+                { BtnSolicitud.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }/**/
+
+                sqlCon.Close();
+                ViewState["TablaIdioma"] = Idioma;
+            }
         }
         protected void BindBDdlBusq()
         {
@@ -179,73 +242,89 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void ValidarCampos(string Accion)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
             ViewState["Validar"] = "S";
             if (TxtMatr.Text.Trim().Equals(""))
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar una matrícula')", true);
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens01Aero'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar una matrícula')", true);
                 ViewState["Validar"] = "N";
                 return;
             }
             ViewState["Validar"] = "S";
             if (TxtSn.Text.Trim().Equals(""))
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar una serie')", true);
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens02Aero'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar una serie')", true);
                 ViewState["Validar"] = "N";
                 return;
             }
             ViewState["Validar"] = "S";
             if (DdlCcosto.Text.Trim().Equals(""))
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar un centro de costo')", true);
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens03Aero'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar un centro de costo')", true);
                 ViewState["Validar"] = "N";
                 return;
             }
             if (TxtFecFabr.Text.Trim().Equals(""))
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar una fecha de fabricación')", true);
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens04Aero'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar una fecha de fabricación')", true);
                 ViewState["Validar"] = "N";
                 return;
             }
             if (DdlModelo.Text.Trim().Equals(""))
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar un modelo'')", true);
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens05Aero'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar un modelo'')", true);
                 ViewState["Validar"] = "N";
                 return;
             }
             if (DdlTipo.Text.Trim().Equals(""))
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar un tipo de aeronave')", true);
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens06Aero'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar un tipo de aeronave')", true);
                 ViewState["Validar"] = "N";
                 return;
             }
-            if (DdlTipo.Text.Trim().Equals(""))
-            {
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar un tipo de aeronave')", true);
-                ViewState["Validar"] = "N";
-                return;
-            }
+
             if (DdlPropie.Text.Trim().Equals(""))
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar un propietario')", true);
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens07Aero'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar un propietario')", true);
                 ViewState["Validar"] = "N";
                 return;
             }
             if (TxtFecIngr.Text.Trim().Equals(""))
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar una fecha de ingreso')", true);
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens08Aero'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//La fecha de ingreso es requerida')", true);
                 ViewState["Validar"] = "N";
                 return;
             }
             if (TxtTSN.Text.Trim().Equals(""))
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar un valor para TSN')", true);
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens09Aero'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar un valor para TSN')", true);
                 TxtTSN.Text = "0";
                 ViewState["Validar"] = "N";
                 return;
             }
             if (TxtCSN.Text.Trim().Equals(""))
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar un valor para CSN')", true);
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens10Aero'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar un valor para CSN')", true);
                 TxtCSN.Text = "0";
                 ViewState["Validar"] = "N";
                 return;
@@ -359,19 +438,26 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnIngresar_Click(object sender, EventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
             try
             {
-                if (BtnIngresar.Text == "Ingresar")
+                if (ViewState["Accion"].ToString().Equals(""))
                 {
                     ActivarBtn(true, false, false, false, false);
-                    BtnIngresar.Text = "Aceptar";
+
+                    ViewState["Accion"] = "Aceptar";
+                    DataRow[] Result = Idioma.Select("Objeto= 'BotonIngOk'");
+                    foreach (DataRow row in Result)
+                    { BtnIngresar.Text = row["Texto"].ToString().Trim(); }//
                     LimpiarCampos();
                     TxtCodHk.Text = "0";
                     ActivarCampos(true, true, "Ingresar");
                     BindBDdlRefresh("", "");
                     DdlBusqHK.SelectedValue = "0";
                     DdlBusqHK.Enabled = false;
-                    BtnIngresar.OnClientClick = "return confirm('¿Desea realizar el ingreso?');";
+                    Result = Idioma.Select("Objeto= 'MensConfIng'"); // |MensConfMod
+                    foreach (DataRow row in Result)
+                    { BtnIngresar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }//¿Desea realizar el ingreso?
                 }
                 else
                 {
@@ -409,11 +495,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                     string Mensj = ClsAeronave.GetMensj();
                     if (!Mensj.Equals(""))
                     {
+                        DataRow[] Result2 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                        foreach (DataRow row in Result2)
+                        { Mensj = row["Texto"].ToString().Trim(); }
                         ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
                         return;
                     }
                     ActivarBtn(true, true, true, true, true);
-                    BtnIngresar.Text = "Ingresar";
+                    ViewState["Accion"] = "";
+                    DataRow[] Result = Idioma.Select("Objeto= 'IbtAddNew'");
+                    foreach (DataRow row in Result)
+                    { BtnIngresar.Text = row["Texto"].ToString().Trim(); }//
                     ActivarCampos(false, false, "Ingresar");
                     DdlBusqHK.Enabled = true;
                     BindBDdlBusq();
@@ -424,7 +516,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
             catch (Exception Ex)
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('Inconveniente en el ingreso')", true);
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//Inconveniente en el ingreso')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INGRESAR Aeronave", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
@@ -433,10 +527,11 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
                 if (TxtCodHk.Text.Equals("0") || TxtCodHk.Text.Equals(""))
                 { return; }
 
-                if (BtnModificar.Text == "Modificar")
+                if (ViewState["Accion"].ToString().Equals(""))
                 {
                     string VbCodEstado, VblCC;
                     VbCodEstado = DdlEstado.Text.Trim();
@@ -445,11 +540,16 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DdlEstado.Text = VbCodEstado;
                     DdlCcosto.Text = VblCC;
                     ActivarBtn(false, true, false, false, false);
-                    BtnModificar.Text = "Aceptar";
+                    DataRow[] Result = Idioma.Select("Objeto= 'BotonIngOk'");
+                    foreach (DataRow row in Result)
+                    { BtnModificar.Text = row["Texto"].ToString().Trim(); }//
+                    ViewState["Accion"] = "Aceptar";
                     ActivarCampos(true, true, "UPDATE");
                     DdlBusqHK.SelectedValue = "0";
                     DdlBusqHK.Enabled = false;
-                    BtnModificar.OnClientClick = "return confirm('¿Desea realizar la edición?');";
+                    Result = Idioma.Select("Objeto= 'MensConfMod'"); //MensConfIng |MensConfMod
+                    foreach (DataRow row in Result)
+                    { BtnModificar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }//¿Desea eliminar el registro?  
                 }
                 else
                 {
@@ -487,11 +587,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                     string Mensj = ClsAeronave.GetMensj();
                     if (!Mensj.Equals(""))
                     {
+                        DataRow[] Result2 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                        foreach (DataRow row in Result2)
+                        { Mensj = row["Texto"].ToString().Trim(); }
                         ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
                         return;
                     }
                     ActivarBtn(true, true, true, true, true);
-                    BtnModificar.Text = "Modificar";
+                    DataRow[] Result = Idioma.Select("Objeto= 'BotonMod'");
+                    foreach (DataRow row in Result)
+                    { BtnModificar.Text = row["Texto"].ToString().Trim(); }
+                    ViewState["Accion"] = "";
                     ActivarCampos(false, false, "Ingresar");
                     DdlBusqHK.Enabled = true;
                     BindBDdlBusq();
@@ -502,7 +608,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
             catch (Exception Ex)
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('Inconveniente en la actualización')", true);
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "MODIFICAR Aeronave", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
@@ -511,19 +619,25 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
 
         }
+
         protected void BtnExpor_Click(object sender, EventArgs e)
         {
             try
             {
-                string StSql, VbNomRpt;
-                StSql = "EXEC SP_PANTALLA_Aeronave 4,'','','','',0,0,0,0,'01/01/01','01/01/01','01/01/01'";
-                VbNomRpt = "Aeronaves";                
+                string StSql, VbNomRpt = "";
+                CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
+                CursorIdioma.Alimentar("CurExportAeronave", Session["77IDM"].ToString().Trim());
+                StSql = "EXEC SP_PANTALLA_Aeronave 4,'','','','CurExportAeronave',0,0,0,0,'01/01/01','01/01/01','01/01/01'";
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                DataRow[] Result = Idioma.Select("Objeto= 'Caption'");
+                foreach (DataRow row in Result)
+                { VbNomRpt = row["Texto"].ToString().Trim(); }// Aeronaves
                 Cnx.SelecBD();
                 using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
                 {
                     using (SqlCommand SC = new SqlCommand(StSql, con))
                     {
-                        SC.CommandTimeout = 90000000;                      
+                        SC.CommandTimeout = 90000000;
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             SC.Connection = con;
@@ -565,7 +679,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnSolicitud_Click(object sender, EventArgs e)
         {
-            if(TxtCodHk.Text.Equals("0") || TxtCodHk.Text.Equals(""))
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            string VblObs = "";
+            DataRow[] Result = Idioma.Select("Objeto= 'Mens11Aero'");
+            foreach (DataRow row in Result)
+            { VblObs = row["Texto"].ToString().Trim() + " [" + TxtMatr.Text.Trim() + "]"; }// Generación solicitud de reparación matrícula
+
+            if (TxtCodHk.Text.Equals("0") || TxtCodHk.Text.Equals(""))
             {
                 return;
             }
@@ -573,13 +693,13 @@ namespace _77NeoWeb.Forms.Ingenieria
             var TypEncSP = new ClsTypSolicitudPedido()
             {
                 IdPedido = 0,
-                CodPedido ="",              
+                CodPedido = "",
                 Fechapedido = Convert.ToDateTime(DateTime.Now),
                 CodPrioridad = "NORMAL",
                 CodResponsable = Session["C77U"].ToString(),
-                CodReserva=0,
+                CodReserva = 0,
                 CodEstado = "A",
-                Obsevacion = "Generación solicitud de reparación matrícula ["+ TxtMatr.Text.Trim() + "]",
+                Obsevacion = VblObs,
                 CodtipoSolPedido = "02",
                 Ccostos = DdlCcosto.Text.Trim(),
                 Usu = Session["C77U"].ToString(),
@@ -590,47 +710,50 @@ namespace _77NeoWeb.Forms.Ingenieria
             };
             ObjEncSP.Add(TypEncSP);
 
-            List<ClsTypSolicitudPedido> ObjDetSP = new List<ClsTypSolicitudPedido>();   
-                var TypDetSP = new ClsTypSolicitudPedido()
-                {
-                    IdDetPedido =0,
-                    CodReferencia = "N/A",
-                    PN = "N/A",
-                    CodUndMedida = "EA",
-                    CantidadTotal =1,
-                    CantidadAlmacen =1,
-                    CantidadReparacion =0,
-                    CantidadOrden =0,
-                    Posicion =1,
-                    AprobacionDetalle =0,
-                    CodSeguimiento ="SOL",
-                    Descripcion = "Generación solicitud de reparación matrícula [" + TxtMatr.Text.Trim() + "]",
-                    TipoPedido =0,
-                    CantidadAjustada =1,
-                    Notas =TxtSn.Text.Trim(),
-                    PosicionPr =0,
-                    IdSrvPr =0,
-                    IdReporte =0,
-                    IdDetProPSrvSP =0,
-                    CodIdDetalleResSP =0,
-                    FechaAprob =null,
-                    CodAeronaveSP =Convert.ToInt32(TxtCodHk.Text),
+            List<ClsTypSolicitudPedido> ObjDetSP = new List<ClsTypSolicitudPedido>();
+            var TypDetSP = new ClsTypSolicitudPedido()
+            {
+                IdDetPedido = 0,
+                CodReferencia = "N/A",
+                PN = "N/A",
+                CodUndMedida = "EA",
+                CantidadTotal = 1,
+                CantidadAlmacen = 1,
+                CantidadReparacion = 0,
+                CantidadOrden = 0,
+                Posicion = 1,
+                AprobacionDetalle = 0,
+                CodSeguimiento = "SOL",
+                Descripcion = "Generación solicitud de reparación matrícula [" + TxtMatr.Text.Trim() + "]",
+                TipoPedido = 0,
+                CantidadAjustada = 1,
+                Notas = TxtSn.Text.Trim(),
+                PosicionPr = 0,
+                IdSrvPr = 0,
+                IdReporte = 0,
+                IdDetProPSrvSP = 0,
+                CodIdDetalleResSP = 0,
+                FechaAprob = null,
+                CodAeronaveSP = Convert.ToInt32(TxtCodHk.Text),
 
 
-                };
+            };
             ObjDetSP.Add(TypDetSP);
 
             ClsTypSolicitudPedido TypSolicitudPedido = new ClsTypSolicitudPedido();
 
             TypSolicitudPedido.Alimentar(ObjEncSP, ObjDetSP);
+            string VblPn = TypSolicitudPedido.GetPN();
             string Mensj = TypSolicitudPedido.GetMensj();
             if (!Mensj.Trim().Equals(""))
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + "[" + VblPn + "] " + Mensj + "')", true);
                 return;
             }
             string VbCodPedido = TypSolicitudPedido.GetCodPedido();
-            ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert(' Se generó la solicitud Nro [" + VbCodPedido + "]')", true);
+            DataRow[] Result1 = Idioma.Select("Objeto= 'MstrMens03'");
+            foreach (DataRow row in Result1)
+            { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + " [" + VbCodPedido + "]" + "');", true); }// Se generó la solicitud Nro
         }
     }
 }
