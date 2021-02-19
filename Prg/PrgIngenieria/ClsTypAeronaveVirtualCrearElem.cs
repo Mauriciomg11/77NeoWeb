@@ -144,7 +144,6 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                     }
                 }
             }
-
         }
         public string GetMensj()
         {

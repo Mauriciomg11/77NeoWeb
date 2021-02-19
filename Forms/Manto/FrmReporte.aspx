@@ -127,7 +127,7 @@
                     <asp:Label ID="LblNumLv" runat="server" CssClass="LblEtiquet" Text="Libro Vuelo:"></asp:Label>
                     <asp:TextBox ID="TxtNumLv" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <h6 class="TextoSuperior">
-                        <asp:Label ID="Label4" runat="server" Text="Reportes de mantenimiento"></asp:Label></h6>
+                        <asp:Label ID="LblTitRepMant" runat="server" Text="Reportes de mantenimiento"></asp:Label></h6>
                     <asp:Table runat="server">
                         <asp:TableRow>
                             <asp:TableCell Width="1%">
@@ -289,7 +289,7 @@
                                             &nbsp
                                         </asp:TableCell>
                                         <asp:TableCell>
-                                            <asp:Label ID="Label2" runat="server" CssClass="LblEtiquet" Text="Sí" />
+                                            <asp:Label ID="LblPgSi" runat="server" CssClass="LblEtiquet" Text="Sí" />
                                         </asp:TableCell>
                                         <asp:TableCell>
                                             <asp:RadioButton ID="RdbPgSi" runat="server" TextAlign="Left" GroupName="Prog" Enabled="false" />
@@ -354,8 +354,7 @@
                                 <asp:Label ID="LblNexDue" runat="server" CssClass="LblEtiquet" Text="Next Due:" Visible="false" />
                                 <asp:TextBox ID="TxtNexDue" runat="server" CssClass="Form-control-sm heightCampo" Width="55%" step="0.01" onkeypress="return Decimal(event);" Enabled="false" Visible="false" />
                             </asp:TableCell>
-                            <asp:TableCell>
-                               
+                            <asp:TableCell>                               
                             </asp:TableCell>
                         </asp:TableRow>
                         <asp:TableRow>
@@ -398,7 +397,8 @@
                                 <asp:DropDownList ID="DdlTecDif" runat="server" CssClass="heightCampo" Enabled="false" />
                             </asp:TableCell>
                             <asp:TableCell ColumnSpan="7">
-                                <h6 class="TextoSuperior">Datos de verificacion</h6>
+                                <h6 class="TextoSuperior">
+                                    <asp:Label ID="LblTitDatosVer" runat="server" Text="Datos de verificación" /></h6>
                                 <asp:Table runat="server" Width="100%">
                                     <asp:TableRow>
                                         <asp:TableCell>
@@ -465,7 +465,7 @@
         </asp:View>
         <asp:View ID="Vw1Busq" runat="server">
             <h6 class="TextoSuperior">
-                <asp:Label ID="LblTitOpcBusqueda" runat="server" Text="Opciones de búsqueda "></asp:Label>
+                <asp:Label ID="LblOpbusRTE" runat="server" Text="Opciones de búsqueda "></asp:Label>
             </h6>
             <asp:Table ID="TblBusqRte" runat="server" class="TablaBusqueda" Visible="false" Width="65%">
                 <asp:TableRow>
@@ -492,7 +492,7 @@
             <table class="TablaBusqueda">
                 <tr>
                     <td>
-                        <asp:Label ID="Label1" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
+                        <asp:Label ID="LblBusq" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
                     <td>
                         <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
                     <td>
@@ -512,28 +512,28 @@
                     <RowStyle CssClass="GridRowStyle" />
                     <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                     <Columns>
-                        <asp:CommandField HeaderText="Selección" SelectText="Enviar" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                        <asp:CommandField HeaderText="Select" SelectText="Enviar" ShowSelectButton="True" HeaderStyle-Width="33px" />
                     </Columns>
-                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
                 </asp:GridView>
             </div>
         </asp:View>
         <asp:View ID="Vw2RecursoRte" runat="server">
             <asp:UpdatePanel ID="UpPnlRecursoRte" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <asp:Label ID="Label10" runat="server" CssClass="LblEtiquet" Text="Reporte:"></asp:Label>
+                    <asp:Label ID="LblRecsNumRte" runat="server" CssClass="LblEtiquet" Text="Reporte:"/>
                     <asp:TextBox ID="TxtRecurNumRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
-                    <asp:Label ID="Label6" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:"></asp:Label>
+                    <asp:Label ID="LblRecsSubOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:"/>
                     <asp:TextBox ID="TxtRecurSubOt" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
-                    <asp:Label ID="LblPrioridadOT" runat="server" CssClass="LblEtiquet" Text="Prioridad:"></asp:Label>
-                    <asp:DropDownList ID="DdlPrioridadOT" runat="server" CssClass="Campos" Width="15%"></asp:DropDownList>
+                    <asp:Label ID="LblPrioridadOT" runat="server" CssClass="LblEtiquet" Text="Prioridad:"/>
+                    <asp:DropDownList ID="DdlPrioridadOT" runat="server" CssClass="Campos" Width="15%"/>
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTtlRecursoRte" runat="server" Text="Recurso Físico y Licencias"></asp:Label></h6>
                     <asp:ImageButton ID="IbtCerrarRec" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarRec_Click" ImageAlign="Right" />
                     <table class="TablaBusqueda">
                         <tr>
                             <td>
-                                <asp:Label ID="Label5" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
+                                <asp:Label ID="LblRecsBusq" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
                             <td>
                                 <asp:TextBox ID="TxtConsulPnRecurRte" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
                             <td>
@@ -575,7 +575,7 @@
                                                 <asp:TextBox ID="TxtPosRFPP" runat="server" MaxLength="240" Width="100%" Enabled="false" />
                                             </FooterTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Parte número" HeaderStyle-Width="25%">
+                                        <asp:TemplateField HeaderText="P/N" HeaderStyle-Width="25%">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblPn" Text='<%# Eval("PN") %>' runat="server" />
                                             </ItemTemplate>
@@ -652,7 +652,7 @@
                                     <HeaderStyle CssClass="GridCabecera" />
                                     <RowStyle CssClass="GridRowStyle" />
                                     <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
                                 </asp:GridView>
                             </asp:TableCell>
                             <asp:TableCell VerticalAlign="Top">
@@ -731,13 +731,13 @@
         <asp:View ID="Vw3CargaMasiva" runat="server">
             <asp:UpdatePanel ID="UpPnlCargaMasiva" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <asp:Label ID="Label8" runat="server" CssClass="LblEtiquet" Text="Reporte:"></asp:Label>
+                    <asp:Label ID="LblCargaMasRte" runat="server" CssClass="LblEtiquet" Text="Reporte:"></asp:Label>
                     <asp:TextBox ID="TxtCargaMasiRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
-                    <asp:Label ID="Label9" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:"></asp:Label>
+                    <asp:Label ID="LblCargaMasOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:"></asp:Label>
                     <asp:TextBox ID="TxtCargaMasiOT" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:ImageButton ID="IbtCerrarSubMaxivo" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarSubMaxivo_Click" ImageAlign="Right" />
                     <h6 class="TextoSuperior">
-                        <asp:Label ID="Label7" runat="server" Text="Subir Evaluación"></asp:Label></h6>
+                        <asp:Label ID="LblTitOTCargMasiv" runat="server" Text="Subir Evaluación"></asp:Label></h6>
                     <asp:ImageButton ID="IbtSubirCargaMax" runat="server" ToolTip="Cargar archivo..." ImageUrl="~/images/SubirCarga.png" OnClick="IbtSubirCargaMax_Click" Width="30px" Height="30px" />
                     <asp:ImageButton ID="IbtGuardarCargaMax" runat="server" ToolTip="Guardar" ImageUrl="~/images/Descargar.png" OnClick="IbtGuardarCargaMax_Click" Width="30px" Height="30px" Enabled="false" OnClientClick="javascript:return confirm('¿Desea almacenar la información?', 'Mensaje de sistema')" />
                     <asp:GridView ID="GrdCargaMax" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="False"
@@ -748,7 +748,7 @@
                                     <asp:TextBox ID="TxtPosRF" Text='<%# Eval("Posicion") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Parte número" HeaderStyle-Width="25%">
+                            <asp:TemplateField HeaderText="P/N" HeaderStyle-Width="25%">
                                 <ItemTemplate>
                                     <asp:TextBox ID="TxtPNRF" Text='<%# Eval("PN") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
@@ -808,11 +808,11 @@
         <asp:View ID="Vw5SNOnOff" runat="server">
             <asp:UpdatePanel ID="UplSnOnOff" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <asp:Label ID="Label11" runat="server" CssClass="LblEtiquet" Text="Reporte:"></asp:Label>
+                    <asp:Label ID="LblSnONOfNumRte" runat="server" CssClass="LblEtiquet" Text="Reporte:"/>
                     <asp:TextBox ID="TxtSnOnOffNumRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:ImageButton ID="IbtCerrarSnOnOff" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarSnOnOff_Click" ImageAlign="Right" />
                     <h6 class="TextoSuperior">
-                        <asp:Label ID="Label12" runat="server" Text="Ingreseso de elementos On - Off"></asp:Label></h6>
+                        <asp:Label ID="LlTitSnOnOff" runat="server" Text="Ingreseso de elementos On - Off"/></h6>
                     <asp:GridView ID="GrdSnOnOff" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodIdDetLvDetManto"
                         CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="4"
                         OnRowCommand="GrdSnOnOff_RowCommand" OnRowEditing="GrdSnOnOff_RowEditing" OnRowUpdating="GrdSnOnOff_RowUpdating" OnRowCancelingEdit="GrdSnOnOff_RowCancelingEdit"
@@ -946,7 +946,7 @@
                         <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
                     </asp:GridView>
                     <h6 class="TextoSuperior">
-                        <asp:Label ID="LblTitHta" runat="server" Text="Herramientas"></asp:Label></h6>
+                        <asp:Label ID="LblTitHta" runat="server" Text="Herramientas"/></h6>
                     <asp:GridView ID="GrdHta" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdHerramientoManto"
                         CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="3" Width="80%"
                         OnRowCommand="GrdHta_RowCommand" OnRowEditing="GrdHta_RowEditing" OnRowUpdating="GrdHta_RowUpdating" OnRowCancelingEdit="GrdHta_RowCancelingEdit"

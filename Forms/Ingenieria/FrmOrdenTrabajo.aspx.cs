@@ -190,7 +190,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 SC.Parameters.AddWithValue("@F2", "FrmReporte");
                 SC.Parameters.AddWithValue("@F3", "0");
                 SC.Parameters.AddWithValue("@F4", "0");
-                sqlCon.Open();https://localhost:44350/Forms/Ingenieria/FrmOrdenTrabajo.aspx.cs
+                sqlCon.Open();//https://localhost:44350/Forms/Ingenieria/FrmOrdenTrabajo.aspx.cs
                 SqlDataReader tbl = SC.ExecuteReader();
                 while (tbl.Read())  //Todos los objetos
                 {
@@ -1871,7 +1871,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 GrdOTRecursoF.DataBind();
                                 GrdOTRecursoF.Rows[0].Cells.Clear();
                                 GrdOTRecursoF.Rows[0].Cells.Add(new TableCell());
-                                DataRow[] Result = Idioma.Select("Objeto= 'Mens07'");
+                                DataRow[] Result = Idioma.Select("Objeto= 'RteMens41'");
                                 foreach (DataRow row in Result)
                                 { GrdOTRecursoF.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
                                 GrdOTRecursoF.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;

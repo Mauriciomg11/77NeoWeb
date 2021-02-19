@@ -19,10 +19,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null)
-            {
-                Response.Redirect("~/FrmAcceso.aspx");
-            }/**/
+            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }/* */
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo    
             Page.Title = string.Format("Aeronave Virtual");
             if (Session["C77U"] == null)
@@ -34,8 +31,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 Session["V$U@"] = "sa";
                 Session["P@$"] = "admindemp";
                 Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["77IDM"] = "5"; // 4 español | 5 ingles */ 
+                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT 
+                Session["77IDM"] = "5"; // 4 español | 5 ingles */
             }
             if (!IsPostBack)
             {
@@ -1908,12 +1905,10 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
                 CursorIdioma.Alimentar("CurBusInstalar", Session["77IDM"].ToString().Trim());
                 string VbTxtSql = "", VbOpcion = "";
-                //VbTxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 23,@SN,@PN,@UN,'M',@CodHK,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
                 VbTxtSql = "EXEC SP_TablasIngenieria 11,@SN, @PN,@UN,'M','','','','','CurBusInstalar',@CodHK,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
-
                     SC.Parameters.AddWithValue("@SN", ViewState["PNSN"].Equals("SN") ? TxtBusqInsMay.Text.Trim() : "");
                     SC.Parameters.AddWithValue("@PN", ViewState["PNSN"].Equals("PN") ? TxtBusqInsMay.Text.Trim() : "");
                     SC.Parameters.AddWithValue("@UN", ViewState["PNSN"].Equals("UN") ? TxtBusqInsMay.Text.Trim() : "");
@@ -3368,7 +3363,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
                 CursorIdioma.Alimentar("CurBusInstalar", Session["77IDM"].ToString().Trim());
                 string VbTxtSql = "";
-               // VbTxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 26,@SN,@PN,@UN,@CM,0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                // VbTxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 26,@SN,@PN,@UN,@CM,0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
                 VbTxtSql = "EXEC SP_TablasIngenieria 12, @SN, @PN, @UN,@CM,'','','','','CurBusInstalar',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
@@ -3815,12 +3810,14 @@ namespace _77NeoWeb.Forms.Ingenieria
             BtnPropiedad.CssClass = "btn btn-primary";
             BtnCliente.CssClass = "btn btn-outline-primary";
             ViewState["Propiedad"] = 0; // 0= Propiedad Cia| 1=ajeno (Cliente)
+            Page.Title = ViewState["PageTit"].ToString();
         }
         protected void BtnCliente_Click(object sender, EventArgs e)
         {
             BtnCliente.CssClass = "btn btn-primary";
             BtnPropiedad.CssClass = "btn btn-outline-primary";
             ViewState["Propiedad"] = 1; // 0= Propiedad Cia| 1=ajeno (Cliente)
+            Page.Title = ViewState["PageTit"].ToString();
         }
         protected void IbtCerrarCrearElem_Click(object sender, ImageClickEventArgs e)
         {
@@ -3948,7 +3945,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Crear Elemento", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlCrearElemPn.Text = "";
             }
-
         }
     }
 }
