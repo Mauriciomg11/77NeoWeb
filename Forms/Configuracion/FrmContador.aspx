@@ -59,18 +59,18 @@
             <div class=" CentrarTable ">
                 <table class="TablaCampos table table-sm">
                     <tr>
-                        <td class="LblTextoBusq">Código:</td>
+                        <td ><asp:Label ID="LblCodigo" runat="server" CssClass="LblTextoBusq" Text="Código:" /></td>
                         <td>
                             <asp:TextBox ID="TxtCod" runat="server" CssClass="form-control Campos" MaxLength="3" Enabled="false"></asp:TextBox></td>
-                        <td class="LblTextoBusq">Descripción:</td>
+                        <td><asp:Label ID="LblDescrip" runat="server" CssClass="LblTextoBusq" Text="Descripción:" /></td>
                         <td>
                             <asp:TextBox ID="TxtDesc" runat="server" CssClass="form-control Campos" MaxLength="60" TextMode="MultiLine" Enabled="false"></asp:TextBox></td>
                     </tr>
                     <tr>
-                        <td class="LblTextoBusq">Unidad medida:</td>
+                        <td><asp:Label ID="LblUndMed" runat="server" CssClass="LblTextoBusq" Text="Unidad medida:" /></td>
                         <td>
                             <asp:DropDownList ID="DdlUndMed" runat="server" CssClass="form-control Campos" Height="30px" Font-Size="10px" Enabled="false"></asp:DropDownList></td>
-                        <td class="LblTextoBusq">Identificador:</td>
+                        <td><asp:Label ID="LblIdentif" runat="server" CssClass="LblTextoBusq" Text="Identificador:" /></td>
                         <td>
                             <asp:DropDownList ID="DdlIdent" runat="server" CssClass="form-control Campos" Height="30px" Font-Size="10px" Enabled="false"></asp:DropDownList></td>
                         <td width="5%"></td>
@@ -90,5 +90,8 @@
                 </table>
             </div>
         </ContentTemplate>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="IbtExpExcel" />
+        </Triggers>
     </asp:UpdatePanel>
 </asp:Content>

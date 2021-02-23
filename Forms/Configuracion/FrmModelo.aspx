@@ -47,7 +47,6 @@
             left: 2%;
         }
 
-
         .Campos {
             Height: 28px;
             Width: 250px;
@@ -61,8 +60,8 @@
             left: 95%;
             top: 1%;
         }
-        .BtnSveFrml
-        {
+
+        .BtnSveFrml {
             background-image: url("../Images/formulaV1.png");
             /*background-size: cover;*/
             width: 32px;
@@ -100,7 +99,8 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1><asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
+    <h1>
+        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
@@ -110,9 +110,9 @@
                     <table class="TablaBusqueda TabBusq">
                         <tr>
                             <td>
-                                <asp:Label ID="LblBusq" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
+                                <asp:Label ID="LblBusq" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
                             <td>
-                                <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
+                                <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
                             <td>
                                 <asp:ImageButton ID="BtIConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="BtIConsultar_Click" /></td>
                         </tr>
@@ -120,48 +120,48 @@
                     <table class="TablaCampos">
                         <tr>
                             <td>
-                                <asp:Label ID="LblCodigo" runat="server" Text="Codigo: " CssClass="LblTextoBusq"></asp:Label></td>
+                                <asp:Label ID="LblCodigo" runat="server" Text="Codigo: " CssClass="LblTextoBusq" /></td>
                             <td>
-                                <asp:TextBox ID="TxtCod" runat="server" CssClass="form-control Campos" MaxLength="3" Enabled="false"></asp:TextBox></td>
+                                <asp:TextBox ID="TxtCod" runat="server" CssClass="form-control Campos" MaxLength="3" Enabled="false" /></td>
                             <td>
-                                <asp:Label ID="LblMod" runat="server" Text="Modelo: " CssClass="LblTextoBusq"></asp:Label></td>
+                                <asp:Label ID="LblMod" runat="server" Text="Modelo: " CssClass="LblTextoBusq" /></td>
                             <td>
-                                <asp:TextBox ID="TxtMod" runat="server" CssClass="form-control Campos" MaxLength="30" Enabled="false"></asp:TextBox></td>
+                                <asp:TextBox ID="TxtMod" runat="server" CssClass="form-control Campos" MaxLength="30" Enabled="false" /></td>
                             <td>
-                                <asp:Label ID="LblDesc" runat="server" Text="Descripción: " CssClass="LblTextoBusq"></asp:Label></td>
+                                <asp:Label ID="LblDesc" runat="server" Text="Descripción: " CssClass="LblTextoBusq" /></td>
                             <td>
-                                <asp:TextBox ID="TxtDesc" runat="server" CssClass="form-control Campos" MaxLength="200" TextMode="MultiLine" Enabled="false"></asp:TextBox></td>
+                                <asp:TextBox ID="TxtDesc" runat="server" CssClass="form-control Campos" MaxLength="200" TextMode="MultiLine" Enabled="false" /></td>
                         </tr>
                         <tr>
                             <td>
-                                <asp:Label ID="LblNumMot" runat="server" Text="Nro de motores: " CssClass="LblTextoBusq"></asp:Label></td>
+                                <asp:Label ID="LblNumMot" runat="server" Text="Nro de motores: " CssClass="LblTextoBusq" /></td>
                             <td>
-                                <asp:TextBox ID="TxtNumMot" runat="server" OnKeyPress="javascript:return solonumeros(event)" CssClass="form-control Campos" Enabled="false"></asp:TextBox></td>
+                                <asp:TextBox ID="TxtNumMot" runat="server" OnKeyPress="javascript:return solonumeros(event)" CssClass="form-control Campos" Enabled="false" /></td>
                             <td>
-                                <asp:Label ID="LblNumTr" runat="server" Text="Nro de tripulación: " CssClass="LblTextoBusq"></asp:Label></td>
+                                <asp:Label ID="LblNumTr" runat="server" Text="Nro de tripulación: " CssClass="LblTextoBusq" /></td>
                             <td>
-                                <asp:TextBox ID="TxtNumTr" runat="server" OnKeyPress="javascript:return solonumeros(event)" CssClass="form-control Campos" Enabled="false"></asp:TextBox></td>
+                                <asp:TextBox ID="TxtNumTr" runat="server" OnKeyPress="javascript:return solonumeros(event)" CssClass="form-control Campos" Enabled="false" /></td>
                             <td>
-                                <asp:Label ID="LblPasj" runat="server" Text="Nro de pasajeros: " CssClass="LblTextoBusq"></asp:Label></td>
+                                <asp:Label ID="LblPasj" runat="server" Text="Nro de pasajeros: " CssClass="LblTextoBusq" /></td>
                             <td>
-                                <asp:TextBox ID="TxtPasj" runat="server" OnKeyPress="javascript:return solonumeros(event)" CssClass="form-control Campos" Enabled="false"></asp:TextBox></td>
+                                <asp:TextBox ID="TxtPasj" runat="server" OnKeyPress="javascript:return solonumeros(event)" CssClass="form-control Campos" Enabled="false" /></td>
                         </tr>
                         <tr>
                             <td>
-                                <asp:Label ID="LblFormL" runat="server" Text="Fórmula de levantes: " CssClass="LblTextoBusq"></asp:Label></td>
+                                <asp:Label ID="LblFormL" runat="server" Text="Fórmula de levantes: " CssClass="LblTextoBusq" /></td>
                             <td>
-                                <asp:TextBox ID="TxtFormL" runat="server" Width="350px" Height="28px" CssClass="form-control" placeholder="Sin formula" Enabled="false"></asp:TextBox></td>
+                                <asp:TextBox ID="TxtFormL" runat="server" Width="350px" Height="28px" CssClass="form-control" placeholder="Sin formula" Enabled="false" /></td>
                             <td>
                                 <asp:ImageButton ID="BtIFormL" runat="server" ToolTip="Editar fórmula" CssClass="BtnFrmL" OnClick="BtIFormL_Click1" ImageUrl="~/images/FormulaV2.png" Enabled="false" /></td>
                             <td>
                                 <table>
                                     <tr>
                                         <td>
-                                            <asp:Label ID="LblAlaF" runat="server" CssClass="LblEtiquet" Text="Ala Fija"></asp:Label></td>
+                                            <asp:Label ID="LblAlaF" runat="server" CssClass="LblEtiquet" Text="Ala Fija" /></td>
                                         <td>
                                             <asp:RadioButton ID="RdbAlaF" runat="server" TextAlign="Left" GroupName="Ala" Enabled="false" Checked="true" /></td>
                                         <td>
-                                            <asp:Label ID="LblAlaR" runat="server" CssClass="LblEtiquet" Text="Ala Rotatoria"></asp:Label></td>
+                                            <asp:Label ID="LblAlaR" runat="server" CssClass="LblEtiquet" Text="Ala Rotatoria" /></td>
                                         <td>
                                             <asp:RadioButton ID="RdbAlaRo" runat="server" TextAlign="Left" GroupName="Ala" Enabled="false" /></td>
                                     </tr>
@@ -169,7 +169,7 @@
                             </td>
                         </tr>
                     </table>
-                   
+
                     <table class="TabBtnEdicion">
                         <tr>
                             <td>
@@ -182,22 +182,68 @@
                     </table>
                 </div>
                 <div class="DivGrid DivContendorGrid">
-                    <asp:GridView ID="GrdDatos" runat="server" DataKeyNames="CodModelo" EmptyDataText="No existen registros ..!"
+                    <asp:GridView ID="GrdDatos" runat="server" DataKeyNames="CodModelo" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8" OnSelectedIndexChanged="GrdDatos_SelectedIndexChanged">
                         <FooterStyle CssClass="GridFooterStyle" />
                         <HeaderStyle CssClass="GridCabecera" />
                         <RowStyle CssClass="GridRowStyle" />
                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                         <Columns>
-                            <asp:CommandField SelectText="Activar" ShowSelectButton="True" />
+                            <asp:CommandField SelectText="CodModelo" ShowSelectButton="True" HeaderStyle-Width="1%" />
+                            <asp:TemplateField HeaderText="Pos" HeaderStyle-Width="5%">
+                                <ItemTemplate>
+                                    <asp:Label ID="LblCodModelo" Text='<%# Eval("CodModelo") %>' runat="server" Width="100%" Enabled="false" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Modelo" HeaderStyle-Width="10%">
+                                <ItemTemplate>
+                                    <asp:Label ID="LblModelo" Text='<%# Eval("Modelo") %>' runat="server" Width="100%" Enabled="false" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                             <asp:TemplateField HeaderText="Descripcion" HeaderStyle-Width="15%">
+                                <ItemTemplate>
+                                    <asp:Label ID="LblDescripcion" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" Enabled="false" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="NroMotor" HeaderStyle-Width="5%">
+                                <ItemTemplate>
+                                    <asp:Label ID="LblNroMotor" Text='<%# Eval("NroMotor") %>' runat="server" Width="100%" Enabled="false" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="nrotripulacion" HeaderStyle-Width="5%">
+                                <ItemTemplate>
+                                    <asp:Label ID="LblNroTri" Text='<%# Eval("nrotripulacion") %>' runat="server" Width="100%" Enabled="false" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                             <asp:TemplateField HeaderText="NroPasajeros" HeaderStyle-Width="5%">
+                                <ItemTemplate>
+                                    <asp:Label ID="LbNroPax" Text='<%# Eval("NroPasajeros") %>' runat="server" Width="100%" Enabled="false" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                             <asp:TemplateField HeaderText="FormulaLevante" HeaderStyle-Width="10%">
+                                <ItemTemplate>
+                                    <asp:Label ID="LblFormLv" Text='<%# Eval("FormulaLevante") %>' runat="server" Width="100%" Enabled="false" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                             <asp:TemplateField HeaderText="Ala_Fija" HeaderStyle-Width="5%">
+                                <ItemTemplate>
+                                    <asp:Label ID="LblAlaF" Text='<%# Eval("Ala_Fija") %>' runat="server" Width="100%" Enabled="false" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                             <asp:TemplateField HeaderText="Ala_Rotatoria" HeaderStyle-Width="5%">
+                                <ItemTemplate>
+                                    <asp:Label ID="LblAlaR" Text='<%# Eval("Ala_Rotatoria") %>' runat="server" Width="100%" Enabled="false" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
-                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
+
                     </asp:GridView>
                 </div>
             </asp:Panel>
             <asp:Panel ID="PnlFrml" runat="server" Visible="false">
                 <asp:Panel ID="PnlEditarPerfil" runat="server" CssClass="PneleditarPerfil" BorderStyle="Solid" BorderColor="#3399ff" BackColor="#66ccff">
-                    <asp:Label ID="Label1" runat="server" Text="Formula" CssClass="LblTextoBusq" Font-Size="X-Large"></asp:Label>
+                    <asp:Label ID="LblFormula" runat="server" Text="Formula" CssClass="LblTextoBusq" Font-Size="X-Large"></asp:Label>
                     <asp:TextBox ID="TxtNewFml" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
                     <table>
                         <tr>
@@ -250,7 +296,7 @@
                             <td>
                                 <asp:ImageButton ID="BtiAceptar" runat="server" CssClass="BtnAceptar" ImageUrl="~/images/Save.png" ToolTip="Editar" OnClick="BtiAceptar_Click" /></td>
                             <td>
-                                <asp:ImageButton ID="BtiCancelar" runat="server" CssClass="BtnCancelar" ImageUrl="~/images/Cancel.png"  ToolTip="Cancelar" OnClick="BtiCancelar_Click" /></td>
+                                <asp:ImageButton ID="BtiCancelar" runat="server" CssClass="BtnCancelar" ImageUrl="~/images/Cancel.png" ToolTip="Cancelar" OnClick="BtiCancelar_Click" /></td>
                         </tr>
                     </table>
                 </asp:Panel>

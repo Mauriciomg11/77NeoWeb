@@ -23,6 +23,20 @@
 
             return true;
         }
+        function Decimal(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode == 46) {
+                var inputValue = $("#inputfield").val()
+                if (inputValue.indexOf('.') < 1) {
+                    return true;
+                }
+                return false;
+            }
+            if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
     </script>
 
     <style type="text/css">
@@ -112,7 +126,7 @@
                                         <asp:TextBox ID="TxtCiclos" Text='<%# Eval("CiclosEquivalente") %>' runat="server" />
                                     </EditItemTemplate>
                                     <FooterTemplate>
-                                        <asp:TextBox ID="TxtCiclosPP" onkeypress="return solonumeros(event); " runat="server" Width="100%" />
+                                        <asp:TextBox ID="TxtCiclosPP"  runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);"/>
                                     </FooterTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField FooterStyle-Width="12%">
@@ -128,7 +142,7 @@
                             <HeaderStyle CssClass="GridCabecera" />
                             <RowStyle CssClass="GridRowStyle" />
                             <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                            <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                            <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                         </asp:GridView>
                     </div>
                 </asp:Panel>
@@ -174,7 +188,7 @@
                                         <asp:Label Text='<%# Eval("CFAbbr") %>' runat="server" />
                                     </ItemTemplate>
                                     <FooterTemplate>
-                                        <asp:TextBox ID="TxtCFAbbrPP" onkeypress="return solonumeros(event); " runat="server" Width="100%" />
+                                        <asp:TextBox ID="TxtCFAbbrPP" runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);"/>
                                     </FooterTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Cycle Factor Ext'd" HeaderStyle-Width="6%">
@@ -182,7 +196,7 @@
                                         <asp:Label Text='<%# Eval("CFExt") %>' runat="server" />
                                     </ItemTemplate>
                                     <FooterTemplate>
-                                        <asp:TextBox ID="TxtCFExtPP" onkeypress="return solonumeros(event); " runat="server" Width="100%" />
+                                        <asp:TextBox ID="TxtCFExtPP"  runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" />
                                     </FooterTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Flight Count Factor" HeaderStyle-Width="6%">
@@ -190,7 +204,7 @@
                                         <asp:Label Text='<%# Eval("FCFactor") %>' runat="server" />
                                     </ItemTemplate>
                                     <FooterTemplate>
-                                        <asp:TextBox ID="TxtFCFactorPP" onkeypress="return solonumeros(event); " runat="server" Width="100%" />
+                                        <asp:TextBox ID="TxtFCFactorPP"  runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);"/>
                                     </FooterTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Life Limit Hours" HeaderStyle-Width="6%">
@@ -198,7 +212,7 @@
                                         <asp:Label Text='<%# Eval("LLHours") %>' runat="server" />
                                     </ItemTemplate>
                                     <FooterTemplate>
-                                        <asp:TextBox ID="TxtLLHoursPP" onkeypress="return solonumeros(event); " runat="server" Width="100%" />
+                                        <asp:TextBox ID="TxtLLHoursPP"  runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);"/>
                                     </FooterTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Life Limit Cycles" HeaderStyle-Width="6%">
@@ -206,7 +220,7 @@
                                         <asp:Label Text='<%# Eval("LLCycles") %>' runat="server" />
                                     </ItemTemplate>
                                     <FooterTemplate>
-                                        <asp:TextBox ID="TxtLLCyclesPP" onkeypress="return solonumeros(event); " runat="server" Width="100%" />
+                                        <asp:TextBox ID="TxtLLCyclesPP"  runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);"/>
                                     </FooterTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField FooterStyle-Width="7%">
@@ -222,7 +236,7 @@
                             <HeaderStyle CssClass="GridCabecera" />
                             <RowStyle CssClass="GridRowStyle" />
                             <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                            <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                            <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
                         </asp:GridView>
                     </div>
                 </asp:Panel>

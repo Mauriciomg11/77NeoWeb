@@ -60,6 +60,15 @@ namespace _77NeoWeb.Forms.Configuracion
         protected global::System.Web.UI.WebControls.ImageButton IbtExpExcel;
 
         /// <summary>
+        /// Control LblCodigo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblCodigo;
+
+        /// <summary>
         /// Control TxtCod.
         /// </summary>
         /// <remarks>
@@ -67,6 +76,15 @@ namespace _77NeoWeb.Forms.Configuracion
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtCod;
+
+        /// <summary>
+        /// Control LblDescrip.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblDescrip;
 
         /// <summary>
         /// Control TxtDesc.
@@ -78,6 +96,15 @@ namespace _77NeoWeb.Forms.Configuracion
         protected global::System.Web.UI.WebControls.TextBox TxtDesc;
 
         /// <summary>
+        /// Control LblUndMed.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblUndMed;
+
+        /// <summary>
         /// Control DdlUndMed.
         /// </summary>
         /// <remarks>
@@ -85,6 +112,15 @@ namespace _77NeoWeb.Forms.Configuracion
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DdlUndMed;
+
+        /// <summary>
+        /// Control LblIdentif.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblIdentif;
 
         /// <summary>
         /// Control DdlIdent.
