@@ -42,7 +42,8 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1>Menú virtual</h1>
+    <h1>
+        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
@@ -50,9 +51,9 @@
             <table class="TablaBusqueda">
                 <tr>
                     <td>
-                        <asp:Label ID="Label1" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
+                        <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"/></td>
                     <td>
-                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
+                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"/></td>
                     <td>
                         <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                 </tr>
@@ -179,7 +180,7 @@
                         </FooterTemplate>
                     </asp:TemplateField>
                 </Columns>
-                <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
             </asp:GridView>
             <%-- </div>--%>
         </ContentTemplate>

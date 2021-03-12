@@ -321,6 +321,7 @@ namespace _77NeoWeb.Forms.Configuracion
         }
         protected void GrdDatos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
             if ((int)ViewState["VblModMS"] == 0)
             {
                 ImageButton imgE = e.Row.FindControl("IbtEdit") as ImageButton;

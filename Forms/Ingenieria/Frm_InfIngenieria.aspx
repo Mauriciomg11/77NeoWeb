@@ -89,6 +89,7 @@
                 <Triggers>
                     <asp:PostBackTrigger ControlID="BtnHistCont" />
                     <asp:PostBackTrigger ControlID="BtnProcIngeni" />
+                    <asp:PostBackTrigger ControlID="BtnPnPlanti" />
                 </Triggers>
             </asp:UpdatePanel>
         </asp:View>

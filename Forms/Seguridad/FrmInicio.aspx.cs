@@ -18,20 +18,17 @@ namespace _77NeoWeb.Forms
         protected void Page_Load(object sender, EventArgs e)
         {
             Page.Title = string.Format("Inicio");
-             if (Session["Login77"] == null)
-             {
-                 Response.Redirect("~/FrmAcceso.aspx");
-             }/**/
+            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }/**/
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                 /*Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = "UsuPrueba";
-                Session["Nit77Cia"] = "811035879-1";*/
+                /*Session["C77U"] = "00000082";
+               Session["D[BX"] = "DbNeoDempV2";
+               Session["$VR"] = "77NEO01";
+               Session["V$U@"] = "sa";
+               Session["P@$"] = "admindemp";
+               Session["N77U"] = "UsuPrueba";
+               Session["Nit77Cia"] = "811035879-1";*/
             }
             if (!IsPostBack)
             {
@@ -59,7 +56,7 @@ namespace _77NeoWeb.Forms
                     string b1 = tbl["Objeto"].ToString();
                     string b2 = tbl["Texto"].ToString();
                     Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());
-                    IbnSalir.ToolTip = b1.Trim().Equals("IbnSalir") ? b2.Trim() : IbnSalir.ToolTip;      
+                    IbnSalir.ToolTip = b1.Trim().Equals("IbnSalir") ? b2.Trim() : IbnSalir.ToolTip;
                     LkbCambPass.Text = b1.Trim().Equals("LkbCambPass") ? b2.Trim() : LkbCambPass.Text;
                     LkbMenu.Text = b1.Trim().Equals("LkbMenu") ? b2.Trim() : LkbMenu.Text;
                 }

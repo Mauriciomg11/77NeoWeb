@@ -101,8 +101,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     string bO = tbl["Objeto"].ToString().Trim();
                     string bT = tbl["Texto"].ToString().Trim();
-                    Idioma.Rows.Add(bO, bT);
-                    Page.Title = bO.Equals("TituloHstC") ? bT : Page.Title;
+                    Idioma.Rows.Add(bO, bT);                   
+                    if (bO.Equals("TituloHstC"))
+                    { Page.Title = bT; ViewState["PageTit"] = bT; }
                     TitForm.Text = bO.Equals("CaptionHst") ? bT : TitForm.Text;
                     //**************************************Contadores con valor Null**********************************************
                     LblTitContNull.Text = bO.Equals("LblTitContNull") ? bT : LblTitContNull.Text;
@@ -204,6 +205,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void IbtClosContNull_Click(object sender, ImageClickEventArgs e)
         {
             MlVw.ActiveViewIndex = 0;
+            Page.Title = ViewState["PageTit"].ToString().Trim();
         }
         //******************************** Panel historico UNO *****************************************
         protected void BindBDdlAK(string Panel)
@@ -463,6 +465,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 TxtHisVlrAcumv1.Text = GrdHisC1.DataKeys[Row.RowIndex].Values[3].ToString();
                 LblTitHisC1Aplicab.Text = GrdHisC1.DataKeys[Row.RowIndex].Values[4].ToString();
             }
+            Page.Title = ViewState["PageTit"].ToString().Trim();
         }
         protected void GrdHisC1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -600,6 +603,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         //******************************** EXportar *****************************************
         protected void IbtHisC1Excel_Click(object sender, ImageClickEventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             try
             {
@@ -669,8 +673,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Exportar Histórico", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
-            }
-
+            }           
         }
         //******************************** Panel historico dos *****************************************
         protected void RdbHisC2AplicAK_CheckedChanged(object sender, EventArgs e)
@@ -814,6 +817,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 TxtHisVlrAcumv2.Text = GrdHisC2.DataKeys[Row.RowIndex].Values[3].ToString();
                 LblTitHisC2Aplicab.Text = GrdHisC2.DataKeys[Row.RowIndex].Values[4].ToString();
             }
+            Page.Title = ViewState["PageTit"].ToString().Trim();
         }
         protected void DdlHisC2HK_TextChanged(object sender, EventArgs e)
         {
@@ -976,6 +980,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         //******************************** EXportar panel 2 *****************************************
         protected void IbtHisC2Excel_Click(object sender, ImageClickEventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             try
             {
@@ -1046,6 +1051,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Exportar Histórico", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
+            Page.Title = ViewState["PageTit"].ToString().Trim();
         }
     }
 }

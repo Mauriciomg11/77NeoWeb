@@ -14,24 +14,23 @@ namespace _77NeoWeb.Forms
     public partial class FrmMenu : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
+        DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (Session["Login77"] == null)
-            {
-                Response.Redirect("~/FrmAcceso.aspx");
-            }/**/
+            /*if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }*/
+            ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /* Session["C77U"] = "00000082"; //00000133
-                 Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                 Session["$VR"] = "77NEO01";
-                 Session["V$U@"] = "sa";
-                 Session["P@$"] = "admindemp";
-                 Session["N77U"] = Session["D[BX"];
-                 Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                 Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                Session["C77U"] = "00000082"; //00000133
+                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                Session["$VR"] = "77NEO01";
+                Session["V$U@"] = "sa";
+                Session["P@$"] = "admindemp";
+                Session["N77U"] = Session["D[BX"];
+                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                Session["77IDM"] = "5"; // 4 español | 5 ingles /* */
             }
             if (!IsPostBack)
             {
@@ -89,6 +88,48 @@ namespace _77NeoWeb.Forms
             }
             if (ClsP.GetCE6() == 0)
             {
+            }
+            IdiomaControles();
+        }
+        protected void IdiomaControles()
+        {
+            Idioma.Columns.Add("Objeto", typeof(string));
+            Idioma.Columns.Add("Texto", typeof(string));
+            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+            {
+                string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
+                SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
+                SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
+                SC.Parameters.AddWithValue("@F1", ViewState["PFileName"]);
+                SC.Parameters.AddWithValue("@F2", "");
+                SC.Parameters.AddWithValue("@F3", "");
+                SC.Parameters.AddWithValue("@F4", "");
+                sqlCon.Open();
+                SqlDataReader tbl = SC.ExecuteReader();
+                while (tbl.Read())  //Todos los objetos
+                {
+                    string bO = tbl["Objeto"].ToString().Trim();
+                    string bT = tbl["Texto"].ToString().Trim();
+                    Idioma.Rows.Add(bO, bT);
+                    if (bO.Equals("Caption"))
+                    { Page.Title = bT; ViewState["PageTit"] = bT; }
+
+                    TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
+                    LblBusqueda.Text = bO.Equals("LblBusqueda") ? bT + ":" : LblBusqueda.Text;
+                    if (bO.Equals("placeholder"))
+                    { TxtBusqueda.Attributes.Add("placeholder", bT); }
+                    IbtConsultar.ToolTip = bO.Equals("IbtConsultar") ? bT : IbtConsultar.ToolTip;
+                    GrdDatos.Columns[0].HeaderText = bO.Equals("GrdIR") ? bT : GrdDatos.Columns[0].HeaderText;
+                    GrdDatos.Columns[2].HeaderText = bO.Equals("GrdPos") ? bT : GrdDatos.Columns[2].HeaderText;
+                    GrdDatos.Columns[3].HeaderText = bO.Equals("GrdDesc") ? bT : GrdDatos.Columns[3].HeaderText;
+                    GrdDatos.Columns[4].HeaderText = bO.Equals("GrdPosSup") ? bT : GrdDatos.Columns[4].HeaderText;
+                    GrdDatos.Columns[5].HeaderText = bO.Equals("GrdPosPpl") ? bT : GrdDatos.Columns[5].HeaderText;
+                    GrdDatos.Columns[6].HeaderText = bO.Equals("GrdNvl") ? bT : GrdDatos.Columns[6].HeaderText;
+                    GrdDatos.Columns[7].HeaderText = bO.Equals("GrdRuta") ? bT : GrdDatos.Columns[7].HeaderText;
+                    GrdDatos.Columns[8].HeaderText = bO.Equals("GrdNom") ? bT : GrdDatos.Columns[8].HeaderText;
+                }
+                sqlCon.Close();
+                ViewState["TablaIdioma"] = Idioma;
             }
         }
         void BindData(string VbDesmenu)
@@ -150,6 +191,7 @@ namespace _77NeoWeb.Forms
         {
             try
             {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
                 if (e.CommandName.Equals("AddNew"))
                 {
                     Cnx.SelecBD();
@@ -174,15 +216,14 @@ namespace _77NeoWeb.Forms
                 {
                     GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
                     string VbIdx = GrdDatos.DataKeys[gvr.RowIndex].Values["RutaFormulario"].ToString();
-                    if (VbIdx != String.Empty && !VbIdx.Equals("#"))
-                    {
-                        Response.Redirect(VbIdx);
-                    }
+                    if (VbIdx != String.Empty && !VbIdx.Equals("#")) { Response.Redirect(VbIdx); }
                 }
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "IdntificadorBloqueScript", "alert('Error en el ingreso')", true);
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
                 ClsConexion ClsUE = new ClsConexion();
                 ClsUE.UpdateError(Session["C77U"].ToString(), "FrmMenu", "INSERT", "0", ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
             }
@@ -260,14 +301,12 @@ namespace _77NeoWeb.Forms
         protected void GrdDatos_SelectedIndexChanged(object sender, EventArgs e)
         {
             string VbOpenForm = GrdDatos.DataKeys[this.GrdDatos.SelectedIndex][1].ToString();
-            if (VbOpenForm != String.Empty && !VbOpenForm.Equals("#"))
-            {
-                Response.Redirect(VbOpenForm);
-            }
+            if (VbOpenForm != String.Empty && !VbOpenForm.Equals("#")) { Response.Redirect(VbOpenForm); }
             PerfilesGrid();
         }
         protected void GrdDatos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
             if ((int)ViewState["VblIngMS"] == 0)
             {
                 ImageButton imgI = e.Row.FindControl("IbtAddNew") as ImageButton;
@@ -299,6 +338,24 @@ namespace _77NeoWeb.Forms
                 {
                     e.Row.Cells[10].Controls.Remove(imgD);
                 }
+            }
+            if (e.Row.RowType == DataControlRowType.Footer)
+            {
+                ImageButton IbtAddNew = (e.Row.FindControl("IbtAddNew") as ImageButton);
+                DataRow[] Result = Idioma.Select("Objeto= 'IbtAddNew'");
+                foreach (DataRow row in Result)
+                { IbtAddNew.ToolTip = row["Texto"].ToString().Trim(); }
+            }
+            if ((e.Row.RowState & DataControlRowState.Edit) > 0)
+            {
+                ImageButton IbtUpdate = (e.Row.FindControl("IbtUpdate") as ImageButton);
+                DataRow[] Result = Idioma.Select("Objeto= 'IbtUpdate'");
+                foreach (DataRow row in Result)
+                { IbtUpdate.ToolTip = row["Texto"].ToString().Trim(); }
+                ImageButton IbtCancel = (e.Row.FindControl("IbtCancel") as ImageButton);
+                Result = Idioma.Select("Objeto= 'IbtCancel'");
+                foreach (DataRow row in Result)
+                { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
             }
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
@@ -344,15 +401,40 @@ namespace _77NeoWeb.Forms
                         TxtDescP.BackColor = System.Drawing.Color.LightBlue;
                     }
                 }
+                ImageButton imgE = e.Row.FindControl("IbtEdit") as ImageButton;
+                if (imgE != null)
+                {
+                    DataRow[] Result = Idioma.Select("Objeto='IbtEdit'");
+                    foreach (DataRow RowIdioma in Result)
+                    { imgE.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                }
 
+                ImageButton imgD = e.Row.FindControl("IbtDelete") as ImageButton;
+                if (imgD != null)
+                {
+                    DataRow[] Result = Idioma.Select("Objeto='IbtDelete'");
+                    foreach (DataRow RowIdioma in Result)
+                    { imgD.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                    Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
+                    foreach (DataRow row in Result)
+                    { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                }
+
+                ImageButton IbtAbrir = e.Row.FindControl("IbtAbrir") as ImageButton;
+                if (IbtAbrir != null)
+                {
+                    DataRow[] Result = Idioma.Select("Objeto='IbtAbrir'");
+                    foreach (DataRow RowIdioma in Result)
+                    { IbtAbrir.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                }
             }
         }
         protected void GrdDatos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GrdDatos.PageIndex = e.NewPageIndex;
             BindData(TxtBusqueda.Text);
-        }             
+        }
         protected void IbtAbrir_Click(object sender, ImageClickEventArgs e)
-        {}
+        { }
     }
 }

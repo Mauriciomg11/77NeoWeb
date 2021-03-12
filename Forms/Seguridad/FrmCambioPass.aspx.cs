@@ -17,16 +17,13 @@ namespace _77NeoWeb.Forms.Seguridad
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-             if (Session["Login77"] == null)
-             {
-                 Response.Redirect("~/FrmAcceso.aspx");
-             }/**/
+             if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }/**/
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /* Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoAda";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+               /* Session["C77U"] = "00000082";
+                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
                 Session["$VR"] = "77NEO01";
                 Session["V$U@"] = "sa";
                 Session["P@$"] = "admindemp";
@@ -60,9 +57,9 @@ namespace _77NeoWeb.Forms.Seguridad
                 {
                     string b1 = tbl["Objeto"].ToString();
                     string b2 = tbl["Texto"].ToString();
-                    Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());                   
+                    Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());
                     TbnIngresar.Text = b1.Trim().Equals("BtnAcceder") ? b2.Trim() : TbnIngresar.Text;
-                    TitConfirmarC.Text = b1.Trim().Equals("TitConfirmarC") ? b2.Trim() : TitConfirmarC.Text; 
+                    TitConfirmarC.Text = b1.Trim().Equals("TitConfirmarC") ? b2.Trim() : TitConfirmarC.Text;
                     if (b1.Trim().Equals("placeholderNew"))
                     { TxtNuevoPass.Attributes.Add("placeholder", b2.Trim()); }
                     if (b1.Trim().Equals("placeholderConf"))
@@ -123,7 +120,7 @@ namespace _77NeoWeb.Forms.Seguridad
                 else
                 {
                     DataRow[] Result4 = Idioma.Select("Objeto= 'MensAcc01'");
-                    foreach (DataRow row in Result4)                
+                    foreach (DataRow row in Result4)
                     { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }
                 }
             }

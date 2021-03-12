@@ -1,17 +1,22 @@
 ﻿using _77NeoWeb.prg;
+using _77NeoWeb.Prg.PrgIngenieria;
+using ClosedXML.Excel;
 using System;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
 using System.Web.UI;
 
 namespace _77NeoWeb.Forms.Ingenieria
 {
     public partial class Frm_InfIngenieria : System.Web.UI.Page
     {
+        ClsConexion Cnx = new ClsConexion();
+        DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            /*if (Session["Login77"] == null)
-            {
-                Response.Redirect("~/FrmAcceso.aspx");
-            } */
+            /*if (Session["Login77"] == null)            {                Response.Redirect("~/FrmAcceso.aspx");            } */
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
@@ -28,9 +33,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             if (!IsPostBack)
             {
                 MlVw.ActiveViewIndex = 0;
-                ModSeguridad();               
                 Page.Title = "Reportes de ingeniería";
                 TitForm.Text = "Reportes de ingeniería";
+                ModSeguridad();
             }
         }
         protected void ModSeguridad()
@@ -51,43 +56,121 @@ namespace _77NeoWeb.Forms.Ingenieria
             if (ClsP.GetConsultar() == 0) { }
             if (ClsP.GetImprimir() == 0) { ViewState["VblImpMS"] = 0; }
             if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; }
-            if (ClsP.GetCE1() == 0) { ViewState["VblCE1"] = 0;  } //
+            if (ClsP.GetCE1() == 0) { ViewState["VblCE1"] = 0; } //
             if (ClsP.GetCE2() == 0) { }
             if (ClsP.GetCE3() == 0) { ViewState["VblCE3"] = 0; }
             if (ClsP.GetCE4() == 0) { ViewState["VblCE4"] = 0; }
             if (ClsP.GetCE5() == 0) { }
             if (ClsP.GetCE6() == 0) { }
-            //IdiomaControles();
-           // PerfilesGrid();
+            IdiomaControles();
+            // PerfilesGrid();
+        }
+        protected void IdiomaControles()
+        {
+            Idioma.Columns.Add("Objeto", typeof(string));
+            Idioma.Columns.Add("Texto", typeof(string));
+            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+            {
+                string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
+                SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
+                SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
+                SC.Parameters.AddWithValue("@F1", ViewState["PFileName"]);
+                SC.Parameters.AddWithValue("@F2", "");
+                SC.Parameters.AddWithValue("@F3", "");
+                SC.Parameters.AddWithValue("@F4", "");
+                sqlCon.Open();
+                SqlDataReader tbl = SC.ExecuteReader();
+                while (tbl.Read())  //Todos los objetos
+                {
+                    string bO = tbl["Objeto"].ToString().Trim();
+                    string bT = tbl["Texto"].ToString().Trim();
+                    Idioma.Rows.Add(bO, bT);
+                    if (bO.Equals("Caption"))
+                    { Page.Title = bT; ViewState["PageTit"] = bT; }
+
+                    TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
+                    BtnAdvice.ToolTip = bO.Equals("BtnAdviceTT") ? bT : BtnAdvice.ToolTip;
+                    BtnInsRemElem.Text = bO.Equals("BtnInsRemElem") ? bT : BtnInsRemElem.Text;
+                    BtnInsRemElem.ToolTip = bO.Equals("BtnInsRemElemTT") ? bT : BtnInsRemElem.ToolTip;
+                    BtnInsRemSubC.Text = bO.Equals("BtnInsRemSubC") ? bT : BtnInsRemSubC.Text;
+                    BtnInsRemSubC.ToolTip = bO.Equals("BtnInsRemSubCTT") ? bT : BtnInsRemSubC.ToolTip;
+                    BtnPnPlanti.Text = bO.Equals("BtnPnPlanti") ? bT : BtnPnPlanti.Text;
+                    BtnPnPlanti.ToolTip = bO.Equals("BtnPnPlantiTT") ? bT : BtnPnPlanti.ToolTip;
+                    BtnHistCont.Text = bO.Equals("BtnHistCont") ? bT : BtnHistCont.Text;
+                    BtnHistCont.ToolTip = bO.Equals("BtnHistContTT") ? bT : BtnHistCont.ToolTip;
+                    BtnProcIngeni.Text = bO.Equals("BtnProcIngeni") ? bT : BtnProcIngeni.Text;
+                    BtnProcIngeni.ToolTip = bO.Equals("BtnProcIngeniTT") ? bT : BtnProcIngeni.ToolTip;
+                }
+                sqlCon.Close();
+                ViewState["TablaIdioma"] = Idioma;
+            }
         }
         protected void BtnAdvice_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        { Response.Redirect("~/Forms/Ingenieria/FrmAdvice.aspx"); }
         protected void BtnInsRemElem_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        { Response.Redirect("~/Forms/Ingenieria/Inf_FrmComponenteRemovidoDeAeronave.aspx"); }
         protected void BtnInsRemSubC_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        { Response.Redirect("~/Forms/Ingenieria/FrmHistoricoSubComponentes.aspx"); }
         protected void BtnHistCont_Click(object sender, EventArgs e)
-        {
-    
-            Response.Redirect("~/Forms/Ingenieria/FrmHistoricosContadores.aspx");
-        }
+        { Response.Redirect("~/Forms/Ingenieria/FrmHistoricosContadores.aspx"); }
         protected void BtnPnPlanti_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            try
+            {
+                string VbNomArchivo = "";
+                CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
+                CursorIdioma.Alimentar("CurPLantillaMaestraExportar", Session["77IDM"].ToString().Trim());
 
+                string query = "EXEC SP_PANTALLA_Informe_Ingenieria 3,'','','','CurPLantillaMaestraExportar',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                DataRow[] Result = Idioma.Select("Objeto= 'NomExpPM'");
+                foreach (DataRow row in Result)
+                { VbNomArchivo = row["Texto"].ToString().Trim(); }
+
+
+                Cnx.SelecBD();
+                using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataSet ds = new DataSet())
+                            {
+                                sda.Fill(ds);
+                                ds.Tables[0].TableName = "PlMaGrl";
+                                using (XLWorkbook wb = new XLWorkbook())
+                                {
+                                    foreach (DataTable dt in ds.Tables) { wb.Worksheets.Add(dt); }
+                                    Response.Clear();
+                                    Response.Buffer = true;
+                                    Response.ContentType = "application/ms-excel";
+                                    Response.AddHeader("content-disposition", string.Format("attachment;filename={0}.xlsx", VbNomArchivo));
+                                    Response.Charset = "";
+                                    using (MemoryStream MyMemoryStream = new MemoryStream())
+                                    {
+                                        wb.SaveAs(MyMemoryStream);
+                                        MyMemoryStream.WriteTo(Response.OutputStream);
+                                        Response.Flush();
+                                        Response.End();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Exportar Histórico", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
         }
 
         protected void BtnProcIngeni_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Forms/Ingenieria/FrmControlContadoresGeneral.aspx");
-        }
+        { Response.Redirect("~/Forms/Ingenieria/FrmControlContadoresGeneral.aspx"); }
     }
 }

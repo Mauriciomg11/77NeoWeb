@@ -31,7 +31,7 @@
                 <table class="TablaBusqueda">
                     <tr>
                         <td>
-                            <asp:Label ID="Label1" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
+                            <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
                         <td>
                             <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
                         <td>
@@ -42,7 +42,7 @@
                 </table>
                 <div class="DivGrid DivContendorGrid">
                     <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodTaller,PfjAnt"
-                        CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
+                        CssClass="DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                         OnRowCommand="GrdDatos_RowCommand" OnSelectedIndexChanged="GrdDatos_SelectedIndexChanged" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit"
                         OnRowDeleting="GrdDatos_RowDeleting" OnRowDataBound="GrdDatos_RowDataBound" OnPageIndexChanging="GrdDatos_PageIndexChanging">
                         <Columns>
@@ -51,9 +51,9 @@
                                     <asp:Label Text='<%# Eval("CodTaller") %>' runat="server" Width="40px" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Nombre">
+                            <asp:TemplateField HeaderText="Nombre" >
                                 <ItemTemplate>
-                                    <asp:Label Text='<%# Eval("NomTaller") %>' runat="server" />
+                                    <asp:Label Text='<%# Eval("NomTaller") %>' runat="server" Width="100%" />
                                 </ItemTemplate>
                                 <EditItemTemplate>
                                     <asp:TextBox ID="TxtNomT" Text='<%# Eval("NomTaller") %>' runat="server" MaxLength="100" Width="100%" />
@@ -64,7 +64,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Centro de costo">
                                 <ItemTemplate>
-                                    <asp:Label Text='<%# Eval("CentroCosto") %>' runat="server" />
+                                    <asp:Label Text='<%# Eval("CentroCosto") %>' runat="server"  Width="100%" />
                                 </ItemTemplate>
                                 <EditItemTemplate>
                                     <asp:DropDownList ID="DdlCC" runat="server" Width="100%" Height="28px" />
@@ -113,10 +113,13 @@
                         <HeaderStyle CssClass="GridCabecera" />
                         <RowStyle CssClass="GridRowStyle" />
                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
                     </asp:GridView>
                 </div>
             </div>
         </ContentTemplate>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="IbtExpExcel" />
+        </Triggers>
     </asp:UpdatePanel>
 </asp:Content>

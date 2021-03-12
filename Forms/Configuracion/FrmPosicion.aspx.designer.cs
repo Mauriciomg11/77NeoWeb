@@ -33,13 +33,13 @@ namespace _77NeoWeb.Forms.Configuracion
         protected global::System.Web.UI.UpdatePanel UpPanel;
 
         /// <summary>
-        /// Control Label1.
+        /// Control LblBusqueda.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label LblBusqueda;
 
         /// <summary>
         /// Control TxtBusqueda.

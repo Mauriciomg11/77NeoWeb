@@ -29,6 +29,7 @@ namespace _77NeoWeb
                 Session["V$U@"] = "";
                 Session["P@$"] = "";
                 Session["NomCiaPpal"] = "";
+                Session["!dC!@"] = 0;
                 DdlNit.DataSource = Cnx.DSET(LtxtSql);
                 DdlNit.DataMember = "Datos";
                 DdlNit.DataTextField = "RazonSocial";
@@ -187,7 +188,6 @@ namespace _77NeoWeb
                     }
                     sqlCon.Close();
                 }
-
             }
         }
         protected void DdlNit_TextChanged(object sender, EventArgs e)
@@ -197,6 +197,7 @@ namespace _77NeoWeb
                 Session["Login77"] = null;
                 Session["C77U"] = "";
                 Session["N77U"] = "";
+                Session["!dC!@"] = 0;
                 TbnIngresar.Text = "Validar compañía";
                 //DdlBD.SelectedValue = "";
                 DdlBD.Visible = false;

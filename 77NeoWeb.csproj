@@ -129,16 +129,19 @@
     <Content Include="Forms\Configuracion\FrmTaller.aspx" />
     <Content Include="Forms\Configuracion\FrmTipoAeronave.aspx" />
     <Content Include="Forms\FrmExportar.aspx" />
+    <Content Include="Forms\Ingenieria\FrmAdvice.aspx" />
     <Content Include="Forms\Ingenieria\FrmAeronave.aspx" />
     <Content Include="Forms\Ingenieria\FrmAeronaveVirtualNew.aspx" />
     <Content Include="Forms\Ingenieria\FrmControlContadoresGeneral.aspx" />
     <Content Include="Forms\Ingenieria\FrmHistoricosContadores.aspx" />
+    <Content Include="Forms\Ingenieria\FrmHistoricoSubComponentes.aspx" />
     <Content Include="Forms\Ingenieria\FrmLibroVueloAC.aspx" />
     <Content Include="Forms\Ingenieria\FrmOrdenTrabajo.aspx" />
     <Content Include="Forms\Ingenieria\FrmServicioManto.aspx" />
     <Content Include="Forms\Ingenieria\FrmStatusReportAtas.aspx" />
     <Content Include="Forms\Ingenieria\FrmWorkSheet.aspx" />
     <Content Include="Forms\Ingenieria\Frm_InfIngenieria.aspx" />
+    <Content Include="Forms\Ingenieria\Inf_FrmComponenteRemovidoDeAeronave.aspx" />
     <Content Include="Forms\InventariosCompras\FrmElemento.aspx" />
     <Content Include="Forms\InventariosCompras\FrmReferencia.aspx" />
     <Content Include="Forms\Manto\FrmReporte.aspx" />
@@ -289,6 +292,13 @@
     <Compile Include="Forms\FrmExportar.aspx.designer.cs">
       <DependentUpon>FrmExportar.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Ingenieria\FrmAdvice.aspx.cs">
+      <DependentUpon>FrmAdvice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmAdvice.aspx.designer.cs">
+      <DependentUpon>FrmAdvice.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Ingenieria\FrmAeronave.aspx.cs">
       <DependentUpon>FrmAeronave.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -316,6 +326,13 @@
     </Compile>
     <Compile Include="Forms\Ingenieria\FrmHistoricosContadores.aspx.designer.cs">
       <DependentUpon>FrmHistoricosContadores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmHistoricoSubComponentes.aspx.cs">
+      <DependentUpon>FrmHistoricoSubComponentes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmHistoricoSubComponentes.aspx.designer.cs">
+      <DependentUpon>FrmHistoricoSubComponentes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Ingenieria\FrmLibroVueloAC.aspx.cs">
       <DependentUpon>FrmLibroVueloAC.aspx</DependentUpon>
@@ -358,6 +375,13 @@
     </Compile>
     <Compile Include="Forms\Ingenieria\Frm_InfIngenieria.aspx.designer.cs">
       <DependentUpon>Frm_InfIngenieria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\Inf_FrmComponenteRemovidoDeAeronave.aspx.cs">
+      <DependentUpon>Inf_FrmComponenteRemovidoDeAeronave.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\Inf_FrmComponenteRemovidoDeAeronave.aspx.designer.cs">
+      <DependentUpon>Inf_FrmComponenteRemovidoDeAeronave.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\InventariosCompras\FrmElemento.aspx.cs">
       <DependentUpon>FrmElemento.aspx</DependentUpon>
@@ -520,6 +544,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Report\Ing\Advice.rdlc" />
     <EmbeddedResource Include="Report\Ing\WSRecurso.rdlc" />
     <EmbeddedResource Include="Report\Ing\WSTrabajos.rdlc" />
     <EmbeddedResource Include="Report\Ing\Status_Grupos.rdlc" />

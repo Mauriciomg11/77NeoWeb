@@ -24,9 +24,9 @@
                 <table class="TablaBusqueda">
                     <tr>
                         <td>
-                            <asp:Label ID="Label1" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
+                            <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"/></td>
                         <td>
-                            <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
+                            <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"/></td>
                         <td>
                             <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                         <td>
@@ -34,15 +34,15 @@
                     </tr>
                 </table>
                 <div class="DivGrid DivContendorGrid">
-                    <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdDet,IdEnc"
-                        CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
+                    <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodRemocion"
+                        CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                         OnRowCommand="GrdDatos_RowCommand" OnSelectedIndexChanged="GrdDatos_SelectedIndexChanged" OnRowEditing="GrdDatos_RowEditing"
                         OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit"
                         OnRowDeleting="GrdDatos_RowDeleting" OnRowDataBound="GrdDatos_RowDataBound" OnPageIndexChanging="GrdDatos_PageIndexChanging">
                         <Columns>
                             <asp:TemplateField HeaderText="Descripción">
                                 <ItemTemplate>
-                                    <asp:Label ID="LblDesc" Text='<%# Eval("Descripcion") %>' runat="server" Width="40px" />
+                                    <asp:Label ID="LblDesc" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%"/>
                                 </ItemTemplate>
                                 <EditItemTemplate>
                                     <asp:TextBox ID="TxtDes" Text='<%# Eval("Descripcion") %>' runat="server" MaxLength="100" Width="100%" />
@@ -85,5 +85,8 @@
                 </div>
             </div>
         </ContentTemplate>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="IbtExpExcel" />
+        </Triggers>
     </asp:UpdatePanel>
 </asp:Content>

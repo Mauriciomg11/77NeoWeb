@@ -62,11 +62,11 @@
         <asp:UpdatePanel ID="UpPnlCampos" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <div class="form-group">
-                    <asp:DropDownList ID="DdlNit" runat="server" CssClass="form-control" Height="30px" Font-Size="Smaller" OnTextChanged="DdlNit_TextChanged"></asp:DropDownList>
-                    <asp:TextBox ID="TxtPassEmsa" runat="server" TextMode="Password" CssClass="form-control" placeholder="Password compañía" Height="30px"></asp:TextBox><br />
-                    <asp:DropDownList ID="DdlBD" runat="server" CssClass="form-control" Height="30px" Font-Size="Smaller" Visible="false"></asp:DropDownList>
-                    <asp:TextBox ID="TxtUsuario" runat="server" CssClass="form-control" placeholder="Usuario" Height="30px" Visible="false"></asp:TextBox>
-                    <asp:TextBox ID="TxtClave" runat="server" TextMode="Password" CssClass="form-control" placeholder="Password" Height="30px" Visible="false"></asp:TextBox>
+                    <asp:DropDownList ID="DdlNit" runat="server" CssClass="form-control" Height="30px" Font-Size="Smaller" OnTextChanged="DdlNit_TextChanged"/>
+                    <asp:TextBox ID="TxtPassEmsa" runat="server" TextMode="Password" CssClass="form-control" placeholder="Password compañía" Height="30px"/><br />
+                    <asp:DropDownList ID="DdlBD" runat="server" CssClass="form-control" Height="30px" Font-Size="Smaller" Visible="false"/>
+                    <asp:TextBox ID="TxtUsuario" runat="server" CssClass="form-control" placeholder="Usuario" Height="30px" Visible="false"/>
+                    <asp:TextBox ID="TxtClave" runat="server" TextMode="Password" CssClass="form-control" placeholder="Password" Height="30px" Visible="false"/>
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
