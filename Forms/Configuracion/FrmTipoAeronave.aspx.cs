@@ -38,7 +38,6 @@ namespace _77NeoWeb.Forms.Configuracion
                 TitForm.Text = "Configuración Tipo de Aeronave";
                 ModSeguridad();
                 BindData(TxtBusqueda.Text);
-                TxtBusqueda.ToolTip = "Descripción";
             }
         }
         void ModSeguridad()
@@ -116,7 +115,7 @@ namespace _77NeoWeb.Forms.Configuracion
                     if (bO.Equals("Caption"))
                     { Page.Title = bT; ViewState["PageTit"] = bT; }
 
-                    TitForm.Text = bO.Equals("TituloEA") ? bT : TitForm.Text;
+                    TitForm.Text = bO.Equals("TituloTA") ? bT : TitForm.Text;
                     LblBusqueda.Text = bO.Equals("LblBusqueda") ? bT + ":" : LblBusqueda.Text;
                     if (bO.Equals("placeholder"))
                     { TxtBusqueda.Attributes.Add("placeholder", bT); }

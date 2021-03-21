@@ -119,6 +119,9 @@
     <Content Include="Css\CssPagTrans.css" />
     <Content Include="Css\GridViewDiseño.css" />
     <Content Include="Css\CssCampos.css" />
+    <Content Include="Forms\Configuracion\ControlPersonal\FrmAreaOrganizacional.aspx" />
+    <Content Include="Forms\Configuracion\ControlPersonal\FrmCargo.aspx" />
+    <Content Include="Forms\Configuracion\ControlPersonal\FrmPersona.aspx" />
     <Content Include="Forms\Configuracion\FrmCicloDiscosMotor.aspx" />
     <Content Include="Forms\Configuracion\FrmContador.aspx" />
     <Content Include="Forms\Configuracion\FrmEstadoAeronave.aspx" />
@@ -128,6 +131,11 @@
     <Content Include="Forms\Configuracion\FrmRazonRemocion.aspx" />
     <Content Include="Forms\Configuracion\FrmTaller.aspx" />
     <Content Include="Forms\Configuracion\FrmTipoAeronave.aspx" />
+    <Content Include="Forms\Configuracion\InventarioLogistica\FrmCategoriaMA.aspx" />
+    <Content Include="Forms\Configuracion\InventarioLogistica\FrmClaseProveedor.aspx" />
+    <Content Include="Forms\Configuracion\InventarioLogistica\FrmFabricante.aspx" />
+    <Content Include="Forms\Configuracion\InventarioLogistica\FrmManipulacionMA.aspx" />
+    <Content Include="Forms\Configuracion\InventarioLogistica\TipoProveedor.aspx" />
     <Content Include="Forms\FrmExportar.aspx" />
     <Content Include="Forms\Ingenieria\FrmAdvice.aspx" />
     <Content Include="Forms\Ingenieria\FrmAeronave.aspx" />
@@ -222,6 +230,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Configuracion\ControlPersonal\FrmAreaOrganizacional.aspx.cs">
+      <DependentUpon>FrmAreaOrganizacional.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\ControlPersonal\FrmAreaOrganizacional.aspx.designer.cs">
+      <DependentUpon>FrmAreaOrganizacional.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\ControlPersonal\FrmCargo.aspx.cs">
+      <DependentUpon>FrmCargo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\ControlPersonal\FrmCargo.aspx.designer.cs">
+      <DependentUpon>FrmCargo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\ControlPersonal\FrmPersona.aspx.cs">
+      <DependentUpon>FrmPersona.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\ControlPersonal\FrmPersona.aspx.designer.cs">
+      <DependentUpon>FrmPersona.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Configuracion\FrmCicloDiscosMotor.aspx.cs">
       <DependentUpon>FrmCicloDiscosMotor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -284,6 +313,41 @@
     </Compile>
     <Compile Include="Forms\Configuracion\FrmTipoAeronave.aspx.designer.cs">
       <DependentUpon>FrmTipoAeronave.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmCategoriaMA.aspx.cs">
+      <DependentUpon>FrmCategoriaMA.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmCategoriaMA.aspx.designer.cs">
+      <DependentUpon>FrmCategoriaMA.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmClaseProveedor.aspx.cs">
+      <DependentUpon>FrmClaseProveedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmClaseProveedor.aspx.designer.cs">
+      <DependentUpon>FrmClaseProveedor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmFabricante.aspx.cs">
+      <DependentUpon>FrmFabricante.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmFabricante.aspx.designer.cs">
+      <DependentUpon>FrmFabricante.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmManipulacionMA.aspx.cs">
+      <DependentUpon>FrmManipulacionMA.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmManipulacionMA.aspx.designer.cs">
+      <DependentUpon>FrmManipulacionMA.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\TipoProveedor.aspx.cs">
+      <DependentUpon>TipoProveedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\TipoProveedor.aspx.designer.cs">
+      <DependentUpon>TipoProveedor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\FrmExportar.aspx.cs">
       <DependentUpon>FrmExportar.aspx</DependentUpon>
@@ -497,6 +561,7 @@
     <Compile Include="Prg\PrgIngenieria\ClsTypOrdenTrabajo.cs" />
     <Compile Include="Prg\PrgIngenieria\ClsTypAeronaveVirtualCrearElem.cs" />
     <Compile Include="Prg\PrgIngenieria\ClsTypAeronaveVirtual.cs" />
+    <Compile Include="Prg\PrgIngenieria\CsTypPersona.cs" />
     <Compile Include="Prg\PrgIngenieria\CsTypPasosOT.cs" />
     <Compile Include="Prg\PrgIngenieria\CsTypExportarIdioma.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypSolicitudPedido.cs" />

@@ -342,20 +342,29 @@ namespace _77NeoWeb.Forms
             if (e.Row.RowType == DataControlRowType.Footer)
             {
                 ImageButton IbtAddNew = (e.Row.FindControl("IbtAddNew") as ImageButton);
-                DataRow[] Result = Idioma.Select("Objeto= 'IbtAddNew'");
-                foreach (DataRow row in Result)
-                { IbtAddNew.ToolTip = row["Texto"].ToString().Trim(); }
+                if (IbtAddNew != null)
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= 'IbtAddNew'");
+                    foreach (DataRow row in Result)
+                    { IbtAddNew.ToolTip = row["Texto"].ToString().Trim(); }
+                }               
             }
             if ((e.Row.RowState & DataControlRowState.Edit) > 0)
             {
                 ImageButton IbtUpdate = (e.Row.FindControl("IbtUpdate") as ImageButton);
-                DataRow[] Result = Idioma.Select("Objeto= 'IbtUpdate'");
-                foreach (DataRow row in Result)
-                { IbtUpdate.ToolTip = row["Texto"].ToString().Trim(); }
+                if (IbtUpdate != null)
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= 'IbtUpdate'");
+                    foreach (DataRow row in Result)
+                    { IbtUpdate.ToolTip = row["Texto"].ToString().Trim(); }
+                }                    
                 ImageButton IbtCancel = (e.Row.FindControl("IbtCancel") as ImageButton);
-                Result = Idioma.Select("Objeto= 'IbtCancel'");
-                foreach (DataRow row in Result)
-                { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
+                if (IbtCancel != null)
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= 'IbtCancel'");
+                    foreach (DataRow row in Result)
+                    { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
+                }
             }
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
