@@ -9,9 +9,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
+namespace _77NeoWeb.Forms.Configuracion.ConfigManto
 {
-    public partial class FrmClaseProveedor : System.Web.UI.Page
+    public partial class FrmTipoReporteManto : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
@@ -23,14 +23,14 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000133";// 00000082|00000133
-                  Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                  Session["$VR"] = "77NEO01";
-                  Session["V$U@"] = "sa";
-                  Session["P@$"] = "admindemp";
-                  Session["N77U"] = Session["D[BX"];
-                  Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                  Session["77IDM"] = "5"; // 4 español | 5 ingles      */
+                /*Session["C77U"] = "00000082";// 00000082|00000133
+                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                Session["$VR"] = "77NEO01";
+                Session["V$U@"] = "sa";
+                Session["P@$"] = "admindemp";
+                Session["N77U"] = Session["D[BX"];
+                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                Session["77IDM"] = "5"; // 4 español | 5 ingles      */
             }
             if (!IsPostBack)
             {
@@ -125,7 +125,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataTable dtbl = new DataTable();
-            string VbTxtSql = "EXEC SP_TablasGeneral 6, @C,'','','','','','','ClaseProv','SELECT',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'	";
+            string VbTxtSql = "EXEC SP_TablasGeneral 7, @C,'','','','','','','TipoRte','SELECT',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
             Cnx.SelecBD();
             using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
             {
@@ -166,7 +166,16 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             PerfilesGrid();
             if (e.CommandName.Equals("AddNew"))
             {
-                string VbDesc, VBQuery;
+                string VbDesc, VbCod, VBQuery;
+                VbCod = (GrdDatos.FooterRow.FindControl("TxtTipoRPP") as TextBox).Text.Trim();
+                if (VbCod.Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= 'MstrMens09'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar el código.
+                    return;
+                }
+
                 VbDesc = (GrdDatos.FooterRow.FindControl("TxtDescPP") as TextBox).Text.Trim();
                 if (VbDesc == String.Empty)
                 {
@@ -181,12 +190,13 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        VBQuery = "EXEC SP_TablasGeneral 6,@Desc,@US,'','','','','','ClaseProv','INSERT',@Act,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                        VBQuery = "EXEC SP_TablasGeneral 7,@Desc,@US,'',@Cod,'','','','TipoRte','INSERT',@Act,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             SC.Parameters.AddWithValue("@Desc", VbDesc);
                             SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@Act", (GrdDatos.FooterRow.FindControl("CkbActPP") as CheckBox).Checked == false ? 0 : 1);
+                            SC.Parameters.AddWithValue("@Cod", VbCod);
                             try
                             {
                                 var Mensj = SC.ExecuteScalar();
@@ -220,7 +230,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
         protected void GrdDatos_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            string VbDesc, VBQuery = "";
+            string VbDesc, VBQuery;
             PerfilesGrid();
             VbDesc = (GrdDatos.Rows[e.RowIndex].FindControl("TxtDesc") as TextBox).Text.Trim();
             if (VbDesc == String.Empty)
@@ -236,12 +246,12 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = "EXEC SP_TablasGeneral 6,@Desc,@US,@ID,'','','','','ClaseProv','UPDATE',@Act,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    VBQuery = "EXEC SP_TablasGeneral 7,@Desc,@US,@ID,'','','','','TipoRte','UPDATE',@Act,@ID,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@Desc", VbDesc);
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
-                        SC.Parameters.AddWithValue("@ID", GrdDatos.DataKeys[e.RowIndex].Value.ToString());
+                        SC.Parameters.AddWithValue("@ID", Convert.ToInt32(GrdDatos.DataKeys[e.RowIndex].Value.ToString()));
                         SC.Parameters.AddWithValue("@Act", (GrdDatos.Rows[e.RowIndex].FindControl("CkbAct") as CheckBox).Checked == false ? 0 : 1);
                         try
                         {
@@ -285,11 +295,11 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
 
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = "EXEC SP_TablasGeneral 6,'',@US,@ID,'','','','','ClaseProv','DELETE',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    VBQuery = "EXEC SP_TablasGeneral 7,'',@US,'','','','','','TipoRte','DELETE',0,@ID,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
-                        SC.Parameters.AddWithValue("@ID", GrdDatos.DataKeys[e.RowIndex].Value.ToString());
+                        SC.Parameters.AddWithValue("@ID", Convert.ToInt32(GrdDatos.DataKeys[e.RowIndex].Value.ToString()));
                         try
                         {
                             var Mensj = SC.ExecuteScalar();

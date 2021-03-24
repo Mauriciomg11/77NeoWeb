@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 
 namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
 {
-    public partial class FrmClaseProveedor : System.Web.UI.Page
+    public partial class FrmTipoUbicacionCia : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
@@ -23,14 +23,14 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000133";// 00000082|00000133
-                  Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                  Session["$VR"] = "77NEO01";
-                  Session["V$U@"] = "sa";
-                  Session["P@$"] = "admindemp";
-                  Session["N77U"] = Session["D[BX"];
-                  Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                  Session["77IDM"] = "5"; // 4 español | 5 ingles      */
+                /*Session["C77U"] = "00000082";// 00000082|00000133
+                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                Session["$VR"] = "77NEO01";
+                Session["V$U@"] = "sa";
+                Session["P@$"] = "admindemp";
+                Session["N77U"] = Session["D[BX"];
+                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                Session["77IDM"] = "5"; // 4 español | 5 ingles     */
             }
             if (!IsPostBack)
             {
@@ -93,7 +93,8 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     IbtConsultar.ToolTip = bO.Equals("IbtConsultarTTMst") ? bT : IbtConsultar.ToolTip;
                     GrdDatos.Columns[0].HeaderText = bO.Equals("GrdCod") ? bT : GrdDatos.Columns[0].HeaderText;
                     GrdDatos.Columns[1].HeaderText = bO.Equals("GrdDesc") ? bT : GrdDatos.Columns[1].HeaderText;
-                    GrdDatos.Columns[2].HeaderText = bO.Equals("GrdAct") ? bT : GrdDatos.Columns[2].HeaderText;
+                    GrdDatos.Columns[2].HeaderText = bO.Equals("GrdTip") ? bT : GrdDatos.Columns[2].HeaderText;
+                    GrdDatos.Columns[3].HeaderText = bO.Equals("GrdAct") ? bT : GrdDatos.Columns[3].HeaderText;
                 }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
@@ -108,7 +109,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     ImageButton imgE = Row.FindControl("IbtEdit") as ImageButton;
                     if (imgE != null)
                     {
-                        Row.Cells[3].Controls.Remove(imgE);
+                        Row.Cells[4].Controls.Remove(imgE);
                     }
                 }
                 if ((int)ViewState["VblEliMS"] == 0)
@@ -116,7 +117,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     ImageButton imgD = Row.FindControl("IbtDelete") as ImageButton;
                     if (imgD != null)
                     {
-                        Row.Cells[3].Controls.Remove(imgD);
+                        Row.Cells[4].Controls.Remove(imgD);
                     }
                 }
             }
@@ -125,7 +126,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataTable dtbl = new DataTable();
-            string VbTxtSql = "EXEC SP_TablasGeneral 6, @C,'','','','','','','ClaseProv','SELECT',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'	";
+            string VbTxtSql = "EXEC SP_TablasGeneral 6, @C,'','','','','','','UbicaCia','SELECT',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'	";
             Cnx.SelecBD();
             using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
             {
@@ -166,7 +167,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             PerfilesGrid();
             if (e.CommandName.Equals("AddNew"))
             {
-                string VbDesc, VBQuery;
+                string VbDesc, VbTipU, VBQuery;
                 VbDesc = (GrdDatos.FooterRow.FindControl("TxtDescPP") as TextBox).Text.Trim();
                 if (VbDesc == String.Empty)
                 {
@@ -175,18 +176,30 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una descripción')", true);
                     return;
                 }
+                VbTipU = (GrdDatos.FooterRow.FindControl("TxtipoUPP") as TextBox).Text.Trim().ToUpper();
+                if (!VbTipU.Trim().Equals("I"))
+                {
+                    if (!VbTipU.Trim().Equals("N"))
+                    {
+                        DataRow[] Result = Idioma.Select("Objeto= 'Mens01UC'");
+                        foreach (DataRow row in Result)
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//El tipo solo permite la "N" nacional o "I" internacional.
+                        return;
+                    }
+                }
                 Cnx.SelecBD();
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        VBQuery = "EXEC SP_TablasGeneral 6,@Desc,@US,'','','','','','ClaseProv','INSERT',@Act,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                        VBQuery = "EXEC SP_TablasGeneral 6,@Desc,@US,'',@Tip,'','','','UbicaCia','INSERT',@Act,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             SC.Parameters.AddWithValue("@Desc", VbDesc);
                             SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@Act", (GrdDatos.FooterRow.FindControl("CkbActPP") as CheckBox).Checked == false ? 0 : 1);
+                            SC.Parameters.AddWithValue("@Tip", VbTipU);
                             try
                             {
                                 var Mensj = SC.ExecuteScalar();
@@ -220,9 +233,21 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
         protected void GrdDatos_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            string VbDesc, VBQuery = "";
+            string VbDesc, VbTipU, VBQuery;
             PerfilesGrid();
             VbDesc = (GrdDatos.Rows[e.RowIndex].FindControl("TxtDesc") as TextBox).Text.Trim();
+            VbTipU = (GrdDatos.Rows[e.RowIndex].FindControl("TxtipoU") as TextBox).Text.Trim().ToUpper();
+            if (!VbTipU.Trim().Equals("I"))
+            {
+                if (!VbTipU.Trim().Equals("N"))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= 'Mens01UC'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//El tipo solo permite la "N" nacional o "I" internacional.
+                    return;
+                }
+            }
+
             if (VbDesc == String.Empty)
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'MstrMens06'");
@@ -236,13 +261,14 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = "EXEC SP_TablasGeneral 6,@Desc,@US,@ID,'','','','','ClaseProv','UPDATE',@Act,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    VBQuery = "EXEC SP_TablasGeneral 6,@Desc,@US,@ID,@Tp,'','','','UbicaCia','UPDATE',@Act,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@Desc", VbDesc);
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@ID", GrdDatos.DataKeys[e.RowIndex].Value.ToString());
                         SC.Parameters.AddWithValue("@Act", (GrdDatos.Rows[e.RowIndex].FindControl("CkbAct") as CheckBox).Checked == false ? 0 : 1);
+                        SC.Parameters.AddWithValue("@Tp", VbTipU);
                         try
                         {
                             var Mensj = SC.ExecuteScalar();
@@ -285,7 +311,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
 
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = "EXEC SP_TablasGeneral 6,'',@US,@ID,'','','','','ClaseProv','DELETE',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    VBQuery = "EXEC SP_TablasGeneral 6,'',@US,@ID,'','','','','UbicaCia','DELETE',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());

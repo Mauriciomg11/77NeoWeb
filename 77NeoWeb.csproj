@@ -119,6 +119,7 @@
     <Content Include="Css\CssPagTrans.css" />
     <Content Include="Css\GridViewDiseño.css" />
     <Content Include="Css\CssCampos.css" />
+    <Content Include="Forms\Configuracion\ConfigManto\FrmTipoReporteManto.aspx" />
     <Content Include="Forms\Configuracion\ControlPersonal\FrmAreaOrganizacional.aspx" />
     <Content Include="Forms\Configuracion\ControlPersonal\FrmCargo.aspx" />
     <Content Include="Forms\Configuracion\ControlPersonal\FrmPersona.aspx" />
@@ -131,10 +132,17 @@
     <Content Include="Forms\Configuracion\FrmRazonRemocion.aspx" />
     <Content Include="Forms\Configuracion\FrmTaller.aspx" />
     <Content Include="Forms\Configuracion\FrmTipoAeronave.aspx" />
+    <Content Include="Forms\Configuracion\InventarioLogistica\FormaPago.aspx" />
+    <Content Include="Forms\Configuracion\InventarioLogistica\FrmBodega.aspx" />
     <Content Include="Forms\Configuracion\InventarioLogistica\FrmCategoriaMA.aspx" />
     <Content Include="Forms\Configuracion\InventarioLogistica\FrmClaseProveedor.aspx" />
+    <Content Include="Forms\Configuracion\InventarioLogistica\FrmEstadoElemCotizacion.aspx" />
     <Content Include="Forms\Configuracion\InventarioLogistica\FrmFabricante.aspx" />
     <Content Include="Forms\Configuracion\InventarioLogistica\FrmManipulacionMA.aspx" />
+    <Content Include="Forms\Configuracion\InventarioLogistica\FrmMedioCotizacion.aspx" />
+    <Content Include="Forms\Configuracion\InventarioLogistica\FrmTipoUbicacionCia.aspx" />
+    <Content Include="Forms\Configuracion\InventarioLogistica\FrmTipoUnidadMedida.aspx" />
+    <Content Include="Forms\Configuracion\InventarioLogistica\FrmUbicacionEnvioFactura.aspx" />
     <Content Include="Forms\Configuracion\InventarioLogistica\TipoProveedor.aspx" />
     <Content Include="Forms\FrmExportar.aspx" />
     <Content Include="Forms\Ingenieria\FrmAdvice.aspx" />
@@ -230,6 +238,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Configuracion\ConfigManto\FrmTipoReporteManto.aspx.cs">
+      <DependentUpon>FrmTipoReporteManto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\ConfigManto\FrmTipoReporteManto.aspx.designer.cs">
+      <DependentUpon>FrmTipoReporteManto.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Configuracion\ControlPersonal\FrmAreaOrganizacional.aspx.cs">
       <DependentUpon>FrmAreaOrganizacional.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -314,6 +329,20 @@
     <Compile Include="Forms\Configuracion\FrmTipoAeronave.aspx.designer.cs">
       <DependentUpon>FrmTipoAeronave.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FormaPago.aspx.cs">
+      <DependentUpon>FormaPago.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FormaPago.aspx.designer.cs">
+      <DependentUpon>FormaPago.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmBodega.aspx.cs">
+      <DependentUpon>FrmBodega.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmBodega.aspx.designer.cs">
+      <DependentUpon>FrmBodega.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Configuracion\InventarioLogistica\FrmCategoriaMA.aspx.cs">
       <DependentUpon>FrmCategoriaMA.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -328,6 +357,13 @@
     <Compile Include="Forms\Configuracion\InventarioLogistica\FrmClaseProveedor.aspx.designer.cs">
       <DependentUpon>FrmClaseProveedor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmEstadoElemCotizacion.aspx.cs">
+      <DependentUpon>FrmEstadoElemCotizacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmEstadoElemCotizacion.aspx.designer.cs">
+      <DependentUpon>FrmEstadoElemCotizacion.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Configuracion\InventarioLogistica\FrmFabricante.aspx.cs">
       <DependentUpon>FrmFabricante.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -341,6 +377,34 @@
     </Compile>
     <Compile Include="Forms\Configuracion\InventarioLogistica\FrmManipulacionMA.aspx.designer.cs">
       <DependentUpon>FrmManipulacionMA.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmMedioCotizacion.aspx.cs">
+      <DependentUpon>FrmMedioCotizacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmMedioCotizacion.aspx.designer.cs">
+      <DependentUpon>FrmMedioCotizacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmTipoUbicacionCia.aspx.cs">
+      <DependentUpon>FrmTipoUbicacionCia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmTipoUbicacionCia.aspx.designer.cs">
+      <DependentUpon>FrmTipoUbicacionCia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmTipoUnidadMedida.aspx.cs">
+      <DependentUpon>FrmTipoUnidadMedida.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmTipoUnidadMedida.aspx.designer.cs">
+      <DependentUpon>FrmTipoUnidadMedida.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmUbicacionEnvioFactura.aspx.cs">
+      <DependentUpon>FrmUbicacionEnvioFactura.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\InventarioLogistica\FrmUbicacionEnvioFactura.aspx.designer.cs">
+      <DependentUpon>FrmUbicacionEnvioFactura.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Configuracion\InventarioLogistica\TipoProveedor.aspx.cs">
       <DependentUpon>TipoProveedor.aspx</DependentUpon>
