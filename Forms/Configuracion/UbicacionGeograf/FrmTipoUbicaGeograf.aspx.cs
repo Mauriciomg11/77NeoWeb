@@ -9,9 +9,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
+namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
 {
-    public partial class FrmEstadoElemCotizacion : System.Web.UI.Page
+    public partial class FrmTipoUbicaGeograf : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
@@ -23,14 +23,14 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-               /* Session["C77U"] = "00000082";// 00000082|00000133
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["77IDM"] = "5"; // 4 español | 5 ingles      */
+                 /*Session["C77U"] = "00000082";// 00000082|00000133
+                 Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                 Session["$VR"] = "77NEO01";
+                 Session["V$U@"] = "sa";
+                 Session["P@$"] = "admindemp";
+                 Session["N77U"] = Session["D[BX"];
+                 Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                 Session["77IDM"] = "5"; // 4 español | 5 ingles      */
             }
             if (!IsPostBack)
             {
@@ -124,7 +124,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataTable dtbl = new DataTable();
-            string VbTxtSql = "EXEC SP_TablasGeneral 6, @C,'','','','','','','EstadElemCotiza','SELECT',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+            string VbTxtSql = "EXEC SP_TablasGeneral 12,@C,'','','','','','','TipoUbGeo','SELECT',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
             Cnx.SelecBD();
             using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
             {
@@ -180,7 +180,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        VBQuery = "EXEC SP_TablasGeneral 6,@Desc,@US,'','','','','','EstadElemCotiza','INSERT',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                        VBQuery = "EXEC SP_TablasGeneral 12,@Desc,@US,'','','','','','TipoUbGeo','INSERT',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             SC.Parameters.AddWithValue("@Desc", VbDesc);
@@ -234,7 +234,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = "EXEC SP_TablasGeneral 6,@Desc,@US,@ID,'','','','','EstadElemCotiza','UPDATE',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    VBQuery = "EXEC SP_TablasGeneral 12,@Desc,@US,@ID,'','','','','TipoUbGeo','UPDATE',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@Desc", VbDesc);
@@ -282,7 +282,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
 
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = "EXEC SP_TablasGeneral 6,'',@US,@ID,'','','','','EstadElemCotiza','DELETE',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    VBQuery = "EXEC SP_TablasGeneral 12,'',@US,@ID,'','','','','TipoUbGeo','DELETE',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());

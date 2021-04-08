@@ -2552,17 +2552,23 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                     ImageButton imgE = e.Row.FindControl("IbtEdit") as ImageButton;
                     ImageButton imgD = e.Row.FindControl("IbtDelete") as ImageButton;
-                    imgE.Enabled = true;
-                    Result = Idioma.Select("Objeto='IbtEdit'");
-                    foreach (DataRow RowIdioma in Result)
-                    { imgE.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                    if (imgE != null)
+                    {
+                        imgE.Enabled = true;
+                        Result = Idioma.Select("Objeto='IbtEdit'");
+                        foreach (DataRow RowIdioma in Result)
+                        { imgE.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                    }
 
-                    Result = Idioma.Select("Objeto='IbtDelete'");
-                    foreach (DataRow RowIdioma in Result)
-                    { imgD.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
-                    Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
-                    foreach (DataRow row in Result)
-                    { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                    if (imgD != null)
+                    {
+                        Result = Idioma.Select("Objeto='IbtDelete'");
+                        foreach (DataRow RowIdioma in Result)
+                        { imgD.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                        Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
+                        foreach (DataRow row in Result)
+                        { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                    }
                 }
             }
         }

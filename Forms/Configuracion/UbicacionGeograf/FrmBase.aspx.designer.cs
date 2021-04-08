@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
+namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
 {
 
 
-    public partial class FrmBodega
+    public partial class FrmBase
     {
 
         /// <summary>
@@ -24,13 +24,13 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
         protected global::System.Web.UI.WebControls.Label TitForm;
 
         /// <summary>
-        /// Control UplPpl.
+        /// Control UplDatos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UplPpl;
+        protected global::System.Web.UI.UpdatePanel UplDatos;
 
         /// <summary>
         /// Control LblBusq.
@@ -87,22 +87,121 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
         protected global::System.Web.UI.WebControls.TextBox TxtNombre;
 
         /// <summary>
-        /// Control LblCliente.
+        /// Control LblFrecR.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblCliente;
+        protected global::System.Web.UI.WebControls.Label LblFrecR;
 
         /// <summary>
-        /// Control DdlCliente.
+        /// Control TxtFrecR.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DdlCliente;
+        protected global::System.Web.UI.WebControls.TextBox TxtFrecR;
+
+        /// <summary>
+        /// Control LblTelef.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblTelef;
+
+        /// <summary>
+        /// Control TxtTelef.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtTelef;
+
+        /// <summary>
+        /// Control LblFax.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFax;
+
+        /// <summary>
+        /// Control TxtFax.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtFax;
+
+        /// <summary>
+        /// Control LblDir.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblDir;
+
+        /// <summary>
+        /// Control TxtDir.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtDir;
+
+        /// <summary>
+        /// Control LblUbica.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblUbica;
+
+        /// <summary>
+        /// Control DdlUbica.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DdlUbica;
+
+        /// <summary>
+        /// Control CkbActivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CkbActivo;
+
+        /// <summary>
+        /// Control LblDescrip.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblDescrip;
+
+        /// <summary>
+        /// Control TxtDescrip.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtDescrip;
 
         /// <summary>
         /// Control BtnIngresar.
@@ -130,14 +229,5 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnEliminar;
-
-        /// <summary>
-        /// Control GrdDetalle.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GrdDetalle;
     }
 }

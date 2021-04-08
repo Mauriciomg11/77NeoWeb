@@ -16,23 +16,23 @@ namespace _77NeoWeb.Forms.Seguridad
         ClsConexion Cnx = new ClsConexion();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null)
-            {
-                Response.Redirect("~/FrmAcceso.aspx");
-            }/*  */
+            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); } /* */
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             Page.Title = string.Format("Configuración_Pantalla");
             TitForm.Text = "Configuración de Pantallas";
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";/* */
-                /*Session["C77U"] = "00000082";
-                 Session["D[BX"] = "DbNeoDempV2";
-                 Session["$VR"] = "77NEO01";
-                 Session["V$U@"] = "sa";
-                 Session["P@$"] = "admindemp";
-                 Session["N77U"] = "UsuPrueba";
-                 Session["Nit77Cia"] = "811035879-1";   */
+                /*Session["C77U"] = "";
+                Session["C77U"] = "00000082";// 00000082|00000133
+                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                Session["$VR"] = "77NEO01";
+                Session["V$U@"] = "sa";
+                Session["P@$"] = "admindemp";
+                Session["N77U"] = Session["D[BX"];
+                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                Session["!dC!@"] = 0;
+                Session["77IDM"] = "5"; // 4 español | 5 ingles    */
             }
             if (!IsPostBack)
             {
@@ -243,43 +243,48 @@ namespace _77NeoWeb.Forms.Seguridad
         {
             if (e.CommandName == "Select")
             {
-                int index = int.Parse(e.CommandArgument.ToString());
-                Session["IdForm"] = int.Parse(GrdDatos.DataKeys[index].Value.ToString());
-                int vblleee = (int)Session["IdForm"];
-                BtnModificar.Enabled = true;
-                Cnx.SelecBD();
-                using (SqlConnection sqlConx = new SqlConnection(Cnx.GetConex()))
+                try
                 {
-
-                    string LtxtSql = "SP_ConfiguracionV2_ 12,'','','','',''," + ((int)Session["IdForm"]).ToString() + ",0,0,0,'01-01-01','02-01-01','03-01-01'";
-                    SqlCommand Comando = new SqlCommand(LtxtSql, sqlConx);
-                    sqlConx.Open();
-                    SqlDataReader tbl = Comando.ExecuteReader();
-                    if (tbl.Read())
+                    int index = int.Parse(e.CommandArgument.ToString());
+                    Session["IdForm"] = int.Parse(GrdDatos.DataKeys[index].Value.ToString());
+                    int vblleee = (int)Session["IdForm"];
+                    BtnModificar.Enabled = true;
+                    Cnx.SelecBD();
+                    using (SqlConnection sqlConx = new SqlConnection(Cnx.GetConex()))
                     {
 
-                        TxtDescripcion.Text = "";
-                        if (tbl["NomFormWeb"].ToString() != string.Empty)
+                        string LtxtSql = "SP_ConfiguracionV2_ 12,'','','','',''," + ((int)Session["IdForm"]).ToString() + ",0,0,0,'01-01-01','02-01-01','03-01-01'";
+                        SqlCommand Comando = new SqlCommand(LtxtSql, sqlConx);
+                        sqlConx.Open();
+                        SqlDataReader tbl = Comando.ExecuteReader();
+                        if (tbl.Read())
                         {
-                            TxtDescripcion.Text = tbl["Descripcion"].ToString();
-                            CkbPpl.Checked = Convert.ToBoolean(tbl["Principal"]);
-                            CkbIng.Checked = Convert.ToBoolean(tbl["IngresarF"]);
-                            CkbMod.Checked = Convert.ToBoolean(tbl["ModificarF"]);
-                            CkbCons.Checked = Convert.ToBoolean(tbl["ConsultarF"]);
-                            CkbImpr.Checked = Convert.ToBoolean(tbl["ImprimirF"]);
-                            CkbElim.Checked = Convert.ToBoolean(tbl["EliminarF"]);
 
-                            TxtCE1.Text = tbl["CasoEspeciaLF1"].ToString();
-                            TxtCE2.Text = tbl["CasoEspeciaLF2"].ToString();
-                            TxtCE3.Text = tbl["CasoEspeciaLF3"].ToString();
-                            TxtCE4.Text = tbl["CasoEspeciaLF4"].ToString();
-                            TxtCE5.Text = tbl["CasoEspeciaLF5"].ToString();
-                            TxtCE6.Text = tbl["CasoEspeciaLF6"].ToString();
+                            TxtDescripcion.Text = "";
+                            if (tbl["NomFormWeb"].ToString() != string.Empty)
+                            {
+                                TxtDescripcion.Text = tbl["Descripcion"].ToString();
+                                CkbPpl.Checked = Convert.ToBoolean(tbl["Principal"]);
+                                CkbIng.Checked = Convert.ToBoolean(tbl["IngresarF"]);
+                                CkbMod.Checked = Convert.ToBoolean(tbl["ModificarF"]);
+                                CkbCons.Checked = Convert.ToBoolean(tbl["ConsultarF"]);
+                                CkbImpr.Checked = Convert.ToBoolean(tbl["ImprimirF"]);
+                                CkbElim.Checked = Convert.ToBoolean(tbl["EliminarF"]);
+
+                                TxtCE1.Text = tbl["CasoEspeciaLF1"].ToString();
+                                TxtCE2.Text = tbl["CasoEspeciaLF2"].ToString();
+                                TxtCE3.Text = tbl["CasoEspeciaLF3"].ToString();
+                                TxtCE4.Text = tbl["CasoEspeciaLF4"].ToString();
+                                TxtCE5.Text = tbl["CasoEspeciaLF5"].ToString();
+                                TxtCE6.Text = tbl["CasoEspeciaLF6"].ToString();
+                            }
+                            BtnModificar.Text = "Modificar";
                         }
-                        BtnModificar.Text = "Modificar";
-                    }
 
+                    }
                 }
+                catch (Exception ex)
+                { }
             }
         }
         protected void GrdDatos_PageIndexChanging(object sender, GridViewPageEventArgs e)

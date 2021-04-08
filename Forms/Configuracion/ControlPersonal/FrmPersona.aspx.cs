@@ -25,14 +25,14 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-               /* Session["C77U"] = "00000133";// 00000082|00000133
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["77IDM"] = "5"; // 4 español | 5 ingles   */
+                /* Session["C77U"] = "00000133";// 00000082|00000133
+                 Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                 Session["$VR"] = "77NEO01";
+                 Session["V$U@"] = "sa";
+                 Session["P@$"] = "admindemp";
+                 Session["N77U"] = Session["D[BX"];
+                 Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                 Session["77IDM"] = "5"; // 4 español | 5 ingles   */
             }
             if (!IsPostBack)
             {
@@ -127,9 +127,9 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     GrdCursos.Columns[2].HeaderText = bO.Equals("GrdFechVen") ? bT : GrdCursos.Columns[2].HeaderText;
                     LblUsuario.Text = bO.Equals("LblUsuario") ? bT : LblUsuario.Text;
                     LblTitCrearusu.Text = bO.Equals("LblTitCrearusu") ? bT : LblTitCrearusu.Text;
-                    LblNomUsu.Text = bO.Equals("LblUsuario") ? bT+":" : LblNomUsu.Text;
+                    LblNomUsu.Text = bO.Equals("LblUsuario") ? bT + ":" : LblNomUsu.Text;
                     IbtCerrarCrearUsu.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarCrearUsu.ToolTip;
-                    BtnAsignarUsu.Text = bO.Equals("BtnAsignarUsu") ? bT: BtnAsignarUsu.Text;
+                    BtnAsignarUsu.Text = bO.Equals("BtnAsignarUsu") ? bT : BtnAsignarUsu.Text;
                 }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
@@ -374,9 +374,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             }
         }
         protected void DdlBusqPers_TextChanged(object sender, EventArgs e)
-        {
-            Traerdatos(DdlBusqPers.Text);
-        }
+        { Traerdatos(DdlBusqPers.Text); }
         protected void BtnIngresar_Click(object sender, EventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -404,7 +402,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 }
                 else
                 {
-                   
+
                     ValidarCampos("INSERT");
                     if (ViewState["Validar"].Equals("N"))
                     { return; }
@@ -495,7 +493,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     DdlBusqPers.Enabled = false;
                     Result = Idioma.Select("Objeto= 'MensConfMod'"); //MensConfIng |MensConfMod
                     foreach (DataRow row in Result)
-                    { BtnModificar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }//¿Desea eliminar el registro?  
+                    { BtnModificar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }//¿Desea editar el registro?  
                 }
                 else
                 {
@@ -587,7 +585,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             {
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, con))
                 {
-                    SC.CommandTimeout = 90000000;                   
+                    SC.CommandTimeout = 90000000;
                     using (SqlDataAdapter sda = new SqlDataAdapter())
                     {
                         SC.Connection = con;
@@ -928,10 +926,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             }
         }
         protected void GrdLicencias_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdLicencias.PageIndex = e.NewPageIndex;
-            BindDLicen(TxtCodUsu.Text.Trim());
-        }
+        { GrdLicencias.PageIndex = e.NewPageIndex; BindDLicen(TxtCodUsu.Text.Trim()); }
         protected void BindDCurso(string VbConsultar)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
