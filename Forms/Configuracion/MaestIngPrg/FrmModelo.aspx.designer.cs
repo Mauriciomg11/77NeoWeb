@@ -7,7 +7,7 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace _77NeoWeb.Forms.Configuracion
+namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
 {
 
 

@@ -125,15 +125,15 @@
     <Content Include="Forms\Configuracion\ControlPersonal\FrmAreaOrganizacional.aspx" />
     <Content Include="Forms\Configuracion\ControlPersonal\FrmCargo.aspx" />
     <Content Include="Forms\Configuracion\ControlPersonal\FrmPersona.aspx" />
-    <Content Include="Forms\Configuracion\FrmCicloDiscosMotor.aspx" />
-    <Content Include="Forms\Configuracion\FrmContador.aspx" />
-    <Content Include="Forms\Configuracion\FrmEstadoAeronave.aspx" />
-    <Content Include="Forms\Configuracion\FrmModelo.aspx" />
-    <Content Include="Forms\Configuracion\FrmPlantillaMaestra.aspx" />
-    <Content Include="Forms\Configuracion\FrmPosicion.aspx" />
-    <Content Include="Forms\Configuracion\FrmRazonRemocion.aspx" />
-    <Content Include="Forms\Configuracion\FrmTaller.aspx" />
-    <Content Include="Forms\Configuracion\FrmTipoAeronave.aspx" />
+    <Content Include="Forms\Configuracion\MaestIngPrg\FrmCicloDiscosMotor.aspx" />
+    <Content Include="Forms\Configuracion\MaestIngPrg\FrmContador.aspx" />
+    <Content Include="Forms\Configuracion\MaestIngPrg\FrmEstadoAeronave.aspx" />
+    <Content Include="Forms\Configuracion\MaestIngPrg\FrmModelo.aspx" />
+    <Content Include="Forms\Configuracion\MaestIngPrg\FrmPlantillaMaestra.aspx" />
+    <Content Include="Forms\Configuracion\MaestIngPrg\FrmPosicion.aspx" />
+    <Content Include="Forms\Configuracion\MaestIngPrg\FrmRazonRemocion.aspx" />
+    <Content Include="Forms\Configuracion\MaestIngPrg\FrmTaller.aspx" />
+    <Content Include="Forms\Configuracion\MaestIngPrg\FrmTipoAeronave.aspx" />
     <Content Include="Forms\Configuracion\InventarioLogistica\FormaPago.aspx" />
     <Content Include="Forms\Configuracion\InventarioLogistica\FrmAlmacen.aspx" />
     <Content Include="Forms\Configuracion\InventarioLogistica\FrmBodega.aspx" />
@@ -288,67 +288,67 @@
     <Compile Include="Forms\Configuracion\ControlPersonal\FrmPersona.aspx.designer.cs">
       <DependentUpon>FrmPersona.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmCicloDiscosMotor.aspx.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmCicloDiscosMotor.aspx.cs">
       <DependentUpon>FrmCicloDiscosMotor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmCicloDiscosMotor.aspx.designer.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmCicloDiscosMotor.aspx.designer.cs">
       <DependentUpon>FrmCicloDiscosMotor.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmContador.aspx.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmContador.aspx.cs">
       <DependentUpon>FrmContador.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmContador.aspx.designer.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmContador.aspx.designer.cs">
       <DependentUpon>FrmContador.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmEstadoAeronave.aspx.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmEstadoAeronave.aspx.cs">
       <DependentUpon>FrmEstadoAeronave.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmEstadoAeronave.aspx.designer.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmEstadoAeronave.aspx.designer.cs">
       <DependentUpon>FrmEstadoAeronave.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmModelo.aspx.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmModelo.aspx.cs">
       <DependentUpon>FrmModelo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmModelo.aspx.designer.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmModelo.aspx.designer.cs">
       <DependentUpon>FrmModelo.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmPlantillaMaestra.aspx.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmPlantillaMaestra.aspx.cs">
       <DependentUpon>FrmPlantillaMaestra.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmPlantillaMaestra.aspx.designer.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmPlantillaMaestra.aspx.designer.cs">
       <DependentUpon>FrmPlantillaMaestra.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmPosicion.aspx.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmPosicion.aspx.cs">
       <DependentUpon>FrmPosicion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmPosicion.aspx.designer.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmPosicion.aspx.designer.cs">
       <DependentUpon>FrmPosicion.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmRazonRemocion.aspx.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmRazonRemocion.aspx.cs">
       <DependentUpon>FrmRazonRemocion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmRazonRemocion.aspx.designer.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmRazonRemocion.aspx.designer.cs">
       <DependentUpon>FrmRazonRemocion.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmTaller.aspx.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmTaller.aspx.cs">
       <DependentUpon>FrmTaller.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmTaller.aspx.designer.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmTaller.aspx.designer.cs">
       <DependentUpon>FrmTaller.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmTipoAeronave.aspx.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmTipoAeronave.aspx.cs">
       <DependentUpon>FrmTipoAeronave.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Forms\Configuracion\FrmTipoAeronave.aspx.designer.cs">
+    <Compile Include="Forms\Configuracion\MaestIngPrg\FrmTipoAeronave.aspx.designer.cs">
       <DependentUpon>FrmTipoAeronave.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Configuracion\InventarioLogistica\FormaPago.aspx.cs">
@@ -705,6 +705,7 @@
     <Compile Include="Prg\PrgIngenieria\CsTypContaSrvMant.cs" />
     <Compile Include="Prg\PrgLogistica\CsTTPN.cs" />
     <Compile Include="Prg\PrgLogistica\CsTypeReferencia.cs" />
+    <Compile Include="Prg\PrgManto\ClsUbicaGeograf.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
   </ItemGroup>

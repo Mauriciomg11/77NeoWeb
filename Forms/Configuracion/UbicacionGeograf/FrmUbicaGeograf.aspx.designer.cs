@@ -150,6 +150,15 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
         protected global::System.Web.UI.WebControls.CheckBox CkbActivo;
 
         /// <summary>
+        /// Control CkbRutaFrec.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CkbRutaFrec;
+
+        /// <summary>
         /// Control BtnIngresar.
         /// </summary>
         /// <remarks>

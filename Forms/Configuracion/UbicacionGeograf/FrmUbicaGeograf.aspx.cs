@@ -1,4 +1,5 @@
 ﻿using _77NeoWeb.prg;
+using _77NeoWeb.Prg.PrgManto;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,12 +18,12 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            /*if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }*/
+            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }/**/
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                Session["C77U"] = "00000082";// 00000082|00000133
+               /* Session["C77U"] = "00000082";// 00000082|00000133
                 Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
                 Session["$VR"] = "77NEO01";
                 Session["V$U@"] = "sa";
@@ -30,7 +31,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                 Session["N77U"] = Session["D[BX"];
                 Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                 Session["!dC!@"] = 0;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles   /* */
+                Session["77IDM"] = "5"; // 4 español | 5 ingles    */
             }
             if (!IsPostBack)
             {
@@ -99,6 +100,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                     LblUbicaSupr.Text = bO.Equals("LblUbicaSupr") ? bT : LblUbicaSupr.Text;
                     LblVlrTasa.Text = bO.Equals("LblVlrTasa") ? bT : LblVlrTasa.Text;                  
                     CkbActivo.Text = bO.Equals("CkbActivo") ? "&nbsp" + bT : CkbActivo.Text;
+                    CkbRutaFrec.Text = bO.Equals("CkbRutaFrec") ? "&nbsp" + bT : CkbRutaFrec.Text;
                     BtnIngresar.Text = bO.Equals("BtnIngresar") ? bT : BtnIngresar.Text;
                     BtnModificar.Text = bO.Equals("BtnModificar") ? bT : BtnModificar.Text;
                     BtnEliminar.Text = bO.Equals("BtnEliminar") ? bT : BtnEliminar.Text;
@@ -137,7 +139,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
         }
         protected void LimpiarCampos(string Accion)
         {
-            TxtCod.Text = ""; TxtNombre.Text = "";  DdlTipoUbc.Text = ""; DdlUbicaSupr.Text = ""; TxtVlrTasa.Text = "0";
+            TxtCod.Text = ""; TxtNombre.Text = "";  DdlTipoUbc.Text = ""; DdlUbicaSupr.Text = ""; TxtVlrTasa.Text = "0"; CkbRutaFrec.Checked = false;
             if (Accion.Trim().Equals("INSERT")) { CkbActivo.Checked = true; }
             else { CkbActivo.Checked = false; }
         }
@@ -184,7 +186,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
         }
         protected void ActivarCampos(bool Ing, bool Edi, string accion)
         {
-            TxtCod.Enabled = Ing; TxtNombre.Enabled = Edi; DdlTipoUbc.Enabled = Edi; DdlUbicaSupr.Enabled = Edi; TxtVlrTasa.Enabled = Edi;
+            TxtCod.Enabled = Ing; TxtNombre.Enabled = Edi; DdlTipoUbc.Enabled = Edi; DdlUbicaSupr.Enabled = Edi; TxtVlrTasa.Enabled = Edi; CkbRutaFrec.Enabled = Edi;
             if (accion.Trim().Equals("UPDATE")) { CkbActivo.Enabled = Edi; }
         }
         protected void Traerdatos(string Prmtr)
@@ -208,6 +210,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                     DdlUbicaSupr.Text = HttpUtility.HtmlDecode(SDR["CodUbicaGeoSup"].ToString().Trim());
                     TxtVlrTasa.Text = HttpUtility.HtmlDecode(SDR["VlorTasa"].ToString().Trim());
                     CkbActivo.Checked = Convert.ToBoolean(HttpUtility.HtmlDecode(SDR["Activo"].ToString().Trim()));
+                    CkbRutaFrec.Checked = Convert.ToBoolean(HttpUtility.HtmlDecode(SDR["RutaFrecuente"].ToString().Trim()));
                 }
                 SDR.Close();
                 Cnx2.Close();
@@ -217,17 +220,218 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
         { Traerdatos(DdlBusq.Text.Trim()); }
         protected void BtnIngresar_Click(object sender, EventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            try
+            {
+                if (ViewState["Accion"].ToString().Equals(""))
+                {
+                    ActivarBtn(true, false, false, false, false);
 
+                    ViewState["Accion"] = "Aceptar";
+                    DataRow[] Result = Idioma.Select("Objeto= 'BotonIngOk'");
+                    foreach (DataRow row in Result)
+                    { BtnIngresar.Text = row["Texto"].ToString().Trim(); }//
+                    LimpiarCampos("INSERT");
+                    ActivarCampos(true, true, "Ingresar");
+
+                    DdlBusq.Text = "0";
+                    DdlBusq.Enabled = false;
+                    Result = Idioma.Select("Objeto= 'MensConfIng'"); // |MensConfMod
+                    foreach (DataRow row in Result)
+                    { BtnIngresar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }//¿Desea realizar el ingreso?
+                }
+                else
+                {
+                    ValidarCampos("INSERT");
+                    if (ViewState["Validar"].Equals("N"))
+                    { return; }
+                    double VblVlrTasa = 0;
+                    if (TxtVlrTasa.Text.Trim().Equals("")) { VblVlrTasa = Convert.ToDouble(0); }
+                    else { VblVlrTasa = Convert.ToDouble(TxtVlrTasa.Text.Trim()); }
+
+                    List<ClsUbicaGeograf> ObjUbGeo = new List<ClsUbicaGeograf>();
+                    var TypUbGeo = new ClsUbicaGeograf()
+                    {
+
+                        IdUbicaGeogr =0,
+                        CodUbicaGeogr = TxtCod.Text.Trim(),
+                        Nombre = TxtNombre.Text.Trim(),
+                        CodUbicaGeoSup = DdlUbicaSupr.Text.Trim(),
+                        CodTipoUbicaGeogr = DdlTipoUbc.Text.Trim(),
+                        Usu = Session["C77U"].ToString(),
+                        VlorTasa = VblVlrTasa,
+                        Activa = CkbActivo.Checked == true ? 1 : 0,
+                        RutaFrecuente = CkbRutaFrec.Checked == true ? 1 : 0,
+                        IdConfigCia = (int)Session["!dC!@"],
+                        Accion = "INSERT",
+                    };
+                    ObjUbGeo.Add(TypUbGeo);
+                    ClsUbicaGeograf ClsUbicaGeograf = new ClsUbicaGeograf();
+                    ClsUbicaGeograf.Alimentar(ObjUbGeo);
+                    string Mensj = ClsUbicaGeograf.GetMensj();
+                    if (!Mensj.Equals(""))
+                    {
+                        DataRow[] Result2 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                        foreach (DataRow row in Result2)
+                        { Mensj = row["Texto"].ToString().Trim(); }
+                        ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                        return;
+                    }
+                    ActivarBtn(true, true, true, true, true);
+                    ViewState["Accion"] = "";
+                    DataRow[] Result = Idioma.Select("Objeto= 'IbtAddNew'");
+                    foreach (DataRow row in Result)
+                    { BtnIngresar.Text = row["Texto"].ToString().Trim(); }//
+                    ActivarCampos(false, false, "Ingresar");
+                    DdlBusq.Enabled = true;
+                    BindBDdlBusq();
+                    DdlBusq.Text = ClsUbicaGeograf.GetId().ToString();
+                    Traerdatos(DdlBusq.Text.Trim());
+                    BtnIngresar.OnClientClick = "";
+                }
+            }
+            catch (Exception Ex)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Inconveniente en el ingreso')", true);
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INGRESAR UbicaGeografica", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
         }
-
         protected void BtnModificar_Click(object sender, EventArgs e)
         {
+            try
+            {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                if (TxtCod.Text.Equals("") || DdlBusq.Text.Trim().Equals("0"))
+                { return; }
 
+                if (ViewState["Accion"].ToString().Equals(""))
+                {                   
+                    ActivarBtn(false, true, false, false, false);
+                    DataRow[] Result = Idioma.Select("Objeto= 'BotonIngOk'");
+                    foreach (DataRow row in Result)
+                    { BtnModificar.Text = row["Texto"].ToString().Trim(); }//
+                    ViewState["Accion"] = "Aceptar";
+                    ActivarCampos(true, true, "UPDATE");
+                    DdlBusq.Enabled = false;
+                    Result = Idioma.Select("Objeto= 'MensConfMod'"); //MensConfIng |MensConfMod
+                    foreach (DataRow row in Result)
+                    { BtnModificar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }//¿Desea eliminar el registro?  
+                }
+                else
+                {
+                    ValidarCampos("UPDATE");
+                    if (ViewState["Validar"].Equals("N"))
+                    { return; }
+
+                    double VblVlrTasa = 0;
+                    if (TxtVlrTasa.Text.Trim().Equals("")) { VblVlrTasa = Convert.ToDouble(0); }
+                    else { VblVlrTasa = Convert.ToDouble(TxtVlrTasa.Text.Trim()); }
+
+                    List<ClsUbicaGeograf> ObjUbGeo = new List<ClsUbicaGeograf>();
+                    var TypUbGeo = new ClsUbicaGeograf()
+                    {
+                        IdUbicaGeogr = Convert.ToInt32(DdlBusq.Text.Trim()),
+                        CodUbicaGeogr = TxtCod.Text.Trim(),
+                        Nombre = TxtNombre.Text.Trim(),
+                        CodUbicaGeoSup = DdlUbicaSupr.Text.Trim(),
+                        CodTipoUbicaGeogr = DdlTipoUbc.Text.Trim(),
+                        Usu = Session["C77U"].ToString(),
+                        VlorTasa = VblVlrTasa,
+                        Activa = CkbActivo.Checked == true ? 1 : 0,
+                        RutaFrecuente = CkbRutaFrec.Checked == true ? 1 : 0,
+                        IdConfigCia = (int)Session["!dC!@"],
+                        Accion = "UPDATE",
+                    };
+                    ObjUbGeo.Add(TypUbGeo);
+                    ClsUbicaGeograf ClsUbicaGeograf = new ClsUbicaGeograf();
+                    ClsUbicaGeograf.Alimentar(ObjUbGeo);
+                    string Mensj = ClsUbicaGeograf.GetMensj();
+                    if (!Mensj.Equals(""))
+                    {
+                        DataRow[] Result2 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                        foreach (DataRow row in Result2)
+                        { Mensj = row["Texto"].ToString().Trim(); }
+                        ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                        return;
+                    }
+                    ActivarBtn(true, true, true, true, true);
+                    DataRow[] Result = Idioma.Select("Objeto= 'BotonMod'");
+                    foreach (DataRow row in Result)
+                    { BtnModificar.Text = row["Texto"].ToString().Trim(); }
+                    ViewState["Accion"] = "";
+                    ActivarCampos(false, false, "UPDATE");
+                    DdlBusq.Enabled = true;
+                    BindBDdlBusq();
+                    DdlBusq.Text = ClsUbicaGeograf.GetId().ToString().Trim();
+                    Traerdatos(DdlBusq.Text);
+                    BtnModificar.OnClientClick = "";
+                }
+            }
+            catch (Exception Ex)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//inconvenientes en la modificacion
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "MODIFICAR UbicacionGeografica", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
         }
-
         protected void BtnEliminar_Click(object sender, EventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            try
+            {
 
+                if (TxtCod.Text.Equals("") || DdlBusq.Text.Trim().Equals("0"))
+                { return; }
+
+                double VblVlrTasa = 0;
+                if (TxtVlrTasa.Text.Trim().Equals("")) { VblVlrTasa = Convert.ToDouble(0); }
+                else { VblVlrTasa = Convert.ToDouble(TxtVlrTasa.Text.Trim()); }
+
+                List<ClsUbicaGeograf> ObjUbGeo = new List<ClsUbicaGeograf>();
+                var TypUbGeo = new ClsUbicaGeograf()
+                {                  
+                    IdUbicaGeogr = Convert.ToInt32(DdlBusq.Text.Trim()),
+                    CodUbicaGeogr = TxtCod.Text.Trim(),
+                    Nombre = TxtNombre.Text.Trim(),
+                    CodUbicaGeoSup = DdlUbicaSupr.Text.Trim(),
+                    CodTipoUbicaGeogr = DdlTipoUbc.Text.Trim(),
+                    Usu = Session["C77U"].ToString(),
+                    VlorTasa = VblVlrTasa,
+                    Activa = CkbActivo.Checked == true ? 1 : 0,
+                    RutaFrecuente = CkbRutaFrec.Checked == true ? 1 : 0,
+                    IdConfigCia = (int)Session["!dC!@"],
+                    Accion = "DELETE",
+                };
+                ObjUbGeo.Add(TypUbGeo);
+                ClsUbicaGeograf ClsUbicaGeograf = new ClsUbicaGeograf();
+                ClsUbicaGeograf.Alimentar(ObjUbGeo);
+                string Mensj = ClsUbicaGeograf.GetMensj();
+                if (!Mensj.Equals(""))
+                {
+                    DataRow[] Result2 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result2)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    return;
+                }
+                ViewState["Accion"] = "";
+                LimpiarCampos("DELETE");
+                BindBDdlBusq();
+                DdlBusq.Text = "0";
+            }
+            catch (Exception Ex)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrEli'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Inconveniente en la eliminacion
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE Ubicacion Geografica", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
         }
     }
 }

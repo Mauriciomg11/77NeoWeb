@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="FrmPlantillaMaestra.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.FrmPlantillaMaestra" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="FrmPlantillaMaestra.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.MaestIngPrg.FrmPlantillaMaestra" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Plantilla_Maestra</title>

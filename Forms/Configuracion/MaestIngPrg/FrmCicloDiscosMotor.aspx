@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="FrmCicloDiscosMotor.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.FrmCicloDiscosMotor" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="FrmCicloDiscosMotor.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.MaestIngPrg.FrmCicloDiscosMotor" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>CicloDiscos</title>

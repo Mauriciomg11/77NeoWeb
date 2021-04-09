@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="FrmRazonRemocion.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.FrmRazonRemocion" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="FrmRazonRemocion.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.MaestIngPrg.FrmRazonRemocion" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>RazonRemocion</title>

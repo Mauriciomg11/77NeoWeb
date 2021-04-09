@@ -11,7 +11,7 @@ using System.Drawing;
 using System.Configuration;
 using System.Globalization;
 
-namespace _77NeoWeb.Forms.Configuracion
+namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
 {
     public partial class FrmCicloDiscosMotor : System.Web.UI.Page
     {

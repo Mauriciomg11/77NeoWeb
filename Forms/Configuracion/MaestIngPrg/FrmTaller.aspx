@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="FrmTaller.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.FrmTaller" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="FrmTaller.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.MaestIngPrg.FrmTaller" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Taller</title>

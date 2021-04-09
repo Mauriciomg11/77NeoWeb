@@ -369,7 +369,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                     foreach (DataRow row in Result)
                     { BtnModificar.Text = row["Texto"].ToString().Trim(); }
                     ViewState["Accion"] = "";
-                    ActivarCampos(false, false, "Ingresar");
+                    ActivarCampos(false, false, "UPDATE");
                     DdlBusq.Enabled = true;
                     BindBDdlBusq();
                     DdlBusq.Text = ClsBase.GetIdBase().ToString().Trim();

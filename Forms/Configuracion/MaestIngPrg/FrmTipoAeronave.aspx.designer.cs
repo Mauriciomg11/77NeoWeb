@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace _77NeoWeb.Forms.Configuracion
+namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
 {
 
 
-    public partial class FrmEstadoAeronave
+    public partial class FrmTipoAeronave
     {
 
         /// <summary>

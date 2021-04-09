@@ -11,7 +11,7 @@ using System.Diagnostics;
 using DocumentFormat.OpenXml.Presentation;
 using System.Configuration;
 
-namespace _77NeoWeb.Forms.Configuracion
+namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
 {
     public partial class FrmModelo : System.Web.UI.Page
     {

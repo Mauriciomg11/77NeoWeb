@@ -1,7 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmTipoAeronave.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.FrmTipoAeronave" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmPosicion.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.MaestIngPrg.FrmPosicion" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <title>Tipo_Aeronave</title>
+    <title>Pantalla</title>
     <style type="text/css">
         .DivGrid {
             position: absolute;
@@ -23,33 +23,50 @@
             <table class="TablaBusqueda">
                 <tr>
                     <td>
-                        <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
+                        <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"/></td>
                     <td>
-                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
+                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"/></td>
                     <td>
                         <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                 </tr>
             </table>
             <div class="DivGrid DivContendorGrid">
-                <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodTipoAeronave"
+                <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdPosicion,CodAnt"
                     CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                     OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit"
                     OnRowDeleting="GrdDatos_RowDeleting" OnRowDataBound="GrdDatos_RowDataBound" OnPageIndexChanging="GrdDatos_PageIndexChanging">
                     <Columns>
-                        <asp:TemplateField HeaderText="Codigo">
+                        <asp:TemplateField HeaderText="Código">
                             <ItemTemplate>
-                                <asp:Label Text='<%# Eval("CodTipoAeronave") %>' runat="server" />
+                                <asp:Label Text='<%# Eval("Codigo") %>' runat="server" />
                             </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="TxtCodPos" Text='<%# Eval("Codigo") %>' runat="server" />
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                <asp:TextBox ID="TxtCodPosPP" runat="server" />
+                            </FooterTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Descripción">
                             <ItemTemplate>
                                 <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" />
                             </ItemTemplate>
                             <EditItemTemplate>
-                                <asp:TextBox ID="TxtDesc" Text='<%# Eval("Descripcion") %>' runat="server" Width="300px" />
+                                <asp:TextBox ID="TxtDesc" Text='<%# Eval("Descripcion") %>' runat="server" />
                             </EditItemTemplate>
                             <FooterTemplate>
-                                <asp:TextBox ID="TxtDescPP" runat="server" Width="300px" />
+                                <asp:TextBox ID="TxtDescPP" runat="server" />
+                            </FooterTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Activo">
+                            <ItemTemplate>
+                                <asp:CheckBox ID="CkbActivoP" Checked='<%# Eval("Activo").ToString()=="1" ? true : false %>' runat="server" Enabled="false" />
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:CheckBox ID="CkbActivo" Checked='<%# Eval("Activo").ToString()=="1" ? true : false %>' runat="server" />
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                <asp:CheckBox ID="CkbActivoPP" runat="server" />
                             </FooterTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField FooterStyle-Width="10%">
@@ -76,3 +93,4 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
+

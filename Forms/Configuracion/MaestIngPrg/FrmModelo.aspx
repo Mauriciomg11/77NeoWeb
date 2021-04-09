@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmModelo.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.FrmModelo" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmModelo.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.MaestIngPrg.FrmModelo" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Modelos</title>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmContador.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.FrmContador" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmContador.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.MaestIngPrg.FrmContador" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Contador</title>

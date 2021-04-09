@@ -13,7 +13,7 @@ using _77NeoWeb.Prg.PrgIngenieria;
 using ClosedXML.Excel;
 using System.IO;
 
-namespace _77NeoWeb.Forms.Configuracion
+namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
 {
     public partial class FrmPlantillaMaestra : System.Web.UI.Page
     {

@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace _77NeoWeb.Forms.Configuracion
+namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
 {
 
 
-    public partial class FrmRazonRemocion
+    public partial class FrmPosicion
     {
 
         /// <summary>
@@ -58,15 +58,6 @@ namespace _77NeoWeb.Forms.Configuracion
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton IbtConsultar;
-
-        /// <summary>
-        /// Control IbtExpExcel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtExpExcel;
 
         /// <summary>
         /// Control GrdDatos.

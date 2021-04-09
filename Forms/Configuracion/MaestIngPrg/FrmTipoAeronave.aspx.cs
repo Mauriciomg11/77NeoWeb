@@ -10,17 +10,17 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Configuration;
 
-namespace _77NeoWeb.Forms.Configuracion
+namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
 {
-    public partial class FrmPosicion : System.Web.UI.Page
+    public partial class FrmTipoAeronave : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }/**/
+            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }/* */
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
-            Page.Title = string.Format("Configuración_Posición");
+            Page.Title = string.Format("Configuración_Tipo_Aeronave");
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
@@ -31,11 +31,11 @@ namespace _77NeoWeb.Forms.Configuracion
                 Session["P@$"] = "admindemp";
                 Session["N77U"] = Session["D[BX"];
                 Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["77IDM"] = "5"; // 4 español | 5 ingles   */
+                Session["77IDM"] = "5"; // 4 español | 5 ingles    */
             }
             if (!IsPostBack)
             {
-                TitForm.Text = "Configuración de Posiciones";
+                TitForm.Text = "Configuración Tipo de Aeronave";
                 ModSeguridad();
                 BindData(TxtBusqueda.Text);
             }
@@ -46,10 +46,8 @@ namespace _77NeoWeb.Forms.Configuracion
             ViewState["VblModMS"] = 1;
             ViewState["VblEliMS"] = 1;
             ViewState["VblImpMS"] = 1;
-
             ClsPermisos ClsP = new ClsPermisos();
-            ClsP.Acceder(Session["C77U"].ToString(), "FrmPosicion.aspx");
-
+            ClsP.Acceder(Session["C77U"].ToString(), "FrmTipoAeronave.aspx");
             if (ClsP.GetAccesoFrm() == 0)
             {
                 Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx");
@@ -117,14 +115,13 @@ namespace _77NeoWeb.Forms.Configuracion
                     if (bO.Equals("Caption"))
                     { Page.Title = bT; ViewState["PageTit"] = bT; }
 
-                    TitForm.Text = bO.Equals("TituloPos") ? bT : TitForm.Text;
+                    TitForm.Text = bO.Equals("TituloTA") ? bT : TitForm.Text;
                     LblBusqueda.Text = bO.Equals("LblBusqueda") ? bT + ":" : LblBusqueda.Text;
                     if (bO.Equals("placeholder"))
                     { TxtBusqueda.Attributes.Add("placeholder", bT); }
                     IbtConsultar.ToolTip = bO.Equals("IbtConsultar") ? bT : IbtConsultar.ToolTip;
                     GrdDatos.Columns[0].HeaderText = bO.Equals("GrdCod") ? bT : GrdDatos.Columns[0].HeaderText;
                     GrdDatos.Columns[1].HeaderText = bO.Equals("GrdDesc") ? bT : GrdDatos.Columns[1].HeaderText;
-                    GrdDatos.Columns[2].HeaderText = bO.Equals("GrdAct") ? bT : GrdDatos.Columns[2].HeaderText;
                 }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
@@ -137,7 +134,7 @@ namespace _77NeoWeb.Forms.Configuracion
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = "SELECT IdPosicion,Codigo,Descripcion, Activo,UsuCrea,UsuMod,FechaCrea, FechaMod, Codigo CodAnt  FROM TblPosicion WHERE Descripcion LIKE '%" + VbConsultar + "%'";
+                string VbTxtSql = "EXEC SP_Pantalla_Parametros 8,'" + VbConsultar + "','','','','TIPOA',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                 sqlCon.Open();
                 SqlDataAdapter sqlDa = new SqlDataAdapter(VbTxtSql, sqlCon);
                 sqlDa.Fill(dtbl);
@@ -172,13 +169,12 @@ namespace _77NeoWeb.Forms.Configuracion
                 Idioma = (DataTable)ViewState["TablaIdioma"];
                 foreach (GridViewRow Row in GrdDatos.Rows)
                 {
-
                     if ((int)ViewState["VblModMS"] == 0)
                     {
                         ImageButton imgE = Row.FindControl("IbtEdit") as ImageButton;
                         if (imgE != null)
                         {
-                            Row.Cells[3].Controls.Remove(imgE);
+                            Row.Cells[2].Controls.Remove(imgE);
                         }
                     }
                     if ((int)ViewState["VblEliMS"] == 0)
@@ -186,50 +182,29 @@ namespace _77NeoWeb.Forms.Configuracion
                         ImageButton imgD = Row.FindControl("IbtDelete") as ImageButton;
                         if (imgD != null)
                         {
-                            Row.Cells[3].Controls.Remove(imgD);
+                            Row.Cells[2].Controls.Remove(imgD);
                         }
                     }
                 }
                 if (e.CommandName.Equals("AddNew"))
                 {
-                    string VblCodPpal, VBQuery;
-                    VblCodPpal = (GrdDatos.FooterRow.FindControl("TxtCodPosPP") as TextBox).Text.Trim();
+                    string VbDesc, VBQuery;
+                    VbDesc = (GrdDatos.FooterRow.FindControl("TxtDescPP") as TextBox).Text.Trim();
+                    if (VbDesc == String.Empty)
+                    {
+                        DataRow[] Result = Idioma.Select("Objeto= 'Mens01TipAk'");
+                        foreach (DataRow row in Result)
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una descripción')", true);
+                        return;
+                    }
                     Cnx.SelecBD();
                     using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                     {
                         sqlCon.Open();
-                        VBQuery = "EXEC SP_Pantalla_Parametros 1,'" + VblCodPpal + "','0','C','Codigo','TblPosicion',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
-                        SqlCommand Comando = new SqlCommand(VBQuery, sqlCon);
-
-                        SqlDataReader registro = Comando.ExecuteReader();
-                        if (registro.Read())
-                        {
-                            DataRow[] Result = Idioma.Select("Objeto= 'Mens01Pos'");
-                            foreach (DataRow row in Result)
-                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//La posición existe')", true);
-                            return;
-                        }
-                        sqlCon.Close();
-                    }
-                    using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
-                    {
-                        if (VblCodPpal == String.Empty)
-                        {
-                            DataRow[] Result = Idioma.Select("Objeto= 'Mens02Pos'");
-                            foreach (DataRow row in Result)
-                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una posición')", true);
-                            return;
-                        }
-                        sqlCon.Open();
-                        VBQuery = "EXEC SP_Pantalla_Parametros 7,@Cod,@Desc,@VbC77U,'','INSERT',@Act,0,0,0,'01-01-1','02-01-1','03-01-1'";
-                        CheckBox chkbox = GrdDatos.FooterRow.FindControl("CkbActivoPP") as CheckBox;
-                        int VbActivo = 0;
-                        if (chkbox.Checked == true) { VbActivo = 1; }
+                        VBQuery = "EXEC SP_Pantalla_Parametros 0,@Desc,@US,'','TblTipoAeronave','CodTipoAeronave',4,0,0,1,'01-01-1','02-01-1','03-01-1'";
                         SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon);
-                        sqlCmd.Parameters.AddWithValue("@Cod", VblCodPpal);
-                        sqlCmd.Parameters.AddWithValue("@Desc", (GrdDatos.FooterRow.FindControl("TxtDescPP") as TextBox).Text.Trim());
-                        sqlCmd.Parameters.AddWithValue("@Act", VbActivo);
-                        sqlCmd.Parameters.AddWithValue("@VbC77U", Session["C77U"].ToString());
+                        sqlCmd.Parameters.AddWithValue("@Desc", VbDesc);
+                        sqlCmd.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         sqlCmd.ExecuteNonQuery();
                         BindData(TxtBusqueda.Text);
                     }
@@ -239,8 +214,8 @@ namespace _77NeoWeb.Forms.Configuracion
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//rror en el ingreso')", true);
-                Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmPosicion", "INSERT", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
+                Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmTipoAeronave", "INSERT", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
             }
         }
         protected void GrdDatos_RowEditing(object sender, GridViewEditEventArgs e)
@@ -253,38 +228,24 @@ namespace _77NeoWeb.Forms.Configuracion
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
-                string VblCodPpal, VblCodAnt, VbQuery;
+                string VbDesc, VbQuery;
+                VbDesc = (GrdDatos.Rows[e.RowIndex].FindControl("TxtDesc") as TextBox).Text.Trim();
+                if (VbDesc == String.Empty)
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= 'Mens01TipAk'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una descripción')", true);
+                    return;
+                }
                 Cnx.SelecBD();
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
-                    VblCodPpal = (GrdDatos.Rows[e.RowIndex].FindControl("TxtCodPos") as TextBox).Text.Trim();
-                    VblCodAnt = GrdDatos.DataKeys[e.RowIndex].Values["CodAnt"].ToString();
-                    VbQuery = "EXEC SP_Pantalla_Parametros 1,'" + VblCodPpal + "','" + VblCodAnt + "','C','Codigo','TblPosicion',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
-                    SqlCommand Comando = new SqlCommand(VbQuery, sqlCon);
-                    SqlDataReader registro = Comando.ExecuteReader();
-                    if (registro.Read())
-                    {
-                        DataRow[] Result = Idioma.Select("Objeto= 'Mens01Pos'");
-                        foreach (DataRow row in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//La posición existe')", true);
-                        return;
-                    }
-                    sqlCon.Close();
-                }
-                using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
-                {
-                    sqlCon.Open();
-                    CheckBox chkbox = GrdDatos.Rows[e.RowIndex].FindControl("CkbActivo") as CheckBox;
-                    int VbActivo = 0;
-                    if (chkbox.Checked == true) { VbActivo = 1; }
-                    VbQuery = "EXEC SP_Pantalla_Parametros 7, @Cod, @Desc, @VbC77U,'','UPDATE',@Act,@ID,0,0,'01-01-1','02-01-1','03-01-1'";
+                    VbQuery = "EXEC SP_TablasPlantillaM 10, @ID, @Desc, @UMd,'','','','','','UPDATE',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                     SqlCommand sqlCmd = new SqlCommand(VbQuery, sqlCon);
-                    sqlCmd.Parameters.AddWithValue("@Cod", VblCodPpal);
                     sqlCmd.Parameters.AddWithValue("@Desc", (GrdDatos.Rows[e.RowIndex].FindControl("TxtDesc") as TextBox).Text.Trim());
-                    sqlCmd.Parameters.AddWithValue("@Act", VbActivo);
-                    sqlCmd.Parameters.AddWithValue("@VbC77U", Session["C77U"].ToString());
-                    sqlCmd.Parameters.AddWithValue("@ID", Convert.ToInt32(GrdDatos.DataKeys[e.RowIndex].Value.ToString()));
+                    sqlCmd.Parameters.AddWithValue("@UMd", Session["C77U"].ToString());
+                    sqlCmd.Parameters.AddWithValue("@ID",GrdDatos.DataKeys[e.RowIndex].Value.ToString());
                     sqlCmd.ExecuteNonQuery();
                     GrdDatos.EditIndex = -1;
                     BindData(TxtBusqueda.Text);
@@ -295,7 +256,7 @@ namespace _77NeoWeb.Forms.Configuracion
                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el proceso de edición')", true);
-                Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmPosicion", "Update", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmTipoAeronave", "UPDATE", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
             }
         }
         protected void GrdDatos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -308,15 +269,34 @@ namespace _77NeoWeb.Forms.Configuracion
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
+
+                string VBQuery, VbCod;
+                VbCod = GrdDatos.DataKeys[e.RowIndex].Value.ToString();
                 Cnx.SelecBD();
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
-                    string query = "EXEC SP_Pantalla_Parametros 2,'','','','','',@id,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    VBQuery = "EXEC SP_Pantalla_Parametros 9,'" + VbCod + "','','','','VALIDA',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    SqlCommand Comando = new SqlCommand(VBQuery, sqlCon);
+                    SqlDataReader registro = Comando.ExecuteReader();
+                    if (registro.Read())
+                    {
+                        string Mensj = registro["Mensj"].ToString().Trim();
+                        DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                        foreach (DataRow row in Result)
+                        { Mensj = row["Texto"].ToString().Trim(); }
+
+                        ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                        return;
+                    }
+                }
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+                {
+                    sqlCon.Open();
+                    string query = "EXEC SP_Pantalla_Parametros 9,@id,'','','','ELIMINA',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                     SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
                     sqlCmd.Parameters.AddWithValue("@id", GrdDatos.DataKeys[e.RowIndex].Value.ToString());
                     sqlCmd.ExecuteNonQuery();
-                    sqlCon.Close();
                     BindData(TxtBusqueda.Text);
                 }
             }
@@ -325,7 +305,7 @@ namespace _77NeoWeb.Forms.Configuracion
                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrEli'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el proceso de eliminación')", true);
-                Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmPosicion", "DELETE", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmTipoAeronave", "DELETE", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
             }
         }
         protected void GrdDatos_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -335,7 +315,7 @@ namespace _77NeoWeb.Forms.Configuracion
                 ImageButton imgE = e.Row.FindControl("IbtEdit") as ImageButton;
                 if (imgE != null)
                 {
-                    e.Row.Cells[3].Controls.Remove(imgE);
+                    e.Row.Cells[2].Controls.Remove(imgE);
                 }
             }
             if ((int)ViewState["VblEliMS"] == 0)
@@ -343,11 +323,12 @@ namespace _77NeoWeb.Forms.Configuracion
                 ImageButton imgD = e.Row.FindControl("IbtDelete") as ImageButton;
                 if (imgD != null)
                 {
-                    e.Row.Cells[3].Controls.Remove(imgD);
+                    e.Row.Cells[2].Controls.Remove(imgD);
                 }
             }
             if (e.Row.RowType == DataControlRowType.Footer)
             {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
                 ImageButton IbtAddNew = (e.Row.FindControl("IbtAddNew") as ImageButton);
                 DataRow[] Result = Idioma.Select("Objeto= 'IbtAddNew'");
                 foreach (DataRow row in Result)
