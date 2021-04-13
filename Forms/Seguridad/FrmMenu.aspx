@@ -141,18 +141,18 @@
                             <asp:Label Text='<%# Eval("RutaFormulario") %>' runat="server" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="TxtRuta" Text='<%# Eval("RutaFormulario") %>' runat="server" Width="260px" />
+                            <asp:TextBox ID="TxtRuta" Text='<%# Eval("RutaFormulario") %>' runat="server" Width="100%" />
                         </EditItemTemplate>
                         <FooterTemplate>
-                            <asp:TextBox ID="TxtRutaPP" runat="server" Width="260px" />
+                            <asp:TextBox ID="TxtRutaPP" runat="server" Width="100%"  />
                         </FooterTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Nombre">
                         <ItemTemplate>
-                            <asp:Label ID="LblNomForm" Text='<%# Eval("NomFormWeb") %>' runat="server" />
+                            <asp:Label ID="LblNomForm" Text='<%# Eval("NomFormWeb") %>' runat="server" Width="100%" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="TxtNomForm" Text='<%# Eval("NomFormWeb") %>' runat="server" />
+                            <asp:TextBox ID="TxtNomForm" Text='<%# Eval("NomFormWeb") %>' runat="server" Width="100%" />
                         </EditItemTemplate>
                         <FooterTemplate>
                             <asp:TextBox ID="TxtNomFormPP" runat="server" />

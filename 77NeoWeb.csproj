@@ -117,6 +117,7 @@
     <Content Include="Css\CssConsultar.css" />
     <Content Include="Css\CssPagePpal.css" />
     <Content Include="Css\CssPagTrans.css" />
+    <Content Include="Css\DisenoFrm.css" />
     <Content Include="Css\GridViewDiseño.css" />
     <Content Include="Css\CssCampos.css" />
     <Content Include="Forms\Configuracion\ConfigManto\FrmCategoriaMel.aspx" />
@@ -125,6 +126,7 @@
     <Content Include="Forms\Configuracion\ControlPersonal\FrmAreaOrganizacional.aspx" />
     <Content Include="Forms\Configuracion\ControlPersonal\FrmCargo.aspx" />
     <Content Include="Forms\Configuracion\ControlPersonal\FrmPersona.aspx" />
+    <Content Include="Forms\Configuracion\FrmCierreContable.aspx" />
     <Content Include="Forms\Configuracion\MaestIngPrg\FrmCicloDiscosMotor.aspx" />
     <Content Include="Forms\Configuracion\MaestIngPrg\FrmContador.aspx" />
     <Content Include="Forms\Configuracion\MaestIngPrg\FrmEstadoAeronave.aspx" />
@@ -161,8 +163,11 @@
     <Content Include="Forms\Ingenieria\FrmHistoricoSubComponentes.aspx" />
     <Content Include="Forms\Ingenieria\FrmLibroVueloAC.aspx" />
     <Content Include="Forms\Ingenieria\FrmOrdenTrabajo.aspx" />
+    <Content Include="Forms\Ingenieria\FrmOrdenTrabajoCerrada.aspx" />
+    <Content Include="Forms\Ingenieria\FrmPatronManto.aspx" />
     <Content Include="Forms\Ingenieria\FrmServicioManto.aspx" />
     <Content Include="Forms\Ingenieria\FrmStatusReportAtas.aspx" />
+    <Content Include="Forms\Ingenieria\FrmTipoSrv.aspx" />
     <Content Include="Forms\Ingenieria\FrmWorkSheet.aspx" />
     <Content Include="Forms\Ingenieria\Frm_InfIngenieria.aspx" />
     <Content Include="Forms\Ingenieria\Inf_FrmComponenteRemovidoDeAeronave.aspx" />
@@ -287,6 +292,13 @@
     </Compile>
     <Compile Include="Forms\Configuracion\ControlPersonal\FrmPersona.aspx.designer.cs">
       <DependentUpon>FrmPersona.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmCierreContable.aspx.cs">
+      <DependentUpon>FrmCierreContable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\FrmCierreContable.aspx.designer.cs">
+      <DependentUpon>FrmCierreContable.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Configuracion\MaestIngPrg\FrmCicloDiscosMotor.aspx.cs">
       <DependentUpon>FrmCicloDiscosMotor.aspx</DependentUpon>
@@ -540,6 +552,20 @@
     <Compile Include="Forms\Ingenieria\FrmOrdenTrabajo.aspx.designer.cs">
       <DependentUpon>FrmOrdenTrabajo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Ingenieria\FrmOrdenTrabajoCerrada.aspx.cs">
+      <DependentUpon>FrmOrdenTrabajoCerrada.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmOrdenTrabajoCerrada.aspx.designer.cs">
+      <DependentUpon>FrmOrdenTrabajoCerrada.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmPatronManto.aspx.cs">
+      <DependentUpon>FrmPatronManto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmPatronManto.aspx.designer.cs">
+      <DependentUpon>FrmPatronManto.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Ingenieria\FrmServicioManto.aspx.cs">
       <DependentUpon>FrmServicioManto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -553,6 +579,13 @@
     </Compile>
     <Compile Include="Forms\Ingenieria\FrmStatusReportAtas.aspx.designer.cs">
       <DependentUpon>FrmStatusReportAtas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmTipoSrv.aspx.cs">
+      <DependentUpon>FrmTipoSrv.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmTipoSrv.aspx.designer.cs">
+      <DependentUpon>FrmTipoSrv.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Ingenieria\FrmWorkSheet.aspx.cs">
       <DependentUpon>FrmWorkSheet.aspx</DependentUpon>
@@ -684,6 +717,7 @@
       <DependentUpon>MasterTransac.Master</DependentUpon>
     </Compile>
     <Compile Include="MuDatabaseEntities.cs" />
+    <Compile Include="Prg\ClsCierreContable.cs" />
     <Compile Include="Prg\ClsConexion.cs" />
     <Compile Include="Prg\ClsPermisos.cs" />
     <Compile Include="Prg\PrgIngenieria\ClsTypOrdenTrabajo.cs" />

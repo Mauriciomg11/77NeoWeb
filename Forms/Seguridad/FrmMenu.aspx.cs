@@ -18,19 +18,20 @@ namespace _77NeoWeb.Forms
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            /*if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }*/
+           if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); } /**/
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                Session["C77U"] = "00000082"; //00000133
+                /* Session["C77U"] = "00000082";// 00000082|00000133
                 Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
                 Session["$VR"] = "77NEO01";
                 Session["V$U@"] = "sa";
                 Session["P@$"] = "admindemp";
                 Session["N77U"] = Session["D[BX"];
                 Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["77IDM"] = "5"; // 4 español | 5 ingles /* */
+                Session["!dC!@"] = 0;
+                Session["77IDM"] = "5"; // 4 español | 5 ingles    */
             }
             if (!IsPostBack)
             {
@@ -435,6 +436,13 @@ namespace _77NeoWeb.Forms
                     DataRow[] Result = Idioma.Select("Objeto='IbtAbrir'");
                     foreach (DataRow RowIdioma in Result)
                     { IbtAbrir.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+
+
+                }
+                Label LblNomForm = e.Row.FindControl("LblNomForm") as Label;
+                if (LblNomForm != null)
+                {
+                    if (LblNomForm.Text.Trim().Equals("")) { IbtAbrir.Visible = false; }
                 }
             }
         }
