@@ -161,11 +161,14 @@
     <Content Include="Forms\Ingenieria\FrmControlContadoresGeneral.aspx" />
     <Content Include="Forms\Ingenieria\FrmHistoricosContadores.aspx" />
     <Content Include="Forms\Ingenieria\FrmHistoricoSubComponentes.aspx" />
+    <Content Include="Forms\Ingenieria\FrmIngCostoOT.aspx" />
+    <Content Include="Forms\Ingenieria\FrmIngProxCumplimiento.aspx" />
     <Content Include="Forms\Ingenieria\FrmLibroVueloAC.aspx" />
     <Content Include="Forms\Ingenieria\FrmOrdenTrabajo.aspx" />
     <Content Include="Forms\Ingenieria\FrmOrdenTrabajoCerrada.aspx" />
     <Content Include="Forms\Ingenieria\FrmPatronManto.aspx" />
     <Content Include="Forms\Ingenieria\FrmServicioManto.aspx" />
+    <Content Include="Forms\Ingenieria\FrmServiciosProxCumplimiento.aspx" />
     <Content Include="Forms\Ingenieria\FrmStatusReportAtas.aspx" />
     <Content Include="Forms\Ingenieria\FrmTipoSrv.aspx" />
     <Content Include="Forms\Ingenieria\FrmWorkSheet.aspx" />
@@ -538,6 +541,20 @@
     <Compile Include="Forms\Ingenieria\FrmHistoricoSubComponentes.aspx.designer.cs">
       <DependentUpon>FrmHistoricoSubComponentes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Ingenieria\FrmIngCostoOT.aspx.cs">
+      <DependentUpon>FrmIngCostoOT.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmIngCostoOT.aspx.designer.cs">
+      <DependentUpon>FrmIngCostoOT.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmIngProxCumplimiento.aspx.cs">
+      <DependentUpon>FrmIngProxCumplimiento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmIngProxCumplimiento.aspx.designer.cs">
+      <DependentUpon>FrmIngProxCumplimiento.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Ingenieria\FrmLibroVueloAC.aspx.cs">
       <DependentUpon>FrmLibroVueloAC.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -572,6 +589,13 @@
     </Compile>
     <Compile Include="Forms\Ingenieria\FrmServicioManto.aspx.designer.cs">
       <DependentUpon>FrmServicioManto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmServiciosProxCumplimiento.aspx.cs">
+      <DependentUpon>FrmServiciosProxCumplimiento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Ingenieria\FrmServiciosProxCumplimiento.aspx.designer.cs">
+      <DependentUpon>FrmServiciosProxCumplimiento.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Ingenieria\FrmStatusReportAtas.aspx.cs">
       <DependentUpon>FrmStatusReportAtas.aspx</DependentUpon>

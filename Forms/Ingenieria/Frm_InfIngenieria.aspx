@@ -57,19 +57,19 @@
                             <div class="row">
                                 <div class="col-sm-3">
                                     <br />
-                                    <asp:Button ID="BtnAdvice" runat="server" CssClass="btn btn-primary heightCampo " OnClick="BtnAdvice_Click" Text="Advice" ToolTip="Imprimir valores actuales de los contadores de un elemento." />
+                                    <asp:Button ID="BtnAdvice" runat="server" CssClass="btn btn-primary heightCampo " OnClick="BtnAdvice_Click" OnClientClick="target ='_blank';" Text="Advice" ToolTip="Imprimir valores actuales de los contadores de un elemento." />
                                 </div>
                                 <div class="col-sm-3">
                                     <br />
-                                    <asp:Button ID="BtnInsRemElem" runat="server" CssClass="btn btn-primary heightCampo" OnClick="BtnInsRemElem_Click" Text="Instalación / Remoción" ToolTip="Histórico de Istalaciones y remociones / Eliminación de histórico." />
+                                    <asp:Button ID="BtnInsRemElem" runat="server" CssClass="btn btn-primary heightCampo" OnClick="BtnInsRemElem_Click" OnClientClick="target ='_blank';" Text="Instalación / Remoción" ToolTip="Histórico de Istalaciones y remociones / Eliminación de histórico." />
                                 </div>
                                 <div class="col-sm-3">
                                     <br />
-                                    <asp:Button ID="BtnInsRemSubC" runat="server" CssClass="btn btn-primary heightCampo" OnClick="BtnInsRemSubC_Click" Text="Histórico Subcomponente" ToolTip="Historico de instalaciones y remociones de Subcomponentes." />
+                                    <asp:Button ID="BtnInsRemSubC" runat="server" CssClass="btn btn-primary heightCampo" OnClick="BtnInsRemSubC_Click" OnClientClick="target ='_blank';" Text="Histórico Subcomponente" ToolTip="Historico de instalaciones y remociones de Subcomponentes." />
                                 </div>
                                 <div class="col-sm-3">
                                     <br />
-                                    <asp:Button ID="BtnPnPlanti" runat="server" CssClass="btn btn-primary heightCampo" OnClick="BtnPnPlanti_Click" Text="P/N en plantilla maestra" ToolTip="P/N configurados en el último nivel." />
+                                    <asp:Button ID="BtnPnPlanti" runat="server" CssClass="btn btn-primary heightCampo" OnClick="BtnPnPlanti_Click" OnClientClick="target ='_blank';" Text="P/N en plantilla maestra" ToolTip="P/N configurados en el último nivel." />
                                 </div>
                             </div>
                             <div class="row">
@@ -81,15 +81,29 @@
                                     <br />
                                     <asp:Button ID="BtnProcIngeni" runat="server" CssClass="btn btn-primary heightCampo" OnClick="BtnProcIngeni_Click" OnClientClick="target ='_blank';" Text="Procesos de Ingenieria" ToolTip="Procesos de los contadores." />
                                 </div>
+                                 <div class="col-sm-3">
+                                    <br />
+                                    <asp:Button ID="BtnProxCump" runat="server" CssClass="btn btn-primary heightCampo" OnClick="BtnProxCump_Click" OnClientClick="target ='_blank';" Text="proximo cumplimiento" ToolTip="Servicios que se cumplen según rango de fecha." />
+                                </div>
+                                <div class="col-sm-3">
+                                    <br />
+                                    <asp:Button ID="BtnCostoOT" runat="server" CssClass="btn btn-primary heightCampo" OnClick="BtnCostoOT_Click" OnClientClick="target ='_blank';" Text="costo por orden de trabajo" ToolTip="valor de las O.T. despachadas en un rango de fecha." />
+                                </div>
                             </div>
 
                         </div>
                     </div>
                 </ContentTemplate>
                 <Triggers>
+                    <asp:PostBackTrigger ControlID="BtnAdvice" />
+                    <asp:PostBackTrigger ControlID="BtnInsRemElem" />
+                    <asp:PostBackTrigger ControlID="BtnInsRemSubC" />
+                    <asp:PostBackTrigger ControlID="BtnPnPlanti" />
                     <asp:PostBackTrigger ControlID="BtnHistCont" />
                     <asp:PostBackTrigger ControlID="BtnProcIngeni" />
                     <asp:PostBackTrigger ControlID="BtnPnPlanti" />
+                    <asp:PostBackTrigger ControlID="BtnProxCump" />
+                    <asp:PostBackTrigger ControlID="BtnCostoOT" />
                 </Triggers>
             </asp:UpdatePanel>
         </asp:View>

@@ -11,7 +11,7 @@ namespace _77NeoWeb.Forms.Ingenieria
 {
 
 
-    public partial class Frm_InfIngenieria
+    public partial class FrmIngCostoOT
     {
 
         /// <summary>
@@ -24,102 +24,75 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label TitForm;
 
         /// <summary>
-        /// Control MlVw.
+        /// Control UplDatos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.MultiView MlVw;
+        protected global::System.Web.UI.UpdatePanel UplDatos;
 
         /// <summary>
-        /// Control Vw0Principal.
+        /// Control LblFechI.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.View Vw0Principal;
+        protected global::System.Web.UI.WebControls.Label LblFechI;
 
         /// <summary>
-        /// Control UplRteIngPpl.
+        /// Control TxtFechI.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UplRteIngPpl;
+        protected global::System.Web.UI.WebControls.TextBox TxtFechI;
 
         /// <summary>
-        /// Control BtnAdvice.
+        /// Control LblFechF.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnAdvice;
+        protected global::System.Web.UI.WebControls.Label LblFechF;
 
         /// <summary>
-        /// Control BtnInsRemElem.
+        /// Control TxtFechF.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnInsRemElem;
+        protected global::System.Web.UI.WebControls.TextBox TxtFechF;
 
         /// <summary>
-        /// Control BtnInsRemSubC.
+        /// Control IbnExcel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnInsRemSubC;
+        protected global::System.Web.UI.WebControls.ImageButton IbnExcel;
 
         /// <summary>
-        /// Control BtnPnPlanti.
+        /// Control LblOT.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnPnPlanti;
+        protected global::System.Web.UI.WebControls.Label LblOT;
 
         /// <summary>
-        /// Control BtnHistCont.
+        /// Control TxtOT.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnHistCont;
-
-        /// <summary>
-        /// Control BtnProcIngeni.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnProcIngeni;
-
-        /// <summary>
-        /// Control BtnProxCump.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnProxCump;
-
-        /// <summary>
-        /// Control BtnCostoOT.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnCostoOT;
+        protected global::System.Web.UI.WebControls.TextBox TxtOT;
     }
 }

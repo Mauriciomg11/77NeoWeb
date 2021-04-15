@@ -48,7 +48,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["EstadoAnt"] = "";
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
-
         }
         protected void ModSeguridad()
         {

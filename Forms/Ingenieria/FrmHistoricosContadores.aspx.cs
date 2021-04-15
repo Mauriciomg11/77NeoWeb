@@ -21,15 +21,12 @@ namespace _77NeoWeb.Forms.Ingenieria
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null)
-           {
-               Response.Redirect("~/FrmAcceso.aspx");
-           } /**/
+           if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); } /* */
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000082";
+               /* Session["C77U"] = "00000082";
                 Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
                 Session["$VR"] = "77NEO01";
                 Session["V$U@"] = "sa";
@@ -46,8 +43,12 @@ namespace _77NeoWeb.Forms.Ingenieria
                 RdbHisC2AplicAK.Checked = true;
                 BindBDdlAK("1"); BindBDdlAK("2");
                 ViewState["Validar"] = "S";
-                TxtFechIPpl.Text = "2020-01-01";
-                TxtFechFPpl.Text = "2020-12-31";
+                string VbM = Convert.ToString(DateTime.UtcNow.Month);
+                string VbY = Convert.ToString(DateTime.UtcNow.Year);
+                string fecha = string.Format("{0}-{1}-{2}", VbY, VbM, "01");
+                DateTime VbFecID = Convert.ToDateTime(fecha);
+                TxtFechIPpl.Text = string.Format("{0:yyyy-MM-dd}", VbFecID);
+                TxtFechFPpl.Text = string.Format("{0:yyyy-MM-dd}", DateTime.UtcNow);
                 //Page.Title = "Histórico contadores";
                 //TitForm.Text = "Histórico de Contadores";
             }
@@ -101,7 +102,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     string bO = tbl["Objeto"].ToString().Trim();
                     string bT = tbl["Texto"].ToString().Trim();
-                    Idioma.Rows.Add(bO, bT);                   
+                    Idioma.Rows.Add(bO, bT);
                     if (bO.Equals("TituloHstC"))
                     { Page.Title = bT; ViewState["PageTit"] = bT; }
                     TitForm.Text = bO.Equals("CaptionHst") ? bT : TitForm.Text;
@@ -451,7 +452,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 { ScriptManager.RegisterClientScriptBlock(this.UplPpl, UplPpl.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar un contador.');", true);
                 ViewState["Validar"] = "N"; return;
             }
-        }       
+        }
         protected void IbtHisC1Find_Click(object sender, ImageClickEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -673,7 +674,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Exportar Histórico", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
-            }           
+            }
         }
         //******************************** Panel historico dos *****************************************
         protected void RdbHisC2AplicAK_CheckedChanged(object sender, EventArgs e)
@@ -803,7 +804,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 { ScriptManager.RegisterClientScriptBlock(this.UplPpl, UplPpl.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar un contador.');", true);
                 ViewState["Validar"] = "N"; return;
             }
-        }       
+        }
         protected void IbtHisC2Find_Click(object sender, ImageClickEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];

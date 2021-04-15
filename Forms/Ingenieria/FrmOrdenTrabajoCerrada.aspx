@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="FrmOrdenTrabajoCerrada.aspx.cs" Inherits="_77NeoWeb.Forms.Ingenieria.FrmOrdenTrabajoCerrada" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
     <style type="text/css">
         .CentrarGrid {
             position: absolute;
@@ -18,9 +17,7 @@
         }
 
         .CentrarContenedor {
-            /*vertical-align: top;*/
-            /*background: #e0e0e0;*/
-            /*margin: 0 0 1rem;*/
+           
             position: absolute;
             /*nos posicionamos en el centro del navegador*/
             /*top: 50%;*/
@@ -32,7 +29,6 @@
             /*determinamos una altura*/
             height: 90%;
             /*indicamos que el margen superior, es la mitad de la altura*/
-            /*border: 1px solid #808080;*/
             padding: 5px;
         }
 
@@ -53,19 +49,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
-
-    <script type="text/javascript">
-        function Confirm() {
-            var confirm_value = document.createElement("INPUT");
-            confirm_value.type = "hidden";
-            confirm_value.name = "confirm_value";
-            if (confirm("Do you want to save data?")) {
-                confirm_value.value = "Yes";
-            } else {
-                confirm_value.value = "No";
-            }
-            document.forms[0].appendChild(confirm_value);
-        }
+    <script type="text/javascript">       
         function myFuncionddl() {
             $('#<%=DdlStatus.ClientID%>').chosen();
             $('[id *=DdlCodEstadoP]').chosen();

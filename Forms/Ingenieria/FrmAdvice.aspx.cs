@@ -23,14 +23,14 @@ namespace _77NeoWeb.Forms.Ingenieria
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000082";
+               /*Session["C77U"] = "00000082";
                 Session["D[BX"] = "DbNeoHCT";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
                 Session["$VR"] = "77NEO01";
                 Session["V$U@"] = "sa";
                 Session["P@$"] = "admindemp";
                 Session["N77U"] = Session["D[BX"];
                 Session["Nit77Cia"] = "860064038-4"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                Session["77IDM"] = "5"; // 4 español | 5 ingles   */
             }
             if (!IsPostBack)
             {

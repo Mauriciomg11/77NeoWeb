@@ -28,6 +28,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 Session["P@$"] = "admindemp";
                 Session["N77U"] = Session["D[BX"];
                 Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                Session["!dC!@"] = 0;
                 Session["77IDM"] = "5"; // 4 español | 5 ingles  */
             }
             if (!IsPostBack)
@@ -100,6 +101,10 @@ namespace _77NeoWeb.Forms.Ingenieria
                     BtnHistCont.ToolTip = bO.Equals("BtnHistContTT") ? bT : BtnHistCont.ToolTip;
                     BtnProcIngeni.Text = bO.Equals("BtnProcIngeni") ? bT : BtnProcIngeni.Text;
                     BtnProcIngeni.ToolTip = bO.Equals("BtnProcIngeniTT") ? bT : BtnProcIngeni.ToolTip;
+                    BtnProxCump.Text = bO.Equals("BtnProxCump") ? bT : BtnProxCump.Text;
+                    BtnProxCump.ToolTip = bO.Equals("BtnProxCumpTT") ? bT : BtnProxCump.ToolTip;
+                    BtnCostoOT.Text = bO.Equals("BtnCostoOT") ? bT : BtnCostoOT.Text;
+                    BtnCostoOT.ToolTip = bO.Equals("BtnCostoOTTT") ? bT : BtnCostoOT.ToolTip;
                 }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
@@ -170,5 +175,9 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnProcIngeni_Click(object sender, EventArgs e)
         { Response.Redirect("~/Forms/Ingenieria/FrmControlContadoresGeneral.aspx"); }
+        protected void BtnProxCump_Click(object sender, EventArgs e)
+        { Response.Redirect("~/Forms/Ingenieria/FrmIngProxCumplimiento.aspx"); }
+        protected void BtnCostoOT_Click(object sender, EventArgs e)
+        { Response.Redirect("~/Forms/Ingenieria/FrmIngCostoOT.aspx"); }
     }
 }

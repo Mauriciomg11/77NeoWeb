@@ -11,6 +11,7 @@ namespace _77NeoWeb.prg
 {
     public class ClsConexion
     {
+        static public string PMensj;
         string VblConexion, VblDecimal;
         public ClsConexion()
         {
@@ -33,7 +34,7 @@ namespace _77NeoWeb.prg
             cnn.Close();
         }
         public DataSet DSET(string sentencia)
-        {            
+        {
             SelecBD();
             using (SqlConnection cnn = new SqlConnection(GetConex()))
             {
@@ -54,7 +55,7 @@ namespace _77NeoWeb.prg
         {
             System.Web.HttpContext.Current.Session["ELiminar"] = 0;
             try
-            {              
+            {
                 SelecBD();
                 using (SqlConnection cnn = new SqlConnection(GetConex()))
                 {
@@ -151,8 +152,8 @@ namespace _77NeoWeb.prg
                 this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString);
             }
             else
-            {                
-                switch (VbNomBD.Substring(0,3))
+            {
+                switch (VbNomBD.Substring(0, 3))
                 {
                     case "Web":
                         this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["WebPConexDB"].ConnectionString, "", VbNomBD, "", "");
@@ -168,20 +169,91 @@ namespace _77NeoWeb.prg
             return this.VblConexion;
         }
         public void RetirarPuntos(string VbCampo)
-        {           
+        {
             int I = VbCampo.IndexOf(",") == -1 ? 0 : VbCampo.IndexOf(",");
             if (I > 0)
-            { VbCampo = VbCampo.Remove(I, 1).Insert(I, ".").Replace(",", ""); }         
+            { VbCampo = VbCampo.Remove(I, 1).Insert(I, ".").Replace(",", ""); }
             I = VbCampo.IndexOf(".");
             if (I > 0)
             { VbCampo = VbCampo.Remove(I, 1).Insert(I, ",").Replace(".", ""); }
-            else if (I ==0)
+            else if (I == 0)
             { VbCampo = VbCampo.Remove(I, 1).Insert(I, "0,").Replace(".", ""); }
             this.VblDecimal = VbCampo;
+        }
+        public void ValidarFechas(string VbF1, string VbF2,int NumPrmts)
+        {
+            PMensj = "";
+            DateTime FI, FF;
+            int Comparar;
+            if (NumPrmts==1)// una fecha
+            {
+                if (VbF1.Equals(""))
+                {
+                    PMensj = "MstrMens08";//Feha invalida
+                    return;
+
+                }
+                if (VbF1.Length > 10)
+                {
+                    PMensj = "MstrMens08";//Feha invalida
+                    return;
+                }
+               
+                FI = Convert.ToDateTime(VbF1.Trim());
+                FF = Convert.ToDateTime("01/01/1900");
+                Comparar = DateTime.Compare(FI, FF);
+                if (Comparar < 0) //-1 menor; 0 igual; 1 mayor
+                {
+                    PMensj = "MstrMens08";//Feha invalida
+                    return;
+                }
+               
+            }
+            else// dos fechas
+            {
+                if (VbF1.Equals("") || VbF2.Equals(""))
+                {
+                    PMensj = "MstrMens08";//Feha invalida
+                    return;
+
+                }
+                if (VbF1.Length > 10 || VbF2.Length > 10)
+                {
+                    PMensj = "MstrMens08";//Feha invalida
+                    return;
+                }
+                FI = Convert.ToDateTime(VbF1.Trim());
+                FF = Convert.ToDateTime(VbF2.Trim());
+                Comparar = DateTime.Compare(FF, FI);
+                if (Comparar < 0) //-1 menor; 0 igual; 1 mayor
+                {
+                    PMensj = "MstrMens13";//Rango de Feha invalida
+                    return;
+                }
+                FI = Convert.ToDateTime(VbF1.Trim());
+                FF = Convert.ToDateTime("01/01/1900");
+                 Comparar = DateTime.Compare(FI,FF );
+                if (Comparar < 0) //-1 menor; 0 igual; 1 mayor
+                {
+                    PMensj = "MstrMens08";//Feha invalida
+                    return;
+                }
+                FI = Convert.ToDateTime(VbF2.Trim());
+                Comparar = DateTime.Compare(FI, FF);
+                if (Comparar < 0) //-1 menor; 0 igual; 1 mayor
+                {
+                    PMensj = "MstrMens08";//Feha invalida
+                    return;
+                }
+            }
         }
         public string ValorDecimal()
         {
             return this.VblDecimal;
+        }
+        public string GetMensj()
+        {
+            return PMensj;
         }
     }
 }
