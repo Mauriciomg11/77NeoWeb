@@ -202,6 +202,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                             SC.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = SC.Parameters.AddWithValue("@CurLvDetManto", TblLvDetalleManto);
                             SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@CurOTRteMRO", TblMROReporteOTPpal);
+                            SqlParameter Prmtrs3 = SC.Parameters.AddWithValue("@ICC", HttpContext.Current.Session["!dC!@"]);
                             Prmtrs.SqlDbType = SqlDbType.Structured;
                             // SC.ExecuteNonQuery();
                             //PMensj = (string)SC.ExecuteScalar();

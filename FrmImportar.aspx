@@ -12,8 +12,30 @@
 
             <br />
             <br />
-            <asp:Button ID="BtnImportarV1" runat="server" Text="Importar" OnClick="BtnImportarV1_Click" />
+            <asp:RadioButton ID="RdbAK" runat="server" CssClass="LblEtiquet" Text="&nbsp Datos Aeronave" GroupName="D" />
+            <asp:RadioButton ID="RdbHHK" runat="server" CssClass="LblEtiquet" Text="&nbsp Hisórico contadores HK" GroupName="D" />
+            <asp:RadioButton ID="RdbInvHK" runat="server" CssClass="LblEtiquet" Text="&nbsp Elementos Instalados HK" GroupName="D" />
+            <asp:RadioButton ID="RdbHistSN" runat="server" CssClass="LblEtiquet" Text="&nbsp Hisórico Elementos (SN)" GroupName="D" />
+            <asp:RadioButton ID="RdbRtes" runat="server" CssClass="LblEtiquet" Text="&nbsp Reportes" GroupName="D" />
+            <asp:RadioButton ID="RdbPlantMstra" runat="server" CssClass="LblEtiquet" Text="&nbsp Plantilla Maestra" GroupName="D" />
+            <asp:RadioButton ID="RdbSvcMnto" runat="server" CssClass="LblEtiquet" Text="&nbsp Servicios Manto" GroupName="D" />
+            <asp:RadioButton ID="RdbRcsoFscoSM" runat="server" CssClass="LblEtiquet" Text="&nbsp Rercurso SvcManto" GroupName="D" />
+            <asp:RadioButton ID="RdbLicncSM" runat="server" CssClass="LblEtiquet" Text="&nbsp Licencia SvcManto" GroupName="D" />
+            <asp:RadioButton ID="RdbOT" runat="server" CssClass="LblEtiquet" Text="&nbsp OT" GroupName="D" />
+            <asp:RadioButton ID="RdbWS" runat="server" CssClass="LblEtiquet" Text="&nbsp Work Sheet" GroupName="D" />
+            <asp:RadioButton ID="RdbInventr" runat="server" CssClass="LblEtiquet" Text="&nbsp Inventario" GroupName="D" />
+            <asp:RadioButton ID="RdbHisSvcCumpl" runat="server" CssClass="LblEtiquet" Text="&nbsp Servicios Cumplidos" GroupName="D" />
+            <asp:RadioButton ID="RdbLV" runat="server" CssClass="LblEtiquet" Text="&nbsp Libros de Vuelo" GroupName="D" />
+            <asp:RadioButton ID="RdbStatusRprt" runat="server" CssClass="LblEtiquet" Text="&nbsp Status Report" GroupName="D" />
+            <br />
             <asp:Button ID="BtnExportar" runat="server" Text="Exportar Excel" OnClick="BtnExportar_Click" />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <asp:Button ID="BtnImportarV1" runat="server" Text="Importar" OnClick="BtnImportarV1_Click" />
+
             <asp:Button ID="BtnExportar2" runat="server" Text="Cursor" OnClick="BtnExportar2_Click" />
             <br />
             <asp:FileUpload ID="FileUpload1" runat="server" ToolTip="" />

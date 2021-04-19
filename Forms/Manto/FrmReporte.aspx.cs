@@ -38,6 +38,7 @@ namespace _77NeoWeb.Forms.Manto
                 Session["P@$"] = "admindemp";
                 Session["N77U"] = Session["D[BX"];
                 Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                Session["!dC!@"] = 0;
                 Session["77IDM"] = "5"; // 4 español | 5 ingles */
             }
             Page.Title = string.Format("Reporte de mantenimiento");
@@ -506,7 +507,7 @@ namespace _77NeoWeb.Forms.Manto
         protected void BindDdlRteCondicional(int Act, int Inact, string Categ, string LicGen, string LicCump, string LicVer, string CodTall, string CodClasf,
            string CodPos, string UsuGen, string UsuCump, string UsuDif, string UsuVer, string OT)
         {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','TLLR',0,0,0,0,'01-01-1','02-01-1','03-01-1'", CodTall);
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','TLLR',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", CodTall, Session["!dC!@"]);
             DdlTall.DataSource = Cnx.DSET(LtxtSql);
             DdlTall.DataMember = "Datos";
             DdlTall.DataTextField = "NomTaller";
@@ -1098,7 +1099,7 @@ namespace _77NeoWeb.Forms.Manto
         }
         protected void DdlAeroRte_TextChanged(object sender, EventArgs e)
         {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','OTPP',{0},{1},0,0,'01-01-1','02-01-1','03-01-1'", DdlAeroRte.Text, "0");
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','OTPP',{0},{1},0,{2},'01-01-1','02-01-1','03-01-1'", DdlAeroRte.Text, "0", Session["!dC!@"]);
             DdlOtRte.DataSource = Cnx.DSET(LtxtSql);
             DdlOtRte.DataMember = "Datos";
             DdlOtRte.DataTextField = "OT";
@@ -1528,10 +1529,7 @@ namespace _77NeoWeb.Forms.Manto
             Page.Title = ViewState["PageTit"].ToString().Trim();
         }
         protected void BtnExporRte_Click(object sender, EventArgs e)
-        {
-            Exportar("ReporteGeneral");
-            Page.Title = ViewState["PageTit"].ToString().Trim();
-        }
+        {            Exportar("ReporteGeneral");            Page.Title = ViewState["PageTit"].ToString().Trim();        }
         protected void BtnNotificar_Click(object sender, EventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -1634,13 +1632,14 @@ namespace _77NeoWeb.Forms.Manto
                 { VbOpcion = "Tecn"; }
                 if (RdbBusqRteDescRte.Checked == true)
                 { VbOpcion = "DescRte"; }
-                VbTxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 7,@Prmtr,'','','CurBusqRte',@Opc,0,0,0,0,'01-01-1','02-01-1','03-01-1'");
+                VbTxtSql = "EXEC SP_PANTALLA_Reporte_Manto2 7,@Prmtr,'','','CurBusqRte',@Opc,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
 
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     SC.Parameters.AddWithValue("@Prmtr", TxtBusqueda.Text.Trim());
                     SC.Parameters.AddWithValue("@Opc", VbOpcion.Trim());
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -3775,7 +3774,7 @@ namespace _77NeoWeb.Forms.Manto
                         break;
                     case "ReporteGeneral":
                         CursorIdioma.Alimentar("CurInfomeRte", Session["77IDM"].ToString().Trim());
-                        StSql = "EXEC SP_PANTALLA_Reporte_Manto 4,'CurInfomeRte','','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                        StSql = "EXEC SP_PANTALLA_Reporte_Manto 4,'CurInfomeRte','','','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                         DataRow[] Result1 = Idioma.Select("Objeto= 'TitExpNomRte'");
                         foreach (DataRow row in Result1)
                         { VbNomRpt = row["Texto"].ToString().Trim(); }
@@ -3798,7 +3797,7 @@ namespace _77NeoWeb.Forms.Manto
                             { VbOpcion = "DescRte"; }
                         }
                         CursorIdioma.Alimentar("CurBusqRte", Session["77IDM"].ToString().Trim());
-                        StSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 7,@Prmtr,@CodlV,'','CurBusqRte',@Opc,0,0,0,0,'01-01-1','02-01-1','03-01-1'");
+                        StSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 7,@Prmtr,@CodlV,'','CurBusqRte',@Opc,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'");
                         DataRow[] Result = Idioma.Select("Objeto= 'TitExpBusqRte'");
                         foreach (DataRow row in Result)
                         { VbNomRpt = row["Texto"].ToString().Trim(); }
@@ -3814,6 +3813,7 @@ namespace _77NeoWeb.Forms.Manto
                         SC.Parameters.AddWithValue("@Prmtr", TxtBusqueda.Text.Trim()); // solo cuando es para el reporte
                         SC.Parameters.AddWithValue("@Opc", VbOpcion.Trim());// solo cuando es para el reporte
                         SC.Parameters.AddWithValue("@CodlV", TxtNumLv.Text.Trim());// solo cuando es para el reporte
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             SC.Connection = con;

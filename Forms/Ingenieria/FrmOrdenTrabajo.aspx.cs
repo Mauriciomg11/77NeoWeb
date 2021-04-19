@@ -40,6 +40,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 Session["P@$"] = "admindemp";
                 Session["N77U"] = Session["D[BX"];// "UsuPrueba";
                 Session["Nit77Cia"] = "860064038-4"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                Session["!dC!@"]=0;
                 Session["77IDM"] = "5"; // 4 español | 5 ingles  */
             }
             if (!IsPostBack)
@@ -196,7 +197,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());
                     if (tbl["Objeto"].ToString().Trim().Equals("TituloOT"))
-                    { Page.Title = tbl["Texto"].ToString().Trim();  }
+                    { Page.Title = tbl["Texto"].ToString().Trim(); }
                     TitForm.Text = tbl["Objeto"].ToString().Trim().Equals("CaptionOT") ? tbl["Texto"].ToString().Trim() : TitForm.Text;
                     LblTitoTGral.Text = tbl["Objeto"].ToString().Trim().Equals("LblTitoTGral") ? tbl["Texto"].ToString().Trim() : LblTitoTGral.Text;
                     LblOt.Text = tbl["Objeto"].ToString().Trim().Equals("LblOt") ? tbl["Texto"].ToString().Trim() : LblOt.Text;
@@ -964,7 +965,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlBusqOT.DataValueField = "Codigo";
             DdlBusqOT.DataBind(); /**/
 
-            LtxtSql = string.Format("EXEC SP_PANTALLA_OrdenTrabajo2 5,'','','','','HK',0,0,0,0,'01-01-01','01-01-01','01-01-01'");
+            LtxtSql = string.Format("EXEC SP_PANTALLA_OrdenTrabajo2 5,'','','','','HK',0,0,0,{0},'01-01-01','01-01-01','01-01-01'", Session["!dC!@"]);
             DdlOTAero.DataSource = Cnx.DSET(LtxtSql);
             DdlOTAero.DataMember = "Datos";
             DdlOTAero.DataTextField = "Matricula";
@@ -992,7 +993,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BindDdlOTCondicional(string CT, string CB, string INSP, string RSP, string CC)
         {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_OrdenTrabajo2 5,'{0}','','','','TALLE',0,0,0,0,'01-01-01','01-01-01','01-01-01'", CT);
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_OrdenTrabajo2 5,'{0}','','','','TALLE',0,0,0,{1},'01-01-01','01-01-01','01-01-01'", CT, Session["!dC!@"]);
             DdlMroTaller.DataSource = Cnx.DSET(LtxtSql);
             DdlMroTaller.DataMember = "Datos";
             DdlMroTaller.DataTextField = "NomTaller";
@@ -1439,9 +1440,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             MlVwOT.ActiveViewIndex = 10;
         }
         protected void BtNOTExportar_Click(object sender, EventArgs e)
-        {
-            Exportar("OTGeneral");
-        }
+        { Exportar("OTGeneral"); }
         protected void BtnOTDetTec_Click(object sender, EventArgs e)
         {
             if (!TxtOt.Text.Equals(""))
@@ -2686,7 +2685,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { VbOpcion = "PN"; }
                     if (RdbOTBusqHK.Checked == true)
                     { VbOpcion = "HK"; }
-                    VbTxtSql = "EXEC SP_PANTALLA_OrdenTrabajo2 8,@Prmtr,'CurBusqOT','','',@Opc,0,0,0,0,'01-01-01','01-01-01','01-01-01'"; 
+                    VbTxtSql = "EXEC SP_PANTALLA_OrdenTrabajo2 8,@Prmtr,'CurBusqOT','','',@Opc,0,0,0,@ICC,'01-01-01','01-01-01','01-01-01'";
                 }
                 else
                 {  //busqueda Reporte
@@ -2701,7 +2700,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { VbOpcion = "Tecn"; }
                     if (RdbBusqRteDescRte.Checked == true)
                     { VbOpcion = "DescRte"; }
-                    VbTxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 7,@Prmtr,'','','CurBusqRte',@Opc,@OTMst,0,0,0,'01-01-1','02-01-1','03-01-1'");
+                    VbTxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 7,@Prmtr,'','','CurBusqRte',@Opc,@OTMst,0,0,@ICC,'01-01-1','02-01-1','03-01-1'");
                 }
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
@@ -2709,7 +2708,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                     SC.Parameters.AddWithValue("@Prmtr", TxtOTBusq.Text.Trim()); ;// VbOpcion.Equals("OT") ? TxtOt.Text : TxtOTBusq.Text.Trim()
                     SC.Parameters.AddWithValue("@Opc", VbOpcion.Trim());
                     SC.Parameters.AddWithValue("@OTMst", TxtOt.Text.Trim());
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
+
                     {
                         DAB.SelectCommand = SC;
                         DAB.Fill(DtB);
@@ -2729,9 +2730,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
         }
         protected void IbtOTConsultarBusq_Click(object sender, ImageClickEventArgs e)
-        {
-            BIndDBusqOT();
-        }
+        { BIndDBusqOT(); }
         protected void IbtOTCerrarBusq_Click(object sender, ImageClickEventArgs e)
         {
             TblOTBusq.Visible = false;
@@ -2739,9 +2738,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             MlVwOT.ActiveViewIndex = (int)ViewState["VentanaBusq"];
         }
         protected void IbtOTExpBusqOT_Click(object sender, ImageClickEventArgs e)
-        {
-            Exportar("");
-        }
+        { Exportar(""); }
         protected void GrdOTBusq_SelectedIndexChanged(object sender, EventArgs e)
         {
             string vbcod = HttpUtility.HtmlDecode(GrdOTBusq.SelectedRow.Cells[1].Text);
@@ -2753,10 +2750,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             PerfilesGrid();
         }
         protected void GrdOTBusq_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdOTBusq.PageIndex = e.NewPageIndex;
-            BIndDBusqOT();
-        }
+        { GrdOTBusq.PageIndex = e.NewPageIndex; BIndDBusqOT(); }
         //******************************************  Procedimientos EXPORTAR*********************************************************
         protected void Exportar(string Condcion)
         {
@@ -2775,17 +2769,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                         break;
                     case "ReporteGeneral":
                         CursorIdioma.Alimentar("CurInfomeRte", Session["77IDM"].ToString().Trim());
-                        StSql = "EXEC SP_PANTALLA_Reporte_Manto 4,'CurInfomeRte','','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                        StSql = "EXEC SP_PANTALLA_Reporte_Manto 4,'CurInfomeRte','','','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                         VbNomRpt = "Report_Maintenance";
                         break;
                     case "OTGeneral":
                         CursorIdioma.Alimentar("CurInfomeOT", Session["77IDM"].ToString().Trim());
-                        StSql = "EXEC SP_PANTALLA_OrdenTrabajo 8,'CurInfomeOT','','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                        StSql = "EXEC SP_PANTALLA_OrdenTrabajo 8,'CurInfomeOT','','','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                         VbNomRpt = "WO";
                         break;
                     case "PasoCloseOTOpen":
                         CursorIdioma.Alimentar("Cur8cumplido", Session["77IDM"].ToString().Trim());
-                        StSql = string.Format(" EXEC SP_PANTALLA_OrdenTrabajo 40,'Cur8cumplido','','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                        StSql = string.Format(" EXEC SP_PANTALLA_OrdenTrabajo 40,'Cur8cumplido','','','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'");
                         VbNomRpt = "Steps_Completed_OpenWO";
                         break;
                     default:
@@ -2801,7 +2795,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             if (RdbOTBusqHK.Checked == true)
                             { VbOpcion = "HK"; }
 
-                            StSql = string.Format("EXEC SP_PANTALLA_OrdenTrabajo2 8, @Prmtr, 'CurBusqOT', '', '', @Opc, 0, 0, 0, 0, '01-01-01', '01-01-01', '01-01-01'");
+                            StSql = string.Format("EXEC SP_PANTALLA_OrdenTrabajo2 8, @Prmtr, 'CurBusqOT', '', '', @Opc, 0, 0, 0, @ICC, '01-01-01', '01-01-01', '01-01-01'");
                             VbNomRpt = "W_Order";
                         }
                         else
@@ -2818,10 +2812,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                             { VbOpcion = "Tecn"; }
                             if (RdbBusqRteDescRte.Checked == true)
                             { VbOpcion = "DescRte"; }
-                            StSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 7,@Prmtr,'','','CurBusqRte',@Opc,@OT,0,0,0,'01-01-1','02-01-1','03-01-1'");
+                            StSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 7,@Prmtr,'','','CurBusqRte',@Opc,@OT,0,0,@ICC,'01-01-1','02-01-1','03-01-1'");
                             VbNomRpt = "Report";
-                            if (VbOpcion.Equals("OT"))
-                            { TxtOTBusq.Text = TxtOt.Text; }
+                            if (VbOpcion.Equals("OT")) { TxtOTBusq.Text = TxtOt.Text; }
                         }
                         break;
                 }
@@ -2834,6 +2827,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         SC.Parameters.AddWithValue("@OT", TxtOt.Text); // solo cuando es para el reporte                       
                         SC.Parameters.AddWithValue("@Prmtr", TxtOTBusq.Text.Trim()); // solo cuando es para el reporte
                         SC.Parameters.AddWithValue("@Opc", VbOpcion.Trim()); // solo cuando es para el reporte
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]); // ID Cia
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             SC.Connection = con;
@@ -4810,9 +4804,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
         }
         protected void BtnExporRte_Click(object sender, EventArgs e)
-        {
-            Exportar("ReporteGeneral");
-        }
+        {            Exportar("ReporteGeneral");        }
         protected void BtnReserva_Click(object sender, EventArgs e)
         {
             if (!TxtNroRte.Text.Equals("0"))
@@ -5887,7 +5879,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     if (imgE != null)
                     {
-                        imgE.Enabled = true; 
+                        imgE.Enabled = true;
                         DataRow[] Result = Idioma.Select("Objeto='IbtEdit'");
                         foreach (DataRow RowIdioma in Result)
                         { imgE.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
@@ -6266,11 +6258,12 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                 CursorIdioma.Alimentar("Cur8cumplido", Session["77IDM"].ToString().Trim());
 
-                string VbTxtSql = string.Format(" EXEC SP_PANTALLA_OrdenTrabajo 40,'Cur8cumplido','','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                string VbTxtSql = string.Format(" EXEC SP_PANTALLA_OrdenTrabajo 40,'Cur8cumplido','','','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'");
 
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]); // ID Cia
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -6299,9 +6292,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             MlVwOT.ActiveViewIndex = 0;
         }
         protected void IbtExportarOT8PasoClose_Click(object sender, ImageClickEventArgs e)
-        {
-            Exportar("PasoCloseOTOpen");
-        }
+        {            Exportar("PasoCloseOTOpen");        }
         protected void Grd8PasoCOTOpen_SelectedIndexChanged(object sender, EventArgs e)
         {
             string vbcod = HttpUtility.HtmlDecode(Grd8PasoCOTOpen.SelectedRow.Cells[3].Text);

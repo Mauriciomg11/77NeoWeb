@@ -34,10 +34,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
-    <script type="text/javascript">       
-        function myFuncionddl() {
-            <%--$('#<%=DdlMroTaller.ClientID%>').chosen();--%>          
-        }
+    <script type="text/javascript"> 
         function targetMeBlank() {
             document.forms[0].target = "_blank";
         }
@@ -81,7 +78,7 @@
                                     <br />
                                     <asp:Button ID="BtnProcIngeni" runat="server" CssClass="btn btn-primary heightCampo" OnClick="BtnProcIngeni_Click" OnClientClick="target ='_blank';" Text="Procesos de Ingenieria" ToolTip="Procesos de los contadores." />
                                 </div>
-                                 <div class="col-sm-3">
+                                <div class="col-sm-3">
                                     <br />
                                     <asp:Button ID="BtnProxCump" runat="server" CssClass="btn btn-primary heightCampo" OnClick="BtnProxCump_Click" OnClientClick="target ='_blank';" Text="proximo cumplimiento" ToolTip="Servicios que se cumplen según rango de fecha." />
                                 </div>

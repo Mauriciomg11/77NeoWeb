@@ -45,25 +45,9 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
-    <script type="text/javascript">
-        function solonumeros(e) {
-            var key;
-            if (window.event) // IE
-            {
-                key = e.keyCode;
-            }
-            else if (e.which) // Netscape/Firefox/Opera
-            {
-                key = e.which;
-            }
-            if (key < 48 || key > 57) {
-                return false;
-            }
-            return true;
-        }
+    <script type="text/javascript">       
         function myFuncionddl() {
             $('#<%=DdlAeronave.ClientID%>').chosen();
-               <%--$('#<%=DdlAno.ClientID%>').chosen();--%>
         }
     </script>
 </asp:Content>

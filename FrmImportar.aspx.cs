@@ -21,19 +21,31 @@ namespace _77NeoWeb
         ClsConexion Cnx = new ClsConexion();
         protected void Page_Load(object sender, EventArgs e)
         {
-            ViewState["NomBtnExp"] = "Datos_HK";
-            BtnExportar.Text = "Exportar " + ViewState["NomBtnExp"].ToString();
+            
+            BtnExportar.Text = "Exportar ";
             if (Session["C77U"] == null)
             {
                 /*Session["C77U"] = ""; */
                 Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2"; //DbNeoAda
+                Session["D[BX"] = "DbNeoAda"; //DbNeoAda
                 Session["$VR"] = "77NEO01";
                 Session["V$U@"] = "sa";
                 Session["P@$"] = "admindemp";
-                Session["N77U"] = "UsuPrueba";
-                Session["Nit77Cia"] = "811035879-1"; /**/
-                ViewState["Validar"] = "S";               
+                Session["N77U"] = Session["D[BX"];
+                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                Session["!dC!@"] = 0;
+                Session["77IDM"] = "5"; // 4 español | 5 ingles   */
+                ViewState["Validar"] = "S";
+
+                /*  Session["C77U"] = "00000082";
+                 Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                 Session["$VR"] = "77NEO01";
+                 Session["V$U@"] = "sa";
+                 Session["P@$"] = "admindemp";
+                 Session["N77U"] = Session["D[BX"];
+                 Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                 Session["!dC!@"] = 0;
+                 Session["77IDM"] = "5"; // 4 español | 5 ingles   */
             }
         }
 
@@ -188,12 +200,30 @@ namespace _77NeoWeb
             try
             {
                 string StSql;
+                int VbOpc=0;
 
+                if (RdbAK.Checked == true) { VbOpc = 1; ViewState["NomBtnExp"] = "Datos_HK"; }
+                if (RdbHHK.Checked == true) { VbOpc = 2; ViewState["NomBtnExp"] = "Hist_Contdr_HK"; }
+                if (RdbInvHK.Checked == true) { VbOpc = 3; ViewState["NomBtnExp"] = "ElementosInstaladosAeronave"; }
+                if (RdbHistSN.Checked == true) { VbOpc = 4; ViewState["NomBtnExp"] = "Hist_Contdr_SN"; }
+                if (RdbRtes.Checked == true) { VbOpc = 5; ViewState["NomBtnExp"] = "Reportes"; }
+                if (RdbPlantMstra.Checked == true) { VbOpc = 6; ViewState["NomBtnExp"] = "Plantilla_Maestra"; }
+                if (RdbSvcMnto.Checked == true) { VbOpc = 7; ViewState["NomBtnExp"] = "Servicio_Manto"; }
+                if (RdbRcsoFscoSM.Checked == true) { VbOpc = 8; ViewState["NomBtnExp"] = "Recurso_SM"; }
+                if (RdbLicncSM.Checked == true) { VbOpc = 9; ViewState["NomBtnExp"] = "Licencias_SM"; }
+                if (RdbOT.Checked == true) { VbOpc = 10; ViewState["NomBtnExp"] = "OT"; }
+                if (RdbWS.Checked == true) { VbOpc = 11; ViewState["NomBtnExp"] = "Work_Sheet"; }
+                if (RdbInventr.Checked == true) { VbOpc = 12; ViewState["NomBtnExp"] = "Inventario"; }
+                if (RdbHisSvcCumpl.Checked == true) { VbOpc = 13; ViewState["NomBtnExp"] = "Hist_Svcs_Cumplido"; }
+                if (RdbLV.Checked == true) { VbOpc = 14; ViewState["NomBtnExp"] = "Libros_Vuelos"; }
+                if (RdbStatusRprt.Checked == true) { VbOpc = 15; ViewState["NomBtnExp"] = "Status_Report"; }
 
                 //StSql = "EXEC SP_PANTALLA_Reporte_Manto2 6,'','','','','',@SubOT,0,0,0,'01-01-1','02-01-1','03-01-1'";
-               // VbNomRpt = "Reporte_Manto";
+                // VbNomRpt = "Reporte_Manto";
 
-                StSql = "EXEC ProyectoUsa";
+              
+
+                StSql = "EXEC ProyectoUsa @Op";
                 // VbNomRpt = "Reportes_Mantenimiento";
               
                 Cnx.SelecBD();
@@ -202,7 +232,7 @@ namespace _77NeoWeb
                     using (SqlCommand SC = new SqlCommand(StSql, con))
                     {
                         SC.CommandTimeout = 90000000;
-                        SC.Parameters.AddWithValue("@SubOT", 2084);// solo cuando es para la reserva (recurso)                      
+                        SC.Parameters.AddWithValue("@Op", VbOpc);     
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             SC.Connection = con;

@@ -48,6 +48,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 Session["P@$"] = "admindemp";
                 Session["N77U"] = Session["D[BX"];
                 Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                Session["!dC!@"] = 0;
                 Session["77IDM"] = "5"; // 4 español | 5 ingles     */
             }
             if (!IsPostBack)
@@ -759,8 +760,8 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void BindDdlCondLV(int PrAdministrable, int PrNotAdministrable)
         {
             //PrAdministrable=1 si son | PrNotAdministrable =2 si no son administrables
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_LibroVuelo 20,'','','','MTR',{0},{1},{2},0,'01-1-2009','01-01-1900','01-01-1900'",
-                PrAdministrable, PrNotAdministrable, DdlMatri.Text.Equals("") ? "0" : DdlMatri.Text);
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_LibroVuelo 20,'','','','MTR',{0},{1},{2},{3},'01-1-2009','01-01-1900','01-01-1900'",
+                PrAdministrable, PrNotAdministrable, DdlMatri.Text.Equals("") ? "0" : DdlMatri.Text, Session["!dC!@"]);
             DdlMatri.DataSource = Cnx.DSET(LtxtSql);
             DdlMatri.DataMember = "Datos";
             DdlMatri.DataTextField = "Matricula";
@@ -1658,12 +1659,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                     parameters[13] = new ReportParameter("PrmLVPrcs", ViewState["InfLVProcs"].ToString().Trim());
                     parameters[14] = new ReportParameter("InfLVFcP", ViewState["InfLVFcP"].ToString().Trim());
 
-                    string StSql = "SET DATEFORMAT DMY; EXEC SP_PANTALLA_LibroVuelo 1,@HK,'','','',2,0,0,0,@FI,@FF,'01-01-1900' ";
+                    string StSql = "SET DATEFORMAT DMY; EXEC SP_PANTALLA_LibroVuelo 1,@HK,'','','',2,0,0,@ICC,@FI,@FF,'01-01-1900' ";
                     using (SqlCommand SC = new SqlCommand(StSql, SCnx1))
                     {
                         SC.Parameters.AddWithValue("@HK", DdlHkInfLV.Text.Equals("0") ? "" : DdlHkInfLV.SelectedItem.Text);
                         SC.Parameters.AddWithValue("@FI", TxtFIInfLV.Text);
                         SC.Parameters.AddWithValue("@FF", TxtFFInfLV.Text);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter SDA = new SqlDataAdapter())
                         {
                             SDA.SelectCommand = SC;
@@ -1723,13 +1725,14 @@ namespace _77NeoWeb.Forms.Ingenieria
                     parameters[9] = new ReportParameter("PrmDLVOrig", ViewState["InfDLVOri"].ToString().Trim());
                     parameters[10] = new ReportParameter("PrmDLVDest", ViewState["InfDLVDest"].ToString().Trim());
                     parameters[11] = new ReportParameter("PrmDLVPeso", ViewState["InfDLVPeso"].ToString().Trim());
-                    string StSql = "SET DATEFORMAT DMY; EXEC SP_PANTALLA_LibroVuelo 4,@HK,'','','',0,0,0,0,@FI,@FF,'01-01-1900'";
+                    string StSql = "SET DATEFORMAT DMY; EXEC SP_PANTALLA_LibroVuelo 4,@HK,'','','',0,0,0,@ICC,@FI,@FF,'01-01-1900'";
                     using (SqlCommand SC = new SqlCommand(StSql, SCnx1))
                     {
 
                         SC.Parameters.AddWithValue("@HK", DdlHkInfLV.SelectedItem.Text.Trim());
                         SC.Parameters.AddWithValue("@FI", TxtFIInfLV.Text);
                         SC.Parameters.AddWithValue("@FF", TxtFFInfLV.Text);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter SDA = new SqlDataAdapter())
                         {
                             SDA.SelectCommand = SC;
@@ -2326,7 +2329,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void BindDdlRteCondicional(int Act, int Inact, string Categ, string LicGen, string LicCump, string LicVer, string CodTall, string CodClasf,
             string CodPos, string UsuGen, string UsuCump, string UsuDif, string UsuVer)
         {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','TLLR',0,0,0,0,'01-01-1','02-01-1','03-01-1'", CodTall);
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','TLLR',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", CodTall, Session["!dC!@"]);
             DdlTall.DataSource = Cnx.DSET(LtxtSql);
             DdlTall.DataMember = "Datos";
             DdlTall.DataTextField = "NomTaller";
@@ -3460,7 +3463,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     if (RdbBusqRteDescRte.Checked == true)
                     { VbOpcion = "DescRte"; }
 
-                    VbTxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 7,@Prmtr,@CodlV,'','CurBusqRte',@Opc,0,0,0,0,'01-01-1','02-01-1','03-01-1'");
+                    VbTxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 7,@Prmtr,@CodlV,'','CurBusqRte',@Opc,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'");
                 }
                 else
                 {
@@ -3482,6 +3485,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     SC.Parameters.AddWithValue("@Prmtr", TxtBusqueda.Text.Trim());
                     SC.Parameters.AddWithValue("@Opc", VbOpcion.Trim());
                     SC.Parameters.AddWithValue("@CodlV", LblNumLVTit.Text.Trim());
+                    SC.Parameters.AddWithValue("@ICC", LblNumLVTit.Text.Trim());
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -3597,13 +3601,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
         }
         protected void IbtConsulPnRecurRte_Click(object sender, ImageClickEventArgs e)
-        {
-            BindDRecursoF();
-        }
+        { BindDRecursoF(); }
         protected void IbtExpExcelPnRecurRte_Click(object sender, ImageClickEventArgs e)
-        {
-            Exportar("Reserva");
-        }
+        { Exportar("Reserva"); }
         protected void IbtCerrarRec_Click(object sender, ImageClickEventArgs e)
         {
             TxtOtSec.Text = TxtRecurSubOt.Text;
@@ -5606,7 +5606,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         break;
                     case "ReporteGeneral":
                         CursorIdioma.Alimentar("CurInfomeRte", Session["77IDM"].ToString().Trim());
-                        StSql = "EXEC SP_PANTALLA_Reporte_Manto 4,'CurInfomeRte','','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                        StSql = "EXEC SP_PANTALLA_Reporte_Manto 4,'CurInfomeRte','','','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                         DataRow[] Result1 = Idioma.Select("Objeto= 'TitExpNomRte'");
                         foreach (DataRow row in Result1)
                         { VbNomRpt = row["Texto"].ToString().Trim(); }
@@ -5629,7 +5629,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             if (RdbBusqRteDescRte.Checked == true)
                             { VbOpcion = "DescRte"; }
                         }
-                        StSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 7,@Prmtr,@CodlV,'','CurBusqRte',@Opc,0,0,0,0,'01-01-1','02-01-1','03-01-1'");
+                        StSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 7,@Prmtr,@CodlV,'','CurBusqRte',@Opc,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'");
                         DataRow[] Result = Idioma.Select("Objeto= 'TitExpBusqRte'");
                         foreach (DataRow row in Result)
                         { VbNomRpt = row["Texto"].ToString().Trim(); }
@@ -5645,6 +5645,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         SC.Parameters.AddWithValue("@Prmtr", TxtBusqueda.Text.Trim()); // solo cuando es para el reporte
                         SC.Parameters.AddWithValue("@Opc", VbOpcion.Trim());// solo cuando es para el reporte
                         SC.Parameters.AddWithValue("@CodlV", LblNumLVTit.Text.Trim());// solo cuando es para el reporte
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);// idCia
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             SC.Connection = con;

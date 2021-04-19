@@ -87,8 +87,6 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 string query = "", VbNomArchivo = "";
                 DataRow[] Result;
-                Idioma = (DataTable)ViewState["TablaIdioma"];
-
                 Cnx.ValidarFechas(TxtFechI.Text.Trim(), TxtFechF.Text.Trim(), 2);
                 var Mensj = Cnx.GetMensj();
                 if (!Mensj.ToString().Trim().Equals(""))

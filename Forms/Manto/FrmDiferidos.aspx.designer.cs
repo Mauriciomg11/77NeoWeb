@@ -7,156 +7,129 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace _77NeoWeb
+namespace _77NeoWeb.Forms.Manto
 {
 
 
-    public partial class FrmImportar
+    public partial class FrmDiferidos
     {
 
         /// <summary>
-        /// Control Upl1.
+        /// Control TitForm.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel Upl1;
+        protected global::System.Web.UI.WebControls.Label TitForm;
 
         /// <summary>
-        /// Control RdbAK.
+        /// Control UplDatos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbAK;
+        protected global::System.Web.UI.UpdatePanel UplDatos;
 
         /// <summary>
-        /// Control RdbHHK.
+        /// Control LblAeronave.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbHHK;
+        protected global::System.Web.UI.WebControls.Label LblAeronave;
 
         /// <summary>
-        /// Control RdbInvHK.
+        /// Control DdlAeronave.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbInvHK;
+        protected global::System.Web.UI.WebControls.DropDownList DdlAeronave;
 
         /// <summary>
-        /// Control RdbHistSN.
+        /// Control RdbTodos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbHistSN;
+        protected global::System.Web.UI.WebControls.RadioButton RdbTodos;
 
         /// <summary>
-        /// Control RdbRtes.
+        /// Control RdbAbierto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbRtes;
+        protected global::System.Web.UI.WebControls.RadioButton RdbAbierto;
 
         /// <summary>
-        /// Control RdbPlantMstra.
+        /// Control RdbCumpl.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbPlantMstra;
+        protected global::System.Web.UI.WebControls.RadioButton RdbCumpl;
 
         /// <summary>
-        /// Control RdbSvcMnto.
+        /// Control LblFechI.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbSvcMnto;
+        protected global::System.Web.UI.WebControls.Label LblFechI;
 
         /// <summary>
-        /// Control RdbRcsoFscoSM.
+        /// Control TxtFechI.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbRcsoFscoSM;
+        protected global::System.Web.UI.WebControls.TextBox TxtFechI;
 
         /// <summary>
-        /// Control RdbLicncSM.
+        /// Control LblFechF.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbLicncSM;
+        protected global::System.Web.UI.WebControls.Label LblFechF;
 
         /// <summary>
-        /// Control RdbOT.
+        /// Control TxtFechF.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbOT;
+        protected global::System.Web.UI.WebControls.TextBox TxtFechF;
 
         /// <summary>
-        /// Control RdbWS.
+        /// Control BtnConsult.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbWS;
+        protected global::System.Web.UI.WebControls.Button BtnConsult;
 
         /// <summary>
-        /// Control RdbInventr.
+        /// Control BtnAlertaCO.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbInventr;
-
-        /// <summary>
-        /// Control RdbHisSvcCumpl.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbHisSvcCumpl;
-
-        /// <summary>
-        /// Control RdbLV.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbLV;
-
-        /// <summary>
-        /// Control RdbStatusRprt.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbStatusRprt;
+        protected global::System.Web.UI.WebControls.Button BtnAlertaCO;
 
         /// <summary>
         /// Control BtnExportar.
@@ -168,57 +141,21 @@ namespace _77NeoWeb
         protected global::System.Web.UI.WebControls.Button BtnExportar;
 
         /// <summary>
-        /// Control BtnImportarV1.
+        /// Control LblTitReportes.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnImportarV1;
+        protected global::System.Web.UI.WebControls.Label LblTitReportes;
 
         /// <summary>
-        /// Control BtnExportar2.
+        /// Control GrdDatos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnExportar2;
-
-        /// <summary>
-        /// Control FileUpload1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
-
-        /// <summary>
-        /// Control btnUpload.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpload;
-
-        /// <summary>
-        /// Control BtnV3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnV3;
-
-        /// <summary>
-        /// Control GrdBusq.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GrdBusq;
+        protected global::System.Web.UI.WebControls.GridView GrdDatos;
     }
 }

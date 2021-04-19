@@ -176,7 +176,10 @@
     <Content Include="Forms\Ingenieria\Inf_FrmComponenteRemovidoDeAeronave.aspx" />
     <Content Include="Forms\InventariosCompras\FrmElemento.aspx" />
     <Content Include="Forms\InventariosCompras\FrmReferencia.aspx" />
+    <Content Include="Forms\Manto\FrmAlertaCarryOver.aspx" />
+    <Content Include="Forms\Manto\FrmDiferidos.aspx" />
     <Content Include="Forms\Manto\FrmReporte.aspx" />
+    <Content Include="Forms\Manto\FrmReporteCO.aspx" />
     <Content Include="Forms\Seguridad\FrmCambioPass.aspx" />
     <Content Include="Forms\Seguridad\FrmConfigPantalla.aspx" />
     <Content Include="FrmAcceso.aspx" />
@@ -646,12 +649,33 @@
     <Compile Include="Forms\InventariosCompras\FrmReferencia.aspx.designer.cs">
       <DependentUpon>FrmReferencia.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Manto\FrmAlertaCarryOver.aspx.cs">
+      <DependentUpon>FrmAlertaCarryOver.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Manto\FrmAlertaCarryOver.aspx.designer.cs">
+      <DependentUpon>FrmAlertaCarryOver.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Manto\FrmDiferidos.aspx.cs">
+      <DependentUpon>FrmDiferidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Manto\FrmDiferidos.aspx.designer.cs">
+      <DependentUpon>FrmDiferidos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Manto\FrmReporte.aspx.cs">
       <DependentUpon>FrmReporte.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Forms\Manto\FrmReporte.aspx.designer.cs">
       <DependentUpon>FrmReporte.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Manto\FrmReporteCO.aspx.cs">
+      <DependentUpon>FrmReporteCO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Manto\FrmReporteCO.aspx.designer.cs">
+      <DependentUpon>FrmReporteCO.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Seguridad\FrmCambioPass.aspx.cs">
       <DependentUpon>FrmCambioPass.aspx</DependentUpon>
@@ -798,6 +822,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Report\Manto\Inf_FrmReporteCO.rdlc" />
     <EmbeddedResource Include="Report\Ing\Advice.rdlc" />
     <EmbeddedResource Include="Report\Ing\WSRecurso.rdlc" />
     <EmbeddedResource Include="Report\Ing\WSTrabajos.rdlc" />
