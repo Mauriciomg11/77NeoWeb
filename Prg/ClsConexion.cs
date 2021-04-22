@@ -206,8 +206,7 @@ namespace _77NeoWeb.prg
                 {
                     PMensj = "MstrMens08";//Feha invalida
                     return;
-                }
-               
+                }               
             }
             else// dos fechas
             {

@@ -33,33 +33,6 @@ namespace _77NeoWeb
         protected global::System.Web.UI.WebControls.RadioButton RdbAK;
 
         /// <summary>
-        /// Control RdbHHK.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbHHK;
-
-        /// <summary>
-        /// Control RdbInvHK.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbInvHK;
-
-        /// <summary>
-        /// Control RdbHistSN.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbHistSN;
-
-        /// <summary>
         /// Control RdbRtes.
         /// </summary>
         /// <remarks>
@@ -76,6 +49,33 @@ namespace _77NeoWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton RdbPlantMstra;
+
+        /// <summary>
+        /// Control RdbInvHK.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RdbInvHK;
+
+        /// <summary>
+        /// Control RdbHHK.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RdbHHK;
+
+        /// <summary>
+        /// Control RdbHistSN.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RdbHistSN;
 
         /// <summary>
         /// Control RdbSvcMnto.
@@ -123,15 +123,6 @@ namespace _77NeoWeb
         protected global::System.Web.UI.WebControls.RadioButton RdbWS;
 
         /// <summary>
-        /// Control RdbInventr.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbInventr;
-
-        /// <summary>
         /// Control RdbHisSvcCumpl.
         /// </summary>
         /// <remarks>
@@ -139,6 +130,15 @@ namespace _77NeoWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton RdbHisSvcCumpl;
+
+        /// <summary>
+        /// Control RdbInventr.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RdbInventr;
 
         /// <summary>
         /// Control RdbLV.

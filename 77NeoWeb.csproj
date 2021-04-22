@@ -178,6 +178,7 @@
     <Content Include="Forms\InventariosCompras\FrmReferencia.aspx" />
     <Content Include="Forms\Manto\FrmAlertaCarryOver.aspx" />
     <Content Include="Forms\Manto\FrmDiferidos.aspx" />
+    <Content Include="Forms\Manto\FrmIncoming.aspx" />
     <Content Include="Forms\Manto\FrmReporte.aspx" />
     <Content Include="Forms\Manto\FrmReporteCO.aspx" />
     <Content Include="Forms\Seguridad\FrmCambioPass.aspx" />
@@ -663,6 +664,13 @@
     <Compile Include="Forms\Manto\FrmDiferidos.aspx.designer.cs">
       <DependentUpon>FrmDiferidos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Manto\FrmIncoming.aspx.cs">
+      <DependentUpon>FrmIncoming.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Manto\FrmIncoming.aspx.designer.cs">
+      <DependentUpon>FrmIncoming.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Manto\FrmReporte.aspx.cs">
       <DependentUpon>FrmReporte.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -774,6 +782,7 @@
     <Compile Include="Prg\PrgIngenieria\CsTypPersona.cs" />
     <Compile Include="Prg\PrgIngenieria\CsTypPasosOT.cs" />
     <Compile Include="Prg\PrgIngenieria\CsTypExportarIdioma.cs" />
+    <Compile Include="Prg\PrgLogistica\ClsTypAsignaciones.cs" />
     <Compile Include="Prg\PrgManto\ClsTypBodega.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypAsingarBodega.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypSolicitudPedido.cs" />

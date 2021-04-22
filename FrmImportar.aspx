@@ -12,21 +12,21 @@
 
             <br />
             <br />
-            <asp:RadioButton ID="RdbAK" runat="server" CssClass="LblEtiquet" Text="&nbsp Datos Aeronave" GroupName="D" />
-            <asp:RadioButton ID="RdbHHK" runat="server" CssClass="LblEtiquet" Text="&nbsp Hisórico contadores HK" GroupName="D" />
-            <asp:RadioButton ID="RdbInvHK" runat="server" CssClass="LblEtiquet" Text="&nbsp Elementos Instalados HK" GroupName="D" />
-            <asp:RadioButton ID="RdbHistSN" runat="server" CssClass="LblEtiquet" Text="&nbsp Hisórico Elementos (SN)" GroupName="D" />
-            <asp:RadioButton ID="RdbRtes" runat="server" CssClass="LblEtiquet" Text="&nbsp Reportes" GroupName="D" />
-            <asp:RadioButton ID="RdbPlantMstra" runat="server" CssClass="LblEtiquet" Text="&nbsp Plantilla Maestra" GroupName="D" />
-            <asp:RadioButton ID="RdbSvcMnto" runat="server" CssClass="LblEtiquet" Text="&nbsp Servicios Manto" GroupName="D" />
-            <asp:RadioButton ID="RdbRcsoFscoSM" runat="server" CssClass="LblEtiquet" Text="&nbsp Rercurso SvcManto" GroupName="D" />
-            <asp:RadioButton ID="RdbLicncSM" runat="server" CssClass="LblEtiquet" Text="&nbsp Licencia SvcManto" GroupName="D" />
-            <asp:RadioButton ID="RdbOT" runat="server" CssClass="LblEtiquet" Text="&nbsp OT" GroupName="D" />
-            <asp:RadioButton ID="RdbWS" runat="server" CssClass="LblEtiquet" Text="&nbsp Work Sheet" GroupName="D" />
-            <asp:RadioButton ID="RdbInventr" runat="server" CssClass="LblEtiquet" Text="&nbsp Inventario" GroupName="D" />
-            <asp:RadioButton ID="RdbHisSvcCumpl" runat="server" CssClass="LblEtiquet" Text="&nbsp Servicios Cumplidos" GroupName="D" />
-            <asp:RadioButton ID="RdbLV" runat="server" CssClass="LblEtiquet" Text="&nbsp Libros de Vuelo" GroupName="D" />
-            <asp:RadioButton ID="RdbStatusRprt" runat="server" CssClass="LblEtiquet" Text="&nbsp Status Report" GroupName="D" />
+            <asp:RadioButton ID="RdbAK" runat="server" CssClass="LblEtiquet" Text="&nbsp Datos Vw_Aeronave" GroupName="D" />
+              <asp:RadioButton ID="RdbRtes" runat="server" CssClass="LblEtiquet" Text="&nbsp Vw_ReporteMantenimiento" GroupName="D" />
+            <asp:RadioButton ID="RdbPlantMstra" runat="server" CssClass="LblEtiquet" Text="&nbsp Vw_PlantillaMaestra" GroupName="D" />
+            <asp:RadioButton ID="RdbInvHK" runat="server" CssClass="LblEtiquet" Text="&nbsp Vw_ElementosInstaladosAeronave" GroupName="D" />
+            <asp:RadioButton ID="RdbHHK" runat="server" CssClass="LblEtiquet" Text="&nbsp Vw_HistoricoContadorAeroanve" GroupName="D" />            
+            <asp:RadioButton ID="RdbHistSN" runat="server" CssClass="LblEtiquet" Text="&nbsp Vw_HistoricoContadorElemento" GroupName="D" />
+            <asp:RadioButton ID="RdbSvcMnto" runat="server" CssClass="LblEtiquet" Text="&nbsp Vw_ServicioMantenimiento" GroupName="D" />
+            <asp:RadioButton ID="RdbRcsoFscoSM" runat="server" CssClass="LblEtiquet" Text="&nbsp Vw_RecursoServicioMantenimiento" GroupName="D" />
+            <asp:RadioButton ID="RdbLicncSM" runat="server" CssClass="LblEtiquet" Text="&nbsp Vw_LicenciaServicioManto" GroupName="D" />
+            <asp:RadioButton ID="RdbOT" runat="server" CssClass="LblEtiquet" Text="&nbsp Vw_OrdenTrabajo_OT" GroupName="D" />
+            <asp:RadioButton ID="RdbWS" runat="server" CssClass="LblEtiquet" Text="&nbsp Vw_WorkSheet_WS" GroupName="D" />
+            <asp:RadioButton ID="RdbHisSvcCumpl" runat="server" CssClass="LblEtiquet" Text="&nbsp Vw_HistoricoServicioCumplidos" GroupName="D" />
+            <asp:RadioButton ID="RdbInventr" runat="server" CssClass="LblEtiquet" Text="&nbsp Vw_Inventario" GroupName="D" />            
+            <asp:RadioButton ID="RdbLV" runat="server" CssClass="LblEtiquet" Text="&nbsp Vw_LibroVuelo" GroupName="D" />
+            <asp:RadioButton ID="RdbStatusRprt" runat="server" CssClass="LblEtiquet" Text="&nbsp Vw_StatusReport" GroupName="D" />
             <br />
             <asp:Button ID="BtnExportar" runat="server" Text="Exportar Excel" OnClick="BtnExportar_Click" />
             <br />

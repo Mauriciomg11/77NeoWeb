@@ -202,21 +202,21 @@ namespace _77NeoWeb
                 string StSql;
                 int VbOpc=0;
 
-                if (RdbAK.Checked == true) { VbOpc = 1; ViewState["NomBtnExp"] = "Datos_HK"; }
-                if (RdbHHK.Checked == true) { VbOpc = 2; ViewState["NomBtnExp"] = "Hist_Contdr_HK"; }
-                if (RdbInvHK.Checked == true) { VbOpc = 3; ViewState["NomBtnExp"] = "ElementosInstaladosAeronave"; }
-                if (RdbHistSN.Checked == true) { VbOpc = 4; ViewState["NomBtnExp"] = "Hist_Contdr_SN"; }
-                if (RdbRtes.Checked == true) { VbOpc = 5; ViewState["NomBtnExp"] = "Reportes"; }
-                if (RdbPlantMstra.Checked == true) { VbOpc = 6; ViewState["NomBtnExp"] = "Plantilla_Maestra"; }
-                if (RdbSvcMnto.Checked == true) { VbOpc = 7; ViewState["NomBtnExp"] = "Servicio_Manto"; }
-                if (RdbRcsoFscoSM.Checked == true) { VbOpc = 8; ViewState["NomBtnExp"] = "Recurso_SM"; }
-                if (RdbLicncSM.Checked == true) { VbOpc = 9; ViewState["NomBtnExp"] = "Licencias_SM"; }
-                if (RdbOT.Checked == true) { VbOpc = 10; ViewState["NomBtnExp"] = "OT"; }
-                if (RdbWS.Checked == true) { VbOpc = 11; ViewState["NomBtnExp"] = "Work_Sheet"; }
-                if (RdbInventr.Checked == true) { VbOpc = 12; ViewState["NomBtnExp"] = "Inventario"; }
-                if (RdbHisSvcCumpl.Checked == true) { VbOpc = 13; ViewState["NomBtnExp"] = "Hist_Svcs_Cumplido"; }
-                if (RdbLV.Checked == true) { VbOpc = 14; ViewState["NomBtnExp"] = "Libros_Vuelos"; }
-                if (RdbStatusRprt.Checked == true) { VbOpc = 15; ViewState["NomBtnExp"] = "Status_Report"; }
+                if (RdbAK.Checked == true) { VbOpc = 1; ViewState["NomBtnExp"] = "Vw_Aeronave"; }
+                if (RdbRtes.Checked == true) { VbOpc = 5; ViewState["NomBtnExp"] = "Vw_ReporteMantenimiento"; }
+                if (RdbPlantMstra.Checked == true) { VbOpc = 6; ViewState["NomBtnExp"] = "Vw_PlantillaMaestra"; }
+                if (RdbInvHK.Checked == true) { VbOpc = 3; ViewState["NomBtnExp"] = "Vw_ElementosInstaladosAeronave"; }
+                if (RdbHHK.Checked == true) { VbOpc = 2; ViewState["NomBtnExp"] = "Vw_HistoricoContadorAeroanve"; }                
+                if (RdbHistSN.Checked == true) { VbOpc = 4; ViewState["NomBtnExp"] = "Vw_HistoricoContadorElemento"; }
+                if (RdbSvcMnto.Checked == true) { VbOpc = 7; ViewState["NomBtnExp"] = "Vw_ServicioMantenimiento"; }
+                if (RdbRcsoFscoSM.Checked == true) { VbOpc = 8; ViewState["NomBtnExp"] = "Vw_RecursoServicioMantenimiento"; }
+                if (RdbLicncSM.Checked == true) { VbOpc = 9; ViewState["NomBtnExp"] = "Vw_LicenciaServicioManto"; }
+                if (RdbOT.Checked == true) { VbOpc = 10; ViewState["NomBtnExp"] = "Vw_OrdenTrabajo_OT"; }
+                if (RdbWS.Checked == true) { VbOpc = 11; ViewState["NomBtnExp"] = "Vw_WorkSheet_WS"; }
+                if (RdbHisSvcCumpl.Checked == true) { VbOpc = 13; ViewState["NomBtnExp"] = "Vw_HistoricoServicioCumplidos"; }
+                if (RdbInventr.Checked == true) { VbOpc = 12; ViewState["NomBtnExp"] = "Vw_Inventario"; }               
+                if (RdbLV.Checked == true) { VbOpc = 14; ViewState["NomBtnExp"] = "Vw_LibroVuelo"; }
+                if (RdbStatusRprt.Checked == true) { VbOpc = 15; ViewState["NomBtnExp"] = "Vw_StatusReport"; }
 
                 //StSql = "EXEC SP_PANTALLA_Reporte_Manto2 6,'','','','','',@SubOT,0,0,0,'01-01-1','02-01-1','03-01-1'";
                 // VbNomRpt = "Reporte_Manto";
