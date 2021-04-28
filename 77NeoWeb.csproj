@@ -120,6 +120,7 @@
     <Content Include="Css\DisenoFrm.css" />
     <Content Include="Css\GridViewDiseño.css" />
     <Content Include="Css\CssCampos.css" />
+    <Content Include="Forms\Almacen\FrmUbicacionElemento.aspx" />
     <Content Include="Forms\Configuracion\ConfigManto\FrmCategoriaMel.aspx" />
     <Content Include="Forms\Configuracion\ConfigManto\FrmPrioridadManto.aspx" />
     <Content Include="Forms\Configuracion\ConfigManto\FrmTipoReporteManto.aspx" />
@@ -257,6 +258,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmUbicacionElemento.aspx.cs">
+      <DependentUpon>FrmUbicacionElemento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmUbicacionElemento.aspx.designer.cs">
+      <DependentUpon>FrmUbicacionElemento.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Configuracion\ConfigManto\FrmCategoriaMel.aspx.cs">
       <DependentUpon>FrmCategoriaMel.aspx</DependentUpon>
@@ -782,7 +790,7 @@
     <Compile Include="Prg\PrgIngenieria\CsTypPersona.cs" />
     <Compile Include="Prg\PrgIngenieria\CsTypPasosOT.cs" />
     <Compile Include="Prg\PrgIngenieria\CsTypExportarIdioma.cs" />
-    <Compile Include="Prg\PrgLogistica\ClsTypAsignaciones.cs" />
+    <Compile Include="Prg\PrgAlmacen\ClsTypAsignaciones.cs" />
     <Compile Include="Prg\PrgManto\ClsTypBodega.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypAsingarBodega.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypSolicitudPedido.cs" />

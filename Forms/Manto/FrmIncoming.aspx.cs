@@ -1,6 +1,6 @@
 ﻿using _77NeoWeb.prg;
 using _77NeoWeb.Prg.PrgIngenieria;
-using _77NeoWeb.Prg.PrgLogistica;
+using _77NeoWeb.Prg.PrgManto;
 using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
@@ -21,21 +21,27 @@ namespace _77NeoWeb.Forms.Manto
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); } /* */
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            } /* */
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             Page.Title = "";
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-               /* Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["!dC!@"] = 0;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082";
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 1;
+                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
@@ -133,19 +139,42 @@ namespace _77NeoWeb.Forms.Manto
         }
         protected void BindDataDdl()
         {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_Incoming 3,'{0}','','','ALMA',0,0,0,{1},'01-1-2009','01-01-1900','01-01-1900'", Session["C77U"], Session["!dC!@"]);
-            DdlAlmacen.DataSource = Cnx.DSET(LtxtSql);
-            DdlAlmacen.DataMember = "Datos";
-            DdlAlmacen.DataTextField = "NomAlmacen";
-            DdlAlmacen.DataValueField = "CodIdAlmacen";
-            DdlAlmacen.DataBind();
+            DataTable DtAll = new DataTable();
+            DataTable HK = new DataTable();
+            DataTable Tipo = new DataTable();
+            string VbTxtSql = "EXEC SP_PANTALLA_Incoming 3,@U,'','','ALL',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+            Cnx.SelecBD();
+            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+            {
+                sqlConB.Open();
+                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                {
+                    SC.Parameters.AddWithValue("@U", Session["C77U"]);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                    using (SqlDataAdapter SDA = new SqlDataAdapter())
+                    {
+                        SDA.SelectCommand = SC;
+                        SDA.Fill(DtAll);
+                        HK = DtAll.Clone();
+                        DataRow[] Result = DtAll.Select("Filtro='ALMA'");
+                        foreach (DataRow Row in Result)
+                        { HK.ImportRow(Row); }
+                        DdlAlmacen.DataSource = HK;
+                        DdlAlmacen.DataTextField = "Descr";
+                        DdlAlmacen.DataValueField = "Cod";
+                        DdlAlmacen.DataBind();
 
-            LtxtSql = "EXEC SP_PANTALLA_ReferenciaV2 3,'','','','','GRU',0,0,0,0,'01-01-01','02-01-01','03-01-01'";
-            DdlTipo.DataSource = Cnx.DSET(LtxtSql);
-            DdlTipo.DataMember = "Datos";
-            DdlTipo.DataTextField = "Descripcion";
-            DdlTipo.DataValueField = "CodTipoElemento";
-            DdlTipo.DataBind();
+                        Tipo = DtAll.Clone();
+                        Result = DtAll.Select("Filtro='Tipo'");
+                        foreach (DataRow Row in Result)
+                        { Tipo.ImportRow(Row); }
+                        DdlTipo.DataSource = Tipo;
+                        DdlTipo.DataTextField = "Descr";
+                        DdlTipo.DataValueField = "Cod";
+                        DdlTipo.DataBind();
+                    }
+                }
+            }
         }
         protected void BIndDatos()
         {
@@ -371,7 +400,6 @@ namespace _77NeoWeb.Forms.Manto
             }
             if (e.CommandName.Equals("Asignar"))
             {
-                int borrar = Convert.ToInt32(ViewState["CodIdUbicacion"]);
                 GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
                 DateTime? VbFechaV;
                 if (VbAplicaFV == "S") { VbFechaV = Convert.ToDateTime(TxtFechI.Text); }
@@ -392,6 +420,7 @@ namespace _77NeoWeb.Forms.Manto
                     AplicaFV = VbAplicaFV,
                     FechaVence = VbFechaV,
                     Usu = Session["C77U"].ToString(),
+                    SP = "N",
                     Accion = "INCOMING",
                 };
                 ObjAsignaciones.Add(TypAsignaciones);
@@ -422,7 +451,12 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto='GrdTrasf'");
                     foreach (DataRow RowIdioma in Result)
-                    { IbtAsig.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                    {
+                        IbtAsig.ToolTip = RowIdioma["Texto"].ToString().Trim();
+                        Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
+                        foreach (DataRow row in Result)
+                        { IbtAsig.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                    }
                 }
             }
         }

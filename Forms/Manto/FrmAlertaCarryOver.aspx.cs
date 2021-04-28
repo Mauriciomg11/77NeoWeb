@@ -30,7 +30,7 @@ namespace _77NeoWeb.Forms.Manto
                   Session["P@$"] = "admindemp";
                   Session["N77U"] = Session["D[BX"];
                   Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                  Session["!dC!@"] = 0;
+                  Session["!dC!@"] = 1;
                   Session["77IDM"] = "5"; // 4 español | 5 ingles   */
             }
             if (!IsPostBack)

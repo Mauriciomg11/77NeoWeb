@@ -12,10 +12,14 @@ namespace _77NeoWeb.prg
     public class ClsConexion
     {
         static public string PMensj;
+        static public string Produccion;
+ 
         string VblConexion, VblDecimal;
+
         public ClsConexion()
         {
             this.VblConexion = "";
+            Produccion = "N";
         }
         public void SelecBD()
         {
@@ -180,12 +184,12 @@ namespace _77NeoWeb.prg
             { VbCampo = VbCampo.Remove(I, 1).Insert(I, "0,").Replace(".", ""); }
             this.VblDecimal = VbCampo;
         }
-        public void ValidarFechas(string VbF1, string VbF2,int NumPrmts)
+        public void ValidarFechas(string VbF1, string VbF2, int NumPrmts)
         {
             PMensj = "";
             DateTime FI, FF;
             int Comparar;
-            if (NumPrmts==1)// una fecha
+            if (NumPrmts == 1)// una fecha
             {
                 if (VbF1.Equals(""))
                 {
@@ -198,7 +202,7 @@ namespace _77NeoWeb.prg
                     PMensj = "MstrMens08";//Feha invalida
                     return;
                 }
-               
+
                 FI = Convert.ToDateTime(VbF1.Trim());
                 FF = Convert.ToDateTime("01/01/1900");
                 Comparar = DateTime.Compare(FI, FF);
@@ -206,7 +210,7 @@ namespace _77NeoWeb.prg
                 {
                     PMensj = "MstrMens08";//Feha invalida
                     return;
-                }               
+                }
             }
             else// dos fechas
             {
@@ -231,7 +235,7 @@ namespace _77NeoWeb.prg
                 }
                 FI = Convert.ToDateTime(VbF1.Trim());
                 FF = Convert.ToDateTime("01/01/1900");
-                 Comparar = DateTime.Compare(FI,FF );
+                Comparar = DateTime.Compare(FI, FF);
                 if (Comparar < 0) //-1 menor; 0 igual; 1 mayor
                 {
                     PMensj = "MstrMens08";//Feha invalida
@@ -254,5 +258,7 @@ namespace _77NeoWeb.prg
         {
             return PMensj;
         }
+        public string GetProduccion()
+        { return Produccion; }
     }
 }

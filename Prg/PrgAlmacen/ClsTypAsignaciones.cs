@@ -6,11 +6,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace _77NeoWeb.Prg.PrgLogistica
+namespace _77NeoWeb.Prg.PrgManto
 {
     public class ClsTypAsignaciones
     {
         static public string PMensj;
+        static public string PNumSP;
         public int CodIdUbicacion { get; set; }
         public string CodUbicaBodegaOrg { get; set; }
         public string CodUbicaBodegaDst { get; set; }
@@ -24,6 +25,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
         public DateTime? FechaVence { get; set; }
         public string AplicaFV { get; set; }
         public string Usu { get; set; }
+        public string SP { get; set; }
         public string Accion { get; set; }
         ClsConexion Cnx = new ClsConexion();
         public void Alimentar(IEnumerable<ClsTypAsignaciones> Asignacion)
@@ -42,6 +44,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
             TblAsignacion.Columns.Add("AplicaFV", typeof(string));
             TblAsignacion.Columns.Add("FechaVence", typeof(DateTime));
             TblAsignacion.Columns.Add("Usu", typeof(string));
+            TblAsignacion.Columns.Add("SP", typeof(string));
             TblAsignacion.Columns.Add("Accion", typeof(string));
 
             foreach (var Campos in Asignacion)
@@ -60,6 +63,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
                     Campos.AplicaFV,
                     Campos.FechaVence,
                     Campos.Usu,
+                    Campos.SP,
                     Campos.Accion,
                 });
             }
@@ -75,13 +79,16 @@ namespace _77NeoWeb.Prg.PrgLogistica
                         try
                         {
                             PMensj = "";
+                            PNumSP = "";
                             SC.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = SC.Parameters.AddWithValue("@Asignacion", TblAsignacion);
+                            SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@NT", HttpContext.Current.Session["Nit77Cia"].ToString());
                             Prmtrs.SqlDbType = SqlDbType.Structured;
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())
                             {
                                 PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
+                                PNumSP = HttpUtility.HtmlDecode(SDR["CodSP"].ToString().Trim());
                             }
                             SDR.Close();
                             transaction.Commit();
@@ -104,6 +111,10 @@ namespace _77NeoWeb.Prg.PrgLogistica
         public string GetMensj()
         {
             return PMensj;
+        }
+        public string GetNumSP()
+        {
+            return PNumSP;
         }
     }
 }
