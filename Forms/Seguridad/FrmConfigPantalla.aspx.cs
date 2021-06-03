@@ -243,48 +243,43 @@ namespace _77NeoWeb.Forms.Seguridad
         {
             if (e.CommandName == "Select")
             {
-                try
+                int index = int.Parse(e.CommandArgument.ToString());
+                Session["IdForm"] = int.Parse(GrdDatos.DataKeys[index].Value.ToString());
+                int vblleee = (int)Session["IdForm"];
+                BtnModificar.Enabled = true;
+                Cnx.SelecBD();
+                using (SqlConnection sqlConx = new SqlConnection(Cnx.GetConex()))
                 {
-                    int index = int.Parse(e.CommandArgument.ToString());
-                    Session["IdForm"] = int.Parse(GrdDatos.DataKeys[index].Value.ToString());
-                    int vblleee = (int)Session["IdForm"];
-                    BtnModificar.Enabled = true;
-                    Cnx.SelecBD();
-                    using (SqlConnection sqlConx = new SqlConnection(Cnx.GetConex()))
+
+                    string LtxtSql = "SP_ConfiguracionV2_ 12,'','','','',''," + ((int)Session["IdForm"]).ToString() + ",0,0,0,'01-01-01','02-01-01','03-01-01'";
+                    SqlCommand Comando = new SqlCommand(LtxtSql, sqlConx);
+                    sqlConx.Open();
+                    SqlDataReader tbl = Comando.ExecuteReader();
+                    if (tbl.Read())
                     {
 
-                        string LtxtSql = "SP_ConfiguracionV2_ 12,'','','','',''," + ((int)Session["IdForm"]).ToString() + ",0,0,0,'01-01-01','02-01-01','03-01-01'";
-                        SqlCommand Comando = new SqlCommand(LtxtSql, sqlConx);
-                        sqlConx.Open();
-                        SqlDataReader tbl = Comando.ExecuteReader();
-                        if (tbl.Read())
+                        TxtDescripcion.Text = "";
+                        if (tbl["NomFormWeb"].ToString() != string.Empty)
                         {
+                            TxtDescripcion.Text = tbl["Descripcion"].ToString();
+                            CkbPpl.Checked = Convert.ToBoolean(tbl["Principal"]);
+                            CkbIng.Checked = Convert.ToBoolean(tbl["IngresarF"]);
+                            CkbMod.Checked = Convert.ToBoolean(tbl["ModificarF"]);
+                            CkbCons.Checked = Convert.ToBoolean(tbl["ConsultarF"]);
+                            CkbImpr.Checked = Convert.ToBoolean(tbl["ImprimirF"]);
+                            CkbElim.Checked = Convert.ToBoolean(tbl["EliminarF"]);
 
-                            TxtDescripcion.Text = "";
-                            if (tbl["NomFormWeb"].ToString() != string.Empty)
-                            {
-                                TxtDescripcion.Text = tbl["Descripcion"].ToString();
-                                CkbPpl.Checked = Convert.ToBoolean(tbl["Principal"]);
-                                CkbIng.Checked = Convert.ToBoolean(tbl["IngresarF"]);
-                                CkbMod.Checked = Convert.ToBoolean(tbl["ModificarF"]);
-                                CkbCons.Checked = Convert.ToBoolean(tbl["ConsultarF"]);
-                                CkbImpr.Checked = Convert.ToBoolean(tbl["ImprimirF"]);
-                                CkbElim.Checked = Convert.ToBoolean(tbl["EliminarF"]);
-
-                                TxtCE1.Text = tbl["CasoEspeciaLF1"].ToString();
-                                TxtCE2.Text = tbl["CasoEspeciaLF2"].ToString();
-                                TxtCE3.Text = tbl["CasoEspeciaLF3"].ToString();
-                                TxtCE4.Text = tbl["CasoEspeciaLF4"].ToString();
-                                TxtCE5.Text = tbl["CasoEspeciaLF5"].ToString();
-                                TxtCE6.Text = tbl["CasoEspeciaLF6"].ToString();
-                            }
-                            BtnModificar.Text = "Modificar";
+                            TxtCE1.Text = tbl["CasoEspeciaLF1"].ToString();
+                            TxtCE2.Text = tbl["CasoEspeciaLF2"].ToString();
+                            TxtCE3.Text = tbl["CasoEspeciaLF3"].ToString();
+                            TxtCE4.Text = tbl["CasoEspeciaLF4"].ToString();
+                            TxtCE5.Text = tbl["CasoEspeciaLF5"].ToString();
+                            TxtCE6.Text = tbl["CasoEspeciaLF6"].ToString();
                         }
-
+                        BtnModificar.Text = "Modificar";
                     }
+
                 }
-                catch (Exception ex)
-                { }
             }
         }
         protected void GrdDatos_PageIndexChanging(object sender, GridViewPageEventArgs e)

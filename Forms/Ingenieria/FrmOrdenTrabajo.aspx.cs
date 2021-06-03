@@ -26,23 +26,26 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             if (Session["Login77"] == null)
             {
-                Response.Redirect("~/FrmAcceso.aspx");
-            }/**/
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo    
             Page.Title = string.Format("Orden de Trabajo");
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoHCT";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];// "UsuPrueba";
-                Session["Nit77Cia"] = "860064038-4"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["!dC!@"]=0;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles  */
-            }
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 1;
+                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                }
+            }           
             if (!IsPostBack)
             {
                 TitForm.Text = "Orden de Trabajo";
@@ -264,7 +267,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     //****************************************  Recuso Fisico --------------------
                     LblRecFRte.Text = tbl["Objeto"].ToString().Trim().Equals("LblNroRte") ? tbl["Texto"].ToString().Trim() : LblRecFRte.Text;
                     LblRecFSubOt.Text = tbl["Objeto"].ToString().Trim().Equals("LblOtSec") ? tbl["Texto"].ToString().Trim() : LblRecFSubOt.Text;
-                    LblPrioridadOT.Text = tbl["Objeto"].ToString().Trim().Equals("LblTtlRecursoRte") ? tbl["Texto"].ToString().Trim() : LblPrioridadOT.Text;
+                    LblPrioridadOT.Text = tbl["Objeto"].ToString().Trim().Equals("LblPrioridadOT") ? tbl["Texto"].ToString().Trim() : LblPrioridadOT.Text;
                     GrdOTRecursoF.Columns[2].HeaderText = tbl["Objeto"].ToString().Trim().Equals("Descripción") ? tbl["Texto"].ToString().Trim() : GrdOTRecursoF.Columns[2].HeaderText;
                     GrdOTRecursoF.Columns[3].HeaderText = tbl["Objeto"].ToString().Trim().Equals("Cantidad") ? tbl["Texto"].ToString().Trim() : GrdOTRecursoF.Columns[3].HeaderText;
                     GrdOTRecursoF.Columns[4].HeaderText = tbl["Objeto"].ToString().Trim().Equals("UndMed") ? tbl["Texto"].ToString().Trim() : GrdOTRecursoF.Columns[4].HeaderText;
@@ -2122,7 +2125,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                             Cnx.SelecBD();
                                             using (SqlConnection SCnxPln = new SqlConnection(Cnx.GetConex()))
                                             {
-                                                sqlCon.Open();
+                                                //sqlCon.Open();
                                                 VBQuery = string.Format("EXEC SP_IntegradorNEW 6,'',@Usu,'','','',@CodOT,0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
                                                 using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon))
                                                 {

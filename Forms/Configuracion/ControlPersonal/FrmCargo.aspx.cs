@@ -270,13 +270,13 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                             GrdDatos.EditIndex = -1;
                             BindData(TxtBusqueda.Text);
                         }
-                        catch (Exception ex)
+                        catch (Exception Ex)
                         {
                             Transac.Rollback();
                             DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
                             foreach (DataRow row in Result)
                             { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
-                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "INSERT", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "UPDATE", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                         }
                     }
                 }
@@ -323,7 +323,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                             DataRow[] Result = Idioma.Select("Objeto= 'MensErrEli'");
                             foreach (DataRow row in Result)
                             { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
-                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "INSERT", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "ELIMINAR CARGO", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                         }
                     }
                 }

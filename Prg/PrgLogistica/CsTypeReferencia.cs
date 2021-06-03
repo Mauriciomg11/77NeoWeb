@@ -141,6 +141,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
                         {
                             sqlCmd.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = sqlCmd.Parameters.AddWithValue("@CurVD", table);
+                            SqlParameter Prmtrs2 = sqlCmd.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
                             Prmtrs.SqlDbType = SqlDbType.Structured;
                             sqlCmd.ExecuteNonQuery();
                             transaction.Commit();

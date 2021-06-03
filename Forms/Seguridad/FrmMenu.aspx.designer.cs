@@ -7,7 +7,7 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace _77NeoWeb.Forms
+namespace _77NeoWeb.Forms.Seguridad
 {
 
 

@@ -122,6 +122,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
                             {
                                 sqlCmd.CommandType = CommandType.StoredProcedure;
                                 SqlParameter Prmtrs = sqlCmd.Parameters.AddWithValue("@CurPN", table);
+                                SqlParameter Prmtrs2 = sqlCmd.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
                                 Prmtrs.SqlDbType = SqlDbType.Structured;
                                 string Mensj = (string)sqlCmd.ExecuteScalar();
                                 if (!Mensj.ToString().Trim().Equals(""))

@@ -25,21 +25,26 @@ namespace _77NeoWeb.Forms.Manto
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }/* */
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo            
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /* 
-                Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["!dC!@"] = 0;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 1;
+                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                }
             }
             Page.Title = string.Format("Reporte de mantenimiento");
             if (!IsPostBack)
@@ -616,8 +621,11 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     string VbFecha;
                     Cnx2.Open();
-                    string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 2,'','','','','',{0},0,0,0,'01-01-1','02-01-1','03-01-1'", NumRte);
+                    string LtxtSql =  "EXEC SP_PANTALLA_Reporte_Manto2 2,'','','','','',@NR,0,0,@CC,'01-01-1','02-01-1','03-01-1'";
                     SqlCommand SqlC = new SqlCommand(LtxtSql, Cnx2);
+                    SqlC.Parameters.AddWithValue("@NR", NumRte);
+                    SqlC.Parameters.AddWithValue("@CC", Session["!dC!@"]);
+                   
                     SqlDataReader SDR = SqlC.ExecuteReader();
                     if (SDR.Read())
                     {
@@ -1480,7 +1488,7 @@ namespace _77NeoWeb.Forms.Manto
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "MODIFICAR REPORTE", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
-        protected void BtnEliminar_Click(object sender, EventArgs e)
+        protected void BtnEliminar_Click(object sender, EventArgs e)    
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (TxtNroRte.Text.Equals("0"))
@@ -1874,9 +1882,9 @@ namespace _77NeoWeb.Forms.Manto
                                         Cnx.SelecBD();
                                         using (SqlConnection SCnxPln = new SqlConnection(Cnx.GetConex()))
                                         {
-                                            sqlCon.Open();
+                                            SCnxPln.Open();
                                             VBQuery = string.Format("EXEC SP_IntegradorNEW 6,'',@Usu,'','','',@CodOT,0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-                                            using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon))
+                                            using (SqlCommand sqlCmd = new SqlCommand(VBQuery, SCnxPln))
                                             {
                                                 try
                                                 {

@@ -65,7 +65,8 @@ namespace _77NeoWeb.Prg.PrgIngenieria
             using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
             {
                 string C01="", C02 = "", C03 = "", C04 = "", C05 = "", C06 = "", C07 = "", C08 = "", C09 = "", C10 = "", C11 = "", C12 = "", C13 = "", C14 = "",C15 = "", C16 = "";
-                string C17 = "", C18 = "", C19 = "", C20 = "", C21 = "", C22 = "", C23 = "", C24 = "", C25 = "", C26 = "", C27 = "", C28 = "", C29 = "", C30 = "";
+                string C17 = "", C18 = "", C19 = "", C20 = "", C21 = "", C22 = "", C23 = "", C24 = "", C25 = "", C26 = "", C27 = "", C28 = "", C29 = "", C30 = "", C31 = "", C32 = "", 
+                    C33 = "", C34 = "", C35 = "", C36 = "", C37 = "", C38 = "", C39 = "";
                 string LtxtSql = "EXEC Idioma @I,@F,'','',''";
                 SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
                 SC.Parameters.AddWithValue("@I", Idioma);
@@ -104,9 +105,18 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                     C28 = tbl["Objeto"].ToString().Trim() == "C28" ? tbl["Texto"].ToString().Trim() : C28;
                     C29 = tbl["Objeto"].ToString().Trim() == "C29" ? tbl["Texto"].ToString().Trim() : C29;
                     C30 = tbl["Objeto"].ToString().Trim() == "C30" ? tbl["Texto"].ToString().Trim() : C30;
+                    C31 = tbl["Objeto"].ToString().Trim() == "C31" ? tbl["Texto"].ToString().Trim() : C31;
+                    C32 = tbl["Objeto"].ToString().Trim() == "C32" ? tbl["Texto"].ToString().Trim() : C32;
+                    C33 = tbl["Objeto"].ToString().Trim() == "C33" ? tbl["Texto"].ToString().Trim() : C33;
+                    C34 = tbl["Objeto"].ToString().Trim() == "C34" ? tbl["Texto"].ToString().Trim() : C34;
+                    C35 = tbl["Objeto"].ToString().Trim() == "C35" ? tbl["Texto"].ToString().Trim() : C35;
+                    C36 = tbl["Objeto"].ToString().Trim() == "C36" ? tbl["Texto"].ToString().Trim() : C36;
+                    C37 = tbl["Objeto"].ToString().Trim() == "C37" ? tbl["Texto"].ToString().Trim() : C37;
+                    C38 = tbl["Objeto"].ToString().Trim() == "C38" ? tbl["Texto"].ToString().Trim() : C38;
+                    C39 = tbl["Objeto"].ToString().Trim() == "C39" ? tbl["Texto"].ToString().Trim() : C39;
                 }
                 Tb77lIdioma.Rows.Add(Vista.Trim(),C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25,
-                    C26, C27, C28, C29, C30, "31", "32", "33", "34", "35", "36", "27", "38", "39", "40", "41", "42", "43", "44", "45");
+                    C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, "40", "41", "42", "43", "44", "45");
 
                 Cnx.SelecBD();
                 using (SqlConnection sqlCon2 = new SqlConnection(Cnx.GetConex()))

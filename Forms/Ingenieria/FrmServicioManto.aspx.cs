@@ -27,27 +27,32 @@ namespace _77NeoWeb.Forms.Ingenieria
         private byte[] imagen;
         protected void Page_Load(object sender, EventArgs e)
         {
-           if (Session["Login77"] == null)
+            if (Session["Login77"] == null)
             {
-                Response.Redirect("~/FrmAcceso.aspx");
-            }  /**/
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            } /* */
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo    
             if (Session["PllaSrvManto"].ToString().Equals("SERVICIO"))
             { Page.Title = string.Format("Servicio_Mantenimiento"); }
             else
             { Page.Title = string.Format("Reparaciones_Mayores"); }
+           
             if (Session["C77U"] == null)
             {
-                Session["VldrCntdr"] = "S";
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["77IDM"] = "5"; // 4 español | 5 ingles */
+                Session["VldrCntdr"] = "S";
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 1;
+                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
@@ -1413,12 +1418,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                     using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                     {
                         sqlCon.Open();
-                        string VBQuery = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 16,'{0}','','','','',{1},0,0,0,'01-01-01','01-01-01','01-01-01'",
+                        string VBQuery = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 16,'{0}','','','','',{1},0,0,@CC,'01-01-01','01-01-01','01-01-01'",
                         Session["C77U"].ToString(), VblIdSvcManto);
                         using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon))
                         {
                             try
                             {
+                                sqlCmd.Parameters.AddWithValue("@CC", Session["!dC!@"]);
                                 sqlCmd.ExecuteNonQuery();
                             }
                             catch (Exception ex)

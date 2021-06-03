@@ -35,21 +35,24 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             if (Session["Login77"] == null)
             {
-                Response.Redirect("~/FrmAcceso.aspx");
-            }   /**/
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            } /* */
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["!dC!@"] = 0;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles     */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 1;
+                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
@@ -367,7 +370,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     //****************************************  Recuso Fisico --------------------
                     LblRecFRte.Text = tbl["Objeto"].ToString().Trim().Equals("LblNroRte") ? tbl["Texto"].ToString().Trim() : LblRecFRte.Text;
                     LblRecFSubOt.Text = tbl["Objeto"].ToString().Trim().Equals("LblOtSec") ? tbl["Texto"].ToString().Trim() : LblRecFSubOt.Text;
-                    LblPrioridadOT.Text = tbl["Objeto"].ToString().Trim().Equals("LblTtlRecursoRte") ? tbl["Texto"].ToString().Trim() : LblPrioridadOT.Text;
+                    LblPrioridadOT.Text = tbl["Objeto"].ToString().Trim().Equals("LblPrioridadOT2") ? tbl["Texto"].ToString().Trim() : LblPrioridadOT.Text;
                     LblTtlRecursoRte.Text = tbl["Objeto"].ToString().Trim().Equals("LblTtlRecursoRte") ? tbl["Texto"].ToString().Trim() : LblTtlRecursoRte.Text;
                     LblTitRecursFis.Text = tbl["Objeto"].ToString().Trim().Equals("BtnReserva") ? tbl["Texto"].ToString().Trim() : LblTitRecursFis.Text;
                     GrdRecursoF.Columns[2].HeaderText = bO.Equals("Descripcion") ? bT : GrdRecursoF.Columns[2].HeaderText;
@@ -3649,8 +3652,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     if (DdlPrioridadOT.Text.Trim().Equals(""))
                     {
                         DataRow[] Result = Idioma.Select("Objeto= 'Mens11'");
-                        foreach (DataRow row in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }
+                        foreach (DataRow row in Result)                       
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                         return;
                     }
                     string VblPN, VBQuery, VblTxtCant, VbDesc, VbIPC;
@@ -3665,6 +3668,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     VblCant = VblTxtCant.Length == 0 ? 0 : Convert.ToDouble(VblTxtCant, Culture);
                     VbDesc = (GrdRecursoF.FooterRow.FindControl("TxtDesRFPP") as TextBox).Text.Trim();
                     VbIPC = (GrdRecursoF.FooterRow.FindControl("TxtIPCRFPP") as TextBox).Text.Trim();
+                    string VbEjecPlano = "N";
+
                     Cnx.SelecBD();
                     using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                     {
@@ -3689,8 +3694,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                     SC.Parameters.AddWithValue("@CodHK", Convert.ToInt32(DdlAeroRte.Text));
                                     SC.Parameters.AddWithValue("@IdRte", Convert.ToInt32(TxtNroRte.Text));
 
-                                    string Mensj = "OK";
-                                    string VbEjecPlano = "N";
+                                    string Mensj = "OK";                                   
                                     int VblSubOt = Convert.ToInt32(TxtRecurSubOt.Text);
                                     SqlDataReader SDR = SC.ExecuteReader();
                                     if (SDR.Read())
@@ -3711,31 +3715,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                         return;
                                     }
                                     TxtRecurSubOt.Text = VblSubOt.ToString();
-                                    if (VbEjecPlano.Trim().Equals("S"))
-                                    {
-                                        Cnx.SelecBD();
-                                        using (SqlConnection SCnxPln = new SqlConnection(Cnx.GetConex()))
-                                        {
-                                            sqlCon.Open();
-                                            VBQuery = string.Format("EXEC SP_IntegradorNEW 6,'',@Usu,'','','',@CodOT,0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-                                            using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon))
-                                            {
-                                                try
-                                                {
-                                                    sqlCmd.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
-                                                    sqlCmd.Parameters.AddWithValue("@CodOT", Convert.ToInt32(TxtRecurSubOt.Text));
-                                                    sqlCmd.ExecuteNonQuery();
-                                                }
-                                                catch (Exception ex)
-                                                {
-                                                    DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
-                                                    foreach (DataRow row in Result)
-                                                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//EError en el proceso de eliminación')", true);
-                                                    Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString(), "PLANOS Generar Nueva Reserva", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
-                                                }
-                                            }
-                                        }
-                                    }
+                                   
                                     TxtConsulPnRecurRte.Text = "";
                                     BindDRecursoF();
                                     PerfilesGrid();
@@ -3748,6 +3728,32 @@ namespace _77NeoWeb.Forms.Ingenieria
                                     { ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }
                                     string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                                     Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Recurso Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                                }
+                            }
+                        }
+                    }
+
+                    if (VbEjecPlano.Trim().Equals("S"))
+                    {
+                        Cnx.SelecBD();
+                        using (SqlConnection SCnxPln = new SqlConnection(Cnx.GetConex()))
+                        {
+                            SCnxPln.Open();
+                            VBQuery = string.Format("EXEC SP_IntegradorNEW 6,'',@Usu,'','','',@CodOT,0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                            using (SqlCommand sqlCmd = new SqlCommand(VBQuery, SCnxPln))
+                            {
+                                try
+                                {
+                                    sqlCmd.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
+                                    sqlCmd.Parameters.AddWithValue("@CodOT", Convert.ToInt32(TxtRecurSubOt.Text));
+                                    sqlCmd.ExecuteNonQuery();
+                                }
+                                catch (Exception ex)
+                                {
+                                    DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
+                                    foreach (DataRow row in Result)
+                                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//EError en el proceso de eliminación')", true);
+                                    Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString(), "PLANOS Generar Nueva Reserva", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                                 }
                             }
                         }

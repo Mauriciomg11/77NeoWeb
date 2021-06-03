@@ -10,7 +10,7 @@
     <link href="Css/CssPagTrans.css" rel="stylesheet" />
     <link href="Css/CssConsultar.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
-    <%--     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>--%>
+    <%--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"/>--%>
     <%-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js" type="text/javaScript"> </script>--%>
@@ -26,15 +26,15 @@
     </style>
     <script>
 
-   function cerrarform(){
+        function cerrarform() {
 
-        window.close();
+            window.close();
 
-         return false;
+            return false;
 
-   }
+        }
 
-</script>
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -43,7 +43,7 @@
             </asp:ContentPlaceHolder>
         </div>
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-        <asp:Label ID="LblCia" runat="server" Text="" CssClass="LblCiaTrans"></asp:Label>      
+        <asp:Label ID="LblCia" runat="server" Text="" CssClass="LblCiaTrans"></asp:Label>
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
     </form>
