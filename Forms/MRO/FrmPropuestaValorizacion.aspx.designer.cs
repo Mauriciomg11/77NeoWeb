@@ -78,15 +78,6 @@ namespace _77NeoWeb.Forms.MRO
         protected global::System.Web.UI.WebControls.DropDownList DdlNumPpt;
 
         /// <summary>
-        /// Control IbtConsult.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtConsult;
-
-        /// <summary>
         /// Control BtnValorizar.
         /// </summary>
         /// <remarks>

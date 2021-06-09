@@ -1,6 +1,7 @@
 ﻿using _77NeoWeb.prg;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace _77NeoWeb.Forms.MRO
         DataTable Idioma = new DataTable();
         DataTable DtDdlPpal = new DataTable();
         DataTable DtDet = new DataTable();
+        DataSet DS = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
@@ -43,12 +45,69 @@ namespace _77NeoWeb.Forms.MRO
             if (!IsPostBack)
             {
                 TitForm.Text = "";
-                // ModSeguridad();
+                ModSeguridad();
                 BindDdlPpal("UPDATE");
                 MultVw.ActiveViewIndex = 0;
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
+        protected void ModSeguridad()
+        {
+            ViewState["VblIngMS"] = 1;
+            ViewState["VblModMS"] = 1;
+            ViewState["VblImpMS"] = 1;
+            ViewState["VblEliMS"] = 1;
+            ViewState["VblCE1"] = 1;
+            ViewState["VblCE2"] = 1;
+            ViewState["VblCE3"] = 1;
+            ViewState["VblCE4"] = 1;
+            ClsPermisos ClsP = new ClsPermisos();
+            ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
+            if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
+            if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; }
+            if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; }
+            if (ClsP.GetConsultar() == 0) { }
+            if (ClsP.GetImprimir() == 0) { ViewState["VblImpMS"] = 0; }
+            if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; }
+            if (ClsP.GetCE1() == 0) { ViewState["VblCE1"] = 0; }//
+            if (ClsP.GetCE2() == 0) { ViewState["VblCE2"] = 0; }//
+            if (ClsP.GetCE3() == 0) { ViewState["VblCE3"] = 0; }//
+            if (ClsP.GetCE4() == 0) { ViewState["VblCE4"] = 0; }//                          
+
+            IdiomaControles();
+        }
+        protected void IdiomaControles()
+        {
+            Idioma.Columns.Add("Objeto", typeof(string));
+            Idioma.Columns.Add("Texto", typeof(string));
+            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+            {
+                string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
+                SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
+                SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
+                SC.Parameters.AddWithValue("@F1", ViewState["PFileName"]);
+                SC.Parameters.AddWithValue("@F2", "");
+                SC.Parameters.AddWithValue("@F3", "");
+                SC.Parameters.AddWithValue("@F4", "");
+                sqlCon.Open();
+                SqlDataReader tbl = SC.ExecuteReader();
+                while (tbl.Read())  //Todos los objetos
+                {
+                    string bO = tbl["Objeto"].ToString().Trim();
+                    string bT = tbl["Texto"].ToString().Trim();
+                    Idioma.Rows.Add(bO, bT);
+                    if (bO.Equals("Caption"))
+                    { Page.Title = bT; ViewState["PageTit"] = bT; }
+                    TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
+
+                }
+
+
+                sqlCon.Close();
+                ViewState["TablaIdioma"] = Idioma;
+            }
+        }
+
         protected void BindDdlPpal(string Accion)
         {
             if (Accion.Equals("UPDATE"))
@@ -63,18 +122,28 @@ namespace _77NeoWeb.Forms.MRO
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter SDA = new SqlDataAdapter())
                         {
-                            SDA.SelectCommand = SC;
-                            SDA.Fill(DtDdlPpal);
-                            ViewState["DtDdlPpal"] = DtDdlPpal;
+                            using (DataSet DS = new DataSet())
+                            {
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DS);
+
+                                DS.Tables[0].TableName = "PPTS";
+                                DS.Tables[1].TableName = "MonedaLocal";
+                                ViewState["DS"] = DS;
+                            }
                         }
                     }
                 }
             }
-            DtDdlPpal = (DataTable)ViewState["DtDdlPpal"];
+            DS = (DataSet)ViewState["DS"];
+            DtDdlPpal = DS.Tables["PPTS"].Clone();
+            DtDdlPpal = DS.Tables["PPTS"];
             DtDdlPpal.Rows.Add(" - ", "", "", "", "", "", "", "", "", "", "01/01/1900", "0");
             DataView DV = DtDdlPpal.DefaultView;
             DV.Sort = "OrdenPpta";
             DtDdlPpal = DV.ToTable();
+            ViewState["DtDdlPpal"] = DtDdlPpal;
+
             DdlNumPpt.DataSource = DtDdlPpal;
             DdlNumPpt.DataTextField = "IdPropuesta";
             DdlNumPpt.DataValueField = "OrdenPpta";
@@ -102,12 +171,13 @@ namespace _77NeoWeb.Forms.MRO
                     }
                 }
             }
+
             DtDet = (DataTable)ViewState["DtDet"];
             if (DtDet.Rows.Count > 0) { GrdDetValrzc.DataSource = DtDet; }
             else { GrdDetValrzc.DataSource = null; }
             GrdDetValrzc.DataBind();
         }
-        protected void IbtConsult_Click(object sender, ImageClickEventArgs e)
+        protected void DdlNumPpt_TextChanged(object sender, EventArgs e)
         {
             DtDdlPpal = (DataTable)ViewState["DtDdlPpal"];
             TxtCliente.Text = "";
@@ -126,6 +196,10 @@ namespace _77NeoWeb.Forms.MRO
                 TxtDescPptTipoSol.Text = Row["Descripcion"].ToString().Trim();
             }
             BindDetalle("UPDATE");
+        }
+        protected void IbtConsult_Click(object sender, ImageClickEventArgs e)
+        {
+
         }
 
         protected void BtnPNSinValorizar_Click(object sender, EventArgs e)
@@ -168,61 +242,42 @@ namespace _77NeoWeb.Forms.MRO
 
         }
 
-        protected void GrdDetValrzc_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-
-        }
-
-
-
         protected void TxtVlr_TextChanged(object sender, EventArgs e)
         {
-            /*foreach (GridViewRow grvRow in GrdDetValrzc.Rows)
-             {
-                 TextBox TxtVlr = (TextBox)grvRow.FindControl("TxtVlr");
-                 TextBox TxtMnda = (TextBox)grvRow.FindControl("TxtMnda");
-                 TxtVlr.Text = TxtVlr.Text.Equals("") ? "0" : TxtVlr.Text.Trim();
-                 if (Convert.ToDouble(TxtVlr.Text) > 0 && TxtMnda.Text.Equals("")) { TxtMnda.Text = "COP"; }
-                 else { TxtMnda.Text = ""; }
-             }
-
-             foreach (GridViewRow dtgItem in this.GrdDetValrzc.Rows)
-             {
-                 TextBox TxtVlr = (TextBox)GrdDetValrzc.Rows[dtgItem.RowIndex].FindControl("TxtVlr");
-                 TextBox TxtMnda = (TextBox)GrdDetValrzc.Rows[dtgItem.RowIndex].FindControl("TxtMnda");
-                 TxtMnda.Text = "COP";
-             }*/
-
+            DS = (DataSet)ViewState["DS"];
             var ControlAct = (Control)sender;
             GridViewRow row = (GridViewRow)ControlAct.NamingContainer;
             int rowIndex = row.RowIndex;
             TextBox TxtVlr = (TextBox)GrdDetValrzc.Rows[rowIndex].FindControl("TxtVlr");
             TextBox TxtMnda = (TextBox)GrdDetValrzc.Rows[rowIndex].FindControl("TxtMnda");
             TxtVlr.Text = TxtVlr.Text.Equals("") ? "0" : TxtVlr.Text.Trim();
-            if (Convert.ToDouble(TxtVlr.Text) > 0 && TxtMnda.Text.Equals("")) { TxtMnda.Text = "COP"; }
+            if (Convert.ToDouble(TxtVlr.Text) > 0)
+            {
+                if (TxtMnda.Text.Equals(""))
+                {
+                    foreach (DataRow Row in DS.Tables[1].Rows)
+                    {
+                        TxtMnda.Text = Row["CodMoneda"].ToString().Trim();
+                        TxtMnda.AutoPostBack = true;
+                    }
+                }
+            }
             else { TxtMnda.Text = ""; }
         }
-
-
-        protected void DdlNumPpt_TextChanged(object sender, EventArgs e)
+        protected void CkbGenrSP_CheckedChanged(object sender, EventArgs e)
         {
-            DtDdlPpal = (DataTable)ViewState["DtDdlPpal"];
-            TxtCliente.Text = "";
-            TxtDescTipoPPT.Text = "";
-            TxtDesEstado.Text = "";
-            TxtDescPptTipoSol.Text = "";
-            DataRow[] Result = DtDdlPpal.Select("IdPropuesta='" + DdlNumPpt.Text.Trim() + "'");
-            foreach (DataRow Row in Result)
-            {
-
-                if (!Row["FechaAprobacion"].ToString().Trim().Equals("")) { BtnValorizar.Visible = false; BtnReValorizar.Visible = false; BtnPlantilla.Visible = false; BtnSolPed.Visible = false; }
-                else { BtnValorizar.Visible = true; BtnReValorizar.Visible = true; BtnPlantilla.Visible = true; BtnSolPed.Visible = true; }
-                TxtCliente.Text = Row["RazonSocial"].ToString().Trim();
-                TxtDescTipoPPT.Text = Row["DescripcionPropuesta"].ToString().Trim();
-                TxtDesEstado.Text = Row["DescripcionEstado"].ToString().Trim();
-                TxtDescPptTipoSol.Text = Row["Descripcion"].ToString().Trim();
-            }
-            BindDetalle("UPDATE");
+            var CntrlGrd = (Control)sender;
+            GridViewRow row = (GridViewRow)CntrlGrd.NamingContainer;
+            int rowIndex = row.RowIndex;
+            CheckBox CkbGenrSP = (CheckBox)GrdDetValrzc.Rows[rowIndex].FindControl("CkbGenrSP");
+            Label CantPpt = (Label)GrdDetValrzc.Rows[rowIndex].FindControl("CantPpt");
+            TextBox TxtCantSP = (TextBox)GrdDetValrzc.Rows[rowIndex].FindControl("TxtCantSP");
+            TxtCantSP.Text = CkbGenrSP.Checked == true ? CantPpt.Text : "0";
         }
+        protected void GrdDetValrzc_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
+        }
+
     }
 }
