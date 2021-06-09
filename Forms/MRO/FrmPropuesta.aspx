@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmPropuesta.aspx.cs" Inherits="_77NeoWeb.Forms.MRO.FrmPropuesta" %>
+﻿a<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmPropuesta.aspx.cs" Inherits="_77NeoWeb.Forms.MRO.FrmPropuesta" %>
 
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms" Namespace="Microsoft.Reporting.WebForms" TagPrefix="RpVw" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -390,31 +390,31 @@
                         </table>
                         <div class="row">
                             <div class="col-sm-1">
-                                <asp:Button ID="BtnConsultar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnConsultar_Click" Text="consultar" />
+                                <asp:Button ID="BtnConsultar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnConsultar_Click" OnClientClick="target ='';" Text="consultar" />
                             </div>
                             <div class="col-sm-1">
-                                <asp:Button ID="BtnIngresar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnIngresar_Click" Text="nuevo" />
+                                <asp:Button ID="BtnIngresar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnIngresar_Click" OnClientClick="target ='';" Text="nuevo" />
                             </div>
                             <div class="col-sm-1">
-                                <asp:Button ID="BtnModificar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnModificar_Click" Text="modificar" />
+                                <asp:Button ID="BtnModificar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnModificar_Click" OnClientClick="target ='';" Text="modificar" />
                             </div>
                             <div class="col-sm-1">
-                                <asp:Button ID="BtnEliminar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnEliminar_Click" Text="eliminar" />
+                                <asp:Button ID="BtnEliminar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnEliminar_Click" OnClientClick="target ='';" Text="eliminar" />
                             </div>
                             <div class="col-sm-1">
                                 <asp:Button ID="BtnEditCondic" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnEditCondic_Click" Text="condiciones" />
                             </div>
                             <div class="col-sm-1">
-                                <asp:Button ID="BtnDetalle" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnDetalle_Click" Text="Trabajos" />
+                                <asp:Button ID="BtnDetalle" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnDetalle_Click" OnClientClick="target ='';" Text="Trabajos" />
                             </div>
                             <div class="col-sm-1">
-                                <asp:Button ID="BtnImprimir" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnImprimir_Click" Text="imprimir" />
+                                <asp:Button ID="BtnImprimir" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnImprimir_Click" OnClientClick="target ='';" Text="imprimir" />
                             </div>
                             <div class="col-sm-2">
-                                <asp:Button ID="BtnExportPPT" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnExportPPT_Click" Text="Exportar propuesta" />
+                                <asp:Button ID="BtnExportPPT" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnExportPPT_Click" OnClientClick="target ='';" Text="Exportar propuesta" />
                             </div>
                             <div class="col-sm-2">
-                                <asp:Button ID="BtnExportDet" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnExportDet_Click" Text="Exportar detalle" />
+                                <asp:Button ID="BtnExportDet" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnExportDet_Click" OnClientClick="target ='';" Text="Exportar detalle" />
                             </div>
                             <div class="col-sm-1">
                                 <asp:Button ID="BtnAux" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnAux_Click" OnClientClick="target ='_blank';" Text="Auxiliares" />

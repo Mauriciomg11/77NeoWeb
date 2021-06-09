@@ -4568,7 +4568,6 @@ namespace _77NeoWeb.Forms.MRO
                 }
             }
         }
-
         protected void GrdAlrtDetSinAprb_RowEditing(object sender, GridViewEditEventArgs e)
         {
             DSAlerta = (DataSet)ViewState["DSAlerta"];
@@ -4617,9 +4616,7 @@ namespace _77NeoWeb.Forms.MRO
                 GrdAlrtDetSinAprb.EditIndex = -1;
                 GrdAlrtDetSinAprb.DataSource = DSAlerta.Tables["SinDetAprob"]; GrdAlrtDetSinAprb.DataBind();
             }
-
         }
-
         protected void GrdAlrtDetSinAprb_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             DSAlerta = (DataSet)ViewState["DSAlerta"];
