@@ -1,4 +1,4 @@
-﻿a<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmPropuesta.aspx.cs" Inherits="_77NeoWeb.Forms.MRO.FrmPropuesta" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmPropuesta.aspx.cs" Inherits="_77NeoWeb.Forms.MRO.FrmPropuesta" %>
 
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms" Namespace="Microsoft.Reporting.WebForms" TagPrefix="RpVw" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
