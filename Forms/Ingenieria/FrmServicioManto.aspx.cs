@@ -3476,8 +3476,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
             {
                 Cnx2.Open();
-                string VblString = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 17,'{0}','','','','DescRef',0,0,0,0,'01-01-01','01-01-01','01-01-01'", DdlPNRFPP.Text);
+                string VblString = "EXEC SP_PANTALLA__Servicio_Manto2 17,@PN,'','','','DescRef',0,0,0,0,'01-01-01','01-01-01','01-01-01'";
                 SqlCommand SC = new SqlCommand(VblString, Cnx2);
+                SC.Parameters.AddWithValue("@PN", DdlPNRFPP.Text.Trim());
                 SqlDataReader SDR = SC.ExecuteReader();
                 if (SDR.Read())
                 {
@@ -3519,15 +3520,21 @@ namespace _77NeoWeb.Forms.Ingenieria
                         sqlCon.Open();
                         using (SqlTransaction Transac = sqlCon.BeginTransaction())
                         {
-
-                            VBQuery = string.Format("EXEC SP_TablasIngenieria 5,'{0}','{1}','{7}','','','','','','INSERT',{2},{3},{4},{5},{6},0,'01-01-1','02-01-1','03-01-1'",
-                            VblPN, Session["C77U"].ToString(), 0, TxtId.Text, VblCant, VblCond, VblFase, VbDesc);
-
-                            using (SqlCommand SqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
+                            VBQuery = "EXEC SP_TablasIngenieria 5,@PN,@Us,@Desc,'','','','','','INSERT',@IdPlIns,@IdSvc,@Cnt,@Condc,@Fs,0,'01-01-1','02-01-1','03-01-1'";
+                            using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                             {
                                 try
                                 {
-                                    var Mensj = SqlCmd.ExecuteScalar();
+                                  
+                                    SC.Parameters.AddWithValue("@PN", VblPN);
+                                    SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
+                                    SC.Parameters.AddWithValue("@Desc", VbDesc);
+                                    SC.Parameters.AddWithValue("@IdPlIns", 0);
+                                    SC.Parameters.AddWithValue("@IdSvc", TxtId.Text);
+                                    SC.Parameters.AddWithValue("@Cnt", VblCant);
+                                    SC.Parameters.AddWithValue("@Condc", VblCond);
+                                    SC.Parameters.AddWithValue("@Fs", VblFase);
+                                    var Mensj = SC.ExecuteScalar();
                                     if (!Mensj.ToString().Trim().Equals(""))
                                     {
                                         DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
@@ -3548,7 +3555,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                     foreach (DataRow row in Result)
                                     { ScriptManager.RegisterClientScriptBlock(this.UpPnlRF, UpPnlRF.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
                                     string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                                    Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Recurso", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                                    Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Recurso", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                                 }
                             }
                         }
@@ -3592,15 +3599,20 @@ namespace _77NeoWeb.Forms.Ingenieria
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
 
-                        VBQuery = string.Format("EXEC SP_TablasIngenieria 5,'{0}','{1}','','','','','','','UPDATE',{2},{3},@Cant,{4},{5},0,'01-01-1','02-01-1','03-01-1'",
-                        VblPN, Session["C77U"].ToString(), VblId, TxtId.Text, VblCond, VblFase);
+                        VBQuery ="EXEC SP_TablasIngenieria 5,@PN,@Us,'','','','','','','UPDATE',@IdPlIns,@IdSvc,@Cant,@Condc,@Fs,0,'01-01-1','02-01-1','03-01-1'";
 
-                        using (SqlCommand SqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
+                        using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
                             {
-                                SqlCmd.Parameters.AddWithValue("@Cant", VblCant);
-                                var Mensj = SqlCmd.ExecuteScalar();
+                                SC.Parameters.AddWithValue("@PN", VblPN);
+                                SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
+                                SC.Parameters.AddWithValue("@IdPlIns", VblId);
+                                SC.Parameters.AddWithValue("@IdSvc", TxtId.Text);
+                                SC.Parameters.AddWithValue("@Cant", VblCant);
+                                SC.Parameters.AddWithValue("@Condc", VblCond);
+                                SC.Parameters.AddWithValue("@Fs", VblFase);
+                                var Mensj = SC.ExecuteScalar();
                                 if (!Mensj.ToString().Trim().Equals(""))
                                 {
                                     DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
@@ -3633,7 +3645,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.UpPnlRF, UpPnlRF.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Recurso", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE Recurso", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void GrdRecursoF_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)

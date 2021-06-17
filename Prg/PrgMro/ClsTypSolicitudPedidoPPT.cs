@@ -6,11 +6,11 @@ using System.Data;
 using System.Data.SqlClient;
 using _77NeoWeb.prg;
 
-namespace _77NeoWeb.Prg.PrgLogistica
+namespace _77NeoWeb.Prg.PrgMro
 {
-    public class ClsTypSolicitudPedido
+    public class ClsTypSolicitudPedidoPPT
     {
-        static public string PMensj, PCodPedido,PPN;
+        static public string PMensj, PCodPedido;
         static public int PIdPedido;
         public int IdPedido { get; set; }
         public string CodPedido { get; set; }
@@ -55,7 +55,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
 
 
         ClsConexion Cnx = new ClsConexion();
-        public void Alimentar(IEnumerable<ClsTypSolicitudPedido> EncPedido, IEnumerable<ClsTypSolicitudPedido> DetPedido)
+        public void Alimentar(IEnumerable<ClsTypSolicitudPedidoPPT> EncPedido, IEnumerable<ClsTypSolicitudPedidoPPT> DetPedido)
         {
             DataTable TblEncPedido = new DataTable();
             TblEncPedido.Columns.Add("IdPedido", typeof(int));
@@ -153,7 +153,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
                 SCX.Open();
                 using (SqlTransaction transaction = SCX.BeginTransaction())
                 {
-                    string VBQuery = "INSERT_UPDATE_SolPed";
+                    string VBQuery = "New_SolPedidoPpt";
                     using (SqlCommand SC = new SqlCommand(VBQuery, SCX, transaction))
                     {
                         try
@@ -171,7 +171,6 @@ namespace _77NeoWeb.Prg.PrgLogistica
                                 PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 PIdPedido = Convert.ToInt32(SDR["IdPedido"].ToString().Trim());
                                 PCodPedido = HttpUtility.HtmlDecode(SDR["CodPedido"].ToString().Trim());       
-                                PPN= HttpUtility.HtmlDecode(SDR["PN"].ToString().Trim());
                             }                           
                             SDR.Close();
                             transaction.Commit();
@@ -202,10 +201,6 @@ namespace _77NeoWeb.Prg.PrgLogistica
         public string GetCodPedido()
         {
             return PCodPedido;
-        }
-        public string GetPN()
-        {
-            return PPN;
         }
     }
 }

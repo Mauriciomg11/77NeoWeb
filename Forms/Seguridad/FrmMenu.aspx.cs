@@ -454,11 +454,6 @@ namespace _77NeoWeb.Forms.Seguridad
                 }
             }
         }
-        protected void GrdDatos_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdDatos.PageIndex = e.NewPageIndex;
-            BindData(TxtBusqueda.Text);
-        }
         protected void IbtAbrir_Click(object sender, ImageClickEventArgs e)
         { }
     }

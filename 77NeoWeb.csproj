@@ -182,6 +182,7 @@
     <Content Include="Forms\Manto\FrmIncoming.aspx" />
     <Content Include="Forms\Manto\FrmReporte.aspx" />
     <Content Include="Forms\Manto\FrmReporteCO.aspx" />
+    <Content Include="Forms\MRO\FrmAlertaPNNuevos.aspx" />
     <Content Include="Forms\MRO\FrmInformePropuesta.aspx" />
     <Content Include="Forms\MRO\FrmPropuesta.aspx" />
     <Content Include="Forms\MRO\FrmPropuestaValorizacion.aspx" />
@@ -704,6 +705,13 @@
     <Compile Include="Forms\Manto\FrmReporteCO.aspx.designer.cs">
       <DependentUpon>FrmReporteCO.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MRO\FrmAlertaPNNuevos.aspx.cs">
+      <DependentUpon>FrmAlertaPNNuevos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\MRO\FrmAlertaPNNuevos.aspx.designer.cs">
+      <DependentUpon>FrmAlertaPNNuevos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MRO\FrmInformePropuesta.aspx.cs">
       <DependentUpon>FrmInformePropuesta.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -823,6 +831,7 @@
     <Compile Include="Prg\PrgIngenieria\CsTypPasosOT.cs" />
     <Compile Include="Prg\PrgIngenieria\CsTypExportarIdioma.cs" />
     <Compile Include="Prg\PrgAlmacen\ClsTypAsignaciones.cs" />
+    <Compile Include="Prg\PrgMro\ClsTypSolicitudPedidoPPT.cs" />
     <Compile Include="Prg\PrgManto\ClsTypBodega.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypAsingarBodega.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypSolicitudPedido.cs" />
@@ -837,9 +846,10 @@
     <Compile Include="Prg\PrgLogistica\CsTTPN.cs" />
     <Compile Include="Prg\PrgLogistica\CsTypeReferencia.cs" />
     <Compile Include="Prg\PrgManto\ClsUbicaGeograf.cs" />
-    <Compile Include="Prg\prgMro\CsTypDetallePropuesta.cs" />
-    <Compile Include="Prg\prgMro\CsTypEncPropuesta.cs" />
-    <Compile Include="Prg\prgMro\CsTypDetallePropuestaSvcManto.cs" />
+    <Compile Include="Prg\PrgMro\CsTypDetallePropuesta.cs" />
+    <Compile Include="Prg\PrgMro\CsTypEncPropuesta.cs" />
+    <Compile Include="Prg\PrgMro\CsTypDetallePropuestaSvcManto.cs" />
+    <Compile Include="Prg\PrgMro\CsTypPropuestaValorizada.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
   </ItemGroup>

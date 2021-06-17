@@ -719,7 +719,7 @@
                                                     <asp:TextBox ID="TxtCantSolPP" runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Text="0" />
                                                 </FooterTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Cant Real" FooterStyle-Width="8%">
+                                            <asp:TemplateField HeaderText="Cant Real" FooterStyle-Width="2%">
                                                 <ItemTemplate>
                                                     <asp:Label Text='<%# Eval("CantRealDP") %>' runat="server" Width="100%" />
                                                 </ItemTemplate>
