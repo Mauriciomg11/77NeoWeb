@@ -520,7 +520,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//Inconveniente en el ingreso')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INGRESAR Aeronave", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INGRESAR Aeronave", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void BtnModificar_Click(object sender, EventArgs e)
@@ -612,7 +612,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "MODIFICAR Aeronave", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "MODIFICAR Aeronave", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void BtnConsultar_Click(object sender, EventArgs e)
@@ -674,7 +674,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             catch (Exception Ex)
             {
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Exportar Excel Aeronaves", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Exportar Excel Aeronaves", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void BtnSolicitud_Click(object sender, EventArgs e)

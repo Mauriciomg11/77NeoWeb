@@ -115,9 +115,13 @@ namespace _77NeoWeb.Forms.MRO
                     BtnPlantilla.ToolTip = bO.Equals("BtnPlantillaTT") ? bT : BtnPlantilla.ToolTip;
                     BtnExportar.Text = bO.Equals("BtnExportar") ? bT : BtnExportar.Text;
                     BtnPNSinValorizar.Text = bO.Equals("BtnPNSinValorizar") ? bT : BtnPNSinValorizar.Text;
+                    BtnPNSinValorizar.ToolTip = bO.Equals("BtnPNSinValorizarTT") ? bT : BtnPNSinValorizar.ToolTip;
                     BtnSolPed.Text = bO.Equals("BtnSolPed") ? bT : BtnSolPed.Text;
+                    BtnSolPed.ToolTip = bO.Equals("BtnSolPedTT") ? bT : BtnSolPed.ToolTip;
                     BtnCotizacion.Text = bO.Equals("BtnCotizacion") ? bT : BtnCotizacion.Text;
+                    BtnCotizacion.ToolTip = bO.Equals("BtnCotizacionTT") ? bT : BtnCotizacion.ToolTip;
                     BtnCuadroComprtv.Text = bO.Equals("BtnCuadroComprtv") ? bT : BtnCuadroComprtv.Text;
+                    BtnCuadroComprtv.ToolTip = bO.Equals("BtnCuadroComprtvTT") ? bT : BtnCuadroComprtv.ToolTip;
                     LblCliente.Text = bO.Equals("LblCliente") ? bT : LblCliente.Text;
                     LblDescTipoPPT.Text = bO.Equals("LblDescTipoPPT") ? bT : LblDescTipoPPT.Text;
                     LblDesEstado.Text = bO.Equals("LblDesEstado") ? bT : LblDesEstado.Text;
@@ -160,7 +164,7 @@ namespace _77NeoWeb.Forms.MRO
                     GrdPnNoValorizado.Columns[4].HeaderText = bO.Equals("GrdFecRva") ? bT : GrdPnNoValorizado.Columns[4].HeaderText;
                     GrdPnNoValorizado.Columns[5].HeaderText = bO.Equals("GrdCreaPN") ? bT : GrdPnNoValorizado.Columns[5].HeaderText;
                     GrdPnNoValorizado.Columns[6].HeaderText = bO.Equals("GrdFechNotf") ? bT : GrdPnNoValorizado.Columns[6].HeaderText;
-                    GrdPnNoValorizado.Columns[7].HeaderText = bO.Equals("GrdFechValoriza") ? bT : GrdPnNoValorizado.Columns[7].HeaderText;                    
+                    GrdPnNoValorizado.Columns[7].HeaderText = bO.Equals("GrdFechValoriza") ? bT : GrdPnNoValorizado.Columns[7].HeaderText;
                 }
                 DataRow[] Result;
                 Result = Idioma.Select("Objeto= 'BtnValorizarOnCl'");
@@ -541,8 +545,14 @@ namespace _77NeoWeb.Forms.MRO
             int rowIndex = row.RowIndex;
             CheckBox CkbGenrSP = (CheckBox)GrdDetValrzc.Rows[rowIndex].FindControl("CkbGenrSP");
             Label CantPpt = (Label)GrdDetValrzc.Rows[rowIndex].FindControl("CantPpt");
+            Label LblUndMPt = (Label)GrdDetValrzc.Rows[rowIndex].FindControl("LblUndMPt");
             TextBox TxtCantSP = (TextBox)GrdDetValrzc.Rows[rowIndex].FindControl("TxtCantSP");
             TxtCantSP.Text = CkbGenrSP.Checked == true ? CantPpt.Text : "0";
+            if (LblUndMPt.Text.Trim().Equals(""))
+            {
+                TxtCantSP.Text = "0";
+                CkbGenrSP.Checked = false;
+            }
         }
         protected void GrdDetValrzc_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -637,7 +647,11 @@ namespace _77NeoWeb.Forms.MRO
             if (DdlNumPpt.Text.Equals("0")) { return; }
             DtDet = (DataTable)ViewState["DtDet"];
 
-            foreach (DataRow Dtll in DtDet.Rows) { Dtll["SelectSolicitud"] = "1"; Dtll["CantidadSolicitud"] = Dtll["CantidadPropuesta"]; }
+            foreach (DataRow Dtll in DtDet.Rows)
+            {
+                if (!Dtll["CodReferencia"].ToString().Trim().Equals(""))
+                Dtll["SelectSolicitud"] = "1"; Dtll["CantidadSolicitud"] = Dtll["CantidadPropuesta"];
+            }
             GrdDetValrzc.DataSource = DtDet;
             GrdDetValrzc.DataBind();
         }
@@ -749,7 +763,7 @@ namespace _77NeoWeb.Forms.MRO
             }
 
             ClsTypSolicitudPedidoPPT TypSolicitudPedido = new ClsTypSolicitudPedidoPPT();
-
+            TypSolicitudPedido.NumPPT(Convert.ToInt32(DdlNumPpt.Text));
             TypSolicitudPedido.Alimentar(ObjEncSP, ObjDetSP);
             string Mensj = TypSolicitudPedido.GetMensj();
             if (!Mensj.Trim().Equals(""))

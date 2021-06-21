@@ -12,6 +12,7 @@ namespace _77NeoWeb.Prg.PrgMro
     {
         static public string PMensj, PCodPedido;
         static public int PIdPedido;
+        static public int VbIdPpt;
         public int IdPedido { get; set; }
         public string CodPedido { get; set; }
         public DateTime Fechapedido { get; set; }
@@ -55,6 +56,10 @@ namespace _77NeoWeb.Prg.PrgMro
 
 
         ClsConexion Cnx = new ClsConexion();
+        public void NumPPT(int IdPpt)
+        {
+            VbIdPpt = IdPpt;
+        }
         public void Alimentar(IEnumerable<ClsTypSolicitudPedidoPPT> EncPedido, IEnumerable<ClsTypSolicitudPedidoPPT> DetPedido)
         {
             DataTable TblEncPedido = new DataTable();
@@ -164,6 +169,7 @@ namespace _77NeoWeb.Prg.PrgMro
                             SqlParameter Prmtrs = SC.Parameters.AddWithValue("@EncSP", TblEncPedido);
                             SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@DetSP", TblDetPedido);
                             SqlParameter Prmtrs3 = SC.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
+                            SqlParameter Prmtrs4 = SC.Parameters.AddWithValue("@IdPpt", VbIdPpt);
                             Prmtrs.SqlDbType = SqlDbType.Structured;                           
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())

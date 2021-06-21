@@ -1586,7 +1586,7 @@ namespace _77NeoWeb.Forms.MRO
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INGRESAR Propuesta", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INGRESAR Propuesta", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void ActivarCliente()
@@ -1763,7 +1763,7 @@ namespace _77NeoWeb.Forms.MRO
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Modificar Propuesta", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Modificar Propuesta", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void BtnEliminar_Click(object sender, EventArgs e)
@@ -3852,7 +3852,7 @@ namespace _77NeoWeb.Forms.MRO
                             Result = Idioma.Select("Objeto= 'MensErrEli'");
                             foreach (DataRow row in Result)
                             { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
-                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "Eliminar Servicios de PPT", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "Eliminar Servicios de PPT", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                         }
                     }
                 }
@@ -3973,7 +3973,8 @@ namespace _77NeoWeb.Forms.MRO
                     foreach (DataRow row in Result)
                     { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
                 }
-
+                DataRowView DRV = e.Row.DataItem as DataRowView;
+                if (DRV["IdSvcManto"].ToString().Equals("0")) { e.Row.BackColor = System.Drawing.Color.DarkOrange; }
             }
 
         }

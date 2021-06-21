@@ -122,17 +122,16 @@
                                 </asp:Table>
                             </div>
                             <div class="col-sm-9">
-                                <asp:Button ID="BtnValorizar" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnValorizar_Click" OnClientClick="target ='';"  Text="Valorizar" />
-                                <asp:Button ID="BtnReValorizar" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnReValorizar_Click" OnClientClick="target ='';"  Text="Revalorizar" />
-                                <asp:Button ID="BtnPlantilla" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnPlantilla_Click" OnClientClick="target ='';"  Text="Plantilla" />
-                                <asp:Button ID="BtnExportar" runat="server" CssClass="btn btn-primary Font_btnCrud" OnClick="BtnExportar_Click" OnClientClick="target ='';"  Text="exportar" />&nbsp&nbsp
-                                <asp:Button ID="BtnPNSinValorizar" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnPNSinValorizar_Click" OnClientClick="target ='';"  Text="PN sin Valorizar" />
+                                <asp:Button ID="BtnValorizar" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnValorizar_Click" OnClientClick="target ='';" Text="Valorizar" />
+                                <asp:Button ID="BtnReValorizar" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnReValorizar_Click" OnClientClick="target ='';" Text="Revalorizar" />
+                                <asp:Button ID="BtnPlantilla" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnPlantilla_Click" OnClientClick="target ='';" Text="Plantilla" />
+                                <asp:Button ID="BtnExportar" runat="server" CssClass="btn btn-primary Font_btnCrud" OnClick="BtnExportar_Click" OnClientClick="target ='';" Text="exportar" />&nbsp&nbsp
+                                <asp:Button ID="BtnPNSinValorizar" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnPNSinValorizar_Click" OnClientClick="target ='';" Text="PN sin Valorizar" />
                                 <asp:Button ID="BtnSolPed" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnSolPed_Click" OnClientClick="target ='_blank';" Text="solicitud pedido" />
                                 <asp:Button ID="BtnCotizacion" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnCotizacion_Click" OnClientClick="target ='_blank';" Text="cotización" />
                                 <asp:Button ID="BtnCuadroComprtv" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnCuadroComprtv_Click" OnClientClick="target ='_blank';" Text="cuadro comparativo" />
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-sm-1">
                                 <br />
@@ -305,8 +304,6 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2ElementosNoValorizados" runat="server">
-            <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
-                <ContentTemplate>
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitEleNoValorizado" runat="server" Text="parte no encontradas en la valorización" />
                     </h6>
@@ -365,18 +362,13 @@
                             </asp:GridView>
                         </div>
                     </div>
-                </ContentTemplate>
-                <Triggers>
-                    <asp:PostBackTrigger ControlID="IbtClosePNoValorizado" />
-                </Triggers>
-            </asp:UpdatePanel>
-        </asp:View>
+                </asp:View>
             </asp:MultiView>
         </ContentTemplate>
         <Triggers>
             <asp:PostBackTrigger ControlID="BtnDetPpt" />
             <asp:PostBackTrigger ControlID="BtnExpPlantilla" />
-<%--            <asp:PostBackTrigger ControlID="IbtAprDet1All" />--%>
+            <%--            <asp:PostBackTrigger ControlID="IbtAprDet1All" />--%>
         </Triggers>
     </asp:UpdatePanel>
 

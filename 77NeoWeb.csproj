@@ -186,6 +186,7 @@
     <Content Include="Forms\MRO\FrmInformePropuesta.aspx" />
     <Content Include="Forms\MRO\FrmPropuesta.aspx" />
     <Content Include="Forms\MRO\FrmPropuestaValorizacion.aspx" />
+    <Content Include="Forms\MRO\FrmServiciosSinCrear.aspx" />
     <Content Include="Forms\Seguridad\FrmCambioPass.aspx" />
     <Content Include="Forms\Seguridad\FrmConfigPantalla.aspx" />
     <Content Include="FrmAcceso.aspx" />
@@ -733,6 +734,13 @@
     <Compile Include="Forms\MRO\FrmPropuestaValorizacion.aspx.designer.cs">
       <DependentUpon>FrmPropuestaValorizacion.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MRO\FrmServiciosSinCrear.aspx.cs">
+      <DependentUpon>FrmServiciosSinCrear.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\MRO\FrmServiciosSinCrear.aspx.designer.cs">
+      <DependentUpon>FrmServiciosSinCrear.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Seguridad\FrmCambioPass.aspx.cs">
       <DependentUpon>FrmCambioPass.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -847,6 +855,7 @@
     <Compile Include="Prg\PrgLogistica\CsTypeReferencia.cs" />
     <Compile Include="Prg\PrgManto\ClsUbicaGeograf.cs" />
     <Compile Include="Prg\PrgMro\CsTypDetallePropuesta.cs" />
+    <Compile Include="Prg\PrgMro\CsTypPnNoExistente.cs" />
     <Compile Include="Prg\PrgMro\CsTypEncPropuesta.cs" />
     <Compile Include="Prg\PrgMro\CsTypDetallePropuestaSvcManto.cs" />
     <Compile Include="Prg\PrgMro\CsTypPropuestaValorizada.cs" />
