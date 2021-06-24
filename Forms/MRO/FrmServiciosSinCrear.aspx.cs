@@ -234,7 +234,6 @@ namespace _77NeoWeb.Forms.MRO
                 Page.Title = ViewState["PageTit"].ToString().Trim();
                 Idioma = (DataTable)ViewState["TablaIdioma"];
                 GridViewRow RowG = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
-                //int rowIndex = RowG.RowIndex;
                 GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
 
                 Cnx.SelecBD();

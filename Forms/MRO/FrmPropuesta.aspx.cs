@@ -4069,7 +4069,7 @@ namespace _77NeoWeb.Forms.MRO
 
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
-                {
+                {                   
                     SC.Parameters.AddWithValue("@P", ViewState["RegistroElemHK"]);
                     SC.Parameters.AddWithValue("@TiP", DdlTipo.Text.Trim());
                     SC.Parameters.AddWithValue("@IdD", ViewState["IdDetPropHk"]);

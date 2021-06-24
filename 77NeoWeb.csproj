@@ -186,6 +186,7 @@
     <Content Include="Forms\MRO\FrmInformePropuesta.aspx" />
     <Content Include="Forms\MRO\FrmPropuesta.aspx" />
     <Content Include="Forms\MRO\FrmPropuestaValorizacion.aspx" />
+    <Content Include="Forms\MRO\FrmReparacionMayor.aspx" />
     <Content Include="Forms\MRO\FrmServiciosSinCrear.aspx" />
     <Content Include="Forms\Seguridad\FrmCambioPass.aspx" />
     <Content Include="Forms\Seguridad\FrmConfigPantalla.aspx" />
@@ -733,6 +734,13 @@
     </Compile>
     <Compile Include="Forms\MRO\FrmPropuestaValorizacion.aspx.designer.cs">
       <DependentUpon>FrmPropuestaValorizacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MRO\FrmReparacionMayor.aspx.cs">
+      <DependentUpon>FrmReparacionMayor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\MRO\FrmReparacionMayor.aspx.designer.cs">
+      <DependentUpon>FrmReparacionMayor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\MRO\FrmServiciosSinCrear.aspx.cs">
       <DependentUpon>FrmServiciosSinCrear.aspx</DependentUpon>

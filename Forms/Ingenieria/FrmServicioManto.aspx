@@ -204,7 +204,7 @@
                             <td width="50%">
                                 <asp:UpdatePanel ID="UpPnlBusq" runat="server" UpdateMode="Conditional">
                                     <ContentTemplate>
-                                        <asp:DropDownList ID="DdlBusq" runat="server" CssClass="Campos" OnTextChanged="DdlBusq_TextChanged" AutoPostBack="true"></asp:DropDownList>
+                                        <asp:DropDownList ID="DdlBusq" runat="server" CssClass="Campos" OnTextChanged="DdlBusq_TextChanged" AutoPostBack="true"/>
                                     </ContentTemplate>
                                     <Triggers>
                                         <asp:AsyncPostBackTrigger ControlID="DdlBusq" EventName="TextChanged" />
@@ -335,13 +335,13 @@
                                 </tr>
                                 <tr>
                                     <td width="7%">
-                                        <asp:Label ID="LblModel" runat="server" CssClass="LblEtiquet" Text="Modelo:"></asp:Label></td>
+                                        <asp:Label ID="LblModel" runat="server" CssClass="LblEtiquet" Text="Modelo:"/></td>
                                     <td width="13%">
-                                        <asp:DropDownList ID="DdlModel" runat="server" CssClass="form-control  Campos" Enabled="false"></asp:DropDownList></td>
+                                        <asp:DropDownList ID="DdlModel" runat="server" CssClass="form-control  Campos" Enabled="false"/></td>
                                     <td width="5%">
-                                        <asp:Label ID="LblTaller" runat="server" CssClass="LblEtiquet" Text="Taller:"></asp:Label></td>
+                                        <asp:Label ID="LblTaller" runat="server" CssClass="LblEtiquet" Text="Taller:"/></td>
                                     <td width="25%">
-                                        <asp:DropDownList ID="Ddltaller" runat="server" CssClass="Campos" Enabled="false"></asp:DropDownList></td>
+                                        <asp:DropDownList ID="Ddltaller" runat="server" CssClass="Campos" Enabled="false"/></td>
                                     <td colspan="2">
                                         <table class="TablaCheck table-responsive">
                                             <tr>

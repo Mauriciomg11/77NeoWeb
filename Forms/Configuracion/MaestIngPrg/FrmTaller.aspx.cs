@@ -20,21 +20,27 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); } /* */
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            } /* */
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             Page.Title = string.Format("Configuración_Talleres");
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["!dC!@"] = 0;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles   */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 1;
+                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
@@ -130,7 +136,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = string.Format("EXEC SP_Pantalla_Parametros 12,'" + VbConsultar + "','','','','',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"] ); ;
+                string VbTxtSql = string.Format("EXEC SP_Pantalla_Parametros 12,'" + VbConsultar + "','','','','',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]); ;
                 sqlCon.Open();
                 SqlDataAdapter sqlDa = new SqlDataAdapter(VbTxtSql, sqlCon);
                 sqlDa.Fill(dtbl);
@@ -165,7 +171,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             { VbNomRpt = row["Texto"].ToString().Trim(); }
             CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
             CursorIdioma.Alimentar("CurTaller", Session["77IDM"].ToString().Trim());
-            string VbTxtSql = "EXEC SP_Pantalla_Parametros 13,@TL,'','','','CurTaller',0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'"; 
+            string VbTxtSql = "EXEC SP_Pantalla_Parametros 13,@TL,'','','','CurTaller',0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
             Cnx.SelecBD();
             using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
             {
@@ -278,12 +284,12 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception Ex)
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
-                Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmTaller", "INSERT", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmTaller", "INSERT", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
             }
         }
         protected void GrdDatos_SelectedIndexChanged(object sender, EventArgs e)
@@ -382,12 +388,12 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     BindData(TxtBusqueda.Text);
                 }
             }
-            catch (Exception ex)
+            catch (Exception Ex)
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el proceso de edición')", true);
-                Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmTaller", "Update", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmTaller", "Update", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
             }
         }
         protected void GrdDatos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -430,12 +436,12 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     BindData(TxtBusqueda.Text);
                 }
             }
-            catch (Exception ex)
+            catch (Exception Ex)
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrEli'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el proceso de eliminación')", true);
-                Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmTaller", "DELETE", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmTaller", "DELETE", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
             }
         }
         protected void GrdDatos_RowDataBound(object sender, GridViewRowEventArgs e)
