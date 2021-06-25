@@ -185,6 +185,7 @@
     <Content Include="Forms\MRO\FrmAlertaPNNuevos.aspx" />
     <Content Include="Forms\MRO\FrmInformePropuesta.aspx" />
     <Content Include="Forms\MRO\FrmPropuesta.aspx" />
+    <Content Include="Forms\MRO\FrmPropuestaReciboElemV2.aspx" />
     <Content Include="Forms\MRO\FrmPropuestaValorizacion.aspx" />
     <Content Include="Forms\MRO\FrmReparacionMayor.aspx" />
     <Content Include="Forms\MRO\FrmServiciosSinCrear.aspx" />
@@ -728,6 +729,13 @@
     <Compile Include="Forms\MRO\FrmPropuesta.aspx.designer.cs">
       <DependentUpon>FrmPropuesta.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MRO\FrmPropuestaReciboElemV2.aspx.cs">
+      <DependentUpon>FrmPropuestaReciboElemV2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\MRO\FrmPropuestaReciboElemV2.aspx.designer.cs">
+      <DependentUpon>FrmPropuestaReciboElemV2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MRO\FrmPropuestaValorizacion.aspx.cs">
       <DependentUpon>FrmPropuestaValorizacion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -840,6 +848,7 @@
     <Compile Include="Prg\ClsCierreContable.cs" />
     <Compile Include="Prg\ClsConexion.cs" />
     <Compile Include="Prg\ClsPermisos.cs" />
+    <Compile Include="Prg\PrgAlmacen\CsInsertElementoAlmacen.cs" />
     <Compile Include="Prg\PrgIngenieria\ClsTypOrdenTrabajo.cs" />
     <Compile Include="Prg\PrgIngenieria\ClsTypAeronaveVirtualCrearElem.cs" />
     <Compile Include="Prg\PrgIngenieria\ClsTypAeronaveVirtual.cs" />

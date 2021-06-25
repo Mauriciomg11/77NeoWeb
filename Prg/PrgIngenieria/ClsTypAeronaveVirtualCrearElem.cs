@@ -120,7 +120,8 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                         {
                             SC.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = SC.Parameters.AddWithValue("@CurAeroVirtual", TblAeronaveVirtual);
-                            SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@CurServManto", TblServicios);                           
+                            SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@CurServManto", TblServicios);
+                            SqlParameter Prmtrs1 = SC.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
                             Prmtrs.SqlDbType = SqlDbType.Structured;                          
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())

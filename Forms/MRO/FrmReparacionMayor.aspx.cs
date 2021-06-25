@@ -20,7 +20,6 @@ namespace _77NeoWeb.Forms.MRO
         DataTable Idioma = new DataTable();
         DataSet DSTPpal = new DataSet();
         DataSet DSDdl = new DataSet();
-        DataTable DTSrvcConsultado = new DataTable();
         DataTable DTAK = new DataTable();
         DataTable DTAdj = new DataTable();
         DataSet DSPNSN = new DataSet();
@@ -94,13 +93,11 @@ namespace _77NeoWeb.Forms.MRO
             if (ClsP.GetIngresar() == 0)
             {
                 ViewState["VblIngMS"] = 0; BtnIngresar.Visible = false;
-                // GrdAeron.ShowFooter = false;
-                // GrdPN.ShowFooter = false;
-                // GrdHKAsig.ShowFooter = false;
-                // GrdHKAsig.ShowFooter = false;
-                //  GrdAdj.ShowFooter = false;
-                // GrdRecursoF.ShowFooter = false;
-                // GrdLicen.ShowFooter = false;
+                GrdAeron.ShowFooter = false;
+                GrdPN.ShowFooter = false;
+                GrdAdj.ShowFooter = false;
+                GrdRecursoF.ShowFooter = false;
+                GrdLicen.ShowFooter = false;
             }
             if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; BtnModificar.Visible = false; BtnGenerarOT.Visible = false; }
             if (ClsP.GetConsultar() == 0) { }
