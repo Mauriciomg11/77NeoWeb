@@ -33,6 +33,7 @@ namespace _77NeoWeb.Prg.PrgAlmacen
         public int IdAlmacen { get; set; }
         public string CodBodega { get; set; }
         public string CodShippingOrder { get; set; }
+        public int CodAeronave { get; set; }
         public string Matricula { get; set; }
         public string CCosto { get; set; }
         public int AfectaInventario { get; set; }
@@ -67,6 +68,7 @@ namespace _77NeoWeb.Prg.PrgAlmacen
             TblDetalle.Columns.Add("IdAlmacen", typeof(int));
             TblDetalle.Columns.Add("CodBodega", typeof(string));
             TblDetalle.Columns.Add("CodShippingOrder", typeof(string));
+            TblDetalle.Columns.Add("CodAeronave", typeof(int));
             TblDetalle.Columns.Add("Matricula", typeof(string));
             TblDetalle.Columns.Add("CCosto", typeof(string));
             TblDetalle.Columns.Add("AfectaInventario", typeof(int));
@@ -99,6 +101,7 @@ namespace _77NeoWeb.Prg.PrgAlmacen
                     Campo.IdAlmacen,
                     Campo.CodBodega,
                     Campo.CodShippingOrder,
+                    Campo.CodAeronave,
                     Campo.Matricula,
                     Campo.CCosto,
                     Campo.AfectaInventario,

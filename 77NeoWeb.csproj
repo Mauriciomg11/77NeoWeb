@@ -185,6 +185,7 @@
     <Content Include="Forms\MRO\FrmAlertaPNNuevos.aspx" />
     <Content Include="Forms\MRO\FrmInformePropuesta.aspx" />
     <Content Include="Forms\MRO\FrmPropuesta.aspx" />
+    <Content Include="Forms\MRO\FrmPropuestaEntregaElem.aspx" />
     <Content Include="Forms\MRO\FrmPropuestaReciboElemV2.aspx" />
     <Content Include="Forms\MRO\FrmPropuestaValorizacion.aspx" />
     <Content Include="Forms\MRO\FrmReparacionMayor.aspx" />
@@ -728,6 +729,13 @@
     </Compile>
     <Compile Include="Forms\MRO\FrmPropuesta.aspx.designer.cs">
       <DependentUpon>FrmPropuesta.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MRO\FrmPropuestaEntregaElem.aspx.cs">
+      <DependentUpon>FrmPropuestaEntregaElem.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\MRO\FrmPropuestaEntregaElem.aspx.designer.cs">
+      <DependentUpon>FrmPropuestaEntregaElem.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\MRO\FrmPropuestaReciboElemV2.aspx.cs">
       <DependentUpon>FrmPropuestaReciboElemV2.aspx</DependentUpon>

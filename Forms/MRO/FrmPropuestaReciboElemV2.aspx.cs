@@ -211,6 +211,7 @@ namespace _77NeoWeb.Forms.MRO
                     IdAlmacen = Convert.ToInt32(Row["IdAlmacen"].ToString().Trim()),
                     CodBodega = Row["CodBodega"].ToString().Trim(),
                     CodShippingOrder = "",
+                    CodAeronave=0,
                     Matricula = "",
                     CCosto = "",
                     AfectaInventario = Convert.ToInt32(0),
@@ -223,7 +224,7 @@ namespace _77NeoWeb.Forms.MRO
                     Proceso = "RecElemPpt",
                     IdDetPropHk = Convert.ToInt32(0),
                     IdPPt = Convert.ToInt32(0),
-                    Accion = "INSERT",
+                    Accion = "ENTRADA",
                 };
                 ObjDetalle.Add(TypDetalle);
             }

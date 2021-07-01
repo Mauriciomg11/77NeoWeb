@@ -16,22 +16,29 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataTable DTDet = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }/* */
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000082";// 00000082|00000133
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["!dC!@"] = 1;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles    */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 1;
+                    Session["77IDM"] = "4"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
@@ -221,9 +228,10 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
             {
                 Cnx2.Open();
-                string LtxtSql = "EXEC SP_PANTALLA_Almacen 6,'','','','SELECT',@Prmtr,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                string LtxtSql = "EXEC SP_PANTALLA_Almacen 6,'','','','SELECT',@Prmtr,0,0,@CC,'01-1-2009','01-01-1900','01-01-1900'";
                 SqlCommand SC = new SqlCommand(LtxtSql, Cnx2);
                 SC.Parameters.AddWithValue("@Prmtr", Prmtr);
+                SC.Parameters.AddWithValue("@CC", Session["!dC!@"]);
                 SqlDataReader SDR = SC.ExecuteReader();
                 if (SDR.Read())
                 {
@@ -235,11 +243,11 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 }
                 SDR.Close();
                 Cnx2.Close();
-                BindDBodg(TxtCod.Text.Trim());
+                //BindDBodg(TxtCod.Text.Trim(), "UPDATE");
             }
         }
         protected void DdlBusq_TextChanged(object sender, EventArgs e)
-        { Traerdatos(DdlBusq.Text); }
+        { Traerdatos(DdlBusq.Text); BindDBodg(TxtCod.Text.Trim(), "UPDATE"); }
         protected void BtnIngresar_Click(object sender, EventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -256,7 +264,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 ActivarCampos(true, true, false, "Ingresar");
                 DdlBusq.SelectedValue = "0";
                 DdlBusq.Enabled = false;
-                BindDBodg("0");
+                BindDBodg("0", "SELECT");
                 GrdDetalle.Enabled = false;
                 Result = Idioma.Select("Objeto= 'MensConfIng'"); // |MensConfMod
                 foreach (DataRow row in Result)
@@ -316,6 +324,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                                 BindBDdlBusq();
                                 DdlBusq.Text = PCod;
                                 Traerdatos(PCod);
+                                BindDBodg(TxtCod.Text.Trim(), "SELECT");
                                 GrdDetalle.Enabled = true;
                                 BtnIngresar.OnClientClick = "";
                             }
@@ -408,6 +417,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                                 DdlBusq.Text = TxtCod.Text.Trim();
                                 DdlBusq.Enabled = true;
                                 Traerdatos(DdlBusq.Text.Trim());
+                                BindDBodg(TxtCod.Text.Trim(), "SELECT");
                                 BtnModificar.OnClientClick = "";
                             }
                             catch (Exception Ex)
@@ -492,42 +502,47 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             BindDAsigUsu();
             MultVw.ActiveViewIndex = 2;
         }
-        protected void BindDBodg(string CodA)
+        protected void BindDBodg(string CodA, string Accion)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            DataTable dtbl = new DataTable();
-            string VbTxtSql = "EXEC SP_PANTALLA_Almacen 2,'01','','','',@CA,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
-            Cnx.SelecBD();
-            using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
+            if (Accion.Equals("UPDATE"))
             {
-                SCnx.Open();
-                using (SqlCommand SC = new SqlCommand(VbTxtSql, SCnx))
+                string VbTxtSql = "EXEC SP_PANTALLA_Almacen 2,'01','','','',@CA,0,0,@CC,'01-1-2009','01-01-1900','01-01-1900'";
+                Cnx.SelecBD();
+                using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
                 {
-                    SC.Parameters.AddWithValue("@CA", CodA);
+                    SCnx.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, SCnx))
+                    {
+                        SC.Parameters.AddWithValue("@CA", CodA);
+                        SC.Parameters.AddWithValue("@CC", Session["!dC!@"]);
 
-                    SqlDataAdapter SDA = new SqlDataAdapter();
-                    SDA.SelectCommand = SC;
-                    SDA.Fill(dtbl);
+                        SqlDataAdapter SDA = new SqlDataAdapter();
+                        SDA.SelectCommand = SC;
+                        SDA.Fill(DTDet);
+                        ViewState["DTDet"] = DTDet;
+                    }
                 }
             }
-            if (dtbl.Rows.Count > 0)
+            DTDet = (DataTable)ViewState["DTDet"];
+            if (DTDet.Rows.Count > 0)
             {
-                GrdDetalle.DataSource = dtbl;
+                GrdDetalle.DataSource = DTDet;
                 GrdDetalle.DataBind();
             }
             else
             {
-                dtbl.Rows.Add(dtbl.NewRow());
-                GrdDetalle.DataSource = dtbl;
+                DTDet.Rows.Add(DTDet.NewRow());
+                GrdDetalle.DataSource = DTDet;
                 GrdDetalle.DataBind();
                 GrdDetalle.Rows[0].Cells.Clear();
                 GrdDetalle.Rows[0].Cells.Add(new TableCell());
-                GrdDetalle.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
                 DataRow[] Result = Idioma.Select("Objeto= 'SinRegistros'");
                 foreach (DataRow row in Result)
                 { GrdDetalle.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
                 GrdDetalle.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
             }
+
         }
         protected void GrdDetalle_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -568,7 +583,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                                 return;
                             }
                             Transac.Commit();
-                            BindDBodg(TxtCod.Text.Trim());
+                            BindDBodg(TxtCod.Text.Trim(), "UPDATE");
                         }
                         catch (Exception ex)
                         {
@@ -609,7 +624,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             }
         }
         protected void GrdDetalle_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        { GrdDetalle.PageIndex = e.NewPageIndex; BindDBodg(TxtCod.Text); }
+        { GrdDetalle.PageIndex = e.NewPageIndex; BindDBodg(TxtCod.Text, "SELECT"); }
         // *********************** Asignar ubicaciones fisicas *********************
         protected void BindBDdlAsigUB()
         {
@@ -712,7 +727,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             ddlUbicaFis.Text = "";
             CkbTodasUbica.Checked = false;
             MultVw.ActiveViewIndex = 0;
-            BindDBodg(TxtCod.Text.Trim());
+            BindDBodg(TxtCod.Text.Trim(), "UPDATE");
         }
         protected void GrdUbicaDispo_RowDataBound(object sender, GridViewRowEventArgs e)
         {
