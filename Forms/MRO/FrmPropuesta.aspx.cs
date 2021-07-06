@@ -533,7 +533,6 @@ namespace _77NeoWeb.Forms.MRO
 
                                 SDA.SelectCommand = SC;
                                 SDA.Fill(DSDdl);
-                                //SDA.Fill(DtDdlIncioPpal);
                                 DSDdl.Tables[0].TableName = "HKSinPPT";
                                 DSDdl.Tables[1].TableName = "HKConSubPT";
                                 DSDdl.Tables[2].TableName = "TipoPT";
@@ -677,7 +676,7 @@ namespace _77NeoWeb.Forms.MRO
                             TxtNumPpt.Text = SDR["IdPropuesta"].ToString().Trim();
                             TxtFecha.Text = SDR["FechaPropuesta"].ToString().Trim();
                             DdlTipo.Text = SDR["CodTipoPropuesta"].ToString().Trim();
-                            DdlCliente.Text = SDR["CodCliente"].ToString().Trim();
+                            DdlCliente.Text = SDR["IdTercero"].ToString().Trim();
                             DdlFormPag.Text = SDR["CodTipoPago"].ToString().Trim();
                             DdlPptSuper.Text = SDR["DanoOculto"].ToString().Trim();
                             if (DdlPptSuper.Text.Trim().Equals("")) { LblMaster.Visible = true; } else { LblMaster.Visible = false; }
@@ -2743,7 +2742,7 @@ namespace _77NeoWeb.Forms.MRO
                 int rowIndex = row.RowIndex;
                 string vbcod = ((Label)row.FindControl("LblPpt")).Text.ToString().Trim();
                 GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
-                string VbCodCli = GrdBusq.DataKeys[gvr.RowIndex].Values["CodCliente"].ToString();
+                string VbCodCli = GrdBusq.DataKeys[gvr.RowIndex].Values["IdTercero"].ToString();
                 string VbCodTipo = GrdBusq.DataKeys[gvr.RowIndex].Values["CodTipoPropuesta"].ToString();
                 TxtNumPpt.Text = vbcod;
                 DdlTipo.Text = VbCodTipo;

@@ -15,28 +15,34 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataSet DSTDet = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); } /**/
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-               /* Session["C77U"] = "00000082";// 00000082|00000133
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["!dC!@"] = 1;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles    */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 1;
+                    Session["77IDM"] = "4"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
                 ModSeguridad();
-                BindBDdlBusq();
-                BindBDdl();
+                Traerdatos("0", "UPDATE");
                 ViewState["Accion"] = "";
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
@@ -158,24 +164,6 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 }
             }
         }
-        protected void BindBDdlBusq()
-        {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_Bodega 4,'','','','Busq',{0},0,0,0,'01-1-2009','01-01-1900','01-01-1900'", Session["!dC!@"]);
-            DdlBusq.DataSource = Cnx.DSET(LtxtSql);
-            DdlBusq.DataMember = "Datos";
-            DdlBusq.DataTextField = "CodBodega";
-            DdlBusq.DataValueField = "CodidBodega";
-            DdlBusq.DataBind();
-        }
-        protected void BindBDdl()
-        {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_Bodega 4,'','','','Cliente',{0},0,0,0,'01-1-2009','01-01-1900','01-01-1900'", Session["!dC!@"]);
-            DdlCliente.DataSource = Cnx.DSET(LtxtSql);
-            DdlCliente.DataMember = "Datos";
-            DdlCliente.DataTextField = "RazonSocial";
-            DdlCliente.DataValueField = "CodTercero";
-            DdlCliente.DataBind();
-        }
         protected void LimpiarCampos()
         { TxtCod.Text = ""; TxtNombre.Text = ""; DdlCliente.Text = ""; }
         protected void ValidarCampos(string Accion)
@@ -205,31 +193,60 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
         }
         protected void ActivarCampos(bool Ing, bool Edi, string accion)
         { TxtCod.Enabled = Ing; TxtNombre.Enabled = Edi; DdlCliente.Enabled = Edi; }
-        protected void Traerdatos(string Prmtr)
+        protected void Traerdatos(string Prmtr,string Accion)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
 
-            Cnx.SelecBD();
-            using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
+            if (Accion.Equals("UPDATE"))
             {
-                Cnx2.Open();
-                string LtxtSql = "EXEC SP_PANTALLA_Bodega 4,'','','','SELECT',@Prmtr,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
-                SqlCommand SC = new SqlCommand(LtxtSql, Cnx2);
-                SC.Parameters.AddWithValue("@Prmtr", Prmtr);
-                SqlDataReader SDR = SC.ExecuteReader();
-                if (SDR.Read())
+                Cnx.SelecBD();
+                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    TxtCod.Text = HttpUtility.HtmlDecode(SDR["CodBodega"].ToString().Trim());
-                    TxtNombre.Text = HttpUtility.HtmlDecode(SDR["Nombre"].ToString().Trim());
-                    DdlCliente.Text = HttpUtility.HtmlDecode(SDR["CodTercero"].ToString().Trim());
+                    string VbTxtSql = "EXEC SP_PANTALLA_Bodega 4,'','','','SELECT',@Prmtr,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                    sqlConB.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                    {
+                        SC.Parameters.AddWithValue("@Prmtr", Prmtr);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            using (DataSet DSTDet = new DataSet())
+                            {
+
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DSTDet);
+                                DSTDet.Tables[0].TableName = "Bodega";
+                                DSTDet.Tables[1].TableName = "Tercero";
+                                DSTDet.Tables[2].TableName = "Consult";
+                                ViewState["DSTDet"] = DSTDet;
+                            }
+                        }
+                    }
                 }
-                SDR.Close();
-                Cnx2.Close();
-                BindDBodg(TxtCod.Text.Trim());
+            }
+            DSTDet = (DataSet)ViewState["DSTDet"];
+
+            string VbCodAnt = DdlBusq.Text.Trim();
+            DdlBusq.DataSource = DSTDet.Tables[0];
+            DdlBusq.DataTextField = "CodBodega";
+            DdlBusq.DataValueField = "CodidBodega";
+            DdlBusq.DataBind();
+            DdlBusq.Text = VbCodAnt.Equals("0") ? @Prmtr : VbCodAnt;
+
+            DdlCliente.DataSource = DSTDet.Tables[1];
+            DdlCliente.DataTextField = "RazonSocial";
+            DdlCliente.DataValueField = "IdTercero";
+            DdlCliente.DataBind();
+
+            foreach (DataRow DR in DSTDet.Tables[2].Rows)//"Consult"
+            {
+                TxtCod.Text = HttpUtility.HtmlDecode(DR["CodBodega"].ToString().Trim());
+                TxtNombre.Text = HttpUtility.HtmlDecode(DR["Nombre"].ToString().Trim());
+                DdlCliente.Text = HttpUtility.HtmlDecode(DR["CodTercero"].ToString().Trim());
             }
         }
         protected void DdlBusq_TextChanged(object sender, EventArgs e)
-        { Traerdatos(DdlBusq.Text); }
+        { Traerdatos(DdlBusq.Text,"UPDATE"); }
         protected void BtnIngresar_Click(object sender, EventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -300,10 +317,9 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                                 foreach (DataRow row in Result)
                                 { BtnIngresar.Text = row["Texto"].ToString().Trim(); }//
                                 ActivarCampos(false, false, "Ingresar");
-                                DdlBusq.Enabled = true;
-                                BindBDdlBusq();
+                                DdlBusq.Enabled = true;                                
+                                Traerdatos(PCod,"UPDATE");
                                 DdlBusq.Text = PCod;
-                                Traerdatos(PCod);
                                 GrdDetalle.Enabled = true;
                                 BtnIngresar.OnClientClick = "";
                             }
@@ -392,7 +408,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                                 ViewState["Accion"] = "";
                                 ActivarCampos(false, false, "UPDATE");
                                 DdlBusq.Enabled = true;
-                                Traerdatos(DdlBusq.Text.Trim());
+                                Traerdatos(DdlBusq.Text.Trim(), "UPDATE");
                                 BtnModificar.OnClientClick = "";
                             }
                             catch (Exception Ex)
@@ -452,8 +468,9 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                                 return;
                             }
                             Transac.Commit();
-                            BindBDdlBusq();
+ 
                             DdlBusq.Text = "0";
+                            Traerdatos(DdlBusq.Text.Trim(), "UPDATE");
                             LimpiarCampos();
                         }
                         catch (Exception ex)
@@ -498,7 +515,6 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 GrdDetalle.DataBind();
                 GrdDetalle.Rows[0].Cells.Clear();
                 GrdDetalle.Rows[0].Cells.Add(new TableCell());
-                GrdDetalle.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
                 DataRow[] Result = Idioma.Select("Objeto= 'SinRegistros'");
                 foreach (DataRow row in Result)
                 { GrdDetalle.Rows[0].Cells[0].Text = row["Texto"].ToString(); }

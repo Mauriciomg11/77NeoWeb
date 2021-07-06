@@ -31,7 +31,7 @@
                 </tr>
             </table>
             <div class="DivGrid DivContendorGrid">
-                <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodEstadoAeronave"
+                <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdEstadoAeronave,CodEstadoAeronave"
                     CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                     OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit"
                     OnRowDeleting="GrdDatos_RowDeleting" OnRowDataBound="GrdDatos_RowDataBound" OnPageIndexChanging="GrdDatos_PageIndexChanging">
@@ -60,7 +60,7 @@
                                 <asp:CheckBox ID="CkbActivo" Checked='<%# Eval("Activo").ToString()=="1" ? true : false %>' runat="server" />
                             </EditItemTemplate>
                             <FooterTemplate>
-                                <asp:CheckBox ID="CkbActivoPP" runat="server" />
+                                <asp:CheckBox ID="CkbActivoPP" runat="server" Checked="true" />
                             </FooterTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField FooterStyle-Width="10%">

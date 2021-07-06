@@ -74,6 +74,7 @@
         .TablaFlota {
             position: absolute;
             left: 40%;
+            width:40%
         }
     </style>
 </asp:Content>
@@ -96,9 +97,9 @@
             <table class="TablaFlota">
                 <tr>
                     <td>
-                        <asp:Label ID="LblFlota" runat="server" Text="Modelo: " CssClass="LblTextoBusq"></asp:Label></td>
+                        <asp:Label ID="LblFlota" runat="server" Text="Modelo: " CssClass="LblTextoBusq"/></td>
                     <td>
-                        <asp:DropDownList ID="DdlFlota" runat="server" CssClass="form-control" Height="30px" Font-Size="Smaller" AutoPostBack="true" OnTextChanged="DdlFlota_TextChanged"></asp:DropDownList>
+                        <asp:DropDownList ID="DdlFlota" runat="server" CssClass="form-control" Width="100%" Height="30px" Font-Size="Smaller" AutoPostBack="true" OnTextChanged="DdlFlota_TextChanged"/></td>
                         <td>
                             <asp:ImageButton ID="IbtExpExcel" runat="server" ToolTip="Exportar" CssClass=" BtnExpExcel" ImageUrl="~/images/ExcelV1.png" OnClick="IbtExpExcel_Click" /></td>
                 </tr>

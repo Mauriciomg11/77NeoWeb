@@ -66,7 +66,7 @@
                                 <asp:CheckBox ID="CkbActivo" Checked='<%# Eval("Activo").ToString()=="1" ? true : false %>' runat="server" />
                             </EditItemTemplate>
                             <FooterTemplate>
-                                <asp:CheckBox ID="CkbActivoPP" runat="server" />
+                                <asp:CheckBox ID="CkbActivoPP" runat="server" Checked="true" />
                             </FooterTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField FooterStyle-Width="10%">

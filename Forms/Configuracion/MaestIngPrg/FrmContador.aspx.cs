@@ -22,22 +22,28 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         int VbResetCnt;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); } /**/
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             Page.Title = string.Format("Configuración_Contador");
             if (Session["C77U"] == null)
             {
-                Session["VldrCntdr"] = "S";
+                ViewState["VldrCntdr"] = "S";
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000082";// 00000082|00000133
-                 Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                 Session["$VR"] = "77NEO01";
-                 Session["V$U@"] = "sa";
-                 Session["P@$"] = "admindemp";
-                 Session["N77U"] = Session["D[BX"];
-                 Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                 Session["!dC!@"] = 0;
-                 Session["77IDM"] = "5"; // 4 español | 5 ingles     */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 2;
+                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
@@ -55,6 +61,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             ViewState["VblModMS"] = 1;
             ViewState["VblEliMS"] = 1;
             ViewState["VblImpMS"] = 1;
+            if (!Session["C77U"].ToString().Trim().Equals("00000082")) { BtnIngresar.Visible = false; BtnModificar.Visible = false; BtnEliminar.Visible = false; }
 
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), "FrmContador.aspx");
@@ -203,14 +210,13 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         protected void AsignarValores()
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            Session["VldrCntdr"] = "S";
+            ViewState["VldrCntdr"] = "S";
             if (TxtCod.Text == String.Empty)
             {
-                //ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Debe ingresar un código')", true);
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens01Cntdr'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
-                Session["VldrCntdr"] = "N";
+                ViewState["VldrCntdr"] = "N";
                 return;
             }
             if (DdlUndMed.Text == String.Empty)
@@ -218,7 +224,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens02Cntdr'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una unidad de medida')", true);
-                Session["VldrCntdr"] = "N";
+                ViewState["VldrCntdr"] = "N";
                 return;
             }
             if (DdlIdent.Text == String.Empty)
@@ -226,7 +232,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens03Cntdr'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar un identificador')", true);
-                Session["VldrCntdr"] = "N";
+                ViewState["VldrCntdr"] = "N";
                 return;
             }
             VbCont = TxtCod.Text.Trim();
@@ -343,7 +349,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 try
                 {
                     AsignarValores();
-                    if (Session["VldrCntdr"].ToString() == "N") { return; }
+                    if (ViewState["VldrCntdr"].ToString() == "N") { return; }
                     Cnx.SelecBD();
                     using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                     {
@@ -415,7 +421,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 try
                 {
                     AsignarValores();
-                    if (Session["VldrCntdr"].ToString() == "N") { return; }
+                    if (ViewState["VldrCntdr"].ToString() == "N") { return; }
                     Cnx.SelecBD();
                     using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                     {

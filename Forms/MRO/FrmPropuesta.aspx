@@ -884,7 +884,7 @@
                         </table>
                         <br />
                         <div class="CentrarGrid pre-scrollable">
-                            <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="Codigo,CodCliente,CodTipoPropuesta"
+                            <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="Codigo,CodCliente,CodTipoPropuesta,IdTercero"
                                 CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowCommand="GrdBusq_RowCommand" OnRowDataBound="GrdBusq_RowDataBound">
                                 <Columns>
                                     <asp:TemplateField HeaderText="Select">
