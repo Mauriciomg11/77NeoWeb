@@ -49,7 +49,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 BindData(TxtBusqueda.Text, "UPD");
             }
         }
-        void ModSeguridad()
+        protected void ModSeguridad()
         {
             ViewState["VblIngMS"] = 1;
             ViewState["VblModMS"] = 1;

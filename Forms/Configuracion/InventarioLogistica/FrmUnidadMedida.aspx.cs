@@ -56,10 +56,8 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             ViewState["VblCE1"] = 1;
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
-            if (ClsP.GetAccesoFrm() == 0)
-            { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
-            if (ClsP.GetIngresar() == 0)
-            { ViewState["VblIngMS"] = 0; GrdDatos.ShowFooter = false; }
+            if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
+            if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; GrdDatos.ShowFooter = false; }
             if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; }
             if (ClsP.GetConsultar() == 0) { }
             if (ClsP.GetImprimir() == 0) { }
@@ -249,7 +247,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
         protected void GrdDatos_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-             PerfilesGrid();
+            PerfilesGrid();
             string VbCodAnt = GrdDatos.DataKeys[e.RowIndex].Values["CodAnt"].ToString();
             string VbCodTipoUMAnt = GrdDatos.DataKeys[e.RowIndex].Values["CodTipUnMedAnt"].ToString();
             string VbCod = (GrdDatos.Rows[e.RowIndex].FindControl("TxtCodUM") as TextBox).Text.Trim();
@@ -284,7 +282,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 {
                     string VBQuery = "EXEC SP_TablasGeneral 11,@Cd,@Dsc,@Tp,@US,@CdAnt,@CdTpUMAnt,'','','UPDATE',@Act,0,0,0,0,@CC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
-                    {                       
+                    {
                         SC.Parameters.AddWithValue("@Cd", VbCod);
                         SC.Parameters.AddWithValue("@Dsc", VbDesc);
                         SC.Parameters.AddWithValue("@Tp", VbTipo);
@@ -341,7 +339,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     string VBQuery = "EXEC SP_TablasGeneral 11,@ID,'',@Tp,@US,'','','','','DELETE',0,0,0,0,0,@CC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
-                       
+
                         SC.Parameters.AddWithValue("@ID", VbCod);
                         SC.Parameters.AddWithValue("@Tp", GrdDatos.DataKeys[e.RowIndex].Values["CodTipUnMedAnt"].ToString());
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
@@ -394,7 +392,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             }
             if ((e.Row.RowState & DataControlRowState.Edit) > 0)
             {
-               string LtxtSql = string.Format(" EXEC SP_TablasGeneral 11,'','','','','','','','','DDL',0,0,0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
+                string LtxtSql = string.Format(" EXEC SP_TablasGeneral 11,'','','','','','','','','DDL',0,0,0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
                 DropDownList DdlTipoUM = (e.Row.FindControl("DdlTipoUM") as DropDownList);
                 DdlTipoUM.DataSource = Cnx.DSET(LtxtSql);
                 DdlTipoUM.DataTextField = "Descripcion";
@@ -412,7 +410,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 foreach (DataRow row in Result)
                 { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
 
-                if((int)ViewState["VblCE1"] == 0)
+                if ((int)ViewState["VblCE1"] == 0)
                 { TextBox TxtCodUM = (e.Row.FindControl("TxtCodUM") as TextBox); TxtCodUM.Enabled = false; }
             }
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -437,7 +435,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
                 }
                 e.Row.Cells[2].HorizontalAlign = HorizontalAlign.Left;
-            }            
+            }
         }
         protected void GrdDatos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         { GrdDatos.PageIndex = e.NewPageIndex; BindData(TxtBusqueda.Text); }

@@ -18,6 +18,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataSet DSTDdl = new DataSet();
         string VbCont, VbDescCn, VbUMCnt, VbIdenCnt;
         int VbResetCnt;
         protected void Page_Load(object sender, EventArgs e)
@@ -51,7 +52,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 ViewState["Accion"] = "";
                 ModSeguridad();
                 ActivarCampos(false, false);
-                BindDataDdlCntr();
+                BindDataDdlCntr("UPD");
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
@@ -157,32 +158,58 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 ViewState["TablaIdioma"] = Idioma;
             }
         }
-        protected void BindDataDdlCntr()
+        protected void BindDataDdlCntr( string Accion)
         {
-            Cnx.SelecBD();
-            using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+            if (Accion.Equals("UPD"))
             {
-                string LtxtSql = "EXEC SP_PANTALLA_Tipo_contador 4,'','','','','',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
-                DdlBuscar.DataSource = Cnx.DSET(LtxtSql);
-                DdlBuscar.DataMember = "Datos";
-                DdlBuscar.DataTextField = "Descripcion";
-                DdlBuscar.DataValueField = "CodContador";
-                DdlBuscar.DataBind();
+                Cnx.SelecBD();
+                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+                {
+                    string VbTxtSql = " EXEC SP_PANTALLA_Tipo_contador 9,'','','','','',0,0,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'";
+                    sqlConB.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                    {
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
 
-                LtxtSql = "EXEC SP_PANTALLA_Tipo_contador 5,'','','','','',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
-                DdlUndMed.DataSource = Cnx.DSET(LtxtSql);
-                DdlUndMed.DataMember = "Datos";
-                DdlUndMed.DataTextField = "Descripcion";
-                DdlUndMed.DataValueField = "CodUnidMedida";
-                DdlUndMed.DataBind();
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            using (DataSet DSTDdl = new DataSet())
+                            {
 
-                LtxtSql = "EXEC SP_PANTALLA_Tipo_contador 6,'','','','','',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
-                DdlIdent.DataSource = Cnx.DSET(LtxtSql);
-                DdlIdent.DataMember = "Datos";
-                DdlIdent.DataTextField = "Descripcion";
-                DdlIdent.DataValueField = "IdentificadorC";
-                DdlIdent.DataBind();
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DSTDdl);
+                                DSTDdl.Tables[0].TableName = "Contador";
+                                DSTDdl.Tables[1].TableName = "UndMed";
+                                DSTDdl.Tables[2].TableName = "Identificdr";                                
+                                ViewState["DSDdl"] = DSTDdl;
+                            }
+                        }
+                    }
+                }
             }
+            DSTDdl = (DataSet)ViewState["DSDdl"];
+
+            string VbCodAnt = DdlBuscar.Text.Trim();
+            DdlBuscar.DataSource = DSTDdl.Tables[0];
+            DdlBuscar.DataTextField = "Descripcion";
+            DdlBuscar.DataValueField = "CodContador";
+            DdlBuscar.DataBind();
+            DdlBuscar.Text = VbCodAnt;
+
+            VbCodAnt = DdlUndMed.Text.Trim();
+            DdlUndMed.DataSource = DSTDdl.Tables[1];
+            DdlUndMed.DataTextField = "Descripcion";
+            DdlUndMed.DataValueField = "CodUnidMedida";
+            DdlUndMed.DataBind();
+            DdlUndMed.Text = VbCodAnt;
+
+            VbCodAnt = DdlIdent.Text.Trim();
+            DdlIdent.DataSource = DSTDdl.Tables[2];
+            DdlIdent.DataTextField = "Descripcion";
+            DdlIdent.DataValueField = "IdentificadorC";
+            DdlIdent.DataBind();
+            DdlIdent.Text = VbCodAnt;
         }
         protected void LimpiarCampos()
         {
@@ -258,20 +285,23 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
 
                 }
 
-                string LtxtSql = "EXEC SP_PANTALLA_Tipo_contador 7,'" + VbNewCod + "','','','','',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
-                SqlCommand Comando = new SqlCommand(LtxtSql, sqlCon);
-                sqlCon.Open();
-                SqlDataReader tbl = Comando.ExecuteReader();
-                if (tbl.Read())
+                string LtxtSql = "EXEC SP_PANTALLA_Tipo_contador 7,'" + VbNewCod + "','','','','',0,0,@Idm,0,'01-01-1','02-01-1','03-01-1'";
+                using (SqlCommand sqlCmd = new SqlCommand(LtxtSql, sqlCon))
                 {
-                    TxtCod.Text = tbl["CodContador"].ToString();
-                    TxtDesc.Text = tbl["Nombre"].ToString();
-                    DdlUndMed.Text = tbl["CodUnidMedida"].ToString();
-                    DdlIdent.Text = tbl["identificador"].ToString();
-                    CkReset.Checked = false;
-                    if (Convert.ToInt32(tbl["Reseteable"].ToString()) == 1)
+                    sqlCmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                    sqlCon.Open();
+                    SqlDataReader tbl = sqlCmd.ExecuteReader();
+                    if (tbl.Read())
                     {
-                        CkReset.Checked = true;
+                        TxtCod.Text = tbl["CodContador"].ToString();
+                        TxtDesc.Text = tbl["Nombre"].ToString();
+                        DdlUndMed.Text = tbl["CodUnidMedida"].ToString();
+                        DdlIdent.Text = tbl["identificador"].ToString();
+                        CkReset.Checked = false;
+                        if (Convert.ToInt32(tbl["Reseteable"].ToString()) == 1)
+                        {
+                            CkReset.Checked = true;
+                        }
                     }
                 }
             }
@@ -368,7 +398,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                     {
                         sqlCon.Open();
-                        Txtsql = "EXEC SP_TablasPlantillaM 8,@Cod,@Desc, @UM, @Idnt, @UsuC,'','','','',@Rst,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'	";
+                        Txtsql = "EXEC SP_TablasPlantillaM 8,@Cod,@Desc, @UM, @Idnt, @UsuC,'','','','',@Rst,0,0,0,@Idm,0,'01-01-1','02-01-1','03-01-1'	";
                         SqlCommand sqlCmd = new SqlCommand(Txtsql, sqlCon);
                         sqlCmd.Parameters.AddWithValue("@Cod", VbCont.ToString());
                         sqlCmd.Parameters.AddWithValue("@Desc", VbDescCn.ToString());
@@ -376,6 +406,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                         sqlCmd.Parameters.AddWithValue("@UM", VbUMCnt.ToString());
                         sqlCmd.Parameters.AddWithValue("@Idnt", VbIdenCnt);
                         sqlCmd.Parameters.AddWithValue("@Rst", VbResetCnt);
+                        sqlCmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);
 
                         sqlCmd.ExecuteNonQuery();
                         LimpiarCampos();
@@ -387,7 +418,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                         ActivarCampos(false, false);
                         DdlBuscar.Enabled = true;
                         BtnIngresar.OnClientClick = "";
-                        BindDataDdlCntr();
+                        BindDataDdlCntr("UPD");
                     }
                     BusqNewReg(VbCont);
                 }
@@ -426,7 +457,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                     {
                         sqlCon.Open();
-                        string Txtsql = "EXEC SP_TablasPlantillaM 9,@Cod,@Desc, @UM, @Idnt, @UsuC,'','','','',@Rst,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                        string Txtsql = "EXEC SP_TablasPlantillaM 9,@Cod,@Desc, @UM, @Idnt, @UsuC,'','','','',@Rst,0,0,0,@Idm,0,'01-01-1','02-01-1','03-01-1'";
                         SqlCommand sqlCmd = new SqlCommand(Txtsql, sqlCon);
                         sqlCmd.Parameters.AddWithValue("@Cod", VbCont.ToString());
                         sqlCmd.Parameters.AddWithValue("@Desc", VbDescCn.ToString());
@@ -434,6 +465,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                         sqlCmd.Parameters.AddWithValue("@UM", VbUMCnt.ToString());
                         sqlCmd.Parameters.AddWithValue("@Idnt", VbIdenCnt);
                         sqlCmd.Parameters.AddWithValue("@Rst", VbResetCnt);
+                        sqlCmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                         sqlCmd.ExecuteNonQuery();
                         ViewState["Accion"] = "";
                         DataRow[] Result = Idioma.Select("Objeto= 'BotonMod'");
@@ -444,7 +476,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                         DdlBuscar.Enabled = true;
                         BtnModificar.OnClientClick = "";
                         LimpiarCampos();
-                        BindDataDdlCntr();
+                        BindDataDdlCntr("UPD");
                     }
                     BusqNewReg(VbCont);
                 }
@@ -493,7 +525,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     sqlCmd.ExecuteNonQuery();
                     LimpiarCampos();
                     ActivarBotones(true, false, false, false, false);
-                    BindDataDdlCntr();
+                    BindDataDdlCntr("UPD");
                 }
             }
             catch (Exception ex)

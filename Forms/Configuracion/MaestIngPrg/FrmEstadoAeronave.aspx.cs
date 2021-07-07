@@ -54,22 +54,13 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             ViewState["VblModMS"] = 1;
             ViewState["VblEliMS"] = 1;
             ViewState["VblImpMS"] = 1;
+            if (!Session["C77U"].ToString().Trim().Equals("00000082")) { GrdDatos.ShowFooter = false; }
 
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), "FrmEstadoAeronave.aspx");
-            if (ClsP.GetAccesoFrm() == 0)
-            {
-                Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx");
-            }
-            if (ClsP.GetIngresar() == 0)
-            {
-                ViewState["VblIngMS"] = 0;
-                GrdDatos.ShowFooter = false;
-            }
-            if (ClsP.GetModificar() == 0)
-            {
-                ViewState["VblModMS"] = 0;
-            }
+            if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
+            if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; GrdDatos.ShowFooter = false; }
+            if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; }
             if (ClsP.GetConsultar() == 0)
             {
             }
@@ -77,10 +68,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             {
 
             }
-            if (ClsP.GetEliminar() == 0)
-            {
-                ViewState["VblEliMS"] = 0;
-            }
+            if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; }
             if (ClsP.GetCE1() == 0)
             {
             }
@@ -138,6 +126,26 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 ViewState["TablaIdioma"] = Idioma;
             }
         }
+        protected void PerfilesGrid()
+        {
+            foreach (GridViewRow Row in GrdDatos.Rows)
+            {
+                ImageButton imgE = Row.FindControl("IbtEdit") as ImageButton; ImageButton imgD = Row.FindControl("IbtDelete") as ImageButton;
+                if (!Session["C77U"].ToString().Trim().Equals("00000082"))
+                {
+                    if (imgE != null) { Row.Cells[3].Controls.Remove(imgE); }
+                    if (imgD != null) { Row.Cells[3].Controls.Remove(imgD); }
+                }
+                if ((int)ViewState["VblModMS"] == 0)
+                {
+                    if (imgE != null) { Row.Cells[3].Controls.Remove(imgE); }
+                }
+                if ((int)ViewState["VblEliMS"] == 0)
+                {
+                    if (imgD != null) { Row.Cells[3].Controls.Remove(imgD); }
+                }
+            }
+        }
         protected void BindData(string VbConsultar, string Accion)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -147,10 +155,11 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 Cnx.SelecBD();
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbTxtSql = "EXEC SP_Pantalla_Parametros 8,'','','','','ESTADOA',0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
+                    string VbTxtSql = "EXEC SP_Pantalla_Parametros 8,'','','','','ESTADOA',0,0,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'";
                     sqlCon.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlCon))
                     {
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
 
                         SqlDataAdapter SDA = new SqlDataAdapter();
@@ -195,30 +204,10 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         {
 
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            foreach (GridViewRow Row in GrdDatos.Rows)
-            {
-
-                if ((int)ViewState["VblModMS"] == 0)
-                {
-                    ImageButton imgE = Row.FindControl("IbtEdit") as ImageButton;
-                    if (imgE != null)
-                    {
-                        Row.Cells[3].Controls.Remove(imgE);
-                    }
-                }
-                if ((int)ViewState["VblEliMS"] == 0)
-                {
-                    ImageButton imgD = Row.FindControl("IbtDelete") as ImageButton;
-                    if (imgD != null)
-                    {
-                        Row.Cells[3].Controls.Remove(imgD);
-                    }
-                }
-            }
+            PerfilesGrid();
             if (e.CommandName.Equals("AddNew"))
             {
-                string VbDesc, VBQuery;
-                VbDesc = (GrdDatos.FooterRow.FindControl("TxtDescPP") as TextBox).Text.Trim();
+                string VbDesc = (GrdDatos.FooterRow.FindControl("TxtDescPP") as TextBox).Text.Trim();
                 if (VbDesc == String.Empty)
                 {
 
@@ -233,17 +222,18 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        VBQuery = "EXEC SP_Pantalla_Parametros 0, @Desc, @US,'','TblEstadoAeronave','CodEstadoAeronave',6,@Act,@ICC,2,'01-01-1','02-01-1','03-01-1'";
+                        string VbQuery = "EXEC SP_TablasPlantillaM 11,'', @Desc, @Us,'','','','TblEstadoAeronave','CodEstadoAeronave','INSERT', @Act,0,6,0,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'";
                         CheckBox chkbox = GrdDatos.FooterRow.FindControl("CkbActivoPP") as CheckBox;
                         int VbActivo = 0;
                         if (chkbox.Checked == true) { VbActivo = 1; }
-                        using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
+                        using (SqlCommand sqlCmd = new SqlCommand(VbQuery, sqlCon, Transac))
                         {
                             try
                             {
                                 sqlCmd.Parameters.AddWithValue("@Desc", VbDesc);
                                 sqlCmd.Parameters.AddWithValue("@Act", VbActivo);
                                 sqlCmd.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                                sqlCmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                                 sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 sqlCmd.ExecuteNonQuery();
                                 Transac.Commit();
@@ -266,7 +256,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         { GrdDatos.EditIndex = e.NewEditIndex; BindData(TxtBusqueda.Text, "SEL"); }
         protected void GrdDatos_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-
+            PerfilesGrid();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             string VbDesc, VbQuery;
             VbDesc = (GrdDatos.Rows[e.RowIndex].FindControl("TxtDesc") as TextBox).Text.Trim();
@@ -283,7 +273,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VbQuery = "EXEC SP_TablasPlantillaM 11,'', @Desc, @Us,'','','','','','UPDATE', @Act,@ID,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
+                    VbQuery = "EXEC SP_TablasPlantillaM 11,'', @Desc, @Us,'','','','','','UPDATE', @Act,@ID,0,0,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'";
                     CheckBox chkbox = GrdDatos.Rows[e.RowIndex].FindControl("CkbActivo") as CheckBox;
                     int VbActivo = 0;
                     if (chkbox.Checked == true) { VbActivo = 1; }
@@ -295,6 +285,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                             sqlCmd.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                             sqlCmd.Parameters.AddWithValue("@Act", VbActivo);
                             sqlCmd.Parameters.AddWithValue("@ID", GrdDatos.DataKeys[e.RowIndex].Value.ToString().Trim());
+                            sqlCmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                             sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             sqlCmd.ExecuteNonQuery();
                             Transac.Commit();
@@ -318,6 +309,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         { GrdDatos.EditIndex = -1; BindData(TxtBusqueda.Text, "SEL"); }
         protected void GrdDatos_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            PerfilesGrid();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             string VbCod;
             VbCod = GrdDatos.DataKeys[e.RowIndex].Value.ToString();
@@ -327,14 +319,15 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_Pantalla_Parametros 10,@Cd,'','','','',@id,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
-                    using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
+                    string VbQuery = "EXEC SP_TablasPlantillaM 11, @Cd, '', @Us,'','','','','','DELETE', 0,@ID,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
+                    using (SqlCommand sqlCmd = new SqlCommand(VbQuery, sqlCon, Transac))
                     {
                         try
                         {
                             string Mensj = "";
                             sqlCmd.Parameters.AddWithValue("@Cd", GrdDatos.DataKeys[e.RowIndex].Values["CodEstadoAeronave"].ToString());
-                            sqlCmd.Parameters.AddWithValue("@id", GrdDatos.DataKeys[e.RowIndex].Value.ToString());
+                            sqlCmd.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
+                            sqlCmd.Parameters.AddWithValue("@ID", GrdDatos.DataKeys[e.RowIndex].Value.ToString());
                             sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             SqlDataReader SDR = sqlCmd.ExecuteReader();
                             if (SDR.Read())
@@ -367,27 +360,11 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     }
                 }
             }
-
         }
         protected void GrdDatos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            if ((int)ViewState["VblModMS"] == 0)
-            {
-                ImageButton imgE = e.Row.FindControl("IbtEdit") as ImageButton;
-                if (imgE != null)
-                {
-                    e.Row.Cells[3].Controls.Remove(imgE);
-                }
-            }
-            if ((int)ViewState["VblEliMS"] == 0)
-            {
-                ImageButton imgD = e.Row.FindControl("IbtDelete") as ImageButton;
-                if (imgD != null)
-                {
-                    e.Row.Cells[3].Controls.Remove(imgD);
-                }
-            }
+            PerfilesGrid();
             if (e.Row.RowType == DataControlRowType.Footer)
             {
                 ImageButton IbtAddNew = (e.Row.FindControl("IbtAddNew") as ImageButton);
