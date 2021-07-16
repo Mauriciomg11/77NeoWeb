@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmClaseProveedor.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.InventarioLogistica.FrmClaseProveedor" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-     <style type="text/css">
+    <style type="text/css">
         .DivGrid {
             position: absolute;
             width: 80%;
@@ -18,7 +19,7 @@
         <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
-     <asp:UpdatePanel ID="UpPanel" runat="server">
+    <asp:UpdatePanel ID="UpPanel" runat="server">
         <ContentTemplate>
             <div class="CentrarTable">
                 <table class="TablaBusqueda">

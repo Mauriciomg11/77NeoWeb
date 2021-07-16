@@ -36,6 +36,7 @@
         <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
+
     <asp:UpdatePanel ID="UpPanel" runat="server">
         <ContentTemplate>
             <div class="CentrarTable">

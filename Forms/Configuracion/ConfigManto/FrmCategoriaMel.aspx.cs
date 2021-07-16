@@ -17,21 +17,27 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-           if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); } /* */
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             Page.Title = "XX";
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000082";// 00000082|00000133
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["!dC!@"] = 1;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles      */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 2;
+                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
@@ -47,6 +53,7 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
             ViewState["VblModMS"] = 1;
             ViewState["VblEliMS"] = 1;
             ViewState["VblImpMS"] = 1;
+            if (!Session["C77U"].ToString().Trim().Equals("00000082")) { GrdDatos.ShowFooter = false; }
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
             if (ClsP.GetAccesoFrm() == 0)
@@ -97,10 +104,11 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
                 if ((int)ViewState["VblModMS"] == 0)
                 {
                     ImageButton imgE = Row.FindControl("IbtEdit") as ImageButton;
-                    if (imgE != null)
+                    if (!Session["C77U"].ToString().Trim().Equals("00000082"))
                     {
-                        Row.Cells[3].Controls.Remove(imgE);
+                        if (imgE != null) { Row.Cells[3].Controls.Remove(imgE); }
                     }
+                    if (imgE != null) { Row.Cells[3].Controls.Remove(imgE); }
                 }
             }
         }
@@ -117,7 +125,7 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataTable dtbl = new DataTable();
-            string VbTxtSql = "EXEC SP_TablasGeneral 7,@C,'','','','','','','CatgrMel','SELECT',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+            string VbTxtSql = "EXEC SP_TablasGeneral 7,@C,'','','','','','','CatgrMel','SELECT',0,0,0,0,@Idm,0,'01-01-1','02-01-1','03-01-1'";
             Cnx.SelecBD();
             using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
             {
@@ -125,6 +133,7 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, SCnx))
                 {
                     SC.Parameters.AddWithValue("@C", VbConsultar);
+                    SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
 
                     SqlDataAdapter SDA = new SqlDataAdapter();
                     SDA.SelectCommand = SC;
@@ -171,7 +180,7 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
             if ((GrdDatos.Rows[e.RowIndex].FindControl("TxtCritD") as TextBox).Text.Trim().Equals("")) { VbDia = 0; }
             else { VbDia = Convert.ToInt32((GrdDatos.Rows[e.RowIndex].FindControl("TxtCritD") as TextBox).Text.Trim()); }
             if (VbDia < 0) { VbDia = 0; }
-            
+
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {

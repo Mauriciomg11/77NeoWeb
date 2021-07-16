@@ -34,8 +34,9 @@
             padding: 5px;
             background-color: cadetblue;
         }
-        .DimensionTexto{
-            font-size:12px;
+
+        .DimensionTexto {
+            font-size: 12px;
         }
     </style>
 </asp:Content>

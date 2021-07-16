@@ -15,6 +15,15 @@ namespace _77NeoWeb.Forms
     {
 
         /// <summary>
+        /// Control TitForm.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TitForm;
+
+        /// <summary>
         /// Control UpPanel.
         /// </summary>
         /// <remarks>
@@ -24,13 +33,13 @@ namespace _77NeoWeb.Forms
         protected global::System.Web.UI.UpdatePanel UpPanel;
 
         /// <summary>
-        /// Control Label1.
+        /// Control LblBusqueda.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label LblBusqueda;
 
         /// <summary>
         /// Control TxtBusqueda.

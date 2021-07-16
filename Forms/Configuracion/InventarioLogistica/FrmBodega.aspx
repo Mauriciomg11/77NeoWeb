@@ -77,7 +77,7 @@
                 </div>
                 <br />
                 <div class="DivGrid DivContendorGrid">
-                    <asp:GridView ID="GrdDetalle" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodUbicaBodega,CodBodega"
+                    <asp:GridView ID="GrdDetalle" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodUbicaBodega, CodBodega"
                         CssClass="DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="7"
                         OnRowCommand="GrdDetalle_RowCommand" OnRowEditing="GrdDetalle_RowEditing" OnRowUpdating="GrdDetalle_RowUpdating"
                         OnRowCancelingEdit="GrdDetalle_RowCancelingEdit" OnRowDeleting="GrdDetalle_RowDeleting" OnRowDataBound="GrdDetalle_RowDataBound"

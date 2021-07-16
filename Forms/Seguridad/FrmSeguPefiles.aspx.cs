@@ -18,17 +18,27 @@ namespace _77NeoWeb.Forms.Seguridad
         {
             if (Session["Login77"] == null)
             {
-                Response.Redirect("~/FrmAcceso.aspx");
-            }
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }   
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                // Session["C77U"] = "00000082";
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 21;
+                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
                 ModSeguridad();
-
                 BindData(TxtBusqueda.Text);
             }
         }
@@ -42,10 +52,7 @@ namespace _77NeoWeb.Forms.Seguridad
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), "FrmSeguPefiles.aspx");
 
-            if (ClsP.GetAccesoFrm() == 0)
-            {
-                Response.Redirect("WebMenuInicio.aspx");
-            }
+            if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }            
             if (ClsP.GetIngresar() == 0)
             {
                 ViewState["VblIngMS"] = 0;

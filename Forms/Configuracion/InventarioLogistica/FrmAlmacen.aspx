@@ -205,9 +205,9 @@
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsigUsu" runat="server" Text="Asigar Usuario" /></h6>
                     <asp:ImageButton ID="IbtCerrarAsigUsu" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarAsigUsu_Click" ImageAlign="Right" />
-                     <div class="row">
+                    <div class="row">
                         <div class="col-sm-5">
-                             <asp:GridView ID="GrdAsigUsu" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdPersonaAlmacen"
+                            <asp:GridView ID="GrdAsigUsu" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdPersonaAlmacen"
                                 CssClass="DiseñoGrid table-sm" GridLines="Both" Width="100%" AllowPaging="true" PageSize="12"
                                 OnRowCommand="GrdAsigUsu_RowCommand" OnRowEditing="GrdAsigUsu_RowEditing" OnRowUpdating="GrdAsigUsu_RowUpdating"
                                 OnRowCancelingEdit="GrdAsigUsu_RowCancelingEdit" OnRowDeleting="GrdAsigUsu_RowDeleting" OnRowDataBound="GrdAsigUsu_RowDataBound"
@@ -234,7 +234,7 @@
                                         <FooterTemplate>
                                             <asp:DropDownList ID="DdlUsuPP" runat="server" Width="100%" Height="28px" />
                                         </FooterTemplate>
-                                    </asp:TemplateField>                                 
+                                    </asp:TemplateField>
                                     <asp:TemplateField FooterStyle-Width="15%">
                                         <ItemTemplate>
                                             <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />

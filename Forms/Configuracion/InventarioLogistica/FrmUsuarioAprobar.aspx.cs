@@ -15,29 +15,36 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataSet DSTDdl = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }/*  */
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-               /* Session["C77U"] = "00000082";// 00000082|00000133
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["!dC!@"] = 0;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles    */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 2;
+                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
                 ModSeguridad();
-                BindBDdlPersonal();
+                BindBDdlPersonal("UPD");
                 ViewState["Accion"] = "";
-                Traerdatos();
+                //Traerdatos();
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
@@ -104,52 +111,97 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 ViewState["TablaIdioma"] = Idioma;
             }
         }
-        protected void BindBDdlPersonal()
+        protected void BindBDdlPersonal(string Accion)
         {
-            string LtxtSql = string.Format(" EXEC SP_TablasGeneral 10,'','','','','','','','','',0,0,0,0,1,{0},'01-01-1','02-01-1','03-01-1'	", Session["!dC!@"]);
-            DdllUsuPpl.DataSource = Cnx.DSET(LtxtSql);
-            DdllUsuPpl.DataMember = "Datos";
+
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            if (Accion.Equals("UPD"))
+            {
+                Cnx.SelecBD();
+                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+                {
+                    string VbTxtSql = "EXEC SP_TablasGeneral 10,'','','','','','','','','',0,0,0,0,1,@ICC,'01-01-1','02-01-1','03-01-1'";
+                    sqlConB.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                    {
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            using (DataSet DSTDdl = new DataSet())
+                            {
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DSTDdl);
+                                DSTDdl.Tables[0].TableName = "Persona";
+                                DSTDdl.Tables[1].TableName = "Datos";
+
+                                ViewState["DSTDdl"] = DSTDdl;
+                            }
+                        }
+                    }
+                }
+            }
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+
+
+
+            DdllUsuPpl.DataSource = DSTDdl.Tables[0];
             DdllUsuPpl.DataTextField = "Usuario";
             DdllUsuPpl.DataValueField = "CodUsuario";
             DdllUsuPpl.DataBind();
 
-            DdlUsuMyrAlt1.DataSource = Cnx.DSET(LtxtSql);
-            DdlUsuMyrAlt1.DataMember = "Datos";
+            DdlUsuMyrAlt1.DataSource = DSTDdl.Tables[0];
             DdlUsuMyrAlt1.DataTextField = "Usuario";
             DdlUsuMyrAlt1.DataValueField = "CodUsuario";
             DdlUsuMyrAlt1.DataBind();
 
-            DdlUsuMyrAlt2.DataSource = Cnx.DSET(LtxtSql);
-            DdlUsuMyrAlt2.DataMember = "Datos";
+            DdlUsuMyrAlt2.DataSource = DSTDdl.Tables[0];
             DdlUsuMyrAlt2.DataTextField = "Usuario";
             DdlUsuMyrAlt2.DataValueField = "CodUsuario";
             DdlUsuMyrAlt2.DataBind();
 
-            DdlUsuMnrPpl.DataSource = Cnx.DSET(LtxtSql);
-            DdlUsuMnrPpl.DataMember = "Datos";
+            DdlUsuMnrPpl.DataSource = DSTDdl.Tables[0];
             DdlUsuMnrPpl.DataTextField = "Usuario";
             DdlUsuMnrPpl.DataValueField = "CodUsuario";
             DdlUsuMnrPpl.DataBind();
 
-            DdlUsuMnrAlt1.DataSource = Cnx.DSET(LtxtSql);
-            DdlUsuMnrAlt1.DataMember = "Datos";
+            DdlUsuMnrAlt1.DataSource = DSTDdl.Tables[0];
             DdlUsuMnrAlt1.DataTextField = "Usuario";
             DdlUsuMnrAlt1.DataValueField = "CodUsuario";
             DdlUsuMnrAlt1.DataBind();
 
-            DdlUsuTrmPpl.DataSource = Cnx.DSET(LtxtSql);
-            DdlUsuTrmPpl.DataMember = "Datos";
+            DdlUsuTrmPpl.DataSource = DSTDdl.Tables[0];
             DdlUsuTrmPpl.DataTextField = "Usuario";
             DdlUsuTrmPpl.DataValueField = "CodUsuario";
             DdlUsuTrmPpl.DataBind();
 
-            DdlUsuTrmAlt1.DataSource = Cnx.DSET(LtxtSql);
-            DdlUsuTrmAlt1.DataMember = "Datos";
+            DdlUsuTrmAlt1.DataSource = DSTDdl.Tables[0];
             DdlUsuTrmAlt1.DataTextField = "Usuario";
             DdlUsuTrmAlt1.DataValueField = "CodUsuario";
             DdlUsuTrmAlt1.DataBind();
+
+            ViewState["IDUsAp"] = "0";
+            
+            if (DSTDdl.Tables[1].Rows.Count > 0)
+            {
+                DdllUsuPpl.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuario"].ToString().Trim());
+                DdllUsuPpl.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuario"].ToString().Trim());
+                DdlUsuMyrAlt1.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuAlter1"].ToString().Trim());
+                 DdlUsuMyrAlt2.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuAlter2"].ToString().Trim());
+                 DdlUsuMnrPpl.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuarioAprobMenor"].ToString().Trim());
+                 DdlUsuMnrAlt1.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuAprobMenorAlter"].ToString().Trim());
+                 DdlUsuTrmPpl.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["Usr1CrearTrm"].ToString().Trim());
+                 DdlUsuTrmAlt1.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["Usr2CrearTrm"].ToString().Trim());
+                 MonLocal.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["MonLocal"].ToString().Trim());
+                 MonUSD.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["MonUSD"].ToString().Trim());
+                 MonEUR.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["MonEUR"].ToString().Trim());
+                 TxtMonedaLocal.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["ValorCOP"].ToString().Trim());
+                 TxtDolar.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["ValorUSD"].ToString().Trim());
+                 TxtEuro.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["ValorEURO"].ToString().Trim());
+                 ViewState["IDUsAp"] = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["Id"].ToString().Trim());/**/
+            }
+
         }
-        protected void Traerdatos()
+       /* protected void Traerdatos()
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             Cnx.SelecBD();
@@ -175,15 +227,15 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     TxtMonedaLocal.Text = HttpUtility.HtmlDecode(SDR["ValorCOP"].ToString().Trim());
                     TxtDolar.Text = HttpUtility.HtmlDecode(SDR["ValorUSD"].ToString().Trim());
                     TxtEuro.Text = HttpUtility.HtmlDecode(SDR["ValorEURO"].ToString().Trim());
-                    ViewState["IDUsAp"]= HttpUtility.HtmlDecode(SDR["Id"].ToString().Trim());
+                    ViewState["IDUsAp"] = HttpUtility.HtmlDecode(SDR["Id"].ToString().Trim());
                 }
                 SDR.Close();
                 Cnx2.Close();
             }
-        }
+        }*/
         protected void ActivarBtn(bool In, bool Md, bool El, bool Ip, bool Otr)
         { BtnModificar.Enabled = Md; }
-        protected void ActivarCampos(bool Ing, bool Edi, bool Vble,bool VbCurrent, string accion)
+        protected void ActivarCampos(bool Ing, bool Edi, bool Vble, bool VbCurrent, string accion)
         {
             DdllUsuPpl.Enabled = Edi; DdlUsuMyrAlt1.Enabled = Edi; DdlUsuMyrAlt2.Enabled = Edi; DdlUsuMnrPpl.Enabled = Edi; DdlUsuMnrAlt1.Enabled = Edi;
             DdlUsuTrmPpl.Enabled = Edi; DdlUsuTrmAlt1.Enabled = Edi;
@@ -209,18 +261,19 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 { BtnModificar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }//¿Desea eliminar el registro?  
             }
             else
-            {               
+            {
                 Cnx.SelecBD();
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = "EXEC SP_TablasGeneral 10,@MyP,@My1,@My2,@MnP,@Mn1,@TrP,@Tr1,@Us,'',@ML,@MD,@ME,@Id,3,0,'01-01-1','02-01-1','03-01-1'";
+                        string VBQuery = "EXEC SP_TablasGeneral 10,@MyP,@My1,@My2,@MnP,@Mn1,@TrP,@Tr1,@Us,'',@ML,@MD,@ME,@Id,3,@ICC,'01-01-1','02-01-1','03-01-1'";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
                             {
+                                string borr = ViewState["IDUsAp"].ToString();
                                 SC.Parameters.AddWithValue("@MyP", DdllUsuPpl.Text.Trim());
                                 SC.Parameters.AddWithValue("@My1", DdlUsuMyrAlt1.Text.Trim());
                                 SC.Parameters.AddWithValue("@My2", DdlUsuMyrAlt2.Text.Trim());
@@ -233,6 +286,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                                 SC.Parameters.AddWithValue("@MD", TxtDolar.Text.Trim());
                                 SC.Parameters.AddWithValue("@ME", TxtEuro.Text.Trim());
                                 SC.Parameters.AddWithValue("@Id", ViewState["IDUsAp"]);
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 SqlDataReader SDR = SC.ExecuteReader();
                                 if (SDR.Read())
                                 { Mensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim()); }
@@ -255,7 +309,8 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                                 foreach (DataRow row in Result)
                                 { BtnModificar.Text = row["Texto"].ToString().Trim(); }
                                 ViewState["Accion"] = "";
-                                Traerdatos();
+                                //Traerdatos();
+                                BindBDdlPersonal("UPD");
                                 BtnModificar.OnClientClick = "";
                             }
                             catch (Exception Ex)
@@ -266,7 +321,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                                 foreach (DataRow row in Result1)
                                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Modificar", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Modificar", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
 
                             }
                         }

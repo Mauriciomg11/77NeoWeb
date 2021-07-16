@@ -29,7 +29,7 @@ namespace _77NeoWeb
                 Session["V$U@"] = "";
                 Session["P@$"] = "";
                 Session["NomCiaPpal"] = "";
-                Session["!dC!@"] = 0;
+                Session["!dC!@"] = "0";
                 DdlNit.DataSource = Cnx.DSET(LtxtSql);
                 DdlNit.DataMember = "Datos";
                 DdlNit.DataTextField = "RazonSocial";
@@ -106,24 +106,27 @@ namespace _77NeoWeb
                         Session["NomCiaPpal"] = tbl["RazonSocial"].ToString();
                         Session["SigCia"] = tbl["SiglaCia"].ToString();
                         Session["LogoPpal"] = tbl["Logo"].ToString();
-                        // Session["77IDM"] = tbl["Idioma"].ToString(); //Idiioma
+                        Session["!dC!@"] = DdlBD.Text.ToString(); //cia
+                        Session["77IDM"] = tbl["Idioma"].ToString(); //Idiioma
                     }
                     else
                     {
                         Session["D[BX"] = "";
+                        Session["!dC!@"] = "0";
                         return;
                     }
                 }
                 Cnx.SelecBD();
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
-                    //LtxtSql = " EXEC SP_ConfiguracionV2_ 2,'" + TxtUsuario.Text + "','" + TxtClave.Text + "','','','',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
-                    LtxtSql = " EXEC SP_ConfiguracionV2_ 2,@H77,@H775,'','','',@PI,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    // valida usuario y Pass
+                    LtxtSql = " EXEC SP_ConfiguracionV2_ 2,@H77,@H775,'','','',@PI,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                     string b2 = Session["77IDM"].ToString();
                     SqlCommand Comando = new SqlCommand(LtxtSql, sqlCon);
                     Comando.Parameters.AddWithValue("@H77", TxtUsuario.Text);
                     Comando.Parameters.AddWithValue("@H775", TxtClave.Text);
                     Comando.Parameters.AddWithValue("@PI", Session["77IDM"].ToString().Trim());
+                    Comando.Parameters.AddWithValue("@ICC", DdlBD.Text.ToString().Trim());
                     sqlCon.Open();
                     SqlDataReader registro = Comando.ExecuteReader();
                     if (registro.Read())
@@ -151,7 +154,6 @@ namespace _77NeoWeb
                     VbPassCia = VbPassCia.Replace(" ", "");
                 }
                 TxtPassEmsa.Text = VbPassCia;
-                //Cnx.BaseDatos(Session["D[BX"].ToString(), Session["$VR"].ToString(), Session["V$U@"].ToString(), Session["P@$"].ToString());
                 using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
                 {
                     LtxtSql = "EXEC SP_ACCESO_WEB 2,@E71,@E59,'','','',0, 0,0,0,'01-01-1','01-01-1'";
@@ -163,16 +165,15 @@ namespace _77NeoWeb
                     if (tbl.Read())
                     {                       
                         Session["SigCiaPpal"] = tbl["SiglaCiaPpal"].ToString();
-                        Session["77IDM"] = tbl["Idioma"].ToString(); //Idiioma
+                        Session["77IDM"] = tbl["Idioma"].ToString(); //Idiioma                      
                         DdlBD.Visible = true;
-                        LtxtSql = "EXEC SP_Configuracion  1,'" + Session["SigCiaPpal"].ToString() + "','','','','DropDown',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                        LtxtSql = "EXEC SP_Configuracion 1,'" + Session["SigCiaPpal"].ToString() + "','','','','DropDown',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                         DdlBD.DataSource = Cnx.DSET(LtxtSql);
                         DdlBD.DataMember = "Datos";
                         DdlBD.DataTextField = "RazonSocial";
-                        DdlBD.DataValueField = "NomDB";
+                        DdlBD.DataValueField = "IdConfiguracion";
                         DdlBD.DataBind();
                         IdiomaControles();
-                        //TbnIngresar.Text = "Iniciar sesión";
                         DataRow[] Result1 = Idioma.Select("Objeto= 'TbnIngresarUsu'");
                         foreach (DataRow row in Result1)
                         { TbnIngresar.Text = row["Texto"].ToString().Trim(); }
@@ -197,7 +198,7 @@ namespace _77NeoWeb
                 Session["Login77"] = null;
                 Session["C77U"] = "";
                 Session["N77U"] = "";
-                Session["!dC!@"] = 0;
+                Session["!dC!@"] = "0";
                 TbnIngresar.Text = "Validar compañía";
                 //DdlBD.SelectedValue = "";
                 DdlBD.Visible = false;

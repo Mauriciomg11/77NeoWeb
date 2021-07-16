@@ -15,11 +15,15 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataSet DSTDdl = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
             {
-                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+                if (Cnx.GetProduccion().Trim().Equals("Y"))
+                {
+                    if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+                }
             }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             Page.Title = "Configuración Categoría Maestro de articulo";
@@ -35,7 +39,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 1;
+                    Session["!dC!@"] = 2;
                     Session["77IDM"] = "5"; // 4 español | 5 ingles  */
                 }
             }
@@ -43,7 +47,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             {
                 TitForm.Text = "";
                 ModSeguridad();
-                BindData(TxtBusqueda.Text);
+                BindData(TxtBusqueda.Text, "UPD");
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
@@ -129,46 +133,69 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 }
             }
         }
-        protected void BindData(string VbConsultar)
+        protected void BindData(string VbConsultar, string Accion)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            DataTable dtbl = new DataTable();
-            string VbTxtSql = "EXEC SP_TablasGeneral 11,@D,'','','','','','','','SELECT',0,0,0,0,0,@CC,'01-01-1','02-01-1','03-01-1'";
-            Cnx.SelecBD();
-            using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
+            DataRow[] Result;   
+            if (Accion.Equals("UPD"))
             {
-                SCnx.Open();
-                using (SqlCommand SC = new SqlCommand(VbTxtSql, SCnx))
+                Cnx.SelecBD();
+                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    SC.Parameters.AddWithValue("@D", TxtBusqueda.Text);
-                    SC.Parameters.AddWithValue("@CC", Session["!dC!@"]);
+                    string VbTxtSql = "EXEC SP_TablasGeneral 11, '','','','','','','','','SELECT',0,0,0,0, @Idm,@ICC,'01-01-1','02-01-1','03-01-1'";
+                    sqlConB.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                    {
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            using (DataSet DSTDdl = new DataSet())
+                            {
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DSTDdl);
+                                DSTDdl.Tables[0].TableName = "Datos";
+                                DSTDdl.Tables[1].TableName = "Tipo";
 
-                    SqlDataAdapter SDA = new SqlDataAdapter();
-                    SDA.SelectCommand = SC;
-                    SDA.Fill(dtbl);
+                                ViewState["DSTDdl"] = DSTDdl;
+                            }
+                        }
+                    }
                 }
             }
-            if (dtbl.Rows.Count > 0)
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+
+            DataTable DT = new DataTable();
+            DT = DSTDdl.Tables[0].Clone();
+            Result = DSTDdl.Tables[0].Select("Descripcion LIKE '%" + VbConsultar + "%'");
+            foreach (DataRow DR in Result)
             {
-                GrdDatos.DataSource = dtbl;
-                GrdDatos.DataBind();
+                DT.ImportRow(DR);
+            }
+            if (DT.Rows.Count > 0)
+            {
+                DataView DV = DT.DefaultView;
+                DV.Sort = "CodUnidMedida";
+                DT = DV.ToTable();
+                GrdDatos.DataSource = DT;
+                GrdDatos.DataBind();               
             }
             else
             {
-                dtbl.Rows.Add(dtbl.NewRow());
-                GrdDatos.DataSource = dtbl;
+                DT.Rows.Add(DT.NewRow());
+                GrdDatos.DataSource = DT;
                 GrdDatos.DataBind();
                 GrdDatos.Rows[0].Cells.Clear();
                 GrdDatos.Rows[0].Cells.Add(new TableCell());
-                GrdDatos.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
-                DataRow[] Result = Idioma.Select("Objeto= 'SinRegistros'");
+                Result = Idioma.Select("Objeto= 'SinRegistros'");
                 foreach (DataRow row in Result)
                 { GrdDatos.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
                 GrdDatos.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
             }
         }
         protected void IbtConsultar_Click(object sender, ImageClickEventArgs e)
-        { BindData(TxtBusqueda.Text); }
+        { BindData(TxtBusqueda.Text, "SEL"); }
         protected void GrdDatos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -205,7 +232,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = "EXEC SP_TablasGeneral 11,@Cd,@Dsc,@Tp,@US,'','','','','INSERT',@Act,0,0,0,0,@CC,'01-01-1','02-01-1','03-01-1'";
+                        string VBQuery = "EXEC SP_TablasGeneral 11,@Cd,@Dsc,@Tp,@US,'','','','','INSERT',@Act,0,0,0,@Idm,@CC,'01-01-1','02-01-1','03-01-1'";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             SC.Parameters.AddWithValue("@Cd", VbCod);
@@ -213,6 +240,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                             SC.Parameters.AddWithValue("@Tp", VbTipo);
                             SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@Act", (GrdDatos.FooterRow.FindControl("CkbActPP") as CheckBox).Checked == false ? 0 : 1);
+                            SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                             SC.Parameters.AddWithValue("@CC", Session["!dC!@"]);
                             try
                             {
@@ -227,7 +255,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                                     return;
                                 }
                                 Transac.Commit();
-                                BindData(TxtBusqueda.Text);
+                                BindData(TxtBusqueda.Text, "UPD");
                             }
                             catch (Exception ex)
                             {
@@ -243,7 +271,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             }
         }
         protected void GrdDatos_RowEditing(object sender, GridViewEditEventArgs e)
-        { GrdDatos.EditIndex = e.NewEditIndex; BindData(TxtBusqueda.Text); }
+        { GrdDatos.EditIndex = e.NewEditIndex; BindData(TxtBusqueda.Text, "SEL"); }
         protected void GrdDatos_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -280,7 +308,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasGeneral 11,@Cd,@Dsc,@Tp,@US,@CdAnt,@CdTpUMAnt,'','','UPDATE',@Act,0,0,0,0,@CC,'01-01-1','02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasGeneral 11,@Cd,@Dsc,@Tp,@US,@CdAnt,@CdTpUMAnt,'','','UPDATE',@Act,0,0,0, @Idm,@CC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@Cd", VbCod);
@@ -290,6 +318,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                         SC.Parameters.AddWithValue("@CdAnt", VbCodAnt);
                         SC.Parameters.AddWithValue("@CdTpUMAnt", VbCodTipoUMAnt);
                         SC.Parameters.AddWithValue("@Act", (GrdDatos.Rows[e.RowIndex].FindControl("CkbAct") as CheckBox).Checked == false ? 0 : 1);
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                         SC.Parameters.AddWithValue("@CC", Session["!dC!@"]);
                         try
                         {
@@ -305,7 +334,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                             }
                             Transac.Commit();
                             GrdDatos.EditIndex = -1;
-                            BindData(TxtBusqueda.Text);
+                            BindData(TxtBusqueda.Text, "UPD");
                         }
                         catch (Exception ex)
                         {
@@ -320,7 +349,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             }
         }
         protected void GrdDatos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        { GrdDatos.EditIndex = -1; BindData(TxtBusqueda.Text); }
+        { GrdDatos.EditIndex = -1; BindData(TxtBusqueda.Text, "SEL"); }
         protected void GrdDatos_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -357,7 +386,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                                 return;
                             }
                             Transac.Commit();
-                            BindData(TxtBusqueda.Text);
+                            BindData(TxtBusqueda.Text, "UPD");
                         }
                         catch (Exception ex)
                         {
@@ -374,12 +403,12 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
         protected void GrdDatos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
             PerfilesGrid();
             if (e.Row.RowType == DataControlRowType.Footer)
-            {
-                string LtxtSql = string.Format("EXEC SP_TablasGeneral 11,'','','','','','','','','DDL',0,0,0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
+            {               
                 DropDownList DdlTipoUMPP = (e.Row.FindControl("DdlTipoUMPP") as DropDownList);
-                DdlTipoUMPP.DataSource = Cnx.DSET(LtxtSql);
+                DdlTipoUMPP.DataSource = DSTDdl.Tables[1];
                 DdlTipoUMPP.DataTextField = "Descripcion";
                 DdlTipoUMPP.DataValueField = "CodTipUnMed";
                 DdlTipoUMPP.DataBind();
@@ -388,13 +417,12 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 DataRow[] Result = Idioma.Select("Objeto= 'IbtAddNew'");
                 foreach (DataRow row in Result)
                 { IbtAddNew.ToolTip = row["Texto"].ToString().Trim(); }
-                //e.Row.Cells[2].HorizontalAlign = HorizontalAlign.Left;
+                e.Row.Cells[3].HorizontalAlign = HorizontalAlign.Center;
             }
             if ((e.Row.RowState & DataControlRowState.Edit) > 0)
-            {
-                string LtxtSql = string.Format(" EXEC SP_TablasGeneral 11,'','','','','','','','','DDL',0,0,0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
+            {               
                 DropDownList DdlTipoUM = (e.Row.FindControl("DdlTipoUM") as DropDownList);
-                DdlTipoUM.DataSource = Cnx.DSET(LtxtSql);
+                DdlTipoUM.DataSource = DSTDdl.Tables[1];
                 DdlTipoUM.DataTextField = "Descripcion";
                 DdlTipoUM.DataValueField = "CodTipUnMed";
                 DdlTipoUM.DataBind();
@@ -434,10 +462,10 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     foreach (DataRow row in Result)
                     { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
                 }
-                e.Row.Cells[2].HorizontalAlign = HorizontalAlign.Left;
+                e.Row.Cells[3].HorizontalAlign = HorizontalAlign.Center;
             }
         }
         protected void GrdDatos_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        { GrdDatos.PageIndex = e.NewPageIndex; BindData(TxtBusqueda.Text); }
+        { GrdDatos.PageIndex = e.NewPageIndex; BindData(TxtBusqueda.Text, "SEL"); }
     }
 }

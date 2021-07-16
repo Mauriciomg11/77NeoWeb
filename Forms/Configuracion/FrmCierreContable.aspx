@@ -35,7 +35,7 @@
             border: 1px solid #808080;
             padding: 5px;
         }
-       
+
         .heightCampo {
             height: 25px;
             width: 95%;
@@ -63,7 +63,7 @@
         }
         function myFuncionddl() {
             $('#<%=DdlMes.ClientID%>').chosen();
-            $('#<%=DdlAno.ClientID%>').chosen();
+            $('#<%=DdlAno.ClientID%>').chosen(); 
         }
     </script>
 </asp:Content>

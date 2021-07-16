@@ -19,7 +19,7 @@ namespace _77NeoWeb.prg
         public ClsConexion()
         {
             this.VblConexion = "";
-            Produccion = "N";
+            Produccion = "Y";
         }
         public void SelecBD()
         {

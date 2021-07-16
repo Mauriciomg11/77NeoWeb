@@ -118,23 +118,23 @@
                         <asp:Label ID="LblTitValores" runat="server" Text="Valores" /></h6>
                     <div class="row">
                         <div class="col-sm-6">
-                            <asp:Label ID="LblMonedaLocal" runat="server" CssClass="LblEtiquet" Text="Moneda Loc" />                           
-                            <asp:TextBox ID="TxtMonedaLocal" runat="server" Width="100%" CssClass="form-control heightCampo" Enabled="false" TextMode="Number" onkeypress="return solonumeros(event);" Text="0"  Visible="false" />
+                            <asp:Label ID="LblMonedaLocal" runat="server" CssClass="LblEtiquet" Text="Moneda Loc" />
+                            <asp:TextBox ID="TxtMonedaLocal" runat="server" Width="100%" CssClass="form-control heightCampo" Enabled="false" TextMode="Number" onkeypress="return solonumeros(event);" Text="0" Visible="false" />
                             <asp:TextBox ID="MonLocal" runat="server" Width="100%" CssClass="form-control heightCampo" Enabled="false" Text="0" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <asp:Label ID="LblDolar" runat="server" CssClass="LblEtiquet" Text="Dolar" />                           
-                            <asp:TextBox ID="TxtDolar" runat="server" Width="100%" CssClass="form-control heightCampo" Enabled="false" TextMode="Number" onkeypress="return solonumeros(event);" Text="0"  Visible="false"/>
-                             <asp:TextBox ID="MonUSD" runat="server" Width="100%" CssClass="form-control heightCampo" Enabled="false" Text="0" />
+                            <asp:Label ID="LblDolar" runat="server" CssClass="LblEtiquet" Text="Dolar" />
+                            <asp:TextBox ID="TxtDolar" runat="server" Width="100%" CssClass="form-control heightCampo" Enabled="false" TextMode="Number" onkeypress="return solonumeros(event);" Text="0" Visible="false" />
+                            <asp:TextBox ID="MonUSD" runat="server" Width="100%" CssClass="form-control heightCampo" Enabled="false" Text="0" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <asp:Label ID="LblEuro" runat="server" CssClass="LblEtiquet" Text=" Euro" />                           
-                            <asp:TextBox ID="TxtEuro" runat="server" Width="100%" CssClass="form-control heightCampo" Enabled="false" TextMode="Number" onkeypress="return solonumeros(event);" Text="0"  Visible="false"/>
-                             <asp:TextBox ID="MonEUR" runat="server" Width="100%" CssClass="form-control heightCampo" Enabled="false" Text="0" />
+                            <asp:Label ID="LblEuro" runat="server" CssClass="LblEtiquet" Text=" Euro" />
+                            <asp:TextBox ID="TxtEuro" runat="server" Width="100%" CssClass="form-control heightCampo" Enabled="false" TextMode="Number" onkeypress="return solonumeros(event);" Text="0" Visible="false" />
+                            <asp:TextBox ID="MonEUR" runat="server" Width="100%" CssClass="form-control heightCampo" Enabled="false" Text="0" />
                         </div>
                     </div>
                 </div>

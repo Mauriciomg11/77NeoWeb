@@ -57,32 +57,13 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             ViewState["VblImpMS"] = 1;
 
             ClsPermisos ClsP = new ClsPermisos();
-            ClsP.Acceder(Session["C77U"].ToString(), "FrmPosicion.aspx");
-
-            if (ClsP.GetAccesoFrm() == 0)
-            {
-                Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx");
-            }
-            if (ClsP.GetIngresar() == 0)
-            {
-                ViewState["VblIngMS"] = 0;
-                GrdDatos.ShowFooter = false;
-            }
-            if (ClsP.GetModificar() == 0)
-            {
-                ViewState["VblModMS"] = 0;
-            }
-            if (ClsP.GetConsultar() == 0)
-            {
-            }
-            if (ClsP.GetImprimir() == 0)
-            {
-
-            }
-            if (ClsP.GetEliminar() == 0)
-            {
-                ViewState["VblEliMS"] = 0;
-            }
+            ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
+            if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
+            if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; GrdDatos.ShowFooter = false; }
+            if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; }
+            if (ClsP.GetConsultar() == 0) { }
+            if (ClsP.GetImprimir() == 0) { }
+            if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; }
             if (ClsP.GetCE1() == 0)
             {
             }
@@ -166,9 +147,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             DT = DTDet.Clone();
             Result = DTDet.Select("Descripcion LIKE '%" + VbConsultar + "%'");
             foreach (DataRow DR in Result)
-            {
-                DT.ImportRow(DR);
-            }
+            { DT.ImportRow(DR); }
             if (DT.Rows.Count > 0)
             {
                 DataView DV = DT.DefaultView;
@@ -330,7 +309,6 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                                 Transac.Commit();
                                 BindData(TxtBusqueda.Text, "UPD");
                             }
-
                             catch (Exception ex)
                             {
                                 Transac.Rollback();
@@ -452,6 +430,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         }
         protected void GrdDatos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
             if ((int)ViewState["VblModMS"] == 0)
             {
                 ImageButton imgE = e.Row.FindControl("IbtEdit") as ImageButton;

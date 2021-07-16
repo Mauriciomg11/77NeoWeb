@@ -13,39 +13,40 @@ namespace _77NeoWeb.Forms.Seguridad
 {
     public partial class FrmPerfil : System.Web.UI.Page
     {
-        ClsConexion Cnx = new ClsConexion();        
+        ClsConexion Cnx = new ClsConexion();
+        DataSet DSTDdl = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
             {
-                Response.Redirect("~/FrmAcceso.aspx");
-            } /**/
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
+            ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";/* */
-                /*Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = "UsuPrueba"; */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 2;
+                    Session["77IDM"] = "4"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
                 ModSeguridad();
-
-                string LtxtSql = "EXEC SP_ConfiguracionV2_ 14,'','','','','',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
-                Cnx.BaseDatos(Session["D[BX"].ToString(), Session["$VR"].ToString(), Session["V$U@"].ToString(), Session["P@$"].ToString());
-                DdlGruposRP.DataSource = Cnx.DSET(LtxtSql);
-                DdlGruposRP.DataMember = "Datos";
-                DdlGruposRP.DataTextField = "NombreGrupo";
-                DdlGruposRP.DataValueField = "CodIdGrupo";
-                DdlGruposRP.DataBind();
-                BindData(TxtBusqueda.Text, TxtBusqUsu.Text);
+                ViewState["IdFormRP"] = "0";
+                BindData(TxtBusqueda.Text, TxtBusqUsu.Text, "UPD");
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
-        void ModSeguridad()
+        protected void ModSeguridad()
         {
             ViewState["VblIngMS"] = 1;
             ViewState["VblModMS"] = 1;
@@ -53,12 +54,9 @@ namespace _77NeoWeb.Forms.Seguridad
             ViewState["VblImpMS"] = 1;
 
             ClsPermisos ClsP = new ClsPermisos();
-            ClsP.Acceder(Session["C77U"].ToString(), "FrmPerfil.aspx");
+            ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
 
-            if (ClsP.GetAccesoFrm() == 0)
-            {
-                Response.Redirect("WebMenuInicio.aspx");
-            }
+            if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }          
             if (ClsP.GetIngresar() == 0)
             {
                 ViewState["VblIngMS"] = 0;
@@ -97,25 +95,63 @@ namespace _77NeoWeb.Forms.Seguridad
             {
             }
         }
-        void BindData(string VbDesPefil, string VbDesUsu)
+        protected void BindData(string VbDesPefil, string VbDesUsu, string Accion)
         {
-            string DatoGrid = "EXEC SP_ConfiguracionV2_ 13,'','" + VbDesUsu + "','','','UsuAsig'," + Session["IdGrupoRP"].ToString() + ",0,0,0,'01-01-1','02-01-1','03-01-1'";
-            GrdDatos.DataSource = Cnx.DSET(DatoGrid);
+            if (Accion.Equals("UPD"))
+            {
+                Cnx.SelecBD();
+                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+                {
+                    string VbTxtSql = "EXEC SP_ConfiguracionV2_ 14,@NomUsu,@DesPrfl,'','','',@IdG,0,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'";
+                    sqlConB.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                    {
+                        SC.Parameters.AddWithValue("@NomUsu", VbDesUsu);
+                        SC.Parameters.AddWithValue("@DesPrfl", VbDesPefil);
+                        SC.Parameters.AddWithValue("@IdG", Session["IdGrupoRP"]);
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            using (DataSet DSTDdl = new DataSet())
+                            {
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DSTDdl);
+                                DSTDdl.Tables[0].TableName = "Grupos";
+                                DSTDdl.Tables[1].TableName = "UsuAsignados";
+                                DSTDdl.Tables[2].TableName = "UsuSinAsign";
+                                DSTDdl.Tables[3].TableName = "PerfilAsig";
+                                DSTDdl.Tables[4].TableName = "PerfilSinAsig";
+                                DSTDdl.Tables[5].TableName = "TraerDatosParaAsigPerfil";
+                                DSTDdl.Tables[6].TableName = "TraerDatosPrflAsigdos";
+
+                                ViewState["DSTDdl"] = DSTDdl;
+                            }
+                        }
+                    }
+                }
+            }
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+            string VbCodAnt = DdlGruposRP.Text.Trim();
+            DdlGruposRP.DataSource = DSTDdl.Tables[0];
+            DdlGruposRP.DataTextField = "NombreGrupo";
+            DdlGruposRP.DataValueField = "CodIdGrupo";
+            DdlGruposRP.DataBind();
+            DdlGruposRP.Text = VbCodAnt;
+
+            GrdDatos.DataSource = DSTDdl.Tables[1];
             GrdDatos.DataBind();
 
-            DatoGrid = "EXEC SP_ConfiguracionV2_ 13,'','" + VbDesUsu + "','','','UsuSinAsig'," + Session["IdGrupoRP"].ToString() + ",0,0,0,'01-01-1','02-01-1','03-01-1'";
-            GrdDatosUsin.DataSource = Cnx.DSET(DatoGrid);
+            GrdDatosUsin.DataSource = DSTDdl.Tables[2];
             GrdDatosUsin.DataBind();
 
-            DatoGrid = "EXEC SP_ConfiguracionV2_ 13,'" + VbDesPefil + "','','','','PerfilAsig'," + Session["IdGrupoRP"].ToString() + ",0,0,0,'01-01-1','02-01-1','03-01-1'";
-            GrdPerfilAsig.DataSource = Cnx.DSET(DatoGrid);
+            GrdPerfilAsig.DataSource = DSTDdl.Tables[3];
             GrdPerfilAsig.DataBind();
 
-            DatoGrid = "EXEC SP_ConfiguracionV2_ 13,'" + VbDesPefil + "','','','','PerfilSinAsig'," + Session["IdGrupoRP"].ToString() + ",0,0,0,'01-01-1','02-01-1','03-01-1'";
-            GrdSinAsig.DataSource = Cnx.DSET(DatoGrid);
+            GrdSinAsig.DataSource = DSTDdl.Tables[4];
             GrdSinAsig.DataBind();
         }
-        void ActivarControles()
+        protected void ActivarControles()
         {
             CkbIng.Visible = false;
             CkbMod.Visible = false;
@@ -145,7 +181,7 @@ namespace _77NeoWeb.Forms.Seguridad
         protected void DdlGruposRP_TextChanged(object sender, EventArgs e)
         {
             Session["IdGrupoRP"] = Convert.ToInt32(DdlGruposRP.SelectedValue);
-            BindData(TxtBusqueda.Text, TxtBusqUsu.Text);
+            BindData(TxtBusqueda.Text, TxtBusqUsu.Text, "UPD");
             ActivarControles();
         }
         protected void IbtIr_Click(object sender, ImageClickEventArgs e)
@@ -154,14 +190,9 @@ namespace _77NeoWeb.Forms.Seguridad
             PnlPerfil.Visible = true;
         }
         protected void IbtRegresar_Click(object sender, ImageClickEventArgs e)
-        {
-            PnlRol.Visible = true;
-            PnlPerfil.Visible = false;
-        }
+        { PnlRol.Visible = true; PnlPerfil.Visible = false; }
         protected void IbnBusUsu_Click(object sender, ImageClickEventArgs e)
-        {
-            BindData(TxtBusqueda.Text, TxtBusqUsu.Text);
-        }
+        { BindData(TxtBusqueda.Text, TxtBusqUsu.Text, "UPD"); }
         protected void GrdDatos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
@@ -181,24 +212,33 @@ namespace _77NeoWeb.Forms.Seguridad
         {
             if ((int)Session["IdGrupoRP"] != 0)
             {
-                Cnx.BaseDatos( Session["D[BX"].ToString(), Session["$VR"].ToString(), Session["V$U@"].ToString(), Session["P@$"].ToString());
+                Cnx.SelecBD();
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
-                    int vbleee = (int)Session["IdUsrGruRP"];
                     sqlCon.Open();
-                    string query = "DELETE FROM TblUsrAsignacionGrupo WHERE CodIdUsrGrupo = @ID";
-                    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                    sqlCmd.Parameters.AddWithValue("@ID", (int)Session["IdUsrGruRP"]);
-                    sqlCmd.ExecuteNonQuery();
-                    BindData(TxtBusqueda.Text, TxtBusqUsu.Text);
+                    using (SqlTransaction Transac = sqlCon.BeginTransaction())
+                    {
+                        string VBQuery = "DELETE FROM TblUsrAsignacionGrupo WHERE CodIdUsrGrupo = @ID";
+                        using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
+                        {
+                            try
+                            {
+                                sqlCmd.Parameters.AddWithValue("@ID", (int)Session["IdUsrGruRP"]);
+                                sqlCmd.ExecuteNonQuery();
+                                Transac.Commit();
+                                BindData(TxtBusqueda.Text, TxtBusqUsu.Text, "UPD");
+                            }
+                            catch (Exception)
+                            {
+                                Transac.Rollback();
+                            }
+                        }
+                    }
                 }
             }
         }
         protected void GrdDatos_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdDatos.PageIndex = e.NewPageIndex;
-            BindData(TxtBusqueda.Text, TxtBusqUsu.Text);
-        }
+        { GrdDatos.PageIndex = e.NewPageIndex; BindData(TxtBusqueda.Text, TxtBusqUsu.Text, "SEL"); }
         protected void GrdDatosUsin_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Select")
@@ -209,6 +249,7 @@ namespace _77NeoWeb.Forms.Seguridad
         }
         protected void GrdDatosUsin_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             string VbCodUsuPerfil = Session["IdGrupoRP"].ToString();
             if (VbCodUsuPerfil != string.Empty)
             {
@@ -216,69 +257,56 @@ namespace _77NeoWeb.Forms.Seguridad
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
-                    string query = "INSERT INTO TblUsrAsignacionGrupo(CodUsuario, CodIdGrupo) VALUES(@Codusu,@CodGru)";
-                    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                    sqlCmd.Parameters.AddWithValue("@Codusu", Session["IdUsuRP"].ToString());
-                    sqlCmd.Parameters.AddWithValue("@CodGru", (int)Session["IdGrupoRP"]);
-                    sqlCmd.ExecuteNonQuery();
-                    BindData(TxtBusqueda.Text, TxtBusqUsu.Text);
+                    using (SqlTransaction Transac = sqlCon.BeginTransaction())
+                    {
+                        string VBQuery = "EXEC SP_ConfiguracionV2_ 13,@Codusu,'','','','INSERT_ASIG_USU',@CodGru,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
+                        using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
+                        {
+                            try
+                            {
+                                SC.Parameters.AddWithValue("@Codusu", Session["IdUsuRP"].ToString());
+                                SC.Parameters.AddWithValue("@CodGru", (int)Session["IdGrupoRP"]);
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                                SC.ExecuteNonQuery();
+                                Transac.Commit();
+                                BindData(TxtBusqueda.Text, TxtBusqUsu.Text, "UPD");
+                            }
+                            catch (Exception)
+                            { Transac.Rollback(); }
+                        }
+                    }
                 }
             }
         }
         protected void GrdDatosUsin_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdDatosUsin.PageIndex = e.NewPageIndex;
-            BindData(TxtBusqueda.Text, TxtBusqUsu.Text);
-        }
+        { GrdDatosUsin.PageIndex = e.NewPageIndex; BindData(TxtBusqueda.Text, TxtBusqUsu.Text, "SEL"); }
         protected void IbtConsultar_Click(object sender, ImageClickEventArgs e)
-        {
-            BindData(TxtBusqueda.Text, TxtBusqUsu.Text);
-        }
+        { BindData(TxtBusqueda.Text, TxtBusqUsu.Text, "SEL"); }
         protected void IbtAsignarPerfil_Click(object sender, ImageClickEventArgs e)
         {
             string VbCRUD = "";
             string VbCasosEsp = "";
             if (CkbIng.Checked == true)
-            {
-                VbCRUD = VbCRUD + '1';
-            }
+            { VbCRUD = VbCRUD + '1'; }
             else
-            {
-                VbCRUD = VbCRUD + '0';
-            }
-            if (CkbMod.Checked == true)
-            {
-                VbCRUD = VbCRUD + '1';
-            }
-            else
-            {
-                VbCRUD = VbCRUD + '0';
-            }
-            if (CkbCons.Checked == true)
-            {
-                VbCRUD = VbCRUD + '1';
-            }
-            else
-            {
-                VbCRUD = VbCRUD + '0';
-            }
-            if (CkbImpr.Checked == true)
-            {
-                VbCRUD = VbCRUD + '1';
-            }
-            else
-            {
-                VbCRUD = VbCRUD + '0';
-            }
-            if (CkbElim.Checked == true)
-            {
-                VbCRUD = VbCRUD + '1';
-            }
-            else
-            {
-                VbCRUD = VbCRUD + '0';
-            }
+            { VbCRUD = VbCRUD + '0'; }
 
+            if (CkbMod.Checked == true)
+            { VbCRUD = VbCRUD + '1'; }
+            else
+            { VbCRUD = VbCRUD + '0'; }
+            if (CkbCons.Checked == true)
+            { VbCRUD = VbCRUD + '1'; }
+            else
+            { VbCRUD = VbCRUD + '0'; }
+            if (CkbImpr.Checked == true)
+            { VbCRUD = VbCRUD + '1'; }
+            else
+            { VbCRUD = VbCRUD + '0'; }
+            if (CkbElim.Checked == true)
+            { VbCRUD = VbCRUD + '1'; }
+            else
+            { VbCRUD = VbCRUD + '0'; }
             if (CkbCE1.Checked == true)
             {
                 VbCasosEsp = VbCasosEsp + '1';
@@ -330,28 +358,135 @@ namespace _77NeoWeb.Forms.Seguridad
 
             if ((int)Session["IdGrupoRP"] != 0)
             {
-                Cnx.BaseDatos(Session["D[BX"].ToString(), Session["$VR"].ToString(), Session["V$U@"].ToString(), Session["P@$"].ToString());
+                Cnx.SelecBD();
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
-
-                    string Vbsql = "EXEC SP_ConfiguracionV2_ 16,'" + VbCRUD + "','" + VbCasosEsp + "','','',''," + Session["IdGrupoRP"].ToString() + ", " +
-                        Session["IdFormRP"].ToString() + ",0,0,'01-01-1','02-01-1','03-01-1'";
-                    SqlCommand sqlCmd = new SqlCommand(Vbsql, sqlCon);
-                    sqlCmd.ExecuteNonQuery();
-                    BindData(TxtBusqueda.Text, TxtBusqUsu.Text);
+                    using (SqlTransaction Transac = sqlCon.BeginTransaction())
+                    {
+                        string VBQuery = "EXEC SP_ConfiguracionV2_ 16, @Crud, @CsEsp,'','','', @IdGrp, @IdFrm,0,@ICC,'01-01-1','02-01-1','03-01-1'";
+                        using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
+                        {
+                            try
+                            {
+                                SC.Parameters.AddWithValue("@Crud", VbCRUD.Trim());
+                                SC.Parameters.AddWithValue("@CsEsp", VbCasosEsp.Trim());
+                                SC.Parameters.AddWithValue("@IdGrp", Session["IdGrupoRP"].ToString());
+                                SC.Parameters.AddWithValue("@IdFrm", ViewState["IdFormRP"].ToString());
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                                SC.ExecuteNonQuery();
+                                Transac.Commit();
+                                BindData(TxtBusqueda.Text, TxtBusqUsu.Text, "UPD");
+                            }
+                            catch (Exception)
+                            { Transac.Rollback(); }
+                        }
+                    }
                 }
             }
             ActivarControles();
         }
         protected void GrdPerfilAsig_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (e.CommandName == "Select")
+            {
+                int index = int.Parse(e.CommandArgument.ToString());
+                ViewState["CodidUsrPerfil"] = GrdPerfilAsig.DataKeys[index].Value.ToString();
+                string borr = GrdPerfilAsig.DataKeys[index].Value.ToString();
+
+            }
+
+        }
+        protected void GrdPerfilAsig_SelectedIndexChanged(object sender, EventArgs e)
+        {
             try
             {
-                if (e.CommandName == "Select")
+
+                if ((int)Session["IdGrupoRP"] != 0)
                 {
-                    int index = int.Parse(e.CommandArgument.ToString());
-                    Session["CodidUsrPerfil"] = int.Parse(GrdPerfilAsig.DataKeys[index].Value.ToString());
+                    DSTDdl = (DataSet)ViewState["DSTDdl"];
+                    DataTable DT = new DataTable();
+                    DT = DSTDdl.Tables[6].Clone();
+                    DataRow[] Result = DSTDdl.Tables[6].Select("CodidUsrPerfil = " + ViewState["CodidUsrPerfil"].ToString().Trim());
+                    foreach (DataRow tbl in Result)
+                    {
+                        LblNombrePantalla.Text = tbl["NomFormWeb"].ToString();
+                        string VblNomPant = tbl["NomFormWeb"].ToString();
+                        CkbIng.Checked = Convert.ToBoolean(tbl["IngresarF"]);
+                        CkbMod.Checked = Convert.ToBoolean(tbl["ModificarF"]);
+                        CkbCons.Checked = Convert.ToBoolean(tbl["ConsultarF"]);
+                        CkbImpr.Checked = Convert.ToBoolean(tbl["ImprimirF"]);
+                        CkbElim.Checked = Convert.ToBoolean(tbl["EliminarF"]);
+                        CkbCE1.Checked = Convert.ToBoolean(tbl["CEF1"]);
+                        CkbCE2.Checked = Convert.ToBoolean(tbl["CEF2"]);
+                        CkbCE3.Checked = Convert.ToBoolean(tbl["CEF3"]);
+                        CkbCE4.Checked = Convert.ToBoolean(tbl["CEF4"]);
+                        CkbCE5.Checked = Convert.ToBoolean(tbl["CEF5"]);
+                        CkbCE6.Checked = Convert.ToBoolean(tbl["CEF6"]);
+                        CkbIng.Visible = true;
+                        CkbMod.Visible = true;
+                        CkbCons.Visible = true;
+                        CkbImpr.Visible = true;
+                        CkbElim.Visible = true;
+                        CkbCE1.Visible = false;
+                        CkbCE2.Visible = false;
+                        CkbCE3.Visible = false;
+                        CkbCE4.Visible = false;
+                        CkbCE5.Visible = false;
+                        CkbCE6.Visible = false;
+                        IbtAsignarPerfil.Visible = false;
+
+                        if (Convert.ToBoolean(tbl["IngresarF"]).Equals(false))
+                        {
+                            CkbIng.Visible = false;
+                        }
+                        if (Convert.ToBoolean(tbl["ModificarF"]).Equals(false))
+                        {
+                            CkbMod.Visible = false;
+                        }
+                        if (Convert.ToBoolean(tbl["ConsultarF"]).Equals(false))
+                        {
+                            CkbCons.Visible = false;
+                        }
+                        if (Convert.ToBoolean(tbl["ImprimirF"]).Equals(false))
+                        {
+                            CkbImpr.Visible = false;
+                        }
+                        if (Convert.ToBoolean(tbl["EliminarF"]).Equals(false))
+                        {
+                            CkbElim.Visible = false;
+                        }
+                        if (Convert.ToBoolean(tbl["CEF1"]).Equals(true))
+                        {
+                            CkbCE1.Visible = true;
+                            CkbCE1.Text = tbl["CasoEspeciaLF1"].ToString();
+                        }
+                        if (Convert.ToBoolean(tbl["CEF2"]).Equals(true))
+                        {
+                            CkbCE2.Visible = true;
+                            CkbCE2.Text = tbl["CasoEspeciaLF2"].ToString();
+                        }
+                        if (Convert.ToBoolean(tbl["CEF3"]).Equals(true))
+                        {
+                            CkbCE3.Visible = true;
+                            CkbCE3.Text = tbl["CasoEspeciaLF3"].ToString();
+                        }
+                        if (Convert.ToBoolean(tbl["CEF4"]).Equals(true))
+                        {
+                            CkbCE4.Visible = true;
+                            CkbCE4.Text = tbl["CasoEspeciaLF4"].ToString();
+                        }
+                        if (Convert.ToBoolean(tbl["CEF5"]).Equals(true))
+                        {
+                            CkbCE5.Visible = true;
+                            CkbCE5.Text = tbl["CasoEspeciaLF5"].ToString();
+                        }
+                        if (Convert.ToBoolean(tbl["CEF6"]).Equals(true))
+                        {
+                            CkbCE6.Visible = true;
+                            CkbCE6.Text = tbl["CasoEspeciaLF6"].ToString();
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -359,21 +494,55 @@ namespace _77NeoWeb.Forms.Seguridad
                 ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "IdntificadorBloqueScript", "alert('" + ex.Message + "')", true);
             }
         }
-        protected void GrdPerfilAsig_SelectedIndexChanged(object sender, EventArgs e)
+        protected void GrdPerfilAsig_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            if ((int)Session["IdGrupoRP"] != 0)
+            {
+                Cnx.BaseDatos(Session["D[BX"].ToString(), Session["$VR"].ToString(), Session["V$U@"].ToString(), Session["P@$"].ToString());
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+                {
+                    sqlCon.Open();
+                    string query = "DELETE FROM TblUsrPerfiles WHERE CodidUsrPerfil = @ID";
+                    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                    sqlCmd.Parameters.AddWithValue("@ID", Convert.ToInt32(GrdPerfilAsig.DataKeys[e.RowIndex].Value.ToString()));
+                    sqlCmd.ExecuteNonQuery();
+                    ActivarControles();
+                    BindData(TxtBusqueda.Text, TxtBusqUsu.Text, "UPD");
+                }
+            }
+        }
+        protected void GrdPerfilAsig_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                string VbNomFormWeb = DataBinder.Eval(e.Row.DataItem, "NomFormWeb").ToString();
+
+                if (VbNomFormWeb == string.Empty)
+                {
+                    e.Row.BackColor = System.Drawing.Color.DarkOrange;
+                }
+            }
+
+        }
+        protected void GrdSinAsig_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
             {
                 if ((int)Session["IdGrupoRP"] != 0)
                 {
-                    Cnx.BaseDatos(Session["D[BX"].ToString(), Session["$VR"].ToString(), Session["V$U@"].ToString(), Session["P@$"].ToString());
-                    using (SqlConnection sqlConx = new SqlConnection(Cnx.GetConex()))
+                    if (e.CommandName == "Select")
                     {
-                        string LtxtSql = "EXEC SP_ConfiguracionV2_ 15,'','','','',''," + ((int)Session["CodidUsrPerfil"]).ToString() + ",0,0,0,'01-01-1','02-01-1','03-01-1'";
-                        SqlCommand Comando = new SqlCommand(LtxtSql, sqlConx);
-                        sqlConx.Open();
-                        SqlDataReader tbl = Comando.ExecuteReader();
-                        if (tbl.Read())
+                        ActivarControles();
+                        int index = int.Parse(e.CommandArgument.ToString());
+                        ViewState["IdFormRP"] = int.Parse(GrdSinAsig.DataKeys[index].Value.ToString());
+
+                        DSTDdl = (DataSet)ViewState["DSTDdl"];
+                        DataTable DT = new DataTable();
+                        DT = DSTDdl.Tables[5].Clone();
+                        DataRow[] Result = DSTDdl.Tables[5].Select("CodIdFormulario = " + ViewState["IdFormRP"].ToString());
+                        foreach (DataRow tbl in Result)
                         {
+                            DT.ImportRow(tbl);
                             LblNombrePantalla.Text = tbl["NomFormWeb"].ToString();
                             string VblNomPant = tbl["NomFormWeb"].ToString();
                             CkbIng.Checked = Convert.ToBoolean(tbl["IngresarF"]);
@@ -381,12 +550,6 @@ namespace _77NeoWeb.Forms.Seguridad
                             CkbCons.Checked = Convert.ToBoolean(tbl["ConsultarF"]);
                             CkbImpr.Checked = Convert.ToBoolean(tbl["ImprimirF"]);
                             CkbElim.Checked = Convert.ToBoolean(tbl["EliminarF"]);
-                            CkbCE1.Checked = Convert.ToBoolean(tbl["CEF1"]);
-                            CkbCE2.Checked = Convert.ToBoolean(tbl["CEF2"]);
-                            CkbCE3.Checked = Convert.ToBoolean(tbl["CEF3"]);
-                            CkbCE4.Checked = Convert.ToBoolean(tbl["CEF4"]);
-                            CkbCE5.Checked = Convert.ToBoolean(tbl["CEF5"]);
-                            CkbCE6.Checked = Convert.ToBoolean(tbl["CEF6"]);
                             CkbIng.Visible = true;
                             CkbMod.Visible = true;
                             CkbCons.Visible = true;
@@ -399,7 +562,10 @@ namespace _77NeoWeb.Forms.Seguridad
                             CkbCE5.Visible = false;
                             CkbCE6.Visible = false;
                             IbtAsignarPerfil.Visible = false;
-
+                            if (VblNomPant != string.Empty)
+                            {
+                                IbtAsignarPerfil.Visible = true;
+                            }
                             if (Convert.ToBoolean(tbl["IngresarF"]).Equals(false))
                             {
                                 CkbIng.Visible = false;
@@ -450,156 +616,6 @@ namespace _77NeoWeb.Forms.Seguridad
                                 CkbCE6.Visible = true;
                                 CkbCE6.Text = tbl["CasoEspeciaLF6"].ToString();
                             }
-                            sqlConx.Close();
-                            BindData(TxtBusqueda.Text, TxtBusqUsu.Text);
-                        }
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "IdntificadorBloqueScript", "alert('" + ex.Message + "')", true);
-            }
-        }
-        protected void GrdPerfilAsig_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            try
-            {
-                if ((int)Session["IdGrupoRP"] != 0)
-                {
-                    Cnx.BaseDatos(Session["D[BX"].ToString(), Session["$VR"].ToString(), Session["V$U@"].ToString(), Session["P@$"].ToString());
-                    using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
-                    {
-                        sqlCon.Open();
-                        string query = "DELETE FROM TblUsrPerfiles WHERE CodidUsrPerfil = @ID";
-                        SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                        sqlCmd.Parameters.AddWithValue("@ID", Convert.ToInt32(GrdPerfilAsig.DataKeys[e.RowIndex].Value.ToString()));
-                        sqlCmd.ExecuteNonQuery();
-                        ActivarControles();
-                        BindData(TxtBusqueda.Text, TxtBusqUsu.Text);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "IdntificadorBloqueScript", "alert('" + ex.Message + "')", true);
-            }
-        }
-        protected void GrdPerfilAsig_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                string VbNomFormWeb = DataBinder.Eval(e.Row.DataItem, "NomFormWeb").ToString();
-
-                if (VbNomFormWeb == string.Empty)
-                {
-                    e.Row.BackColor = System.Drawing.Color.DarkOrange;
-                }
-
-            }
-        }
-        protected void GrdPerfilAsig_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdPerfilAsig.PageIndex = e.NewPageIndex;
-            BindData(TxtBusqueda.Text, TxtBusqUsu.Text);
-        }
-        protected void GrdSinAsig_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            try
-            {
-                if ((int)Session["IdGrupoRP"] != 0)
-                {
-                    if (e.CommandName == "Select")
-                    {
-                        ActivarControles();
-                        int index = int.Parse(e.CommandArgument.ToString());
-                        Session["IdFormRP"] = int.Parse(GrdSinAsig.DataKeys[index].Value.ToString());
-                        Cnx.BaseDatos(Session["D[BX"].ToString(), Session["$VR"].ToString(), Session["V$U@"].ToString(), Session["P@$"].ToString());
-                        using (SqlConnection sqlConx = new SqlConnection(Cnx.GetConex()))
-                        {
-                            string LtxtSql = "EXEC SP_ConfiguracionV2_ 17,'','','','',''," + ((int)Session["IdFormRP"]).ToString() + ",0,0,0,'01-01-1','02-01-1','03-01-1'";
-                            SqlCommand Comando = new SqlCommand(LtxtSql, sqlConx);
-                            sqlConx.Open();
-                            SqlDataReader tbl = Comando.ExecuteReader();
-                            if (tbl.Read())
-                            {
-                                LblNombrePantalla.Text = tbl["NomFormWeb"].ToString();
-                                string VblNomPant = tbl["NomFormWeb"].ToString();
-                                CkbIng.Checked = Convert.ToBoolean(tbl["IngresarF"]);
-                                CkbMod.Checked = Convert.ToBoolean(tbl["ModificarF"]);
-                                CkbCons.Checked = Convert.ToBoolean(tbl["ConsultarF"]);
-                                CkbImpr.Checked = Convert.ToBoolean(tbl["ImprimirF"]);
-                                CkbElim.Checked = Convert.ToBoolean(tbl["EliminarF"]);
-                                CkbIng.Visible = true;
-                                CkbMod.Visible = true;
-                                CkbCons.Visible = true;
-                                CkbImpr.Visible = true;
-                                CkbElim.Visible = true;
-                                CkbCE1.Visible = false;
-                                CkbCE2.Visible = false;
-                                CkbCE3.Visible = false;
-                                CkbCE4.Visible = false;
-                                CkbCE5.Visible = false;
-                                CkbCE6.Visible = false;
-                                IbtAsignarPerfil.Visible = false;
-                                if (VblNomPant != string.Empty)
-                                {
-                                    IbtAsignarPerfil.Visible = true;
-                                }
-                                if (Convert.ToBoolean(tbl["IngresarF"]).Equals(false))
-                                {
-                                    CkbIng.Visible = false;
-                                }
-                                if (Convert.ToBoolean(tbl["ModificarF"]).Equals(false))
-                                {
-                                    CkbMod.Visible = false;
-                                }
-                                if (Convert.ToBoolean(tbl["ConsultarF"]).Equals(false))
-                                {
-                                    CkbCons.Visible = false;
-                                }
-                                if (Convert.ToBoolean(tbl["ImprimirF"]).Equals(false))
-                                {
-                                    CkbImpr.Visible = false;
-                                }
-                                if (Convert.ToBoolean(tbl["EliminarF"]).Equals(false))
-                                {
-                                    CkbElim.Visible = false;
-                                }
-                                if (Convert.ToBoolean(tbl["CEF1"]).Equals(true))
-                                {
-                                    CkbCE1.Visible = true;
-                                    CkbCE1.Text = tbl["CasoEspeciaLF1"].ToString();
-                                }
-                                if (Convert.ToBoolean(tbl["CEF2"]).Equals(true))
-                                {
-                                    CkbCE2.Visible = true;
-                                    CkbCE2.Text = tbl["CasoEspeciaLF2"].ToString();
-                                }
-                                if (Convert.ToBoolean(tbl["CEF3"]).Equals(true))
-                                {
-                                    CkbCE3.Visible = true;
-                                    CkbCE3.Text = tbl["CasoEspeciaLF3"].ToString();
-                                }
-                                if (Convert.ToBoolean(tbl["CEF4"]).Equals(true))
-                                {
-                                    CkbCE4.Visible = true;
-                                    CkbCE4.Text = tbl["CasoEspeciaLF4"].ToString();
-                                }
-                                if (Convert.ToBoolean(tbl["CEF5"]).Equals(true))
-                                {
-                                    CkbCE5.Visible = true;
-                                    CkbCE5.Text = tbl["CasoEspeciaLF5"].ToString();
-                                }
-                                if (Convert.ToBoolean(tbl["CEF6"]).Equals(true))
-                                {
-                                    CkbCE6.Visible = true;
-                                    CkbCE6.Text = tbl["CasoEspeciaLF6"].ToString();
-                                }
-                                sqlConx.Close();
-                                BindData(TxtBusqueda.Text, TxtBusqUsu.Text);
-                            }
                         }
                     }
                 }
@@ -623,10 +639,7 @@ namespace _77NeoWeb.Forms.Seguridad
             }
         }
         protected void GrdSinAsig_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdSinAsig.PageIndex = e.NewPageIndex;
-            BindData(TxtBusqueda.Text, TxtBusqUsu.Text);
-        }
+        { GrdSinAsig.PageIndex = e.NewPageIndex; BindData(TxtBusqueda.Text, TxtBusqUsu.Text, "SEL"); }
         protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
@@ -647,5 +660,6 @@ namespace _77NeoWeb.Forms.Seguridad
                 gv.Height = new Unit(height);
             }
         }
+
     }
 }

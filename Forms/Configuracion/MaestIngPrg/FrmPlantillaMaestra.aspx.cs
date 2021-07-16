@@ -39,7 +39,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 2;
+                    Session["!dC!@"] = 1;
                     Session["77IDM"] = "5"; // 4 español | 5 ingles  */
                 }
             }
@@ -1201,7 +1201,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
-            string LtxtSql = "EXEC SP_PANTALLA_Capitulo_PM 11,'" + ViewState["CodUNPM"].ToString() + "','" + DdlFlota.Text.Trim() + "','','',0,0,0," + Session["!dC!@"] + ",'01-1-2009','01-01-1900','01-01-1900'";
+            string LtxtSql = "EXEC SP_PANTALLA_Capitulo_PM 11,'" + ViewState["CodUNPM"].ToString() + "','" + DdlFlota.Text.Trim() + "','','',0,0," + Session["77IDM"] + "," + Session["!dC!@"] + ",'01-1-2009','01-01-1900','01-01-1900'";
             if (e.Row.RowType == DataControlRowType.Footer)
             {
                 DropDownList DdlPscPP = (e.Row.FindControl("DdlPscPP") as DropDownList);

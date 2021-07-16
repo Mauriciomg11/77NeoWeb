@@ -3,22 +3,42 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>TA</title>
     <style type="text/css">
-        .DivGrid {
+        .CentrarContenedor {
             position: absolute;
-            width: 80%;
-            height: 500px;
-            top: 15%;
-            left: 10%;
-            margin-top: 0px;
+            /*nos posicionamos en el centro del navegador*/
+            /*top: 50%;*/
+            left: 50%;
+            /*determinamos una anchura*/
+            width: 90%;
+            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
+            margin-left: -45%;
+            /*determinamos una altura*/
+            height: 90%;
+            /*indicamos que el margen superior, es la mitad de la altura*/
+            padding: 5px;
         }
-      
+
+        .CentrarGrid {
+            position: absolute;
+            /*nos posicionamos en el centro del navegador*/
+            /*top: 50%;*/
+            left: 50%;
+            /*determinamos una anchura*/
+            width: 90%;
+            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
+            margin-left: -45%;
+            /*determinamos una altura*/
+            /*indicamos que el margen superior, es la mitad de la altura*/
+            padding: 5px;
+            text-align: left;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
     <script type="text/javascript">       
         function myFuncionddl() {
-            $('[id *=DdlTipoUM]').chosen(); /**/        }
-            $('[id *=DdlTipoUMPP]').chosen();           
+            $('[id *=DdlTipoUMPP],[id *=DdlTipoUM]').chosen();           
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
@@ -27,25 +47,26 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
-        <ContentTemplate>
-            <div class="CentrarTable">
-                <table class="TablaBusqueda">
-                    <tr>
-                        <td>
-                            <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
-                        <td>
-                            <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
-                        <td>
-                            <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
-                    </tr>
-                </table>
-                <div class="DivGrid DivContendorGrid">
+        <ContentTemplate>   
+            <table class="TablaBusqueda">
+                <tr>
+                    <td>
+                        <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
+                    <td>
+                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
+                    <td>
+                        <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
+                </tr>
+            </table>
+            <div class="CentrarContenedor DivMarco">
+                <div class="CentrarGrid">
                     <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodUnidMedida,CodAnt,CodTipUnMedAnt"
-                        CssClass="DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
+                        CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                         OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating"
                         OnRowCancelingEdit="GrdDatos_RowCancelingEdit" OnRowDeleting="GrdDatos_RowDeleting" OnRowDataBound="GrdDatos_RowDataBound"
                         OnPageIndexChanging="GrdDatos_PageIndexChanging">
                         <Columns>
+
                             <asp:TemplateField HeaderText="Cód" HeaderStyle-Width="15%">
                                 <ItemTemplate>
                                     <asp:Label Text='<%# Eval("CodUnidMedida") %>' runat="server" Width="50px" />

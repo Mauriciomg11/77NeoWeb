@@ -38,9 +38,10 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
         <ContentTemplate>
+
             <div class="CentrarTable">
                 <div class="DivGrid DivContendorGrid">
-                    <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodPrioridadSolicitudMat"
+                    <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false" DataKeyNames="CodPrioridadSolicitudMat"
                         CssClass="DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                         OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit" OnRowDataBound="GrdDatos_RowDataBound">
                         <Columns>
@@ -96,13 +97,13 @@
                                 </FooterTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField FooterStyle-Width="10%">
-                                <ItemTemplate>
+                                  <%--<ItemTemplate>
                                     <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />
                                 </ItemTemplate>
                                 <EditItemTemplate>
-                                    <asp:ImageButton ID="IbtUpdate" CssClass="BotonUpdateGrid" ImageUrl="~/images/Save.png" runat="server" CommandName="Update" ToolTip="Actualizar" />
+                                  <asp:ImageButton ID="IbtUpdate" CssClass="BotonUpdateGrid" ImageUrl="~/images/Save.png" runat="server" CommandName="Update" ToolTip="Actualizar" />
                                     <asp:ImageButton ID="IbtCancel" CssClass="BotonCancelGrid" ImageUrl="~/images/Cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancelar" />
-                                </EditItemTemplate>
+                                </EditItemTemplate>--%>
                             </asp:TemplateField>
                         </Columns>
                         <FooterStyle CssClass="GridFooterStyle" />

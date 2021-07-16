@@ -56,7 +56,7 @@
                         OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit" OnRowDataBound="GrdDatos_RowDataBound"
                         OnPageIndexChanging="GrdDatos_PageIndexChanging">
                         <Columns>
-                            <asp:TemplateField HeaderText="Cód"  HeaderStyle-Width="5%">
+                            <asp:TemplateField HeaderText="Cód" HeaderStyle-Width="5%">
                                 <ItemTemplate>
                                     <asp:Label Text='<%# Eval("CodCategoriaMel") %>' runat="server" Width="100%" />
                                 </ItemTemplate>

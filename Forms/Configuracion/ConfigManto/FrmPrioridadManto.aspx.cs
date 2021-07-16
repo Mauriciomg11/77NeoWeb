@@ -17,21 +17,27 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }/* */
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             Page.Title = "XX";
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-               /* Session["C77U"] = "00000082";// 00000082|00000133
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["!dC!@"] = 1;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles      */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 2;
+                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
@@ -93,6 +99,7 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
         }
         protected void PerfilesGrid()
         {
+            /*
             foreach (GridViewRow Row in GrdDatos.Rows)
             {
                 if ((int)ViewState["VblModMS"] == 0)
@@ -104,18 +111,20 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
                     }
                 }
             }
+            */
         }
         protected void BindData()
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataTable dtbl = new DataTable();
-            string VbTxtSql = "EXEC SP_TablasGeneral 7, '','','','','','','','PrioSol','SELECT',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+            string VbTxtSql = "EXEC SP_TablasGeneral 7, '','','','','','','','PrioSol','SELECT',0,0,0,0,@Idm,0,'01-01-1','02-01-1','03-01-1'";
             Cnx.SelecBD();
             using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
             {
                 SCnx.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, SCnx))
                 {
+                    SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                     SqlDataAdapter SDA = new SqlDataAdapter();
                     SDA.SelectCommand = SC;
                     SDA.Fill(dtbl);
@@ -156,7 +165,7 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
             if ((GrdDatos.Rows[e.RowIndex].FindControl("TxtCritD") as TextBox).Text.Trim().Equals("")) { VbCDia = 0; }
             else { VbCDia = Convert.ToInt32((GrdDatos.Rows[e.RowIndex].FindControl("TxtCritD") as TextBox).Text.Trim()); }
             if (VbCDia < 0) { VbCDia = 0; }
-           
+
             if ((GrdDatos.Rows[e.RowIndex].FindControl("TxtDI") as TextBox).Text.Trim().Equals("")) { VbDIA = 0; }
             else { VbDIA = Convert.ToInt32((GrdDatos.Rows[e.RowIndex].FindControl("TxtDI") as TextBox).Text.Trim()); }
             if (VbDIA < 0) { VbDIA = 0; }

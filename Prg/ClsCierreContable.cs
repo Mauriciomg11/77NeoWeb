@@ -31,13 +31,14 @@ namespace _77NeoWeb.Prg
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
                     PMensj = "";
-                    string VBQuery = " EXEC Consultas_General 25,@M,@Cia,@U,@A, 0,0,'01-01-1','01-01-1'";
+                    string VBQuery = " EXEC Consultas_General 25,@M,@Cia,@U,@A, 0,@ICC,'01-01-1','01-01-1'";
                     using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         sqlCmd.Parameters.AddWithValue("@M", PMes);
                         sqlCmd.Parameters.AddWithValue("@Cia", System.Web.HttpContext.Current.Session["Nit77Cia"].ToString());
                         sqlCmd.Parameters.AddWithValue("@U", System.Web.HttpContext.Current.Session["C77U"].ToString());
                         sqlCmd.Parameters.AddWithValue("@A", PAno);
+                        sqlCmd.Parameters.AddWithValue("@ICC", System.Web.HttpContext.Current.Session["!dC!@"].ToString());
                         try
                         {
                             SqlDataReader SDR = sqlCmd.ExecuteReader();

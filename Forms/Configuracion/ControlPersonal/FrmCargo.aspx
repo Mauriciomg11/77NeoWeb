@@ -30,17 +30,17 @@
                         <td>
                             <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
                         <td>
-                            <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td                      
+                            <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                     </tr>
                 </table>
                 <div class="DivGrid DivContendorGrid">
                     <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodCargo"
                         CssClass="DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
-                        OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" 
-                        OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit" OnRowDeleting="GrdDatos_RowDeleting" 
+                        OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing"
+                        OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit" OnRowDeleting="GrdDatos_RowDeleting"
                         OnRowDataBound="GrdDatos_RowDataBound" OnPageIndexChanging="GrdDatos_PageIndexChanging">
                         <Columns>
-                            <asp:TemplateField HeaderText="Código">
+                            <asp:TemplateField HeaderText="Código" HeaderStyle-Width="9%">
                                 <ItemTemplate>
                                     <asp:Label Text='<%# Eval("CodCargo") %>' runat="server" Width="50px" />
                                 </ItemTemplate>

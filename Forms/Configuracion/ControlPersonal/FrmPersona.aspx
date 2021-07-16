@@ -158,7 +158,7 @@
                         </div>
                         <div class="col-sm-3">
                             <asp:Label ID="LblUsuario" runat="server" CssClass="LblEtiquet" Text="Usu" />
-                            <asp:TextBox ID="TxtUsuario" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="90%"/>
+                            <asp:TextBox ID="TxtUsuario" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="90%" />
                         </div>
                     </div>
                     <br />
@@ -281,7 +281,7 @@
                         </div>
                         <div class="col-sm-5">
                             <h6 class="TextoSuperior">
-                                <asp:Label ID="LblTitCurso" runat="server" Text="Cursos"/></h6>
+                                <asp:Label ID="LblTitCurso" runat="server" Text="Cursos" /></h6>
                             <asp:GridView ID="GrdCursos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdOperacionCursoXPer"
                                 CssClass="DiseñoGrid table-sm" GridLines="Both" Width="100%" AllowPaging="true" PageSize="8"
                                 OnRowCommand="GrdCursos_RowCommand" OnRowEditing="GrdCursos_RowEditing" OnRowUpdating="GrdCursos_RowUpdating"
@@ -356,7 +356,7 @@
                     <br />
                     <asp:Label ID="LblNomUsu" runat="server" CssClass="LblEtiquet" Text="Usuario" />
                     <asp:TextBox ID="TxtNomUsu" runat="server" CssClass="heightCampo" Width="15%" />
-                     <asp:Button ID="BtnAsignarUsu" runat="server" CssClass="btn btn-success botones BtnEdicion" OnClick="BtnAsignarUsu_Click" Text="Asignar" />
+                    <asp:Button ID="BtnAsignarUsu" runat="server" CssClass="btn btn-success botones BtnEdicion" OnClick="BtnAsignarUsu_Click" Text="Asignar" />
                 </asp:View>
             </asp:MultiView>
         </ContentTemplate>

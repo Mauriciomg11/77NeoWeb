@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmTipoUbicaGeograf.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.UbicacionGeograf.FrmTipoUbicaGeograf" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-     <style type="text/css">
+    <style type="text/css">
         .DivGrid {
             position: absolute;
             width: 80%;
@@ -14,11 +15,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-      <h1>
+    <h1>
         <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
-     <asp:UpdatePanel ID="UpPanel" runat="server">
+    <asp:UpdatePanel ID="UpPanel" runat="server">
         <ContentTemplate>
             <div class="CentrarTable">
                 <table class="TablaBusqueda">
@@ -42,7 +43,7 @@
                                 <ItemTemplate>
                                     <asp:Label Text='<%# Eval("TipoUbicaGeogr") %>' runat="server" Width="100%" />
                                 </ItemTemplate>
-                                  <EditItemTemplate>
+                                <EditItemTemplate>
                                     <asp:Label Text='<%# Eval("TipoUbicaGeogr") %>' runat="server" Width="100%" />
                                 </EditItemTemplate>
                             </asp:TemplateField>
@@ -56,7 +57,7 @@
                                 <FooterTemplate>
                                     <asp:TextBox ID="TxtDescPP" runat="server" MaxLength="200" Width="100%" />
                                 </FooterTemplate>
-                            </asp:TemplateField>                             
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderStyle-Width="10%">
                                 <ItemTemplate>
                                     <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />

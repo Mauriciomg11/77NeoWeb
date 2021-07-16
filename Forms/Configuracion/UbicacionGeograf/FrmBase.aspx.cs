@@ -16,28 +16,34 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataSet DSTDdl = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); } /**/
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-               /* Session["C77U"] = "00000082";// 00000082|00000133
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["!dC!@"] = 0;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles    */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 2;
+                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
                 ModSeguridad();
-                BindBDdlBusq();
-                BindBDdl("");
+                BindDdl("", "UPD");
                 ViewState["Accion"] = "";
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
@@ -114,23 +120,64 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                 ViewState["TablaIdioma"] = Idioma;
             }
         }
-        protected void BindBDdlBusq()
+        protected void BindDdl(string CodUG, string Accion)
         {
-            string LtxtSql = string.Format("EXEC SP_TablasGeneral 13,'','','','','','','','Todas','Base',0,0,0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
-            DdlBusq.DataSource = Cnx.DSET(LtxtSql);
-            DdlBusq.DataMember = "Datos";
+            if (Accion.Equals("UPD"))
+            {
+                Cnx.SelecBD();
+                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+                {
+                    string VbTxtSql = " EXEC SP_TablasGeneral 16,'CodUB','','','','','','','','',0,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
+                    sqlConB.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                    {
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        SC.Parameters.AddWithValue("@CdUb", CodUG.Trim());
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            using (DataSet DSTDdl = new DataSet())
+                            {
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DSTDdl);
+                                DSTDdl.Tables[0].TableName = "Busq";
+                                DSTDdl.Tables[1].TableName = "Ubica";
+                                DSTDdl.Tables[2].TableName = "DatosBase";
+
+                                ViewState["DSTDdl"] = DSTDdl;
+                            }
+                        }
+                    }
+                }
+            }
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+            DataRow[] Result;
+            string VbCodAnt = "";
+
+            VbCodAnt = DdlBusq.Text.Trim();
+            DdlBusq.DataSource = DSTDdl.Tables[0];
             DdlBusq.DataTextField = "NomBase";
             DdlBusq.DataValueField = "IdBase";
             DdlBusq.DataBind();
-        }
-        protected void BindBDdl(string CodUG)
-        {
-            string LtxtSql = string.Format("EXEC SP_TablasGeneral 13,'{0}','','','','','','','','UbicaGeo',0,0,0,0,0,{1},'01-01-1','02-01-1','03-01-1'", CodUG.Trim(), Session["!dC!@"]);
-            DdlUbica.DataSource = Cnx.DSET(LtxtSql);
-            DdlUbica.DataMember = "Datos";
+            DdlBusq.Text = VbCodAnt;
+
+            DataTable DT = new DataTable();
+            VbCodAnt = CodUG.Trim();
+            DT = DSTDdl.Tables[1].Clone();
+
+            Result = DSTDdl.Tables[1].Select("CodUbicaGeogr='"+ CodUG.Trim()+"'");// trae el codigo actual por si esta inactivo
+            foreach (DataRow Row in Result)
+            { DT.ImportRow(Row); }
+
+            Result = DSTDdl.Tables[1].Select("Activa=1");
+            foreach (DataRow Row in Result)
+            { DT.ImportRow(Row); }
+
+            DdlUbica.DataSource = DT;
             DdlUbica.DataTextField = "Nombre";
             DdlUbica.DataValueField = "CodUbicaGeogr";
             DdlUbica.DataBind();
+            DdlUbica.Text = VbCodAnt;
+
         }
         protected void LimpiarCampos(string Accion)
         {
@@ -192,32 +239,20 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
         protected void Traerdatos(string Prmtr)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-
-            Cnx.SelecBD();
-            using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+            DataRow[] Result = DSTDdl.Tables[2].Select("IdBase = " + Prmtr.Trim());
+            foreach (DataRow SDR in Result)
             {
-                Cnx2.Open();
-                string LtxtSql = "EXEC SP_TablasGeneral 13,@Prmtr,'','','','','','','','ReadBase',0,0,0,0,0,@CC,'01-01-1','02-01-1','03-01-1'";
-                SqlCommand SC = new SqlCommand(LtxtSql, Cnx2);
-                SC.Parameters.AddWithValue("@Prmtr", Prmtr);
-                SC.Parameters.AddWithValue("@CC", Session["!dC!@"]);
-                SqlDataReader SDR = SC.ExecuteReader();
-                if (SDR.Read())
-                {
-                    TxtCod.Text = HttpUtility.HtmlDecode(SDR["CodBase"].ToString().Trim());
-                    TxtNombre.Text = HttpUtility.HtmlDecode(SDR["NomBase"].ToString().Trim());
-                    TxtFrecR.Text = HttpUtility.HtmlDecode(SDR["FrecuenciaRadio"].ToString().Trim());
-                    TxtTelef.Text = HttpUtility.HtmlDecode(SDR["Telefono"].ToString().Trim());
-                    TxtFax.Text = HttpUtility.HtmlDecode(SDR["Fax"].ToString().Trim());
-                    TxtDir.Text = HttpUtility.HtmlDecode(SDR["Direccion"].ToString().Trim());
-                    string VbUbica = HttpUtility.HtmlDecode(SDR["CodUbicaGeogr"].ToString().Trim());
-                    BindBDdl(VbUbica);
-                    DdlUbica.Text = VbUbica;
-                    TxtDescrip.Text = HttpUtility.HtmlDecode(SDR["Descripcion"].ToString().Trim());
-                    CkbActivo.Checked = Convert.ToBoolean(HttpUtility.HtmlDecode(SDR["Activo"].ToString().Trim()));
-                }
-                SDR.Close();
-                Cnx2.Close();
+                TxtCod.Text = HttpUtility.HtmlDecode(SDR["CodBase"].ToString().Trim());
+                TxtNombre.Text = HttpUtility.HtmlDecode(SDR["NomBase"].ToString().Trim());
+                TxtFrecR.Text = HttpUtility.HtmlDecode(SDR["FrecuenciaRadio"].ToString().Trim());
+                TxtTelef.Text = HttpUtility.HtmlDecode(SDR["Telefono"].ToString().Trim());
+                TxtFax.Text = HttpUtility.HtmlDecode(SDR["Fax"].ToString().Trim());
+                TxtDir.Text = HttpUtility.HtmlDecode(SDR["Direccion"].ToString().Trim());
+                string VbUbica = HttpUtility.HtmlDecode(SDR["CodUbicaGeogr"].ToString().Trim());
+                BindDdl(VbUbica, "SEL");                
+                TxtDescrip.Text = HttpUtility.HtmlDecode(SDR["Descripcion"].ToString().Trim());
+                CkbActivo.Checked = Convert.ToBoolean(HttpUtility.HtmlDecode(SDR["Activo"].ToString().Trim()));
             }
         }
         protected void DdlBusq_TextChanged(object sender, EventArgs e)
@@ -287,7 +322,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                     { BtnIngresar.Text = row["Texto"].ToString().Trim(); }//
                     ActivarCampos(false, false, "Ingresar");
                     DdlBusq.Enabled = true;
-                    BindBDdlBusq();
+                    BindDdl(DdlUbica.Text.Trim(), "UPD");
                     DdlBusq.Text = ClsBase.GetIdBase().ToString();
                     Traerdatos(DdlBusq.Text.Trim());
                     BtnIngresar.OnClientClick = "";
@@ -299,7 +334,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Inconveniente en el ingreso')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INGRESAR Base", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INGRESAR Base", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void BtnModificar_Click(object sender, EventArgs e)
@@ -314,8 +349,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                 {
                     string VbCodUb;
                     VbCodUb = DdlUbica.Text.Trim();
-
-                    BindBDdl(VbCodUb);
+                    BindDdl(DdlUbica.Text.Trim(), "SEL");
                     DdlUbica.Text = VbCodUb;
                     ActivarBtn(false, true, false, false, false);
                     DataRow[] Result = Idioma.Select("Objeto= 'BotonIngOk'");
@@ -371,7 +405,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                     ViewState["Accion"] = "";
                     ActivarCampos(false, false, "UPDATE");
                     DdlBusq.Enabled = true;
-                    BindBDdlBusq();
+                    BindDdl(DdlUbica.Text.Trim(), "UPD");
                     DdlBusq.Text = ClsBase.GetIdBase().ToString().Trim();
                     Traerdatos(DdlBusq.Text);
                     BtnModificar.OnClientClick = "";
@@ -383,7 +417,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//inconvenientes en la modificacion
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "MODIFICAR Base", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "MODIFICAR Base", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void BtnEliminar_Click(object sender, EventArgs e)
@@ -427,7 +461,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                 }
                 ViewState["Accion"] = "";
                 LimpiarCampos("DELETE");
-                BindBDdlBusq();
+                BindDdl("", "UPD");
                 DdlBusq.Text = "0";
             }
             catch (Exception Ex)
@@ -436,7 +470,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Inconveniente en la eliminacion
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE Base", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE Base", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
     }

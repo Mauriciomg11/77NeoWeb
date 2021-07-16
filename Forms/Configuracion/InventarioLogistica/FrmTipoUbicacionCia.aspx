@@ -52,7 +52,7 @@
                                     <asp:TextBox ID="TxtDesc" Text='<%# Eval("Descripcion") %>' runat="server" MaxLength="200" Width="100%" TextMode="MultiLine" />
                                 </EditItemTemplate>
                                 <FooterTemplate>
-                                    <asp:TextBox ID="TxtDescPP" runat="server" MaxLength="200" Width="100%"  TextMode="MultiLine"/>
+                                    <asp:TextBox ID="TxtDescPP" runat="server" MaxLength="200" Width="100%" TextMode="MultiLine" />
                                 </FooterTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="TipoU" HeaderStyle-Width="5%">
@@ -63,7 +63,7 @@
                                     <asp:TextBox ID="TxtipoU" Text='<%# Eval("TipoUbicacion") %>' runat="server" Width="100%" />
                                 </EditItemTemplate>
                                 <FooterTemplate>
-                                    <asp:TextBox ID="TxtipoUPP" runat="server" Width="100%"  Text="N" />
+                                    <asp:TextBox ID="TxtipoUPP" runat="server" Width="100%" Text="N" />
                                 </FooterTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Acti" HeaderStyle-Width="5%">

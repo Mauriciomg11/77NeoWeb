@@ -93,7 +93,7 @@
                         <br />
                         <asp:CheckBox ID="CkbActivo" runat="server" CssClass="LblEtiquet" Text="Act" Enabled="false" />
                     </div>
-                     <div class="col-sm-2">
+                    <div class="col-sm-2">
                         <br />
                         <asp:CheckBox ID="CkbRutaFrec" runat="server" CssClass="LblEtiquet" Text="Ruta Frec" Enabled="false" />
                     </div>

@@ -99,7 +99,7 @@
                                 <asp:TextBox ID="TxtPosPP" runat="server" Width="100px" />
                             </FooterTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Descripción" ItemStyle-HorizontalAlign="Left">
+                        <asp:TemplateField HeaderText="Descripción" ItemStyle-HorizontalAlign="Left" >
                             <ItemTemplate>
                                 <asp:TextBox ID="TxtIdDescrP" Text='<%# Eval("DescSangria") %>' runat="server" Width="300px" ReadOnly="true" TextMode="MultiLine" Height="35px" />
                             </ItemTemplate>

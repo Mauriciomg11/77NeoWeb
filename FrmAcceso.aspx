@@ -45,11 +45,11 @@
         <div class="text">
             <h2>77NeoWeb system</h2>
             <h5>
-                <asp:Label ID="LblText1" runat="server"  Text="Sistema de gestión aeronautico" /></h5>
+                <asp:Label ID="LblText1" runat="server" Text="Sistema de gestión aeronautico" /></h5>
             <h5>
-                <asp:Label ID="LblText2" runat="server" CssClass="CsTitulo" Text="Cuidamos sus datos"/></h5>
+                <asp:Label ID="LblText2" runat="server" CssClass="CsTitulo" Text="Cuidamos sus datos" /></h5>
             <h5>
-                <asp:Label ID="LblText3" runat="server" CssClass="CsTitulo" Text="Volamos con ellos..."/></h5>
+                <asp:Label ID="LblText3" runat="server" CssClass="CsTitulo" Text="Volamos con ellos..." /></h5>
         </div>
     </div>
     <div class="ContenedorLogin">
@@ -62,11 +62,11 @@
         <asp:UpdatePanel ID="UpPnlCampos" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <div class="form-group">
-                    <asp:DropDownList ID="DdlNit" runat="server" CssClass="form-control" Height="30px" Font-Size="Smaller" OnTextChanged="DdlNit_TextChanged"/>
-                    <asp:TextBox ID="TxtPassEmsa" runat="server" TextMode="Password" CssClass="form-control" placeholder="Password compañía" Height="30px"/><br />
-                    <asp:DropDownList ID="DdlBD" runat="server" CssClass="form-control" Height="30px" Font-Size="Smaller" Visible="false"/>
-                    <asp:TextBox ID="TxtUsuario" runat="server" CssClass="form-control" placeholder="Usuario" Height="30px" Visible="false"/>
-                    <asp:TextBox ID="TxtClave" runat="server" TextMode="Password" CssClass="form-control" placeholder="Password" Height="30px" Visible="false"/>
+                    <asp:DropDownList ID="DdlNit" runat="server" CssClass="form-control" Height="30px" Font-Size="Smaller" OnTextChanged="DdlNit_TextChanged" />
+                    <asp:TextBox ID="TxtPassEmsa" runat="server" TextMode="Password" CssClass="form-control" placeholder="Password compañía" Height="30px" /><br />
+                    <asp:DropDownList ID="DdlBD" runat="server" CssClass="form-control" Height="30px" Font-Size="Smaller" Visible="false" />
+                    <asp:TextBox ID="TxtUsuario" runat="server" CssClass="form-control" placeholder="Usuario" Height="30px" Visible="false" />
+                    <asp:TextBox ID="TxtClave" runat="server" TextMode="Password" CssClass="form-control" placeholder="Password" Height="30px" Visible="false" />
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>

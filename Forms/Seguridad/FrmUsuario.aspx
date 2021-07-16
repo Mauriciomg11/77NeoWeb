@@ -19,6 +19,7 @@
             border-width: 3px;
             /*BorderWidth="1px"*/
         }
+
         .Scroll-table2 {
             vertical-align: top;
             overflow: auto;
@@ -35,7 +36,8 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1>Datos de los usuarios</h1>
+    <h1>
+        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
@@ -43,14 +45,14 @@
             <table class="TablaBusqueda">
                 <tr>
                     <td>
-                        <asp:Label ID="Label1" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
+                        <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
                     <td>
-                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
+                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
                     <td>
                         <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                 </tr>
             </table>
-            <div class="table-responsive Scroll-table2"">
+            <div class="table-responsive Scroll-table2">
                 <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodUsuario"
                     CellPadding="3" CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8" OnPageIndexChanging="GrdDatos_PageIndexChanging"
                     OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit"
@@ -123,7 +125,7 @@
                                 <asp:CheckBox ID="CkbActivo" Checked='<%# Eval("Activo").ToString()=="1" ? true : false %>' runat="server" />
                             </EditItemTemplate>
                             <FooterTemplate>
-                                <asp:CheckBox ID="CkbActivoPP" runat="server" />
+                                <asp:CheckBox ID="CkbActivoPP" runat="server" Checked="true" />
                             </FooterTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField>

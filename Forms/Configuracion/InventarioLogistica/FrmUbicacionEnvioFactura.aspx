@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmUbicacionEnvioFactura.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.InventarioLogistica.FrmUbicacionEnvioFactura" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-       <style type="text/css">
+    <style type="text/css">
         .DivGrid {
             position: absolute;
             width: 80%;
@@ -14,11 +15,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-     <h1>
+    <h1>
         <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
-     <asp:UpdatePanel ID="UpPanel" runat="server">
+    <asp:UpdatePanel ID="UpPanel" runat="server">
         <ContentTemplate>
             <div class="CentrarTable">
                 <table class="TablaBusqueda">
@@ -51,7 +52,7 @@
                                     <asp:TextBox ID="TxtDesc" Text='<%# Eval("Descripcion") %>' runat="server" MaxLength="240" Width="100%" TextMode="MultiLine" />
                                 </EditItemTemplate>
                                 <FooterTemplate>
-                                    <asp:TextBox ID="TxtDescPP" runat="server" MaxLength="240" Width="100%"  TextMode="MultiLine"/>
+                                    <asp:TextBox ID="TxtDescPP" runat="server" MaxLength="240" Width="100%" TextMode="MultiLine" />
                                 </FooterTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="TipoU" HeaderStyle-Width="5%">
@@ -62,7 +63,7 @@
                                     <asp:TextBox ID="TxtipoU" Text='<%# Eval("TipoUbicacionNI") %>' runat="server" Width="100%" />
                                 </EditItemTemplate>
                                 <FooterTemplate>
-                                    <asp:TextBox ID="TxtipoUPP" runat="server" Width="100%"  Text="N" />
+                                    <asp:TextBox ID="TxtipoUPP" runat="server" Width="100%" Text="N" />
                                 </FooterTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Acti" HeaderStyle-Width="5%">

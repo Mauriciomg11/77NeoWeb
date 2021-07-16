@@ -18,26 +18,26 @@ namespace _77NeoWeb.Forms.Seguridad
         protected void Page_Load(object sender, EventArgs e)
         {
 
-          
+
             if (Session["Login77"] == null)
             {
                 if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
             }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
-          
+
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["C77U"] = "00000142"; //00000082|00000133
                     Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
                     Session["$VR"] = "77NEO01";
                     Session["V$U@"] = "sa";
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 1;
+                    Session["!dC!@"] = 2;
                     Session["77IDM"] = "5"; // 4 español | 5 ingles  */
                 }
             }
@@ -56,11 +56,7 @@ namespace _77NeoWeb.Forms.Seguridad
 
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), "FrmMenu.aspx");
-
-            if (ClsP.GetAccesoFrm() == 0)
-            {
-                Response.Redirect("WebMenuInicio.aspx");
-            }
+            if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }          
             if (ClsP.GetIngresar() == 0)
             {
                 ViewState["VblIngMS"] = 0;
@@ -147,24 +143,31 @@ namespace _77NeoWeb.Forms.Seguridad
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = "EXEC SP_ConfiguracionV2_ 3,'" + VbDesmenu + "','" + Session["C77U"].ToString() + "','','',''," + ViewState["VblIngMS"].ToString() + ",0,0,0,'01-01-1','02-01-1','03-01-1'";
+                string VbTxtSql = "EXEC SP_ConfiguracionV2_ 3, @Dsc, @Us,'','','', @Ing,0, @Idm, @ICC,'01-01-1','02-01-1','03-01-1'";
                 sqlCon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter(VbTxtSql, sqlCon);
-                sqlDa.Fill(dtbl);
-                if (dtbl.Rows.Count > 0)
+                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlCon))
                 {
-                    GrdDatos.DataSource = dtbl;
-                    GrdDatos.DataBind();
-                }
-                else
-                {
-                    dtbl.Rows.Add(dtbl.NewRow());
-                    GrdDatos.DataSource = dtbl;
-                    GrdDatos.DataBind();
-                    GrdDatos.Rows[0].Cells.Clear();
-                    GrdDatos.Rows[0].Cells.Add(new TableCell());
-                    GrdDatos.Rows[0].Cells[0].Text = "No existen registros ..!";
-                    GrdDatos.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                    string borr = ViewState["VblIngMS"].ToString();
+                    SC.Parameters.AddWithValue("@Dsc", VbDesmenu);
+                    SC.Parameters.AddWithValue("@Us", Session["C77U"]);
+                    SC.Parameters.AddWithValue("@Ing", ViewState["VblIngMS"]);
+                    SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                    SqlDataAdapter SDA = new SqlDataAdapter();
+                    SDA.SelectCommand = SC;
+                    SDA.Fill(dtbl);
+                    if (dtbl.Rows.Count > 0)
+                    { GrdDatos.DataSource = dtbl; GrdDatos.DataBind(); }
+                    else
+                    {
+                        dtbl.Rows.Add(dtbl.NewRow());
+                        GrdDatos.DataSource = dtbl;
+                        GrdDatos.DataBind();
+                        GrdDatos.Rows[0].Cells.Clear();
+                        GrdDatos.Rows[0].Cells.Add(new TableCell());
+                        GrdDatos.Rows[0].Cells[0].Text = "No existen registros ..!";
+                        GrdDatos.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                    }
                 }
             }
         }
@@ -356,7 +359,7 @@ namespace _77NeoWeb.Forms.Seguridad
                     DataRow[] Result = Idioma.Select("Objeto= 'IbtAddNew'");
                     foreach (DataRow row in Result)
                     { IbtAddNew.ToolTip = row["Texto"].ToString().Trim(); }
-                }               
+                }
             }
             if ((e.Row.RowState & DataControlRowState.Edit) > 0)
             {
@@ -366,7 +369,7 @@ namespace _77NeoWeb.Forms.Seguridad
                     DataRow[] Result = Idioma.Select("Objeto= 'IbtUpdate'");
                     foreach (DataRow row in Result)
                     { IbtUpdate.ToolTip = row["Texto"].ToString().Trim(); }
-                }                    
+                }
                 ImageButton IbtCancel = (e.Row.FindControl("IbtCancel") as ImageButton);
                 if (IbtCancel != null)
                 {

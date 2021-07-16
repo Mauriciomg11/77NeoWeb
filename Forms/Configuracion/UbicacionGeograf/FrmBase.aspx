@@ -2,28 +2,29 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
-        .Scroll {
-            vertical-align: top;
-            overflow: auto;
-            width: 90%;
-            height: 570px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    .Scroll {
+        vertical-align: top;
+        overflow: auto;
+        width: 90%;
+        height: 570px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-        .CentarGrid {
-            width: 60%;
-            margin-left: auto;
-            margin-right: auto;
-            width: 50%;
-        }
+    .CentarGrid {
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
 
-        .heightCampo {
-            height: 25px;
-            width: 95%;
-            font-size: 12px;
-        }
-    </style>
+    .heightCampo {
+        height: 25px;
+        width: 95%;
+        font-size: 12px;
+    }
+
+  </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
     <script type="text/javascript">   
@@ -93,7 +94,7 @@
                     <div class="col-sm-5">
                         <asp:Label ID="LblUbica" runat="server" CssClass="LblEtiquet" Text="Ubica" />
                         <asp:DropDownList ID="DdlUbica" runat="server" CssClass="heightCampo" Width="100%" Enabled="false" />
-                    </div>                   
+                    </div>
                     <div class="col-sm-2">
                         <br />
                         <asp:CheckBox ID="CkbActivo" runat="server" CssClass="LblEtiquet" Text="Act" Enabled="false" />
@@ -115,9 +116,9 @@
                     </div>
                     <div class="col-sm-2">
                         <asp:Button ID="BtnEliminar" runat="server" CssClass="btn btn-success botones" Width="100%" OnClick="BtnEliminar_Click" Text="Elimina" />
-                    </div>                  
+                    </div>
                 </div>
-                <br />               
+                <br />
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

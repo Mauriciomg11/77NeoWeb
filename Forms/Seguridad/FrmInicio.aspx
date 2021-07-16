@@ -90,7 +90,7 @@
 
         .Menu {
             text-align: left;
-             left: 1%;
+            left: 1%;
         }
     </style>
 </asp:Content>
@@ -98,11 +98,11 @@
     <div class="TextoSuperior">
         <h1>77NeoWeb</h1>
     </div>
-    <asp:ImageButton ID="IbnSalir" runat="server" CssClass="menuSalir" ImageUrl="~/images/ExitV1.png" ToolTip="Salir" OnClick="IbnSalir_Click" OnClientClick="return confirm('¿Desea cerrar la sesión?');"/>
+    <asp:ImageButton ID="IbnSalir" runat="server" CssClass="menuSalir" ImageUrl="~/images/ExitV1.png" ToolTip="Salir" OnClick="IbnSalir_Click" OnClientClick="return confirm('¿Desea cerrar la sesión?');" />
     <div class="Passw">
         <asp:LinkButton ID="LkbMenu" runat="server" CssClass="Menu" CausesValidation="False" Text="Menú" OnClick="LkbMenu_Click" />&nbsp&nbsp&nbsp&nbsp   
         <asp:LinkButton ID="LkbCambPass" runat="server" CssClass="Passw" CausesValidation="False" Text="Cambio contraseña..." OnClick="LkbCambPass_Click" OnClientClick="return confirm('¿Desea ralizar el cambio de contraseña?');" />
-        
+
     </div>
     <div class="Posmenu">
         <asp:Menu ID="MyMenu" runat="server" Font-Names="Verdana" Font-Size="0.8em" ForeColor="#069" StaticSubMenuIndent="10px" Orientation="Vertical" BackColor="#F7F6F3"

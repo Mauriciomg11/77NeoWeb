@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmCambioPass.aspx.cs" Inherits="_77NeoWeb.Forms.Seguridad.FrmCambioPass" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
-         .ContenedorLogin {
+        .ContenedorLogin {
             position: absolute;
             text-align: center;
             top: 60%;
@@ -21,13 +22,14 @@
     <h1>
         <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
 </asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">    
-     <asp:UpdatePanel ID="UpPnlCampos" runat="server" UpdateMode="Conditional">
-        <ContentTemplate>          
+<asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
+    <asp:UpdatePanel ID="UpPnlCampos" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
             <div class="ContenedorLogin">
                 <div>
                     <div class="btn-info">
-                        <h2> <asp:Label ID="TitConfirmarC" runat="server" Text="Confirmar contraseña" /></h2>
+                        <h2>
+                            <asp:Label ID="TitConfirmarC" runat="server" Text="Confirmar contraseña" /></h2>
                     </div>
                 </div>
                 <div class="form-group">

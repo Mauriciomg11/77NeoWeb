@@ -16,6 +16,7 @@ namespace _77NeoWeb.Forms.Configuracion
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataSet DSTDdl = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
@@ -116,15 +117,38 @@ namespace _77NeoWeb.Forms.Configuracion
         }
         protected void BindBDdl()
         {
-            string LtxtSql = "EXEC SP_TablasGeneral 13,'','','','','','','','','MesCContble',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
-            DdlMes.DataSource = Cnx.DSET(LtxtSql);
+            Cnx.SelecBD();
+            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+            {
+                string VbTxtSql = "EXEC SP_TablasGeneral 13,'','','','','','','','','CierreContable',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                sqlConB.Open();
+                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                {
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                    using (SqlDataAdapter SDA = new SqlDataAdapter())
+                    {
+                        using (DataSet DSTDdl = new DataSet())
+                        {
+                            SDA.SelectCommand = SC;
+                            SDA.Fill(DSTDdl);
+                            DSTDdl.Tables[0].TableName = "MES";
+                            DSTDdl.Tables[1].TableName = "Ano";
+
+                            ViewState["DSTDdl"] = DSTDdl;
+                        }
+                    }
+                }
+            }
+
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+            
+            DdlMes.DataSource = DSTDdl.Tables[0];
             DdlMes.DataMember = "Datos";
             DdlMes.DataTextField = "NMES";
             DdlMes.DataValueField = "MES1";
             DdlMes.DataBind();
 
-            LtxtSql = "EXEC SP_TablasGeneral 13,'','','','','','','','','AnoCContble',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
-            DdlAno.DataSource = Cnx.DSET(LtxtSql);
+            DdlAno.DataSource = DSTDdl.Tables[1];
             DdlAno.DataMember = "Datos";
             DdlAno.DataTextField = "ANO";
             DdlAno.DataValueField = "CodANO";
@@ -185,13 +209,14 @@ namespace _77NeoWeb.Forms.Configuracion
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataTable dtbl = new DataTable();
-            string VbTxtSql = "EXEC SP_TablasGeneral 13,'','','','','','','','','ReadCierreContable',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+            string VbTxtSql = "EXEC SP_TablasGeneral 13,'','','','','','','','','ReadCierreContable',0,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
             Cnx.SelecBD();
             using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
             {
                 SCnx.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, SCnx))
                 {
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataAdapter SDA = new SqlDataAdapter();
                     SDA.SelectCommand = SC;
                     SDA.Fill(dtbl);
@@ -225,13 +250,14 @@ namespace _77NeoWeb.Forms.Configuracion
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = " EXEC Consultas_General 25,'',@Cia,@U,0,@Ac,@Id,'01-01-1','02-02-2'";
+                    string VBQuery = " EXEC Consultas_General 25,'',@Cia,@U,@ICC,@Ac,@Id,'01-01-1','02-02-2'";
                     using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         sqlCmd.Parameters.AddWithValue("@Cia", System.Web.HttpContext.Current.Session["Nit77Cia"].ToString());
                         sqlCmd.Parameters.AddWithValue("@U", System.Web.HttpContext.Current.Session["C77U"].ToString());
                         sqlCmd.Parameters.AddWithValue("@Ac", (GrdDatos.Rows[e.RowIndex].FindControl("CkbAct") as CheckBox).Checked == false ? 0 : 1);
                         sqlCmd.Parameters.AddWithValue("@Id", GrdDatos.DataKeys[e.RowIndex].Value.ToString());
+                        sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
                             var Mensj = sqlCmd.ExecuteScalar();

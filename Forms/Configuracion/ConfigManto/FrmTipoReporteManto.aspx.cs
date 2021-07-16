@@ -17,20 +17,27 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }/* */
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             Page.Title = "XX";
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000082";// 00000082|00000133
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["77IDM"] = "5"; // 4 español | 5 ingles      */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 2;
+                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
@@ -45,6 +52,7 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
             ViewState["VblModMS"] = 1;
             ViewState["VblEliMS"] = 1;
             ViewState["VblImpMS"] = 1;
+            if (!Session["C77U"].ToString().Trim().Equals("00000082")) { GrdDatos.ShowFooter = false; }
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
             if (ClsP.GetAccesoFrm() == 0)
@@ -103,21 +111,19 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
         {
             foreach (GridViewRow Row in GrdDatos.Rows)
             {
+                ImageButton imgE = Row.FindControl("IbtEdit") as ImageButton; ImageButton imgD = Row.FindControl("IbtDelete") as ImageButton;
+                if (!Session["C77U"].ToString().Trim().Equals("00000082"))
+                {
+                    if (imgE != null) { Row.Cells[3].Controls.Remove(imgE); }
+                    if (imgD != null) { Row.Cells[3].Controls.Remove(imgD); }
+                }
                 if ((int)ViewState["VblModMS"] == 0)
                 {
-                    ImageButton imgE = Row.FindControl("IbtEdit") as ImageButton;
-                    if (imgE != null)
-                    {
-                        Row.Cells[3].Controls.Remove(imgE);
-                    }
+                    if (imgE != null) { Row.Cells[3].Controls.Remove(imgE); }
                 }
                 if ((int)ViewState["VblEliMS"] == 0)
                 {
-                    ImageButton imgD = Row.FindControl("IbtDelete") as ImageButton;
-                    if (imgD != null)
-                    {
-                        Row.Cells[3].Controls.Remove(imgD);
-                    }
+                    if (imgD != null) { Row.Cells[3].Controls.Remove(imgD); }
                 }
             }
         }
@@ -125,7 +131,7 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataTable dtbl = new DataTable();
-            string VbTxtSql = "EXEC SP_TablasGeneral 7, @C,'','','','','','','TipoRte','SELECT',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+            string VbTxtSql = "EXEC SP_TablasGeneral 7, @C,'','','','','','','TipoRte','SELECT',0,0,0,0,@Idm,0,'01-01-1','02-01-1','03-01-1'";
             Cnx.SelecBD();
             using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
             {
@@ -133,6 +139,7 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, SCnx))
                 {
                     SC.Parameters.AddWithValue("@C", TxtBusqueda.Text);
+                    SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
 
                     SqlDataAdapter SDA = new SqlDataAdapter();
                     SDA.SelectCommand = SC;
@@ -151,7 +158,6 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
                 GrdDatos.DataBind();
                 GrdDatos.Rows[0].Cells.Clear();
                 GrdDatos.Rows[0].Cells.Add(new TableCell());
-                GrdDatos.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
                 DataRow[] Result = Idioma.Select("Objeto= 'SinRegistros'");
                 foreach (DataRow row in Result)
                 { GrdDatos.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
@@ -190,13 +196,14 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        VBQuery = "EXEC SP_TablasGeneral 7,@Desc,@US,'',@Cod,'','','','TipoRte','INSERT',@Act,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                        VBQuery = "EXEC SP_TablasGeneral 7,@Desc,@US,'',@Cod,'','','','TipoRte','INSERT',@Act,0,0,0,@Idm,0,'01-01-1','02-01-1','03-01-1'";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             SC.Parameters.AddWithValue("@Desc", VbDesc);
                             SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@Act", (GrdDatos.FooterRow.FindControl("CkbActPP") as CheckBox).Checked == false ? 0 : 1);
                             SC.Parameters.AddWithValue("@Cod", VbCod);
+                            SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                             try
                             {
                                 var Mensj = SC.ExecuteScalar();
@@ -246,13 +253,14 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = "EXEC SP_TablasGeneral 7,@Desc,@US,@ID,'','','','','TipoRte','UPDATE',@Act,@ID,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    VBQuery = "EXEC SP_TablasGeneral 7,@Desc,@US,@ID,'','','','','TipoRte','UPDATE',@Act,@ID,0,0,@Idm,0,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@Desc", VbDesc);
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@ID", Convert.ToInt32(GrdDatos.DataKeys[e.RowIndex].Value.ToString()));
                         SC.Parameters.AddWithValue("@Act", (GrdDatos.Rows[e.RowIndex].FindControl("CkbAct") as CheckBox).Checked == false ? 0 : 1);
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                         try
                         {
                             var Mensj = SC.ExecuteScalar();
@@ -295,11 +303,12 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
 
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = "EXEC SP_TablasGeneral 7,'',@US,'','','','','','TipoRte','DELETE',0,@ID,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    VBQuery = "EXEC SP_TablasGeneral 7,'',@US,'','','','','','TipoRte','DELETE',0,@ID,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@ID", Convert.ToInt32(GrdDatos.DataKeys[e.RowIndex].Value.ToString()));
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
                             var Mensj = SC.ExecuteScalar();
@@ -370,7 +379,6 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
                     foreach (DataRow row in Result)
                     { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
                 }
-                e.Row.Cells[1].HorizontalAlign = HorizontalAlign.Left;
             }
         }
         protected void GrdDatos_PageIndexChanging(object sender, GridViewPageEventArgs e)

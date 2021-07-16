@@ -18,17 +18,25 @@ namespace _77NeoWeb.Forms
         protected void Page_Load(object sender, EventArgs e)
         {
             Page.Title = string.Format("Inicio");
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }/**/
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000082";
-               Session["D[BX"] = "DbNeoDempV2";
-               Session["$VR"] = "77NEO01";
-               Session["V$U@"] = "sa";
-               Session["P@$"] = "admindemp";
-               Session["N77U"] = "UsuPrueba";
-               Session["Nit77Cia"] = "811035879-1";*/
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = 2;
+                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                }
             }
             if (!IsPostBack)
             {
@@ -73,43 +81,50 @@ namespace _77NeoWeb.Forms
         protected void BindMenuControl()
         {
             Cnx.SelecBD();
-            string VblTxtSql = "EXEC SP_ConfiguracionV2_ 1,'','" + Session["C77U"].ToString() + "','','','',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
-            SqlConnection scSqlConnection = new SqlConnection(Cnx.GetConex());
-            SqlCommand scSqlCommand = new SqlCommand(VblTxtSql, scSqlConnection);
-            SqlDataAdapter sdaSqlDataAdapter = new SqlDataAdapter(scSqlCommand);
-            DataSet dsDataSet = new DataSet();
-            DataTable dtDataTable = null;
-            try
+            using (SqlConnection SCNX = new SqlConnection(Cnx.GetConex()))
             {
-                scSqlConnection.Open();
-                sdaSqlDataAdapter.Fill(dsDataSet);
-                dtDataTable = dsDataSet.Tables[0];
-                if (dtDataTable != null && dtDataTable.Rows.Count > 0)
+                SCNX.Open();
+                string VblTxtSql = "EXEC SP_ConfiguracionV2_ 1,'', @Us,'','','',0,0,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'";
+                using (SqlCommand SC = new SqlCommand(VblTxtSql, SCNX))
                 {
-                    foreach (DataRow drDataRow in dtDataTable.Rows)
+                    SC.Parameters.AddWithValue("@Us", Session["C77U"]);
+                    SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                    SqlDataAdapter SDA = new SqlDataAdapter();
+                    SDA.SelectCommand = SC;
+                    DataSet DST = new DataSet();
+                    DataTable DT = null;
+                    try
                     {
-                        if (drDataRow[0].ToString() == drDataRow[2].ToString())
+                        SDA.Fill(DST);
+                        DT = DST.Tables[0];
+                        if (DT != null && DT.Rows.Count > 0)
                         {
-                            MenuItem miMenuItem = new MenuItem(Convert.ToString(drDataRow[1]), Convert.ToString(drDataRow[0]), String.Empty, Convert.ToString(drDataRow[7]));
-                            MyMenu.Items.Add(miMenuItem);
-                            AddChildItem(ref miMenuItem, dtDataTable);
+                            foreach (DataRow DR in DT.Rows)
+                            {
+                                if (DR[0].ToString() == DR[2].ToString())
+                                {
+                                    MenuItem miMenuItem = new MenuItem(Convert.ToString(DR[1]), Convert.ToString(DR[0]), String.Empty, Convert.ToString(DR[7]));
+                                    MyMenu.Items.Add(miMenuItem);
+                                    AddChildItem(ref miMenuItem, DT);
+                                }
+                            }
+                            MenuItem newMenuItem1 = new MenuItem("");
+                            MyMenu.Items.Add(newMenuItem1);
+
                         }
                     }
-                    MenuItem newMenuItem1 = new MenuItem("");
-                    MyMenu.Items.Add(newMenuItem1);
-
+                    catch (Exception ex)
+                    {
+                        Response.Write(ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        SDA.Dispose();
+                        DST.Dispose();
+                        DT.Dispose();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Response.Write(ex.Message.ToString());
-            }
-            finally
-            {
-                scSqlConnection.Close();
-                sdaSqlDataAdapter.Dispose();
-                dsDataSet.Dispose();
-                dtDataTable.Dispose();
             }
         }
         protected void AddChildItem(ref MenuItem miMenuItem, DataTable dtDataTable)
