@@ -30,15 +30,15 @@ namespace _77NeoWeb.Forms.Seguridad
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000142"; //00000082|00000133
+                    Session["C77U"] = "00000082"; //00000082|00000133
                     Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
                     Session["$VR"] = "77NEO01";
                     Session["V$U@"] = "sa";
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 2;
-                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                    Session["!dC!@"] = 21;
+                    Session["77IDM"] = "4"; // 4 español | 5 ingles  */
                 }
             }
             if (!IsPostBack)

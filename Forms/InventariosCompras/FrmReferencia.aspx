@@ -66,10 +66,10 @@
 
         .DivUndCom {
             position: absolute;
-            width: 30%;
+            width: 50%;
             height: 60%;
             top: 20%;
-            left: 35%
+            left: 25%
         }
     </style>
     <script type="text/javascript">
@@ -443,13 +443,13 @@
                 <h6 class="TextoSuperior">
                     <asp:Label ID="LblTitOpcBusq" runat="server" Text="Opciones de búsqueda" /></h6>
                 <table class="TablaBusqueda">
-                    <tr>                       
+                    <tr>
                         <td width="10%">
-                            <asp:RadioButton ID="RdbBusqR" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="Referencia"/></td>                       
+                            <asp:RadioButton ID="RdbBusqR" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="Referencia" /></td>
                         <td width="10%">
-                            <asp:RadioButton ID="RdbBusqP" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="&nbsp P/N"/></td>                      
+                            <asp:RadioButton ID="RdbBusqP" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="&nbsp P/N" /></td>
                         <td width="10%">
-                            <asp:RadioButton ID="RdbBusqD" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="Descripción"/></td>
+                            <asp:RadioButton ID="RdbBusqD" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="Descripción" /></td>
                     </tr>
                 </table>
                 <table class="TablaBusqueda">
@@ -558,11 +558,11 @@
                 <h6 class="TextoSuperior">
                     <asp:Label ID="LblTitCambRef" runat="server" Text="Cambio de referencia" /></h6>
                 <table class="TablaBusqueda">
-                    <tr>                     
+                    <tr>
                         <td width="10%">
-                            <asp:RadioButton ID="RdbRefCRef" runat="server" CssClass="LblEtiquet" GroupName="CambRef" Text="Referencia"/></td>
+                            <asp:RadioButton ID="RdbRefCRef" runat="server" CssClass="LblEtiquet" GroupName="CambRef" Text="Referencia" /></td>
                         <td width="10%">
-                            <asp:RadioButton ID="RdbPnCRef" runat="server" CssClass="LblEtiquet" GroupName="CambRef" Text="&nbsp P/N"/></td>
+                            <asp:RadioButton ID="RdbPnCRef" runat="server" CssClass="LblEtiquet" GroupName="CambRef" Text="&nbsp P/N" /></td>
                     </tr>
                     <tr>
                         <td colspan="4">
@@ -578,7 +578,7 @@
                         <td>
                             <asp:ImageButton ID="IbtConsultarCambRef" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultarCambRef_Click" /></td>
                         <td>
-                            <asp:ImageButton ID="IbtApliarCambRef" runat="server" ToolTip=" " CssClass="BtnAceptar"  ImageUrl="~/images/Save.png" OnClick="IbtApliarCambRef_Click" OnClientClick="javascript:return confirm('Desea asignar el P/N a la nueva referencia?');" /></td>
+                            <asp:ImageButton ID="IbtApliarCambRef" runat="server" ToolTip=" " CssClass="BtnAceptar" ImageUrl="~/images/Save.png" OnClick="IbtApliarCambRef_Click" OnClientClick="javascript:return confirm('Desea asignar el P/N a la nueva referencia?');" /></td>
                         <td>
                             <asp:ImageButton ID="IbtCerrarCambRef" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarCambRef_Click" /></td>
                     </tr>

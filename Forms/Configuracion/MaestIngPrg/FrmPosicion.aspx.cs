@@ -279,17 +279,17 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                         CheckBox chkbox = GrdDatos.FooterRow.FindControl("CkbActivoPP") as CheckBox;
                         int VbActivo = 0;
                         if (chkbox.Checked == true) { VbActivo = 1; }
-                        using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
+                        using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
                             {
                                 string Mensj = "";
-                                sqlCmd.Parameters.AddWithValue("@Cod", VblCodPpal);
-                                sqlCmd.Parameters.AddWithValue("@Desc", (GrdDatos.FooterRow.FindControl("TxtDescPP") as TextBox).Text.Trim());
-                                sqlCmd.Parameters.AddWithValue("@Act", VbActivo);
-                                sqlCmd.Parameters.AddWithValue("@VbC77U", Session["C77U"].ToString());
-                                sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                                SqlDataReader SDR = sqlCmd.ExecuteReader();
+                                SC.Parameters.AddWithValue("@Cod", VblCodPpal);
+                                SC.Parameters.AddWithValue("@Desc", (GrdDatos.FooterRow.FindControl("TxtDescPP") as TextBox).Text.Trim());
+                                SC.Parameters.AddWithValue("@Act", VbActivo);
+                                SC.Parameters.AddWithValue("@VbC77U", Session["C77U"].ToString());
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                                SqlDataReader SDR = SC.ExecuteReader();
                                 if (SDR.Read())
                                 {
                                     Mensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());

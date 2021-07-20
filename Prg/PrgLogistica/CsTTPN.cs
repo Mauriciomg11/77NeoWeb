@@ -13,6 +13,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
         ClsConexion Cnx = new ClsConexion();
         static public string VblAccion;
         static public string VbMensIPN;
+        static public string VbMensj;
         public string PN { get; set; }
         public string Descripcion { get; set; }
         public string DescripcionEsp { get; set; }
@@ -120,18 +121,23 @@ namespace _77NeoWeb.Prg.PrgLogistica
                         {
                             try
                             {
+                                VbMensIPN = "";
+                                VbMensj = "";
                                 sqlCmd.CommandType = CommandType.StoredProcedure;
                                 SqlParameter Prmtrs = sqlCmd.Parameters.AddWithValue("@CurPN", table);
                                 SqlParameter Prmtrs2 = sqlCmd.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
                                 Prmtrs.SqlDbType = SqlDbType.Structured;
-                                string Mensj = (string)sqlCmd.ExecuteScalar();
-                                if (!Mensj.ToString().Trim().Equals(""))
+
+                                SqlDataReader SDR = sqlCmd.ExecuteReader();
+                                if (SDR.Read())
                                 {
-                                    VbMensIPN = Mensj;
+                                    VbMensIPN = HttpUtility.HtmlDecode(SDR["Plano"].ToString().Trim());
+                                    VbMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 }
+                                SDR.Close();
                                 transaction.Commit();
                             }
-                            catch (Exception)
+                            catch (Exception ex)
                             {
                                 transaction.Rollback();
                             }
@@ -144,9 +150,13 @@ namespace _77NeoWeb.Prg.PrgLogistica
                 string mensjaes = Ex.Message;
             }
         }
-        public string GetMensj()
+        public string GetPlano()
         {
             return VbMensIPN;
+        }
+        public string GetMensj()
+        {
+            return VbMensj;
         }
     }
 }
