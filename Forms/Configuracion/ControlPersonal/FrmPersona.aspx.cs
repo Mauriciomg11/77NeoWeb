@@ -38,8 +38,8 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 2;
-                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
                 }
             }
             if (!IsPostBack)
@@ -721,7 +721,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                         sqlCon.Open();
                         using (SqlTransaction Transac = sqlCon.BeginTransaction())
                         {
-                            VBQuery = "EXEC SP_TablasGeneral 1,@CP,@Lc,@Md,@Ep,@US,'','','','INSERT',@Ac,@Nm,0,0,0,0,@FV,'02-01-1','03-01-1'";
+                            VBQuery = "EXEC SP_TablasGeneral 1,@CP,@Lc,@Md,@Ep,@US,'','','','INSERT',@Ac,@Nm,0,0,0,@ICC,@FV,'02-01-1','03-01-1'";
                             using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                             {
                                 SC.Parameters.AddWithValue("@CP", TxtCodUsu.Text.Trim());
@@ -732,6 +732,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                                 SC.Parameters.AddWithValue("@Md", VbModel);
                                 SC.Parameters.AddWithValue("@Ep", VbEspec);
                                 SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 try
                                 {
                                     var Mensj = SC.ExecuteScalar();
@@ -803,7 +804,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasGeneral 1,@CP,'',@Md,@Ep,@US,'','','','UPDATE',@Ac,@Nm,@id,0,0,0,@FV,'02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasGeneral 1,@CP,'',@Md,@Ep,@US,'','','','UPDATE',@Ac,@Nm,@id,0,0,@ICC,@FV,'02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@CP", TxtCodUsu.Text.Trim());
@@ -814,6 +815,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                         SC.Parameters.AddWithValue("@Ep", (GrdLicencias.Rows[e.RowIndex].FindControl("TxtEspec") as TextBox).Text.Trim());
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@id", VblId);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
                             var Mensj = SC.ExecuteScalar();
@@ -861,12 +863,13 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
 
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasGeneral 1,'','','','',@US,'','','','DELETE',0,0,@ID,0,0,0,'01-01-01','02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasGeneral 1,'','','','',@US,'','','','DELETE',0,0,@ID,0,0,@ICC,'01-01-01','02-01-1','03-01-1'";
 
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@ID", VbCod);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
                             var Mensj = SC.ExecuteScalar();
@@ -1016,7 +1019,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                         sqlCon.Open();
                         using (SqlTransaction Transac = sqlCon.BeginTransaction())
                         {
-                            VBQuery = "EXEC SP_TablasGeneral 2,@CP,@CCrs,@US,'','','','','','INSERT',@Ac,0,0,0,0,0,@FV,'02-01-1','03-01-1'";
+                            VBQuery = "EXEC SP_TablasGeneral 2,@CP,@CCrs,@US,'','','','','','INSERT',@Ac,0,0,0,0,@ICC,@FV,'02-01-1','03-01-1'";
                             using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                             {
                                 SC.Parameters.AddWithValue("@CP", TxtCodUsu.Text.Trim());
@@ -1024,6 +1027,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                                 SC.Parameters.AddWithValue("@CCrs", VbNombre);
                                 SC.Parameters.AddWithValue("@FV", VbFechaVenc);
                                 SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 try
                                 {
                                     var Mensj = SC.ExecuteScalar();
@@ -1086,13 +1090,14 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasGeneral 2,'','',@US,'','','','','','UPDATE',@Ac,@id,0,0,0,0,@FV,'02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasGeneral 2,'','',@US,'','','','','','UPDATE',@Ac,@id,0,0,0,@ICC,@FV,'02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@Ac", (GrdCursos.Rows[e.RowIndex].FindControl("CkbActivo") as CheckBox).Checked == false ? 0 : 1);
                         SC.Parameters.AddWithValue("@FV", VbFechaVenc);
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@id", VblId);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
                             var Mensj = SC.ExecuteScalar();
@@ -1140,11 +1145,12 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
 
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasGeneral 2,'','',@US,'','','','','','DELETE',0,@id,0,0,0,0,'01-01-01','02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasGeneral 2,'','',@US,'','','','','','DELETE',0,@id,0,0,0,@ICC,'01-01-01','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@ID", VbCod);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
                             var Mensj = SC.ExecuteScalar();

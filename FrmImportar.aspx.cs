@@ -216,16 +216,9 @@ namespace _77NeoWeb
                 if (RdbHisSvcCumpl.Checked == true) { VbOpc = 13; ViewState["NomBtnExp"] = "Vw_HistoricoServicioCumplidos"; }
                 if (RdbInventr.Checked == true) { VbOpc = 12; ViewState["NomBtnExp"] = "Vw_Inventario"; }               
                 if (RdbLV.Checked == true) { VbOpc = 14; ViewState["NomBtnExp"] = "Vw_LibroVuelo"; }
-                if (RdbStatusRprt.Checked == true) { VbOpc = 15; ViewState["NomBtnExp"] = "Vw_StatusReport"; }
+                if (RdbStatusRprt.Checked == true) { VbOpc = 15; ViewState["NomBtnExp"] = "Vw_StatusReport"; }               
 
-                //StSql = "EXEC SP_PANTALLA_Reporte_Manto2 6,'','','','','',@SubOT,0,0,0,'01-01-1','02-01-1','03-01-1'";
-                // VbNomRpt = "Reporte_Manto";
-
-              
-
-                StSql = "EXEC ProyectoUsa @Op";
-                // VbNomRpt = "Reportes_Mantenimiento";
-              
+                StSql = "EXEC ProyectoUsa @Op";              
                 Cnx.SelecBD();
                 using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
                 {

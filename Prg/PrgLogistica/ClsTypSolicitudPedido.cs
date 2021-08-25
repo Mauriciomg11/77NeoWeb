@@ -183,7 +183,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
                             VbPantalla = "GenerarSolicitud";
                             VbcatVer = System.Web.HttpContext.Current.Session["77Version"].ToString();
                             VbcatAct = System.Web.HttpContext.Current.Session["77Act"].ToString();
-                            Cnx.UpdateErrorV2(VbUsu, VbPantalla, "ClsTypSolicitudPedido", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                            Cnx.UpdateErrorV2(VbUsu, VbPantalla, "ClsTypSolicitudPedido", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                             transaction.Rollback();
                         }
                     }

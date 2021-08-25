@@ -17,21 +17,30 @@ namespace _77NeoWeb.Forms.Ingenieria
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); } /* */
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             Page.Title = string.Format("Configuración_Tipo_Aeronave");
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /* Session["C77U"] = "00000082";
-                 Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                 Session["$VR"] = "77NEO01";
-                 Session["V$U@"] = "sa";
-                 Session["P@$"] = "admindemp";
-                 Session["N77U"] = Session["D[BX"];
-                 Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                 Session["!dC!@"] = 0;
-                 Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
+                }
             }
             if (!IsPostBack)
             {
@@ -103,7 +112,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataTable dtbl = new DataTable();
-            string VbTxtSql = "EXEC SP_TablasIngenieria 14,@C,'','','','','','','','SELECT',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+            string VbTxtSql = "EXEC SP_TablasIngenieria 14,@C,'','','','','','','','SELECT',0,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
             Cnx.SelecBD();
             using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
             {
@@ -111,6 +120,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, SCnx))
                 {
                     SC.Parameters.AddWithValue("@C", TxtBusqueda.Text);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataAdapter SDA = new SqlDataAdapter();
                     SDA.SelectCommand = SC;
                     SDA.Fill(dtbl);
@@ -174,11 +184,12 @@ namespace _77NeoWeb.Forms.Ingenieria
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        VBQuery = "EXEC SP_TablasIngenieria 14,@Desc,@US,'','','','','','','INSERT',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                        VBQuery = "EXEC SP_TablasIngenieria 14,@Desc,@US,'','','','','','','INSERT',0,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             SC.Parameters.AddWithValue("@Desc", VbDesc);
                             SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             try
                             {
                                 var Mensj = SC.ExecuteScalar();
@@ -227,12 +238,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasIngenieria 14,@Desc,@US,'','','','','','','UPDATE',@ID,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasIngenieria 14,@Desc,@US,'','','','','','','UPDATE',@ID,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@Desc", VbDesc);
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@ID", GrdDatos.DataKeys[e.RowIndex].Value.ToString());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
                             var Mensj = SC.ExecuteScalar();
@@ -276,11 +288,12 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = " EXEC SP_TablasIngenieria 14,'',@US,'','','','','','','DELETE',@ID,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    string VBQuery = " EXEC SP_TablasIngenieria 14,'',@US,'','','','','','','DELETE',@ID,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@ID", GrdDatos.DataKeys[e.RowIndex].Value.ToString());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
                             var Mensj = SC.ExecuteScalar();

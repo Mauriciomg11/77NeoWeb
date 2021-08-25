@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
-        .CentrarContenedor {            
+        .CentrarContenedor {
             position: absolute;
             /*nos posicionamos en el centro del navegador*/
             /*top: 50%;*/
@@ -68,9 +68,9 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <asp:Label ID="LblOT" runat="server" CssClass="LblEtiquet" Text="Oden de trabajo" Visible="false" />
-                        <asp:TextBox ID="TxtOT" runat="server" CssClass="form-control-sm heightCampo" Width="80%" TextMode="Number" step="0.01" onkeypress="return solonumeros(event);" Text="0"  Visible="false"/>
+                        <asp:TextBox ID="TxtOT" runat="server" CssClass="form-control-sm heightCampo" Width="80%" TextMode="Number" step="0.01" onkeypress="return solonumeros(event);" Text="0" Visible="false" />
                     </div>
-                </div><%----%>
+                </div>
         </ContentTemplate>
         <Triggers>
             <asp:PostBackTrigger ControlID="IbnExcel" />

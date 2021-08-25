@@ -18,12 +18,13 @@ namespace _77NeoWeb.Forms.Ingenieria
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataSet DST = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
             {
                 if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
-            } /* */
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
@@ -37,46 +38,25 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 1;
-                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
                 }
             }
             if (!IsPostBack)
             {
                 TxtDiaVisual.Text = "365";
                 ModSeguridad();
-                BindBDdl();
-                BindData();
+                BindData("UPD");
                 MultVw.ActiveViewIndex = 0;
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
         protected void ModSeguridad()
         {
-            /*ViewState["VblIngMS"] = 1;
-            ViewState["VblModMS"] = 1;
-            ViewState["VblEliMS"] = 1;
-            ViewState["VblImpMS"] = 1;
-            ViewState["VblCE1"] = 1;
-            ViewState["VblCE2"] = 1;
-            ViewState["VblCE3"] = 1;
-            ViewState["VblCE4"] = 1;
-            ViewState["VblCE5"] = 1;
-            ViewState["VblCE6"] = 1;*/
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
-            /*if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; }
-            if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0;}
-            if (ClsP.GetConsultar() == 0) { }
-            if (ClsP.GetImprimir() == 0) { ViewState["VblImpMS"] = 0; }
-            if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; }
-            if (ClsP.GetCE1() == 0) { ViewState["VblCE1"] = 0; } 
-            if (ClsP.GetCE2() == 0) { ViewState["VblCE2"] = 0; }
-            if (ClsP.GetCE3() == 0) { ViewState["VblCE3"] = 0; }
-            if (ClsP.GetCE4() == 0) { }
-            if (ClsP.GetCE5() == 0) { }
-            if (ClsP.GetCE6() == 0) { }*/
+
             IdiomaControles();
         }
         protected void IdiomaControles()
@@ -147,58 +127,70 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["TablaIdioma"] = Idioma;
             }
         }
-        protected void BindBDdl()
-        {
-            string LtxtSql = string.Format("EXEC SP_TablasIngenieria 16,'','','','','','','','','AK',0,0,0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
-            DdlAeronave.DataSource = Cnx.DSET(LtxtSql);
-            DdlAeronave.DataMember = "Datos";
-            DdlAeronave.DataTextField = "Matricula";
-            DdlAeronave.DataValueField = "CodAeronave";
-            DdlAeronave.DataBind();
-        }
-        protected void BindData()
+        protected void BindData(string Accion)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            DataTable dtbl = new DataTable();
-            string VbTxtSql = "";
-
-            if (DdlAeronave.Text.Trim().Equals("0"))
-            { VbTxtSql = "EXEC Consultas_General 3, '', '', '',@Todo,@Di, @ICC, '06-01-2012', '06-01-2012'"; }
-            else
-            { VbTxtSql = "EXEC Consultas_General 3, @A, '', '',@Todo,@Di, @ICC, '06-01-2012', '06-01-2012'"; }
-
-            Cnx.SelecBD();
-            using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
+            string VbTxtSql, VbCodAnt;
+            if (Accion.Equals("UPD"))
             {
-                SCnx.Open();
-                using (SqlCommand SC = new SqlCommand(VbTxtSql, SCnx))
+                Cnx.SelecBD();
+                using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
                 {
-                    SC.Parameters.AddWithValue("@Todo", CkbVisualTodo.Checked == true ? 1 : 0);
-                    SC.Parameters.AddWithValue("@Di", TxtDiaVisual.Text);
-                    SC.Parameters.AddWithValue("@A", DdlAeronave.SelectedItem.Text.Trim());
-                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                    SqlDataAdapter SDA = new SqlDataAdapter();
-                    SDA.SelectCommand = SC;
-                    SDA.Fill(dtbl);
+                    string VbHK;
+                    if (DdlAeronave.Text.Equals("")) { VbHK = ""; }
+                    else { VbHK = DdlAeronave.SelectedItem.Text.Trim(); }
+                    if (VbHK.Trim().Equals(""))
+                    { VbTxtSql = "EXEC Consultas_General 6, '', '', '',@Todo,@Di, @ICC, '06-01-2012', '06-01-2012'"; }
+                    else
+                    { VbTxtSql = "EXEC Consultas_General 6, @A, '', '',@Todo,@Di, @ICC, '06-01-2012', '06-01-2012'"; }
+
+                    SCnx.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, SCnx))
+                    {
+                        SC.Parameters.AddWithValue("@Todo", CkbVisualTodo.Checked == true ? 1 : 0);
+                        SC.Parameters.AddWithValue("@Di", TxtDiaVisual.Text);
+                        SC.Parameters.AddWithValue("@A", VbHK);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            using (DataSet DST = new DataSet())
+                            {
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DST);
+                                DST.Tables[0].TableName = "Servicios";
+                                DST.Tables[1].TableName = "HK";
+                                DST.Tables[2].TableName = "SvcRst";
+                                DST.Tables[3].TableName = "UbicacionSinInst";
+
+                                ViewState["DST"] = DST;
+                            }
+                        }
+                    }
                 }
             }
-            if (dtbl.Rows.Count > 0) { GrdDatos.DataSource = dtbl; GrdDatos.DataBind(); }
+            DST = (DataSet)ViewState["DST"];
+            if (DST.Tables[0].Rows.Count > 0) { GrdDatos.DataSource = DST.Tables[0]; GrdDatos.DataBind(); }
             else
             {
-                dtbl.Rows.Add(dtbl.NewRow());
-                GrdDatos.DataSource = dtbl;
+                DST.Tables[0].Rows.Add(DST.Tables[0].NewRow());
+                GrdDatos.DataSource = DST.Tables[0];
                 GrdDatos.DataBind();
                 GrdDatos.Rows[0].Cells.Clear();
                 GrdDatos.Rows[0].Cells.Add(new TableCell());
-                GrdDatos.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
                 DataRow[] Result = Idioma.Select("Objeto= 'SinRegistros'");
                 foreach (DataRow row in Result)
                 { GrdDatos.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
                 GrdDatos.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
             }
+            VbCodAnt = DdlAeronave.Text.Trim();
+            DdlAeronave.DataSource = DST.Tables[1];
+            DdlAeronave.DataTextField = "Matricula";
+            DdlAeronave.DataValueField = "CodAeronave";
+            DdlAeronave.DataBind();
+            DdlAeronave.Text = VbCodAnt;
         }
         protected void BtnConsultar_Click(object sender, EventArgs e)
-        { BindData(); }
+        { BindData("UPD"); }
         protected void BtnSvcRestCero_Click(object sender, EventArgs e)
         { BIndDSvcReset(); MultVw.ActiveViewIndex = 1; Page.Title = ViewState["PageTit"].ToString(); }
         protected void BtnUbicaTec_Click(object sender, EventArgs e)
@@ -296,49 +288,19 @@ namespace _77NeoWeb.Forms.Ingenieria
         { MultVw.ActiveViewIndex = 0; }
         protected void BIndDSvcReset()
         {
-            DataTable DtB = new DataTable();
-            Cnx.SelecBD();
-            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
-            {
-                string VbTxtSql = "EXEC Consultas_General_Ingenieria 1,'','','',1,2,@ICC,'06-01-2012','06-01-2012'";
-                sqlConB.Open();
-                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
-                {
-                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                    using (SqlDataAdapter DAB = new SqlDataAdapter())
-                    {
-                        DAB.SelectCommand = SC;
-                        DAB.Fill(DtB);
+            DST = (DataSet)ViewState["DST"];
 
-                        if (DtB.Rows.Count > 0) { GrdSvcReset.DataSource = DtB; GrdSvcReset.DataBind(); }
-                        else { GrdSvcReset.DataSource = null; GrdSvcReset.DataBind(); }
-                    }
-                }
-            }
+            if (DST.Tables[2].Rows.Count > 0) { GrdSvcReset.DataSource = DST.Tables[2]; GrdSvcReset.DataBind(); }
+            else { GrdSvcReset.DataSource = null; GrdSvcReset.DataBind(); }
         }
         //*************************************** Ubicación Técnica  ************************************************
         protected void IbtCerrarUbicTec_Click(object sender, ImageClickEventArgs e)
         { MultVw.ActiveViewIndex = 0; }
         protected void BIndDUbicTec()
         {
-            DataTable DtB = new DataTable();
-            Cnx.SelecBD();
-            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
-            {
-                string VbTxtSql = "EXEC Consultas_General_Ingenieria 3,'','','',1,2,@ICC,'06-01-2012','06-01-2012'";
-                sqlConB.Open();
-                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
-                {
-                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                    using (SqlDataAdapter DAB = new SqlDataAdapter())
-                    {
-                        DAB.SelectCommand = SC;
-                        DAB.Fill(DtB);
-                        if (DtB.Rows.Count > 0) { GrdUbicTec.DataSource = DtB; GrdUbicTec.DataBind(); }
-                        else { GrdUbicTec.DataSource = null; GrdUbicTec.DataBind(); }
-                    }
-                }
-            }
+            DST = (DataSet)ViewState["DST"];
+            if (DST.Tables[3].Rows.Count > 0) { GrdUbicTec.DataSource = DST.Tables[3]; GrdUbicTec.DataBind(); }
+            else { GrdUbicTec.DataSource = null; GrdUbicTec.DataBind(); }
         }
     }
 }

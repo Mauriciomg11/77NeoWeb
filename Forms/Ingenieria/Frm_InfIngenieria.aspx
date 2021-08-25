@@ -3,6 +3,20 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>OT</title>
     <style type="text/css">
+        .CentrarContenedor {
+            position: absolute;
+            /*nos posicionamos en el centro del navegador*/
+            left: 50%;
+            /*determinamos una anchura*/
+            width: 98%;
+            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
+            margin-left: -49%;
+            /*determinamos una altura*/
+            height: 90%;
+            /*indicamos que el margen superior, es la mitad de la altura*/
+            padding: 5px;
+        }
+
         .heightCampo {
             height: 35px;
             width: 95%;
@@ -47,6 +61,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:MultiView ID="MlVw" runat="server">
         <asp:View ID="Vw0Principal" runat="server">
+            <div class="CentrarContenedor DivMarco">
             <asp:UpdatePanel ID="UplRteIngPpl" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
                     <div class="wrp">
@@ -87,7 +102,6 @@
                                     <asp:Button ID="BtnCostoOT" runat="server" CssClass="btn btn-primary heightCampo" OnClick="BtnCostoOT_Click" OnClientClick="target ='_blank';" Text="costo por orden de trabajo" ToolTip="valor de las O.T. despachadas en un rango de fecha." />
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </ContentTemplate>
@@ -103,6 +117,7 @@
                     <asp:PostBackTrigger ControlID="BtnCostoOT" />
                 </Triggers>
             </asp:UpdatePanel>
+                </div>
         </asp:View>
     </asp:MultiView>
 </asp:Content>

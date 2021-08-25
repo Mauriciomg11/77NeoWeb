@@ -166,7 +166,6 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-3">
-                            <%----%>
                             <asp:Table ID="TblOpciones" runat="server" Width="100%" GridLines="Horizontal" Visible="false">
                                 <asp:TableRow>
                                     <asp:TableCell ColumnSpan="3">
@@ -198,7 +197,6 @@
                             </asp:Table>
                         </div>
                     </div>
-                    <%----%>
                     <div class="table-responsive Scroll-table2">
                         <asp:GridView ID="GrdStatusReport" runat="server" EmptyDataText="No existen registros ..!"
                             CssClass="GridControl DiseñoGrid table-sm" GridLines="Both">
@@ -518,9 +516,7 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <asp:Label ID="LblFechaStsAnt" runat="server" CssClass="LblEtiquet" Text="Fecha" />
-                            <%--<asp:ImageButton ID="IbtFechaStsAnt" runat="server" CssClass="BtnImagenCalender DiseñoCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="15px" Width="15px" />--%>
                             <asp:TextBox ID="TxtFechaStsAnt" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
-                            <%--<ajaxToolkit:CalendarExtender ID="CldFechaStsAnt" runat="server" CssClass=" MyCalendar" PopupButtonID="IbtFechaStsAnt" TargetControlID="TxtFechaStsAnt" Format="dd/MM/yyyy" />--%>
                         </div>
                         <div class="col-sm-1">
                             <br />

@@ -38,8 +38,8 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 1;
-                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
                 }
             }
             if (!IsPostBack)
@@ -378,12 +378,13 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = string.Format("EXEC SP_TablasPlantillaM 14,'','','','{0}','','','{1}','A','DELETE',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'",
+                    VBQuery = string.Format("EXEC SP_TablasPlantillaM 14,'','','','{0}','','','{1}','A','DELETE',0,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'",
                      Session["C77U"], GrdDatos.DataKeys[e.RowIndex].Value.ToString());
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
                         {
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             SC.ExecuteNonQuery();
                             Transac.Commit();
                             BindDataAlaF("");
@@ -644,12 +645,13 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = string.Format("EXEC SP_TablasPlantillaM 14,'','','','{0}','','','{1}','A','DELETE',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'",
+                    VBQuery = string.Format("EXEC SP_TablasPlantillaM 14,'','','','{0}','','','{1}','A','DELETE',0,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'",
                     Session["C77U"], GrdAR.DataKeys[e.RowIndex].Value.ToString());
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
                         {
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             SC.ExecuteNonQuery();
                             Transac.Commit();
                             BindDataAlaR("");

@@ -47,14 +47,14 @@
                         <asp:Label ID="LblFechF" runat="server" CssClass="LblEtiquet" Text="fecha Final" />
                         <asp:TextBox ID="TxtFechF" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
                     </div>
-                    <div class="col-sm-0">                      
-                        <asp:ImageButton ID="IbnExcel" runat="server" ToolTip="exportar consolidado" CssClass=" BtnExpExcel" Height="50px" Width="50px" ImageUrl="~/images/ExcelV1.png" OnClick="IbnExcel_Click" />
+                    <div class="col-sm-2">
+                        <asp:ImageButton ID="IbnExcel" runat="server" ToolTip="exportar consolidado" CssClass=" BtnExpExcel" Height="35px" Width="35px" ImageUrl="~/images/ExcelV1.png" OnClick="IbnExcel_Click" />
                     </div>
                 </div>
-
             </div>
         </ContentTemplate>
         <Triggers>
-                    <asp:PostBackTrigger ControlID="IbnExcel" /></Triggers>
+            <asp:PostBackTrigger ControlID="IbnExcel" />
+        </Triggers>
     </asp:UpdatePanel>
 </asp:Content>

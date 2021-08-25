@@ -4,8 +4,6 @@
     <style type="text/css">
         .CentrarGrid {
             position: absolute;
-            /*nos posicionamos en el centro del navegador*/
-            /*top: 50%;*/
             left: 50%;
             /*determinamos una anchura*/
             width: 60%;

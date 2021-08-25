@@ -77,6 +77,7 @@ namespace _77NeoWeb.Prg
                             TbResultado.Columns.Add("IPC", typeof(string));
                             SC.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = SC.Parameters.AddWithValue("@CurSubRvaMax", TblRsva);
+                            SqlParameter Prmtrs1 = SC.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
                             Prmtrs.SqlDbType = SqlDbType.Structured;
                             SqlDataReader SDR = SC.ExecuteReader();
                             while (SDR.Read())

@@ -1,10 +1,9 @@
-﻿using System;
+﻿using _77NeoWeb.prg;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-using _77NeoWeb.prg;
+using System.Web;
 
 namespace _77NeoWeb.Prg.PrgIngenieria
 {
@@ -14,7 +13,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         static public string borrar;
         public string TipoEvento { get; set; }
         public int CodAeronave { get; set; }
-        public string CodModelo  { get; set; }
+        public string CodModelo { get; set; }
         public string NivelElemento { get; set; }
         public string Motor { get; set; }
         public string UltimoNivel { get; set; }
@@ -29,7 +28,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
 
         //-------------  Servicios --------------------
         public int CodIdContadorElem { get; set; }
-        public string CodElementoSvc { get; set; }        
+        public string CodElementoSvc { get; set; }
         public DateTime? FechaVence { get; set; }
         public DateTime? FechaVenceAnt { get; set; }
         public int Resetear { get; set; }
@@ -37,7 +36,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         public int CodIdContaSrvManto { get; set; }
         public string NumReporte { get; set; }
         public double ValorUltCump { get; set; }
-        public string GeneraHist { get; set; }        
+        public string GeneraHist { get; set; }
 
         //-------------  Compensacion --------------------
 
@@ -46,7 +45,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         public string CodlibroVuelo { get; set; }
         public DateTime FechaLibroVuelo { get; set; }
         public DateTime HoraDespegue { get; set; }
-        public int CompensInicioDia { get; set; }        
+        public int CompensInicioDia { get; set; }
         public double HorasAcum { get; set; }
         public double CiclosAcum { get; set; }
         public double HorasRemain { get; set; }
@@ -173,7 +172,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
             TblCompensacion.Columns.Add("CodlibroVuelo", typeof(string));
             TblCompensacion.Columns.Add("FechaLibroVuelo", typeof(DateTime));
             TblCompensacion.Columns.Add("HoraDespegue", typeof(DateTime));
-            TblCompensacion.Columns.Add("CompensInicioDia", typeof(int));            
+            TblCompensacion.Columns.Add("CompensInicioDia", typeof(int));
             TblCompensacion.Columns.Add("HorasAcum", typeof(double));
             TblCompensacion.Columns.Add("CiclosAcum", typeof(double));
             TblCompensacion.Columns.Add("HorasRemain", typeof(double));
@@ -308,22 +307,23 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                             SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@CurServManto", TblServicios);
                             SqlParameter Prmtrs3 = SC.Parameters.AddWithValue("@CurCompensac", TblCompensacion);
                             SqlParameter Prmtrs4 = SC.Parameters.AddWithValue("@CurOT", TblORdenTrabajo);
-                            Prmtrs.SqlDbType = SqlDbType.Structured;                          
+                            SqlParameter Prmtrs5 = SC.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
+                            Prmtrs.SqlDbType = SqlDbType.Structured;
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())
                             {
                                 PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
-                                string mod= SDR["Modelo"].ToString().Trim();
+                                string mod = SDR["Modelo"].ToString().Trim();
                                 string UN = SDR["UN"].ToString().Trim();
-                                string CodRef = SDR["CodRef"].ToString().Trim();                                
+                                string CodRef = SDR["CodRef"].ToString().Trim();
                                 string NivelSuperior = SDR["NivelSuperior"].ToString().Trim();
                                 string MensjServicios = SDR["MensjServicios"].ToString().Trim();
                                 string MensjCompensac = SDR["MensjCompensac"].ToString().Trim();
                                 string MensjCorrCont = SDR["MensjCorrCont"].ToString().Trim();
                                 string MensjOT = SDR["MensjOT"].ToString().Trim();
                                 string MensInsMayor = SDR["MensInsMayor"].ToString().Trim();
-                                string MensjCorrerContSubC= SDR["MensjCorrerContSubC"].ToString().Trim();
-                                borrar = SDR["MensRemMayor"].ToString().Trim(); 
+                                string MensjCorrerContSubC = SDR["MensjCorrerContSubC"].ToString().Trim();
+                                borrar = SDR["MensRemMayor"].ToString().Trim();
                             }
                             SDR.Close();
                             transaction.Commit();
@@ -335,7 +335,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                             VbPantalla = "FrmAeronaveVirtual";
                             VbcatVer = System.Web.HttpContext.Current.Session["77Version"].ToString();
                             VbcatAct = System.Web.HttpContext.Current.Session["77Act"].ToString();
-                            Cnx.UpdateErrorV2(VbUsu, VbPantalla, "ClsTypLvDetalleManto", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                            Cnx.UpdateErrorV2(VbUsu, VbPantalla, "ClsTypLvDetalleManto", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                             transaction.Rollback();
                         }
                     }

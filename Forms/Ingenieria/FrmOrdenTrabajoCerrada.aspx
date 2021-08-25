@@ -17,7 +17,6 @@
         }
 
         .CentrarContenedor {
-           
             position: absolute;
             /*nos posicionamos en el centro del navegador*/
             /*top: 50%;*/
@@ -78,8 +77,8 @@
                             </div>
                             <div class="col-sm-2">
                                 <asp:Label ID="LblStatus" runat="server" CssClass="LblEtiquet" Text=" estado" />
-                                <asp:DropDownList ID="DdlStatus" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="DdlStatus_TextChanged" AutoPostBack="true"/>                                 
-                                
+                                <asp:DropDownList ID="DdlStatus" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="DdlStatus_TextChanged" AutoPostBack="true" />
+
                             </div>
                             <div class="col-sm-2">
                                 <br />
@@ -117,7 +116,7 @@
                                                 <asp:Label Text='<%# Eval("DescripcionPaso") %>' runat="server" />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
-                                         <asp:TemplateField HeaderText="codestado" HeaderStyle-Width="10%">
+                                        <asp:TemplateField HeaderText="codestado" HeaderStyle-Width="10%">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblCodEstadoP" Text='<%# Eval("CodEstado") %>' runat="server" />
                                             </ItemTemplate>
@@ -130,7 +129,7 @@
                                                 <asp:Label Text='<%# Eval("NombreESO") %>' runat="server" />
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                 <asp:DropDownList ID="DdlCodEstadoP" runat="server" Width="100%" Height="28px" />
+                                                <asp:DropDownList ID="DdlCodEstadoP" runat="server" Width="100%" Height="28px" />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField FooterStyle-Width="15%">

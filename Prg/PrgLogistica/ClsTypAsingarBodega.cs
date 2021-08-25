@@ -57,6 +57,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
                         {                          
                             SC.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = SC.Parameters.AddWithValue("@CurElemBod", TblElementoBodega);
+                            SqlParameter Prmtrs1 = SC.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
                             Prmtrs.SqlDbType = SqlDbType.Structured;
                             SC.ExecuteNonQuery();                           
                             transaction.Commit();
@@ -68,7 +69,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
                             VbPantalla = "Insert Masivamete ElementoBodega";
                             VbcatVer = System.Web.HttpContext.Current.Session["77Version"].ToString();
                             VbcatAct = System.Web.HttpContext.Current.Session["77Act"].ToString();
-                            Cnx.UpdateErrorV2(VbUsu, VbPantalla, "ClsTypAsingarBodega", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                            Cnx.UpdateErrorV2(VbUsu, VbPantalla, "ClsTypAsingarBodega", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                             transaction.Rollback();
                         }
                     }

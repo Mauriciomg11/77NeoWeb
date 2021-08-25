@@ -137,7 +137,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
                                 SDR.Close();
                                 transaction.Commit();
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
                                 transaction.Rollback();
                             }

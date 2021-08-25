@@ -2,6 +2,7 @@
 using _77NeoWeb.Prg.PrgIngenieria;
 using Microsoft.Reporting.WebForms;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -16,31 +17,37 @@ namespace _77NeoWeb.Forms.Ingenieria
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataSet DST = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
             {
-                Response.Redirect("~/FrmAcceso.aspx");
-            }/* */
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoHCT";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "860064038-4"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
+                }
             }
             if (!IsPostBack)
             {
                 MlVw.ActiveViewIndex = 0;
                 ModSeguridad();
                 BindBDdlAK();
-                Page.Title = "Work Sheet";
+                ViewState["PageTit"] = "Work Sheet";
+                Page.Title = ViewState["PageTit"].ToString();
                 TitForm.Text = "Work Sheet";
                 PerfilesGrid();
             }
@@ -226,9 +233,8 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BindBDdlAK()
         {
-            string LtxtSql = "EXEC SP_PANTALLA_Status 11,'','','','HK',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_Status 11,'','','WS','HK',0,0,0,{0},'01-1-2009','01-01-1900','01-01-1900'", Session["!dC!@"]);
             DdlWSHK.DataSource = Cnx.DSET(LtxtSql);
-            DdlWSHK.DataMember = "Datos";
             DdlWSHK.DataTextField = "Matricula";
             DdlWSHK.DataValueField = "CodAeronave";
             DdlWSHK.DataBind();
@@ -245,9 +251,10 @@ namespace _77NeoWeb.Forms.Ingenieria
             using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
             {
                 Cnx2.Open();
-                string LtxtSql = string.Format(" EXEC SP_PANTALLA_Status 12,'','','','',@Prmtr,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                string LtxtSql = string.Format(" EXEC SP_PANTALLA_Status 12,'','','','',@Prmtr,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'");
                 SqlCommand SC = new SqlCommand(LtxtSql, Cnx2);
                 SC.Parameters.AddWithValue("@Prmtr", Prmtr);
+                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                 SqlDataReader SDR = SC.ExecuteReader();
                 if (SDR.Read())
                 {
@@ -267,6 +274,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void BtnWSNew_Click(object sender, EventArgs e)
         {
             if (!DdlWSHK.Text.Equals("0")) { MlVw.ActiveViewIndex = 1; DatosAsignarOT("", "0001"); BIndDSvcSinAsingar(); }
+            Page.Title = ViewState["PageTit"].ToString();
         }
         protected void BtnWSProces_Click(object sender, EventArgs e)
         {
@@ -274,23 +282,25 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
                 Traerdatos(DdlWSHK.Text);
+                Page.Title = ViewState["PageTit"].ToString();
                 Cnx.SelecBD();
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = "EXEC SP_StatusReport @HK,@Fec,'NO',@HV,@CV,@APU,@Usu";
+                        string VBQuery = "EXEC SP_StatusReport @HK,@Fec,'NO',@HV,@CV,@APU,@Usu, @ICC";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
-                            {                                
+                            {
                                 SC.Parameters.AddWithValue("@HK", DdlWSHK.Text);
                                 SC.Parameters.AddWithValue("@Fec", ViewState["UltFechaProces"].ToString());
                                 SC.Parameters.AddWithValue("@HV", ViewState["HrasProm"]);
                                 SC.Parameters.AddWithValue("@CV", ViewState["CclProm"]);
                                 SC.Parameters.AddWithValue("@APU", ViewState["APUsProm"]);
                                 SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 SC.ExecuteNonQuery();
                                 Transac.Commit(); DataRow[] Result = Idioma.Select("Objeto= 'MstrMens02'");
                                 foreach (DataRow row in Result)
@@ -311,53 +321,65 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
         }
         //*************************************************  WORK SHEET ABIERTAS  *************************************************
-        protected void BIndDWSAOpen()
+        public bool IsIENumerableLleno(IEnumerable<DataRow> ieNumerable)
+        {
+            bool isFull = false;
+            foreach (DataRow item in ieNumerable)
+            { isFull = true; break; }
+            return isFull;
+        }
+        protected void BIndDWSAOpen(string Accion)
         {
             PerfilesGrid();
-            DataTable DtB = new DataTable();
-            Cnx.SelecBD();
-            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
-            {                
-                string VbTxtSql = "EXEC SP_PANTALLA_WorkSheet 7,'','','','',@Prmtr,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
-                sqlConB.Open();
-                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+            if (Accion.Equals("UPD"))
+            {
+                DataTable DtB = new DataTable();
+                Page.Title = ViewState["PageTit"].ToString();
+                Cnx.SelecBD();
+                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    SC.Parameters.AddWithValue("@Prmtr", DdlWSHK.Text.Trim());
-                    using (SqlDataAdapter DAB = new SqlDataAdapter())
+                    string VbTxtSql = "EXEC SP_PANTALLA_WorkSheet 15,'','','','',@Prmtr,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                    sqlConB.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
-                        DAB.SelectCommand = SC;
-                        DAB.Fill(DtB);
-                        if (DtB.Rows.Count > 0)
+                        SC.Parameters.AddWithValue("@Prmtr", DdlWSHK.Text.Trim());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
                         {
-                            GrdWSAbiertas.DataSource = DtB;
-                            GrdWSAbiertas.DataBind();
-                        }
-                        else
-                        {
-                            GrdWSAbiertas.DataSource = null;
-                            GrdWSAbiertas.DataBind();
+                            using (DataSet DST = new DataSet())
+                            {
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DST);
+                                DST.Tables[0].TableName = "WSAbiertas";
+                                DST.Tables[1].TableName = "OTAsignadas";
+                                DST.Tables[2].TableName = "SvcSinAsingr";
+                                DST.Tables[3].TableName = "RtesSinAsingr";
+
+                                ViewState["DST"] = DST;
+                            }
                         }
                     }
                 }
             }
+            DST = (DataSet)ViewState["DST"];
+            if (DST.Tables[0].Rows.Count > 0)//WS Abiertas
+            { GrdWSAbiertas.DataSource = DST.Tables[0]; GrdWSAbiertas.DataBind(); }
+            else
+            { GrdWSAbiertas.DataSource = null; GrdWSAbiertas.DataBind(); }
         }
         protected void DdlWSHK_TextChanged(object sender, EventArgs e)
         {
-            if (!DdlWSHK.Text.Equals("0")) { BIndDWSAOpen(); }//DatosAsignarOT("", "0001");
+            if (!DdlWSHK.Text.Equals("0")) { BIndDWSAOpen("UPD"); }//DatosAsignarOT("", "0001");
         }
         protected void GrdWSAbiertas_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            // PerfilesGrid();
+            PerfilesGrid();
+            Page.Title = ViewState["PageTit"].ToString();
             GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
             int rowIndex = row.RowIndex;
             string vbcod = ((Label)row.FindControl("LblWS")).Text.ToString().Trim();
             if (e.CommandName.Equals("Abrir"))
-            {
-                DatosAsignarOT(vbcod, "0001");
-                MlVw.ActiveViewIndex = 1;
-                BIndDWSOTRTE();
-                BIndDSvcSinAsingar();
-            }
+            { DatosAsignarOT(vbcod, "0001"); BIndDWSOTRTE(); BIndDSvcSinAsingar(); MlVw.ActiveViewIndex = 1; }
             if (e.CommandName.Equals("PrintWSTrab"))// imprimir servicios
             {
                 MlVw.ActiveViewIndex = 2;
@@ -386,11 +408,12 @@ namespace _77NeoWeb.Forms.Ingenieria
                     parameters[15] = new ReportParameter("RteFecCum", ViewState["RteFecCum"].ToString());
                     parameters[16] = new ReportParameter("RteTecnL", ViewState["RteTecnL"].ToString());
 
-                    string StSql = "EXEC SP_PANTALLA_WorkSheet 1,@NWS,'','',@Nt,0,0,0,0,'01-1-2009','01-01-1900','01-01-1900' ";
+                    string StSql = "EXEC SP_PANTALLA_WorkSheet 1,@NWS,'','',@Nt,0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900' ";
                     using (SqlCommand SC = new SqlCommand(StSql, SCnx1))
                     {
                         SC.Parameters.AddWithValue("@NWS", vbcod);
                         SC.Parameters.AddWithValue("@Nt", Session["Nit77Cia"]);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter SDA = new SqlDataAdapter())
                         {
                             SDA.SelectCommand = SC;
@@ -431,12 +454,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                     parameters[13] = new ReportParameter("RteCantDev", ViewState["RteCantDev"].ToString());
                     parameters[14] = new ReportParameter("RteFecha", ViewState["RteFecha"].ToString());
 
-
-                    string StSql = "EXEC  SP_TallyDos @NWS, @Nt";
-                    using (SqlCommand SC = new SqlCommand(StSql, SCnx1))
+                    using (SqlCommand SC = new SqlCommand("EXEC  SP_TallyDos @NWS, @Nt, @ICC", SCnx1))
                     {
                         SC.Parameters.AddWithValue("@NWS", vbcod);
                         SC.Parameters.AddWithValue("@Nt", Session["Nit77Cia"]);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter SDA = new SqlDataAdapter())
                         {
                             SDA.SelectCommand = SC;
@@ -465,7 +487,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = string.Format("EXEC SP_PANTALLA_WorkSheet 14,@WS,@Usu,'','WEB',@HK,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                        string VBQuery = string.Format("EXEC SP_PANTALLA_WorkSheet 14,@WS,@Usu,'','WEB',@HK,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'");
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
@@ -474,12 +496,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 SC.Parameters.AddWithValue("@WS", VbWS);
                                 SC.Parameters.AddWithValue("@HK", DdlWSHK.Text);
                                 SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 string Mensj = "";
                                 SqlDataReader SDR = SC.ExecuteReader();
                                 if (SDR.Read())
-                                {
-                                    Mensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
-                                }
+                                { Mensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim()); }
                                 SDR.Close();
                                 Transac.Commit();
                                 if (!Mensj.ToString().Trim().Equals(""))
@@ -489,7 +510,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                     { ScriptManager.RegisterClientScriptBlock(this.UplWS, UplWS.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Tiene trabajos cumplidos, no es posible eliminar el documento.
                                 }
                                 GrdOTRteWS.EditIndex = -1;
-                                BIndDWSAOpen();
+                                BIndDWSAOpen("UPD");
 
                             }
                             catch (Exception Ex)
@@ -530,12 +551,14 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ImageButton IbtPrintOT = (e.Row.FindControl("IbtPrintOT") as ImageButton);
                 if (IbtPrintOT != null)
                 {
+                    Result = Idioma.Select("Objeto='IbtPrintOT'");
                     foreach (DataRow RowIdioma in Result)
                     { IbtPrintOT.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
                 }
                 ImageButton IbtPrintRecu = (e.Row.FindControl("IbtPrintRecu") as ImageButton);
                 if (IbtPrintRecu != null)
                 {
+                    Result = Idioma.Select("Objeto='IbtPrintRecu'");
                     foreach (DataRow RowIdioma in Result)
                     { IbtPrintRecu.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
                 }
@@ -561,11 +584,13 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
                 CursorIdioma.Alimentar("CurGridWS", Session["77IDM"].ToString().Trim());
-                string VbTxtSql = "EXEC SP_PANTALLA_WorkSheet 12,@Prmtr,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                string VbTxtSql = "EXEC SP_PANTALLA_WorkSheet 12,@Prmtr,'','','',0,0,@Idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     SC.Parameters.AddWithValue("@Prmtr", TxtWSBusq.Text.Trim());
+                    SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -585,9 +610,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
         }
         protected void IbtSWConsultar_Click(object sender, ImageClickEventArgs e)
-        {
-            BIndDBusqWS();
-        }
+        { BIndDBusqWS(); }
         protected void GrdWSBusq_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("Abrir"))
@@ -595,11 +618,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                 MlVw.ActiveViewIndex = 1;
                 GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
                 int rowIndex = row.RowIndex;
-                string vbcod=((Label)row.FindControl("LblWS")).Text.ToString().Trim();
+                string vbcod = ((Label)row.FindControl("LblWS")).Text.ToString().Trim();
                 GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
                 string VbIdx = GrdWSBusq.DataKeys[gvr.RowIndex].Values["Estado"].ToString();
                 DdlWSHK.Text = GrdWSBusq.DataKeys[gvr.RowIndex].Values["CodHKWS"].ToString();
-                BIndDWSAOpen();
+                BIndDWSAOpen("UPD");
                 DatosAsignarOT(vbcod, VbIdx);
                 BIndDWSOTRTE();
                 BIndDSvcSinAsingar();
@@ -621,53 +644,26 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         //*************************************************  Asignar OT a la WS  *************************************************
         protected void DatosAsignarOT(string WS, string Estado)
-        {
-
-            TxtAsigOTHK.Text = DdlWSHK.SelectedItem.Text.Trim();
-            TxtAsingOTWS.Text = WS;
-            RdbAsigOT.Checked = true;
-        }
+        { TxtAsigOTHK.Text = DdlWSHK.SelectedItem.Text.Trim(); TxtAsingOTWS.Text = WS; RdbAsigOT.Checked = true; }
         protected void BIndDSvcSinAsingar()
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
+            DST = (DataSet)ViewState["DST"];
+
             DataRow[] Result = Idioma.Select("Objeto= 'LblTitServiciosOT'");
-            foreach (DataRow row in Result)
-            { LblTitServicios.Text = row["Texto"].ToString(); }
+            foreach (DataRow row in Result) { LblTitServicios.Text = row["Texto"].ToString(); }
             GrdServicios.Visible = true;
-            DataTable DtB = new DataTable();
-            Cnx.SelecBD();
-            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
-            {
-                string VbTxtSql = "EXEC SP_PANTALLA_WorkSheet 4,@OR,'','','',@Prmtr,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
-                sqlConB.Open();
-                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
-                {
-                    SC.Parameters.AddWithValue("@Prmtr", DdlWSHK.Text.Trim());
-                    SC.Parameters.AddWithValue("@OR", TxtAsigOT_RTE.Text.Trim());
-                    using (SqlDataAdapter DAB = new SqlDataAdapter())
-                    {
-                        DAB.SelectCommand = SC;
-                        DAB.Fill(DtB);
-                        if (DtB.Rows.Count > 0)
-                        {
-                            GrdServicios.DataSource = DtB;
-                            GrdServicios.DataBind();
-                        }
-                        else
-                        {
-                            GrdServicios.DataSource = null;
-                            GrdServicios.DataBind();
-                        }
-                    }
-                }
-            }
+
+            DataTable DT = new DataTable();
+            DT = DST.Tables[2].Clone();
+            DataRow[] DR = DST.Tables[2].Select("CodHKRva = " + DdlWSHK.Text.Trim() + " AND Orden LIKE '%" + TxtAsigOT_RTE.Text.Trim() + "%'");
+            if (IsIENumerableLleno(DR)) { DT = DR.CopyToDataTable(); }
+
+            if (DT.Rows.Count > 0) { GrdServicios.DataSource = DT; GrdServicios.DataBind(); }
+            else { GrdServicios.DataSource = null; GrdServicios.DataBind(); }
         }
         protected void IbtCerrarAsigOT_Click(object sender, ImageClickEventArgs e)
-        {
-            MlVw.ActiveViewIndex = 0;
-            GrdServicios.Visible = false;
-            GrdOTRteWS.Visible = false;
-        }
+        { MlVw.ActiveViewIndex = 0; GrdServicios.Visible = false; GrdOTRteWS.Visible = false; Page.Title = ViewState["PageTit"].ToString(); }
         protected void IbtAsigOTBusq_Click(object sender, ImageClickEventArgs e)
         {
             if (RdbAsigOT.Checked == true) { BIndDSvcSinAsingar(); }
@@ -675,11 +671,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             BIndDWSOTRTE();
         }
         protected void RdbAsigOT_CheckedChanged(object sender, EventArgs e)
-        {
-            BIndDSvcSinAsingar();
-            GrdServicios.Visible = true;
-            GrdReportes.Visible = false;
-        }
+        { BIndDWSAOpen("SEL"); BIndDSvcSinAsingar(); GrdServicios.Visible = true; GrdReportes.Visible = false; }
         protected void GrdServicios_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -688,15 +680,14 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 if (e.CommandName.Equals("Asignar"))
                 {
-                    if (DdlWSHK.Text.Trim().Equals("0"))
-                    { return; }
+                    if (DdlWSHK.Text.Trim().Equals("0")) { return; }
                     Cnx.SelecBD();
                     using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                     {
                         sqlCon.Open();
                         using (SqlTransaction Transac = sqlCon.BeginTransaction())
                         {
-                            string VBQuery = string.Format("INSERT_UPDATE_WORK_SHEET_WS @WS,@HK,@OT,0,@Usu,NULL,0,'INSERT'");
+                            string VBQuery = string.Format("INSERT_UPDATE_WORK_SHEET_WS @WS,@HK,@OT,0,@Usu,NULL,0,'INSERT', @ICC");
 
                             using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                             {
@@ -709,6 +700,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                     SC.Parameters.AddWithValue("@HK", DdlWSHK.Text);
                                     SC.Parameters.AddWithValue("@OT", VblOT);
                                     SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
+                                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                     string Mensj = "", VbNumWS = "";
                                     SqlDataReader SDR = SC.ExecuteReader();
                                     if (SDR.Read())
@@ -726,9 +718,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                                         ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj.ToString().Trim() + "');", true);
                                     }
                                     TxtAsingOTWS.Text = VbNumWS;
-                                    BIndDSvcSinAsingar();
-                                    BIndDWSOTRTE();
-                                    BIndDWSAOpen();
+                                    BIndDWSAOpen("UPD"); BIndDSvcSinAsingar(); BIndDWSOTRTE();
+
                                 }
                                 catch (Exception Ex)
                                 {
@@ -759,7 +750,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                DataRow[] Result = Idioma.Select("Objeto='IbtEdit'");
+                DataRow[] Result = Idioma.Select("Objeto='IbtEditGrdWS'");
                 ImageButton IbtEdit = (e.Row.FindControl("IbtEdit") as ImageButton);
                 if (IbtEdit != null)
                 {
@@ -768,46 +759,25 @@ namespace _77NeoWeb.Forms.Ingenieria
                 }
             }
         }
+        //********************* Rtes para asignar *********************
         protected void BIndDRtesSinAsingar()
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
+            DST = (DataSet)ViewState["DST"];
             DataRow[] Result = Idioma.Select("Objeto= 'LblTitServiciosRT'");
             foreach (DataRow row in Result)
             { LblTitServicios.Text = row["Texto"].ToString(); }
-            DataTable DtB = new DataTable();
-            Cnx.SelecBD();
-            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
-            {
-                string VbTxtSql = "EXEC SP_PANTALLA_WorkSheet 10,@Rt,'','','',@Prmtr,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
-                sqlConB.Open();
-                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
-                {
-                    SC.Parameters.AddWithValue("@Prmtr", DdlWSHK.Text.Trim());
-                    SC.Parameters.AddWithValue("@Rt", TxtAsigOT_RTE.Text.Trim());
-                    using (SqlDataAdapter DAB = new SqlDataAdapter())
-                    {
-                        DAB.SelectCommand = SC;
-                        DAB.Fill(DtB);
-                        if (DtB.Rows.Count > 0)
-                        {
-                            GrdReportes.DataSource = DtB;
-                            GrdReportes.DataBind();
-                        }
-                        else
-                        {
-                            GrdReportes.DataSource = null;
-                            GrdReportes.DataBind();
-                        }
-                    }
-                }
-            }
+
+            DataTable DT = new DataTable();
+            DT = DST.Tables[3].Clone();
+            DataRow[] DR = DST.Tables[3].Select("CodHKRva = " + DdlWSHK.Text.Trim() + " AND Orden LIKE '%" + TxtAsigOT_RTE.Text.Trim() + "%'");
+            if (IsIENumerableLleno(DR)) { DT = DR.CopyToDataTable(); }
+
+            if (DST.Tables[3].Rows.Count > 0) { GrdReportes.DataSource = DST.Tables[3]; GrdReportes.DataBind(); }
+            else { GrdReportes.DataSource = null; GrdReportes.DataBind(); }
         }
         protected void RdbAsigRte_CheckedChanged(object sender, EventArgs e)
-        {
-            BIndDRtesSinAsingar();
-            GrdServicios.Visible = false;
-            GrdReportes.Visible = true;
-        }
+        { BIndDWSAOpen("SEL"); BIndDRtesSinAsingar(); GrdServicios.Visible = false; GrdReportes.Visible = true; }
         protected void GrdReportes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -823,7 +793,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         sqlCon.Open();
                         using (SqlTransaction Transac = sqlCon.BeginTransaction())
                         {
-                            string VBQuery = string.Format("INSERT_UPDATE_WORK_SHEET_WS @WS,@HK,0,@Rt,@Usu,NULL,0,'INSERT'");
+                            string VBQuery = string.Format("INSERT_UPDATE_WORK_SHEET_WS @WS,@HK,0,@Rt,@Usu,NULL,0,'INSERT', @ICC");
 
                             using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                             {
@@ -836,6 +806,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                     SC.Parameters.AddWithValue("@HK", DdlWSHK.Text);
                                     SC.Parameters.AddWithValue("@Rt", VbRte);
                                     SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
+                                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                     string Mensj = "", VbNumWS = "";
                                     SqlDataReader SDR = SC.ExecuteReader();
                                     if (SDR.Read())
@@ -853,9 +824,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                         ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj.ToString().Trim() + "');", true);
                                     }
                                     TxtAsingOTWS.Text = VbNumWS;
-                                    BIndDRtesSinAsingar();
-                                    BIndDWSOTRTE();
-                                    BIndDWSAOpen();
+                                    BIndDWSAOpen("UPD"); BIndDRtesSinAsingar(); BIndDWSOTRTE();
                                 }
                                 catch (Exception Ex)
                                 {
@@ -886,7 +855,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                DataRow[] Result = Idioma.Select("Objeto='IbtEdit'");
+                DataRow[] Result = Idioma.Select("Objeto='IbtEditGrdWS'");
                 ImageButton IbtEdit = (e.Row.FindControl("IbtEdit") as ImageButton);
                 if (IbtEdit != null)
                 {
@@ -898,43 +867,25 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void BIndDWSOTRTE()
         {
             GrdOTRteWS.Visible = true;
-            DataTable DtB = new DataTable();
-            Cnx.SelecBD();
-            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+            DST = (DataSet)ViewState["DST"];
+            DataTable DT = new DataTable();
+            DT = DST.Tables[1].Clone();
+            DataRow[] DR = DST.Tables[1].Select("Numerado = '" + TxtAsingOTWS.Text.Trim() + "'");
+            if (IsIENumerableLleno(DR))
+            { DT = DR.CopyToDataTable(); }
+            if (DT.Rows.Count > 0)
             {
-                try
-                {
-                    string VbTxtSql = "EXEC SP_PANTALLA_WorkSheet 8,@WS,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
-                    sqlConB.Open();
-                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
-                    {
-                        SC.Parameters.AddWithValue("@WS", TxtAsingOTWS.Text.Trim());
-                        using (SqlDataAdapter DAB = new SqlDataAdapter())
-                        {
-                            DAB.SelectCommand = SC;
-                            DAB.Fill(DtB);
-                            if (DtB.Rows.Count > 0)
-                            {
-                                GrdOTRteWS.DataSource = DtB;
-                                GrdOTRteWS.DataBind();
-                            }
-                            else
-                            {
-                                GrdOTRteWS.DataSource = null;
-                                GrdOTRteWS.DataBind();
-                            }
-                        }
-                    }
-                }
-                catch (Exception)
-                { }
+                GrdOTRteWS.DataSource = DT;
+                GrdOTRteWS.DataBind();
+            }
+            else
+            {
+                GrdOTRteWS.DataSource = null;
+                GrdOTRteWS.DataBind();
             }
         }
         protected void GrdOTRteWS_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            GrdOTRteWS.EditIndex = e.NewEditIndex;
-            BIndDWSOTRTE();
-        }
+        { GrdOTRteWS.EditIndex = e.NewEditIndex; BIndDWSOTRTE(); }
         protected void GrdOTRteWS_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -949,7 +900,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = string.Format("EXEC INSERT_UPDATE_WORK_SHEET_WS @WS,@HK,@OT,@Rt,@Usu,@FV,@Ej,'UPDATE'");
+                        string VBQuery = string.Format("EXEC INSERT_UPDATE_WORK_SHEET_WS @WS,@HK,@OT,@Rt,@Usu,@FV,@Ej,'UPDATE', @ICC");
                         DateTime? FechaVence = Convert.ToDateTime("01/01/1900");
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
@@ -967,6 +918,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
                                 SC.Parameters.AddWithValue("@FV", FechaVence);
                                 SC.Parameters.AddWithValue("@Ej", (GrdOTRteWS.Rows[e.RowIndex].FindControl("CkbPpl") as CheckBox).Checked == true ? "1" : "0");
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
 
                                 string Mensj = "", VbNumWS = "";
                                 SqlDataReader SDR = SC.ExecuteReader();
@@ -987,8 +939,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 }
                                 GrdOTRteWS.EditIndex = -1;
                                 TxtAsingOTWS.Text = VbNumWS;
-                                BIndDWSOTRTE();
-                                BIndDWSAOpen();
+                                BIndDWSAOpen("UPD"); BIndDWSOTRTE();
                             }
                             catch (Exception Ex)
                             {
@@ -1013,10 +964,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
         }
         protected void GrdOTRteWS_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            GrdOTRteWS.EditIndex = -1;
-            BIndDWSOTRTE();
-        }
+        { GrdOTRteWS.EditIndex = -1; BIndDWSOTRTE(); }
         protected void GrdOTRteWS_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -1031,7 +979,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = " EXEC SP_PANTALLA_WorkSheet 5,'WEB',@WS,@Usu,@Fte,@Doc,@HK,@Ej,0,'01-1-2009','01-01-1900','01-01-1900'";
+                        string VBQuery = " EXEC SP_PANTALLA_WorkSheet 5,'WEB',@WS,@Usu,@Fte,@Doc,@HK,@Ej,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
 
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
@@ -1046,6 +994,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 SC.Parameters.AddWithValue("@Fte", VbFuente);
                                 SC.Parameters.AddWithValue("@HK", DdlWSHK.Text);
                                 SC.Parameters.AddWithValue("@Ej", (GrdOTRteWS.Rows[e.RowIndex].FindControl("CkbPplP") as CheckBox).Checked == true ? 1 : 0);
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 string Mensj = "";
                                 SqlDataReader SDR = SC.ExecuteReader();
                                 if (SDR.Read())
@@ -1061,7 +1010,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                     { Mensj = row1["Texto"].ToString(); }
                                     ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj.ToString().Trim() + "')", true);
                                 }
-                                BIndDWSOTRTE();
+                                BIndDWSAOpen("UPD"); BIndDWSOTRTE();
                                 if (VbFuente.Equals("OT")) { BIndDSvcSinAsingar(); }
                                 else { BIndDRtesSinAsingar(); }
                             }
@@ -1097,50 +1046,38 @@ namespace _77NeoWeb.Forms.Ingenieria
                 string VbCap = dr["FuenteWS"].ToString();
                 if (VbCap.Equals("RT"))
                 {
-                    // e.Row.BackColor = System.Drawing.Color.Bisque;
                     e.Row.Cells[1].BackColor = System.Drawing.Color.Bisque;
                     e.Row.Cells[6].BackColor = System.Drawing.Color.Bisque;
                 }
                 DataRowView drE = e.Row.DataItem as DataRowView;
                 string VbPpl = drE["EJE"].ToString();
-                if (VbPpl.Equals("1"))
-                {
-                    e.Row.Cells[0].BackColor = System.Drawing.Color.Red;
-                }
+                if (VbPpl.Equals("1")) { e.Row.Cells[0].BackColor = System.Drawing.Color.Red; }
                 DataRow[] Result = Idioma.Select("Objeto='IbtEdit'");
                 ImageButton IbtEdit = (e.Row.FindControl("IbtEdit") as ImageButton);
                 if (IbtEdit != null)
                 {
-                    foreach (DataRow RowIdioma in Result)
-                    { IbtEdit.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                    foreach (DataRow RowIdioma in Result) { IbtEdit.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
                 }
                 ImageButton IbtDelete = (e.Row.FindControl("IbtDelete") as ImageButton);
                 if (IbtDelete != null)
                 {
                     Result = Idioma.Select("Objeto= 'IbtDelete'");
-                    foreach (DataRow row in Result)
-                    { IbtDelete.ToolTip = row["Texto"].ToString().Trim(); }
+                    foreach (DataRow row in Result) { IbtDelete.ToolTip = row["Texto"].ToString().Trim(); }
                     Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
-                    foreach (DataRow row in Result)
-                    { IbtDelete.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                    foreach (DataRow row in Result) { IbtDelete.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
                 }
-
             }
             if ((e.Row.RowState & DataControlRowState.Edit) > 0)
             {
                 ImageButton IbtUpdate = (e.Row.FindControl("IbtUpdate") as ImageButton);
                 DataRow[] Result = Idioma.Select("Objeto= 'IbtUpdate'");
-                foreach (DataRow row in Result)
-                { IbtUpdate.ToolTip = row["Texto"].ToString().Trim(); }
+                foreach (DataRow row in Result) { IbtUpdate.ToolTip = row["Texto"].ToString().Trim(); }
                 ImageButton IbtCancel = (e.Row.FindControl("IbtCancel") as ImageButton);
                 Result = Idioma.Select("Objeto= 'IbtCancel'");
-                foreach (DataRow row in Result)
-                { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
+                foreach (DataRow row in Result) { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
             }
         }
         protected void IbtCerrarImpresion_Click(object sender, ImageClickEventArgs e)
-        {
-            MlVw.ActiveViewIndex = 0;
-        }
+        { MlVw.ActiveViewIndex = 0; }
     }
 }

@@ -55,16 +55,16 @@
                     <asp:DropDownList ID="DdlSN" runat="server" CssClass="heightCampo" Width="20%" OnTextChanged="DdlSN_TextChanged" AutoPostBack="true" />
                     &nbsp&nbsp
                     <asp:Button ID="BtnConsultar" CssClass="btn btn-primary" runat="server" Height="33px" Text="Consultar" OnClick="BtnConsultar_Click" />
-                     <asp:TextBox ID="TxtDesc" runat="server" CssClass="heightCampo" placeholder="Descripción elemento" Enabled="false" Width="40%" />
-                      <div class="CentarGridAsig table-responsive Scroll">
+                    <asp:TextBox ID="TxtDesc" runat="server" CssClass="heightCampo" placeholder="Descripción elemento" Enabled="false" Width="40%" />
+                    <div class="CentarGridAsig table-responsive Scroll">
                         <asp:GridView ID="GrdHistor" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" DataKeyNames="CodIdHisMayor,CodElemMayor"
                             CssClass="DiseñoGrid table-sm" GridLines="Both" Width="100%"
-                            OnRowCommand="GrdHistor_RowCommand" OnRowEditing="GrdHistor_RowEditing" OnRowUpdating="GrdHistor_RowUpdating" 
+                            OnRowCommand="GrdHistor_RowCommand" OnRowEditing="GrdHistor_RowEditing" OnRowUpdating="GrdHistor_RowUpdating"
                             OnRowCancelingEdit="GrdHistor_RowCancelingEdit" OnRowDeleting="GrdHistor_RowDeleting" OnRowDataBound="GrdHistor_RowDataBound">
                             <Columns>
                                 <asp:TemplateField HeaderText="Procesar">
-                                    <ItemTemplate>                                      
-                                        <asp:ImageButton ID="IbtProcesar" Width="30px" Height="30px" ImageUrl="~/images/IrV2.png" runat="server" CommandName="Procesar" ToolTip="Procesar elemento." />                                       
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="IbtProcesar" Width="30px" Height="30px" ImageUrl="~/images/IrV2.png" runat="server" CommandName="Procesar" ToolTip="Procesar elemento." />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="S/N">
@@ -72,7 +72,7 @@
                                         <asp:Label ID="LblSNP" Text='<%# Eval("Sn") %>' runat="server" Width="100%" Enabled="false" />
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:Label  ID="LblSn" Text='<%# Eval("Sn") %>' runat="server" Width="100%" Enabled="false" />
+                                        <asp:Label ID="LblSn" Text='<%# Eval("Sn") %>' runat="server" Width="100%" Enabled="false" />
                                     </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="P/N">
@@ -91,7 +91,7 @@
                                         <asp:Label Text='<%# Eval("Identificador") %>' runat="server" Width="100%" Enabled="false" />
                                     </EditItemTemplate>
                                 </asp:TemplateField>
-                                  <asp:TemplateField HeaderText="Fecha evento" HeaderStyle-Width="8%">
+                                <asp:TemplateField HeaderText="Fecha evento" HeaderStyle-Width="8%">
                                     <ItemTemplate>
                                         <asp:Label ID="LblFecEvP" Text='<%# Eval("Fecha") %>' runat="server" Width="70%" Enabled="false" />
                                     </ItemTemplate>
@@ -101,7 +101,7 @@
                                         <ajaxToolkit:CalendarExtender ID="CalTxtFecEv" runat="server" PopupButtonID="IbnFecEv" TargetControlID="TxtFecEv" Format="dd/MM/yyyy" CssClass="MyCalendar" />
                                     </EditItemTemplate>
                                 </asp:TemplateField>
-                                 <asp:TemplateField HeaderText="Posicion">
+                                <asp:TemplateField HeaderText="Posicion">
                                     <ItemTemplate>
                                         <asp:Label Text='<%# Eval("PosicionHSC") %>' runat="server" Width="100%" Enabled="false" />
                                     </ItemTemplate>
@@ -117,7 +117,7 @@
                                         <asp:Label Text='<%# Eval("CodUbicacionFisicaH") %>' runat="server" Width="100%" Enabled="false" />
                                     </EditItemTemplate>
                                 </asp:TemplateField>
-                                  <asp:TemplateField HeaderText="P/N Mayor">
+                                <asp:TemplateField HeaderText="P/N Mayor">
                                     <ItemTemplate>
                                         <asp:Label Text='<%# Eval("PnMayor") %>' runat="server" Width="100%" Enabled="false" />
                                     </ItemTemplate>
@@ -132,7 +132,7 @@
                                     <EditItemTemplate>
                                         <asp:Label ID="LblSNMy" Text='<%# Eval("SnMayor") %>' runat="server" Width="100%" Enabled="false" />
                                     </EditItemTemplate>
-                                </asp:TemplateField>                               
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Motivo">
                                     <ItemTemplate>
                                         <asp:Label Text='<%# Eval("MotivoRemocion") %>' runat="server" Width="100%" Enabled="false" />
@@ -168,7 +168,7 @@
                         </asp:GridView>
                     </div>
                 </asp:View>
-                 <asp:View ID="Vw1Procesar" runat="server">
+                <asp:View ID="Vw1Procesar" runat="server">
                     <asp:ImageButton ID="IbtCerrarProces" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarProces_Click" ImageAlign="Right" />
                     <div class="col-sm-7">
                         <h6 class="TextoSuperior">
@@ -198,7 +198,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <asp:Label ID="LblPrcsCont" runat="server" CssClass="LblEtiquet" Text="Contador" />
-                                <asp:DropDownList ID="DdlPrcsCont" runat="server" CssClass="heightCampo" Width="100%"/>
+                                <asp:DropDownList ID="DdlPrcsCont" runat="server" CssClass="heightCampo" Width="100%" />
                             </div>
                             <div class="col-sm-1">
                                 <br />
@@ -206,19 +206,19 @@
                             </div>
                             <div class="col-sm-2">
                                 <br />
-                                <asp:Button ID="BtnPrcsCont" CssClass="btn btn-primary" runat="server" Height="33px" Text="Procesar" OnClick="BtnPrcsCont_Click"  />
+                                <asp:Button ID="BtnPrcsCont" CssClass="btn btn-primary" runat="server" Height="33px" Text="Procesar" OnClick="BtnPrcsCont_Click" />
                             </div>
                         </div>
                         <div class="table-responsive Scroll-table2">
                             <asp:GridView ID="GrdProcesar" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false" DataKeyNames=""
                                 CssClass="DiseñoGrid" GridLines="Both">
-                                  <Columns>
-                                    <asp:TemplateField HeaderText="Fecha"  HeaderStyle-Width="3%">
+                                <Columns>
+                                    <asp:TemplateField HeaderText="Fecha" HeaderStyle-Width="3%">
                                         <ItemTemplate>
                                             <asp:Label ID="LblFecha" Text='<%# Eval("Fecha") %>' runat="server" Width="100%" Enabled="false" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                     <asp:TemplateField HeaderText="Individual"  HeaderStyle-Width="5%">
+                                    <asp:TemplateField HeaderText="Individual" HeaderStyle-Width="5%">
                                         <ItemTemplate>
                                             <asp:Label ID="LblIndivid" Text='<%# Eval("Horas") %>' runat="server" Width="100%" Enabled="false" />
                                         </ItemTemplate>
@@ -228,7 +228,7 @@
                                             <asp:Label ID="LblAcumul" Text='<%# Eval("TSN_actual") %>' runat="server" Width="100%" Enabled="false" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                     <asp:TemplateField HeaderText="Libro Vuelo" HeaderStyle-Width="8%">
+                                    <asp:TemplateField HeaderText="Libro Vuelo" HeaderStyle-Width="8%">
                                         <ItemTemplate>
                                             <asp:Label ID="LblLibroV" Text='<%# Eval("CodlV") %>' runat="server" Width="100%" Enabled="false" />
                                         </ItemTemplate>

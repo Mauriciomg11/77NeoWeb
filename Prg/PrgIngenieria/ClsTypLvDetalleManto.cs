@@ -173,7 +173,6 @@ namespace _77NeoWeb.Prg.PrgIngenieria
             TblMROReporteOTPpal.Columns.Add("ConsecutivoROTP", typeof(string));
             TblMROReporteOTPpal.Columns.Add("SubOT", typeof(int));
 
-
             foreach (var CamposD in MROReporteOTPpal)
             {
                 TblMROReporteOTPpal.Rows.Add(new object[] {
@@ -222,7 +221,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                             VbPantalla = "FrmLibroVuelo";
                             VbcatVer = System.Web.HttpContext.Current.Session["77Version"].ToString();
                             VbcatAct = System.Web.HttpContext.Current.Session["77Act"].ToString();
-                            Cnx.UpdateErrorV2(VbUsu, VbPantalla, "ClsTypLvDetalleManto", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                            Cnx.UpdateErrorV2(VbUsu, VbPantalla, "ClsTypLvDetalleManto", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                             transaction.Rollback();
                         }
                     }

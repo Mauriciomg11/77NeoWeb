@@ -16,20 +16,26 @@ namespace _77NeoWeb.Forms.Ingenieria
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); } /**/
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-               /* Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["!dC!@"] = 0;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
+                }
             }
             if (!IsPostBack)
             {
@@ -128,7 +134,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
                 CursorIdioma.Alimentar("CurPLantillaMaestraExportar", Session["77IDM"].ToString().Trim());
 
-                string query = "EXEC SP_PANTALLA_Informe_Ingenieria 3,'','','','CurPLantillaMaestraExportar',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                string query = "EXEC SP_PANTALLA_Informe_Ingenieria 3,'','','','CurPLantillaMaestraExportar',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                 DataRow[] Result = Idioma.Select("Objeto= 'NomExpPM'");
                 foreach (DataRow row in Result)
                 { VbNomArchivo = row["Texto"].ToString().Trim(); }
@@ -136,12 +142,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                 Cnx.SelecBD();
                 using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
                 {
-                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    using (SqlCommand SC = new SqlCommand(query, con))
                     {
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
-                            cmd.Connection = con;
-                            sda.SelectCommand = cmd;
+                            SC.Connection = con;
+                            sda.SelectCommand = SC;
                             using (DataSet ds = new DataSet())
                             {
                                 sda.Fill(ds);

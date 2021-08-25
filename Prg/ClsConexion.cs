@@ -13,7 +13,7 @@ namespace _77NeoWeb.prg
     {
         static public string PMensj;
         static public string Produccion;
- 
+
         string VblConexion, VblDecimal;
 
         public ClsConexion()
@@ -168,10 +168,7 @@ namespace _77NeoWeb.prg
                 }
             }
         }
-        public string GetConex()
-        {
-            return this.VblConexion;
-        }
+        public string GetConex() { return this.VblConexion; }
         public void RetirarPuntos(string VbCampo)
         {
             int I = VbCampo.IndexOf(",") == -1 ? 0 : VbCampo.IndexOf(",");
@@ -250,15 +247,10 @@ namespace _77NeoWeb.prg
                 }
             }
         }
-        public string ValorDecimal()
-        {
-            return this.VblDecimal;
-        }
-        public string GetMensj()
-        {
-            return PMensj;
-        }
-        public string GetProduccion()
-        { return Produccion; }
+        public string ValorDecimal() { return this.VblDecimal; }
+        public string GetMensj() { return PMensj; }
+        public string GetProduccion() { return Produccion; }
+        public int GetIdCia() { return 1; }
+        public string GetIdm() { return "5"; }//  4 español | 5 ingles
     }
 }

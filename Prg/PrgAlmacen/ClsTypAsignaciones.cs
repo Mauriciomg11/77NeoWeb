@@ -83,6 +83,7 @@ namespace _77NeoWeb.Prg.PrgManto
                             SC.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = SC.Parameters.AddWithValue("@Asignacion", TblAsignacion);
                             SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@NT", HttpContext.Current.Session["Nit77Cia"].ToString());
+                            SqlParameter Prmtrs3 = SC.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
                             Prmtrs.SqlDbType = SqlDbType.Structured;
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())
@@ -100,7 +101,7 @@ namespace _77NeoWeb.Prg.PrgManto
                             VbPantalla = "Asignaciones-Incoming";
                             VbcatVer = System.Web.HttpContext.Current.Session["77Version"].ToString();
                             VbcatAct = System.Web.HttpContext.Current.Session["77Act"].ToString();
-                            Cnx.UpdateErrorV2(VbUsu, VbPantalla, "ClsTypAsignaciones", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                            Cnx.UpdateErrorV2(VbUsu, VbPantalla, "ClsTypAsignaciones", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                             transaction.Rollback();
                         }
                     }

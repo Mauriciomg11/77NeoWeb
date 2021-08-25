@@ -66,7 +66,6 @@
                 <br />
                 <div class="row ">
                     <div class="col-sm-6 CentrarBoton ">
-                        <%--  <div class="DivGrid DivContendorGrid">--%>
                         <h6 class="TextoSuperior">
                             <asp:Label ID="LblTitDatos" runat="server" Text="activar / desactivar periodo" /></h6>
                         <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdTipoSrv"
@@ -110,7 +109,6 @@
                             <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                             <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                         </asp:GridView>
-                        <%--</div>--%>
                     </div>
                 </div>
             </div>

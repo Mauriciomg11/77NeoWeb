@@ -21,18 +21,23 @@ namespace _77NeoWeb.Forms
         {
             if (Session["Login77"] == null)
             {
-                Response.Redirect("~/FrmAcceso.aspx");
-            } /* */
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";  /**/
-                /*  Session["C77U"] = "00000082";
-                  Session["D[BX"] = "DbNeoDempV2";
-                  Session["$VR"] = "77NEO01";
-                  Session["V$U@"] = "sa";
-                  Session["P@$"] = "admindemp";
-                  Session["N77U"] = "UsuPrueba";
-                  Session["Nit77Cia"] = "811035879-1"; */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
+                }
             }
             if (!IsPostBack)
             {

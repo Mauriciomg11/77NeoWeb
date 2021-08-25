@@ -45,8 +45,8 @@ namespace _77NeoWeb.Forms.MRO
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 1;
-                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
                 }
             }
             if (!IsPostBack)
@@ -839,7 +839,7 @@ namespace _77NeoWeb.Forms.MRO
             PerfilesGrid();
             Page.Title = ViewState["PageTit"].ToString().Trim();
             DropDownList DdlHKPP = (GrdAeron.FooterRow.FindControl("DdlHKPP") as DropDownList);
-            string LtxtSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 3,'{0}','','','','CON',{1},0,0,0,'01-01-01','01-01-01','01-01-01'", TxtCod.Text, DdlHKPP.SelectedValue);
+            string LtxtSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 3,'{0}','','','','CON',{1},0,0,{2},'01-01-01','01-01-01','01-01-01'", TxtCod.Text, DdlHKPP.SelectedValue, Session["!dC!@"]);
             DropDownList DdlContHKPP = (GrdAeron.FooterRow.FindControl("DdlContHKPP") as DropDownList);
             DdlContHKPP.DataSource = Cnx.DSET(LtxtSql);
             DdlContHKPP.DataTextField = "CodContador";
@@ -852,7 +852,7 @@ namespace _77NeoWeb.Forms.MRO
             Page.Title = ViewState["PageTit"].ToString().Trim();
             PerfilesGrid();
             DropDownList DdlPNPP = (GrdPN.FooterRow.FindControl("DdlPNPP") as DropDownList);
-            string LtxtSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 3,'{0}','{1}','','','CONPN',0,0,0,0,'01-01-01','01-01-01','01-01-01'", TxtCod.Text, DdlPNPP.SelectedValue);
+            string LtxtSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 3,'{0}','{1}','','','CONPN',0,0,0,{2},'01-01-01','01-01-01','01-01-01'", TxtCod.Text, DdlPNPP.SelectedValue, Session["!dC!@"]);
             DropDownList DdlContPNPP = (GrdPN.FooterRow.FindControl("DdlContPNPP") as DropDownList);
             DdlContPNPP.DataSource = Cnx.DSET(LtxtSql);
             DdlContPNPP.DataTextField = "CodContador";
@@ -2831,7 +2831,7 @@ namespace _77NeoWeb.Forms.MRO
                         sqlCon.Open();
                         using (SqlTransaction Transac = sqlCon.BeginTransaction())
                         {
-                            VBQuery = "EXEC SP_TablasIngenieria 5,@PN,@Us,@Desc,'','','','','','INSERT',@IdPlIns,@IdSvc,@Cnt,@Condc,@Fs,0,'01-01-1','02-01-1','03-01-1'";
+                            VBQuery = "EXEC SP_TablasIngenieria 5,@PN,@Us,@Desc,'','','','','','INSERT',@IdPlIns,@IdSvc,@Cnt,@Condc,@Fs,@ICC,'01-01-1','02-01-1','03-01-1'";
                             using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                             {
                                 try
@@ -2844,6 +2844,7 @@ namespace _77NeoWeb.Forms.MRO
                                     SC.Parameters.AddWithValue("@Cnt", VblCant);
                                     SC.Parameters.AddWithValue("@Condc", VblCond);
                                     SC.Parameters.AddWithValue("@Fs", VblFase);
+                                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                     var Mensj = SC.ExecuteScalar();
                                     if (!Mensj.ToString().Trim().Equals(""))
                                     {
@@ -2905,7 +2906,7 @@ namespace _77NeoWeb.Forms.MRO
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        VBQuery = "EXEC SP_TablasIngenieria 5,@PN,@Us,'','','','','','','UPDATE',@IdPlIns,@IdSvc,@Cant,@Condc,@Fs,0,'01-01-1','02-01-1','03-01-1'";
+                        VBQuery = "EXEC SP_TablasIngenieria 5,@PN,@Us,'','','','','','','UPDATE',@IdPlIns,@IdSvc,@Cant,@Condc,@Fs,@ICC,'01-01-1','02-01-1','03-01-1'";
 
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
@@ -2918,6 +2919,7 @@ namespace _77NeoWeb.Forms.MRO
                                 SC.Parameters.AddWithValue("@Cant", VblCant);
                                 SC.Parameters.AddWithValue("@Condc", VblCond);
                                 SC.Parameters.AddWithValue("@Fs", VblFase);
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 var Mensj = SC.ExecuteScalar();
                                 if (!Mensj.ToString().Trim().Equals(""))
                                 {
@@ -2980,7 +2982,7 @@ namespace _77NeoWeb.Forms.MRO
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        VBQuery = string.Format("EXEC SP_TablasIngenieria 5,'{0}','{1}','','','','','','','DELETE',{2},{3},@Cant,{4},{5},0,'01-01-1','02-01-1','03-01-1'",
+                        VBQuery = string.Format("EXEC SP_TablasIngenieria 5,'{0}','{1}','','','','','','','DELETE',{2},{3},@Cant,{4},{5},@ICC,'01-01-1','02-01-1','03-01-1'",
                         VblPN, Session["C77U"].ToString(), VblId, TxtId.Text, VblCond, VblFase);
 
                         using (SqlCommand SqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
@@ -2988,6 +2990,7 @@ namespace _77NeoWeb.Forms.MRO
                             try
                             {
                                 SqlCmd.Parameters.AddWithValue("@Cant", VblCant);
+                                SqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 var Mensj = SqlCmd.ExecuteScalar();
                                 if (!Mensj.ToString().Trim().Equals(""))
                                 {
@@ -3028,7 +3031,7 @@ namespace _77NeoWeb.Forms.MRO
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataRow[] Result;
             PerfilesGrid();
-            string LtxtSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 3,'','','','','PNRF',0,0,0,0,'01-01-01','01-01-01','01-01-01'");
+            string LtxtSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 3,'','','','','PNRF',0,0,0,{0},'01-01-01','01-01-01','01-01-01'", Session["!dC!@"]);
             if (e.Row.RowType == DataControlRowType.Footer)
             {
                 DropDownList DdlPNRFPP = (e.Row.FindControl("DdlPNRFPP") as DropDownList);
@@ -3120,13 +3123,14 @@ namespace _77NeoWeb.Forms.MRO
                         sqlCon.Open();
                         using (SqlTransaction Transac = sqlCon.BeginTransaction())
                         {
-                            VBQuery = string.Format("EXEC SP_TablasIngenieria 8,'{0}','{1}','','','','','','','INSERT',{2},{3},@TiempEst,0,0,0,'01-01-1','02-01-1','03-01-1'",
+                            VBQuery = string.Format("EXEC SP_TablasIngenieria 8,'{0}','{1}','','','','','','','INSERT',{2},{3},@TiempEst,0,0,@ICC,'01-01-1','02-01-1','03-01-1'",
                             Session["C77U"].ToString(), TxtCod.Text, TxtId.Text, VbCodIdLicencia);
                             using (SqlCommand SqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
                             {
                                 try
                                 {
                                     SqlCmd.Parameters.AddWithValue("@TiempEst", VblTE);
+                                    SqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                     var Mensj = SqlCmd.ExecuteScalar();
                                     if (!Mensj.ToString().Trim().Equals(""))
                                     {
@@ -3186,13 +3190,14 @@ namespace _77NeoWeb.Forms.MRO
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        VBQuery = string.Format("EXEC SP_TablasIngenieria 8,'{0}','{1}','','','','','','','UPDATE',{2},{3},@TiempEst,{4},0,0,'01-01-1','02-01-1','03-01-1'",
+                        VBQuery = string.Format("EXEC SP_TablasIngenieria 8,'{0}','{1}','','','','','','','UPDATE',{2},{3},@TiempEst,{4},0, @ICC,'01-01-1','02-01-1','03-01-1'",
                          Session["C77U"].ToString(), TxtCod.Text, TxtId.Text, VbCodIdLicencia, IdSrvLic);
                         using (SqlCommand SqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
                             {
                                 SqlCmd.Parameters.AddWithValue("@TiempEst", VblTE);
+                                SqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 SqlCmd.ExecuteNonQuery();
                                 Transac.Commit();
                                 GrdLicen.EditIndex = -1;
@@ -3242,7 +3247,7 @@ namespace _77NeoWeb.Forms.MRO
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = string.Format("EXEC SP_TablasIngenieria 8,'{0}','{1}','','','','','','','DELETE',{2},{3},@TiempEst,{4},0,0,'01-01-1','02-01-1','03-01-1'",
+                    VBQuery = string.Format("EXEC SP_TablasIngenieria 8,'{0}','{1}','','','','','','','DELETE',{2},{3},@TiempEst,{4},0, @ICC,'01-01-1','02-01-1','03-01-1'",
                     Session["C77U"].ToString(), TxtCod.Text, TxtId.Text, VbCodIdLicencia, IdSrvLic);
 
                     using (SqlCommand SqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
@@ -3250,6 +3255,7 @@ namespace _77NeoWeb.Forms.MRO
                         try
                         {
                             SqlCmd.Parameters.AddWithValue("@TiempEst", Convert.ToDouble(VblTE));
+                            SqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             SqlCmd.ExecuteNonQuery();
                             Transac.Commit();
                             //BindDLicencia();
@@ -3272,7 +3278,7 @@ namespace _77NeoWeb.Forms.MRO
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
-            string LtxtSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 3,'','','','','LICRF',{0},0,0,0,'01-01-01','01-01-01','01-01-01'", TxtId.Text);
+            string LtxtSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 3,'','','','','LICRF',{0},0,0,{1},'01-01-01','01-01-01','01-01-01'", TxtId.Text, Session["!dC!@"]);
             if (e.Row.RowType == DataControlRowType.Footer)
             {
                 DropDownList DdlLicenRFPP = (e.Row.FindControl("DdlLicenRFPP") as DropDownList);

@@ -39,11 +39,11 @@
                     <asp:Label ID="LblPN" runat="server" CssClass="LblEtiquet" Text="P/N:" />
                     <asp:DropDownList ID="DdlPN" runat="server" CssClass="heightCampo" Width="20%" OnTextChanged="DdlPN_TextChanged" AutoPostBack="true" />
                     <asp:Label ID="LblSN" runat="server" CssClass="LblEtiquet" Text="S/N:" />
-                    <asp:DropDownList ID="DdlSN" runat="server" CssClass="heightCampo" Width="20%"/>
+                    <asp:DropDownList ID="DdlSN" runat="server" CssClass="heightCampo" Width="20%" />
                     <asp:Label ID="LblModel" runat="server" CssClass="LblEtiquet" Text="Modelo:" />
                     <asp:DropDownList ID="DdlModel" runat="server" CssClass="heightCampo" Width="15%" />
                     <asp:Button ID="BtnConsultar" CssClass="btn btn-primary" runat="server" Height="33px" Text="Consultar" OnClick="BtnConsultar_Click" />
-                    <asp:Button ID="BtnImprimir" CssClass="btn btn-primary" runat="server" Height="33px" Text="Imprimir" OnClick="BtnImprimir_Click" Enabled="false"  />
+                    <asp:Button ID="BtnImprimir" CssClass="btn btn-primary" runat="server" Height="33px" Text="Imprimir" OnClick="BtnImprimir_Click" Enabled="false" />
                     &nbsp&nbsp
                     <asp:Label ID="LblHK" runat="server" CssClass="LblEtiquet" Text="Aeronave" />
                     <asp:TextBox ID="TxtHK" runat="server" CssClass="heightCampo" Enabled="false" Width="10%" />
@@ -163,7 +163,7 @@
                 </asp:View>
             </asp:MultiView>
         </ContentTemplate>
-        <Triggers >
+        <Triggers>
             <asp:PostBackTrigger ControlID="BtnImprimir" />
         </Triggers>
     </asp:UpdatePanel>

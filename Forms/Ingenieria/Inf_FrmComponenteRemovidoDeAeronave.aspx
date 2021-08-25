@@ -54,10 +54,10 @@
                     <asp:Label ID="LblPN" runat="server" CssClass="LblEtiquet" Text="P/N:" />
                     <asp:DropDownList ID="DdlPN" runat="server" CssClass="heightCampo" Width="20%" OnTextChanged="DdlPN_TextChanged" AutoPostBack="true" />
                     <asp:Label ID="LblSN" runat="server" CssClass="LblEtiquet" Text="S/N:" />
-                    <asp:DropDownList ID="DdlSN" runat="server" CssClass="heightCampo" Width="20%" OnTextChanged="DdlSN_TextChanged" AutoPostBack="true"/><br />
+                    <asp:DropDownList ID="DdlSN" runat="server" CssClass="heightCampo" Width="20%" OnTextChanged="DdlSN_TextChanged" AutoPostBack="true" /><br />
                     <br />
-                    <asp:Label ID="LblFechI" runat="server" CssClass="LblEtiquet" Text="Fecha Inicial" />
-                    <asp:TextBox ID="TxtFechI" runat="server" CssClass="heightCampo" Width="10%" TextMode="Date" MaxLength="10" />
+                    <asp:Label ID="LblFechI" runat="server" CssClass="LblEtiquet" Text="Fecha Inicial"/>
+                    <asp:TextBox ID="TxtFechI" runat="server" CssClass="heightCampo" Width="10%" TextMode="Date" MaxLength="10"/>
                     <asp:Label ID="LblFechF" runat="server" CssClass="LblEtiquet" Text="Fecha Final" />
                     <asp:TextBox ID="TxtFechF" runat="server" CssClass="heightCampo" Width="10%" TextMode="Date" MaxLength="10" />
                     &nbsp&nbsp
@@ -69,15 +69,8 @@
                             OnRowDataBound="GrdHistor_RowDataBound">
                             <Columns>
                                 <asp:TemplateField HeaderText="Procesar">
-                                    <ItemTemplate>
-                                        <%--<asp:UpdatePanel ID="UplAbrir2" runat="server" UpdateMode="Conditional">
-                                            <ContentTemplate>--%>
-                                        <asp:ImageButton ID="IbtProcesar" Width="30px" Height="30px" ImageUrl="~/images/IrV2.png" runat="server" CommandName="Procesar" ToolTip="Procesar un elemento." />
-                                        <%--</ContentTemplate>
-                                            <Triggers>
-                                                <asp:PostBackTrigger ControlID="IbtAbrir" />
-                                            </Triggers>
-                                        </asp:UpdatePanel>--%>
+                                    <ItemTemplate>                                     
+                                        <asp:ImageButton ID="IbtProcesar" Width="30px" Height="30px" ImageUrl="~/images/IrV2.png" runat="server" CommandName="Procesar" ToolTip="Procesar un elemento." />                                      
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Matricula" HeaderStyle-Width="8%">
@@ -227,7 +220,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <asp:Label ID="LblContador" runat="server" CssClass="LblEtiquet" Text="Contador" />
-                                <asp:DropDownList ID="DdlContador" runat="server" CssClass="heightCampo" Width="100%"/>
+                                <asp:DropDownList ID="DdlContador" runat="server" CssClass="heightCampo" Width="100%" />
                             </div>
                             <div class="col-sm-1">
                                 <br />
@@ -235,19 +228,19 @@
                             </div>
                             <div class="col-sm-2">
                                 <br />
-                                <asp:Button ID="BtnPrcsCont" CssClass="btn btn-primary" runat="server" Height="33px" Text="Procesar" OnClick="BtnPrcsCont_Click"  />
+                                <asp:Button ID="BtnPrcsCont" CssClass="btn btn-primary" runat="server" Height="33px" Text="Procesar" OnClick="BtnPrcsCont_Click" />
                             </div>
                         </div>
                         <div class="table-responsive Scroll-table2">
                             <asp:GridView ID="GrdProcesar" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false" DataKeyNames="CodIdHist,CodIdCont,SumIndiv,VlrMax,Descripcion"
                                 CssClass="DiseñoGrid" GridLines="Both">
                                 <Columns>
-                                    <asp:TemplateField HeaderText="Fecha"  HeaderStyle-Width="3%">
+                                    <asp:TemplateField HeaderText="Fecha" HeaderStyle-Width="3%">
                                         <ItemTemplate>
                                             <asp:Label ID="LblFecha" Text='<%# Eval("Fecha") %>' runat="server" Width="100%" Enabled="false" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                     <asp:TemplateField HeaderText="Individual"  HeaderStyle-Width="5%">
+                                    <asp:TemplateField HeaderText="Individual" HeaderStyle-Width="5%">
                                         <ItemTemplate>
                                             <asp:Label ID="LblIndivid" Text='<%# Eval("Horas") %>' runat="server" Width="100%" Enabled="false" />
                                         </ItemTemplate>
@@ -257,7 +250,7 @@
                                             <asp:Label ID="LblAcumul" Text='<%# Eval("TSN_actual") %>' runat="server" Width="100%" Enabled="false" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                     <asp:TemplateField HeaderText="Libro Vuelo" HeaderStyle-Width="8%">
+                                    <asp:TemplateField HeaderText="Libro Vuelo" HeaderStyle-Width="8%">
                                         <ItemTemplate>
                                             <asp:Label ID="LblLibroV" Text='<%# Eval("CodlV") %>' runat="server" Width="100%" Enabled="false" />
                                         </ItemTemplate>

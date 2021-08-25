@@ -17,6 +17,7 @@ namespace _77NeoWeb.Forms.Ingenieria
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataSet DSTDdl = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
@@ -37,8 +38,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 1;
-                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
                 }
             }
             if (!IsPostBack)
@@ -62,7 +63,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CalCrearElemFechRec.EndDate = DateTime.Now;
                 CalCrearElemFechFabr.EndDate = DateTime.Now;
                 MultVw.ActiveViewIndex = 0;
-                BindDDdl();
+                BindDDdl("UPD");
                 BtnInsElem.CssClass = "btn btn-primary";
                 ViewState["PageTit"] = "";
                 ModSeguridad();
@@ -460,91 +461,98 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["TablaIdioma"] = Idioma;
             }
         }
-        protected void BindDDdl()
+        protected void BindDDdl(string Accion)
         {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 22,'','','','INSHK',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-            DdlAeroInsElem.DataSource = Cnx.DSET(LtxtSql);
-            DdlAeroInsElem.DataMember = "Datos";
-            DdlAeroInsElem.DataTextField = "Matricula";
-            DdlAeroInsElem.DataValueField = "CodAeronave";
-            DdlAeroInsElem.DataBind();
+            if (Accion.Equals("UPD"))
+            {
+                Cnx.SelecBD();
+                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+                {
+                    string VbTxtSql = "EXEC SP_PANTALLA_AeronaveVirtual 29,'','','','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                    sqlConB.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                    {
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            using (DataSet DSTDdl = new DataSet())
+                            {
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DSTDdl);
+                                DSTDdl.Tables[0].TableName = "HK";
+                                DSTDdl.Tables[1].TableName = "Posc";
+                                DSTDdl.Tables[2].TableName = "PNMyr";
+                                DSTDdl.Tables[3].TableName = "PNCrearElem";
+                                DSTDdl.Tables[4].TableName = "PNConsultaCrearElem";
 
-            DdlHkConsAeroVirtual.DataSource = Cnx.DSET(LtxtSql);
-            DdlHkConsAeroVirtual.DataMember = "Datos";
-            DdlHkConsAeroVirtual.DataTextField = "Matricula";
-            DdlHkConsAeroVirtual.DataValueField = "CodAeronave";
-            DdlHkConsAeroVirtual.DataBind();
+                                ViewState["DSTDdl"] = DSTDdl;
+                            }
+                        }
+                    }
+                }
+            }
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+            if (DSTDdl.Tables[0].Rows.Count > 0)
+            {
+                DdlAeroInsElem.DataSource = DSTDdl.Tables[0];
+                DdlAeroInsElem.DataTextField = "Matricula";
+                DdlAeroInsElem.DataValueField = "CodAeronave";
+                DdlAeroInsElem.DataBind();
 
-            DdlAeroRemElem.DataSource = Cnx.DSET(LtxtSql);
-            DdlAeroRemElem.DataMember = "Datos";
-            DdlAeroRemElem.DataTextField = "Matricula";
-            DdlAeroRemElem.DataValueField = "CodAeronave";
-            DdlAeroRemElem.DataBind();
+                DdlHkConsAeroVirtual.DataSource = DSTDdl.Tables[0];
+                DdlHkConsAeroVirtual.DataTextField = "Matricula";
+                DdlHkConsAeroVirtual.DataValueField = "CodAeronave";
+                DdlHkConsAeroVirtual.DataBind();
 
-            DdlAeroInsMay.DataSource = Cnx.DSET(LtxtSql);
-            DdlAeroInsMay.DataMember = "Datos";
-            DdlAeroInsMay.DataTextField = "Matricula";
-            DdlAeroInsMay.DataValueField = "CodAeronave";
-            DdlAeroInsMay.DataBind();
+                DdlAeroRemElem.DataSource = DSTDdl.Tables[0];
+                DdlAeroRemElem.DataTextField = "Matricula";
+                DdlAeroRemElem.DataValueField = "CodAeronave";
+                DdlAeroRemElem.DataBind();
 
-            DdlAeroRemMay.DataSource = Cnx.DSET(LtxtSql);
-            DdlAeroRemMay.DataMember = "Datos";
-            DdlAeroRemMay.DataTextField = "Matricula";
-            DdlAeroRemMay.DataValueField = "CodAeronave";
-            DdlAeroRemMay.DataBind();
+                DdlAeroInsMay.DataSource = DSTDdl.Tables[0];
+                DdlAeroInsMay.DataTextField = "Matricula";
+                DdlAeroInsMay.DataValueField = "CodAeronave";
+                DdlAeroInsMay.DataBind();
 
-            LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','PosR',0,0,0,0,'01-01-1','02-01-1','03-01-1'");
-            DdlPosicRemElem.DataSource = Cnx.DSET(LtxtSql);
-            DdlPosicRemElem.DataMember = "Datos";
-            DdlPosicRemElem.DataTextField = "Descripcion";
-            DdlPosicRemElem.DataValueField = "Codigo";
-            DdlPosicRemElem.DataBind();
+                DdlAeroRemMay.DataSource = DSTDdl.Tables[0];
+                DdlAeroRemMay.DataTextField = "Matricula";
+                DdlAeroRemMay.DataValueField = "CodAeronave";
+                DdlAeroRemMay.DataBind();
 
-            DdlPosicRemMay.DataSource = Cnx.DSET(LtxtSql);
-            DdlPosicRemMay.DataMember = "Datos";
-            DdlPosicRemMay.DataTextField = "Descripcion";
-            DdlPosicRemMay.DataValueField = "Codigo";
-            DdlPosicRemMay.DataBind();
+                DdlPosicRemElem.DataSource = DSTDdl.Tables[1];
+                DdlPosicRemElem.DataTextField = "Descripcion";
+                DdlPosicRemElem.DataValueField = "Codigo";
+                DdlPosicRemElem.DataBind();
 
-            DdlPosicRemSubC.DataSource = Cnx.DSET(LtxtSql);
-            DdlPosicRemSubC.DataMember = "Datos";
-            DdlPosicRemSubC.DataTextField = "Descripcion";
-            DdlPosicRemSubC.DataValueField = "Codigo";
-            DdlPosicRemSubC.DataBind();
+                DdlPosicRemMay.DataSource = DSTDdl.Tables[1];
+                DdlPosicRemElem.DataTextField = "Descripcion";
+                DdlPosicRemMay.DataTextField = "Descripcion";
+                DdlPosicRemMay.DataValueField = "Codigo";
+                DdlPosicRemMay.DataBind();
 
-            LtxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 22,'','','','PNVisMy',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-            DdlPnVisualMay.DataSource = Cnx.DSET(LtxtSql);
-            DdlPnVisualMay.DataMember = "Datos";
-            DdlPnVisualMay.DataTextField = "PN";
-            DdlPnVisualMay.DataValueField = "Codigo";
-            DdlPnVisualMay.DataBind();
+                DdlPosicRemSubC.DataSource = DSTDdl.Tables[1];
+                DdlPosicRemElem.DataTextField = "Descripcion";
+                DdlPosicRemSubC.DataTextField = "Descripcion";
+                DdlPosicRemSubC.DataValueField = "Codigo";
+                DdlPosicRemSubC.DataBind();
 
-            DdlPNInsSubC.DataSource = Cnx.DSET(LtxtSql);
-            DdlPNInsSubC.DataMember = "Datos";
-            DdlPNInsSubC.DataTextField = "PN";
-            DdlPNInsSubC.DataValueField = "Codigo";
-            DdlPNInsSubC.DataBind();
+                DdlPnVisualMay.DataSource = DSTDdl.Tables[2];
+                DdlPnVisualMay.DataTextField = "PN";
+                DdlPnVisualMay.DataValueField = "Codigo";
+                DdlPnVisualMay.DataBind();
 
-            DdlPNRemSubC.DataSource = Cnx.DSET(LtxtSql);
-            DdlPNRemSubC.DataMember = "Datos";
-            DdlPNRemSubC.DataTextField = "PN";
-            DdlPNRemSubC.DataValueField = "Codigo";
-            DdlPNRemSubC.DataBind();
+                DdlPNInsSubC.DataSource = DSTDdl.Tables[2];
+                DdlPNInsSubC.DataTextField = "PN";
+                DdlPNInsSubC.DataValueField = "Codigo";
+                DdlPNInsSubC.DataBind();
+
+                DdlPNRemSubC.DataSource = DSTDdl.Tables[2];
+                DdlPNRemSubC.DataTextField = "PN";
+                DdlPNRemSubC.DataValueField = "Codigo";
+                DdlPNRemSubC.DataBind();
+            }
         }
-        protected void BtnInsElem_Click(object sender, EventArgs e)
-        {
-            LimparCampoHK("InsEle");
-            BtnInsElem.CssClass = "btn btn-primary";
-            MultVw.ActiveViewIndex = 0;
-            Page.Title = ViewState["PageTit"].ToString();
-        }
-        protected void BtnRemElem_Click(object sender, EventArgs e)
-        {
-            LimparCampoHK("RemEle");
-            MultVw.ActiveViewIndex = 3;
-            BtnRemElem.CssClass = "btn btn-primary";
-            Page.Title = ViewState["PageTit"].ToString();
-        }
+
         protected void BtnInsMayor_Click(object sender, EventArgs e)
         {
             LimparCampoHK("InsMay");
@@ -562,6 +570,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void BtnInsSubC_Click(object sender, EventArgs e)
         {
             LimparCampoHK("InsSub");
+            BindDDdlSnVisualMay("", "ISC");
             MultVw.ActiveViewIndex = 8;
             BtnInsSubC.CssClass = "btn btn-primary";
             Page.Title = ViewState["PageTit"].ToString();
@@ -569,24 +578,9 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void BtnRemSubC_Click(object sender, EventArgs e)
         {
             LimparCampoHK("RemSub");
+            BindDDdlSnVisualMay("", "ISC");
             MultVw.ActiveViewIndex = 9;
             BtnRemSubC.CssClass = "btn btn-primary";
-            Page.Title = ViewState["PageTit"].ToString();
-        }
-        protected void BtnCrearElem_Click(object sender, EventArgs e)
-        {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 22,'','','','CrearElem',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-            DdlCrearElemPn.DataSource = Cnx.DSET(LtxtSql);
-            DdlCrearElemPn.DataMember = "Datos";
-            DdlCrearElemPn.DataTextField = "PN";
-            DdlCrearElemPn.DataValueField = "Codigo";
-            DdlCrearElemPn.DataBind();
-            ViewState["Ventana"] = MultVw.ActiveViewIndex;
-            MultVw.ActiveViewIndex = 10;
-            BtnPropiedad.CssClass = "btn btn-outline-primary";
-            BtnCliente.CssClass = "btn btn-outline-primary";
-            ViewState["Propiedad"] = 2;
-            LblTitCrearEDatosE.Text = "Datos del elemento";
             Page.Title = ViewState["PageTit"].ToString();
         }
         protected void AplicarCssClassBtn()
@@ -757,8 +751,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CursorIdioma.Alimentar("CurBusInstalar", Session["77IDM"].ToString().Trim());
 
                 string VbTxtSql = "", VbOpcion = "";
-                // VbTxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 23,@SN,@PN,@UN,'',@CodHK,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-                VbTxtSql = "EXEC SP_TablasIngenieria 11,@SN, @PN,@UN,'','','','','','CurBusInstalar',@CodHK,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                VbTxtSql = "EXEC SP_TablasIngenieria 11,@SN, @PN,@UN,'','','','','','CurBusInstalar',@CodHK,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
@@ -767,6 +760,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     SC.Parameters.AddWithValue("@UN", ViewState["PNSN"].Equals("UN") ? TxtBusqueda.Text.Trim() : "");
                     SC.Parameters.AddWithValue("@Opc", VbOpcion.Trim());
                     SC.Parameters.AddWithValue("@CodHK", DdlAeroInsElem.Text);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -786,8 +780,15 @@ namespace _77NeoWeb.Forms.Ingenieria
                     }
                 }
             }
+        }//ok lista de elem que se pueden instalar
+        protected void BtnInsElem_Click(object sender, EventArgs e)
+        {
+            LimparCampoHK("InsEle");
+            BtnInsElem.CssClass = "btn btn-primary";
+            MultVw.ActiveViewIndex = 0;
+            Page.Title = ViewState["PageTit"].ToString();
         }
-        protected void BIndDHisElemInsElem(string CodElem)
+        protected void BIndDHisElemInsElem(string CodElem)//OK acumulado de los contadores
         {
             if (DdlAeroInsElem.Text.Equals("0"))
             { return; }
@@ -796,11 +797,12 @@ namespace _77NeoWeb.Forms.Ingenieria
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = string.Format(" EXEC SP_PANTALLA_AeronaveVirtual 1,@CodElem,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                string VbTxtSql = string.Format(" EXEC SP_PANTALLA_AeronaveVirtual 1,@CodElem,'','','',0,0,0,@ICC, '01-1-2009','01-01-1900','01-01-1900'");
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     SC.Parameters.AddWithValue("@CodElem", CodElem.Trim());
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -820,7 +822,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 }
             }
         }
-        protected void BIndDSvcInsElem(string CodElem, string Modelo, string CodHK)
+        protected void BIndDSvcInsElem(string CodElem, string Modelo, string CodHK) //OK servicios
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (DdlAeroInsElem.Text.Equals("0"))
@@ -832,7 +834,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = string.Format("EXEC Consultas_General_Ingenieria 4,'NORMAL',@CoEl,@Mo,@CHk,2,3,'01-01-1900','01-01-1900'");
+                string VbTxtSql = string.Format("EXEC Consultas_General_Ingenieria 4,'NORMAL',@CoEl,@Mo,@CHk,2,@ICC,'01-01-1900','01-01-1900'");
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
@@ -841,6 +843,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         SC.Parameters.AddWithValue("@CoEl", CodElem.Trim());
                         SC.Parameters.AddWithValue("@Mo", Modelo.Trim());
                         SC.Parameters.AddWithValue("@CHk", CodHK.Trim());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter DAB = new SqlDataAdapter())
                         {
                             DAB.SelectCommand = SC;
@@ -897,12 +900,21 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             LimpiarCamposInsElem("");
             BIndDataBusq();
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+
+            DataRow[] Result;
+            Result = DSTDdl.Tables[0].Select("CodAeronave= "+DdlAeroInsElem.Text.Trim());
+            foreach (DataRow row in Result)
+            {
+                if (row["Activo"].ToString().Trim().Equals("1")) { BtnGuardarInsElem.Enabled = true; }
+                else { BtnGuardarInsElem.Enabled = false; }
+            }
         }
         protected void TxtFecUltCumpl_TextChanged(object sender, EventArgs e)
         {
             ViewState["ValidaFechaSvc"] = "N";
         }
-        protected void GrdBusq_SelectedIndexChanged(object sender, EventArgs e)
+        protected void GrdBusq_SelectedIndexChanged(object sender, EventArgs e) //OK
         {
             LimpiarCamposInsElem("");
             ViewState["CodModelo"] = HttpUtility.HtmlDecode(GrdBusq.SelectedRow.Cells[11].Text.Trim());
@@ -919,7 +931,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtUbiTecInsElem.Text = HttpUtility.HtmlDecode(GrdBusq.SelectedRow.Cells[5].Text.Trim());
             string PoscElem = HttpUtility.HtmlDecode(GrdBusq.SelectedRow.Cells[10].Text.Trim());
             BIndDHisElemInsElem(ViewState["CodElemento"].ToString().Trim());
-            string LtxtSql = string.Format("EXEC Consultas_General_Ingenieria 2,'{0}','{1}','',0, 0,0,'01-01-1','01-01-1'", TxtUbiTecInsElem.Text, ViewState["CodModelo"].ToString().Trim());
+            string LtxtSql = string.Format("EXEC Consultas_General_Ingenieria 2,'{0}','{1}','',0, 0,{2},'01-01-1','01-01-1'", TxtUbiTecInsElem.Text, ViewState["CodModelo"].ToString().Trim(), Session["!dC!@"]);
             DdlPosicInsElem.DataSource = Cnx.DSET(LtxtSql);
             DdlPosicInsElem.DataMember = "Datos";
             DdlPosicInsElem.DataTextField = "Descripcion";
@@ -947,11 +959,8 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
         }
         protected void GrdBusq_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdBusq.PageIndex = e.NewPageIndex;
-            BIndDataBusq();
-        }
-        protected void TxtFechaInsElem_TextChanged(object sender, EventArgs e)
+        { GrdBusq.PageIndex = e.NewPageIndex; BIndDataBusq(); }
+        protected void TxtFechaInsElem_TextChanged(object sender, EventArgs e) // OK Valida si tiene Hojas para compensar
         {
             if (!DdlAeroInsElem.Text.Equals("0") && !TxtSnInsElem.Text.Equals(""))
             {
@@ -959,11 +968,12 @@ namespace _77NeoWeb.Forms.Ingenieria
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
-                    string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,@UBR,'','','',@CodA,0,0,0,@FE,'01-01-1900','01-01-1900'";
+                    string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,@UBR,'','','',@CodA,0,0,@ICC,@FE,'01-01-1900','01-01-1900'";
                     SqlCommand SC = new SqlCommand(VBQuery, sqlCon);
                     SC.Parameters.AddWithValue("@CodA", DdlAeroInsElem.Text);
                     SC.Parameters.AddWithValue("@FE", TxtFechaInsElem.Text);
                     SC.Parameters.AddWithValue("@UBR", TxtUbiTecInsElem.Text);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataReader SDR = SC.ExecuteReader();
                     if (SDR.Read())
                     {
@@ -978,6 +988,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void BtnGuardarInsElem_Click(object sender, EventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
+            DataRow[] Result;
             try
             {
                 if (DdlAeroInsElem.Text.Equals("0"))
@@ -1159,18 +1170,18 @@ namespace _77NeoWeb.Forms.Ingenieria
                 GrdCompensLv.DataBind();
                 Idioma = (DataTable)ViewState["TablaIdioma"];
 
-                DataRow[] Result = Idioma.Select("Objeto= 'Mens18HkVrt'");
+                Result = Idioma.Select("Objeto= 'Mens18HkVrt'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Proceso exitoso
 
             }
             catch (Exception Ex)
             {
-                DataRow[] Result = Idioma.Select("Objeto= 'Mens33HkVrt'");
+                Result = Idioma.Select("Objeto= 'Mens33HkVrt'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//Inconveniente en la instalación')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Instalar Componente", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Instalar Componente", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlAeroInsElem.Text = "0";
             }
         }
@@ -1231,11 +1242,12 @@ namespace _77NeoWeb.Forms.Ingenieria
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = string.Format("EXEC SP_Visualizar_Aeronave_Virtual @CodHK,'','',0,'AERONAVE_VIRTUAL'");
+                string VbTxtSql = string.Format("EXEC SP_Visualizar_Aeronave_Virtual @CodHK,'','',0,'AERONAVE_VIRTUAL', @ICC");
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     SC.Parameters.AddWithValue("@CodHK", CodHK);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -1316,12 +1328,13 @@ namespace _77NeoWeb.Forms.Ingenieria
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 25,'','','','',@CodA,0,0,0,@F,'01-01-1900','01-01-1900'");
+                string VbTxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 25,'','','','',@CodA,0,0,@ICC,@F,'01-01-1900','01-01-1900'");
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     SC.Parameters.AddWithValue("@CodA", CodHK);
                     SC.Parameters.AddWithValue("@F", Fecha);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -1425,7 +1438,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CursorIdioma.Alimentar("CurBusInstalar", Session["77IDM"].ToString().Trim());
                 string VbTxtSql = "", VbOpcion = "";
                 //VbTxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 26,@SN,@PN,@UN,'',@CodHK,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-                VbTxtSql = "EXEC SP_TablasIngenieria 12, @SN, @PN, @UN,'','','','','','CurBusInstalar',@CodHK,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                VbTxtSql = "EXEC SP_TablasIngenieria 12, @SN, @PN, @UN,'','','','','','CurBusInstalar',@CodHK,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
@@ -1434,6 +1447,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     SC.Parameters.AddWithValue("@UN", ViewState["PNSN"].Equals("UN") ? TxtRemBusqueda.Text.Trim() : "");
                     SC.Parameters.AddWithValue("@Opc", VbOpcion.Trim());
                     SC.Parameters.AddWithValue("@CodHK", DdlAeroRemElem.Text);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -1463,11 +1477,12 @@ namespace _77NeoWeb.Forms.Ingenieria
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = string.Format(" EXEC SP_PANTALLA_AeronaveVirtual 1,@CodElem,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                string VbTxtSql = string.Format(" EXEC SP_PANTALLA_AeronaveVirtual 1,@CodElem,'','','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'");
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     SC.Parameters.AddWithValue("@CodElem", CodElem.Trim());
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -1504,6 +1519,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             LimpiarCamposRemElem("");
             BIndDRemBusqElem();
+        }
+        protected void BtnRemElem_Click(object sender, EventArgs e)
+        {
+            LimparCampoHK("RemEle");
+            MultVw.ActiveViewIndex = 3;
+            BtnRemElem.CssClass = "btn btn-primary";
+            Page.Title = ViewState["PageTit"].ToString();
         }
         protected void BtnPNRemElem_Click(object sender, EventArgs e)
         {
@@ -1725,7 +1747,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 foreach (DataRow row in Result1)
                 { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Inconveniente en la instalación')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Remover Componente", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Remover Componente", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlAeroRemElem.Text = "0";
             }
         }
@@ -1737,10 +1759,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
-                    string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,'','','','',@CodA,0,0,0,@FE,'01-01-1900','01-01-1900'";
+                    string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,'','','','',@CodA,0,0,@ICC,@FE,'01-01-1900','01-01-1900'";
                     SqlCommand SC = new SqlCommand(VBQuery, sqlCon);
                     SC.Parameters.AddWithValue("@CodA", DdlAeroRemElem.Text);
                     SC.Parameters.AddWithValue("@FE", TxtFechaRemElem.Text);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataReader SDR = SC.ExecuteReader();
                     if (SDR.Read())
                     {
@@ -1821,13 +1844,13 @@ namespace _77NeoWeb.Forms.Ingenieria
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
                 string VbTxtSql = "";
-                VbTxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 21,@CE,'','',@TE, 0,0,0,0,'01-01-01','01-01-01','01-01-01'");
+                VbTxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 21,@CE,'','',@TE, 0,0,0,@ICC,'01-01-01','01-01-01','01-01-01'");
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     SC.Parameters.AddWithValue("@CE", CodElem);
                     SC.Parameters.AddWithValue("@TE", TipoElem);
-
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -1912,7 +1935,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
                 CursorIdioma.Alimentar("CurBusInstalar", Session["77IDM"].ToString().Trim());
                 string VbTxtSql = "", VbOpcion = "";
-                VbTxtSql = "EXEC SP_TablasIngenieria 11,@SN, @PN,@UN,'M','','','','','CurBusInstalar',@CodHK,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                VbTxtSql = "EXEC SP_TablasIngenieria 11,@SN, @PN,@UN,'M','','','','','CurBusInstalar',@CodHK,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
@@ -1921,6 +1944,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     SC.Parameters.AddWithValue("@UN", ViewState["PNSN"].Equals("UN") ? TxtBusqInsMay.Text.Trim() : "");
                     SC.Parameters.AddWithValue("@Opc", VbOpcion.Trim());
                     SC.Parameters.AddWithValue("@CodHK", DdlAeroInsMay.Text);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -1951,11 +1975,12 @@ namespace _77NeoWeb.Forms.Ingenieria
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
                 string VbTxtSql = "";
-                VbTxtSql = string.Format(" EXEC SP_PANTALLA_AeronaveVirtual 1,@CodElem,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                VbTxtSql = string.Format(" EXEC SP_PANTALLA_AeronaveVirtual 1,@CodElem,'','','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'");
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     SC.Parameters.AddWithValue("@CodElem", CodElem.Trim());
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -1988,7 +2013,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
                 string VbTxtSql = "";
-                VbTxtSql = string.Format("EXEC Consultas_General_Ingenieria 4,'MAYOR',@CoEl,@Mo,@CHk,2,3,'01-01-1900','01-01-1900'");
+                VbTxtSql = string.Format("EXEC Consultas_General_Ingenieria 4,'MAYOR',@CoEl,@Mo,@CHk,2,@ICC,'01-01-1900','01-01-1900'");
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
@@ -1997,6 +2022,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         SC.Parameters.AddWithValue("@CoEl", CodElem.Trim());
                         SC.Parameters.AddWithValue("@Mo", Modelo.Trim());
                         SC.Parameters.AddWithValue("@CHk", CodHK.Trim());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter SDA = new SqlDataAdapter())
                         {
                             SDA.SelectCommand = SC;
@@ -2257,7 +2283,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//Inconveniente en la instalación')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Instalar MAYOR", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Instalar MAYOR", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlAeroInsMay.Text = "0";
             }
         }
@@ -2269,11 +2295,12 @@ namespace _77NeoWeb.Forms.Ingenieria
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
-                    string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,@UBR,'','','',@CodA,0,0,0,@FE,'01-01-1900','01-01-1900'";
+                    string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,@UBR,'','','',@CodA,0,0,@ICC,@FE,'01-01-1900','01-01-1900'";
                     SqlCommand SC = new SqlCommand(VBQuery, sqlCon);
                     SC.Parameters.AddWithValue("@CodA", DdlAeroInsMay.Text);
                     SC.Parameters.AddWithValue("@FE", TxtFechaInsMay.Text);
                     SC.Parameters.AddWithValue("@UBR", TxtUbiTecInsMay.Text);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataReader SDR = SC.ExecuteReader();
                     if (SDR.Read())
                     {
@@ -2337,7 +2364,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtUbiTecInsMay.Text = HttpUtility.HtmlDecode(GrdBusqMayDisp.SelectedRow.Cells[5].Text.Trim());
             string PoscElem = HttpUtility.HtmlDecode(GrdBusqMayDisp.SelectedRow.Cells[10].Text.Trim());
             BIndDHisElemInsMay(ViewState["CodElemento"].ToString().Trim());
-            string LtxtSql = string.Format("EXEC Consultas_General_Ingenieria 2,'{0}','{1}','',0, 0,0,'01-01-1','01-01-1'", TxtUbiTecInsMay.Text, ViewState["CodModelo"].ToString().Trim());
+            string LtxtSql = string.Format("EXEC Consultas_General_Ingenieria 2,'{0}','{1}','',0, 0,{2},'01-01-1','01-01-1'", TxtUbiTecInsMay.Text, ViewState["CodModelo"].ToString().Trim(), Session["!dC!@"]);
             DdlPosicInsMay.DataSource = Cnx.DSET(LtxtSql);
             DdlPosicInsMay.DataMember = "Datos";
             DdlPosicInsMay.DataTextField = "Descripcion";
@@ -2416,7 +2443,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         //******************************************  VISUALIZAR MAYORES Y SUB-COMPONENTES *********************************************************
         protected void BindDDdlSnVisualMay(string PN, string Origen)
         {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 22,'{0}','','','SNVisMy',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'", PN);
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 22,'{0}','','','SNVisMy',0,0,0,{1},'01-1-2009','01-01-1900','01-01-1900'", PN, Session["!dC!@"]);
             if (Origen.Equals("VM"))
             {
                 DdlSnVisualMay.DataSource = Cnx.DSET(LtxtSql);
@@ -2539,7 +2566,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CursorIdioma.Alimentar("CurBusInstalar", Session["77IDM"].ToString().Trim());
                 string VbTxtSql = "", VbOpcion = "";
                 // VbTxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 26,@SN,@PN,@UN,'',@CodHK,1,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-                VbTxtSql = "EXEC SP_TablasIngenieria 12, @SN, @PN, @UN,'','','','','','CurBusInstalar',@CodHK,1,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                VbTxtSql = "EXEC SP_TablasIngenieria 12, @SN, @PN, @UN,'','','','','','CurBusInstalar',@CodHK,1,0,0,0, @ICC,'01-01-1','02-01-1','03-01-1'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
@@ -2548,6 +2575,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     SC.Parameters.AddWithValue("@UN", ViewState["PNSN"].Equals("UN") ? TxtRemMayBusqueda.Text.Trim() : "");
                     SC.Parameters.AddWithValue("@Opc", VbOpcion.Trim());
                     SC.Parameters.AddWithValue("@CodHK", DdlAeroRemMay.Text);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -2577,11 +2605,12 @@ namespace _77NeoWeb.Forms.Ingenieria
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = string.Format(" EXEC SP_PANTALLA_AeronaveVirtual 1,@CodElem,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                string VbTxtSql = string.Format(" EXEC SP_PANTALLA_AeronaveVirtual 1,@CodElem,'','','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'");
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     SC.Parameters.AddWithValue("@CodElem", CodElem.Trim());
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -2855,7 +2884,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Inconveniente en la remoción')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Remover Mayor", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Remover Mayor", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlAeroRemMay.Text = "0";
             }
         }
@@ -2867,10 +2896,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
-                    string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,'','','','',@CodA,0,0,0,@FE,'01-01-1900','01-01-1900'";
+                    string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,'','','','',@CodA,0,0,@ICC,@FE,'01-01-1900','01-01-1900'";
                     SqlCommand SC = new SqlCommand(VBQuery, sqlCon);
                     SC.Parameters.AddWithValue("@CodA", DdlAeroRemMay.Text);
                     SC.Parameters.AddWithValue("@FE", TxtFechaRemMay.Text);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataReader SDR = SC.ExecuteReader();
                     if (SDR.Read())
                     {
@@ -2960,8 +2990,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
                 CursorIdioma.Alimentar("CurBusInstalar", Session["77IDM"].ToString().Trim());
                 string VbTxtSql = "";
-                //VbTxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 23,@SN,@PN,@UN,@Md,0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-                VbTxtSql = "EXEC SP_TablasIngenieria 11,@SN, @PN,@UN,@Md,'','','','','CurBusInstalar',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                VbTxtSql = "EXEC SP_TablasIngenieria 11,@SN, @PN,@UN,@Md,'','','','','CurBusInstalar',0,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
@@ -2969,6 +2998,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     SC.Parameters.AddWithValue("@PN", ViewState["PNSN"].Equals("PN") ? TxtBusqInsSubC.Text.Trim() : "");
                     SC.Parameters.AddWithValue("@UN", ViewState["PNSN"].Equals("UT") ? TxtBusqInsSubC.Text.Trim() : "");
                     SC.Parameters.AddWithValue("@Md", "S" + DdlModelInsSubC.Text.Trim());
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -2998,11 +3028,12 @@ namespace _77NeoWeb.Forms.Ingenieria
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = string.Format(" EXEC SP_PANTALLA_AeronaveVirtual 1,@CodElem,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                string VbTxtSql = string.Format(" EXEC SP_PANTALLA_AeronaveVirtual 1,@CodElem,'','','',0,0,0, @ICC,'01-1-2009','01-01-1900','01-01-1900'");
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     SC.Parameters.AddWithValue("@CodElem", CodElem.Trim());
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -3034,7 +3065,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = string.Format("EXEC Consultas_General_Ingenieria 4,'SUB_COMP',@Pn,'',0,@CoEl,0,'01-01-1900','01-01-1900'");
+                string VbTxtSql = string.Format("EXEC Consultas_General_Ingenieria 4,'SUB_COMP',@Pn,'',0,@CoEl,@ICC,'01-01-1900','01-01-1900'");
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
@@ -3043,6 +3074,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         SC.Parameters.AddWithValue("@CoEl", CodElem.Trim());
                         SC.Parameters.AddWithValue("@Pn", DdlPNInsSubC.SelectedItem.Text.Trim());
                         SC.Parameters.AddWithValue("@CHk", CodHK.Trim());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter DAB = new SqlDataAdapter())
                         {
                             DAB.SelectCommand = SC;
@@ -3092,8 +3124,8 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void DdlSNInsSub_TextChanged(object sender, EventArgs e)
         {
             DdlModelInsSubC.Text = "";
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 22,'{0}','{1}','','MOD',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'",
-                DdlPNInsSubC.Text.Trim(), DdlSNInsSubC.SelectedItem.Text.Trim());
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 22,'{0}','{1}','','MOD',0,0,0,{2},'01-1-2009','01-01-1900','01-01-1900'",
+                DdlPNInsSubC.Text.Trim(), DdlSNInsSubC.SelectedItem.Text.Trim(), Session["!dC!@"]);
 
             DdlModelInsSubC.DataSource = Cnx.DSET(LtxtSql);
             DdlModelInsSubC.DataMember = "Datos";
@@ -3297,7 +3329,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Inconveniente en la instalación')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Instalar Sub-Componente", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Instalar Sub-Componente", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlPNInsSubC.Text = "";
                 DdlSNInsSubC.Text = "";
                 DdlModelInsSubC.Text = "";
@@ -3323,7 +3355,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtUbiTecInsSubC.Text = HttpUtility.HtmlDecode(GrdBusqInsSubC.SelectedRow.Cells[5].Text.Trim());
             string PoscElem = HttpUtility.HtmlDecode(GrdBusqInsSubC.SelectedRow.Cells[10].Text.Trim());
             BIndDHisElemInsSubC(ViewState["CodElemento"].ToString().Trim());
-            string LtxtSql = string.Format("EXEC Consultas_General_Ingenieria 2,'{0}','{1}','',0, 0,0,'01-01-1','01-01-1'", TxtUbiTecInsSubC.Text, DdlModelInsSubC.Text.Trim());
+            string LtxtSql = string.Format("EXEC Consultas_General_Ingenieria 2,'{0}','{1}','',0, 0,{2},'01-01-1','01-01-1'", TxtUbiTecInsSubC.Text, DdlModelInsSubC.Text.Trim(), Session["!dC!@"]);
             DdlPosicInsSubC.DataSource = Cnx.DSET(LtxtSql);
             DdlPosicInsSubC.DataMember = "Datos";
             DdlPosicInsSubC.DataTextField = "Descripcion";
@@ -3370,8 +3402,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
                 CursorIdioma.Alimentar("CurBusInstalar", Session["77IDM"].ToString().Trim());
                 string VbTxtSql = "";
-                // VbTxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 26,@SN,@PN,@UN,@CM,0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-                VbTxtSql = "EXEC SP_TablasIngenieria 12, @SN, @PN, @UN,@CM,'','','','','CurBusInstalar',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                VbTxtSql = "EXEC SP_TablasIngenieria 12, @SN, @PN, @UN,@CM,'','','','','CurBusInstalar',0,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
@@ -3379,6 +3410,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     SC.Parameters.AddWithValue("@PN", ViewState["PNSN"].Equals("PN") ? TxtBusqRemSubC.Text.Trim() : "");
                     SC.Parameters.AddWithValue("@UN", ViewState["PNSN"].Equals("UN") ? TxtBusqRemSubC.Text.Trim() : "");
                     SC.Parameters.AddWithValue("@CM", DdlSNRemSubC.Text.Trim());
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -3408,11 +3440,12 @@ namespace _77NeoWeb.Forms.Ingenieria
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = string.Format(" EXEC SP_PANTALLA_AeronaveVirtual 1,@CodElem,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                string VbTxtSql = string.Format(" EXEC SP_PANTALLA_AeronaveVirtual 1,@CodElem,'','','',0,0,0, @ICC,'01-1-2009','01-01-1900','01-01-1900'");
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     SC.Parameters.AddWithValue("@CodElem", CodElem.Trim());
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -3458,8 +3491,8 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void DdlSNRemSubC_TextChanged(object sender, EventArgs e)
         {
             DdlModelRemSubC.Text = "";
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 22,'{0}','{1}','','MOD',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'",
-                DdlPNRemSubC.Text.Trim(), DdlSNRemSubC.SelectedItem.Text.Trim());
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_AeronaveVirtual 22,'{0}','{1}','','MOD',0,0,0,{2},'01-1-2009','01-01-1900','01-01-1900'",
+                DdlPNRemSubC.Text.Trim(), DdlSNRemSubC.SelectedItem.Text.Trim(), Session["!dC!@"]);
 
             DdlModelRemSubC.DataSource = Cnx.DSET(LtxtSql);
             DdlModelRemSubC.DataMember = "Datos";
@@ -3713,7 +3746,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Inconveniente
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Remover Sub-Componente", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Remover Sub-Componente", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlPNRemSubC.Text = "";
                 DdlSNRemSubC.Text = "";
                 DdlModelRemSubC.Text = "";
@@ -3770,33 +3803,49 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             if (DdlCrearElemPn.Text.Equals(""))
             { return; }
-            DataTable DtB = new DataTable();
-            Cnx.SelecBD();
-            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
-            {
-                string VbTxtSql = string.Format("EXEC SP_PANTALLA_Elemento 6,@P,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-                sqlConB.Open();
-                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
-                {
-                    SC.Parameters.AddWithValue("@P", DdlCrearElemPn.Text.Trim());
-                    using (SqlDataAdapter DAB = new SqlDataAdapter())
-                    {
-                        DAB.SelectCommand = SC;
-                        DAB.Fill(DtB);
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
 
-                        if (DtB.Rows.Count > 0)
-                        {
-                            GrdCrearECont.DataSource = DtB;
-                            GrdCrearECont.DataBind();
-                        }
-                        else
-                        {
-                            GrdCrearECont.DataSource = null;
-                            GrdCrearECont.DataBind();
-                        }
-                    }
-                }
+            DataTable DtB = new DataTable();
+            DtB = DSTDdl.Tables[4].Clone();
+            DataRow[] Result = DSTDdl.Tables[4].Select("PN='" + DdlCrearElemPn.Text.Trim() + "'");
+            foreach (DataRow Row in Result)
+            { DtB.ImportRow(Row); }
+            if (DtB.Rows.Count > 0)
+            {
+                GrdCrearECont.DataSource = DtB;
+                GrdCrearECont.DataBind();
             }
+            else
+            {
+                GrdCrearECont.DataSource = null;
+                GrdCrearECont.DataBind();
+            }
+            /* Cnx.SelecBD();
+              using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+              {
+                  string VbTxtSql = string.Format("EXEC SP_PANTALLA_Elemento 6,@P,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                  sqlConB.Open();
+                  using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                  {
+                      SC.Parameters.AddWithValue("@P", DdlCrearElemPn.Text.Trim());
+                      using (SqlDataAdapter DAB = new SqlDataAdapter())
+                      {
+                          DAB.SelectCommand = SC;
+                          DAB.Fill(DtB);
+
+                          if (DtB.Rows.Count > 0)
+                          {
+                              GrdCrearECont.DataSource = DtB;
+                              GrdCrearECont.DataBind();
+                          }
+                          else
+                          {
+                              GrdCrearECont.DataSource = null;
+                              GrdCrearECont.DataBind();
+                          }
+                      }
+                  }
+              }*/
         }
         protected void LimpiarCamposCrearElem()
         {
@@ -3811,6 +3860,23 @@ namespace _77NeoWeb.Forms.Ingenieria
             ViewState["CodAeronave"] = 0;
             ViewState["CodModelo"] = "";
             ViewState["EsMotor"] = "N";
+        }
+        protected void BtnCrearElem_Click(object sender, EventArgs e)
+        {
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+
+            DdlCrearElemPn.DataSource = DSTDdl.Tables[3];
+            DdlCrearElemPn.DataTextField = "PN";
+            DdlCrearElemPn.DataValueField = "Codigo";
+            DdlCrearElemPn.DataBind();
+
+            ViewState["Ventana"] = MultVw.ActiveViewIndex;
+            MultVw.ActiveViewIndex = 10;
+            BtnPropiedad.CssClass = "btn btn-outline-primary";
+            BtnCliente.CssClass = "btn btn-outline-primary";
+            ViewState["Propiedad"] = 2;
+            LblTitCrearEDatosE.Text = "Datos del elemento";
+            Page.Title = ViewState["PageTit"].ToString();
         }
         protected void BtnPropiedad_Click(object sender, EventArgs e)
         {
@@ -3827,13 +3893,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             Page.Title = ViewState["PageTit"].ToString();
         }
         protected void IbtCerrarCrearElem_Click(object sender, ImageClickEventArgs e)
-        {
-            MultVw.ActiveViewIndex = (int)ViewState["Ventana"];
-        }
+        { MultVw.ActiveViewIndex = (int)ViewState["Ventana"]; }
         protected void DdlCrearElemPn_TextChanged(object sender, EventArgs e)
-        {
-            BIndDCrearElemContad();
-        }
+        { BIndDCrearElemContad(); }
         protected void GrdCrearECont_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -3949,7 +4011,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Crear Elemento", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Crear Elemento", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlCrearElemPn.Text = "";
             }
         }

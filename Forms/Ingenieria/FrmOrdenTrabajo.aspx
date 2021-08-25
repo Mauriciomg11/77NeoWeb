@@ -183,7 +183,7 @@
                         <asp:Label ID="LblOTAero" runat="server" CssClass="LblEtiquet" Text="Aeronave:" />
                         <asp:DropDownList ID="DdlOTAero" runat="server" CssClass="heightCampo" Width="10%" Enabled="false" />
                         <asp:Label ID="LblOtCCosto" runat="server" CssClass="LblEtiquet" Text="C.costo:" />
-                        <asp:DropDownList ID="DdlOtCCosto" runat="server" CssClass="heightCampo" Width="16%" Enabled="false" />                        
+                        <asp:DropDownList ID="DdlOtCCosto" runat="server" CssClass="heightCampo" Width="16%" Enabled="false" />
                     </div>
                     <div>
                         <asp:Label ID="LblOtEstado" runat="server" CssClass="LblEtiquet" Text="Estado:" />
@@ -216,17 +216,17 @@
                     <div class="table-responsive">
                         <asp:Table runat="server" Width="98%">
                             <asp:TableRow>
-                                <asp:TableCell Width="1%" >
+                                <asp:TableCell Width="1%">
                                     <asp:Label ID="LblOTTrabajo" runat="server" CssClass="LblEtiquet" Text="Trabajo Requerido:" />
                                 </asp:TableCell>
-                                <asp:TableCell Width="38%" >
+                                <asp:TableCell Width="38%">
                                     <asp:TextBox ID="TxtOTTrabajo" runat="server" CssClass="form-control-sm" TextMode="MultiLine" MaxLength="240" Width="100%" Font-Size="10px" Enabled="false" Height="50px" />
                                 </asp:TableCell>
                                 <asp:TableCell Width="1%">
                                     <asp:Label ID="LblOTAccParc" runat="server" CssClass="LblEtiquet" Text="Acción Parcial:" />
                                 </asp:TableCell>
                                 <asp:TableCell Width="38%">
-                                    <asp:TextBox ID="TxtOTAccParc" runat="server" CssClass="form-control-sm" TextMode="MultiLine" MaxLength="240" Width="100%" Font-Size="10px" Enabled="false" Height="50px"/>
+                                    <asp:TextBox ID="TxtOTAccParc" runat="server" CssClass="form-control-sm" TextMode="MultiLine" MaxLength="240" Width="100%" Font-Size="10px" Enabled="false" Height="50px" />
                                 </asp:TableCell>
                             </asp:TableRow>
                         </asp:Table>
@@ -714,7 +714,7 @@
                     <Columns>
                         <asp:CommandField HeaderText="Selección" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
                     </Columns>
-                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
+                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                 </asp:GridView>
             </div>
         </asp:View>
@@ -809,8 +809,9 @@
                     <asp:Label ID="LblOtSec" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:"></asp:Label>
                     <asp:TextBox ID="TxtOtSec" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:Label ID="LblRteNumPaso" runat="server" CssClass="LblEtiquet" Text="Paso:"></asp:Label>
-                    <asp:TextBox ID="TxtNumPaso" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
-
+                    <asp:TextBox ID="TxtNumPaso" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />&nbsp&nbsp&nbsp
+                    <asp:Label ID="LblNotif" runat="server" CssClass="LblEtiquet" Text="Notif:" Visible="false" />
+                     <asp:CheckBox ID="CkbNotif" runat="server" CssClass="LblEtiquet" Font-Size="12px" Text="" Enabled="false" Visible="false" />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitRteManto" runat="server" Text="Reportes de mantenimiento"></asp:Label></h6>
                     <asp:Table runat="server">
@@ -850,16 +851,11 @@
                             </asp:TableCell>
                             <asp:TableCell Width="1%">
                                 <asp:Label ID="LblEstad" runat="server" CssClass="LblEtiquet" Text="Estado:" />
-                            </asp:TableCell>
-                            <asp:TableCell Width="3%">
+                            </asp:TableCell>                           
+                             <asp:TableCell ColumnSpan="3" Width="6%">
                                 <asp:DropDownList ID="DdlRteEstad" runat="server" CssClass="heightCampo" Enabled="false" Width="95%" OnTextChanged="DdlRteEstad_TextChanged" AutoPostBack="true" />
                             </asp:TableCell>
-                            <asp:TableCell Width="1%">
-                                <asp:Label ID="LblNotif" runat="server" CssClass="LblEtiquet" Text="Notif:" Visible="false" />
-                            </asp:TableCell>
-                            <asp:TableCell Width="2%">
-                                <asp:CheckBox ID="CkbNotif" runat="server" CssClass="LblEtiquet" Text="" Enabled="false" Visible="false" />
-                            </asp:TableCell>
+                            
                         </asp:TableRow>
                         <asp:TableRow>
                             <asp:TableCell>

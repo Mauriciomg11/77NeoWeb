@@ -1235,7 +1235,6 @@
                     <asp:PostBackTrigger ControlID="BtnPropiedad" />
                     <asp:PostBackTrigger ControlID="BtnCliente" />
                     <asp:PostBackTrigger ControlID="IbtCerrarCrearElem" />
-                    <%--<asp:PostBackTrigger ControlID="BtnCrearElemGuardar" />--%>
                     <asp:AsyncPostBackTrigger ControlID="DdlCrearElemPn" EventName="TextChanged" />
                 </Triggers>
             </asp:UpdatePanel>

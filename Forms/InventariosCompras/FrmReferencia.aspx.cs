@@ -44,8 +44,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 21;
-                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
                 }
             }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo    
@@ -697,10 +697,11 @@ namespace _77NeoWeb.Forms.InventariosCompras
             VbPos = CkbPos.Checked == true ? 1 : 0;
             VbConsu = CkbCons.Checked == true ? 1 : 0;
             VbMot = CkbMot.Checked == true ? 1 : 0;
-            VbMay = CkbMay.Checked == true ? 1 : 0;
+            if (VbMot == 1) { VbMay = 1; }
+            else { VbMay = CkbMay.Checked == true ? 1 : 0; }
             VbApu = CkbApu.Checked == true ? 1 : 0;
             VbSuC = CkbSub.Checked == true ? 1 : 0;
-            VbMay = VbMot == 1 ? 1 : 0; // si motor tiene que ser mayor
+
             if (VbMay == 1)
             {
                 VbSuC = 0;
@@ -774,6 +775,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 ActivarCampos(true, true, "Ingresar");
                 LimpiarCampos();
                 DdlTipo.Text = "01";
+                GrdPN.DataSource = null; GrdPN.DataBind();
+                GrdMan.DataSource = null; GrdMan.DataBind();
+                GrdCont.DataSource = null; GrdCont.DataBind();
                 Result = Idioma.Select("Objeto= 'MensConfIng'");
                 foreach (DataRow row in Result)
                 { BtnIngresar.OnClientClick = "return confirm('" + row["Texto"].ToString().Trim() + "');"; }
@@ -841,6 +845,10 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     BtnIngresar.OnClientClick = "";
                     BindDataAll("", "");
                     BusqNewReg(VbCod);
+                    BindDataPN("", "UPD");
+                    BindDataCont("");
+                    BindDataMan("");
+
                     ViewState["CRUD"] = "";
                 }
                 catch (Exception ex)
@@ -1072,7 +1080,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             {
                 Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmReferencia", "DELETE EN GENERAL", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
             }
-        }       
+        }
         // *********************************** BUSQUEDAS ***********************************
         protected void BIndDataBusq(string Prmtr)
         {

@@ -8,14 +8,10 @@
         .CssTblPpal {
             position: absolute;
             width: 103%;
-            /* top: 16%;*/
         }
 
         .TablaCampos {
-            /*            position: absolute;*/
-            /*            text-align: left;*/
             width: 95%;
-            /*            top: 16%;*/
         }
 
         .TablaFase {
@@ -42,11 +38,8 @@
         }
 
         .TablaHKAsig {
-            /*          position: absolute;*/
             width: 110%;
             height: 65%;
-            /*top: 66%;
-/*            left: 56%;*/
             margin-top: 0px;
         }
 
@@ -55,25 +48,18 @@
             text-align: center;
             color: aliceblue;
             width: 100%;
-            /* font-size: 18px;*/
         }
 
         .TablaAdj {
             position: absolute;
             width: 27%;
             right: 42px;
-            /*            height: 65%;*/
-            /*top: 66%;
-/*            left: 56%;*/
-            /*            margin-top: 0px;*/
         }
 
         .CsGridHK {
             position: absolute;
             width: 70%;
             height: 30%;
-            /*            top: 80%;*/
-            /* left: 1%;*/
             margin-top: 0px;
         }
 
@@ -87,16 +73,11 @@
             position: absolute;
             width: 95%;
             height: 45%;
-            /* top: 20%;
-            left: 35%*/
         }
 
         .DivLicencia {
-            /*            position: absolute;*/
             width: 50%;
             height: 45%;
-            /* top: 20%;
-            left: 35%*/
         }
 
         .SubTituloLicencia {
@@ -204,7 +185,7 @@
                             <td width="50%">
                                 <asp:UpdatePanel ID="UpPnlBusq" runat="server" UpdateMode="Conditional">
                                     <ContentTemplate>
-                                        <asp:DropDownList ID="DdlBusq" runat="server" CssClass="Campos" OnTextChanged="DdlBusq_TextChanged" AutoPostBack="true"/>
+                                        <asp:DropDownList ID="DdlBusq" runat="server" CssClass="Campos" OnTextChanged="DdlBusq_TextChanged" AutoPostBack="true" />
                                     </ContentTemplate>
                                     <Triggers>
                                         <asp:AsyncPostBackTrigger ControlID="DdlBusq" EventName="TextChanged" />
@@ -298,9 +279,9 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <asp:Label ID="LblHoriz" runat="server" CssClass="LblEtiquet" Text="Horizonte" ToolTip="Horizonte de apertura"></asp:Label></td>
+                                        <asp:Label ID="LblHoriz" runat="server" CssClass="LblEtiquet" Text="Horizonte" ToolTip="Horizonte de apertura" /></td>
                                     <td>
-                                        <asp:TextBox ID="TxtHoriz" runat="server" CssClass="Campos" Enabled="false" TextMode="Number" onkeypress="return solonumeros(event);" Text="0" Width="20%"></asp:TextBox>
+                                        <asp:TextBox ID="TxtHoriz" runat="server" CssClass="Campos" Enabled="false" TextMode="Number" onkeypress="return solonumeros(event);" Text="0" Width="20%" Font-Size="9px" />
                                         <asp:Label ID="Label2" runat="server" CssClass="LblEtiquet" Text="%" />
                                         <asp:Label ID="LblCumplimi" runat="server" CssClass="LblEtiquet" Text="Cumplimiento" />
                                     </td>
@@ -314,11 +295,9 @@
                                                 <td>
                                                     <asp:Label ID="LblEtapa" runat="server" CssClass="LblEtiquet" Text="Etapa" /></td>
                                                 <td>
-                                                    <asp:TextBox ID="TxtEtapa" runat="server" CssClass="form-control Campos" Enabled="false" Width="90%" TextMode="Number" onkeypress="return solonumeros(event);" Text="0"></asp:TextBox></td>
-                                                <td>
-                                                    <asp:Label ID="LblActual" runat="server" CssClass="LblEtiquet" Text="Actual" /></td>
-                                                <td>
-                                                    <asp:TextBox ID="TxtActual" runat="server" CssClass="form-control Campos" Enabled="false" Width="90%" TextMode="Number" onkeypress="return solonumeros(event);" Text="0"></asp:TextBox></td>
+                                                    <asp:TextBox ID="TxtEtapa" runat="server" CssClass=" Campos" Enabled="false" Width="40%" TextMode="Number" onkeypress="return solonumeros(event);" Text="0" />
+                                                    <asp:TextBox ID="TxtActual" runat="server" CssClass=" Campos" Enabled="false" Width="30%" TextMode="Number" onkeypress="return solonumeros(event);" Text="0" /></td>
+
                                             </tr>
                                         </table>
                                     </td>
@@ -335,13 +314,13 @@
                                 </tr>
                                 <tr>
                                     <td width="7%">
-                                        <asp:Label ID="LblModel" runat="server" CssClass="LblEtiquet" Text="Modelo:"/></td>
+                                        <asp:Label ID="LblModel" runat="server" CssClass="LblEtiquet" Text="Modelo:" /></td>
                                     <td width="13%">
-                                        <asp:DropDownList ID="DdlModel" runat="server" CssClass="form-control  Campos" Enabled="false"/></td>
+                                        <asp:DropDownList ID="DdlModel" runat="server" CssClass="form-control  Campos" Enabled="false" /></td>
                                     <td width="5%">
-                                        <asp:Label ID="LblTaller" runat="server" CssClass="LblEtiquet" Text="Taller:"/></td>
+                                        <asp:Label ID="LblTaller" runat="server" CssClass="LblEtiquet" Text="Taller:" /></td>
                                     <td width="25%">
-                                        <asp:DropDownList ID="Ddltaller" runat="server" CssClass="Campos" Enabled="false"/></td>
+                                        <asp:DropDownList ID="Ddltaller" runat="server" CssClass="Campos" Enabled="false" /></td>
                                     <td colspan="2">
                                         <table class="TablaCheck table-responsive">
                                             <tr>

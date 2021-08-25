@@ -17,21 +17,27 @@ namespace _77NeoWeb.Forms.Ingenieria
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); } /* */
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             Page.Title = string.Format("Configuración_Tipo_Aeronave");
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["!dC!@"] = 0;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
+                }
             }
             if (!IsPostBack)
             {
@@ -47,22 +53,15 @@ namespace _77NeoWeb.Forms.Ingenieria
             ViewState["VblIngMS"] = 1;
             ViewState["VblModMS"] = 1;
             ViewState["VblEliMS"] = 1;
-            // ViewState["VblImpMS"] = 1;
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
             if (ClsP.GetAccesoFrm() == 0)
             { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
             if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; GrdDatos.ShowFooter = false; GrdContdr.ShowFooter = false; }//
             if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; }
-            // if (ClsP.GetConsultar() == 0) { }
-            // if (ClsP.GetImprimir() == 0) { }
+
             if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; }
-            /*if (ClsP.GetCE1() == 0) { }
-            if (ClsP.GetCE2() == 0) { }
-            if (ClsP.GetCE3() == 0) { }
-            if (ClsP.GetCE4() == 0) { }
-            if (ClsP.GetCE5() == 0) { }
-            if (ClsP.GetCE6() == 0) { }*/
+
             IdiomaControles();
         }
         protected void IdiomaControles()

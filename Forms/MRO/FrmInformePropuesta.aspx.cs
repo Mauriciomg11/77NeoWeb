@@ -37,8 +37,8 @@ namespace _77NeoWeb.Forms.MRO
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 1;
-                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
                 }
             }
             if (!IsPostBack)
@@ -166,7 +166,7 @@ namespace _77NeoWeb.Forms.MRO
             else
             {
                 CursorIdioma.Alimentar("CurExportPPTRepa", Session["77IDM"].ToString().Trim());
-                VbTxtSql = "EXEC SP_TablasMRO 14,@ICC,'','','','','','','CurExportPPTRepa','WEB',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                VbTxtSql = "EXEC SP_TablasMRO 14, '','','','','','','','CurExportPPTRepa','WEB',0,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                 VbNomRpt = "Repair_Quotation";
             }
             Cnx.SelecBD();

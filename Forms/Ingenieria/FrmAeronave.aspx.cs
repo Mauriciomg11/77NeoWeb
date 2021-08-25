@@ -19,23 +19,31 @@ namespace _77NeoWeb.Forms.Ingenieria
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataSet DSTDet = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); }/**/
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             Page.Title = string.Format("Datos Aeronave");
             TitForm.Text = "Datos Aeronave";
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-                /*Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
+                }
             }
             if (!IsPostBack)
             {
@@ -44,8 +52,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["AC_Virtual"] = 0;
                 ModSeguridad();
                 MlVwCampos.ActiveViewIndex = 0;
-                BindBDdlBusq();
-                BindBDdl();
+                Traerdatos("0", "UPD");
+                BindBDdlPrmtr("", "");
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
@@ -173,6 +181,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     LblTipo.Text = bO.Equals("LblTipo") ? bT + ":" : LblTipo.Text;
                     LblPropie.Text = bO.Equals("LblPropie") ? bT + ":" : LblPropie.Text;
                     LblEstado.Text = bO.Equals("LblEstado") ? bT + ":" : LblEstado.Text;
+                    CkbActiva.Text = bO.Equals("ActivaMstr") ? "&nbsp" + bT : CkbActiva.Text;
                     LblTitContadores.Text = bO.Equals("LblTitContadores") ? bT : LblTitContadores.Text;
                     LblFecIngr.Text = bO.Equals("LblFecIngr") ? bT + ":" : LblFecIngr.Text;
                     LblDescri.Text = bO.Equals("LblDescri") ? bT + ":" : LblDescri.Text;
@@ -191,54 +200,47 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["TablaIdioma"] = Idioma;
             }
         }
-        protected void BindBDdlBusq()
+        protected void BindBDdlPrmtr(string CodEstado, string CodCC)
         {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_LibroVuelo 20,'','','','MTR',{0},{1},{2},0,'01-1-2009','01-01-1900','01-01-1900'",
-                1, 2, "0");
-            DdlBusqHK.DataSource = Cnx.DSET(LtxtSql);
-            DdlBusqHK.DataMember = "Datos";
-            DdlBusqHK.DataTextField = "Matricula";
-            DdlBusqHK.DataValueField = "CodAeronave";
-            DdlBusqHK.DataBind();
-        }
-        protected void BindBDdl()
-        {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_Aeronave 1,'','','','TIP',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-            DdlTipo.DataSource = Cnx.DSET(LtxtSql);
-            DdlTipo.DataMember = "Datos";
-            DdlTipo.DataTextField = "Descripcion";
-            DdlTipo.DataValueField = "CodTipoAeronave";
-            DdlTipo.DataBind();
+            DSTDet = (DataSet)ViewState["DSTDet"];
+            DataRow[] Result;
+            string VbCodAnt = "";
 
-            LtxtSql = string.Format("EXEC SP_PANTALLA_Aeronave 1,'','','','MOD',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-            DdlModelo.DataSource = Cnx.DSET(LtxtSql);
-            DdlModelo.DataMember = "Datos";
-            DdlModelo.DataTextField = "NomModelo";
-            DdlModelo.DataValueField = "CodModelo";
-            DdlModelo.DataBind();
+            DataTable DTEstd = new DataTable();
+            VbCodAnt = CodEstado.Trim();
+            DTEstd = DSTDet.Tables[5].Clone();
 
-            LtxtSql = string.Format("EXEC SP_PANTALLA_Aeronave 1,'','','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-            DdlPropie.DataSource = Cnx.DSET(LtxtSql);
-            DdlPropie.DataMember = "Datos";
-            DdlPropie.DataTextField = "RazonSocial";
-            DdlPropie.DataValueField = "CodTercero";
-            DdlPropie.DataBind();
-        }
-        protected void BindBDdlRefresh(string CodEstado, string CodCC)
-        {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_Aeronave 1,'{0}','','','EST',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'", CodEstado.Trim());
-            DdlEstado.DataSource = Cnx.DSET(LtxtSql);
-            DdlEstado.DataMember = "Datos";
+            Result = DSTDet.Tables[5].Select("CodEstadoAeronave='" + CodEstado.Trim() + "'");// trae el codigo actual por si esta inactivo
+            foreach (DataRow Row in Result)
+            { DTEstd.ImportRow(Row); }
+
+            Result = DSTDet.Tables[5].Select("Activo=1");
+            foreach (DataRow Row in Result)
+            { DTEstd.ImportRow(Row); }
+
+            DdlEstado.DataSource = DTEstd;
             DdlEstado.DataTextField = "Descripcion";
             DdlEstado.DataValueField = "CodEstadoAeronave";
             DdlEstado.DataBind();
+            DdlEstado.Text = VbCodAnt;
 
-            LtxtSql = string.Format("EXEC SP_PANTALLA_Aeronave 2,'','','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'", CodCC.Trim());
-            DdlCcosto.DataSource = Cnx.DSET(LtxtSql);
-            DdlCcosto.DataMember = "Datos";
+            DataTable DTCCsto = new DataTable();
+            VbCodAnt = CodCC.Trim();
+            DTCCsto = DSTDet.Tables[6].Clone();
+
+            Result = DSTDet.Tables[6].Select("CodCc='" + CodCC.Trim() + "'");// trae el codigo actual por si esta inactivo
+            foreach (DataRow Row in Result)
+            { DTCCsto.ImportRow(Row); }
+
+            Result = DSTDet.Tables[6].Select("Activo=1");
+            foreach (DataRow Row in Result)
+            { DTCCsto.ImportRow(Row); }
+
+            DdlCcosto.DataSource = DTCCsto;
             DdlCcosto.DataTextField = "Nombre";
             DdlCcosto.DataValueField = "CodCc";
             DdlCcosto.DataBind();
+            DdlCcosto.Text = VbCodAnt;
         }
         protected void ValidarCampos(string Accion)
         {
@@ -330,62 +332,100 @@ namespace _77NeoWeb.Forms.Ingenieria
                 return;
             }
         }
-        protected void Traerdatos(string Prmtr)
+        protected void Traerdatos(string Prmtr, string Accion)
         {
-            try
-            {
 
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+
+            if (Accion.Equals("UPD"))
+            {
                 Cnx.SelecBD();
-                using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
+                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbFecha;
-                    DateTime? FechaD;
-                    Cnx2.Open();
-                    string LtxtSql = string.Format("EXEC SP_PANTALLA_Aeronave 5,'','','','',@Prmtr,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
-                    SqlCommand SC = new SqlCommand(LtxtSql, Cnx2);
-                    SC.Parameters.AddWithValue("@Prmtr", Prmtr);
-                    SqlDataReader SDR = SC.ExecuteReader();
-                    if (SDR.Read())
+                    string VbTxtSql = "EXEC SP_PANTALLA_Aeronave 5,'','','','',@Prmtr,0,@Idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                    sqlConB.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
-                        TxtCodHk.Text = SDR["CodAeronave"].ToString();
-                        string CodEstado = HttpUtility.HtmlDecode(SDR["CodEstadoAeronave"].ToString().Trim());
-                        string CodCC = HttpUtility.HtmlDecode(SDR["CentroDeCosto"].ToString().Trim());
-                        BindBDdlRefresh(CodEstado, CodCC);
-                        DdlEstado.Text = CodEstado;
-                        TxtMatr.Text = HttpUtility.HtmlDecode(SDR["Matricula"].ToString().Trim());
-                        TxtSn.Text = HttpUtility.HtmlDecode(SDR["SN"].ToString().Trim());
-                        DdlCcosto.Text = CodCC;
-                        VbFecha = HttpUtility.HtmlDecode(SDR["FechaFabricante"].ToString().Trim());
-                        if (!VbFecha.Trim().Equals(""))
-                        { FechaD = Convert.ToDateTime(VbFecha); TxtFecFabr.Text = String.Format("{0:dd/MM/yyyy}", FechaD); }
-                        else
-                        { TxtFecFabr.Text = ""; }
-                        CkbAdmon.Checked = Convert.ToBoolean(SDR["Administrada"].ToString());
-                        CkbPropiedad.Checked = Convert.ToBoolean(SDR["Propiedad"].ToString());
-                        DdlModelo.Text = HttpUtility.HtmlDecode(SDR["CodModelo"].ToString().Trim());
-                        DdlTipo.Text = HttpUtility.HtmlDecode(SDR["CodTipoAeronave"].ToString().Trim());
-                        string borrar = HttpUtility.HtmlDecode(SDR["CodPropietario"].ToString().Trim());
-                        DdlPropie.Text = HttpUtility.HtmlDecode(SDR["CodPropietario"].ToString().Trim());
-                        VbFecha = HttpUtility.HtmlDecode(SDR["FechaIngreso"].ToString().Trim());
-                        if (!VbFecha.Trim().Equals(""))
-                        { FechaD = Convert.ToDateTime(VbFecha); TxtFecIngr.Text = String.Format("{0:dd/MM/yyyy}", FechaD); }
-                        else
-                        { TxtFecIngr.Text = ""; }
-                        TxtTSN.Text = SDR["TSN"].ToString().Trim();
-                        TxtCSN.Text = SDR["CSN"].ToString();
-                        TxtDescri.Text = HttpUtility.HtmlDecode(SDR["Descripcion"].ToString().Trim());
-                        ViewState["AC_Virtual"] = Convert.ToInt32(SDR["AC_Virtual"].ToString().Trim());
-                        DdlModelo.ToolTip = "";
+                        SC.Parameters.AddWithValue("@Prmtr", Prmtr);
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            using (DataSet DSTDet = new DataSet())
+                            {
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DSTDet);
+                                DSTDet.Tables[0].TableName = "BusHK";
+                                DSTDet.Tables[1].TableName = "Consult";
+                                DSTDet.Tables[2].TableName = "Tipo";
+                                DSTDet.Tables[3].TableName = "Modelo";
+                                DSTDet.Tables[4].TableName = "Propietario";
+                                DSTDet.Tables[5].TableName = "Estado";
+                                DSTDet.Tables[6].TableName = "CCosto";
+                                ViewState["DSTDet"] = DSTDet;
+                            }
+                        }
                     }
-                    SDR.Close();
-                    Cnx2.Close();
                 }
             }
-            catch (Exception Ex)
+            DSTDet = (DataSet)ViewState["DSTDet"];
+
+            string VbCodAnt = DdlBusqHK.Text.Trim();
+            DdlBusqHK.DataSource = DSTDet.Tables[0];
+            DdlBusqHK.DataTextField = "Matricula";
+            DdlBusqHK.DataValueField = "CodAeronave";
+            DdlBusqHK.DataBind();
+            DdlBusqHK.Text = VbCodAnt.Equals("0") ? @Prmtr : VbCodAnt;
+
+            DdlTipo.DataSource = DSTDet.Tables[2];
+            DdlTipo.DataTextField = "Descripcion";
+            DdlTipo.DataValueField = "CodTipoAeronave";
+            DdlTipo.DataBind();
+
+            DdlModelo.DataSource = DSTDet.Tables[3];
+            DdlModelo.DataTextField = "NomModelo";
+            DdlModelo.DataValueField = "CodModelo";
+            DdlModelo.DataBind();
+
+            DdlPropie.DataSource = DSTDet.Tables[4];
+            DdlPropie.DataTextField = "RazonSocial";
+            DdlPropie.DataValueField = "CodTercero";
+            DdlPropie.DataBind();
+
+            DataRow[] Result = DSTDet.Tables[1].Select("CodAeronave = " + DdlBusqHK.Text.Trim());
+            foreach (DataRow SDR in Result)
             {
-                string VbMEns = Ex.ToString().Trim().Substring(1, 50);
-                ScriptManager.RegisterClientScriptBlock(this.UpPlHk, UpPlHk.GetType(), "IdntificadorBloqueScript", "alert('Inconveniente con la consulta')", true);
+                string VbFecha;
+                DateTime? FechaD;
+                TxtCodHk.Text = SDR["CodAeronave"].ToString();
+                string CodEstado = HttpUtility.HtmlDecode(SDR["CodEstadoAeronave"].ToString().Trim());
+                string CodCC = HttpUtility.HtmlDecode(SDR["CentroDeCosto"].ToString().Trim());
+                BindBDdlPrmtr(CodEstado, CodCC);
+                CkbActiva.Checked = Convert.ToBoolean(SDR["Activa"].ToString());
+                TxtMatr.Text = HttpUtility.HtmlDecode(SDR["Matricula"].ToString().Trim());
+                TxtSn.Text = HttpUtility.HtmlDecode(SDR["SN"].ToString().Trim());
+                VbFecha = HttpUtility.HtmlDecode(SDR["FechaFabricante"].ToString().Trim());
+                if (!VbFecha.Trim().Equals(""))
+                { FechaD = Convert.ToDateTime(VbFecha); TxtFecFabr.Text = String.Format("{0:dd/MM/yyyy}", FechaD); }
+                else
+                { TxtFecFabr.Text = ""; }
+                CkbAdmon.Checked = Convert.ToBoolean(SDR["Administrada"].ToString());
+                CkbPropiedad.Checked = Convert.ToBoolean(SDR["Propiedad"].ToString());
+                DdlModelo.Text = HttpUtility.HtmlDecode(SDR["CodModelo"].ToString().Trim());
+                DdlTipo.Text = HttpUtility.HtmlDecode(SDR["CodTipoAeronave"].ToString().Trim());
+                DdlPropie.Text = HttpUtility.HtmlDecode(SDR["CodPropietario"].ToString().Trim());
+                VbFecha = HttpUtility.HtmlDecode(SDR["FechaIngreso"].ToString().Trim());
+                if (!VbFecha.Trim().Equals(""))
+                { FechaD = Convert.ToDateTime(VbFecha); TxtFecIngr.Text = String.Format("{0:dd/MM/yyyy}", FechaD); }
+                else
+                { TxtFecIngr.Text = ""; }
+                TxtTSN.Text = SDR["TSN"].ToString().Trim();
+                TxtCSN.Text = SDR["CSN"].ToString();
+                TxtDescri.Text = HttpUtility.HtmlDecode(SDR["Descripcion"].ToString().Trim());
+                ViewState["AC_Virtual"] = Convert.ToInt32(SDR["AC_Virtual"].ToString().Trim());
+                DdlModelo.ToolTip = "";
             }
+
         }
         protected void ActivarBtn(bool In, bool Md, bool El, bool Ip, bool Otr)
         {
@@ -397,13 +437,18 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void ActivarCampos(bool Ing, bool Edi, string accion)
         {
             if (accion.Equals("Ingresar"))
-            { TxtMatr.Enabled = Ing; TxtTSN.Enabled = Ing; TxtCSN.Enabled = Ing; }
-            else { TxtMatr.Enabled = (int)ViewState["VblCE1"] == 1 ? Edi : false; }
-
+            { TxtMatr.Enabled = Ing; TxtTSN.Enabled = Ing; TxtCSN.Enabled = Ing; CkbActiva.Checked = true; }//  CkbAdmon.Enabled = Edi;
+            else
+            {
+                TxtMatr.Enabled = (int)ViewState["VblCE1"] == 1 ? Edi : false; CkbActiva.Enabled = Edi;
+                //if (CkbAdmon.Checked == true)// is es administrada habilita el check para desactivar y al desactivar ya queda fuera de la cantidad la liciencia por aeronave
+                //{ CkbAdmon.Enabled = Edi; }
+            }
+            CkbAdmon.Enabled = Edi;
             TxtSn.Enabled = Edi;
             DdlCcosto.Enabled = Edi;
             IbtFecFabr.Enabled = Edi;
-            CkbAdmon.Enabled = Edi;
+
             CkbPropiedad.Enabled = Edi;
             DdlModelo.Enabled = Edi;
             DdlModelo.ToolTip = "";
@@ -414,6 +459,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlEstado.Enabled = Edi;
             IbtFecIngr.Enabled = Edi;
             TxtDescri.Enabled = Edi;
+
         }
         protected void LimpiarCampos()
         {
@@ -423,6 +469,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtFecFabr.Text = "";
             CkbAdmon.Checked = false;
             CkbPropiedad.Checked = false;
+            CkbActiva.Checked = false;
             DdlModelo.Text = "";
             DdlTipo.Text = "";
             DdlPropie.Text = "";
@@ -433,9 +480,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtDescri.Text = "";
         }
         protected void DdlBusqHK_TextChanged(object sender, EventArgs e)
-        {
-            Traerdatos(DdlBusqHK.Text);
-        }
+        { Traerdatos(DdlBusqHK.Text, "UPD"); }
         protected void BtnIngresar_Click(object sender, EventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -452,7 +497,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     LimpiarCampos();
                     TxtCodHk.Text = "0";
                     ActivarCampos(true, true, "Ingresar");
-                    BindBDdlRefresh("", "");
                     DdlBusqHK.SelectedValue = "0";
                     DdlBusqHK.Enabled = false;
                     Result = Idioma.Select("Objeto= 'MensConfIng'"); // |MensConfMod
@@ -508,9 +552,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { BtnIngresar.Text = row["Texto"].ToString().Trim(); }//
                     ActivarCampos(false, false, "Ingresar");
                     DdlBusqHK.Enabled = true;
-                    BindBDdlBusq();
-                    DdlBusqHK.Text = ClsAeronave.GetCodHK().ToString();
-                    Traerdatos(ClsAeronave.GetCodHK().ToString());
+                    Traerdatos(ClsAeronave.GetCodHK().ToString().Trim(), "UPD");
+                    BindBDdlPrmtr(DdlEstado.Text.Trim(), DdlCcosto.Text.Trim());
                     BtnIngresar.OnClientClick = "";
                 }
             }
@@ -536,7 +579,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     string VbCodEstado, VblCC;
                     VbCodEstado = DdlEstado.Text.Trim();
                     VblCC = DdlCcosto.Text.Trim();
-                    BindBDdlRefresh(VbCodEstado, VblCC);
                     DdlEstado.Text = VbCodEstado;
                     DdlCcosto.Text = VblCC;
                     ActivarBtn(false, true, false, false, false);
@@ -570,7 +612,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         CodTipoAeronave = DdlTipo.Text.Trim(),
                         CodProveedor = "",
                         CodEstadoAeronave = DdlEstado.Text.Trim(),
-                        Activo = "1",
+                        Activo = CkbActiva.Checked == true ? "1" : "0",
                         Descripcion = TxtDescri.Text.Trim(),
                         HoraVoladaIng = Convert.ToDouble(TxtTSN.Text),
                         Usu = Session["C77U"].ToString(),
@@ -598,11 +640,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                     foreach (DataRow row in Result)
                     { BtnModificar.Text = row["Texto"].ToString().Trim(); }
                     ViewState["Accion"] = "";
-                    ActivarCampos(false, false, "Ingresar");
+                    ActivarCampos(false, false, "UPDATE");
                     DdlBusqHK.Enabled = true;
-                    BindBDdlBusq();
+                    Traerdatos(ClsAeronave.GetCodHK().ToString().Trim(), "UPD");
+                    BindBDdlPrmtr(DdlEstado.Text.Trim(), DdlCcosto.Text.Trim());
                     DdlBusqHK.Text = ClsAeronave.GetCodHK().ToString();
-                    Traerdatos(ClsAeronave.GetCodHK().ToString());
                     BtnModificar.OnClientClick = "";
                 }
             }
@@ -615,11 +657,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "MODIFICAR Aeronave", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
-        protected void BtnConsultar_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected void BtnExpor_Click(object sender, EventArgs e)
         {
             try
@@ -627,7 +664,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 string StSql, VbNomRpt = "";
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
                 CursorIdioma.Alimentar("CurExportAeronave", Session["77IDM"].ToString().Trim());
-                StSql = "EXEC SP_PANTALLA_Aeronave 4,'','','','CurExportAeronave',0,0,0,0,'01/01/01','01/01/01','01/01/01'";
+                StSql = "EXEC SP_PANTALLA_Aeronave 4,'','','','CurExportAeronave',0,0,0,@ICC,'01/01/01','01/01/01','01/01/01'";
                 Idioma = (DataTable)ViewState["TablaIdioma"];
                 DataRow[] Result = Idioma.Select("Objeto= 'Caption'");
                 foreach (DataRow row in Result)
@@ -637,6 +674,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     using (SqlCommand SC = new SqlCommand(StSql, con))
                     {
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         SC.CommandTimeout = 90000000;
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {

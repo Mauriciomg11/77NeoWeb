@@ -244,7 +244,6 @@
                                             <asp:Label Text='<%# Eval("Sn") %>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-
                                     <asp:TemplateField HeaderText="Descripcion elemento">
                                         <ItemTemplate>
                                             <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" />

@@ -28,8 +28,8 @@
         .fechas_I_F {
             margin-left: auto;
             margin-right: auto;
-            text-align:center;
-             border: 1px solid black;
+            text-align: center;
+            border: 1px solid black;
         }
     </style>
 </asp:Content>
@@ -57,8 +57,8 @@
             <asp:UpdatePanel ID="UplPpl" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
                     <div class="row">
-                         <div class="col-sm-2 "></div>
-                         <div class="col-sm-2 "></div>
+                        <div class="col-sm-2 "></div>
+                        <div class="col-sm-2 "></div>
                         <div class="col-sm-2 ">
                             <asp:Label ID="LblFechIPpl" runat="server" CssClass="LblEtiquet" Text="Fecha Inicial" />
                             <asp:TextBox ID="TxtFechIPpl" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
@@ -79,7 +79,7 @@
                                 <div class="col-sm-2">
                                     <asp:RadioButton ID="RdbHisC1AplicSN" runat="server" CssClass="LblEtiquet" Text="&nbsp Elemento" GroupName="HisC1Aplic" OnCheckedChanged="RdbHisC1AplicSN_CheckedChanged" AutoPostBack="true" />
                                 </div>
-                               <%-- <div class="col-sm-3">
+                                <%-- <div class="col-sm-3">
                                     <asp:Button ID="BtnHisC1Consult" Height="30px" runat="server" CssClass="btn btn-success" OnClick="BtnHisC1Consult_Click" Text="Consultar" ToolTip="Ejecutar consulta" />
                                 </div>--%>
                                 <div class="col-sm-2">
@@ -106,9 +106,9 @@
                                     <asp:Label ID="LblHisC1CodCont" runat="server" CssClass="LblEtiquet" Text="Contador" />
                                     <asp:DropDownList ID="DdlHisC1CodCont" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="DdlHisC1CodCont_TextChanged" AutoPostBack="true" />
                                 </div>
-                                 <div class="col-sm-0">
-                                     <br />
-                                    <asp:ImageButton ID="IbtHisC1Find" runat="server" ToolTip="Ejecutar consulta"  Height="36px" Width="38px" ImageUrl="~/images/FindV3.png" OnClick="IbtHisC1Find_Click" />
+                                <div class="col-sm-0">
+                                    <br />
+                                    <asp:ImageButton ID="IbtHisC1Find" runat="server" ToolTip="Ejecutar consulta" Height="36px" Width="38px" ImageUrl="~/images/FindV3.png" OnClick="IbtHisC1Find_Click" />
                                 </div>
                                 <div class="col-sm-0">
                                     <br />
@@ -172,7 +172,7 @@
                                 <div class="col-sm-2">
                                     <asp:RadioButton ID="RdbHisC2AplicSN" runat="server" CssClass="LblEtiquet" Text="&nbsp Elemento" GroupName="HisC2Aplic" OnCheckedChanged="RdbHisC2AplicSN_CheckedChanged" AutoPostBack="true" />
                                 </div>
-                               <%-- <div class="col-sm-3">
+                                <%-- <div class="col-sm-3">
                                     <asp:Button ID="BtnHisC2Consult" Height="30px" runat="server" CssClass="btn btn-success" OnClick="BtnHisC2Consult_Click" Text="Consultar" ToolTip="Ejecutar consulta" />
                                 </div>--%>
                                 <div class="col-sm-2">
@@ -199,12 +199,12 @@
                                     <asp:Label ID="LblHisC2CodCont" runat="server" CssClass="LblEtiquet" Text="Contador" />
                                     <asp:DropDownList ID="DdlHisC2CodCont" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="DdlHisC2CodCont_TextChanged" AutoPostBack="true" />
                                 </div>
-                                 <div class="col-sm-0">
-                                     <br />
-                                    <asp:ImageButton ID="IbtHisC2Find" runat="server" ToolTip="Ejecutar consulta"  Height="36px" Width="38px" ImageUrl="~/images/FindV3.png" OnClick="IbtHisC2Find_Click" />
+                                <div class="col-sm-0">
+                                    <br />
+                                    <asp:ImageButton ID="IbtHisC2Find" runat="server" ToolTip="Ejecutar consulta" Height="36px" Width="38px" ImageUrl="~/images/FindV3.png" OnClick="IbtHisC2Find_Click" />
                                 </div>
                                 <div class="col-sm-0">
-                                     <br />
+                                    <br />
                                     <asp:ImageButton ID="IbtHisC2Excel" runat="server" ToolTip="Exportar histórico" CssClass=" BtnExpExcel" Height="38px" Width="40px" ImageUrl="~/images/ExcelV1.png" OnClick="IbtHisC2Excel_Click" />
                                 </div>
                                 <div class="CentarGridAsig table-responsive Scroll">

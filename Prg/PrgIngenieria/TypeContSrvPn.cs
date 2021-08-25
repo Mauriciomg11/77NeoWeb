@@ -68,6 +68,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                         {
                             sqlCmd.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = sqlCmd.Parameters.AddWithValue("@CurVD", table);
+                            SqlParameter Prmtrs1 = sqlCmd.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
                             Prmtrs.SqlDbType = SqlDbType.Structured;
                             sqlCmd.ExecuteNonQuery();
                             transaction.Commit();

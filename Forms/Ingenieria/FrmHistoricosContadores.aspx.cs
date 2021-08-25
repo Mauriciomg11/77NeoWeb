@@ -21,19 +21,26 @@ namespace _77NeoWeb.Forms.Ingenieria
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-           if (Session["Login77"] == null) { Response.Redirect("~/FrmAcceso.aspx"); } /* */
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
-               /* Session["C77U"] = "00000082";
-                Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = "00000082"; //00000082|00000133
+                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = "77NEO01";
+                    Session["V$U@"] = "sa";
+                    Session["P@$"] = "admindemp";
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
+                }
             }
             if (!IsPostBack)
             {
@@ -179,10 +186,11 @@ namespace _77NeoWeb.Forms.Ingenieria
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = "EXEC SP_PANTALLA_Formulario_Historico 4,'','','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                string VbTxtSql = "EXEC SP_PANTALLA_Formulario_Historico 4,'','','','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -211,12 +219,11 @@ namespace _77NeoWeb.Forms.Ingenieria
         //******************************** Panel historico UNO *****************************************
         protected void BindBDdlAK(string Panel)
         {
-            string LtxtSql = "EXEC SP_PANTALLA_Status 11,'','','','HK',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_Status 11,'','','','HK',0,0,0,{0},'01-1-2009','01-01-1900','01-01-1900'", Session["!dC!@"]);
 
             if (Panel.Equals("1"))
             {
                 DdlHisC1HK.DataSource = Cnx.DSET(LtxtSql);
-                DdlHisC1HK.DataMember = "Datos";
                 DdlHisC1HK.DataTextField = "Matricula";
                 DdlHisC1HK.DataValueField = "CodAeronave";
                 DdlHisC1HK.DataBind();
@@ -224,7 +231,6 @@ namespace _77NeoWeb.Forms.Ingenieria
             else
             {
                 DdlHisC2HK.DataSource = Cnx.DSET(LtxtSql);
-                DdlHisC2HK.DataMember = "Datos";
                 DdlHisC2HK.DataTextField = "Matricula";
                 DdlHisC2HK.DataValueField = "CodAeronave";
                 DdlHisC2HK.DataBind();
@@ -234,13 +240,12 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             string LtxtSql = "";
             if (!PN.Trim().Equals(""))
-            { LtxtSql = string.Format("EXEC SP_PANTALLA_Informe_Ingenieria 16,'{0}','','','ContPN',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'", PN); }
+            { LtxtSql = string.Format("EXEC SP_PANTALLA_Informe_Ingenieria 16,'{0}','','','ContPN',0,0,0,{1},'01-1-2009','01-01-1900','01-01-1900'", PN, Session["!dC!@"]); }
             else
-            { LtxtSql = string.Format("EXEC SP_PANTALLA__Historico_Contadores 3,'','','','','',{0}, 0,0,0,'01-01-1','01-01-1','01-01-1'", Hk); }
+            { LtxtSql = string.Format("EXEC SP_PANTALLA__Historico_Contadores 3,'','','','','',{0}, 0,0,{1},'01-01-1','01-01-1','01-01-1'", Hk, Session["!dC!@"]); }
             if (Panel.Equals("1"))
             {
                 DdlHisC1CodCont.DataSource = Cnx.DSET(LtxtSql);
-                DdlHisC1CodCont.DataMember = "Datos";
                 DdlHisC1CodCont.DataTextField = "CodContador";
                 DdlHisC1CodCont.DataValueField = "CodContador";
                 DdlHisC1CodCont.DataBind();
@@ -248,7 +253,6 @@ namespace _77NeoWeb.Forms.Ingenieria
             else
             {
                 DdlHisC2CodCont.DataSource = Cnx.DSET(LtxtSql);
-                DdlHisC2CodCont.DataMember = "Datos";
                 DdlHisC2CodCont.DataTextField = "CodContador";
                 DdlHisC2CodCont.DataValueField = "CodContador";
                 DdlHisC2CodCont.DataBind();
@@ -256,11 +260,10 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BindBDdlPNHC(string Panel)
         {
-            string LtxtSql = "EXEC SP_PANTALLA_Informe_Ingenieria 16,'','','','PNHC',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_Informe_Ingenieria 16,'','','','PNHC',0,0,0,{0},'01-1-2009','01-01-1900','01-01-1900'", Session["!dC!@"]);
             if (Panel.Equals("1"))
             {
                 DdlHisC1PN.DataSource = Cnx.DSET(LtxtSql);
-                DdlHisC1PN.DataMember = "Datos";
                 DdlHisC1PN.DataTextField = "PN";
                 DdlHisC1PN.DataValueField = "Codigo";
                 DdlHisC1PN.DataBind();
@@ -268,7 +271,6 @@ namespace _77NeoWeb.Forms.Ingenieria
             else
             {
                 DdlHisC2PN.DataSource = Cnx.DSET(LtxtSql);
-                DdlHisC2PN.DataMember = "Datos";
                 DdlHisC2PN.DataTextField = "PN";
                 DdlHisC2PN.DataValueField = "Codigo";
                 DdlHisC2PN.DataBind();
@@ -276,11 +278,10 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BindBDdlSNHC(string PN, string Panel)
         {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_Informe_Ingenieria 16,'{0}','','','SNHC',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'", PN);
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_Informe_Ingenieria 16,'{0}','','','SNHC',0,0,0,{1},'01-1-2009','01-01-1900','01-01-1900'", PN, Session["!dC!@"]);
             if (Panel.Equals("1"))
             {
                 DdlHisC1SN.DataSource = Cnx.DSET(LtxtSql);
-                DdlHisC1SN.DataMember = "Datos";
                 DdlHisC1SN.DataTextField = "SN";
                 DdlHisC1SN.DataValueField = "Codigo";
                 DdlHisC1SN.DataBind();
@@ -288,7 +289,6 @@ namespace _77NeoWeb.Forms.Ingenieria
             else
             {
                 DdlHisC2SN.DataSource = Cnx.DSET(LtxtSql);
-                DdlHisC2SN.DataMember = "Datos";
                 DdlHisC2SN.DataTextField = "SN";
                 DdlHisC2SN.DataValueField = "Codigo";
                 DdlHisC2SN.DataBind();
@@ -305,7 +305,6 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlHisC1SN.Visible = false;
             string LtxtSql = "EXEC SP_PANTALLA_Informe_Ingenieria 16,'','','','BLANK',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
             DdlHisC1CodCont.DataSource = Cnx.DSET(LtxtSql);
-            DdlHisC1CodCont.DataMember = "Datos";
             DdlHisC1CodCont.DataTextField = "Descripcion";
             DdlHisC1CodCont.DataValueField = "CodContador";
             DdlHisC1CodCont.DataBind();
@@ -326,9 +325,8 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlHisC1PN.Visible = true;
             LblHisC1SN.Visible = true;
             DdlHisC1SN.Visible = true;
-            string LtxtSql = "EXEC SP_PANTALLA_Informe_Ingenieria 16,'','','','BLANK',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_Informe_Ingenieria 16,'','','','BLANK',0,0,0,{0},'01-1-2009','01-01-1900','01-01-1900'", Session["!dC!@"]);
             DdlHisC1CodCont.DataSource = Cnx.DSET(LtxtSql);
-            DdlHisC1CodCont.DataMember = "Datos";
             DdlHisC1CodCont.DataTextField = "Descripcion";
             DdlHisC1CodCont.DataValueField = "CodContador";
             DdlHisC1CodCont.DataBind();
@@ -354,15 +352,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             GrdHisC1.DataBind();
         }
         protected void DdlHisC1SN_TextChanged(object sender, EventArgs e)
-        {
-            GrdHisC1.DataSource = null;
-            GrdHisC1.DataBind();
-        }
+        { GrdHisC1.DataSource = null; GrdHisC1.DataBind(); }
         protected void DdlHisC1CodCont_TextChanged(object sender, EventArgs e)
-        {
-            GrdHisC1.DataSource = null;
-            GrdHisC1.DataBind();
-        }
+        { GrdHisC1.DataSource = null; GrdHisC1.DataBind(); }
         protected void BIndDHistorico()
         {
             DataTable DtB = new DataTable();
@@ -373,8 +365,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     string VbTxtSql = "";
                     if (RdbHisC1AplicAK.Checked == true)
-                    { VbTxtSql = "EXEC SP_PANTALLA__Historico_Contadores 1,@Ct,'','','','',@HK, 0,0,0,@FI,@FF,'01-01-1'"; }
-                    else { VbTxtSql = "EXEC SP_PANTALLA__Historico_Contadores 5,@Ct,@CE,'','','',0, 0,0,0,@FI,@FF,'01-01-1'"; }
+                    { VbTxtSql = "EXEC SP_PANTALLA__Historico_Contadores 1,@Ct,'','','','',@HK, 0,0,@ICC,@FI,@FF,'01-01-1'"; }
+                    else { VbTxtSql = "EXEC SP_PANTALLA__Historico_Contadores 5,@Ct,@CE,'','','',0, 0,0,@ICC,@FI,@FF,'01-01-1'"; }
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
@@ -382,6 +374,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         SC.Parameters.AddWithValue("@Ct", DdlHisC1CodCont.Text.Trim());
                         SC.Parameters.AddWithValue("@HK", DdlHisC1HK.Text.Trim());
                         SC.Parameters.AddWithValue("@CE", DdlHisC1SN.Text.Trim());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         SC.Parameters.AddWithValue("@FI", Convert.ToDateTime(TxtFechIPpl.Text.Trim()));
                         SC.Parameters.AddWithValue("@FF", Convert.ToDateTime(TxtFechFPpl.Text.Trim()));
                         using (SqlDataAdapter DAB = new SqlDataAdapter())
@@ -400,7 +393,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 GrdHisC1.DataBind();
                                 GrdHisC1.Rows[0].Cells.Clear();
                                 GrdHisC1.Rows[0].Cells.Add(new TableCell());
-                                GrdHisC1.Rows[0].Cells[0].ColumnSpan = DtB.Columns.Count;
                                 DataRow[] Result = Idioma.Select("Objeto= 'MensjHisC00'");
                                 foreach (DataRow row in Result)
                                 { GrdHisC1.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
@@ -492,7 +484,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = "EXEC SP_PANTALLA_Informe_Ingenieria 18,@Cnt,@Us,@CEl,'',@CHK,@Vr,0,0,@FI,'01-01-1900','01-01-1900'";
+                        string VBQuery = "EXEC SP_PANTALLA_Informe_Ingenieria 18,@Cnt,@Us,@CEl,'',@CHK,@Vr,0,@ICC,@FI,'01-01-1900','01-01-1900'";
 
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
@@ -504,6 +496,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                                 SC.Parameters.AddWithValue("@CHK", VbHK);
                                 SC.Parameters.AddWithValue("@CEl", DdlHisC1SN.Text.Trim());
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 SC.Parameters.AddWithValue("@FI", Convert.ToDateTime((GrdHisC1.FooterRow.FindControl("TxtHC1FechaPP") as TextBox).Text.Trim()));
                                 SC.Parameters.AddWithValue("@Vr", VblCant);
                                 SC.ExecuteNonQuery();
@@ -542,8 +535,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    if (RdbHisC1AplicAK.Checked == true) { VBQuery = "EXEC SP_PANTALLA_Informe_Ingenieria 17,@Cnt,@Us,@MAT,'HK',@CHis,@CHK,0,0,'01-1-2009','01-01-1900','01-01-1900'"; }
-                    else { VBQuery = "EXEC SP_PANTALLA_Informe_Ingenieria 17,@Cnt,@Us,@SN,'ELEM',@CHis,0,@CEl,0,'01-1-2009','01-01-1900','01-01-1900'"; }
+                    if (RdbHisC1AplicAK.Checked == true) { VBQuery = "EXEC SP_PANTALLA_Informe_Ingenieria 17,@Cnt,@Us,@MAT,'HK',@CHis,@CHK,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'"; }
+                    else { VBQuery = "EXEC SP_PANTALLA_Informe_Ingenieria 17,@Cnt,@Us,@SN,'ELEM',@CHis,0,@CEl,@ICC,'01-1-2009','01-01-1900','01-01-1900'"; }
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
@@ -555,6 +548,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             SC.Parameters.AddWithValue("@CHis", IdHist);
                             SC.Parameters.AddWithValue("@CHK", DdlHisC1HK.Text);
                             SC.Parameters.AddWithValue("@CEl", DdlHisC1SN.Text.Trim());
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             SC.ExecuteNonQuery();
                             Transac.Commit();
                             BIndDHistorico();
@@ -615,14 +609,14 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CursorIdioma.Alimentar("CurExportarConsulHistorico", Session["77IDM"].ToString().Trim());
                 if (RdbHisC1AplicAK.Checked == true)
                 {
-                    query = "EXEC SP_PANTALLA__Historico_Contadores 1,@Ct,'','','','CurExportarConsulHistorico',@HK, 0,0,0,@FI,@FF,'01-01-1'";
+                    query = "EXEC SP_PANTALLA__Historico_Contadores 1,@Ct,'','','','CurExportarConsulHistorico',@HK, 0,0,@ICC,@FI,@FF,'01-01-1'";
                     DataRow[] Result = Idioma.Select("Objeto= 'HCNomArcHK'");
                     foreach (DataRow row in Result)
                     { VbNomArchivo = row["Texto"].ToString().Trim() + " " + DdlHisC1HK.SelectedItem.Text.Trim() + " " + DdlHisC1CodCont.Text.Trim(); }
                 }
                 else
                 {
-                    query = "EXEC SP_PANTALLA__Historico_Contadores 5,@Ct,@CE,'','','CurExportarConsulHistorico',0, 0,0,0,@FI,@FF,'01-01-1'";
+                    query = "EXEC SP_PANTALLA__Historico_Contadores 5,@Ct,@CE,'','','CurExportarConsulHistorico',0, 0,0,@ICC,@FI,@FF,'01-01-1'";
                     DataRow[] Result = Idioma.Select("Objeto= 'HCNomArcElem'");
                     foreach (DataRow row in Result)
                     { VbNomArchivo = row["Texto"].ToString().Trim() + " " + DdlHisC1SN.SelectedItem.Text.Trim() + " " + DdlHisC1CodCont.Text.Trim(); }
@@ -636,6 +630,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         cmd.Parameters.AddWithValue("@Ct", DdlHisC1CodCont.Text.Trim());
                         cmd.Parameters.AddWithValue("@HK", DdlHisC1HK.Text.Trim());
                         cmd.Parameters.AddWithValue("@CE", DdlHisC1SN.Text.Trim());
+                        cmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         cmd.Parameters.AddWithValue("@FI", Convert.ToDateTime(TxtFechIPpl.Text.Trim()));
                         cmd.Parameters.AddWithValue("@FF", Convert.ToDateTime(TxtFechFPpl.Text.Trim()));
                         using (SqlDataAdapter sda = new SqlDataAdapter())
@@ -688,7 +683,6 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlHisC2SN.Visible = false;
             string LtxtSql = "EXEC SP_PANTALLA_Informe_Ingenieria 16,'','','','BLANK',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
             DdlHisC2CodCont.DataSource = Cnx.DSET(LtxtSql);
-            DdlHisC2CodCont.DataMember = "Datos";
             DdlHisC2CodCont.DataTextField = "Descripcion";
             DdlHisC2CodCont.DataValueField = "CodContador";
             DdlHisC2CodCont.DataBind();
@@ -710,7 +704,6 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlHisC2SN.Visible = true;
             string LtxtSql = "EXEC SP_PANTALLA_Informe_Ingenieria 16,'','','','BLANK',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
             DdlHisC2CodCont.DataSource = Cnx.DSET(LtxtSql);
-            DdlHisC2CodCont.DataMember = "Datos";
             DdlHisC2CodCont.DataTextField = "Descripcion";
             DdlHisC2CodCont.DataValueField = "CodContador";
             DdlHisC2CodCont.DataBind();
@@ -729,14 +722,15 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                 string VbTxtSql = "";
                 if (RdbHisC2AplicAK.Checked == true)
-                { VbTxtSql = "EXEC SP_PANTALLA__Historico_Contadores 1,@Ct,'','','','',@HK, 0,0,0,@FI,@FF,'01-01-1'"; }
-                else { VbTxtSql = "EXEC SP_PANTALLA__Historico_Contadores 5,@Ct,@CE,'','','',0, 0,0,0,@FI,@FF,'01-01-1'"; }
+                { VbTxtSql = "EXEC SP_PANTALLA__Historico_Contadores 1,@Ct,'','','','',@HK, 0,0,@ICC,@FI,@FF,'01-01-1'"; }
+                else { VbTxtSql = "EXEC SP_PANTALLA__Historico_Contadores 5,@Ct,@CE,'','','',0, 0,0,@ICC,@FI,@FF,'01-01-1'"; }
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     SC.Parameters.AddWithValue("@Ct", DdlHisC2CodCont.Text.Trim());
                     SC.Parameters.AddWithValue("@HK", DdlHisC2HK.Text.Trim());
                     SC.Parameters.AddWithValue("@CE", DdlHisC2SN.Text.Trim());
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SC.Parameters.AddWithValue("@FI", Convert.ToDateTime(TxtFechIPpl.Text.Trim()));
                     SC.Parameters.AddWithValue("@FF", Convert.ToDateTime(TxtFechFPpl.Text.Trim()));
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
@@ -755,7 +749,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                             GrdHisC2.DataBind();
                             GrdHisC2.Rows[0].Cells.Clear();
                             GrdHisC2.Rows[0].Cells.Add(new TableCell());
-                            GrdHisC2.Rows[0].Cells[0].ColumnSpan = DtB.Columns.Count;
                             DataRow[] Result = Idioma.Select("Objeto= 'MensjHisC00'");
                             foreach (DataRow row in Result)
                             { GrdHisC2.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
@@ -836,15 +829,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             GrdHisC2.DataBind();
         }
         protected void DdlHisC2SN_TextChanged(object sender, EventArgs e)
-        {
-            GrdHisC2.DataSource = null;
-            GrdHisC2.DataBind();
-        }
+        { GrdHisC2.DataSource = null; GrdHisC2.DataBind(); }
         protected void DdlHisC2CodCont_TextChanged(object sender, EventArgs e)
-        {
-            GrdHisC2.DataSource = null;
-            GrdHisC2.DataBind();
-        }
+        { GrdHisC2.DataSource = null; GrdHisC2.DataBind(); }
         protected void GrdHisC2_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -869,7 +856,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = "EXEC SP_PANTALLA_Informe_Ingenieria 18,@Cnt,@Us,@CEl,'',@CHK,@Vr,0,0,@FI,'01-01-1900','01-01-1900'";
+                        string VBQuery = "EXEC SP_PANTALLA_Informe_Ingenieria 18,@Cnt,@Us,@CEl,'',@CHK,@Vr,0,@ICC,@FI,'01-01-1900','01-01-1900'";
 
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
@@ -881,6 +868,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                                 SC.Parameters.AddWithValue("@CHK", VbHK);
                                 SC.Parameters.AddWithValue("@CEl", DdlHisC2SN.Text.Trim());
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 SC.Parameters.AddWithValue("@FI", Convert.ToDateTime((GrdHisC2.FooterRow.FindControl("TxtHC2FechaPP") as TextBox).Text.Trim()));
                                 SC.Parameters.AddWithValue("@Vr", VblCant);
                                 SC.ExecuteNonQuery();
@@ -919,8 +907,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    if (RdbHisC2AplicAK.Checked == true) { VBQuery = "EXEC SP_PANTALLA_Informe_Ingenieria 17,@Cnt,@Us,@MAT,'HK',@CHis,@CHK,0,0,'01-1-2009','01-01-1900','01-01-1900'"; }
-                    else { VBQuery = "EXEC SP_PANTALLA_Informe_Ingenieria 17,@Cnt,@Us,@SN,'ELEM',@CHis,0,@CEl,0,'01-1-2009','01-01-1900','01-01-1900'"; }
+                    if (RdbHisC2AplicAK.Checked == true) { VBQuery = "EXEC SP_PANTALLA_Informe_Ingenieria 17,@Cnt,@Us,@MAT,'HK',@CHis,@CHK,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'"; }
+                    else { VBQuery = "EXEC SP_PANTALLA_Informe_Ingenieria 17,@Cnt,@Us,@SN,'ELEM',@CHis,0,@CEl,@ICC,'01-1-2009','01-01-1900','01-01-1900'"; }
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
@@ -932,6 +920,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             SC.Parameters.AddWithValue("@CHis", IdHist);
                             SC.Parameters.AddWithValue("@CHK", DdlHisC2HK.Text);
                             SC.Parameters.AddWithValue("@CEl", DdlHisC2SN.Text.Trim());
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             SC.ExecuteNonQuery();
                             Transac.Commit();
                             BIndDHistoricoP2();
@@ -992,14 +981,14 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CursorIdioma.Alimentar("CurExportarConsulHistorico", Session["77IDM"].ToString().Trim());
                 if (RdbHisC2AplicAK.Checked == true)
                 {
-                    query = "EXEC SP_PANTALLA__Historico_Contadores 1,@Ct,'','','','CurExportarConsulHistorico',@HK, 0,0,0,@FI,@FF,'01-01-1'";
+                    query = "EXEC SP_PANTALLA__Historico_Contadores 1,@Ct,'','','','CurExportarConsulHistorico',@HK, 0,0,@ICC,@FI,@FF,'01-01-1'";
                     DataRow[] Result = Idioma.Select("Objeto= 'HCNomArcHK'");
                     foreach (DataRow row in Result)
                     { VbNomArchivo = row["Texto"].ToString().Trim() + " " + DdlHisC2HK.SelectedItem.Text.Trim() + " " + DdlHisC2CodCont.Text.Trim(); }
                 }
                 else
                 {
-                    query = "EXEC SP_PANTALLA__Historico_Contadores 5,@Ct,@CE,'','','CurExportarConsulHistorico',0, 0,0,0,@FI,@FF,'01-01-1'";
+                    query = "EXEC SP_PANTALLA__Historico_Contadores 5,@Ct,@CE,'','','CurExportarConsulHistorico',0, 0,0,@ICC,@FI,@FF,'01-01-1'";
                     DataRow[] Result = Idioma.Select("Objeto= 'HCNomArcElem'");
                     foreach (DataRow row in Result)
                     { VbNomArchivo = row["Texto"].ToString().Trim() + " " + DdlHisC2SN.SelectedItem.Text.Trim() + " " + DdlHisC2CodCont.Text.Trim(); }
@@ -1013,6 +1002,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         cmd.Parameters.AddWithValue("@Ct", DdlHisC2CodCont.Text.Trim());
                         cmd.Parameters.AddWithValue("@HK", DdlHisC2HK.Text.Trim());
                         cmd.Parameters.AddWithValue("@CE", DdlHisC2SN.Text.Trim());
+                        cmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         cmd.Parameters.AddWithValue("@FI", Convert.ToDateTime(TxtFechIPpl.Text.Trim()));
                         cmd.Parameters.AddWithValue("@FF", Convert.ToDateTime(TxtFechFPpl.Text.Trim()));
                         using (SqlDataAdapter sda = new SqlDataAdapter())

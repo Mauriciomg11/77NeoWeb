@@ -15,6 +15,7 @@ namespace _77NeoWeb.Forms.Ingenieria
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataSet DSTPs = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
@@ -35,22 +36,16 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 1;
-                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
                 }
             }
             if (!IsPostBack)
             {
                 TitForm.Text = "";
                 ModSeguridad();
-                string LtxtSql = string.Format("EXEC SP_PANTALLA_OrdenTrabajo2 5,'','','','','ESU',0,0,0,0,'01-01-01','01-01-01','01-01-01'");
-                DdlStatus.DataSource = Cnx.DSET(LtxtSql);
-                DdlStatus.DataMember = "Datos";
-                DdlStatus.DataTextField = "Descripcion";
-                DdlStatus.DataValueField = "Codigo";
-                DdlStatus.DataBind();
+                Traerdatos("0", "UPD");
                 MultVw.ActiveViewIndex = 0;
-                BIndDOTAbiertas();
                 ViewState["EstadoAnt"] = "";
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
@@ -115,8 +110,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     GrdDatos.Columns[2].HeaderText = bO.Equals("GrdCodEst") ? bT : GrdDatos.Columns[2].HeaderText;
                     GrdDatos.Columns[3].HeaderText = bO.Equals("LblStatus") ? bT : GrdDatos.Columns[3].HeaderText;
                     LblTitOTPendCerr.Text = bO.Equals("LblTitOTPendCerr") ? bT : LblTitOTPendCerr.Text;
-                    GrdOtPendCerrar.Columns[0].HeaderText = bO.Equals("GrdCod") ? bT : GrdOtPendCerrar.Columns[0].HeaderText;
-                    GrdOtPendCerrar.Columns[1].HeaderText = bO.Equals("LblAplica") ? bT : GrdOtPendCerrar.Columns[1].HeaderText;
+                    GrdOtPendCerrar.Columns[1].HeaderText = bO.Equals("GrdCod") ? bT : GrdOtPendCerrar.Columns[1].HeaderText;
+                    GrdOtPendCerrar.Columns[2].HeaderText = bO.Equals("LblAplica") ? bT : GrdOtPendCerrar.Columns[2].HeaderText;
                     //*******************Busqueda***************************
                     IbtCerrarBusq.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarBusq.ToolTip;
                     LblBusqueda.Text = bO.Equals("MstrLblBusq") ? bT + ":" : LblBusqueda.Text;
@@ -138,41 +133,64 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             foreach (GridViewRow Row in GrdDatos.Rows)
             {
-               /* if ((int)ViewState["VblModMS"] == 0)
-                {
-                    ImageButton imgE = Row.FindControl("IbtEdit") as ImageButton;
-                    if (imgE != null) { Row.Cells[4].Controls.Remove(imgE); }
-                }*/
+                /* if ((int)ViewState["VblModMS"] == 0)
+                 {
+                     ImageButton imgE = Row.FindControl("IbtEdit") as ImageButton;
+                     if (imgE != null) { Row.Cells[4].Controls.Remove(imgE); }
+                 }*/
             }
         }
-        protected void Traerdatos(string Prmtr)
+        protected void Traerdatos(string Prmtr, string Accion)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             try
             {
-                Cnx.SelecBD();
-                using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
+                if (Accion.Equals("UPD"))
                 {
-                    Cnx2.Open();
-                    string LtxtSql = "EXEC SP_PANTALLA_OT_Cerradas 4,@Prmtr,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
-                    SqlCommand SC = new SqlCommand(LtxtSql, Cnx2);
-                    SC.Parameters.AddWithValue("@Prmtr", Prmtr);
-                    SqlDataReader SDR = SC.ExecuteReader();
-                    if (SDR.Read())
+                    Cnx.SelecBD();
+                    using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
                     {
-                        TxtCodOT.Text = HttpUtility.HtmlDecode(SDR["CodOT"].ToString().Trim());
-                        TxtAplica.Text = HttpUtility.HtmlDecode(SDR["Aplicabilidad"].ToString().Trim());
-                        DdlStatus.Text = HttpUtility.HtmlDecode(SDR["CodEstOrdTrab1"].ToString().Trim());
-                        ViewState["EstadoAnt"] = DdlStatus.Text.Trim();
-                        CkbCancel.Checked = Convert.ToBoolean(SDR["CancelOT"].ToString());
+                        Cnx2.Open();
+                        using (SqlCommand SC = new SqlCommand("EXEC SP_PANTALLA_OT_Cerradas 4,@Prmtr,'','','',0,0,@Idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'", Cnx2))
+                        {
+                            SC.Parameters.AddWithValue("@Prmtr", Prmtr);
+                            SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                            using (SqlDataAdapter SDA = new SqlDataAdapter())
+                            {
+                                using (DataSet DSTPs = new DataSet())
+                                {
+                                    SDA.SelectCommand = SC;
+                                    SDA.Fill(DSTPs);
+                                    DSTPs.Tables[0].TableName = "Datos";
+                                    DSTPs.Tables[1].TableName = "Estado";
+                                    DSTPs.Tables[2].TableName = "OTAbiertas";
+                                    DSTPs.Tables[3].TableName = "DescPasos";
+                                    ViewState["DSTPs"] = DSTPs;
+                                }
+                            }
+                        }
                     }
-                    if (CkbCancel.Checked == true)
-                    { DdlStatus.Enabled = false; }
-                    else { DdlStatus.Enabled = true; }
-                    SDR.Close();
-                    Cnx2.Close();
+                }
+                DSTPs = (DataSet)ViewState["DSTPs"];
+                if (DSTPs.Tables[0].Rows.Count > 0) //Datos
+                {
+                    TxtCodOT.Text = HttpUtility.HtmlDecode(DSTPs.Tables[0].Rows[0]["CodOT"].ToString().Trim());
+                    TxtAplica.Text = HttpUtility.HtmlDecode(DSTPs.Tables[0].Rows[0]["Aplicabilidad"].ToString().Trim());
+                    DdlStatus.Text = HttpUtility.HtmlDecode(DSTPs.Tables[0].Rows[0]["CodEstOrdTrab1"].ToString().Trim());
+                    ViewState["EstadoAnt"] = DdlStatus.Text.Trim();
+                    CkbCancel.Checked = Convert.ToBoolean(DSTPs.Tables[0].Rows[0]["CancelOT"].ToString());
                     BindDPasos(TxtCodOT.Text.Trim());
                 }
+                if (CkbCancel.Checked == true) { DdlStatus.Enabled = false; }
+                else { DdlStatus.Enabled = true; }
+
+                DdlStatus.DataSource = DSTPs.Tables[1];
+                DdlStatus.DataTextField = "Descripcion";
+                DdlStatus.DataValueField = "Codigo";
+                DdlStatus.DataBind();
+                if (DSTPs.Tables[2].Rows.Count > 0) { GrdOtPendCerrar.DataSource = DSTPs.Tables[2]; GrdOtPendCerrar.DataBind(); } //OT abiertas
+                else { GrdOtPendCerrar.DataSource = null; GrdOtPendCerrar.DataBind(); }
             }
             catch (Exception Ex)
             {
@@ -187,7 +205,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataTable dtbl = new DataTable();
-            string VbTxtSql = "EXEC SELECT_Pasos_OT_Cerradas @O,@P1,@P2,@P3,@P4,@P5,@P6,@P7,@P8";
+            string VbTxtSql = "EXEC SELECT_Pasos_OT_Cerradas @O,@P1,@P2,@P3,@P4,@P5,@P6,@P7,@P8, @ICC, @Idm";
 
             string VP1 = "", VP2 = "", VP3 = "", VP4 = "", VP5 = "", VP6 = "", VP7 = "", VP8 = "";
             DataRow[] Result = Idioma.Select("Objeto= 'BtnMroInsPre'");
@@ -231,6 +249,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     SC.Parameters.AddWithValue("@P6", VP6);
                     SC.Parameters.AddWithValue("@P7", VP7);
                     SC.Parameters.AddWithValue("@P8", VP8);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                    SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                     SqlDataAdapter SDA = new SqlDataAdapter();
                     SDA.SelectCommand = SC;
                     SDA.Fill(dtbl);
@@ -271,12 +291,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = "EXEC SP_PANTALLA_OT_Cerradas 5,@E,@US,'','',@COT,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                        string VBQuery = "EXEC SP_PANTALLA_OT_Cerradas 5,@E,@US,'','',@COT,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             SC.Parameters.AddWithValue("@E", DdlStatus.Text.Trim());
                             SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@COT", TxtCodOT.Text.Trim());
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             try
                             {
                                 string PMensj = "", PEstado = ""; ;
@@ -307,7 +328,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 GrdDatos.DataSource = null;
                                 GrdDatos.DataBind();
                                 ViewState["EstadoAnt"] = PEstado.Trim();
-                                BIndDOTAbiertas();
+                                Traerdatos(TxtCodOT.Text.Trim(), "UPD");
                             }
                             catch (Exception ex)
                             {
@@ -345,13 +366,14 @@ namespace _77NeoWeb.Forms.Ingenieria
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_PANTALLA_OT_Cerradas 6,@O,@US,@Ps,'UPDATE',@ID,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                    string VBQuery = "EXEC SP_PANTALLA_OT_Cerradas 6,@O,@US,@Ps,'UPDATE',@ID,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@O", TxtCodOT.Text.Trim());
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@Ps", (GrdDatos.Rows[e.RowIndex].FindControl("LblPaso") as Label).Text.Trim());
                         SC.Parameters.AddWithValue("@ID", GrdDatos.DataKeys[e.RowIndex].Value.ToString());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
                             var Mensj = SC.ExecuteScalar();
@@ -384,15 +406,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         { GrdDatos.EditIndex = -1; BindDPasos(TxtCodOT.Text.Trim()); }
         protected void GrdDatos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-
             Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
             if ((e.Row.RowState & DataControlRowState.Edit) > 0)
             {
-
-                string LtxtSql = "EXEC SP_PANTALLA_OT_Cerradas 6,'','','','EstadoP',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                DSTPs = (DataSet)ViewState["DSTPs"];
                 DropDownList DdlCodEstadoP = (e.Row.FindControl("DdlCodEstadoP") as DropDownList);
-                DdlCodEstadoP.DataSource = Cnx.DSET(LtxtSql);
+                DdlCodEstadoP.DataSource = DSTPs.Tables[3];
                 DdlCodEstadoP.DataTextField = "NombreESO";
                 DdlCodEstadoP.DataValueField = "CodEstadoSO";
                 DdlCodEstadoP.DataBind();
@@ -410,9 +430,8 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                //string VblInd = GrdDatos.DataKeys[this.GrdDatos.SelectedIndex][1].ToString();
                 ImageButton imgE = e.Row.FindControl("IbtEdit") as ImageButton;
-                
+
                 Label LblCodEstadoP = e.Row.FindControl("LblCodEstadoP") as Label;
                 if (imgE != null)
                 {
@@ -423,32 +442,10 @@ namespace _77NeoWeb.Forms.Ingenieria
                 }
             }
         }
-        protected void BIndDOTAbiertas()
-        {
-            DataTable DtB = new DataTable();
-            Cnx.SelecBD();
-            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
-            {
-                string VbTxtSql = "EXEC SP_PANTALLA_OrdenTrabajo 10,'','','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
-                sqlConB.Open();
-                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
-                {
-
-                    using (SqlDataAdapter DAB = new SqlDataAdapter())
-                    {
-                        DAB.SelectCommand = SC;
-                        DAB.Fill(DtB);
-
-                        if (DtB.Rows.Count > 0) { GrdOtPendCerrar.DataSource = DtB; GrdOtPendCerrar.DataBind(); }
-                        else { GrdOtPendCerrar.DataSource = null; GrdOtPendCerrar.DataBind(); }
-                    }
-                }
-            }
-        }
         protected void GrdOtPendCerrar_SelectedIndexChanged(object sender, EventArgs e)
         {
             string vbcod = HttpUtility.HtmlDecode(GrdOtPendCerrar.DataKeys[this.GrdOtPendCerrar.SelectedIndex][0].ToString().Trim());
-            Traerdatos(vbcod);
+            Traerdatos(vbcod, "UPD");
             PerfilesGrid();
         }
         //******************************* Busqueda **********************************
@@ -464,8 +461,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
-                    SC.Parameters.AddWithValue("@Prmtr", TxtBusqueda.Text.Trim());                
-                    SC.Parameters.AddWithValue("@CC", Session["!dC!@"]);                
+                    SC.Parameters.AddWithValue("@Prmtr", TxtBusqueda.Text.Trim());
+                    SC.Parameters.AddWithValue("@CC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
                         DAB.SelectCommand = SC;
@@ -482,7 +479,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void GrdBusq_SelectedIndexChanged(object sender, EventArgs e)
         {
             string vbcod = HttpUtility.HtmlDecode(GrdBusq.DataKeys[this.GrdBusq.SelectedIndex][0].ToString().Trim());
-            Traerdatos(vbcod);
+            Traerdatos(vbcod, "UPD");
             MultVw.ActiveViewIndex = 0;
             PerfilesGrid();
         }

@@ -36,8 +36,8 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 2;
-                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
                 }
             }
             if (!IsPostBack)
@@ -702,12 +702,13 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
 
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = "EXEC SP_TablasGeneral 8,'','',@US,@CB,@IdDet,'','','TblUbicBod','DELETE',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    VBQuery = "EXEC SP_TablasGeneral 8,'','',@US,@CB,@IdDet,'','','TblUbicBod','DELETE',0,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@IdDet", GrdDetalle.DataKeys[e.RowIndex].Value.ToString());
                         SC.Parameters.AddWithValue("@CB", GrdDetalle.DataKeys[e.RowIndex].Values["CodBodega"].ToString());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
                             var Mensj = SC.ExecuteScalar();
