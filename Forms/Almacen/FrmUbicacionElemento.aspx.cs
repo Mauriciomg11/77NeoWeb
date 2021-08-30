@@ -37,8 +37,8 @@ namespace _77NeoWeb.Forms.Almacen
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 1;
-                    Session["77IDM"] = "5"; // 4 español | 5 ingles  */
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
                 }
             }
             if (!IsPostBack)
@@ -62,26 +62,7 @@ namespace _77NeoWeb.Forms.Almacen
             if (ClsP.GetCE1() == 0) { ViewState["VblCE1"] = 0; }//Trasferir entre bodegas 
             if (ClsP.GetCE2() == 0) { ViewState["VblCE2"] = 0; }// Bodega Repa
             if (ClsP.GetCE3() == 0) { ViewState["VblCE3"] = 0; }//Cambio de lotes
-            /*  Cnx.SelecBD();
-              using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
-              {
-                  string VbAplica;
-                  int VbCaso;
-                  ViewState["AplicaCiaFechVenc"] = "N";
-                  string TxQry = string.Format("EXEC SP_HabilitarCampos @Nit,@F,1,'',0,'',0,'',0,'',0,'',0,'',0,'',0,'',0");
-                  SqlCommand SC = new SqlCommand(TxQry, sqlCon);
-                  SC.Parameters.AddWithValue("@Nit", Session["Nit77Cia"].ToString());
-                  SC.Parameters.AddWithValue("@F", "INCOMING");
-                  sqlCon.Open();
-                  SqlDataReader Regs = SC.ExecuteReader();
-                  while (Regs.Read())
-                  {
-                      VbCaso = Convert.ToInt32(Regs["CASO"]);
-                      VbAplica = Regs["EjecutarCodigo"].ToString();
-                      if (VbCaso == 1 && VbAplica.Equals("S")) { ViewState["AplicaCiaFechVenc"] = "S"; } //Aplica Fecha Vence
-                  }
-              }
-            */
+          
             IdiomaControles();
         }
         protected void IdiomaControles()
@@ -199,7 +180,7 @@ namespace _77NeoWeb.Forms.Almacen
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
 
-                string VbTxtSql = "EXEC SP_PANTALLA_Asignacion 2,@Pr,@T,@Pr2,'',@Al,0,1,0,'01-1-2009','01-01-1900','01-01-1900'";
+                string VbTxtSql = "EXEC SP_PANTALLA_Asignacion 2,@Pr,@T,@Pr2,'',@Al,0,1,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
@@ -207,6 +188,7 @@ namespace _77NeoWeb.Forms.Almacen
                     SC.Parameters.AddWithValue("@Pr", TxtBusqueda.Text.Trim());
                     SC.Parameters.AddWithValue("@T", DdlTipo.Text.Trim());
                     SC.Parameters.AddWithValue("@Pr2", TxtBusBodeg.Text.Trim());
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
 
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {

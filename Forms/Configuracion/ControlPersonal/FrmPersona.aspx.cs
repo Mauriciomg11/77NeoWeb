@@ -45,7 +45,8 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             if (!IsPostBack)
             {
                 ModSeguridad();
-                BindBDdl("UPD");
+                ViewState["EmpAnt"] = "";
+               BindBDdl("UPD");
                 ViewState["Accion"] = "";
                 MultVw.ActiveViewIndex = 0;
             }
@@ -183,6 +184,13 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 }
             }
         }
+        public bool IsIENumerableLleno(IEnumerable<DataRow> ieNumerable)
+        {
+            bool isFull = false;
+            foreach (DataRow item in ieNumerable)
+            { isFull = true; break; }
+            return isFull;
+        }
         protected void BindBDdl(string Accion)
         {
             if (Accion.Equals("UPD"))
@@ -208,6 +216,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                                 DSTDdl.Tables[4].TableName = "Licencia";
                                 DSTDdl.Tables[5].TableName = "CursoPer";
                                 DSTDdl.Tables[6].TableName = "Linc";
+                                DSTDdl.Tables[7].TableName = "Tercero";
 
                                 ViewState["DSTDdl"] = DSTDdl;
                             }
@@ -238,8 +247,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             DdlCargo.DataTextField = "Descripcion";
             DdlCargo.DataValueField = "CodCargo";
             DdlCargo.DataBind();
-            DdlCargo.Text = VbCodAnt;
-
+            DdlCargo.Text = VbCodAnt;            
         }
         protected void LimpiarCampos()
         {
@@ -257,6 +265,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             DdlArea.Text = "";
             DdlCargo.Text = "";
             TxtUsuario.Text = "";
+            DdlEmsa.Text = "";
         }
         protected void ValidarCampos(string Accion)
         {
@@ -336,6 +345,13 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// Debe ingresar el cargo.
                 ViewState["Validar"] = "N"; return;
             }
+            if (DdlEmsa.Text.Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens18Persn'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// Debe ingresar la compañía.
+                ViewState["Validar"] = "N"; return;
+            }
         }
         protected void ActivarBtn(bool In, bool Md, bool El, bool Ip, bool Otr)
         {
@@ -358,6 +374,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             TxtCelu.Enabled = Edi;
             DdlArea.Enabled = Edi;
             DdlCargo.Enabled = Edi;
+            DdlEmsa.Enabled = Edi;
         }
         protected void Traerdatos(string Prmtr)
         {
@@ -388,6 +405,8 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 DdlArea.Text = HttpUtility.HtmlDecode(SDR["CodArea"].ToString().Trim());
                 DdlCargo.Text = HttpUtility.HtmlDecode(SDR["CodCargo"].ToString().Trim());
                 TxtUsuario.Text = HttpUtility.HtmlDecode(SDR["Usuario"].ToString().Trim());
+                ViewState["EmpAnt"] = HttpUtility.HtmlDecode(SDR["CodEmpresa"].ToString().Trim());
+
                 BindDLicen(TxtCodUsu.Text.Trim());
                 BindDCurso(TxtCodUsu.Text.Trim());
             }
@@ -416,6 +435,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     ActivarCampos(true, true, "Ingresar");
                     DdlBusqPers.SelectedValue = "";
                     DdlBusqPers.Enabled = false;
+                    ViewState["EmpAnt"] = "";
                     BindDLicen("");
                     GrdLicencias.Enabled = false;
                     Result = Idioma.Select("Objeto= 'MensConfIng'"); // |MensConfMod
@@ -432,7 +452,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     var TypPersona = new CsTypPersona()
                     {
                         CodPersona = "",
-                        CodEmpresa = "",
+                        CodEmpresa = DdlEmsa.Text.Trim(),
                         Nombre = TxtNombr.Text.Trim(),
                         Apellido = TxtApell.Text.Trim(),
                         Registro = "",
@@ -476,7 +496,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     foreach (DataRow row in Result)
                     { BtnIngresar.Text = row["Texto"].ToString().Trim(); }//
                     ActivarCampos(false, false, "Ingresar");
-                    DdlBusqPers.Enabled = true;
+                    DdlBusqPers.Enabled = true;                   
                     BindBDdl("UPD");
                     DdlBusqPers.Text = ClsPersona.GetCodPersn().ToString().Trim();
                     Traerdatos(ClsPersona.GetCodPersn().ToString().Trim());
@@ -512,6 +532,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     ActivarCampos(false, true, "UPDATE");
                     DdlBusqPers.SelectedValue = "";
                     DdlBusqPers.Enabled = false;
+                    ViewState["EmpAnt"] = "";
                     Result = Idioma.Select("Objeto= 'MensConfMod'"); //MensConfIng |MensConfMod
                     foreach (DataRow row in Result)
                     { BtnModificar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }//¿Desea editar el registro?  
@@ -526,7 +547,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     var TypPersona = new CsTypPersona()
                     {
                         CodPersona = TxtCodUsu.Text.Trim(),
-                        CodEmpresa = "",
+                        CodEmpresa = DdlEmsa.Text.Trim(),
                         Nombre = TxtNombr.Text.Trim(),
                         Apellido = TxtApell.Text.Trim(),
                         Registro = "",
@@ -672,6 +693,21 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 foreach (DataRow row in Result)
                 { GrdLicencias.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
                 GrdLicencias.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+            }
+
+            if (DSTDdl.Tables["Tercero"].Rows.Count > 0)
+            {
+                DataTable DTL = new DataTable();
+                DTL = DSTDdl.Tables["Tercero"].Clone();
+                DataRow[] DR = DSTDdl.Tables["Tercero"].Select("Activo=1 OR CodTercero = '" + ViewState["EmpAnt"] + "'");
+                if (IsIENumerableLleno(DR))
+                { DTL = DR.CopyToDataTable(); }
+
+                DdlEmsa.DataSource = DTL;
+                DdlEmsa.DataTextField = "RazonSocial";
+                DdlEmsa.DataValueField = "CodTercero";
+                DdlEmsa.DataBind();
+                DdlEmsa.Text = ViewState["EmpAnt"].ToString().Trim();
             }
         }
         protected void GrdLicencias_RowCommand(object sender, GridViewCommandEventArgs e)

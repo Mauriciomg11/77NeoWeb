@@ -295,7 +295,7 @@
                                     <asp:Label ID="LblNumLote" Text='<%# Eval("NumLote") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="Descripción">
+                            <asp:TemplateField HeaderText="Descripción">
                                 <ItemTemplate>
                                     <asp:Label ID="LblDescripcion" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
@@ -310,12 +310,12 @@
                                     <asp:Label ID="LblCodUnidadMedida" Text='<%# Eval("CodUnidadMedida") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="Cod Grupo">
+                            <asp:TemplateField HeaderText="Cod Grupo">
                                 <ItemTemplate>
                                     <asp:Label ID="LblCodGrupo" Text='<%# Eval("CodGrupo") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="Grupo">
+                            <asp:TemplateField HeaderText="Grupo">
                                 <ItemTemplate>
                                     <asp:Label ID="LblGrupo" Text='<%# Eval("Grupo") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
@@ -325,67 +325,67 @@
                                     <asp:Label ID="LblATA" Text='<%# Eval("ATA") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="Posicion Motor">
+                            <asp:TemplateField HeaderText="Posicion Motor">
                                 <ItemTemplate>
                                     <asp:Label ID="LblPosicionMotor" Text='<%# Eval("PosicionMotor") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="Aeronave">
+                            <asp:TemplateField HeaderText="Aeronave">
                                 <ItemTemplate>
                                     <asp:Label ID="LblAeronave" Text='<%# Eval("Aeronave") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="Mayor">
+                            <asp:TemplateField HeaderText="Mayor">
                                 <ItemTemplate>
                                     <asp:Label ID="LblMayoro" Text='<%# Eval("Mayor") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="CodUbicacionFisica">
+                            <asp:TemplateField HeaderText="CodUbicacionFisica">
                                 <ItemTemplate>
                                     <asp:Label ID="LblCodUbicacionFisica" Text='<%# Eval("CodUbicacionFisica") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="Fecha ShelfLife">
+                            <asp:TemplateField HeaderText="Fecha ShelfLife">
                                 <ItemTemplate>
                                     <asp:Label ID="LblFechaShelfLife" Text='<%# Eval("FechaShelfLife") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="Estado">
+                            <asp:TemplateField HeaderText="Estado">
                                 <ItemTemplate>
                                     <asp:Label ID="LblEstado" Text='<%# Eval("Estado") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="FechaVence">
+                            <asp:TemplateField HeaderText="FechaVence">
                                 <ItemTemplate>
                                     <asp:Label ID="LblFechaVence" Text='<%# Eval("FechaVence") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="APU">
+                            <asp:TemplateField HeaderText="APU">
                                 <ItemTemplate>
                                     <asp:Label ID="APU" Text='<%# Eval("APU") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="Motor">
+                            <asp:TemplateField HeaderText="Motor">
                                 <ItemTemplate>
                                     <asp:Label ID="Motor" Text='<%# Eval("Motor") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="Consignacion">
+                            <asp:TemplateField HeaderText="Consignacion">
                                 <ItemTemplate>
                                     <asp:Label ID="Consignacion" Text='<%# Eval("Consignacion") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="Activo">
+                            <asp:TemplateField HeaderText="Activo">
                                 <ItemTemplate>
                                     <asp:Label ID="Activo" Text='<%# Eval("Activo") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="CodElemento">
+                            <asp:TemplateField HeaderText="CodElemento">
                                 <ItemTemplate>
                                     <asp:Label ID="CodElemento" Text='<%# Eval("CodElemento") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="Identificador">
+                            <asp:TemplateField HeaderText="Identificador">
                                 <ItemTemplate>
                                     <asp:Label ID="Identificador" Text='<%# Eval("Identificador") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>

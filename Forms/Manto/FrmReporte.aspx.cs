@@ -24,6 +24,7 @@ namespace _77NeoWeb.Forms.Manto
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
         DataSet DSTGrDtsRpt = new DataSet();
+        DataSet DSTOTGrl = new DataSet();
         DataSet DSTRTE = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -61,6 +62,7 @@ namespace _77NeoWeb.Forms.Manto
                 MltVRte.ActiveViewIndex = 0;
                 ModSeguridad();
                 BindBDdlBusqRte();
+                TraerDatosRtes(0, "UPD");
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
@@ -455,14 +457,62 @@ namespace _77NeoWeb.Forms.Manto
             }
         }
         //******************************************  Reporte de mantenimiento *********************************************************//
+        public bool IsIENumerableLleno(IEnumerable<DataRow> ieNumerable)
+        {
+            bool isFull = false;
+            foreach (DataRow item in ieNumerable)
+            { isFull = true; break; }
+            return isFull;
+        }
         protected void BindBDdlBusqRte()
         {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','RTE','BSQDRLV',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", TxtNumLv.Text.Trim(), Session["!dC!@"]);
-            DdlBusqRte.DataSource = Cnx.DSET(LtxtSql);
-            DdlBusqRte.DataMember = "Datos";
-            DdlBusqRte.DataTextField = "NumRte";
-            DdlBusqRte.DataValueField = "Codigo";
-            DdlBusqRte.DataBind();
+            Cnx.SelecBD();
+            using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
+            {
+                Cnx2.Open();
+                string LtxtSql = "EXEC SP_PANTALLA_Reporte_Manto2 12,'','','','','',0,0,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'";
+                using (SqlCommand SC = new SqlCommand(LtxtSql, Cnx2))
+                {
+                    SC.Parameters.AddWithValue("@U", Session["C77U"]);
+                    SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                    using (SqlDataAdapter SDA = new SqlDataAdapter())
+                    {
+                        using (DataSet DSTOTGrl = new DataSet())
+                        {
+                            SDA.SelectCommand = SC;
+                            SDA.Fill(DSTOTGrl);
+                            DSTOTGrl.Tables[0].TableName = "V00";
+                            DSTOTGrl.Tables[1].TableName = "V01";
+                            DSTOTGrl.Tables[2].TableName = "HK";
+                            DSTOTGrl.Tables[3].TableName = "V03";
+                            DSTOTGrl.Tables[4].TableName = "V04";
+                            DSTOTGrl.Tables[5].TableName = "Tllr";
+                            DSTOTGrl.Tables[6].TableName = "Base";
+                            DSTOTGrl.Tables[7].TableName = "V07";
+                            DSTOTGrl.Tables[8].TableName = "V08";
+                            DSTOTGrl.Tables[9].TableName = "V09";
+                            DSTOTGrl.Tables[10].TableName = "Lcia";
+                            DSTOTGrl.Tables[11].TableName = "V11";
+                            DSTOTGrl.Tables[12].TableName = "PN_Rsva";
+                            DSTOTGrl.Tables[13].TableName = "TipRte";
+                            DSTOTGrl.Tables[14].TableName = "FteRte";
+                            DSTOTGrl.Tables[15].TableName = "EstadoRte";
+                            DSTOTGrl.Tables[16].TableName = "ClasifRte";
+                            DSTOTGrl.Tables[17].TableName = "Posicion";
+                            DSTOTGrl.Tables[18].TableName = "ATA";
+                            DSTOTGrl.Tables[19].TableName = "GeneradoPor";
+                            ViewState["DSTOTGrl"] = DSTOTGrl;
+                        }
+                    }
+                }
+            }
+            DSTOTGrl = (DataSet)ViewState["DSTOTGrl"];
+
+            DdlAeroRte.DataSource = DSTOTGrl.Tables["HK"];
+            DdlAeroRte.DataTextField = "Matricula";
+            DdlAeroRte.DataValueField = "CodAeronave";
+            DdlAeroRte.DataBind();
         }
         /* protected void BindDdlRte()
          {
@@ -510,197 +560,197 @@ namespace _77NeoWeb.Forms.Manto
              DdlBasRte.DataValueField = "CodBase";
              DdlBasRte.DataBind();
          }*/
-        protected void BindDdlRteCondicional(string Categ, string LicGen, string LicCump, string LicVer, string OT)
-        {
-            DSTGrDtsRpt = (DataSet)ViewState["DSTGrDtsRpt"];
-            DataRow[] Result;
+        /* protected void BindDdlRteCondicional(string Categ, string LicGen, string LicCump, string LicVer, string OT)
+         {
+             DSTGrDtsRpt = (DataSet)ViewState["DSTGrDtsRpt"];
+             DataRow[] Result;
 
-            if (DSTGrDtsRpt.Tables["TipRte"].Rows.Count > 0)
-            {
-                DataTable DTTipRt = new DataTable();
-                DTTipRt = DSTGrDtsRpt.Tables[2].Clone();
+             if (DSTGrDtsRpt.Tables["TipRte"].Rows.Count > 0)
+             {
+                 DataTable DTTipRt = new DataTable();
+                 DTTipRt = DSTGrDtsRpt.Tables[2].Clone();
 
-                Result = DSTGrDtsRpt.Tables[2].Select("CodReporte=" + ViewState["TipRteAnt"]);// trae el codigo actual por si esta inactivo
-                foreach (DataRow Row in Result)
-                { DTTipRt.ImportRow(Row); }
+                 Result = DSTGrDtsRpt.Tables[2].Select("CodReporte=" + ViewState["TipRteAnt"]);// trae el codigo actual por si esta inactivo
+                 foreach (DataRow Row in Result)
+                 { DTTipRt.ImportRow(Row); }
 
-                Result = DSTGrDtsRpt.Tables[2].Select("Activo=1");
-                foreach (DataRow Row in Result)
-                { DTTipRt.ImportRow(Row); }
+                 Result = DSTGrDtsRpt.Tables[2].Select("Activo=1");
+                 foreach (DataRow Row in Result)
+                 { DTTipRt.ImportRow(Row); }
 
-                DdlTipRte.DataSource = DTTipRt;
-                DdlTipRte.DataTextField = "TipoReporte";
-                DdlTipRte.DataValueField = "CodReporte";
-                DdlTipRte.DataBind();
-            }
+                 DdlTipRte.DataSource = DTTipRt;
+                 DdlTipRte.DataTextField = "TipoReporte";
+                 DdlTipRte.DataValueField = "CodReporte";
+                 DdlTipRte.DataBind();
+             }
 
-            DdlFuente.DataSource = DSTGrDtsRpt.Tables[3];
-            DdlFuente.DataTextField = "Descripcion";
-            DdlFuente.DataValueField = "Codigo";
-            DdlFuente.DataBind();
+             DdlFuente.DataSource = DSTGrDtsRpt.Tables[3];
+             DdlFuente.DataTextField = "Descripcion";
+             DdlFuente.DataValueField = "Codigo";
+             DdlFuente.DataBind();
 
-            if (DSTGrDtsRpt.Tables["Tll"].Rows.Count > 0)
-            {
-                DataTable DTTll = new DataTable();
-                DTTll = DSTGrDtsRpt.Tables[4].Clone();
+             if (DSTGrDtsRpt.Tables["Tll"].Rows.Count > 0)
+             {
+                 DataTable DTTll = new DataTable();
+                 DTTll = DSTGrDtsRpt.Tables[4].Clone();
 
-                Result = DSTGrDtsRpt.Tables[4].Select("CodTaller= '" + ViewState["TllAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DTTll.ImportRow(Row); }
+                 Result = DSTGrDtsRpt.Tables[4].Select("CodTaller= '" + ViewState["TllAnt"] + "'");
+                 foreach (DataRow Row in Result)
+                 { DTTll.ImportRow(Row); }
 
-                Result = DSTGrDtsRpt.Tables[4].Select("Activo=1");
-                foreach (DataRow Row in Result)
-                { DTTll.ImportRow(Row); }
+                 Result = DSTGrDtsRpt.Tables[4].Select("Activo=1");
+                 foreach (DataRow Row in Result)
+                 { DTTll.ImportRow(Row); }
 
-                DdlTall.DataSource = DTTll;
-                DdlTall.DataTextField = "NomTaller";
-                DdlTall.DataValueField = "CodTaller";
-                DdlTall.DataBind();
-            }
+                 DdlTall.DataSource = DTTll;
+                 DdlTall.DataTextField = "NomTaller";
+                 DdlTall.DataValueField = "CodTaller";
+                 DdlTall.DataBind();
+             }
 
-            DdlEstad.DataSource = DSTGrDtsRpt.Tables[5];
-            DdlEstad.DataTextField = "Descripcion";
-            DdlEstad.DataValueField = "CodStatus";
-            DdlEstad.DataBind();
+             DdlEstad.DataSource = DSTGrDtsRpt.Tables[5];
+             DdlEstad.DataTextField = "Descripcion";
+             DdlEstad.DataValueField = "CodStatus";
+             DdlEstad.DataBind();
 
-            if (DSTGrDtsRpt.Tables["Clsfcn"].Rows.Count > 0)
-            {
-                DataTable DTClsf = new DataTable();
-                DTClsf = DSTGrDtsRpt.Tables[6].Clone();
+             if (DSTGrDtsRpt.Tables["Clsfcn"].Rows.Count > 0)
+             {
+                 DataTable DTClsf = new DataTable();
+                 DTClsf = DSTGrDtsRpt.Tables[6].Clone();
 
-                Result = DSTGrDtsRpt.Tables[6].Select("Codigo= '" + ViewState["ClsfcnAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DTClsf.ImportRow(Row); }
+                 Result = DSTGrDtsRpt.Tables[6].Select("Codigo= '" + ViewState["ClsfcnAnt"] + "'");
+                 foreach (DataRow Row in Result)
+                 { DTClsf.ImportRow(Row); }
 
-                Result = DSTGrDtsRpt.Tables[6].Select("Activo=1");
-                foreach (DataRow Row in Result)
-                { DTClsf.ImportRow(Row); }
+                 Result = DSTGrDtsRpt.Tables[6].Select("Activo=1");
+                 foreach (DataRow Row in Result)
+                 { DTClsf.ImportRow(Row); }
 
-                DdlClasf.DataSource = DTClsf;
-                DdlClasf.DataTextField = "Descripcion";
-                DdlClasf.DataValueField = "Codigo";
-                DdlClasf.DataBind();
-            }
+                 DdlClasf.DataSource = DTClsf;
+                 DdlClasf.DataTextField = "Descripcion";
+                 DdlClasf.DataValueField = "Codigo";
+                 DdlClasf.DataBind();
+             }
 
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{2}',{3},'','CatM',{1},0,0,{4},'01-01-1','02-01-1','03-01-1'",
-               DdlClasf.Text, DdlClasf.SelectedValue.Equals("") ? "0" : DdlAeroRte.Text, Categ, Session["77IDM"], Session["!dC!@"]);
-            DdlCatgr.DataSource = Cnx.DSET(LtxtSql);
-            DdlCatgr.DataTextField = "CodCategoriaMel";
-            DdlCatgr.DataValueField = "IdCategoria";
-            DdlCatgr.DataBind();
+             string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{2}',{3},'','CatM',{1},0,0,{4},'01-01-1','02-01-1','03-01-1'",
+                DdlClasf.Text, DdlClasf.SelectedValue.Equals("") ? "0" : DdlAeroRte.Text, Categ, Session["77IDM"], Session["!dC!@"]);
+             DdlCatgr.DataSource = Cnx.DSET(LtxtSql);
+             DdlCatgr.DataTextField = "CodCategoriaMel";
+             DdlCatgr.DataValueField = "IdCategoria";
+             DdlCatgr.DataBind();
 
-            if (DSTGrDtsRpt.Tables["Pscn"].Rows.Count > 0)
-            {
-                DataTable DTPscn = new DataTable();
-                DTPscn = DSTGrDtsRpt.Tables[7].Clone();
+             if (DSTGrDtsRpt.Tables["Pscn"].Rows.Count > 0)
+             {
+                 DataTable DTPscn = new DataTable();
+                 DTPscn = DSTGrDtsRpt.Tables[7].Clone();
 
-                Result = DSTGrDtsRpt.Tables[7].Select("Codigo= '" + ViewState["PscnAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DTPscn.ImportRow(Row); }
+                 Result = DSTGrDtsRpt.Tables[7].Select("Codigo= '" + ViewState["PscnAnt"] + "'");
+                 foreach (DataRow Row in Result)
+                 { DTPscn.ImportRow(Row); }
 
-                Result = DSTGrDtsRpt.Tables[7].Select("Activo=1");
-                foreach (DataRow Row in Result)
-                { DTPscn.ImportRow(Row); }
+                 Result = DSTGrDtsRpt.Tables[7].Select("Activo=1");
+                 foreach (DataRow Row in Result)
+                 { DTPscn.ImportRow(Row); }
 
-                DdlPosRte.DataSource = DTPscn;
-                DdlPosRte.DataTextField = "Descripcion";
-                DdlPosRte.DataValueField = "Codigo";
-                DdlPosRte.DataBind();
-            }
+                 DdlPosRte.DataSource = DTPscn;
+                 DdlPosRte.DataTextField = "Descripcion";
+                 DdlPosRte.DataValueField = "Codigo";
+                 DdlPosRte.DataBind();
+             }
 
-            DdlAtaRte.DataSource = DSTGrDtsRpt.Tables[8];
-            DdlAtaRte.DataTextField = "Descripcion";
-            DdlAtaRte.DataValueField = "CodCapitulo";
-            DdlAtaRte.DataBind();
+             DdlAtaRte.DataSource = DSTGrDtsRpt.Tables[8];
+             DdlAtaRte.DataTextField = "Descripcion";
+             DdlAtaRte.DataValueField = "CodCapitulo";
+             DdlAtaRte.DataBind();
 
-            if (DSTGrDtsRpt.Tables["Gnrd"].Rows.Count > 0) // Datos de tecnicos abrir, cierre, difiere y verificado
-            {
-                DataTable DTGnrd = new DataTable();
-                DataTable DTCmpl = new DataTable();
-                DataTable DTDfr = new DataTable();
-                DataTable DTVrfc = new DataTable();
+             if (DSTGrDtsRpt.Tables["Gnrd"].Rows.Count > 0) // Datos de tecnicos abrir, cierre, difiere y verificado
+             {
+                 DataTable DTGnrd = new DataTable();
+                 DataTable DTCmpl = new DataTable();
+                 DataTable DTDfr = new DataTable();
+                 DataTable DTVrfc = new DataTable();
 
-                DTGnrd = DSTGrDtsRpt.Tables[9].Clone();
-                Result = DSTGrDtsRpt.Tables[9].Select("CodPersona= '" + ViewState["GnrdAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DTGnrd.ImportRow(Row); }
+                 DTGnrd = DSTGrDtsRpt.Tables[9].Clone();
+                 Result = DSTGrDtsRpt.Tables[9].Select("CodPersona= '" + ViewState["GnrdAnt"] + "'");
+                 foreach (DataRow Row in Result)
+                 { DTGnrd.ImportRow(Row); }
 
-                DTCmpl = DSTGrDtsRpt.Tables[9].Clone();
-                Result = DSTGrDtsRpt.Tables[9].Select("CodPersona= '" + ViewState["CmplAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DTCmpl.ImportRow(Row); }
+                 DTCmpl = DSTGrDtsRpt.Tables[9].Clone();
+                 Result = DSTGrDtsRpt.Tables[9].Select("CodPersona= '" + ViewState["CmplAnt"] + "'");
+                 foreach (DataRow Row in Result)
+                 { DTCmpl.ImportRow(Row); }
 
-                DTDfr = DSTGrDtsRpt.Tables[9].Clone();
-                Result = DSTGrDtsRpt.Tables[9].Select("CodPersona= '" + ViewState["DfrAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DTDfr.ImportRow(Row); }
+                 DTDfr = DSTGrDtsRpt.Tables[9].Clone();
+                 Result = DSTGrDtsRpt.Tables[9].Select("CodPersona= '" + ViewState["DfrAnt"] + "'");
+                 foreach (DataRow Row in Result)
+                 { DTDfr.ImportRow(Row); }
 
-                DTVrfc = DSTGrDtsRpt.Tables[9].Clone();
-                Result = DSTGrDtsRpt.Tables[9].Select("CodPersona= '" + ViewState["VrfcAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DTVrfc.ImportRow(Row); }
+                 DTVrfc = DSTGrDtsRpt.Tables[9].Clone();
+                 Result = DSTGrDtsRpt.Tables[9].Select("CodPersona= '" + ViewState["VrfcAnt"] + "'");
+                 foreach (DataRow Row in Result)
+                 { DTVrfc.ImportRow(Row); }
 
-                Result = DSTGrDtsRpt.Tables[9].Select("CrearReporte= 1 AND Estado = 'ACTIVO'");
-                foreach (DataRow Row in Result)
-                { DTGnrd.ImportRow(Row); DTCmpl.ImportRow(Row); DTDfr.ImportRow(Row); DTVrfc.ImportRow(Row); }
+                 Result = DSTGrDtsRpt.Tables[9].Select("CrearReporte= 1 AND Estado = 'ACTIVO'");
+                 foreach (DataRow Row in Result)
+                 { DTGnrd.ImportRow(Row); DTCmpl.ImportRow(Row); DTDfr.ImportRow(Row); DTVrfc.ImportRow(Row); }
 
-                DdlGenerado.DataSource = DTGnrd;
-                DdlGenerado.DataTextField = "Tecnico";
-                DdlGenerado.DataValueField = "CodPersona";
-                DdlGenerado.DataBind();
+                 DdlGenerado.DataSource = DTGnrd;
+                 DdlGenerado.DataTextField = "Tecnico";
+                 DdlGenerado.DataValueField = "CodPersona";
+                 DdlGenerado.DataBind();
 
-                DdlCumpl.DataSource = DTCmpl;
-                DdlCumpl.DataTextField = "Tecnico";
-                DdlCumpl.DataValueField = "CodPersona";
-                DdlCumpl.DataBind();
+                 DdlCumpl.DataSource = DTCmpl;
+                 DdlCumpl.DataTextField = "Tecnico";
+                 DdlCumpl.DataValueField = "CodPersona";
+                 DdlCumpl.DataBind();
 
-                DdlTecDif.DataSource = DTDfr;
-                DdlTecDif.DataTextField = "Tecnico";
-                DdlTecDif.DataValueField = "CodPersona";
-                DdlTecDif.DataBind();
+                 DdlTecDif.DataSource = DTDfr;
+                 DdlTecDif.DataTextField = "Tecnico";
+                 DdlTecDif.DataValueField = "CodPersona";
+                 DdlTecDif.DataBind();
 
-                DdlVerif.DataSource = DTVrfc;
-                DdlVerif.DataTextField = "Tecnico";
-                DdlVerif.DataValueField = "CodPersona";
-                DdlVerif.DataBind();
+                 DdlVerif.DataSource = DTVrfc;
+                 DdlVerif.DataTextField = "Tecnico";
+                 DdlVerif.DataValueField = "CodPersona";
+                 DdlVerif.DataBind();
 
-                LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}',{2},'','LICTA',0,0,0,{3},'01-01-1','02-01-1','03-01-1'", ViewState["GnrdAnt"].ToString().Trim(), LicGen, Session["77IDM"], Session["!dC!@"]);
-                DdlLicGene.DataSource = Cnx.DSET(LtxtSql);
-                DdlLicGene.DataTextField = "Licencia";
-                DdlLicGene.DataValueField = "Codigo";
-                DdlLicGene.DataBind();
+                 LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}',{2},'','LICTA',0,0,0,{3},'01-01-1','02-01-1','03-01-1'", ViewState["GnrdAnt"].ToString().Trim(), LicGen, Session["77IDM"], Session["!dC!@"]);
+                 DdlLicGene.DataSource = Cnx.DSET(LtxtSql);
+                 DdlLicGene.DataTextField = "Licencia";
+                 DdlLicGene.DataValueField = "Codigo";
+                 DdlLicGene.DataBind();
 
-                LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}',{2},'','LICTA',0,0,0,{3},'01-01-1','02-01-1','03-01-1'", ViewState["CmplAnt"].ToString().Trim(), LicCump, Session["77IDM"], Session["!dC!@"]);
-                DdlLicCump.DataSource = Cnx.DSET(LtxtSql);
-                DdlLicCump.DataTextField = "Licencia";
-                DdlLicCump.DataValueField = "Codigo";
-                DdlLicCump.DataBind();
+                 LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}',{2},'','LICTA',0,0,0,{3},'01-01-1','02-01-1','03-01-1'", ViewState["CmplAnt"].ToString().Trim(), LicCump, Session["77IDM"], Session["!dC!@"]);
+                 DdlLicCump.DataSource = Cnx.DSET(LtxtSql);
+                 DdlLicCump.DataTextField = "Licencia";
+                 DdlLicCump.DataValueField = "Codigo";
+                 DdlLicCump.DataBind();
 
-                LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}',{2},'','LICTA',0,0,0,{3},'01-01-1','02-01-1','03-01-1'", ViewState["VrfcAnt"].ToString().Trim(), LicVer, Session["77IDM"], Session["!dC!@"]);
-                DdlLicVer.DataSource = Cnx.DSET(LtxtSql);
-                DdlLicVer.DataTextField = "Licencia";
-                DdlLicVer.DataValueField = "Codigo";
-                DdlLicVer.DataBind();
-            }
+                 LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}',{2},'','LICTA',0,0,0,{3},'01-01-1','02-01-1','03-01-1'", ViewState["VrfcAnt"].ToString().Trim(), LicVer, Session["77IDM"], Session["!dC!@"]);
+                 DdlLicVer.DataSource = Cnx.DSET(LtxtSql);
+                 DdlLicVer.DataTextField = "Licencia";
+                 DdlLicVer.DataValueField = "Codigo";
+                 DdlLicVer.DataBind();
+             }
 
-            LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','OTPP',{0},{1},0,{2},'01-01-1','02-01-1','03-01-1'", DdlAeroRte.Text, OT, Session["!dC!@"]);
+             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','OTPP',{0},{1},0,{2},'01-01-1','02-01-1','03-01-1'", DdlAeroRte.Text, OT, Session["!dC!@"]);
 
-            DdlOtRte.DataSource = Cnx.DSET(LtxtSql);
-            DdlOtRte.DataTextField = "OT";
-            DdlOtRte.DataValueField = "CodNumOrdenTrab";
-            DdlOtRte.DataBind();
+             DdlOtRte.DataSource = Cnx.DSET(LtxtSql);
+             DdlOtRte.DataTextField = "OT";
+             DdlOtRte.DataValueField = "CodNumOrdenTrab";
+             DdlOtRte.DataBind();
 
-            DdlPnRte.DataSource = DSTGrDtsRpt.Tables[10];
-            DdlPnRte.DataTextField = "PN";
-            DdlPnRte.DataValueField = "Codigo";
-            DdlPnRte.DataBind();
+             DdlPnRte.DataSource = DSTGrDtsRpt.Tables[10];
+             DdlPnRte.DataTextField = "PN";
+             DdlPnRte.DataValueField = "Codigo";
+             DdlPnRte.DataBind();
 
-            LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','',{1},'','PRIO',0,0,0,{2},'01-01-1','02-01-1','03-01-1'", ViewState["CodPrioridad"].ToString(), Session["77IDM"], Session["!dC!@"]);
-            DdlPrioridadOT.DataSource = Cnx.DSET(LtxtSql);
-            DdlPrioridadOT.DataTextField = "Descripcion";
-            DdlPrioridadOT.DataValueField = "CodPrioridadSolicitudMat";
-            DdlPrioridadOT.DataBind();
-        }
+             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','',{1},'','PRIO',0,0,0,{2},'01-01-1','02-01-1','03-01-1'", ViewState["CodPrioridad"].ToString(), Session["77IDM"], Session["!dC!@"]);
+             DdlPrioridadOT.DataSource = Cnx.DSET(LtxtSql);
+             DdlPrioridadOT.DataTextField = "Descripcion";
+             DdlPrioridadOT.DataValueField = "CodPrioridadSolicitudMat";
+             DdlPrioridadOT.DataBind();
+         }*/
         /* protected void BindDdlRteCondicional(int Act, int Inact, string Categ, string LicGen, string LicCump, string LicVer, string CodTall, string CodClasf,
             string CodPos, string UsuGen, string UsuCump, string UsuDif, string UsuVer, string OT)
          {
@@ -804,103 +854,355 @@ namespace _77NeoWeb.Forms.Manto
              DdlPrioridadOT.DataBind();
 
          }*/
-        protected void TraerDatosRtes(int NumRte)
+        protected void BindDdlRteCondicional(string Categ, string LicGen, string LicCump, string LicVer)
+        {
+            DSTOTGrl = (DataSet)ViewState["DSTOTGrl"];
+            DataRow[] Result; string VbCodAnt;
+
+            if (DSTOTGrl.Tables[13].Rows.Count > 0)
+            {
+                DataTable DT = new DataTable();
+                DT = DSTOTGrl.Tables[13].Clone();
+
+                Result = DSTOTGrl.Tables[13].Select("CodReporte=" + ViewState["TipRteAnt"]);// trae el codigo actual por si esta inactivo
+                foreach (DataRow Row in Result)
+                { DT.ImportRow(Row); }
+
+                Result = DSTOTGrl.Tables[13].Select("Activo=1");
+                foreach (DataRow Row in Result)
+                { DT.ImportRow(Row); }
+
+                DdlTipRte.DataSource = DT;
+                DdlTipRte.DataTextField = "TipoReporte";
+                DdlTipRte.DataValueField = "CodReporte";
+                DdlTipRte.DataBind();
+                DdlTipRte.Text = ViewState["TipRteAnt"].ToString().Trim().Equals("") ? "7777" : ViewState["TipRteAnt"].ToString().Trim();
+            }
+
+            VbCodAnt = DdlFuente.Text.Trim();
+            DdlFuente.DataSource = DSTOTGrl.Tables[14];
+            DdlFuente.DataTextField = "Descripcion";
+            DdlFuente.DataValueField = "Codigo";
+            DdlFuente.DataBind();
+            DdlFuente.Text = VbCodAnt;
+
+            if (DSTOTGrl.Tables[5].Rows.Count > 0)
+            {
+                DataTable DT = new DataTable();
+                DT = DSTOTGrl.Tables[5].Clone();
+                DataRow[] DR = DSTOTGrl.Tables[5].Select("Activo=1 OR CodTaller = '" + ViewState["TllAnt"] + "'");
+                if (IsIENumerableLleno(DR))
+                { DT = DR.CopyToDataTable(); }
+
+                DdlTall.DataSource = DT;
+                DdlTall.DataTextField = "NomTaller";
+                DdlTall.DataValueField = "CodTaller";
+                DdlTall.DataBind();
+                DdlTall.Text = ViewState["TllAnt"].ToString().Trim();
+            }
+
+            VbCodAnt = DdlEstad.Text.Trim().Equals("") ? "A" : DdlEstad.Text.Trim();
+            DdlEstad.DataSource = DSTOTGrl.Tables[15];
+            DdlEstad.DataTextField = "Descripcion";
+            DdlEstad.DataValueField = "CodStatus";
+            DdlEstad.DataBind();
+            DdlEstad.Text = VbCodAnt;
+
+            if (DSTOTGrl.Tables[16].Rows.Count > 0)
+            {
+                DataTable DT = new DataTable();
+                DT = DSTOTGrl.Tables[16].Clone();
+                DataRow[] DR = DSTOTGrl.Tables[16].Select("Activo=1 OR Codigo= '" + ViewState["ClsfcnAnt"] + "'");
+                if (IsIENumerableLleno(DR))
+                { DT = DR.CopyToDataTable(); }
+                DdlClasf.DataSource = DT;
+                DdlClasf.DataTextField = "Descripcion";
+                DdlClasf.DataValueField = "Codigo";
+                DdlClasf.DataBind();
+                DdlClasf.SelectedValue = ViewState["ClsfcnAnt"].ToString().Trim();
+            }
+
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{2}',{3},'','CatM',{1},0,0,{4},'01-01-1','02-01-1','03-01-1'",
+               DdlClasf.Text, DdlClasf.SelectedValue.Equals("") ? "0" : DdlAeroRte.Text.Trim(), Categ, Session["77IDM"], Session["!dC!@"]);
+            DdlCatgr.DataSource = Cnx.DSET(LtxtSql);
+            DdlCatgr.DataTextField = "CodCategoriaMel";
+            DdlCatgr.DataValueField = "IdCategoria";
+            DdlCatgr.DataBind();
+
+            if (DSTOTGrl.Tables[17].Rows.Count > 0)
+            {
+                DataTable DT = new DataTable();
+                DT = DSTOTGrl.Tables[17].Clone();
+                DataRow[] DR = DSTOTGrl.Tables[17].Select("Activo=1 OR Codigo= '" + ViewState["PscnAnt"] + "'");
+                if (IsIENumerableLleno(DR))
+                { DT = DR.CopyToDataTable(); }
+                DdlPosRte.DataSource = DT;
+                DdlPosRte.DataTextField = "Descripcion";
+                DdlPosRte.DataValueField = "Codigo";
+                DdlPosRte.DataBind();
+                DdlPosRte.Text = ViewState["PscnAnt"].ToString().Trim();
+            }
+
+            VbCodAnt = DdlAtaRte.Text.Trim();
+            DdlAtaRte.DataSource = DSTOTGrl.Tables[18];
+            DdlAtaRte.DataTextField = "Descripcion";
+            DdlAtaRte.DataValueField = "CodCapitulo";
+            DdlAtaRte.DataBind();
+            DdlAtaRte.Text = VbCodAnt;
+
+            if (DSTOTGrl.Tables[19].Rows.Count > 0) // Datos de tecnicos abrir, cierre, difiere y verificado
+            {
+                DataTable DTGnrd = new DataTable();
+                DataTable DTCmpl = new DataTable();
+                DataTable DTDfr = new DataTable();
+                DataTable DTVrfc = new DataTable();
+
+                DTGnrd = DSTOTGrl.Tables[19].Clone();
+                Result = DSTOTGrl.Tables[19].Select("CodPersona= '" + ViewState["GnrdAnt"] + "'");
+                foreach (DataRow Row in Result)
+                { DTGnrd.ImportRow(Row); }
+
+                DTCmpl = DSTOTGrl.Tables[19].Clone();
+                Result = DSTOTGrl.Tables[19].Select("CodPersona= '" + ViewState["CmplAnt"] + "'");
+                foreach (DataRow Row in Result)
+                { DTCmpl.ImportRow(Row); }
+
+                DTDfr = DSTOTGrl.Tables[19].Clone();
+                Result = DSTOTGrl.Tables[19].Select("CodPersona= '" + ViewState["DfrAnt"] + "'");
+                foreach (DataRow Row in Result)
+                { DTDfr.ImportRow(Row); }
+
+                DTVrfc = DSTOTGrl.Tables[19].Clone();
+                Result = DSTOTGrl.Tables[19].Select("CodPersona= '" + ViewState["VrfcAnt"] + "'");
+                foreach (DataRow Row in Result)
+                { DTVrfc.ImportRow(Row); }
+
+                Result = DSTOTGrl.Tables[19].Select("CrearReporte= 1 AND Estado = 'ACTIVO'");
+                foreach (DataRow Row in Result)
+                { DTGnrd.ImportRow(Row); DTCmpl.ImportRow(Row); DTDfr.ImportRow(Row); DTVrfc.ImportRow(Row); }
+
+                DdlGenerado.DataSource = DTGnrd;
+                DdlGenerado.DataTextField = "Tecnico";
+                DdlGenerado.DataValueField = "CodPersona";
+                DdlGenerado.DataBind();
+
+                DdlCumpl.DataSource = DTCmpl;
+                DdlCumpl.DataTextField = "Tecnico";
+                DdlCumpl.DataValueField = "CodPersona";
+                DdlCumpl.DataBind();
+
+                DdlTecDif.DataSource = DTDfr;
+                DdlTecDif.DataTextField = "Tecnico";
+                DdlTecDif.DataValueField = "CodPersona";
+                DdlTecDif.DataBind();
+
+                DdlVerif.DataSource = DTVrfc;
+                DdlVerif.DataTextField = "Tecnico";
+                DdlVerif.DataValueField = "CodPersona";
+                DdlVerif.DataBind();
+            }
+
+            if (DSTOTGrl.Tables["Lcia"].Rows.Count > 0) //"Licencia"
+            {
+                DataTable DTG = new DataTable();
+                DTG = DSTOTGrl.Tables["Lcia"].Clone();
+                DataRow[] DR = DSTOTGrl.Tables["Lcia"].Select("Activo = 1 AND CodPersona = '" + ViewState["GnrdAnt"].ToString().Trim() + "'");
+                if (IsIENumerableLleno(DR)) { DTG = DR.CopyToDataTable(); }
+                DTG.Rows.Add("10. licencias", "-", "", "1", "");
+                Result = DSTOTGrl.Tables["Lcia"].Select("Licencia= '" + LicGen.Trim() + "' AND CodPersona = '" + ViewState["GnrdAnt"].ToString().Trim() + "'");
+                foreach (DataRow Row in Result) { DTG.ImportRow(Row); }
+                DdlLicGene.DataSource = DTG;
+                DdlLicGene.DataTextField = "Licencia";
+                DdlLicGene.DataValueField = "Codigo";
+                DdlLicGene.DataBind();
+
+                DataTable DTC = new DataTable();
+                DTC = DSTOTGrl.Tables["Lcia"].Clone();
+                DR = DSTOTGrl.Tables["Lcia"].Select("Activo = 1 AND CodPersona = '" + ViewState["CmplAnt"].ToString().Trim() + "'");
+                if (IsIENumerableLleno(DR)) { DTC = DR.CopyToDataTable(); }
+                DTC.Rows.Add("10. licencias", "-", "", "1", "");
+                Result = DSTOTGrl.Tables["Lcia"].Select("Licencia= '" + LicCump.Trim() + "' AND CodPersona = '" + ViewState["CmplAnt"].ToString().Trim() + "'");
+                foreach (DataRow Row in Result) { DTC.ImportRow(Row); }
+                DdlLicCump.DataSource = DTC;
+                DdlLicCump.DataTextField = "Licencia";
+                DdlLicCump.DataValueField = "Codigo";
+                DdlLicCump.DataBind();
+
+                DataTable DTV = new DataTable();
+                DTV = DSTOTGrl.Tables["Lcia"].Clone();
+                DR = DSTOTGrl.Tables["Lcia"].Select("Activo = 1 AND CodPersona = '" + ViewState["VrfcAnt"].ToString().Trim() + "'");
+                if (IsIENumerableLleno(DR)) { DTV = DR.CopyToDataTable(); }
+                DTV.Rows.Add("10. licencias", "-", "", "1", "");
+                Result = DSTOTGrl.Tables["Lcia"].Select("Licencia= '" + LicVer.Trim() + "' AND CodPersona = '" + ViewState["VrfcAnt"].ToString().Trim() + "'");
+                foreach (DataRow Row in Result) { DTV.ImportRow(Row); }
+                DdlLicVer.DataSource = DTV;
+                DdlLicVer.DataTextField = "Licencia";
+                DdlLicVer.DataValueField = "Codigo";
+                DdlLicVer.DataBind();
+            }
+
+            if (DSTOTGrl.Tables[6].Rows.Count > 0) //"Base"
+            {
+                DataTable DT = new DataTable();
+                DataRow[] DR = DSTOTGrl.Tables[6].Select("Activo=1 OR CodBase= '" + ViewState["BaseAnt"] + "'");
+                if (IsIENumerableLleno(DR))
+                { DT = DR.CopyToDataTable(); }
+                DdlBasRte.DataSource = DT;
+                DdlBasRte.DataTextField = "NomBase";
+                DdlBasRte.DataValueField = "CodBase";
+                DdlBasRte.DataBind();
+                DdlBasRte.SelectedValue = ViewState["BaseAnt"].ToString().Trim();
+            }
+
+            LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','OTPP',{0},{1},0,{2},'01-01-1','02-01-1','03-01-1'", DdlAeroRte.Text, ViewState["OtAnt"], Session["!dC!@"]);
+            DdlOtRte.DataSource = Cnx.DSET(LtxtSql);
+            DdlOtRte.DataTextField = "OT";
+            DdlOtRte.DataValueField = "CodNumOrdenTrab";
+            DdlOtRte.DataBind();
+            DdlOtRte.Text = ViewState["OtAnt"].ToString();
+
+            if (DSTOTGrl.Tables[12].Rows.Count > 0) //"P/N"
+            {
+                DataTable DT = new DataTable();
+                DataRow[] DR = DSTOTGrl.Tables[12].Select("CodTipoElemento <> ''");
+                if (IsIENumerableLleno(DR))
+                { DT = DR.CopyToDataTable(); }
+                DataView DV = DT.DefaultView;
+                DV.Sort = "PN";
+                DT = DV.ToTable();
+                VbCodAnt = DdlPnRte.Text.Trim();
+                DdlPnRte.DataSource = DT;
+                DdlPnRte.DataTextField = "PN";
+                DdlPnRte.DataValueField = "CodPN";
+                DdlPnRte.DataBind();
+                DdlPnRte.Text = VbCodAnt;
+            }
+
+            VbCodAnt = DdlPrioridadOT.Text.Trim();
+            LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','',{1},'','PRIO',0,0,0,{2},'01-01-1','02-01-1','03-01-1'", ViewState["CodPrioridad"].ToString(), Session["77IDM"], Session["!dC!@"]);
+            DdlPrioridadOT.DataSource = Cnx.DSET(LtxtSql);
+            DdlPrioridadOT.DataTextField = "Descripcion";
+            DdlPrioridadOT.DataValueField = "CodPrioridadSolicitudMat";
+            DdlPrioridadOT.DataBind();
+            DdlPrioridadOT.Text = VbCodAnt;
+        }
+        protected void TraerDatosRtes(int NumRte, string Accion)
         {
             try
             {
-                Cnx.SelecBD();
-                using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
+                if (Accion.Equals("UPD"))
                 {
-                    string VbFecha;
-                    Cnx2.Open();
-                    using (SqlCommand SC = new SqlCommand("EXEC SP_PANTALLA_Reporte_Manto2 2,'','','','','',@NR,0,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'", Cnx2))
+                    Cnx.SelecBD();
+                    using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
                     {
-                        SC.Parameters.AddWithValue("@NR", NumRte);
-                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
-                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-
-                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        Cnx2.Open();
+                        using (SqlCommand SC = new SqlCommand("EXEC SP_PANTALLA_Reporte_Manto2 2,'','','','','',@Rt,0,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'", Cnx2))
                         {
-                            using (DataSet DSTRTE = new DataSet())
-                            {
-                                SDA.SelectCommand = SC;
-                                SDA.Fill(DSTRTE);
-                                DSTRTE.Tables[0].TableName = "DatosRte";
-                                ViewState["DSTRTE"] = DSTRTE;
-                                if (DSTRTE.Tables[0].Rows.Count > 0)
-                                {
+                            SC.Parameters.AddWithValue("@Rt", NumRte);
+                            SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
 
-                                    ViewState["TipRteAnt"] = DSTRTE.Tables[0].Rows[0]["TipoReporte"].ToString();
-                                    string VbCodCat = DSTRTE.Tables[0].Rows[0]["CodCategoriaMel"].ToString().Trim();
-                                    string VbLicGen = DSTRTE.Tables[0].Rows[0]["NumLicTecAbre"].ToString().Trim();
-                                    string VbLicCump = DSTRTE.Tables[0].Rows[0]["NumLicTecCierre"].ToString().Trim();
-                                    string VbLicVer = DSTRTE.Tables[0].Rows[0]["NumLicenciaRM"].ToString().Trim();
-                                    ViewState["TllAnt"] = DSTRTE.Tables[0].Rows[0]["CodTaller"].ToString().Trim();
-                                    ViewState["ClsfcnAnt"] = DSTRTE.Tables[0].Rows[0]["CodClasifReporteManto"].ToString().Trim();
-                                    ViewState["PscnAnt"] = DSTRTE.Tables[0].Rows[0]["Posicion"].ToString().Trim();
-                                    ViewState["GnrdAnt"] = DSTRTE.Tables[0].Rows[0]["ReportadoPor"].ToString().Trim();
-                                    ViewState["CmplAnt"] = DSTRTE.Tables[0].Rows[0]["CodTecnico"].ToString().Trim();
-                                    ViewState["DfrAnt"] = DSTRTE.Tables[0].Rows[0]["CodUsuarioDiferido"].ToString().Trim();
-                                    ViewState["VrfcAnt"] = DSTRTE.Tables[0].Rows[0]["CodInspectorVerifica"].ToString().Trim();
-                                    string VbOT = DSTRTE.Tables[0].Rows[0]["OtPrincipal"].ToString().Trim();
-                                    ViewState["ESTAPPT"] = DSTRTE.Tables[0].Rows[0]["EstaPPT"].ToString().Trim();
-                                    ViewState["CodPrioridad"] = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["CodPrioridad"].ToString().Trim());
-                                    BindDdlRteCondicional(VbCodCat, VbLicGen, VbLicCump, VbLicVer, VbOT);
-                                    DdlAeroRte.Text = DSTRTE.Tables[0].Rows[0]["CodAeronave"].ToString();
-                                    TxtNroRte.Text = DSTRTE.Tables[0].Rows[0]["NumReporte"].ToString();
-                                    TxtConsTall.Text = DSTRTE.Tables[0].Rows[0]["ConsecutivoROTP"].ToString().Trim();
-                                    DdlTipRte.SelectedValue = DSTRTE.Tables[0].Rows[0]["TipoReporte"].ToString();
-                                    DdlFuente.SelectedValue = DSTRTE.Tables[0].Rows[0]["Fuente"].ToString().Trim();
-                                    TxtCas.Text = DSTRTE.Tables[0].Rows[0]["NumCasilla"].ToString();
-                                    DdlTall.Text = DSTRTE.Tables[0].Rows[0]["CodTaller"].ToString().Trim();
-                                    DdlEstad.SelectedValue = DSTRTE.Tables[0].Rows[0]["Estado"].ToString().Trim();
-                                    CkbNotif.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["Notificado"].ToString());
-                                    BtnNotificar.Enabled = CkbNotif.Checked == true ? false : true;
-                                    DdlClasf.SelectedValue = ViewState["ClsfcnAnt"].ToString().Trim();
-                                    DdlCatgr.SelectedValue = VbCodCat;
-                                    TxtDocRef.Text = DSTRTE.Tables[0].Rows[0]["DocumentoRef"].ToString().Trim();
-                                    DdlPosRte.SelectedValue = ViewState["PscnAnt"].ToString().Trim();
-                                    DdlAtaRte.SelectedValue = DSTRTE.Tables[0].Rows[0]["UbicacionTecnica"].ToString().Trim();
-                                    DdlGenerado.SelectedValue = ViewState["GnrdAnt"].ToString().Trim();
-                                    DdlLicGene.SelectedValue = VbLicGen;
-                                    VbFecha = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["FechaReporte"].ToString().Trim());
-                                    TxtFecDet.Text = VbFecha.Trim().Equals("") ? "" : String.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(VbFecha));
-                                    VbFecha = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["FechaProyectada"].ToString().Trim());
-                                    TxtFecPry.Text = VbFecha.Trim().Equals("") ? "" : String.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(VbFecha));
-                                    // DdlOtRte.Text = DSTRTE.Tables[0].Rows[0]["OtPrincipal"].ToString().Trim();
-                                    DdlOtRte.SelectedValue = VbOT;
-                                    DdlBasRte.SelectedValue = DSTRTE.Tables[0].Rows[0]["CodBase"].ToString().Trim();
-                                    DdlCumpl.SelectedValue = ViewState["CmplAnt"].ToString().Trim();
-                                    DdlLicCump.SelectedValue = VbLicCump;
-                                    VbFecha = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["FechaCumplimiento"].ToString().Trim());
-                                    TxtFecCump.Text = VbFecha.Trim().Equals("") ? "" : String.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(VbFecha));
-                                    RdbPgSi.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["ProgramadoSi"].ToString());
-                                    RdbPgNo.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["ProgramadoNo"].ToString());
-                                    RdbFlCSi.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["FallaConfirmadaSi"].ToString());
-                                    RdbFlCNo.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["FallaConfirmadaNo"].ToString());
-                                    CkbRII.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["RII"].ToString());
-                                    DdlPnRte.Text = DSTRTE.Tables[0].Rows[0]["ParteNumero"].ToString().Trim();
-                                    TxtSnRte.Text = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["SerieNumero"].ToString().Trim());
-                                    TxtTtlAKSN.Text = DSTRTE.Tables[0].Rows[0]["TT_A_C"].ToString().Trim();
-                                    TxtHPrxCu.Text = DSTRTE.Tables[0].Rows[0]["HraProxCump"].ToString().Trim();
-                                    TxtNexDue.Text = DSTRTE.Tables[0].Rows[0]["Next_Due"].ToString().Trim();
-                                    TxtDescRte.Text = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["Reporte"].ToString().Trim());
-                                    txtAccCrr.Text = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["AccionCorrectiva"].ToString().Trim());
-                                    TxtAcciParc.Text = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["AccionParcial"].ToString().Trim());
-                                    DdlTecDif.SelectedValue = ViewState["DfrAnt"].ToString().Trim();
-                                    DdlVerif.SelectedValue = ViewState["VrfcAnt"].ToString().Trim();
-                                    DdlLicVer.SelectedValue = VbLicVer;
-                                    CkbTearDown.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["TearDown"].ToString());
-                                    ViewState["PasoOT"] = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["PasoOT"].ToString().Trim());
-                                    TxtOtSec.Text = DSTRTE.Tables[0].Rows[0]["OtSec"].ToString().Trim();
-                                    ViewState["IDMroRepOT"] = Convert.ToInt32(DSTRTE.Tables[0].Rows[0]["IDMroRepOT"].ToString());
-                                    ViewState["BloquearDetalle"] = Convert.ToInt32(DSTRTE.Tables[0].Rows[0]["BloquearDetalle"].ToString());
-                                    ViewState["TtlRegDet"] = Convert.ToInt32(DSTRTE.Tables[0].Rows[0]["TtlRegDet"].ToString());
-                                    ViewState["CarpetaCargaMasiva"] = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["CargaMasiva"].ToString().Trim());
+                            using (SqlDataAdapter SDA = new SqlDataAdapter())
+                            {
+                                using (DataSet DSTRTE = new DataSet())
+                                {
+                                    SDA.SelectCommand = SC;
+                                    SDA.Fill(DSTRTE);
+                                    DSTRTE.Tables[0].TableName = "DatosRte";
+                                    DSTRTE.Tables[1].TableName = "BusqRte";
+                                    DSTRTE.Tables[2].TableName = "RFisco";
+                                    DSTRTE.Tables[3].TableName = "PNS";
+                                    DSTRTE.Tables[4].TableName = "TimeLic";
+                                    DSTRTE.Tables[5].TableName = "Licencia";
+                                    DSTRTE.Tables[6].TableName = "ImpRte";
+                                    DSTRTE.Tables[7].TableName = "SNOnOff";
+                                    DSTRTE.Tables[8].TableName = "RazonR";
+                                    DSTRTE.Tables[9].TableName = "PosSnOnOff";
+                                    DSTRTE.Tables[10].TableName = "Hrrts";/**/
+                                    ViewState["DSTRTE"] = DSTRTE;
+
                                 }
                             }
                         }
                     }
+                }
+                DSTRTE = (DataSet)ViewState["DSTRTE"];
+                string VbCodAnt = "";
+
+                VbCodAnt = DdlBusqRte.Text.Trim().Equals("") ? "0" : DdlBusqRte.Text.Trim();
+                DdlBusqRte.DataSource = DSTRTE.Tables[1];
+                DdlBusqRte.DataTextField = "NumRte";
+                DdlBusqRte.DataValueField = "Codigo";
+                DdlBusqRte.DataBind();
+                DdlBusqRte.Text = VbCodAnt;
+
+                if (DSTRTE.Tables[0].Rows.Count > 0)
+                {
+                    string VbFecha;
+                    ViewState["TipRteAnt"] = DSTRTE.Tables[0].Rows[0]["TipoReporte"].ToString();
+                    string VbCodCat = DSTRTE.Tables[0].Rows[0]["CodCategoriaMel"].ToString().Trim();
+                    string VbLicGen = DSTRTE.Tables[0].Rows[0]["NumLicTecAbre"].ToString().Trim();
+                    string VbLicCump = DSTRTE.Tables[0].Rows[0]["NumLicTecCierre"].ToString().Trim();
+                    string VbLicVer = DSTRTE.Tables[0].Rows[0]["NumLicenciaRM"].ToString().Trim();
+                    ViewState["TllAnt"] = DSTRTE.Tables[0].Rows[0]["CodTaller"].ToString().Trim();
+                    ViewState["ClsfcnAnt"] = DSTRTE.Tables[0].Rows[0]["CodClasifReporteManto"].ToString().Trim();
+                    ViewState["PscnAnt"] = DSTRTE.Tables[0].Rows[0]["Posicion"].ToString().Trim();
+                    ViewState["GnrdAnt"] = DSTRTE.Tables[0].Rows[0]["ReportadoPor"].ToString().Trim();
+                    ViewState["CmplAnt"] = DSTRTE.Tables[0].Rows[0]["CodTecnico"].ToString().Trim();
+                    ViewState["DfrAnt"] = DSTRTE.Tables[0].Rows[0]["CodUsuarioDiferido"].ToString().Trim();
+                    ViewState["VrfcAnt"] = DSTRTE.Tables[0].Rows[0]["CodInspectorVerifica"].ToString().Trim();
+                    ViewState["ESTAPPT"] = DSTRTE.Tables[0].Rows[0]["EstaPPT"].ToString().Trim();
+                    ViewState["CodPrioridad"] = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["CodPrioridad"].ToString().Trim());
+                    ViewState["BaseAnt"] = DSTRTE.Tables[0].Rows[0]["CodBase"].ToString().Trim();
+                    ViewState["OtAnt"] = DSTRTE.Tables[0].Rows[0]["OtPrincipal"].ToString().Trim();
+                    BindDdlRteCondicional(VbCodCat, VbLicGen, VbLicCump, VbLicVer);
+
+                    DdlAeroRte.Text = DSTRTE.Tables[0].Rows[0]["CodAeronave"].ToString();
+                    TxtNroRte.Text = DSTRTE.Tables[0].Rows[0]["NumReporte"].ToString();
+                    TxtConsTall.Text = DSTRTE.Tables[0].Rows[0]["ConsecutivoROTP"].ToString().Trim();
+                    DdlFuente.SelectedValue = DSTRTE.Tables[0].Rows[0]["Fuente"].ToString().Trim();
+                    TxtCas.Text = DSTRTE.Tables[0].Rows[0]["NumCasilla"].ToString();
+                    DdlEstad.SelectedValue = DSTRTE.Tables[0].Rows[0]["Estado"].ToString().Trim();
+                    CkbNotif.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["Notificado"].ToString());
+                    BtnNotificar.Enabled = CkbNotif.Checked == true ? false : true;
+                    DdlCatgr.SelectedValue = VbCodCat;
+                    TxtDocRef.Text = DSTRTE.Tables[0].Rows[0]["DocumentoRef"].ToString().Trim();
+                    DdlAtaRte.SelectedValue = DSTRTE.Tables[0].Rows[0]["UbicacionTecnica"].ToString().Trim();
+                    DdlGenerado.SelectedValue = ViewState["GnrdAnt"].ToString().Trim();
+                    DdlLicGene.SelectedValue = VbLicGen;
+                    VbFecha = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["FechaReporte"].ToString().Trim());
+                    TxtFecDet.Text = VbFecha.Trim().Equals("") ? "" : String.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(VbFecha));
+                    VbFecha = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["FechaProyectada"].ToString().Trim());
+                    TxtFecPry.Text = VbFecha.Trim().Equals("") ? "" : String.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(VbFecha));
+                    DdlOtRte.Text = DSTRTE.Tables[0].Rows[0]["OtPrincipal"].ToString().Trim();
+                    DdlCumpl.SelectedValue = ViewState["CmplAnt"].ToString().Trim();
+                    DdlLicCump.SelectedValue = VbLicCump;
+                    VbFecha = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["FechaCumplimiento"].ToString().Trim());
+                    TxtFecCump.Text = VbFecha.Trim().Equals("") ? "" : String.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(VbFecha));
+                    RdbPgSi.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["ProgramadoSi"].ToString());
+                    RdbPgNo.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["ProgramadoNo"].ToString());
+                    RdbFlCSi.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["FallaConfirmadaSi"].ToString());
+                    RdbFlCNo.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["FallaConfirmadaNo"].ToString());
+                    CkbRII.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["RII"].ToString());
+                    DdlPnRte.Text = DSTRTE.Tables[0].Rows[0]["ParteNumero"].ToString().Trim();
+                    TxtSnRte.Text = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["SerieNumero"].ToString().Trim());
+                    TxtTtlAKSN.Text = DSTRTE.Tables[0].Rows[0]["TT_A_C"].ToString().Trim();
+                    TxtHPrxCu.Text = DSTRTE.Tables[0].Rows[0]["HraProxCump"].ToString().Trim();
+                    TxtNexDue.Text = DSTRTE.Tables[0].Rows[0]["Next_Due"].ToString().Trim();
+                    TxtDescRte.Text = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["Reporte"].ToString().Trim());
+                    txtAccCrr.Text = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["AccionCorrectiva"].ToString().Trim());
+                    TxtAcciParc.Text = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["AccionParcial"].ToString().Trim());
+                    DdlTecDif.SelectedValue = ViewState["DfrAnt"].ToString().Trim();
+                    DdlVerif.SelectedValue = ViewState["VrfcAnt"].ToString().Trim();
+                    DdlLicVer.SelectedValue = VbLicVer;
+                    CkbTearDown.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["TearDown"].ToString());
+                    ViewState["PasoOT"] = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["PasoOT"].ToString().Trim());
+                    TxtOtSec.Text = DSTRTE.Tables[0].Rows[0]["OtSec"].ToString().Trim();
+                    ViewState["IDMroRepOT"] = Convert.ToInt32(DSTRTE.Tables[0].Rows[0]["IDMroRepOT"].ToString());
+                    ViewState["BloquearDetalle"] = Convert.ToInt32(DSTRTE.Tables[0].Rows[0]["BloquearDetalle"].ToString());
+                    ViewState["TtlRegDet"] = Convert.ToInt32(DSTRTE.Tables[0].Rows[0]["TtlRegDet"].ToString());
+                    ViewState["CarpetaCargaMasiva"] = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["CargaMasiva"].ToString().Trim());
+                    // ViewState["CarpetaCargaMasiva"] = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["CargaMasiva"].ToString().Trim());                   
                 }
                 /*using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
                 {
@@ -979,7 +1281,7 @@ namespace _77NeoWeb.Forms.Manto
                         ViewState["IDMroRepOT"] = Convert.ToInt32(SDR["IDMroRepOT"].ToString());
                         ViewState["BloquearDetalle"] = Convert.ToInt32(SDR["BloquearDetalle"].ToString());
                         ViewState["TtlRegDet"] = Convert.ToInt32(SDR["TtlRegDet"].ToString());
-                        ViewState["CarpetaCargaMasiva"] = HttpUtility.HtmlDecode(SDR["CargaMasiva"].ToString().Trim());
+                       
                     }
                     SDR.Close();
                     Cnx2.Close();
@@ -1013,13 +1315,13 @@ namespace _77NeoWeb.Forms.Manto
                     if (DdlVerif.Text.Equals(""))
                     {
                         // DdlVerif.Enabled = Edi;
-                        DdlVerif.Text = Session["C77U"].ToString().Trim();
-                        string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}','','','LICTA',0,0,0,{2},'01-01-1','02-01-1','03-01-1'", DdlVerif.Text, "", Session["!dC!@"]);
-                        DdlLicVer.DataSource = Cnx.DSET(LtxtSql);
-                        DdlLicVer.DataMember = "Datos";
-                        DdlLicVer.DataTextField = "Licencia";
-                        DdlLicVer.DataValueField = "Codigo";
-                        DdlLicVer.DataBind();
+                        /* DdlVerif.Text = Session["C77U"].ToString().Trim();
+                         string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}','','','LICTA',0,0,0,{2},'01-01-1','02-01-1','03-01-1'", DdlVerif.Text, "", Session["!dC!@"]);
+                         DdlLicVer.DataSource = Cnx.DSET(LtxtSql);
+                         DdlLicVer.DataMember = "Datos";
+                         DdlLicVer.DataTextField = "Licencia";
+                         DdlLicVer.DataValueField = "Codigo";
+                         DdlLicVer.DataBind();*/
                     }
                     DdlLicVer.Enabled = Edi;
                     CkbTearDown.Enabled = Edi;
@@ -1140,6 +1442,7 @@ namespace _77NeoWeb.Forms.Manto
             DdlVerif.Text = "";
             DdlLicVer.Text = "";
             CkbTearDown.Checked = false;
+            DdlAeroRte.Text = "0";
         }
         protected void ValidarRpte(string Accion)
         {
@@ -1394,7 +1697,7 @@ namespace _77NeoWeb.Forms.Manto
         }
         protected void DdlBusqRte_TextChanged(object sender, EventArgs e)
         {
-            TraerDatosRtes(Convert.ToInt32(DdlBusqRte.SelectedValue));
+            TraerDatosRtes(Convert.ToInt32(DdlBusqRte.SelectedValue), "UPD");
             PerfilesGrid();
         }
         protected void DdlAeroRte_TextChanged(object sender, EventArgs e)
@@ -1452,9 +1755,9 @@ namespace _77NeoWeb.Forms.Manto
         }
         protected void DdlClasf_TextChanged(object sender, EventArgs e)
         {
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','CatM',{1},0,0,{2},'01-01-1','02-01-1','03-01-1'", DdlClasf.Text, DdlAeroRte.Text, Session["!dC!@"]);
+            string VbHk = DdlAeroRte.Text.Trim().Equals("") ? "0" : DdlAeroRte.Text.Trim();
+            string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','CatM',{1},0,0,{2},'01-01-1','02-01-1','03-01-1'", DdlClasf.Text, VbHk, Session["!dC!@"]);
             DdlCatgr.DataSource = Cnx.DSET(LtxtSql);
-            DdlCatgr.DataMember = "Datos";
             DdlCatgr.DataTextField = "CodCategoriaMel";
             DdlCatgr.DataValueField = "IdCategoria";
             DdlCatgr.DataBind();
@@ -1466,8 +1769,7 @@ namespace _77NeoWeb.Forms.Manto
         }
         protected void DdlCatgr_TextChanged(object sender, EventArgs e)
         {
-            if (!DdlCatgr.Text.Equals(""))
-            { CalcularFechaPry(); }
+            if (!DdlCatgr.Text.Equals("")) { CalcularFechaPry(); }
         }
         protected void TxtFecDet_TextChanged(object sender, EventArgs e)
         {
@@ -1484,9 +1786,7 @@ namespace _77NeoWeb.Forms.Manto
             TxtHPrxCu.Focus();
         }
         protected void TxtHPrxCu_TextChanged(object sender, EventArgs e)
-        {
-            CalcularNexDue(TxtTtlAKSN.Text, TxtHPrxCu.Text);
-        }
+        { CalcularNexDue(TxtTtlAKSN.Text, TxtHPrxCu.Text); }
         protected void BtnIngresar_Click(object sender, EventArgs e)
         {
             try
@@ -1508,15 +1808,18 @@ namespace _77NeoWeb.Forms.Manto
                     ActivarCampRte(true, true, "Ingresar");
                     string vbleUsuGe = ViewState["UsuDefecto"].Equals("S") ? Session["C77U"].ToString() : DdlGenerado.SelectedValue;
                     DdlGenerado.SelectedValue = vbleUsuGe;
-                    ViewState["TipRteAnt"] = "-1";
-                    ViewState["TllAnt"] = "-1";
-                    ViewState["ClsfcnAnt"] = "-1";
-                    ViewState["PscnAnt"] = "-1";
+
+                    ViewState["TipRteAnt"] = "7777";
+                    ViewState["TllAnt"] = "";
+                    ViewState["ClsfcnAnt"] = "";
+                    ViewState["PscnAnt"] = "";
                     ViewState["GnrdAnt"] = vbleUsuGe.Trim();
                     ViewState["CmplAnt"] = "-1";
                     ViewState["DfrAnt"] = "-1";
                     ViewState["VrfcAnt"] = "-1";
-                    BindDdlRteCondicional("", "", "", "", "-1");
+                    ViewState["BaseAnt"] = "";
+                    ViewState["OtAnt"] = "0";
+                    BindDdlRteCondicional("", "", "", "");
                     DdlBusqRte.SelectedValue = "0";
                     DdlBusqRte.Enabled = false;
                     ViewState["PasoOT"] = "";
@@ -1616,7 +1919,7 @@ namespace _77NeoWeb.Forms.Manto
                     ViewState["Accion"] = "";
                     ActivarCampRte(false, false, "Ingresar");
                     DdlBusqRte.Enabled = true;
-                    TraerDatosRtes(ClsLvDetManto.GetCodIdRte());
+                    TraerDatosRtes(ClsLvDetManto.GetCodIdRte(), "UPD");
                     BtnIngresar.OnClientClick = "";
                 }
             }
@@ -1644,16 +1947,8 @@ namespace _77NeoWeb.Forms.Manto
                     VblLicGenAnt = DdlLicGene.Text;
                     VbLicCumpAnt = DdlLicCump.Text;
                     VbOtAnt = DdlOtRte.Text;
-                    // VblTipRte = DdlTipRte.Text;
                     VblCat = DdlCatgr.Text;
                     VbLicVerif = DdlLicVer.Text;
-                    //string VbCodTall = DdlTall.Text;
-                    // string VbCodClasf = DdlClasf.Text;
-                    //string VbCodPos = DdlPosRte.Text;
-                    // string UsuGen = DdlGenerado.Text;
-                    //string UsuCump = DdlCumpl.Text;
-                    // string UsuDif = DdlTecDif.Text;
-                    // string UsuVer = DdlVerif.Text;
                     string VbOT = DdlOtRte.Text;
 
                     ViewState["TipRteAnt"] = DdlTipRte.Text.Trim();
@@ -1664,21 +1959,16 @@ namespace _77NeoWeb.Forms.Manto
                     ViewState["CmplAnt"] = DdlCumpl.Text.Trim();
                     ViewState["DfrAnt"] = DdlTecDif.Text.Trim();
                     ViewState["VrfcAnt"] = DdlVerif.Text.Trim();
-                    BindDdlRteCondicional(DdlCatgr.Text, VblLicGenAnt, VbLicCumpAnt, VbLicVerif, VbOT);
+                    ViewState["OtAnt"] = DdlOtRte.Text.Trim();
+                    BindDdlRteCondicional(DdlCatgr.Text, VblLicGenAnt, VbLicCumpAnt, VbLicVerif);
 
                     DdlLicGene.Text = VblLicGenAnt;
                     DdlLicCump.Text = VbLicCumpAnt;
                     DdlOtRte.Text = VbOtAnt;
-                    DdlTipRte.Text = ViewState["TipRteAnt"].ToString().Trim();
+
                     DdlCatgr.Text = VblCat;
                     DdlLicVer.Text = VbLicVerif;
-                    DdlTall.Text = ViewState["TllAnt"].ToString().Trim();
-                    DdlClasf.Text = ViewState["ClsfcnAnt"].ToString().Trim();
-                    DdlPosRte.Text = ViewState["PscnAnt"].ToString().Trim();
-                    DdlGenerado.Text = ViewState["GnrdAnt"].ToString().Trim();
-                    DdlCumpl.Text = ViewState["CmplAnt"].ToString().Trim();
-                    DdlTecDif.Text = ViewState["DfrAnt"].ToString().Trim();
-                    DdlVerif.Text = ViewState["VrfcAnt"].ToString().Trim();
+
                     DdlOtRte.Text = VbOT;
                     ActivarBtnRpt(false, true, false, false, false);
                     DataRow[] Result1 = Idioma.Select("Objeto= 'BotonIngOk'");
@@ -1751,7 +2041,7 @@ namespace _77NeoWeb.Forms.Manto
                         Accion = "UPDATE",
                     };
                     ObjLvDetManto.Add(TypLvDetManto);
-                    int borrar = (int)ViewState["IDMroRepOT"];
+
                     List<ClsTypLvDetalleManto> ObjMROReporteOTPpal = new List<ClsTypLvDetalleManto>();
                     var TypMROReporteOTPpal = new ClsTypLvDetalleManto()
                     {
@@ -1785,7 +2075,7 @@ namespace _77NeoWeb.Forms.Manto
                     ViewState["Accion"] = "";
                     ActivarCampRte(false, false, "UPDATE");
                     DdlBusqRte.Enabled = true;
-                    TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text));
+                    TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
                     BtnModificar.OnClientClick = "";
                 }
             }
@@ -1915,21 +2205,11 @@ namespace _77NeoWeb.Forms.Manto
             Page.Title = ViewState["PageTit"].ToString().Trim();
         }
         protected void IbtConsultarBusq_Click(object sender, ImageClickEventArgs e)
-        {
-            BIndDataBusq();
-            Page.Title = ViewState["PageTit"].ToString().Trim();
-        }
+        { BIndDataBusq(); Page.Title = ViewState["PageTit"].ToString().Trim(); }
         protected void IbtExpConsulRte_Click(object sender, ImageClickEventArgs e)
-        {
-            Exportar("Reporte");
-            Page.Title = ViewState["PageTit"].ToString().Trim();
-        }
+        { Exportar("Reporte"); Page.Title = ViewState["PageTit"].ToString().Trim(); }
         protected void IbtCerrarBusq_Click(object sender, ImageClickEventArgs e)
-        {
-            TblBusqRte.Visible = false;
-            MltVRte.ActiveViewIndex = 0;
-            Page.Title = ViewState["PageTit"].ToString().Trim();
-        }
+        { TblBusqRte.Visible = false; MltVRte.ActiveViewIndex = 0; Page.Title = ViewState["PageTit"].ToString().Trim(); }
         protected void BIndDataBusq()
         {
             CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
@@ -1940,18 +2220,12 @@ namespace _77NeoWeb.Forms.Manto
             {
                 CursorIdioma.Alimentar("CurBusqRte", Session["77IDM"].ToString().Trim());
                 string VbTxtSql = "", VbOpcion = "";
-                if (RdbBusqRteNum.Checked == true)
-                { VbOpcion = "RteNum"; }
-                if (RdbBusqRteHk.Checked == true)
-                { VbOpcion = "HK"; }
-                if (RdbBusqRteAta.Checked == true)
-                { VbOpcion = "Ata"; }
-                if (RdbBusqRteOT.Checked == true)
-                { VbOpcion = "OT"; }
-                if (RdbBusqRteTecn.Checked == true)
-                { VbOpcion = "Tecn"; }
-                if (RdbBusqRteDescRte.Checked == true)
-                { VbOpcion = "DescRte"; }
+                if (RdbBusqRteNum.Checked == true) { VbOpcion = "RteNum"; }
+                if (RdbBusqRteHk.Checked == true) { VbOpcion = "HK"; }
+                if (RdbBusqRteAta.Checked == true) { VbOpcion = "Ata"; }
+                if (RdbBusqRteOT.Checked == true) { VbOpcion = "OT"; }
+                if (RdbBusqRteTecn.Checked == true) { VbOpcion = "Tecn"; }
+                if (RdbBusqRteDescRte.Checked == true) { VbOpcion = "DescRte"; }
                 VbTxtSql = "EXEC SP_PANTALLA_Reporte_Manto2 7,@Prmtr,'','','CurBusqRte',@Opc,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
 
                 sqlConB.Open();
@@ -1970,7 +2244,6 @@ namespace _77NeoWeb.Forms.Manto
                             DataRow[] Result1 = Idioma.Select("Objeto= 'GrdEnviar'");
                             foreach (DataRow row in Result1)
                             { VblLbl = row["Texto"].ToString().Trim(); }
-
                             GrdBusq.DataSource = DtB; GrdBusq.DataBind();
 
                             foreach (GridViewRow row in GrdBusq.Rows)
@@ -1985,16 +2258,13 @@ namespace _77NeoWeb.Forms.Manto
         protected void GrdBusq_SelectedIndexChanged(object sender, EventArgs e)
         {
             string vbcod = HttpUtility.HtmlDecode(GrdBusq.SelectedRow.Cells[1].Text);
-            TraerDatosRtes(Convert.ToInt32(vbcod));
+            TraerDatosRtes(Convert.ToInt32(vbcod), "UPD");
             MltVRte.ActiveViewIndex = 0;
             PerfilesGrid();
             Page.Title = ViewState["PageTit"].ToString().Trim();
         }
         protected void GrdBusq_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdBusq.PageIndex = e.NewPageIndex;
-            BIndDataBusq();
-        }
+        { GrdBusq.PageIndex = e.NewPageIndex; BIndDataBusq(); }
         //******************************************  Recurso y Licencia Reporte de mantenimiento *********************************************************
         protected void BtnReserva_Click(object sender, EventArgs e)
         {
@@ -2025,42 +2295,37 @@ namespace _77NeoWeb.Forms.Manto
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
+                DSTRTE = (DataSet)ViewState["DSTRTE"];
+
+                DataRow[] Result;
                 DataTable DT = new DataTable();
-                Cnx.SelecBD();
-                using (SqlConnection SCX2 = new SqlConnection(Cnx.GetConex()))
+
+                DT = DSTRTE.Tables[2].Clone();
+                Result = DSTRTE.Tables[2].Select("PN LIKE '%" + TxtConsulPnRecurRte.Text.Trim() + "%'");
+                foreach (DataRow Row in Result)
+                { DT.ImportRow(Row); }
+
+                if (DT.Rows.Count > 0)
                 {
-                    string VbTxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 4,@PN,'','','','',@SubOT,0,0,@ICC,'01-01-1','02-01-1','03-01-1'");
-                    using (SqlCommand SC = new SqlCommand(VbTxtSql, SCX2))
-                    {
-                        SC.Parameters.AddWithValue("@PN", TxtConsulPnRecurRte.Text.Trim());
-                        SC.Parameters.AddWithValue("@SubOT", TxtRecurSubOt.Text.Trim());
-                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                        SCX2.Open();
-                        using (SqlDataAdapter SDA = new SqlDataAdapter())
-                        {
-                            SDA.SelectCommand = SC;
-                            SDA.Fill(DT);
-                            if (DT.Rows.Count > 0)
-                            {
-                                GrdRecursoF.DataSource = DT;
-                                GrdRecursoF.DataBind();
-                                ViewState["TtlRegDet"] = DT.Rows.Count;
-                            }
-                            else
-                            {
-                                ViewState["TtlRegDet"] = 0;
-                                DT.Rows.Add(DT.NewRow());
-                                GrdRecursoF.DataSource = DT;
-                                GrdRecursoF.DataBind();
-                                GrdRecursoF.Rows[0].Cells.Clear();
-                                GrdRecursoF.Rows[0].Cells.Add(new TableCell());
-                                DataRow[] Result = Idioma.Select("Objeto= 'RteMens41'");
-                                foreach (DataRow row in Result)
-                                { GrdRecursoF.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
-                                GrdRecursoF.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-                            }
-                        }
-                    }
+                    DataView DV = DT.DefaultView;
+                    DV.Sort = "NumeroPosicion";
+                    DT = DV.ToTable();
+                    GrdRecursoF.DataSource = DT;
+                    GrdRecursoF.DataBind();
+                    ViewState["TtlRegDet"] = DT.Rows.Count;
+                }
+                else
+                {
+                    ViewState["TtlRegDet"] = 0;
+                    DT.Rows.Add(DT.NewRow());
+                    GrdRecursoF.DataSource = DT;
+                    GrdRecursoF.DataBind();
+                    GrdRecursoF.Rows[0].Cells.Clear();
+                    GrdRecursoF.Rows[0].Cells.Add(new TableCell());
+                    Result = Idioma.Select("Objeto= 'RteMens41'");
+                    foreach (DataRow row in Result)
+                    { GrdRecursoF.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
+                    GrdRecursoF.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
                 }
             }
             catch (Exception Ex)
@@ -2070,15 +2335,9 @@ namespace _77NeoWeb.Forms.Manto
             }
         }
         protected void IbtConsulPnRecurRte_Click(object sender, ImageClickEventArgs e)
-        {
-            BindDRecursoF();
-            Page.Title = ViewState["PageTit"].ToString().Trim();
-        }
+        { BindDRecursoF(); Page.Title = ViewState["PageTit"].ToString().Trim(); }
         protected void IbtExpExcelPnRecurRte_Click(object sender, ImageClickEventArgs e)
-        {
-            Exportar("Reserva");
-            Page.Title = ViewState["PageTit"].ToString().Trim();
-        }
+        { Exportar("Reserva"); Page.Title = ViewState["PageTit"].ToString().Trim(); }
         protected void IbtCerrarRec_Click(object sender, ImageClickEventArgs e)
         {
             TxtOtSec.Text = TxtRecurSubOt.Text;
@@ -2089,6 +2348,7 @@ namespace _77NeoWeb.Forms.Manto
         protected void DdlPNRFPP_TextChanged(object sender, EventArgs e)
         {
             PerfilesGrid();
+            DSTOTGrl = (DataSet)ViewState["DSTOTGrl"];
             TextBox TxtDesRFPP = (GrdRecursoF.FooterRow.FindControl("TxtDesRFPP") as TextBox);
             DropDownList DdlPNRFPP = (GrdRecursoF.FooterRow.FindControl("DdlPNRFPP") as DropDownList);
             TextBox TxtPNRFPP = (GrdRecursoF.FooterRow.FindControl("TxtPNRFPP") as TextBox);
@@ -2101,18 +2361,9 @@ namespace _77NeoWeb.Forms.Manto
                 TxtDesRFPP.Enabled = true;
                 return;
             }
-            Cnx.SelecBD();
-            using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
-            {
-                Cnx2.Open();
-                string VblString = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 17,'{0}','','','','DescRef',0,0,0,0,'01-01-01','01-01-01','01-01-01'", DdlPNRFPP.Text);
-                SqlCommand SC = new SqlCommand(VblString, Cnx2);
-                SqlDataReader SDR = SC.ExecuteReader();
-                if (SDR.Read())
-                {
-                    TxtDesRFPP.Text = SDR["Descripcion"].ToString();
-                }
-            }
+            DataRow[] Result = DSTOTGrl.Tables[12].Select("PN= '" + DdlPNRFPP.Text.Trim() + "'");
+            foreach (DataRow row in Result)
+            { TxtDesRFPP.Text = row["Descripcion"].ToString().Trim(); }
         }
         protected void GrdRecursoF_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -2217,6 +2468,7 @@ namespace _77NeoWeb.Forms.Manto
                                         }
                                     }
                                     TxtConsulPnRecurRte.Text = "";
+                                    TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
                                     BindDRecursoF();
                                     PerfilesGrid();
                                 }
@@ -2319,6 +2571,7 @@ namespace _77NeoWeb.Forms.Manto
                                 }
                                 TxtRecurSubOt.Text = VblSubOt.ToString();
                                 GrdRecursoF.EditIndex = -1;
+                                TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
                                 BindDRecursoF();
                                 PerfilesGrid();
                             }
@@ -2345,10 +2598,7 @@ namespace _77NeoWeb.Forms.Manto
             }
         }
         protected void GrdRecursoF_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            GrdRecursoF.EditIndex = -1;
-            BindDRecursoF();
-        }
+        { GrdRecursoF.EditIndex = -1; BindDRecursoF(); }
         protected void GrdRecursoF_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
@@ -2405,6 +2655,7 @@ namespace _77NeoWeb.Forms.Manto
                                     return;
                                 }
                                 TxtConsulPnRecurRte.Text = "";
+                                TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
                                 BindDRecursoF();
                             }
                             catch (Exception Ex)
@@ -2431,12 +2682,13 @@ namespace _77NeoWeb.Forms.Manto
         protected void GrdRecursoF_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
+            DSTOTGrl = (DataSet)ViewState["DSTOTGrl"];
             PerfilesGrid();
             string LtxtSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 3,'','','','','PNRF',0,0,0,{0},'01-01-01','01-01-01','01-01-01'", Session["!dC!@"]);
             if (e.Row.RowType == DataControlRowType.Footer)
             {
                 DropDownList DdlPNRFPP = (e.Row.FindControl("DdlPNRFPP") as DropDownList);
-                DdlPNRFPP.DataSource = Cnx.DSET(LtxtSql);
+                DdlPNRFPP.DataSource = DSTOTGrl.Tables[12]; // PN_Rsva;
                 DdlPNRFPP.DataTextField = "PN";
                 DdlPNRFPP.DataValueField = "CodPN";
                 DdlPNRFPP.DataBind();
@@ -2517,50 +2769,27 @@ namespace _77NeoWeb.Forms.Manto
             }
         }
         protected void GrdRecursoF_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdRecursoF.PageIndex = e.NewPageIndex;
-            BindDRecursoF();
-            PerfilesGrid();
-        }
+        { GrdRecursoF.PageIndex = e.NewPageIndex; BindDRecursoF(); PerfilesGrid(); }
+        //******************************** Licencias ********************************
         protected void BindDLicencia()
         {
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
-                DataTable DT = new DataTable();
-                Cnx.SelecBD();
-                using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
-                {
-                    string VbTxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 5,'','','','','',@NumRTE,0,0,@ICC,'01-01-1','02-01-1','03-01-1'");
+                DSTRTE = (DataSet)ViewState["DSTRTE"];
 
-                    sqlCon.Open();
-                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlCon))
-                    {
-                        SC.Parameters.AddWithValue("@NumRTE", TxtRecurNumRte.Text);
-                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                        using (SqlDataAdapter SDA = new SqlDataAdapter())
-                        {
-                            SDA.SelectCommand = SC;
-                            SDA.Fill(DT);
-                            if (DT.Rows.Count > 0)
-                            {
-                                GrdLicen.DataSource = DT;
-                                GrdLicen.DataBind();
-                            }
-                            else
-                            {
-                                DT.Rows.Add(DT.NewRow());
-                                GrdLicen.DataSource = DT;
-                                GrdLicen.DataBind();
-                                GrdLicen.Rows[0].Cells.Clear();
-                                GrdLicen.Rows[0].Cells.Add(new TableCell());
-                                DataRow[] Result = Idioma.Select("Objeto= 'RteMens40'");
-                                foreach (DataRow row in Result)
-                                { GrdLicen.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
-                                GrdLicen.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-                            }
-                        }
-                    }
+                if (DSTRTE.Tables[4].Rows.Count > 0) { GrdLicen.DataSource = DSTRTE.Tables[4]; GrdLicen.DataBind(); }
+                else
+                {
+                    DSTRTE.Tables[4].Rows.Add(DSTRTE.Tables[4].NewRow());
+                    GrdLicen.DataSource = DSTRTE.Tables[4];
+                    GrdLicen.DataBind();
+                    GrdLicen.Rows[0].Cells.Clear();
+                    GrdLicen.Rows[0].Cells.Add(new TableCell());
+                    DataRow[] Result = Idioma.Select("Objeto= 'RteMens40'");
+                    foreach (DataRow row in Result)
+                    { GrdLicen.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
+                    GrdLicen.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
                 }
             }
             catch (Exception Ex)
@@ -2572,21 +2801,13 @@ namespace _77NeoWeb.Forms.Manto
         protected void DdlLicenRFPP_TextChanged(object sender, EventArgs e)
         {
             PerfilesGrid();
+            DSTRTE = (DataSet)ViewState["DSTRTE"];
             TextBox TxtDesLiRFPP = (GrdLicen.FooterRow.FindControl("TxtDesLiRFPP") as TextBox);
             DropDownList DdlLicenRFPP = (GrdLicen.FooterRow.FindControl("DdlLicenRFPP") as DropDownList);
-            Cnx.SelecBD();
-            using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
-            {
-                Cnx2.Open();
-                string VblString = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 17,'','','','','DescLicenRF',@CodLic,0,0,0,'01-01-01','01-01-01','01-01-01'");
-                SqlCommand SC = new SqlCommand(VblString, Cnx2);
-                SC.Parameters.AddWithValue("@CodLic", DdlLicenRFPP.SelectedValue);
-                SqlDataReader SDR = SC.ExecuteReader();
-                if (SDR.Read())
-                {
-                    TxtDesLiRFPP.Text = SDR["Descripcion"].ToString();
-                }
-            } /**/
+
+            DataRow[] Result = DSTRTE.Tables[5].Select("CodIdLicencia= " + DdlLicenRFPP.Text.Trim());
+            foreach (DataRow row in Result)
+            { TxtDesLiRFPP.Text = row["Descripcion"].ToString().Trim(); }
         }
         protected void GrdLicen_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -2637,6 +2858,7 @@ namespace _77NeoWeb.Forms.Manto
                                         return;
                                     }
                                     Transac.Commit();
+                                    TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
                                     BindDLicencia();
                                     PerfilesGrid();
                                 }
@@ -2664,10 +2886,7 @@ namespace _77NeoWeb.Forms.Manto
             }
         }
         protected void GrdLicen_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            GrdLicen.EditIndex = e.NewEditIndex;
-            BindDLicencia();
-        }
+        { GrdLicen.EditIndex = e.NewEditIndex; BindDLicencia(); }
         protected void GrdLicen_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             try
@@ -2702,6 +2921,7 @@ namespace _77NeoWeb.Forms.Manto
                                 SC.ExecuteNonQuery();
                                 Transac.Commit();
                                 GrdLicen.EditIndex = -1;
+                                TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
                                 BindDLicencia();
                                 PerfilesGrid();
                             }
@@ -2726,10 +2946,7 @@ namespace _77NeoWeb.Forms.Manto
             }
         }
         protected void GrdLicen_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            GrdLicen.EditIndex = -1;
-            BindDLicencia();
-        }
+        { GrdLicen.EditIndex = -1; BindDLicencia(); }
         protected void GrdLicen_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -2762,6 +2979,7 @@ namespace _77NeoWeb.Forms.Manto
                             SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             SC.ExecuteNonQuery();
                             Transac.Commit();
+                            TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
                             BindDLicencia();
                         }
                         catch (Exception Ex)
@@ -2780,12 +2998,12 @@ namespace _77NeoWeb.Forms.Manto
         protected void GrdLicen_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
+            DSTRTE = (DataSet)ViewState["DSTRTE"];
             PerfilesGrid();
-            string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','LICRF',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
             if (e.Row.RowType == DataControlRowType.Footer)
             {
                 DropDownList DdlLicenRFPP = (e.Row.FindControl("DdlLicenRFPP") as DropDownList);
-                DdlLicenRFPP.DataSource = Cnx.DSET(LtxtSql);
+                DdlLicenRFPP.DataSource = DSTRTE.Tables[5];
                 DdlLicenRFPP.DataTextField = "CodLicencia";
                 DdlLicenRFPP.DataValueField = "CodIdLicencia";
                 DdlLicenRFPP.DataBind();
@@ -2866,11 +3084,7 @@ namespace _77NeoWeb.Forms.Manto
             }
         }
         protected void GrdLicen_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdLicen.PageIndex = e.NewPageIndex;
-            BindDLicencia();
-            PerfilesGrid();
-        }
+        { GrdLicen.PageIndex = e.NewPageIndex; BindDLicencia(); PerfilesGrid(); }
         //******************************************  Subir Recurso maxivamente *********************************************************
         protected void BtnCargaMaxiva_Click(object sender, EventArgs e)
         {
@@ -2914,7 +3128,6 @@ namespace _77NeoWeb.Forms.Manto
                     cnn.Close();
 
                     cnn.Open();
-                    // string sql = "SELECT *FROM [Tabla$]";
                     string sql = "SELECT * From [" + SheetName + "]";
                     OleDbCommand command = new OleDbCommand(sql, cnn);
                     OleDbDataAdapter DA = new OleDbDataAdapter(command);
@@ -2979,7 +3192,6 @@ namespace _77NeoWeb.Forms.Manto
             }
             catch (Exception Ex)
             {
-                // ScriptManager.RegisterClientScriptBlock(this.UpPnlCargaMasiva, UpPnlCargaMasiva.GetType(), "IdntificadorBloqueScript", "alert('No se realizó la acción, verifica la plantilla')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "VALIDACIÓN ELIMINAR DET S/N SRV MANTO", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
@@ -3029,15 +3241,13 @@ namespace _77NeoWeb.Forms.Manto
                 return;
             }
             IbtGuardarCargaMax.Enabled = false;
+            TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
             BindDRecursoF();
             MltVRte.ActiveViewIndex = 2;
             Page.Title = ViewState["PageTit"].ToString().Trim();
         }
         protected void IbtCerrarSubMaxivo_Click(object sender, ImageClickEventArgs e)
-        {
-            MltVRte.ActiveViewIndex = 2;
-            Page.Title = ViewState["PageTit"].ToString().Trim();
-        }
+        { MltVRte.ActiveViewIndex = 2; Page.Title = ViewState["PageTit"].ToString().Trim(); }
         //******************************************  Impresion Reporte *********************************************************
         protected void BtnImprimir_Click(object sender, EventArgs e)
         {
@@ -3045,39 +3255,22 @@ namespace _77NeoWeb.Forms.Manto
             { return; }
             MltVRte.ActiveViewIndex = 4;
             string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
-            DataSet ds = new DataSet();
-            Cnx.SelecBD();
-            using (SqlConnection SCnx1 = new SqlConnection(Cnx.GetConex()))
-            {
-                ReportParameter[] parameters = new ReportParameter[3];
+            DSTRTE = (DataSet)ViewState["DSTRTE"];
+            ReportParameter[] parameters = new ReportParameter[3];
 
-                parameters[0] = new ReportParameter("PrmCia", Session["NomCiaPpal"].ToString().Trim());
-                parameters[1] = new ReportParameter("PrmNit", Session["Nit77Cia"].ToString().Trim());
-                parameters[2] = new ReportParameter("PrmImg", VbLogo, true);
+            parameters[0] = new ReportParameter("PrmCia", Session["NomCiaPpal"].ToString().Trim());
+            parameters[1] = new ReportParameter("PrmNit", Session["Nit77Cia"].ToString().Trim());
+            parameters[2] = new ReportParameter("PrmImg", VbLogo, true);
 
-                string StSql = " EXEC SP_PANTALLA_Reporte_Manto2 8,'','','','','',@RteNum,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
-                using (SqlCommand SC = new SqlCommand(StSql, SCnx1))
-                {
-                    SC.Parameters.AddWithValue("@RteNum", TxtNroRte.Text);
-                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                    using (SqlDataAdapter SDA = new SqlDataAdapter())
-                    {
-                        SDA.SelectCommand = SC;
-                        SDA.Fill(ds);
-                        RvwReporte.LocalReport.EnableExternalImages = true;
-                        RvwReporte.LocalReport.ReportPath = "Report/Ing/ReporteV2.rdlc";
-                        RvwReporte.LocalReport.DataSources.Clear();
-                        RvwReporte.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
-                        RvwReporte.LocalReport.SetParameters(parameters);
-                        RvwReporte.LocalReport.Refresh();
-                    }
-                }
-            }
+            RvwReporte.LocalReport.EnableExternalImages = true;
+            RvwReporte.LocalReport.ReportPath = "Report/Ing/ReporteV2.rdlc";
+            RvwReporte.LocalReport.DataSources.Clear();
+            RvwReporte.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", DSTRTE.Tables[6]));
+            RvwReporte.LocalReport.SetParameters(parameters);
+            RvwReporte.LocalReport.Refresh();
         }
         protected void IbtCerrarImpresion_Click(object sender, ImageClickEventArgs e)
-        {
-            MltVRte.ActiveViewIndex = 0;
-        }
+        { MltVRte.ActiveViewIndex = 0; }
         //******************************************  SN On Off  *********************************************************
         protected void BtnSnOnOf_Click(object sender, EventArgs e)
         {
@@ -3095,39 +3288,20 @@ namespace _77NeoWeb.Forms.Manto
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
-                DataTable DT = new DataTable();
-                Cnx.SelecBD();
-                using (SqlConnection SCX2 = new SqlConnection(Cnx.GetConex()))
+                DSTRTE = (DataSet)ViewState["DSTRTE"];
+                if (DSTRTE.Tables[7].Rows.Count > 0)
+                { GrdSnOnOff.DataSource = DSTRTE.Tables[7]; GrdSnOnOff.DataBind(); }
+                else
                 {
-                    string VbTxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 9,'','','','','',@NR,0,0,@ICC,'01-01-1','02-01-1','03-01-1'");
-                    using (SqlCommand SC = new SqlCommand(VbTxtSql, SCX2))
-                    {
-                        SC.Parameters.AddWithValue("@NR", TxtSnOnOffNumRte.Text.Trim());
-                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                        SCX2.Open();
-                        using (SqlDataAdapter SDA = new SqlDataAdapter())
-                        {
-                            SDA.SelectCommand = SC;
-                            SDA.Fill(DT);
-                            if (DT.Rows.Count > 0)
-                            {
-                                GrdSnOnOff.DataSource = DT;
-                                GrdSnOnOff.DataBind();
-                            }
-                            else
-                            {
-                                DT.Rows.Add(DT.NewRow());
-                                GrdSnOnOff.DataSource = DT;
-                                GrdSnOnOff.DataBind();
-                                GrdSnOnOff.Rows[0].Cells.Clear();
-                                GrdSnOnOff.Rows[0].Cells.Add(new TableCell());
-                                DataRow[] Result = Idioma.Select("Objeto= 'SinRegistros'");
-                                foreach (DataRow row in Result)
-                                { GrdSnOnOff.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
-                                GrdSnOnOff.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-                            }
-                        }
-                    }
+                    DSTRTE.Tables[7].Rows.Add(DSTRTE.Tables[7].NewRow());
+                    GrdSnOnOff.DataSource = DSTRTE.Tables[7];
+                    GrdSnOnOff.DataBind();
+                    GrdSnOnOff.Rows[0].Cells.Clear();
+                    GrdSnOnOff.Rows[0].Cells.Add(new TableCell());
+                    DataRow[] Result = Idioma.Select("Objeto= 'SinRegistros'");
+                    foreach (DataRow row in Result)
+                    { GrdSnOnOff.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
+                    GrdSnOnOff.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
                 }
             }
             catch (Exception Ex)
@@ -3137,10 +3311,7 @@ namespace _77NeoWeb.Forms.Manto
             }
         }
         protected void IbtCerrarSnOnOff_Click(object sender, ImageClickEventArgs e)
-        {
-            MltVRte.ActiveViewIndex = 0;
-            Page.Title = ViewState["PageTit"].ToString().Trim();
-        }
+        { MltVRte.ActiveViewIndex = 0; Page.Title = ViewState["PageTit"].ToString().Trim(); }
         protected void DdlPNOn_TextChanged(object sender, EventArgs e)
         {
             ListBox LtbSNOn = (GrdSnOnOff.Rows[(int)ViewState["Index"]].FindControl("LtbSNOn") as ListBox); // El indice se toma en el evento RowEditing
@@ -3351,6 +3522,7 @@ namespace _77NeoWeb.Forms.Manto
                                 SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 SC.ExecuteNonQuery();
                                 Transac.Commit();
+                                TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
                                 BindDSnOnOff();
                                 PerfilesGrid();
                             }
@@ -3369,11 +3541,7 @@ namespace _77NeoWeb.Forms.Manto
             }
         }
         protected void GrdSnOnOff_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            GrdSnOnOff.EditIndex = e.NewEditIndex;
-            ViewState["Index"] = e.NewEditIndex;
-            BindDSnOnOff();
-        }
+        { GrdSnOnOff.EditIndex = e.NewEditIndex; ViewState["Index"] = e.NewEditIndex; BindDSnOnOff(); }
         protected void GrdSnOnOff_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -3439,6 +3607,7 @@ namespace _77NeoWeb.Forms.Manto
                             SC.ExecuteNonQuery();
                             Transac.Commit();
                             GrdSnOnOff.EditIndex = -1;
+                            TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
                             BindDSnOnOff();
                             PerfilesGrid();
                         }
@@ -3456,10 +3625,7 @@ namespace _77NeoWeb.Forms.Manto
             }
         }
         protected void GrdSnOnOff_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            GrdSnOnOff.EditIndex = -1;
-            BindDSnOnOff();
-        }
+        { GrdSnOnOff.EditIndex = -1; BindDSnOnOff(); }
         protected void GrdSnOnOff_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -3484,6 +3650,7 @@ namespace _77NeoWeb.Forms.Manto
                             SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             SC.ExecuteNonQuery();
                             Transac.Commit();
+                            TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
                             BindDSnOnOff();
                         }
                         catch (Exception Ex)
@@ -3502,34 +3669,33 @@ namespace _77NeoWeb.Forms.Manto
         protected void GrdSnOnOff_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            string LtxtSql = "";
+            DSTRTE = (DataSet)ViewState["DSTRTE"];
+            IEnumerable<DataRow> VbQry = from A in DSTRTE.Tables[3].AsEnumerable() where A.Field<string>("CodPn") != "- N -" select A;
+            DataTable DT = VbQry.CopyToDataTable();
             if (e.Row.RowType == DataControlRowType.Footer)
             {
                 DropDownList DdlRazonRPP = (e.Row.FindControl("DdlRazonRPP") as DropDownList);
-                LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','RAZ',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
-                DdlRazonRPP.DataSource = Cnx.DSET(LtxtSql);
+                DdlRazonRPP.DataSource = DSTRTE.Tables[8];
                 DdlRazonRPP.DataTextField = "Descripcion";
                 DdlRazonRPP.DataValueField = "CodRemocion";
                 DdlRazonRPP.DataBind();
 
-                LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','PosR',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
                 DropDownList DdlPosicPP = (e.Row.FindControl("DdlPosicPP") as DropDownList);
-                DdlPosicPP.DataSource = Cnx.DSET(LtxtSql);
+                DdlPosicPP.DataSource = DSTRTE.Tables[9];
                 DdlPosicPP.DataTextField = "Descripcion";
                 DdlPosicPP.DataValueField = "Codigo";
                 DdlPosicPP.DataBind();
 
-                LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','PNRTE',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
                 DropDownList DdlPNOnPP = (e.Row.FindControl("DdlPNOnPP") as DropDownList);
-                DdlPNOnPP.DataSource = Cnx.DSET(LtxtSql);
+                DdlPNOnPP.DataSource = DT;
                 DdlPNOnPP.DataTextField = "PN";
-                DdlPNOnPP.DataValueField = "Codigo";
+                DdlPNOnPP.DataValueField = "CodPn";
                 DdlPNOnPP.DataBind();
 
                 DropDownList DdlPNOffPP = (e.Row.FindControl("DdlPNOffPP") as DropDownList);
-                DdlPNOffPP.DataSource = Cnx.DSET(LtxtSql);
+                DdlPNOffPP.DataSource = DT;
                 DdlPNOffPP.DataTextField = "PN";
-                DdlPNOffPP.DataValueField = "Codigo";
+                DdlPNOffPP.DataValueField = "CodPn";
                 DdlPNOffPP.DataBind();
 
                 TextBox TxtFecPP = (e.Row.FindControl("TxtFecPP") as TextBox);
@@ -3565,38 +3731,34 @@ namespace _77NeoWeb.Forms.Manto
             {
                 DataRowView dr = e.Row.DataItem as DataRowView;
                 DropDownList DdlRazonR = (e.Row.FindControl("DdlRazonR") as DropDownList);
-                string borrar = dr["CodRazonR"].ToString().Trim();
-                LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','RAZ',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", dr["CodRazonR"].ToString().Trim(), Session["!dC!@"]);
-                DdlRazonR.DataSource = Cnx.DSET(LtxtSql);
+
+                DdlRazonR.DataSource = DSTRTE.Tables[8];
                 DdlRazonR.DataTextField = "Descripcion";
                 DdlRazonR.DataValueField = "CodRemocion";
                 DdlRazonR.DataBind();
                 DdlRazonR.SelectedValue = dr["CodRazonR"].ToString().Trim();
 
                 DataRowView DrP = e.Row.DataItem as DataRowView;
-                LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','PosR',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", DrP["Posicion"].ToString().Trim(), Session["!dC!@"]);
                 DropDownList DdlPosic = (e.Row.FindControl("DdlPosic") as DropDownList);
-                DdlPosic.DataSource = Cnx.DSET(LtxtSql);
+                DdlPosic.DataSource = DSTRTE.Tables[9];
                 DdlPosic.DataTextField = "Descripcion";
                 DdlPosic.DataValueField = "Codigo";
                 DdlPosic.DataBind();
                 DdlPosic.SelectedValue = DrP["Posicion"].ToString().Trim();
 
                 DataRowView DrPN = e.Row.DataItem as DataRowView;
-                LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','PNRTE',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", DrPN["CodPnOn"].ToString().Trim(), Session["!dC!@"]);
                 DropDownList DdlPNOn = (e.Row.FindControl("DdlPNOn") as DropDownList);
-                DdlPNOn.DataSource = Cnx.DSET(LtxtSql);
+                DdlPNOn.DataSource = DT;
                 DdlPNOn.DataTextField = "PN";
-                DdlPNOn.DataValueField = "Codigo";
+                DdlPNOn.DataValueField = "CodPn";
                 DdlPNOn.DataBind();
                 DdlPNOn.SelectedValue = DrPN["CodPnOn"].ToString().Trim();
 
                 DataRowView DrPNOf = e.Row.DataItem as DataRowView;
-                LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','PNRTE',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", DrPNOf["CodPnOff"].ToString().Trim(), Session["!dC!@"]);
                 DropDownList DdlPNOff = (e.Row.FindControl("DdlPNOff") as DropDownList);
-                DdlPNOff.DataSource = Cnx.DSET(LtxtSql);
+                DdlPNOff.DataSource = DT;
                 DdlPNOff.DataTextField = "PN";
-                DdlPNOff.DataValueField = "Codigo";
+                DdlPNOff.DataValueField = "CodPn";
                 DdlPNOff.DataBind();
                 DdlPNOff.SelectedValue = DrPNOf["CodPnOff"].ToString().Trim();
 
@@ -3660,50 +3822,27 @@ namespace _77NeoWeb.Forms.Manto
             }
         }
         protected void GrdSnOnOff_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdSnOnOff.PageIndex = e.NewPageIndex;
-            BindDSnOnOff();
-            PerfilesGrid();
-        }
+        { GrdSnOnOff.PageIndex = e.NewPageIndex; BindDSnOnOff(); PerfilesGrid(); }
         //******************************************  herramientas *********************************************************
         protected void BindDHta()
         {
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
-                DataTable DT = new DataTable();
-                Cnx.SelecBD();
-                using (SqlConnection SCX2 = new SqlConnection(Cnx.GetConex()))
+                DSTRTE = (DataSet)ViewState["DSTRTE"];
+                if (DSTRTE.Tables[10].Rows.Count > 0)
+                { GrdHta.DataSource = DSTRTE.Tables[10]; GrdHta.DataBind(); }
+                else
                 {
-                    string VbTxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto 17,'','','','',@NR,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'");
-                    using (SqlCommand SC = new SqlCommand(VbTxtSql, SCX2))
-                    {
-                        SC.Parameters.AddWithValue("@NR", TxtSnOnOffNumRte.Text.Trim());
-                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                        SCX2.Open();
-                        using (SqlDataAdapter SDA = new SqlDataAdapter())
-                        {
-                            SDA.SelectCommand = SC;
-                            SDA.Fill(DT);
-                            if (DT.Rows.Count > 0)
-                            {
-                                GrdHta.DataSource = DT;
-                                GrdHta.DataBind();
-                            }
-                            else
-                            {
-                                DT.Rows.Add(DT.NewRow());
-                                GrdHta.DataSource = DT;
-                                GrdHta.DataBind();
-                                GrdHta.Rows[0].Cells.Clear();
-                                GrdHta.Rows[0].Cells.Add(new TableCell());
-                                DataRow[] Result = Idioma.Select("Objeto= 'SinRegistros'");
-                                foreach (DataRow row in Result)
-                                { GrdHta.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
-                                GrdHta.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-                            }
-                        }
-                    }
+                    DSTRTE.Tables[10].Rows.Add(DSTRTE.Tables[10].NewRow());
+                    GrdHta.DataSource = DSTRTE.Tables[10];
+                    GrdHta.DataBind();
+                    GrdHta.Rows[0].Cells.Clear();
+                    GrdHta.Rows[0].Cells.Add(new TableCell());
+                    DataRow[] Result = Idioma.Select("Objeto= 'SinRegistros'");
+                    foreach (DataRow row in Result)
+                    { GrdHta.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
+                    GrdHta.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
                 }
             }
             catch (Exception Ex)
@@ -3851,6 +3990,7 @@ namespace _77NeoWeb.Forms.Manto
                                 SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 SC.ExecuteNonQuery();
                                 Transac.Commit();
+                                TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
                                 BindDHta();
                                 PerfilesGrid();
                             }
@@ -3869,11 +4009,7 @@ namespace _77NeoWeb.Forms.Manto
             }
         }
         protected void GrdHta_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            GrdHta.EditIndex = e.NewEditIndex;
-            ViewState["Index"] = e.NewEditIndex;
-            BindDHta();
-        }
+        { GrdHta.EditIndex = e.NewEditIndex; ViewState["Index"] = e.NewEditIndex; BindDHta(); }
         protected void GrdHta_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -3928,6 +4064,7 @@ namespace _77NeoWeb.Forms.Manto
                             SC.ExecuteNonQuery();
                             Transac.Commit();
                             GrdHta.EditIndex = -1;
+                            TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
                             BindDHta();
                             PerfilesGrid();
                         }
@@ -3945,10 +4082,7 @@ namespace _77NeoWeb.Forms.Manto
             }
         }
         protected void GrdHta_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            GrdHta.EditIndex = -1;
-            BindDHta();
-        }
+        { GrdHta.EditIndex = -1; BindDHta(); }
         protected void GrdHta_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -3973,6 +4107,7 @@ namespace _77NeoWeb.Forms.Manto
                             SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             SC.ExecuteNonQuery();
                             Transac.Commit();
+                            TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
                             BindDHta();
                         }
                         catch (Exception Ex)
@@ -3991,14 +4126,15 @@ namespace _77NeoWeb.Forms.Manto
         protected void GrdHta_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            string LtxtSql = "";
+            DSTRTE = (DataSet)ViewState["DSTRTE"];
+            IEnumerable<DataRow> VbQry = from A in DSTRTE.Tables[3].AsEnumerable() where A.Field<string>("CodTipoElemento") == "03" select A;
+            DataTable DT = VbQry.CopyToDataTable();
             if (e.Row.RowType == DataControlRowType.Footer)
             {
-                LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','HTA',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
                 DropDownList DdlPNHtaPP = (e.Row.FindControl("DdlPNHtaPP") as DropDownList);
-                DdlPNHtaPP.DataSource = Cnx.DSET(LtxtSql);
+                DdlPNHtaPP.DataSource = DT;
                 DdlPNHtaPP.DataTextField = "PN";
-                DdlPNHtaPP.DataValueField = "Codigo";
+                DdlPNHtaPP.DataValueField = "CodPN";
                 DdlPNHtaPP.DataBind();
 
                 CalendarExtender CalFechVcePP = (e.Row.FindControl("CalFechVcePP") as CalendarExtender);
@@ -4029,11 +4165,10 @@ namespace _77NeoWeb.Forms.Manto
             if ((e.Row.RowState & DataControlRowState.Edit) > 0)
             {
                 DataRowView DrPN = e.Row.DataItem as DataRowView;
-                LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','HTA',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", DrPN["PN"].ToString().Trim(), Session["!dC!@"]);
                 DropDownList DdlPNHta = (e.Row.FindControl("DdlPNHta") as DropDownList);
-                DdlPNHta.DataSource = Cnx.DSET(LtxtSql);
+                DdlPNHta.DataSource = DT;
                 DdlPNHta.DataTextField = "PN";
-                DdlPNHta.DataValueField = "Codigo";
+                DdlPNHta.DataValueField = "CodPN";
                 DdlPNHta.DataBind();
                 DdlPNHta.SelectedValue = DrPN["PN"].ToString().Trim();
 
@@ -4095,11 +4230,7 @@ namespace _77NeoWeb.Forms.Manto
             }
         }
         protected void GrdHta_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdHta.EditIndex = e.NewPageIndex;
-            BindDHta();
-            PerfilesGrid();
-        }
+        { GrdHta.EditIndex = e.NewPageIndex; BindDHta(); PerfilesGrid(); }
         //******************************************  Procedimientos *********************************************************
         protected void Exportar(string Condcion)
         {

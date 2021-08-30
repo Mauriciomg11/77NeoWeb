@@ -87,6 +87,24 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
         protected global::System.Web.UI.WebControls.DropDownList DdlBusqPers;
 
         /// <summary>
+        /// Control LblEmsa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblEmsa;
+
+        /// <summary>
+        /// Control DdlEmsa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DdlEmsa;
+
+        /// <summary>
         /// Control CkbActivo.
         /// </summary>
         /// <remarks>

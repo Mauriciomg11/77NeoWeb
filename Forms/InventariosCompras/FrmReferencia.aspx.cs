@@ -483,14 +483,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
-                string LtxtSql = String.Format("SELECT TOP 1 CodReferencia FROM TblReferencia WHERE SUBSTRing(RTRIM(CodReferencia),1,7)='{0}' ORDER BY IdReferencia desc ", Ref);
+                string LtxtSql = String.Format("SELECT TOP 1 CodReferencia FROM TblReferencia WHERE SUBSTRing(RTRIM(CodReferencia),1,7)='{0}' AND IdConfigCia = @ICC ORDER BY IdReferencia desc ", Ref);
                 SqlCommand Comando = new SqlCommand(LtxtSql, sqlCon);
+                Comando.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                 sqlCon.Open();
                 SqlDataReader tbl = Comando.ExecuteReader();
                 if (tbl.Read())
-                {
-                    TxtCod.Text = tbl["CodReferencia"].ToString();
-                }
+                {                    TxtCod.Text = tbl["CodReferencia"].ToString();                }
                 else
                 { LimpiarCampos(); }
             }
@@ -502,8 +501,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
             using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
             {
                 Cnx2.Open();
-                string LtxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 8,'{0}','','','','',0,0,0,0,'01-01-01','02-01-01','03-01-01'", TxtCod.Text);
+                string LtxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 8,'{0}','','','','',0,0,0,@ICC,'01-01-01','02-01-01','03-01-01'", TxtCod.Text);
                 SqlCommand SqlC = new SqlCommand(LtxtSql, Cnx2);
+                SqlC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                 SqlDataReader tbl = SqlC.ExecuteReader();
                 if (tbl.Read())
                 {
@@ -519,9 +519,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         {
                             DdlTipo.Enabled = Edi;
                             if (CkbVerif.Checked == false || CkbVerif.Enabled == true)
-                            {
-                                CkbVerif.Enabled = Edi;
-                            }
+                            {                                CkbVerif.Enabled = Edi;                            }
                         }
                     }
                     if (tbl["ElE"].ToString().Equals("N") && tbl["SPE"].ToString().Equals("N"))
@@ -543,15 +541,15 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     if (!DdlIdent.SelectedValue.Equals("SN") && (int)ViewState["CE5ActivoNif"] == 1)
                     { CkbNiF.Enabled = Edi; }
                 }
-
             }
             if (accion.Equals("Modificar"))
             {
                 using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
                 {
                     Cnx2.Open();
-                    string LtxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 1,'{0}','{1}','','','',0,0,0,0,'01-01-01','02-01-01','03-01-01'", TxtCod.Text, DdlUM.SelectedValue);
+                    string LtxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 1,'{0}','{1}','','','',0,0,0,@ICC,'01-01-01','02-01-01','03-01-01'", TxtCod.Text, DdlUM.SelectedValue);
                     SqlCommand SqlC2 = new SqlCommand(LtxtSql, Cnx2);
+                    SqlC2.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataReader DR2 = SqlC2.ExecuteReader();
                     if (DR2.Read())
                     {
@@ -565,8 +563,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
             {
                 ViewState["Apu"] = 'S';
                 Cnx3.Open();
-                string LtxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 10,'{0}','','','','ACTIVA-APU',0,0,0,0,'01-01-01','02-01-01','03-01-01'", TxtCod.Text);
+                string LtxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 10,'{0}','','','','ACTIVA-APU',0,0,0,@ICC,'01-01-01','02-01-01','03-01-01'", TxtCod.Text);
                 SqlCommand SqlC2 = new SqlCommand(LtxtSql, Cnx3);
+                SqlC2.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                 SqlDataReader DR3 = SqlC2.ExecuteReader();
                 if (DR3.Read())
                 {
@@ -788,10 +787,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 {
                     AsignarValores("Ingresar");
                     if (Session["VlRefer"].ToString() == "N")
-                    {
-                        BindDataAll(TxtCod.Text, "");
-                        return;
-                    }
+                    {                        BindDataAll(TxtCod.Text, "");                        return;                    }
                     Cnx.SelecBD();
                     using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                     {
@@ -1115,15 +1111,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         DAB.Fill(DtB);
 
                         if (DtB.Rows.Count > 0)
-                        {
-                            GrdDatos.DataSource = DtB;
-                            GrdDatos.DataBind();
-                        }
+                        { GrdDatos.DataSource = DtB; GrdDatos.DataBind(); }
                         else
-                        {
-                            GrdDatos.DataSource = null;
-                            GrdDatos.DataBind();
-                        }
+                        { GrdDatos.DataSource = null; GrdDatos.DataBind(); }
                     }
                 }
             }
@@ -1151,20 +1141,11 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 TxtInfAd.Text = HttpUtility.HtmlDecode(GrdDatos.SelectedRow.Cells[15].Text);
                 string VblReparable = GrdDatos.SelectedRow.Cells[16].Text;
                 if (VblReparable.Equals("N/A"))
-                {
-                    RdbSi.Checked = false;
-                    RdbNo.Checked = false;
-                }
+                { RdbSi.Checked = false; RdbNo.Checked = false; }
                 else if (VblReparable.Equals("S"))
-                {
-                    RdbSi.Checked = true;
-                    RdbNo.Checked = false;
-                }
+                { RdbSi.Checked = true; RdbNo.Checked = false; }
                 else
-                {
-                    RdbSi.Checked = false;
-                    RdbNo.Checked = true;
-                }
+                { RdbSi.Checked = false; RdbNo.Checked = true; }
                 CkbPos.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[17].Text) == 1 ? true : false;
                 CkbCons.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[18].Text) == 1 ? true : false;
                 CkbMot.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[19].Text) == 1 ? true : false;
@@ -1181,7 +1162,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 BindDataMan(TxtCod.Text);
 
                 PerfilesGrid();
-                //--------------------------------
                 PnlBusq.Visible = false;
                 PnlCampos.Visible = true;
                 ActivarBotones(true, true, true, true, true);
@@ -1195,7 +1175,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected void GrdDatos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
-
             {
                 e.Row.Cells[1].Style.Value = "min-width:150px;";
                 e.Row.Cells[2].Style.Value = "min-width:250px;";
@@ -1205,10 +1184,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             }
         }
         protected void GrdDatos_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdDatos.PageIndex = e.NewPageIndex;
-            BIndDataBusq(TxtBusqueda.Text);
-        }
+        { GrdDatos.PageIndex = e.NewPageIndex; BIndDataBusq(TxtBusqueda.Text); }
         // *********************************** Manipulacion y almacenamiento ***********************************
         protected void BindDataMan(string Ref)
         {
@@ -1223,14 +1199,10 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
                 DtMan = DSTDdlPrmtr.Tables[3].Clone();
                 Result = DSTDdlPrmtr.Tables[3].Select("CodReferencia='" + Ref.Trim() + "'");
-                foreach (DataRow Row in Result)
-                { DtMan.ImportRow(Row); }
+                foreach (DataRow Row in Result) { DtMan.ImportRow(Row); }
 
                 if (DtMan.Rows.Count > 0)
-                {
-                    GrdMan.DataSource = DtMan;
-                    GrdMan.DataBind();
-                }
+                { GrdMan.DataSource = DtMan; GrdMan.DataBind(); }
                 else
                 {
                     DtMan.Rows.Add(DtMan.NewRow());
@@ -1309,12 +1281,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_PANTALLA_ReferenciaV2 7,'','','','','DELETE',@id,0,0,0,'01-01-01','02-01-01','03-01-01'";
+                    string VBQuery = "EXEC SP_PANTALLA_ReferenciaV2 7,'','','','','DELETE',@id,0,0,@ICC,'01-01-01','02-01-01','03-01-01'";
                     using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
                         {
                             sqlCmd.Parameters.AddWithValue("@id", GrdMan.DataKeys[e.RowIndex].Value.ToString());
+                            sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             sqlCmd.ExecuteNonQuery();
                             Transac.Commit();
                             BindDataPN(TxtCod.Text.Trim(), "UPD");
@@ -1367,9 +1340,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             {
                 ImageButton imgD = e.Row.FindControl("IbtDelete") as ImageButton;
                 if (imgD != null)
-                {
-                    e.Row.Cells[1].Controls.Remove(imgD);
-                }
+                { e.Row.Cells[1].Controls.Remove(imgD); }
             }
         }
         protected void GrdMan_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -1415,10 +1386,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 DSTDdlPrmtr = (DataSet)ViewState["DSTDdlPrmtr"];
 
                 if (DSTDdlPrmtr.Tables[0].Rows.Count > 0)
-                {
-                    GrdPN.DataSource = DSTDdlPrmtr.Tables[0];
-                    GrdPN.DataBind();
-                }
+                { GrdPN.DataSource = DSTDdlPrmtr.Tables[0]; GrdPN.DataBind(); }
                 else
                 {
                     DSTDdlPrmtr.Tables[0].Rows.Add(DSTDdlPrmtr.Tables[0].NewRow());
@@ -1486,15 +1454,14 @@ namespace _77NeoWeb.Forms.InventariosCompras
             Cnx.SelecBD();
             using (SqlConnection sqlConx = new SqlConnection(Cnx.GetConex()))
             {
-                string LtxtSql = string.Format("SELECT VlorEquivalencia FROM TblUndXPn WHERE Pn=@PN AND UndCompraPN='{0}'", VblUMCD);
+                string LtxtSql = string.Format("SELECT VlorEquivalencia FROM TblUndXPn WHERE Pn=@PN AND UndCompraPN='{0}' AND IdConfigCIa = @ICC", VblUMCD);
                 SqlCommand SC = new SqlCommand(LtxtSql, sqlConx);
                 SC.Parameters.AddWithValue("@PN", ViewState["VbPNSI"].ToString());
+                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                 sqlConx.Open();
                 SqlDataReader tbl = SC.ExecuteReader();
                 if (tbl.Read())
-                {
-                    TxtEqu.Text = tbl["VlorEquivalencia"].ToString();
-                }
+                { TxtEqu.Text = tbl["VlorEquivalencia"].ToString(); }
                 BindDataMan(TxtCod.Text);
                 BindDataCont(ViewState["VbPNSI"].ToString());
             }
@@ -1511,11 +1478,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     float VblEqui;
 
                     VblTxtEqui = (GrdPN.FooterRow.FindControl("TxtEquPP") as TextBox).Text.Trim();
-                    while (VblTxtEqui.Contains("."))
-                    {
-                        VblTxtEqui = VblTxtEqui.Replace(".", ",");
-
-                    }
+                    while (VblTxtEqui.Contains(".")) { VblTxtEqui = VblTxtEqui.Replace(".", ","); }
                     VblPN = (GrdPN.FooterRow.FindControl("TxtPNPP") as TextBox).Text.Trim();
                     VblEstado = (GrdPN.FooterRow.FindControl("DdlEstPNPP") as DropDownList).SelectedValue.Trim();
                     VblUMC = (GrdPN.FooterRow.FindControl("DdlUMComPP") as DropDownList).SelectedValue.Trim();
@@ -1525,10 +1488,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     { VblEqui = (float)Convert.ToDouble(VblTxtEqui); }
                     ValidarPN(VblPN, "", VblEstado, 0);
                     if (Session["VlRefer"].Equals("N"))
-                    {
-                        BindDataAll(TxtCod.Text, VblPN);
-                        return;
-                    }
+                    { BindDataAll(TxtCod.Text, VblPN); return; }
                     List<CsTTPN> ObjTTPN = new List<CsTTPN>();
                     var detail = new CsTTPN()
                     {
@@ -1554,7 +1514,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         Equivalencia = VblEqui,
                         NSN = (GrdPN.FooterRow.FindControl("TxtNSNPP") as TextBox).Text.Trim(),
                         FechaVencPN = (GrdPN.FooterRow.FindControl("CkbFVPP") as CheckBox).Checked == true ? 1 : 0,
-
                     };
                     ObjTTPN.Add(detail);
                     CsTTPN TblPN = new CsTTPN();
@@ -1596,7 +1555,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     }
                     BindDataAll(TxtCod.Text, VblPN);
                     BindDataPN(TxtCod.Text, "UPD");
-
                 }
             }
             catch (Exception ex)
@@ -1655,10 +1613,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 { VblEqui = (float)Convert.ToDouble((GrdPN.Rows[e.RowIndex].FindControl("TxtEqu") as TextBox).Text.Trim()); }
                 ValidarPN(VblPN, VblPNAnt, VblEstado, VblBloqueo);
                 if (Session["VlRefer"].Equals("N"))
-                {
-                    BindDataAll(TxtCod.Text, VblPN);
-                    return;
-                }
+                { BindDataAll(TxtCod.Text, VblPN); return; }
                 List<CsTTPN> ObjTTPN = new List<CsTTPN>();
                 var detail = new CsTTPN()
                 {
@@ -1721,10 +1676,11 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
-                    VBQuery = string.Format("EXEC SP_TablasIngenieria 1,'',@PN,'{0}','','','','','','VALIDA',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'", TxtCod.Text);
+                    VBQuery = string.Format("EXEC SP_TablasIngenieria 1,'',@PN,'{0}','','','','','','VALIDA',0,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'", TxtCod.Text);
 
                     SqlCommand Comando = new SqlCommand(VBQuery, sqlCon);
                     Comando.Parameters.AddWithValue("@PN", VbCod);
+                    Comando.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataReader registro = Comando.ExecuteReader();
                     if (registro.Read())
                     {
@@ -1798,8 +1754,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     DTUM.Rows.Add(DdlUM.Text.Trim(), DdlUM.Text.Trim(), 1);
 
                     Result = DSTDdlPrmtr.Tables[1].Select("ActivoUM=1");
-                    foreach (DataRow Row in Result)
-                    { DTUM.ImportRow(Row); }
+                    foreach (DataRow Row in Result) { DTUM.ImportRow(Row); }
 
                     DdlUMComPP.DataSource = DTUM;
                     DdlUMComPP.DataTextField = "Descripcion";
@@ -1861,7 +1816,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     TextBox TxtPN = (e.Row.FindControl("TxtPN") as TextBox);
                     ViewState["VbPNSI"] = TxtPN.Text;
 
-                    LtxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 3,'','','',@PN,'UMCMOD',0,0,0,0,'01-01-01','02-01-01','03-01-01'");
+                    LtxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 3,'','','',@PN,'UMCMOD',0,0,0, @ICC,'01-01-01','02-01-01','03-01-01'");
                     DropDownList DdlUMCom = (e.Row.FindControl("DdlUMCom") as DropDownList);
                     Cnx.SelecBD();
                     using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
@@ -1870,6 +1825,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         using (SqlCommand cmd = new SqlCommand(LtxtSql, sqlCon))
                         {
                             cmd.Parameters.AddWithValue("@PN", ViewState["VbPNSI"].ToString());
+                            cmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             DdlUMCom.DataSource = cmd.ExecuteReader();
                             DdlUMCom.DataTextField = "UndCompraPN";
                             DdlUMCom.DataValueField = "UndCompraPN";
@@ -1949,14 +1905,10 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
                 DtCont = DSTDdlPrmtr.Tables[2].Clone();
                 Result = DSTDdlPrmtr.Tables[2].Select("PN='" + PN.Trim() + "'");
-                foreach (DataRow Row in Result)
-                { DtCont.ImportRow(Row); }
+                foreach (DataRow Row in Result) { DtCont.ImportRow(Row); }
 
                 if (DtCont.Rows.Count > 0)
-                {
-                    GrdCont.DataSource = DtCont;
-                    GrdCont.DataBind();
-                }
+                { GrdCont.DataSource = DtCont; GrdCont.DataBind(); }
                 else
                 {
                     DtCont.Rows.Add(DtCont.NewRow());
@@ -1972,11 +1924,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 if (!DdlIdent.Text.Equals("SN"))
                 {
                     ImageButton Imge = GrdCont.FooterRow.FindControl("IbtAddNew") as ImageButton;
-
-                    if (Imge != null)
-                    {
-                        Imge.Enabled = false;
-                    }
+                    if (Imge != null) { Imge.Enabled = false; }
                 }
             }
             catch (Exception Ex)
@@ -1992,10 +1940,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             {
                 PerfilesGrid();
                 if (TxtCod.Text.Equals(""))
-                {
-                    BindDataAll(TxtCod.Text, "");
-                    return;
-                }
+                { BindDataAll(TxtCod.Text, ""); return; }
                 if (e.CommandName.Equals("AddNew"))
                 {
                     string VbContad;
@@ -2037,9 +1982,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                                     BindDataCont(ViewState["VbPNSI"].ToString());
                                 }
                                 catch (Exception)
-                                {
-                                    Transac.Rollback();
-                                }
+                                { Transac.Rollback(); }
                             }
                         }
 
@@ -2184,10 +2127,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             DSTUndCompra = (DataSet)ViewState["DSTUndCompra"];
 
             if (DSTUndCompra.Tables[0].Rows.Count > 0)
-            {
-                GrdCamUC.DataSource = DSTUndCompra.Tables[0];
-                GrdCamUC.DataBind();
-            }
+            { GrdCamUC.DataSource = DSTUndCompra.Tables[0]; GrdCamUC.DataBind(); }
             else
             {
                 DSTUndCompra.Tables[0].Rows.Add(DSTUndCompra.Tables[0].NewRow());
@@ -2213,10 +2153,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             }
         }
         protected void IbtCerrarUMC_Click(object sender, ImageClickEventArgs e)
-        {
-            PnlCampos.Visible = true;
-            PnlUnidadCompra.Visible = true;
-        }
+        { PnlCampos.Visible = true; PnlUnidadCompra.Visible = true; }
         protected void GrdCamUC_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -2232,13 +2169,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     VblTxtEqui = (GrdCamUC.FooterRow.FindControl("TxtCEquPP") as TextBox).Text.Trim();
                     VblTxtEqui = VblTxtEqui.Replace(".", ",");
                     if ((GrdCamUC.FooterRow.FindControl("TxtCEquPP") as TextBox).Text.Trim().Length == 0)
-                    {
-                        VblEqui = 1;
-                    }
+                    { VblEqui = 1; }
                     else
-                    {
-                        VblEqui = (float)Convert.ToDouble(VblTxtEqui);
-                    }
+                    { VblEqui = (float)Convert.ToDouble(VblTxtEqui); }
                     Cnx.SelecBD();
                     using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                     {
@@ -2279,9 +2212,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             }
         }
         protected void GrdCamUC_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+        { }
         protected void GrdCamUC_RowEditing(object sender, GridViewEditEventArgs e)
         { GrdCamUC.EditIndex = e.NewEditIndex; BindDataCambUMC(ViewState["VbPNSI"].ToString().Trim(), DdlUM.Text.Trim(), "UPD"); }
         protected void GrdCamUC_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -2295,18 +2226,16 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
             VbequiCUC = (float)Convert.ToDouble(VblTxtEqui);
             VbUCMod = (GrdCamUC.Rows[e.RowIndex].FindControl("TxtCUMC") as TextBox).Text.Trim();
-            if (VbUCMod.Equals(DdlUM.SelectedValue))
-            {
-                VbequiCUC = 1;
-            }
+            if (VbUCMod.Equals(DdlUM.SelectedValue)) { VbequiCUC = 1; }
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
                 sqlCon.Open();
-                VBQuery = string.Format("EXEC SP_PANTALLA_ReferenciaV2 4,@PN,'{0}','','','VALIDA',@Equi, 0,0,0,'01-01-01','02-01-01','03-01-01'", VbUCMod);
+                VBQuery = string.Format("EXEC SP_PANTALLA_ReferenciaV2 4,@PN,'{0}','','','VALIDA',@Equi, 0,0,@ICC,'01-01-01','02-01-01','03-01-01'", VbUCMod);
                 SqlCommand SqlCd = new SqlCommand(VBQuery, sqlCon);
                 SqlCd.Parameters.AddWithValue("@PN", ViewState["VbPNSI"].ToString());
                 SqlCd.Parameters.AddWithValue("@Equi", VbequiCUC);
+                SqlCd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                 SqlDataReader DRCUM = SqlCd.ExecuteReader();
                 if (DRCUM.Read())
                 {
@@ -2491,7 +2420,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
         // ************************* Cambio de Ref *************************
         protected void BindDataCambioRef()
         {
-
             CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
             CursorIdioma.Alimentar("CurCambioRef", Session["77IDM"].ToString().Trim());
             DataTable DtB = new DataTable();
@@ -2503,7 +2431,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 if (RdbRefCRef.Checked == true)
                 {
                     VbTxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 17,'{0}','{1}',{2},'RF','CurCambioRef',0,0,0,{3},'01-01-01','02-01-01','03-01-01'", DdlGrupo.SelectedValue, TxtCod.Text, TxtCambRef.Text, Session["!dC!@"]);
-                    //VbTxtSql = string.Format("EXEC SP_PANTALLA_Referencia 4,'{0}','{1}','{2}','RF',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'", DdlGrupo.SelectedValue, TxtCod.Text, TxtCambRef.Text);
                 }
                 if (RdbPnCRef.Checked == true)
                 {
@@ -2519,21 +2446,11 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     DAB.Fill(DtB);
 
                     if (DtB.Rows.Count > 0)
-                    {
-                        GrdCambioRef.DataSource = DtB;
-                        GrdCambioRef.DataBind();
-                    }
+                    { GrdCambioRef.DataSource = DtB; GrdCambioRef.DataBind(); }
                     else
-                    {
-                        GrdCambioRef.DataSource = null;
-                        GrdCambioRef.DataBind();
-                    }
+                    { GrdCambioRef.DataSource = null; GrdCambioRef.DataBind(); }
                 }
-                else
-                {
-                    GrdCambioRef.DataSource = null;
-                    GrdCambioRef.DataBind();
-                }
+                else { GrdCambioRef.DataSource = null; GrdCambioRef.DataBind(); }
             }
         }
         protected void BtnCambioRef_Click(object sender, EventArgs e)
@@ -2628,29 +2545,20 @@ namespace _77NeoWeb.Forms.InventariosCompras
             DataRow[] Result = Idioma.Select("Objeto= 'RdbBusqR'");
             foreach (DataRow row in Result)
             { VbText = row["Texto"].ToString().Trim(); }
-            try
+
+            if (RdbRefCRef.Checked == true)
             {
-                if (RdbRefCRef.Checked == true)
-                {
-                    LblRefCambRef.Text = VbText + ": " + HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[1].Text);
-                    ViewState["NewRef"] = HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[1].Text);
-                }
-                if (RdbPnCRef.Checked == true)
-                {
-                    LblRefCambRef.Text = VbText + ": " + HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[2].Text);
-                    ViewState["NewRef"] = HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[1].Text);
-                }
+                LblRefCambRef.Text = VbText + ": " + HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[1].Text);
+                ViewState["NewRef"] = HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[1].Text);
             }
-            catch (Exception Ex)
+            if (RdbPnCRef.Checked == true)
             {
-                string Mnsj = Ex.Message.Substring(0, 300);
+                LblRefCambRef.Text = VbText + ": " + HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[2].Text);
+                ViewState["NewRef"] = HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[1].Text);
             }
         }
         protected void GrdCambioRef_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdCambioRef.PageIndex = e.NewPageIndex;
-            BindDataCambioRef();
-        }
+        { GrdCambioRef.PageIndex = e.NewPageIndex; BindDataCambioRef(); }
         protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
@@ -2667,7 +2575,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
             if (gridRowCount <= gv.PageSize)
             {
                 double height = (gridRowCount * rowHeight) + ((gv.PageSize - gridRowCount) * rowHeight) + headerFooterHeight;
-                //adjust footer height based on white space removal between footer and last row
                 height += 30;
                 gv.Height = new Unit(height);
             }

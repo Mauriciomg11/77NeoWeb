@@ -119,7 +119,6 @@ namespace _77NeoWeb.Forms.Manto
                 GrdDatos.DataBind();
                 GrdDatos.Rows[0].Cells.Clear();
                 GrdDatos.Rows[0].Cells.Add(new TableCell());
-                GrdDatos.Rows[0].Cells[0].ColumnSpan = dtbl.Columns.Count;
                 Result = Idioma.Select("Objeto= 'SinRegistros'");
                 foreach (DataRow row in Result)
                 { GrdDatos.Rows[0].Cells[0].Text = row["Texto"].ToString(); }

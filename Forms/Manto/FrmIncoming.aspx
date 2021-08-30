@@ -226,7 +226,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <asp:Label ID="LblFechI" runat="server" CssClass="LblEtiquet" Text="fecha Vencimiento" Visible="false" />
-                                <asp:TextBox ID="TxtFechI" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10"  Visible="false" />
+                                <asp:TextBox ID="TxtFechI" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" Visible="false" />
                             </div>
                         </div>
                         <br />
@@ -242,43 +242,43 @@
                                 <asp:DropDownList ID="DdlBodDest" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="DdlBodDest_TextChanged" AutoPostBack="true" />
                             </div>
                         </div>
-                         <br />
-                         <div class="ScrollDivGrid">
-                        <div class="row">
-                             <div class="col-sm-6">                           
-                                <asp:GridView ID="GrdUbicaDes" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="CodUbicaBodega"
-                                    CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both"
-                                    OnRowCommand="GrdUbicaDes_RowCommand" OnRowDataBound="GrdUbicaDes_RowDataBound">
-                                    <Columns>
-                                        <asp:TemplateField HeaderText="Trasladar">
-                                            <ItemTemplate>
-                                                <asp:UpdatePanel ID="UplAbrir" runat="server" UpdateMode="Conditional">
-                                                    <ContentTemplate>
-                                                        <asp:ImageButton ID="IbtAsigD" Width="30px" Height="30px" ImageUrl="~/images/FlechaIr.png" runat="server" CommandName="Asignar" ToolTip="Trasladar" />
-                                                    </ContentTemplate>
-                                                    <Triggers>
-                                                        <asp:PostBackTrigger ControlID="IbtAsigD" />
-                                                    </Triggers>
-                                                </asp:UpdatePanel>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Fila">
-                                            <ItemTemplate>
-                                                <asp:Label Text='<%# Eval("Fila") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Columna">
-                                            <ItemTemplate>
-                                                <asp:Label Text='<%# Eval("Columna") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                    </Columns>
-                                    <HeaderStyle CssClass="GridCabecera" />
-                                    <RowStyle CssClass="GridRowStyle" />
-                                    <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                </asp:GridView>
+                        <br />
+                        <div class="ScrollDivGrid">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <asp:GridView ID="GrdUbicaDes" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="CodUbicaBodega"
+                                        CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both"
+                                        OnRowCommand="GrdUbicaDes_RowCommand" OnRowDataBound="GrdUbicaDes_RowDataBound">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Trasladar">
+                                                <ItemTemplate>
+                                                    <asp:UpdatePanel ID="UplAbrir" runat="server" UpdateMode="Conditional">
+                                                        <ContentTemplate>
+                                                            <asp:ImageButton ID="IbtAsigD" Width="30px" Height="30px" ImageUrl="~/images/FlechaIr.png" runat="server" CommandName="Asignar" ToolTip="Trasladar" />
+                                                        </ContentTemplate>
+                                                        <Triggers>
+                                                            <asp:PostBackTrigger ControlID="IbtAsigD" />
+                                                        </Triggers>
+                                                    </asp:UpdatePanel>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Fila">
+                                                <ItemTemplate>
+                                                    <asp:Label Text='<%# Eval("Fila") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Columna">
+                                                <ItemTemplate>
+                                                    <asp:Label Text='<%# Eval("Columna") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                        <HeaderStyle CssClass="GridCabecera" />
+                                        <RowStyle CssClass="GridRowStyle" />
+                                        <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                                    </asp:GridView>
+                                </div>
                             </div>
-                                 </div>
                         </div>
                     </div>
                 </asp:View>

@@ -114,6 +114,24 @@ namespace _77NeoWeb.Forms.Manto
         protected global::System.Web.UI.WebControls.TextBox TxtNumLv;
 
         /// <summary>
+        /// Control LblNotif.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblNotif;
+
+        /// <summary>
+        /// Control CkbNotif.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CkbNotif;
+
+        /// <summary>
         /// Control LblTitRepMant.
         /// </summary>
         /// <remarks>
@@ -238,24 +256,6 @@ namespace _77NeoWeb.Forms.Manto
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DdlEstad;
-
-        /// <summary>
-        /// Control LblNotif.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblNotif;
-
-        /// <summary>
-        /// Control CkbNotif.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CkbNotif;
 
         /// <summary>
         /// Control LblClasf.

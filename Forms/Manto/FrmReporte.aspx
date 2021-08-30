@@ -125,7 +125,9 @@
                     <asp:Label ID="LblOtSec" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:"></asp:Label>
                     <asp:TextBox ID="TxtOtSec" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:Label ID="LblNumLv" runat="server" CssClass="LblEtiquet" Text="Libro Vuelo:"></asp:Label>
-                    <asp:TextBox ID="TxtNumLv" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
+                    <asp:TextBox ID="TxtNumLv" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />&nbsp&nbsp&nbsp
+                    <asp:Label ID="LblNotif" runat="server" CssClass="LblEtiquet" Text="Notif:" Visible="false" />
+                    <asp:CheckBox ID="CkbNotif" runat="server" CssClass="LblEtiquet" Text="" Enabled="false" Visible="false" />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitRepMant" runat="server" Text="Reportes de mantenimiento"></asp:Label></h6>
                     <asp:Table runat="server">
@@ -166,14 +168,8 @@
                             <asp:TableCell Width="1%">
                                 <asp:Label ID="LblEstad" runat="server" CssClass="LblEtiquet" Text="Estado:" />
                             </asp:TableCell>
-                            <asp:TableCell Width="3%">
+                           <asp:TableCell ColumnSpan="3" Width="6%">
                                 <asp:DropDownList ID="DdlEstad" runat="server" CssClass="heightCampo" Enabled="false" Width="95%" OnTextChanged="DdlEstad_TextChanged" AutoPostBack="true" />
-                            </asp:TableCell>
-                            <asp:TableCell Width="1%">
-                                <asp:Label ID="LblNotif" runat="server" CssClass="LblEtiquet" Text="Notif:" Visible="false" />
-                            </asp:TableCell>
-                            <asp:TableCell Width="2%">
-                                <asp:CheckBox ID="CkbNotif" runat="server" CssClass="LblEtiquet" Text="" Enabled="false" Visible="false" />
                             </asp:TableCell>
                         </asp:TableRow>
                         <asp:TableRow>
@@ -514,19 +510,19 @@
                     <Columns>
                         <asp:CommandField HeaderText="Select" SelectText="Enviar" ShowSelectButton="True" HeaderStyle-Width="33px" />
                     </Columns>
-                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
+                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                 </asp:GridView>
             </div>
         </asp:View>
         <asp:View ID="Vw2RecursoRte" runat="server">
             <asp:UpdatePanel ID="UpPnlRecursoRte" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <asp:Label ID="LblRecsNumRte" runat="server" CssClass="LblEtiquet" Text="Reporte:"/>
+                    <asp:Label ID="LblRecsNumRte" runat="server" CssClass="LblEtiquet" Text="Reporte:" />
                     <asp:TextBox ID="TxtRecurNumRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
-                    <asp:Label ID="LblRecsSubOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:"/>
+                    <asp:Label ID="LblRecsSubOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:" />
                     <asp:TextBox ID="TxtRecurSubOt" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
-                    <asp:Label ID="LblPrioridadOT" runat="server" CssClass="LblEtiquet" Text="Prioridad:"/>
-                    <asp:DropDownList ID="DdlPrioridadOT" runat="server" CssClass="Campos" Width="15%"/>
+                    <asp:Label ID="LblPrioridadOT" runat="server" CssClass="LblEtiquet" Text="Prioridad:" />
+                    <asp:DropDownList ID="DdlPrioridadOT" runat="server" CssClass="Campos" Width="15%" />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTtlRecursoRte" runat="server" Text="Recurso Físico y Licencias"></asp:Label></h6>
                     <asp:ImageButton ID="IbtCerrarRec" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarRec_Click" ImageAlign="Right" />
@@ -652,7 +648,7 @@
                                     <HeaderStyle CssClass="GridCabecera" />
                                     <RowStyle CssClass="GridRowStyle" />
                                     <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
+                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                 </asp:GridView>
                             </asp:TableCell>
                             <asp:TableCell VerticalAlign="Top">
@@ -808,11 +804,11 @@
         <asp:View ID="Vw5SNOnOff" runat="server">
             <asp:UpdatePanel ID="UplSnOnOff" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <asp:Label ID="LblSnONOfNumRte" runat="server" CssClass="LblEtiquet" Text="Reporte:"/>
+                    <asp:Label ID="LblSnONOfNumRte" runat="server" CssClass="LblEtiquet" Text="Reporte:" />
                     <asp:TextBox ID="TxtSnOnOffNumRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:ImageButton ID="IbtCerrarSnOnOff" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarSnOnOff_Click" ImageAlign="Right" />
                     <h6 class="TextoSuperior">
-                        <asp:Label ID="LlTitSnOnOff" runat="server" Text="Ingreseso de elementos On - Off"/></h6>
+                        <asp:Label ID="LlTitSnOnOff" runat="server" Text="Ingreseso de elementos On - Off" /></h6>
                     <asp:GridView ID="GrdSnOnOff" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodIdDetLvDetManto"
                         CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="4"
                         OnRowCommand="GrdSnOnOff_RowCommand" OnRowEditing="GrdSnOnOff_RowEditing" OnRowUpdating="GrdSnOnOff_RowUpdating" OnRowCancelingEdit="GrdSnOnOff_RowCancelingEdit"
@@ -946,7 +942,7 @@
                         <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
                     </asp:GridView>
                     <h6 class="TextoSuperior">
-                        <asp:Label ID="LblTitHta" runat="server" Text="Herramientas"/></h6>
+                        <asp:Label ID="LblTitHta" runat="server" Text="Herramientas" /></h6>
                     <asp:GridView ID="GrdHta" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdHerramientoManto"
                         CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="3" Width="80%"
                         OnRowCommand="GrdHta_RowCommand" OnRowEditing="GrdHta_RowEditing" OnRowUpdating="GrdHta_RowUpdating" OnRowCancelingEdit="GrdHta_RowCancelingEdit"

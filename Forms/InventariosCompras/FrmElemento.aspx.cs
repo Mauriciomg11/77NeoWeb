@@ -17,10 +17,14 @@ namespace _77NeoWeb.Forms.InventariosCompras
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataSet DST = new DataSet();
         private DateTime FechaD = DateTime.Today;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Login77"] == null) { if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); } }   /* */
+            if (Session["Login77"] == null)
+            {
+                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
+            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
             Page.Title = "Configuración de Elementos";
             if (Session["C77U"] == null)
@@ -54,7 +58,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 ModSeguridad();
                 ActivarCampos(false, false, "");
                 ActivarBotones(true, false, false, false, true);
-                BindDataDdl("");
+                //BindDataDdl("");
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
@@ -69,35 +73,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), "FrmElemento.aspx");
 
-            if (ClsP.GetAccesoFrm() == 0)
-            {
-                Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx");
-            }
-            if (ClsP.GetIngresar() == 0)
-            {
-                ViewState["VblIngMS"] = 0;
-            }
-            if (ClsP.GetModificar() == 0)
-            {
-                ViewState["VblModMS"] = 0;
-                BtnModificar.Visible = false;
-            }
-            if (ClsP.GetConsultar() == 0)
-            {
-                ViewState["VblConsMS"] = 0;
-            }
-            if (ClsP.GetImprimir() == 0)
-            {
-
-            }
-            if (ClsP.GetEliminar() == 0)
-            {
-                ViewState["VblEliMS"] = 0;
-            }
-            if (ClsP.GetCE1() == 0)
-            {
-
-            }
+            if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
+            if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; }
+            if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; BtnModificar.Visible = false; }
+            if (ClsP.GetConsultar() == 0) { ViewState["VblConsMS"] = 0; }
+            if (ClsP.GetImprimir() == 0) { }
+            if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; }
+            if (ClsP.GetCE1() == 0) { }
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
@@ -233,78 +215,100 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         RdbInactivo.Enabled = Edi;
                         break;
                 }
-
             }
             if (ViewState["FechaVenceE"].Equals("S"))
-            {
-                //TxtFecShelfLife.Enabled = Edi;
-                IbtFechaI.Enabled = Edi;
-            }
+            { IbtFechaI.Enabled = Edi; }
         }
-        protected void TraerDatos()
+        protected void TraerDatos(string Accion)
         {
-            if (TxtCod.Text.ToString() != string.Empty)
+            if (TxtCod.Text.ToString() == string.Empty) { return; }
+            if (Accion.Equals("UPD"))
             {
                 Cnx.SelecBD();
-                using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
+                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string TxtFecha;
-                    Cnx2.Open();
-                    string LtxtSql = string.Format("EXEC SP_PANTALLA_Elemento 8,'{0}','','','COD',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'", TxtCod.Text);
-                    SqlCommand SqlC = new SqlCommand(LtxtSql, Cnx2);
-                    SqlDataReader SDR = SqlC.ExecuteReader();
-                    if (SDR.Read())
+                    string VbTxtSql = "EXEC SP_PANTALLA_Elemento 12, @CE,'','','PN',0,0,@Idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                    sqlConB.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
-                        TxtRef.Text = HttpUtility.HtmlDecode(SDR["CodReferencia"].ToString().Trim());
-                        DdlPN.Text = HttpUtility.HtmlDecode(SDR["PN"].ToString().Trim());
-                        TxtSN.Text = HttpUtility.HtmlDecode(SDR["Sn"].ToString().Trim());
-                        ViewState["PNAntEle"] = DdlPN.Text.Trim();
-                        ViewState["SNAntEle"] = TxtSN.Text.Trim();
-                        TxtLote.Text = HttpUtility.HtmlDecode(SDR["NumLote"].ToString().Trim());
-                        TxtDescr.Text = HttpUtility.HtmlDecode(SDR["Descripcion"].ToString().Trim());
-                        TxtFecha = HttpUtility.HtmlDecode(SDR["FechaRecibo"].ToString().Trim());
-                        if (!TxtFecha.Trim().Equals(""))
+                        SC.Parameters.AddWithValue("@CE", TxtCod.Text.Trim());
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
                         {
-                            FechaD = Convert.ToDateTime(TxtFecha);
-                            TxtFecRec.Text = String.Format("{0:yyyy-MM-dd}", FechaD);
+                            using (DataSet DST = new DataSet())
+                            {
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DST);
+                                DST.Tables[0].TableName = "Datos";
+                                DST.Tables[1].TableName = "HKConSubPT";
+                                DST.Tables[2].TableName = "Contadores";
+                                DST.Tables[3].TableName = "PN";
+
+                                ViewState["DST"] = DST;
+                            }
                         }
-                        else
-                        {
-                            TxtFecRec.Text = "";
-                        }
-                        TxtUndMed.Text = HttpUtility.HtmlDecode(SDR["CodUnidadMedida"].ToString().Trim());
-                        DdlGrupo.Text = HttpUtility.HtmlDecode(SDR["CodGrupo"].ToString().Trim());
-                        ViewState["GrupoEle"] = DdlGrupo.Text.Trim();
-                        TxtAta.Text = HttpUtility.HtmlDecode(SDR["ATA"].ToString().Trim());
-                        txtPosic.Text = HttpUtility.HtmlDecode(SDR["PosicionMotor"].ToString().Trim());
-                        TxtHK.Text = HttpUtility.HtmlDecode(SDR["Aeronave"].ToString().Trim());
-                        TxtMayor.Text = HttpUtility.HtmlDecode(SDR["Mayor"].ToString().Trim());
-                        TxtUbiTec.Text = HttpUtility.HtmlDecode(SDR["CodUbicacionFisica"].ToString().Trim());
-                        TxtFecha = HttpUtility.HtmlDecode(SDR["FechaShelfLife"].ToString().Trim());
-                        if (!TxtFecha.Trim().Equals(""))
-                        {
-                            FechaD = Convert.ToDateTime(TxtFecha);
-                            TxtFecShelfLife.Text = String.Format("{0:dd/MM/yyyy}", FechaD);
-                        }
-                        else
-                        {
-                            TxtFecShelfLife.Text = "";
-                        }
-                        TxtEstado.Text = HttpUtility.HtmlDecode(SDR["Estado"].ToString().Trim());
-                        ViewState["FechaVenceE"] = HttpUtility.HtmlDecode(SDR["FechaVence"].ToString().Trim());
-                        CkbApu.Checked = SDR["APU"].ToString().Trim().Equals("S") ? true : false;
-                        CkbMot.Checked = SDR["Motor"].ToString().Trim().Equals("S") ? true : false;
-                        CkbConsig.Checked = SDR["Consignacion"].ToString().Trim().Equals("S") ? true : false;
-                        RdbActivo.Checked = SDR["Activo"].ToString().Trim().Equals("S") ? true : false;
-                        RdbInactivo.Checked = SDR["Activo"].ToString().Trim().Equals("N") ? true : false;
-                        ViewState["CodBodegaE"] = HttpUtility.HtmlDecode(SDR["CodBodega"].ToString().Trim());
-                        ViewState["IdentificadorE"] = HttpUtility.HtmlDecode(SDR["Identificador"].ToString().Trim());
-                        BIndDataCntdr(TxtCod.Text);
                     }
                 }
             }
+            DST = (DataSet)ViewState["DST"];
+
+            string VbCodAnt, TxtFecha;
+
+            VbCodAnt = DdlGrupo.Text.Trim();
+            DdlGrupo.DataSource = DST.Tables[1];
+            DdlGrupo.DataTextField = "Descripcion";
+            DdlGrupo.DataValueField = "CodTipoElemento";
+            DdlGrupo.DataBind();
+            DdlGrupo.Text = VbCodAnt;
+
+            if (DST.Tables[0].Rows.Count > 0)
+            {
+                TxtRef.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["CodReferencia"].ToString().Trim());
+                DdlPN.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["PN"].ToString().Trim());
+                ViewState["PN"] = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["PN"].ToString().Trim());
+                BindDataDdl("SEL");
+                TxtSN.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["Sn"].ToString().Trim());
+                ViewState["PNAntEle"] = DdlPN.Text.Trim();
+                ViewState["SNAntEle"] = TxtSN.Text.Trim();
+                TxtLote.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["NumLote"].ToString().Trim());
+                TxtDescr.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["Descripcion"].ToString().Trim());
+                TxtFecha = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["FechaRecibo"].ToString().Trim());
+                if (!TxtFecha.Trim().Equals(""))
+                {
+                    FechaD = Convert.ToDateTime(TxtFecha);
+                    TxtFecRec.Text = String.Format("{0:yyyy-MM-dd}", FechaD);
+                }
+                else { TxtFecRec.Text = ""; }
+                TxtUndMed.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["CodUnidadMedida"].ToString().Trim());
+                DdlGrupo.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["CodGrupo"].ToString().Trim());
+                ViewState["GrupoEle"] = DdlGrupo.Text.Trim();
+                TxtAta.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["ATA"].ToString().Trim());
+                txtPosic.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["PosicionMotor"].ToString().Trim());
+                TxtHK.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["Aeronave"].ToString().Trim());
+                TxtMayor.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["Mayor"].ToString().Trim());
+                TxtUbiTec.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["CodUbicacionFisica"].ToString().Trim());
+                TxtFecha = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["FechaShelfLife"].ToString().Trim());
+                if (!TxtFecha.Trim().Equals(""))
+                {
+                    FechaD = Convert.ToDateTime(TxtFecha);
+                    TxtFecShelfLife.Text = String.Format("{0:dd/MM/yyyy}", FechaD);
+                }
+                else { TxtFecShelfLife.Text = ""; }
+                TxtEstado.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["Estado"].ToString().Trim());
+                ViewState["FechaVenceE"] = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["FechaVence"].ToString().Trim());
+                CkbApu.Checked = DST.Tables[0].Rows[0]["APU"].ToString().Trim().Equals("S") ? true : false;
+                CkbMot.Checked = DST.Tables[0].Rows[0]["Motor"].ToString().Trim().Equals("S") ? true : false;
+                CkbConsig.Checked = DST.Tables[0].Rows[0]["Consignacion"].ToString().Trim().Equals("S") ? true : false;
+                RdbActivo.Checked = DST.Tables[0].Rows[0]["Activo"].ToString().Trim().Equals("S") ? true : false;
+                RdbInactivo.Checked = DST.Tables[0].Rows[0]["Activo"].ToString().Trim().Equals("N") ? true : false;
+                ViewState["CodBodegaE"] = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["CodBodega"].ToString().Trim());
+                ViewState["IdentificadorE"] = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["Identificador"].ToString().Trim());
+                BIndDataCntdr(TxtCod.Text);
+            }
         }
-        void ActivarBotones(bool In, bool Md, bool El, bool Ip, bool Otr)
+        protected void ActivarBotones(bool In, bool Md, bool El, bool Ip, bool Otr)
         {
             BtnModificar.Enabled = Md;
             BtnConsultar.Enabled = Otr;
@@ -316,7 +320,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
              GrdCont.Enabled = Otr;
              BindDataAll(TxtCod.Text, "");*/
         }
-        void AsignarValores()
+        protected void AsignarValores()
         {
             Session["VldrElem"] = "S";
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -341,10 +345,12 @@ namespace _77NeoWeb.Forms.InventariosCompras
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
                 sqlCon.Open();
-                VBQuery = string.Format("EXEC SP_PANTALLA_Elemento 11,'{0}',@PN,@SN,'VALIDA',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'", TxtCod.Text);
+                VBQuery = "EXEC SP_PANTALLA_Elemento 11, @CE,@PN,@SN,'VALIDA',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                 SqlCommand SC = new SqlCommand(VBQuery, sqlCon);
-                SC.Parameters.AddWithValue("@PN", DdlPN.SelectedValue);
-                SC.Parameters.AddWithValue("@SN", TxtSN.Text);
+                SC.Parameters.AddWithValue("@CE", TxtCod.Text.Trim());
+                SC.Parameters.AddWithValue("@PN", DdlPN.Text.Trim());
+                SC.Parameters.AddWithValue("@SN", TxtSN.Text.Trim());
+                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                 SqlDataReader SDR = SC.ExecuteReader();
                 if (SDR.Read())
                 {
@@ -359,39 +365,25 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 }
             }
         }
-        void BindDataDdl(string Accion)
+        protected void BindDataDdl(string Accion)
         {
-            Cnx.SelecBD();
-            using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
-            {
-                string VbPrmtr = "";
-                if (!Accion.Equals(""))
-                {
-                    VbPrmtr = TxtRef.Text;
-                }
-                string LtxtSql = string.Format("EXEC SP_PANTALLA_Elemento 9,'{0}','','','PN',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'", VbPrmtr);
-                DdlPN.DataSource = Cnx.DSET(LtxtSql);
-                DdlPN.DataMember = "Datos";
-                DdlPN.DataTextField = "PN";
-                DdlPN.DataValueField = "Codigo";
-                DdlPN.DataBind();
-
-                LtxtSql = "EXEC SP_PANTALLA_ReferenciaV2 3,'','','','','GRU',0,0,0,0,'01-01-01','02-01-01','03-01-01'";
-                DdlGrupo.DataSource = Cnx.DSET(LtxtSql);
-                DdlGrupo.DataMember = "Datos";
-                DdlGrupo.DataTextField = "Descripcion";
-                DdlGrupo.DataValueField = "CodTipoElemento";
-                DdlGrupo.DataBind();
-            }
+            DST = (DataSet)ViewState["DST"];
+            string VbPrmtr = "";
+            if (!Accion.Equals("")) { VbPrmtr = TxtRef.Text; }
+            DdlPN.DataSource = DST.Tables[3];
+            DdlPN.DataTextField = "PN";
+            DdlPN.DataValueField = "Codigo";
+            DdlPN.DataBind();
+            DdlPN.Text = ViewState["PN"].ToString().Trim();
         }
-        void BIndDataBusq(string Prmtr)
+        protected void BIndDataBusq(string Prmtr)
         {
             DataTable DtB = new DataTable();
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql, VblOpc = "";
-                VbTxtSql = "";
+                string VblOpc = "";
+
                 if (RdbBusqPN.Checked == true)
                 {
                     VblOpc = "PN";
@@ -408,53 +400,31 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 {
                     VblOpc = "SN";
                 }
-                VbTxtSql = string.Format("EXEC SP_PANTALLA_Elemento 8,@Prmtr,'','','{0}',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'", VblOpc);
-                if (!VbTxtSql.Equals("") && !VblOpc.Equals(""))
+
+                if (!VblOpc.Equals(""))
                 {
                     sqlConB.Open();
-                    SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB);
-                    SC.Parameters.AddWithValue("@Prmtr", Prmtr.Trim());
-                    SqlDataAdapter DAB = new SqlDataAdapter(SC);
-                    DAB.SelectCommand = SC;
-                    DAB.Fill(DtB);
+                    using (SqlCommand SC = new SqlCommand("EXEC SP_PANTALLA_Elemento 8,@Prmtr,'','',@Op,0,0,@Idm, @ICC,'01-1-2009','01-01-1900','01-01-1900'", sqlConB))
+                    {
+                        SC.Parameters.AddWithValue("@Prmtr", Prmtr.Trim());
+                        SC.Parameters.AddWithValue("@Op", VblOpc.Trim());
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
 
-                    if (DtB.Rows.Count > 0)
-                    {
-                        GrdBusq.DataSource = DtB;
-                        GrdBusq.DataBind();
-                    }
-                    else
-                    {
-                        GrdBusq.DataSource = null;
-                        GrdBusq.DataBind();
+                        SqlDataAdapter DAB = new SqlDataAdapter(SC);
+                        DAB.SelectCommand = SC;
+                        DAB.Fill(DtB);
+                        if (DtB.Rows.Count > 0) { GrdBusq.DataSource = DtB; GrdBusq.DataBind(); }
+                        else { GrdBusq.DataSource = null; GrdBusq.DataBind(); }
                     }
                 }
             }
         }
-        void BIndDataCntdr(string CodElem)
+        protected void BIndDataCntdr(string CodElem)
         {
-            DataTable DtC = new DataTable();
-            Cnx.SelecBD();
-            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
-            {
-
-                string VbTxtSql = string.Format("EXEC SP_PANTALLA_Elemento 10,'{0}','','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'", CodElem);
-
-                sqlConB.Open();
-                SqlDataAdapter DAC = new SqlDataAdapter(VbTxtSql, sqlConB);
-                DAC.Fill(DtC);
-
-                if (DtC.Rows.Count > 0)
-                {
-                    GrdCont.DataSource = DtC;
-                    GrdCont.DataBind();
-                }
-                else
-                {
-                    GrdCont.DataSource = null;
-                    GrdCont.DataBind();
-                }
-            }
+            DST = (DataSet)ViewState["DST"];
+            if (DST.Tables[2].Rows.Count > 0) { GrdCont.DataSource = DST.Tables[2]; GrdCont.DataBind(); }
+            else { GrdCont.DataSource = null; GrdCont.DataBind(); }
         }
         protected void BtnModificar_Click(object sender, EventArgs e)
         {
@@ -492,7 +462,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         return;
                     }
                 }
-                TraerDatos();
+                TraerDatos("SEL");
                 ActivarBotones(false, true, false, false, false);
                 ViewState["Accion"] = "Aceptar";
                 DataRow[] Result1 = Idioma.Select("Objeto= 'BotonIngOk'");
@@ -509,17 +479,14 @@ namespace _77NeoWeb.Forms.InventariosCompras
             else
             {
                 AsignarValores();
-                if (Session["VldrElem"].ToString() == "N")
-                {
-                    return;
-                }
+                if (Session["VldrElem"].ToString() == "N") { return; }
                 Cnx.SelecBD();
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = string.Format("EXEC SP_TablasIngenieria 3,'{0}',@PN,@SN,'{1}','{2}','','','','',@Act,0,0,0,0,0,@FecSL,'02-01-1','03-01-1'",
+                        string VBQuery = string.Format("EXEC SP_TablasIngenieria 3,'{0}',@PN,@SN,'{1}','{2}','','','','',@Act,0,0,0,0,@ICC,@FecSL,'02-01-1','03-01-1'",
                             TxtCod.Text, Session["C77U"].ToString(), TxtRef.Text);
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
@@ -529,6 +496,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                                 SC.Parameters.AddWithValue("@SN", TxtSN.Text.Trim());
                                 SC.Parameters.AddWithValue("@Act", RdbActivo.Checked == true ? 1 : 0);
                                 SC.Parameters.AddWithValue("@FecSL", TxtFecShelfLife.Text);
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 SC.ExecuteNonQuery();
                                 Transac.Commit();
                                 ViewState["Accion"] = "";
@@ -561,24 +529,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
             }
         }
         protected void BtnConsultar_Click(object sender, EventArgs e)
-        {
-            BIndDataBusq("77NEO");
-            PnlCampos.Visible = false;
-            PnlBusq.Visible = true;
-            RdbBusqPN.Checked = true;
-        }
+        { BIndDataBusq("77NEO"); PnlCampos.Visible = false; PnlBusq.Visible = true; RdbBusqPN.Checked = true; }
         protected void IbtConsultar_Click(object sender, ImageClickEventArgs e)
-        {
-            BIndDataBusq(TxtBusqueda.Text);
-        }
+        { BIndDataBusq(TxtBusqueda.Text); }
         protected void IbtCerrar_Click(object sender, ImageClickEventArgs e)
-        {
-            PnlBusq.Visible = false;
-            PnlCampos.Visible = true;
-        }
+        { PnlBusq.Visible = false; PnlCampos.Visible = true; }
         protected void IbtFechaI_Click(object sender, ImageClickEventArgs e)
         {
-
             /* BtnConsultar.Visible = false;
              Session["CalP"] = "I";
              if (TxtFecShelfLife.Text != String.Empty)
@@ -636,7 +593,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected void GrdBusq_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
-
             {
                 e.Row.Cells[1].Style.Value = "min-width:100px;";
                 e.Row.Cells[2].Style.Value = "min-width:150px;";
@@ -649,15 +605,12 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected void GrdBusq_SelectedIndexChanged(object sender, EventArgs e)
         {
             TxtCod.Text = GrdBusq.DataKeys[this.GrdBusq.SelectedIndex][0].ToString();
-            TraerDatos();
+            TraerDatos("UPD");
             PnlBusq.Visible = false;
             PnlCampos.Visible = true;
             ActivarBotones(true, true, true, true, true);
         }
         protected void GrdBusq_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdBusq.PageIndex = e.NewPageIndex;
-            BIndDataBusq(TxtBusqueda.Text);
-        }
+        { GrdBusq.PageIndex = e.NewPageIndex; BIndDataBusq(TxtBusqueda.Text); }
     }
 }

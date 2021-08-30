@@ -4,7 +4,6 @@
     <style type="text/css">
         .CentrarContenedor {
             position: absolute;
-            /*nos posicionamos en el centro del navegador*/
             left: 50%;
             /*determinamos una anchura*/
             width: 98%;

@@ -19,6 +19,7 @@ namespace _77NeoWeb.Forms.Manto
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataSet DST = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
@@ -125,30 +126,49 @@ namespace _77NeoWeb.Forms.Manto
         }
         protected void BindBDdl()
         {
-            string LtxtSql = string.Format("EXEC SP_TablasIngenieria 16,'','','','','','','','','AKRte',0,0,0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
-            DdlAeronave.DataSource = Cnx.DSET(LtxtSql);
-            DdlAeronave.DataMember = "Datos";
+            Cnx.SelecBD();
+            using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+            {
+                string VbTxtSql = "EXEC SP_PANTALLA_Reporte_Manto2 11,'','','','','',0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
+                sqlConB.Open();
+                using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                {
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+
+                    using (SqlDataAdapter SDA = new SqlDataAdapter())
+                    {
+                        using (DataSet DST = new DataSet())
+                        {
+                            SDA.SelectCommand = SC;
+                            SDA.Fill(DST);
+                            DST.Tables[0].TableName = "HK";
+                            DST.Tables[1].TableName = "Estado";
+                            DST.Tables[2].TableName = "OT";
+                            DST.Tables[3].TableName = "Rte";
+
+                            ViewState["DST"] = DST;
+                        }
+                    }
+                }
+            }
+            DST = (DataSet)ViewState["DST"];
+
+            DdlAeronave.DataSource = DST.Tables[0];
             DdlAeronave.DataTextField = "Matricula";
             DdlAeronave.DataValueField = "CodAeronave";
             DdlAeronave.DataBind();
 
-            LtxtSql = string.Format("EXEC SP_TablasIngenieria 16,'','','','','','','','','STTS',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
-            DdlStatus.DataSource = Cnx.DSET(LtxtSql);
-            DdlStatus.DataMember = "Datos";
+            DdlStatus.DataSource = DST.Tables[1];
             DdlStatus.DataTextField = "Descripcion";
             DdlStatus.DataValueField = "CodStatus";
             DdlStatus.DataBind();
 
-            LtxtSql = string.Format("EXEC Consultas_General_Manto 32,'','','','', 0, 0, 0, {0},'01-12-00','02-10-00','03-10-00'", Session["!dC!@"]);
-            DdlOTPpl.DataSource = Cnx.DSET(LtxtSql);
-            DdlOTPpl.DataMember = "Datos";
+            DdlOTPpl.DataSource = DST.Tables[2];
             DdlOTPpl.DataTextField = "Descripcion";
             DdlOTPpl.DataValueField = "CodOt";
             DdlOTPpl.DataBind();
 
-            LtxtSql = string.Format("EXEC SP_TablasIngenieria 16,'','','','','','','','','RTE',0,0,0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
-            DdlRpteNro.DataSource = Cnx.DSET(LtxtSql);
-            DdlRpteNro.DataMember = "Datos";
+            DdlRpteNro.DataSource = DST.Tables[3];
             DdlRpteNro.DataTextField = "Descripcion";
             DdlRpteNro.DataValueField = "CodIdLvDetManto";
             DdlRpteNro.DataBind();

@@ -25,9 +25,7 @@
         }
 
         .CentrarContenedor {
-            position: absolute;
-            /*nos posicionamos en el centro del navegador*/
-            /*top: 50%;*/
+            position: absolute;           
             left: 50%;
             /*determinamos una anchura*/
             width: 98%;

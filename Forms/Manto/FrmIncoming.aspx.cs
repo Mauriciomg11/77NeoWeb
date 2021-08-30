@@ -183,13 +183,14 @@ namespace _77NeoWeb.Forms.Manto
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
 
-                string VbTxtSql = "EXEC SP_PANTALLA_Asignacion 4,@Pr,@T,'','',@Al,0,1,0,'01-1-2009','01-01-1900','01-01-1900'";
+                string VbTxtSql = "EXEC SP_PANTALLA_Asignacion 4,@Pr,@T,'','',@Al,0,1,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     SC.Parameters.AddWithValue("@Al", DdlAlmacen.Text.Trim());
                     SC.Parameters.AddWithValue("@Pr", TxtBusqueda.Text.Trim());
                     SC.Parameters.AddWithValue("@T", DdlTipo.Text.Trim());
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
 
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {

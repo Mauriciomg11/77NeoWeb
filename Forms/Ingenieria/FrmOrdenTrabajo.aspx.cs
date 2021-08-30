@@ -874,10 +874,14 @@ namespace _77NeoWeb.Forms.Ingenieria
                 }
                 DSTOTGrl = (DataSet)ViewState["DSTOTGrl"];
 
+                string VbCodAnt = "";
+
+                VbCodAnt = DdlBusqOT.Text.Trim().Equals("") ? "0" : DdlBusqOT.Text.Trim();
                 DdlBusqOT.DataSource = DSTOTGrl.Tables[1];
                 DdlBusqOT.DataTextField = "Descripcion";
                 DdlBusqOT.DataValueField = "Codigo";
                 DdlBusqOT.DataBind();
+                DdlBusqOT.Text = VbCodAnt;
 
                 DdlOTAero.DataSource = DSTOTGrl.Tables[2];
                 DdlOTAero.DataTextField = "Matricula";
@@ -1039,13 +1043,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataTable DT = new DataTable();
 
-                DataRow[] dr = DSTOTGrl.Tables[5].Select("Activo=1");
+                DataRow[] dr = DSTOTGrl.Tables[5].Select("Activo=1 OR CodTaller= '" + ViewState["TllAnt"] + "'");
                 if (IsIENumerableLleno(dr))
                 { DT = dr.CopyToDataTable(); }
-
-                Result = DSTOTGrl.Tables[5].Select("CodTaller= '" + ViewState["TllAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DT.ImportRow(Row); }
 
                 DdlMroTaller.DataSource = DT;
                 DdlMroTaller.DataTextField = "NomTaller";
@@ -1058,13 +1058,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataTable DT = new DataTable();
 
-                DataRow[] dr = DSTOTGrl.Tables[6].Select("Activo=1");
+                DataRow[] dr = DSTOTGrl.Tables[6].Select("Activo=1 OR CodBase= '" + ViewState["BaseAnt"] + "'");
                 if (IsIENumerableLleno(dr))
                 { DT = dr.CopyToDataTable(); }
-                Result = DSTOTGrl.Tables[6].Select("CodBase= '" + ViewState["BaseAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DT.ImportRow(Row); }
-
                 DdlOTBase.DataSource = DT;
                 DdlOTBase.DataTextField = "NomBase";
                 DdlOTBase.DataValueField = "CodBase";
@@ -1100,13 +1096,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             if (DSTOTGrl.Tables[8].Rows.Count > 0) //"CCosto"
             {
                 DataTable DT = new DataTable();
-                DataRow[] dr = DSTOTGrl.Tables[8].Select("Activo=1");
+                DataRow[] dr = DSTOTGrl.Tables[8].Select("Activo=1 OR CodCc= '" + ViewState["CCstAnt"] + "'");
                 if (IsIENumerableLleno(dr))
                 { DT = dr.CopyToDataTable(); }
-                Result = DSTOTGrl.Tables[8].Select("CodCc= '" + ViewState["CCstAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DT.ImportRow(Row); }
-
                 DdlOtCCosto.DataSource = DT;
                 DdlOtCCosto.DataTextField = "Nombre";
                 DdlOtCCosto.DataValueField = "CodCc";
@@ -3876,14 +3868,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataTable DT = new DataTable();
                 DT = DSTOTGrl.Tables[5].Clone();
-                DataRow[] DR = DSTOTGrl.Tables[5].Select("Activo=1");
+                DataRow[] DR = DSTOTGrl.Tables[5].Select("Activo=1 OR CodTaller= '" + ViewState["TllAnt"] + "'");
                 if (IsIENumerableLleno(DR))
-                { DT = DR.CopyToDataTable(); }
-                DT.Rows.Add("", "-", "", "1");
-                Result = DSTOTGrl.Tables[5].Select("CodTaller= '" + ViewState["TllAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DT.ImportRow(Row); }
-
+                { DT = DR.CopyToDataTable(); }               
                 DdlTall.DataSource = DT;
                 DdlTall.DataTextField = "NomTaller";
                 DdlTall.DataValueField = "CodTaller";
@@ -3902,14 +3889,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataTable DT = new DataTable();
                 DT = DSTOTGrl.Tables[16].Clone();
-                DataRow[] DR = DSTOTGrl.Tables[16].Select("Activo=1");
+                DataRow[] DR = DSTOTGrl.Tables[16].Select("Activo=1 OR Codigo= '" + ViewState["ClsfcnAnt"] + "'");
                 if (IsIENumerableLleno(DR))
-                { DT = DR.CopyToDataTable(); }
-                DT.Rows.Add("", "", "-", "1");
-                Result = DSTOTGrl.Tables[16].Select("Codigo= '" + ViewState["ClsfcnAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DT.ImportRow(Row); }
-
+                { DT = DR.CopyToDataTable(); }               
                 DdlRteClasf.DataSource = DT;
                 DdlRteClasf.DataTextField = "Descripcion";
                 DdlRteClasf.DataValueField = "Codigo";
@@ -3928,14 +3910,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataTable DT = new DataTable();
                 DT = DSTOTGrl.Tables[17].Clone();
-                DataRow[] DR = DSTOTGrl.Tables[17].Select("Activo=1");
+                DataRow[] DR = DSTOTGrl.Tables[17].Select("Activo=1 OR Codigo= '" + ViewState["PscnAnt"] + "'");
                 if (IsIENumerableLleno(DR))
                 { DT = DR.CopyToDataTable(); }
-                DT.Rows.Add("", "", "-", "1");
-                Result = DSTOTGrl.Tables[17].Select("Codigo= '" + ViewState["PscnAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DT.ImportRow(Row); }
-
                 DdlPosRte.DataSource = DT;
                 DdlPosRte.DataTextField = "Descripcion";
                 DdlPosRte.DataValueField = "Codigo";
@@ -4000,24 +3977,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DdlVerif.DataTextField = "Tecnico";
                 DdlVerif.DataValueField = "CodPersona";
                 DdlVerif.DataBind();
-
-                /* LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}',{2},'','LICTA',0,0,0,{3},'01-01-1','02-01-1','03-01-1'", ViewState["GnrdAnt"].ToString().Trim(), LicGen, Session["77IDM"], Session["!dC!@"]);
-                 DdlLicGene.DataSource = Cnx.DSET(LtxtSql);
-                 DdlLicGene.DataTextField = "Licencia";
-                 DdlLicGene.DataValueField = "Codigo";
-                 DdlLicGene.DataBind();
-
-                 LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}',{2},'','LICTA',0,0,0,{3},'01-01-1','02-01-1','03-01-1'", ViewState["CmplAnt"].ToString().Trim(), LicCump, Session["77IDM"], Session["!dC!@"]);
-                 DdlLicCump.DataSource = Cnx.DSET(LtxtSql);
-                 DdlLicCump.DataTextField = "Licencia";
-                 DdlLicCump.DataValueField = "Codigo";
-                 DdlLicCump.DataBind();
-
-                 LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}',{2},'','LICTA',0,0,0,{3},'01-01-1','02-01-1','03-01-1'", ViewState["VrfcAnt"].ToString().Trim(), LicVer, Session["77IDM"], Session["!dC!@"]);
-                 DdlLicVer.DataSource = Cnx.DSET(LtxtSql);
-                 DdlLicVer.DataTextField = "Licencia";
-                 DdlLicVer.DataValueField = "Codigo";
-                 DdlLicVer.DataBind();*/
             }
 
             if (DSTOTGrl.Tables[10].Rows.Count > 0) //"Licencia"
@@ -4062,14 +4021,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             if (DSTOTGrl.Tables[6].Rows.Count > 0) //"Base"
             {
                 DataTable DT = new DataTable();
-                DataRow[] DR = DSTOTGrl.Tables[6].Select("Activo=1");
+                DataRow[] DR = DSTOTGrl.Tables[6].Select("Activo=1 OR CodBase= '" + ViewState["BaseAnt"] + "'");
                 if (IsIENumerableLleno(DR))
                 { DT = DR.CopyToDataTable(); }
-                DT.Rows.Add("", "-", "", "1");
-                Result = DSTOTGrl.Tables[6].Select("CodBase= '" + ViewState["BaseAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DT.ImportRow(Row); }
-
                 DdlBasRte.DataSource = DT;
                 DdlBasRte.DataTextField = "NomBase";
                 DdlBasRte.DataValueField = "CodBase";
@@ -4077,12 +4031,22 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DdlBasRte.SelectedValue = ViewState["BaseAnt"].ToString().Trim();
             }
 
-            VbCodAnt = DdlPnRte.Text.Trim();
-            DdlPnRte.DataSource = DSTOTGrl.Tables[12];
-            DdlPnRte.DataTextField = "PN";
-            DdlPnRte.DataValueField = "CodPN";
-            DdlPnRte.DataBind();
-            DdlPnRte.Text = VbCodAnt;
+            if (DSTOTGrl.Tables[12].Rows.Count > 0) //"P/N"
+            {
+                DataTable DT = new DataTable();
+                DataRow[] DR = DSTOTGrl.Tables[12].Select("CodTipoElemento <> ''");
+                if (IsIENumerableLleno(DR))
+                { DT = DR.CopyToDataTable(); }
+                DataView DV = DT.DefaultView;
+                DV.Sort = "PN";
+                DT = DV.ToTable();
+                VbCodAnt = DdlPnRte.Text.Trim();
+                DdlPnRte.DataSource = DT;
+                DdlPnRte.DataTextField = "PN";
+                DdlPnRte.DataValueField = "CodPN";
+                DdlPnRte.DataBind();
+                DdlPnRte.Text = VbCodAnt;
+            }
         }
         protected void TraerDatosRtes(int NumRte, string Accion)
         {
