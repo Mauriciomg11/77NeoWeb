@@ -497,10 +497,11 @@ namespace _77NeoWeb.Forms.MRO
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = "EXEC SP_PANTALLA__Servicio_Manto2 3,'','','','','PNRF',0,0,0,@ICC,'01-01-01','01-01-01','01-01-01'";
+                string VbTxtSql = "EXEC SP_PANTALLA__Servicio_Manto2 3,'','','','','PNRF',0,0, @Idm,@ICC,'01-01-01','01-01-01','01-01-01'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
+                    SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter SDA = new SqlDataAdapter())
                     {
@@ -521,10 +522,11 @@ namespace _77NeoWeb.Forms.MRO
                 Cnx.SelecBD();
                 using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbTxtSql = " EXEC  SP_PANTALLA_PROPUESTA_V2 17,'','','','','DataPpl',0,0,0,@ICC,'01-01-01','02-01-01','03-01-01'";
+                    string VbTxtSql = " EXEC  SP_PANTALLA_PROPUESTA_V2 17,'','','','','DataPpl',0,0,@idm,@ICC,'01-01-01','02-01-01','03-01-01'";
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
+                        SC.Parameters.AddWithValue("@idm", Session["77IDM"]); 
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter SDA = new SqlDataAdapter())
                         {
@@ -661,6 +663,7 @@ namespace _77NeoWeb.Forms.MRO
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                         SC.Parameters.AddWithValue("@CC", Session["!dC!@"]);
                         SC.Parameters.AddWithValue("@PT", PPT);
 
@@ -670,7 +673,6 @@ namespace _77NeoWeb.Forms.MRO
                         ViewState["CamposNuevos"] = "N";
                         foreach (DataRow SDR in DTEncPPT.Rows)
                         {
-
                             string VbFecSt;
                             DateTime? VbFecDT;
                             TxtNumPpt.Text = SDR["IdPropuesta"].ToString().Trim();
@@ -1073,13 +1075,14 @@ namespace _77NeoWeb.Forms.MRO
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = "EXEC SP_TablasMRO 4,'',@Us,'','','','','','','PCP',@PP,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                        string VBQuery = "EXEC SP_TablasMRO 4,'',@Us,'','','','','','','PCP',@PP,0,0,0,0, @ICC,'01-01-1','02-01-1','03-01-1'";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
                             {
                                 SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                                 SC.Parameters.AddWithValue("@PP", TxtNumPpt.Text.Trim());
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 var Mensj = SC.ExecuteScalar();
                                 if (!Mensj.ToString().Trim().Equals(""))
                                 {
@@ -1121,13 +1124,14 @@ namespace _77NeoWeb.Forms.MRO
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = "EXEC SP_TablasMRO 4,'',@Us,'','','','','','','NLOG',@PP,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                        string VBQuery = "EXEC SP_TablasMRO 4,'',@Us,'','','','','','','NLOG',@PP,0,0,0,0, @ICC,'01-01-1','02-01-1','03-01-1'";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
                             {
                                 SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                                 SC.Parameters.AddWithValue("@PP", TxtNumPpt.Text.Trim());
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 var Mensj = SC.ExecuteScalar();
                                 if (!Mensj.ToString().Trim().Equals(""))
                                 {
@@ -1280,13 +1284,14 @@ namespace _77NeoWeb.Forms.MRO
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasMRO 5,'',@Us,'','','','','','','CUMPLID',@PP,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasMRO 5,'',@Us,'','','','','','','CUMPLID',@PP,0,0,0,0, @ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
                         {
                             SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@PP", TxtNumPpt.Text.Trim());
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             var Mensj = SC.ExecuteScalar();
                             if (!Mensj.ToString().Trim().Equals(""))
                             {
@@ -1327,13 +1332,14 @@ namespace _77NeoWeb.Forms.MRO
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasMRO 5,'',@Us,'','','','','','','CANCEL',@PP,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasMRO 5,'',@Us,'','','','','','','CANCEL',@PP,0,0,0,0, @ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
                         {
                             SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@PP", TxtNumPpt.Text.Trim());
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             var Mensj = SC.ExecuteScalar();
                             if (!Mensj.ToString().Trim().Equals(""))
                             {
@@ -1374,13 +1380,14 @@ namespace _77NeoWeb.Forms.MRO
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasMRO 5,'',@Us,'','','','','','','DEVOLUCION',@PP,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasMRO 5,'',@Us,'','','','','','','DEVOLUCION',@PP,0,0,0,0, @ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
                         {
                             SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@PP", TxtNumPpt.Text.Trim());
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             var Mensj = SC.ExecuteScalar();
                             if (!Mensj.ToString().Trim().Equals(""))
                             {
@@ -1421,13 +1428,14 @@ namespace _77NeoWeb.Forms.MRO
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasMRO 5,'',@Us,'','','','','','','NOAPROBADA',@PP,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasMRO 5,'',@Us,'','','','','','','NOAPROBADA',@PP,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
                         {
                             SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@PP", TxtNumPpt.Text.Trim());
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             var Mensj = SC.ExecuteScalar();
                             if (!Mensj.ToString().Trim().Equals(""))
                             {
@@ -1749,9 +1757,8 @@ namespace _77NeoWeb.Forms.MRO
                     ViewState["Accion"] = "";
                     Result = Idioma.Select("Objeto= 'BotonMod'");
                     foreach (DataRow row in Result)
-                    { BtnModificar.Text = row["Texto"].ToString().Trim(); }//                   
+                    { BtnModificar.Text = row["Texto"].ToString().Trim(); }              
                     ActivarCampos(false, false, "UPDATE");
-                    // BindDataDdlPptPpal(DdlCliente.Text.Trim(), "UPDATE");
                     Traerdatos(TxtNumPpt.Text.Trim());
                     BtnModificar.OnClientClick = "";
                 }
@@ -1792,13 +1799,14 @@ namespace _77NeoWeb.Forms.MRO
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC  SP_PANTALLA_PROPUESTA_V2 20,@Usu,'','','','',@PP,0,0,0,'01-01-01','02-01-01','03-01-01'";
+                    string VBQuery = "EXEC SP_PANTALLA_PROPUESTA_V2 20,@Usu,'','','','',@PP,0,0,@ICC,'01-01-01','02-01-01','03-01-01'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
                         {
                             SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@PP", TxtNumPpt.Text.Trim());
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
 
                             var VbMensj = SC.ExecuteScalar();
                             if (!VbMensj.Equals(""))
@@ -1885,13 +1893,13 @@ namespace _77NeoWeb.Forms.MRO
             if (EncDet.Equals("ENC"))
             {
                 CursorIdioma.Alimentar("CurExportEncPPT", Session["77IDM"].ToString().Trim());
-                VbTxtSql = "EXEC SP_PANTALLA_Propuesta 49,'WEB',@PT,ENC,'CurExportEncPPT',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                VbTxtSql = "EXEC SP_PANTALLA_Propuesta 49,'WEB',@PT,ENC,'CurExportEncPPT',0,0, @idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                 VbNomRpt = "Commercial_Quotation";
             }
             else
             {
                 CursorIdioma.Alimentar("CurExportDetPPT", Session["77IDM"].ToString().Trim());
-                VbTxtSql = "EXEC SP_PANTALLA_Propuesta 49,'WEB',@PT,DET,'CurExportDetPPT',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                VbTxtSql = "EXEC SP_PANTALLA_Propuesta 49,'WEB',@PT,DET,'CurExportDetPPT',0,0, @idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                 VbNomRpt = "DetailQuotation";
             }
             Cnx.SelecBD();
@@ -1901,6 +1909,7 @@ namespace _77NeoWeb.Forms.MRO
                 {
                     SC.CommandTimeout = 90000000;
                     SC.Parameters.AddWithValue("@PT", Opcion);
+                    SC.Parameters.AddWithValue("@idm", Session["77IDM"]);
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter sda = new SqlDataAdapter())
                     {
@@ -1992,13 +2001,15 @@ namespace _77NeoWeb.Forms.MRO
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = "EXEC  SP_PANTALLA_PROPUESTA_V2 4,@Eact,'','','','',@IPP,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                string VbTxtSql = "EXEC SP_PANTALLA_PROPUESTA_V2 4,@Eact,'','','','',@IPP,0,@idm,@ICC,'01-01-1','02-01-1','03-01-1'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     DataTable DtDdlEstd = new DataTable();
                     SC.Parameters.AddWithValue("@Eact", DdlEstado.Text.Trim());
                     SC.Parameters.AddWithValue("@IPP", TxtNumPpt.Text.Trim());
+                    SC.Parameters.AddWithValue("@idm", Session["77IDM"]);
+                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter SDA = new SqlDataAdapter())
                     {
                         ViewState["CodAnt"] = DdlEstado.Text.Trim();
@@ -2029,7 +2040,7 @@ namespace _77NeoWeb.Forms.MRO
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = "EXEC SP_TablasMRO 2,@CEA,@Us,@NEAtr,@NEAct,'','','','','',@PP,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                        string VBQuery = "EXEC SP_TablasMRO 2,@CEA,@Us,@NEAtr,@NEAct,'','','','','',@PP,0,0,0,0, @ICC,'01-01-1','02-01-1','03-01-1'";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             SC.Parameters.AddWithValue("@CEA", DdlEstado.Text.Trim());
@@ -2037,6 +2048,7 @@ namespace _77NeoWeb.Forms.MRO
                             SC.Parameters.AddWithValue("@NEAtr", ViewState["NomEstdAnt"]);
                             SC.Parameters.AddWithValue("@NEAct", DdlEstado.SelectedItem.Text.Trim());
                             SC.Parameters.AddWithValue("@PP", TxtNumPpt.Text.Trim());
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             try
                             {
                                 SC.ExecuteNonQuery();
@@ -2075,11 +2087,12 @@ namespace _77NeoWeb.Forms.MRO
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasMRO 3,'',@Us,'','','','','','','',@PP,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasMRO 3,'',@Us,'','','','','','','',@PP,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@PP", TxtNumPpt.Text.Trim());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
                             SC.ExecuteNonQuery();
@@ -2149,11 +2162,12 @@ namespace _77NeoWeb.Forms.MRO
                     using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                     {
 
-                        string VbTxtSql = "EXEC SP_PANTALLA_Propuesta 5,'','','','',@IPpt, 0, 0, 0, '01-1-2009', '01-01-1900', '01-01-1900'";
+                        string VbTxtSql = "EXEC SP_PANTALLA_Propuesta 5,'','','','',@IPpt, @ICC, 0, 0, '01-1-2009', '01-01-1900', '01-01-1900'";
                         sqlConB.Open();
                         using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                         {
                             SC.Parameters.AddWithValue("@IPpt", Ppt);
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
 
                             using (SqlDataAdapter DAB = new SqlDataAdapter())
                             {
@@ -2287,7 +2301,7 @@ namespace _77NeoWeb.Forms.MRO
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasMRO 13,@CT,@Us,'','','','','','','APROBAR_ALL',@PP,@GnNl,@GnIt,@VlrA,0,@ICC,'01-01-1','02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasMRO 13,@CT,@Us,'','','','','','','APROBAR_ALL',@PP,@GnNl,@GnIt,@VlrA,@ICC,0,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
@@ -2703,11 +2717,12 @@ namespace _77NeoWeb.Forms.MRO
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = "EXEC SP_PANTALLA_Propuesta 32,@Prmtr,'','','',0,0,@CC,@Op,'01-1-2009','01-01-1900','01-01-1900'";
+                string VbTxtSql = "EXEC SP_PANTALLA_Propuesta 32,@Prmtr,'','','',0,@Idm,@CC,@Op,'01-1-2009','01-01-1900','01-01-1900'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     SC.Parameters.AddWithValue("@Prmtr", TxtBusqueda.Text.Trim().Equals("") ? "0" : TxtBusqueda.Text.Trim());
+                    SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                     SC.Parameters.AddWithValue("@CC", Session["!dC!@"]);
                     SC.Parameters.AddWithValue("@Op", Opc);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
@@ -2785,8 +2800,9 @@ namespace _77NeoWeb.Forms.MRO
             using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
             {
                 Cnx2.Open();
-                string LtxtSql = "EXEC  SP_PANTALLA_PROPUESTA_V2 17,'','','','','Condiciones',0,0,0,@ICC,'01-01-01','02-01-01','03-01-01'";
+                string LtxtSql = "EXEC SP_PANTALLA_PROPUESTA_V2 17,'','','','','Condiciones',0,0, @idm,@ICC,'01-01-01','02-01-01','03-01-01'";
                 SqlCommand SC = new SqlCommand(LtxtSql, Cnx2);
+                SC.Parameters.AddWithValue("@idm", Session["77IDM"]);
                 SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                 SqlDataReader SDR = SC.ExecuteReader();
                 if (SDR.Read())
@@ -2905,11 +2921,12 @@ namespace _77NeoWeb.Forms.MRO
                 Cnx.SelecBD();
                 using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbTxtSql = "EXEC  SP_PANTALLA_PROPUESTA_V2 18,'','','','','SN',@Pp,0,0,0,'01-01-01','02-01-01','03-01-01'";
+                    string VbTxtSql = "EXEC  SP_PANTALLA_PROPUESTA_V2 18,'','','','','SN',@Pp,0,0, @ICC,'01-01-01','02-01-01','03-01-01'";
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
                         SC.Parameters.AddWithValue("@Pp", TxtNumPpt.Text.Trim());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter DAB = new SqlDataAdapter())
                         {
                             DAB.SelectCommand = SC;
@@ -2946,7 +2963,6 @@ namespace _77NeoWeb.Forms.MRO
                 GrdMO.DataSource = null; GrdMO.DataBind();
 
                 GridViewRow RowG = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
-                // ImageButton IbtAddNew = (e.RowG.FindControl("IbtAddNew") as ImageButton);
                 ImageButton IbtFilter = ((ImageButton)RowG.FindControl("IbtFilter")) as ImageButton;
                 GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
                 string VbIdx = GrdElementos.DataKeys[gvr.RowIndex].Values["IdDetPropHk"].ToString().Trim();
@@ -3010,7 +3026,7 @@ namespace _77NeoWeb.Forms.MRO
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = "EXEC SP_TablasMRO 7,@Bod,@Us,@Pn,@Desc,@Sn,'','','INSERT','ELEM',@PP,@Cant,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                        string VBQuery = "EXEC SP_TablasMRO 7,@Bod,@Us,@Pn,@Desc,@Sn,'','','INSERT','ELEM',@PP,@Cant,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
@@ -3022,6 +3038,7 @@ namespace _77NeoWeb.Forms.MRO
                                 SC.Parameters.AddWithValue("@Sn", (GrdElementos.FooterRow.FindControl("TxtSNPP") as TextBox).Text.Trim());
                                 SC.Parameters.AddWithValue("@PP", TxtNumPpt.Text.Trim());
                                 SC.Parameters.AddWithValue("@Cant", VbCant);
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 var Mensj = SC.ExecuteScalar();
                                 if (!Mensj.ToString().Trim().Equals(""))
                                 {
@@ -3054,7 +3071,7 @@ namespace _77NeoWeb.Forms.MRO
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasMRO 7,'',@Us,'','','','','','DELETE','ELEM',@PP,0,@Id,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasMRO 7,'',@Us,'','','','','','DELETE','ELEM',@PP,0,@Id,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
@@ -3062,6 +3079,7 @@ namespace _77NeoWeb.Forms.MRO
                             SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@PP", TxtNumPpt.Text.Trim());
                             SC.Parameters.AddWithValue("@Id", VbId);
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             var Mensj = SC.ExecuteScalar();
                             if (!Mensj.ToString().Trim().Equals(""))
                             {
@@ -3131,11 +3149,12 @@ namespace _77NeoWeb.Forms.MRO
                 Cnx.SelecBD();
                 using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbTxtSql = "EXEC  SP_PANTALLA_PROPUESTA_V2 18,'','','','','HK',@Pp,0,0,0,'01-01-01','02-01-01','03-01-01'";
+                    string VbTxtSql = "EXEC  SP_PANTALLA_PROPUESTA_V2 18,'','','','','HK',@Pp,0,0, @ICC,'01-01-01','02-01-01','03-01-01'";
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
                         SC.Parameters.AddWithValue("@Pp", TxtNumPpt.Text.Trim());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter DAB = new SqlDataAdapter())
                         {
                             DAB.SelectCommand = SC;
@@ -3233,7 +3252,7 @@ namespace _77NeoWeb.Forms.MRO
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = "EXEC SP_TablasMRO 7,'',@Us,'','','','','','INSERT','HK',@PP,@Cant,@HK,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                        string VBQuery = "EXEC SP_TablasMRO 7,'',@Us,'','','','','','INSERT','HK',@PP,@Cant,@HK,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
@@ -3242,6 +3261,7 @@ namespace _77NeoWeb.Forms.MRO
                                 SC.Parameters.AddWithValue("@PP", TxtNumPpt.Text.Trim());
                                 SC.Parameters.AddWithValue("@Cant", 1);
                                 SC.Parameters.AddWithValue("@HK", VbHK);
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 var Mensj = SC.ExecuteScalar();
                                 if (!Mensj.ToString().Trim().Equals(""))
                                 {
@@ -3274,7 +3294,7 @@ namespace _77NeoWeb.Forms.MRO
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasMRO 7,'',@Us,'','','','','','DELETE','HK',@PP,0,@Id,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasMRO 7,'',@Us,'','','','','','DELETE','HK',@PP,0,@Id,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
@@ -3282,6 +3302,7 @@ namespace _77NeoWeb.Forms.MRO
                             SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@PP", TxtNumPpt.Text.Trim());
                             SC.Parameters.AddWithValue("@Id", VbId);
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             var Mensj = SC.ExecuteScalar();
                             if (!Mensj.ToString().Trim().Equals(""))
                             {
@@ -3443,18 +3464,15 @@ namespace _77NeoWeb.Forms.MRO
                 Cnx.SelecBD();
                 using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbTxtSql = "EXEC SP_PANTALLA_PROPUESTA_V2 19,@DO,'','','','',@Pp,0,0,0,'01-01-01','02-01-01','03-01-01'";
+                    string VbTxtSql = "EXEC SP_PANTALLA_PROPUESTA_V2 19,@DO,'','','','',@Pp,0,0,@ICC,'01-01-01','02-01-01','03-01-01'";
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
                         SC.Parameters.AddWithValue("@Pp", TxtNumPpt.Text.Trim());
                         SC.Parameters.AddWithValue("@DO", RdbSinDanOcul.Checked == true ? "SIN_DAÑO" : "CON_DAÑO");
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter DAB = new SqlDataAdapter())
-                        {
-                            DAB.SelectCommand = SC;
-                            DAB.Fill(DtSrvcs);
-                            ViewState["DtSrvcs"] = DtSrvcs;
-                        }
+                        { DAB.SelectCommand = SC; DAB.Fill(DtSrvcs); ViewState["DtSrvcs"] = DtSrvcs; }
                     }
                 }
             }
@@ -3598,7 +3616,7 @@ namespace _77NeoWeb.Forms.MRO
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = "EXEC GenerarOT_PPT @Tipo, @PPT, @IdDetPropSrv, @EvalDesdeOT, @RepaExt, @OT, @CodSvcManto, @Usu";
+                        string VBQuery = "EXEC GenerarOT_PPT @Tipo, @PPT, @IdDetPropSrv, @EvalDesdeOT, @RepaExt, @OT, @CodSvcManto, @Usu, @ICC";
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
@@ -3611,6 +3629,7 @@ namespace _77NeoWeb.Forms.MRO
                                 SC.Parameters.AddWithValue("@OT", VlOt.Trim());
                                 SC.Parameters.AddWithValue("@CodSvcManto", VbCodSvcM.Trim());
                                 SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
+                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 // SC.Parameters.AddWithValue("@CC", Session["!dC!@"]);
 
                                 SqlDataReader SDR = SC.ExecuteReader();
@@ -3662,8 +3681,7 @@ namespace _77NeoWeb.Forms.MRO
                                 Result = Idioma.Select("Objeto= '" + Mensj2.ToString().Trim() + "'");
                                 if (Result.Length != 0)
                                 {
-                                    foreach (DataRow row in Result)
-                                    { Mensj2 = row["Texto"].ToString().Trim(); }
+                                    foreach (DataRow row in Result) { Mensj2 = row["Texto"].ToString().Trim(); }
                                     ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj2 + "');", true);
                                 }
                             }
@@ -4068,7 +4086,7 @@ namespace _77NeoWeb.Forms.MRO
 
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
-                {                   
+                {
                     SC.Parameters.AddWithValue("@P", ViewState["RegistroElemHK"]);
                     SC.Parameters.AddWithValue("@TiP", DdlTipo.Text.Trim());
                     SC.Parameters.AddWithValue("@IdD", ViewState["IdDetPropHk"]);
@@ -4175,7 +4193,6 @@ namespace _77NeoWeb.Forms.MRO
                             else { GrdMO.DataSource = null; GrdMO.DataBind(); }
                         }
                     }
-
                 }
             }
         }
@@ -4199,9 +4216,8 @@ namespace _77NeoWeb.Forms.MRO
                 string FileName = "";
                 string conexion = "";
                 FileName = "PPTSale.xlsx";
-                //Public cnnstr As String = "Provider=microsoft.ACE.OLEDB.12.0;Data source=" & Application.StartupPath & "\datos.accdb;Persist Security Info=False;"
                 conexion = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ViewState["CarpetaCargaMasiva"].ToString().Trim() + FileName + ";Extended Properties='Excel 12.0 Xml;HDR=YES;'";
-                //conexion = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ViewState["CarpetaCargaMasiva"].ToString().Trim() + FileName + ";datos.accdb;Persist Security Info=False;";
+
                 using (OleDbConnection cnn = new OleDbConnection(conexion))
                 {
                     cnn.Open();
@@ -4211,7 +4227,6 @@ namespace _77NeoWeb.Forms.MRO
                     cnn.Close();
 
                     cnn.Open();
-                    // string sql = "SELECT *FROM [Tabla$]";
                     string sql = "SELECT * From [" + SheetName + "]";
                     OleDbCommand command = new OleDbCommand(sql, cnn);
                     OleDbDataAdapter DA = new OleDbDataAdapter(command);
@@ -4276,7 +4291,6 @@ namespace _77NeoWeb.Forms.MRO
             }
             catch (Exception Ex)
             {
-                // ScriptManager.RegisterClientScriptBlock(this.UpPnlCargaMasiva, UpPnlCargaMasiva.GetType(), "IdntificadorBloqueScript", "alert('No se realizó la acción, verifica la plantilla')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Subir Plantilla de PPT", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
@@ -4585,12 +4599,13 @@ namespace _77NeoWeb.Forms.MRO
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = "EXEC SP_TablasMRO 15,@US,'','','','','','','','UPDATE',@ID,0,0,0,0,1,'01-01-1','02-01-1','03-01-1'";
+                        string VBQuery = "EXEC SP_TablasMRO 15,@US,'','','','','','','','UPDATE',@ID,0,0,0,0, @ICC,'01-01-1','02-01-1','03-01-1'";
 
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@ID", GrdAlrtDetSinAprb.DataKeys[e.RowIndex].Value.ToString());
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             try
                             {
                                 SC.ExecuteNonQuery();

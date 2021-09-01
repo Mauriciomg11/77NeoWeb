@@ -126,7 +126,7 @@ namespace _77NeoWeb.Forms.MRO
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = "EXEC SP_PANTALLA_Propuesta 20,@Prmtr,@ICC,'','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                string VbTxtSql = "EXEC SP_PANTALLA_Propuesta 20,@Prmtr,@ICC,'','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
@@ -160,7 +160,7 @@ namespace _77NeoWeb.Forms.MRO
             if (Opcion.Equals("VENTA"))
             {
                 CursorIdioma.Alimentar("CurExportPPTVenta", Session["77IDM"].ToString().Trim());
-                VbTxtSql = "EXEC SP_PANTALLA_Propuesta 28,@ICC,'','CurExportPPTVenta','WEB',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'";
+                VbTxtSql = "EXEC SP_PANTALLA_Propuesta 28,@ICC,'','CurExportPPTVenta','WEB',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                 VbNomRpt = "Sales_Quotation";
             }
             else
@@ -187,10 +187,7 @@ namespace _77NeoWeb.Forms.MRO
                             ds.Tables[0].TableName = "77NeoWeb";
                             using (XLWorkbook wb = new XLWorkbook())
                             {
-                                foreach (DataTable dt in ds.Tables)
-                                {
-                                    wb.Worksheets.Add(dt);
-                                }
+                                foreach (DataTable dt in ds.Tables) { wb.Worksheets.Add(dt); }
                                 Response.Clear();
                                 Response.Buffer = true;
                                 Response.ContentType = "application/ms-excel";

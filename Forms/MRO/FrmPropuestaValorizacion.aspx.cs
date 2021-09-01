@@ -438,13 +438,14 @@ namespace _77NeoWeb.Forms.MRO
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasMRO 16,@PP,@Us,'','','','','','','REVALORIZAR',0,0,0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasMRO 16,@PP,@Us,'','','','','','','REVALORIZAR',0,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
                         {
                             SC.Parameters.AddWithValue("@PP", DdlNumPpt.Text.Trim());
                             SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             SC.ExecuteNonQuery();
                             Transac.Commit();
                             BindDetalle("UPDATE");

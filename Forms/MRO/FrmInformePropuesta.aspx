@@ -16,8 +16,9 @@
             height: 85%;
             padding: 5px;
         }
-        .width{
-            width:33%;
+
+        .width {
+            width: 33%;
         }
     </style>
 </asp:Content>
@@ -57,11 +58,11 @@
                             </div>
                             <div class="col-sm-4">
                                 <br />
-                                <asp:Button ID="BtnExportarVentas" runat="server" CssClass="btn btn-primary" OnClick="BtnExportarVentas_Click" Text="seguimiento" Width="100%"/>
+                                <asp:Button ID="BtnExportarVentas" runat="server" CssClass="btn btn-primary" OnClick="BtnExportarVentas_Click" Text="seguimiento" Width="100%" />
                             </div>
                             <div class="col-sm-4">
                                 <br />
-                                <asp:Button ID="BtnExportarRepa" runat="server" CssClass="btn btn-primary" OnClick="BtnExportarRepa_Click" Text="seguimiento" Width="100%"/>
+                                <asp:Button ID="BtnExportarRepa" runat="server" CssClass="btn btn-primary" OnClick="BtnExportarRepa_Click" Text="seguimiento" Width="100%" />
                             </div>
                         </div>
                     </div>
@@ -72,11 +73,11 @@
                     </h6>
                     <asp:ImageButton ID="IbtCerrarBusq" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarBusq_Click" />
                     <div class="CentrarBusq DivMarco">
-                        <table class="TablaBusqueda width ">                            
+                        <table class="TablaBusqueda width ">
                             <tr>
                                 <td>
                                     <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
-                                <td >
+                                <td>
                                     <asp:TextBox ID="TxtBusqueda" runat="server" Width="100%" Height="28px" CssClass="form-control" Font-Size="11px" TextMode="Number" step="1" onkeypress="return solonumeros(event);" placeholder="Ingrese el número" /></td>
                                 <td>
                                     <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
@@ -84,9 +85,9 @@
                         </table>
                         <br />
                         <div class="CentrarGrid pre-scrollable">
-                            <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" 
+                            <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
                                 CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowDataBound="GrdBusq_RowDataBound">
-                                <Columns>                                   
+                                <Columns>
                                     <asp:TemplateField HeaderText="Ppt">
                                         <ItemTemplate>
                                             <asp:Label ID="LblPpt" Text='<%# Eval("Propuesta") %>' runat="server" />
@@ -106,7 +107,7 @@
                                         <ItemTemplate>
                                             <asp:Label Text='<%# Eval("FechaCrea") %>' runat="server" />
                                         </ItemTemplate>
-                                    </asp:TemplateField>                                   
+                                    </asp:TemplateField>
                                 </Columns>
                                 <HeaderStyle CssClass="GridCabecera" />
                                 <RowStyle CssClass="GridRowStyle" />
@@ -117,9 +118,9 @@
                 </asp:View>
             </asp:MultiView>
         </ContentTemplate>
-         <Triggers>
-                    <asp:PostBackTrigger ControlID="BtnExportarVentas" />
-                    <asp:PostBackTrigger ControlID="BtnExportarRepa" />
-             </Triggers>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="BtnExportarVentas" />
+            <asp:PostBackTrigger ControlID="BtnExportarRepa" />
+        </Triggers>
     </asp:UpdatePanel>
 </asp:Content>

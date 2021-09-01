@@ -718,7 +718,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         else
                         {
                             VBQuery = string.Format("UPDATE TblAdjuntos SET Descripcion=@Des,Ruta=@Rt,ArchivoAdj=@Image,Extension=@Ex,UsuMod=@Us,FechaMod =GETDATE(),TipoArchivo= @Typ " +
-                                "WHERE IdProceso=@Id AND CodProceso='LV'");
+                                "WHERE IdProceso=@Id AND CodProceso='LV' AND IdConfigCia = @ICC");
                         }
                         using (SqlCommand SqlCmd = new SqlCommand(VBQuery, sqlCon))
                         {

@@ -10,8 +10,7 @@
 
         .CentrarContenedor {
             position: absolute;
-            /*nos posicionamos en el centro del navegador*/
-            /*top: 50%;*/
+           
             left: 50%;
             /*determinamos una anchura*/
             width: 98%;
@@ -138,7 +137,6 @@
             $('[id *=DdlPNPP]').chosen();
             $('[id *=DdlHK], [id *=DdlHKPP]').chosen();
             $('[id *=DdlCont],[id *=DdlContPP]').chosen();
-            $('[id *=DdlHK], [id *=DdlHKPP]').chosen();
             $('[id *=DdlLicenRFPP]').chosen();
             $('[id *=DdlPNRFPP]').chosen();
         }

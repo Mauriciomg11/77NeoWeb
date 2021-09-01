@@ -87,7 +87,7 @@
                     </div>
                     <div class="col-sm-1"></div>
                     <div class="col-sm-5">
-                        <asp:Button ID="BtnIngresar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="30%" OnClick="BtnIngresar_Click" OnClientClick="target ='';" Text="nuevo" Enabled="false"  />
+                        <asp:Button ID="BtnIngresar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="30%" OnClick="BtnIngresar_Click" OnClientClick="target ='';" Text="nuevo" Enabled="false" />
                     </div>
                 </div>
                 <div class="ScrollDet1">
@@ -129,13 +129,13 @@
                             <asp:TemplateField HeaderText="almacén" HeaderStyle-Width="10%">
                                 <ItemTemplate>
                                     <asp:Label Text='<%# Eval("Almacen") %>' runat="server" />
-                                </ItemTemplate>                               
+                                </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Bodega" HeaderStyle-Width="8%">
                                 <ItemTemplate>
                                     <asp:Label Text='<%# Eval("Bodega") %>' runat="server" Width="100%" />
-                                </ItemTemplate>                                
-                            </asp:TemplateField>                            
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                         <FooterStyle CssClass="GridFooterStyle" />
                         <HeaderStyle CssClass="GridCabecera" />

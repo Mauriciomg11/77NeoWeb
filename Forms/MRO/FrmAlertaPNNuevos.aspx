@@ -26,8 +26,7 @@
 
         .CentrarContenedor {
             position: absolute;           
-            left: 50%;
-            /*determinamos una anchura*/
+            left: 50%;           
             width: 98%;
             /*indicamos que el margen izquierdo, es la mitad de la anchura*/
             margin-left: -49%;

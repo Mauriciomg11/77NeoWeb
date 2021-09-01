@@ -174,7 +174,7 @@
                         <RowStyle CssClass="GridRowStyle" />
                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                     </asp:GridView>
-                </div>                
+                </div>
         </ContentTemplate>
         <Triggers>
             <asp:PostBackTrigger ControlID="BtnOpenElem" />

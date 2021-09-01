@@ -78,7 +78,7 @@
                                                 <ItemTemplate>
                                                     <asp:UpdatePanel ID="UplBusq" runat="server" UpdateMode="Conditional">
                                                         <ContentTemplate>
-                                                            <asp:ImageButton ID="IbtBusq" Width="30px" Height="30px" ImageUrl="~/images/FindV3.png" runat="server" CommandName="Busq" ToolTip="Buscar"  OnClientClick="target ='';" />
+                                                            <asp:ImageButton ID="IbtBusq" Width="30px" Height="30px" ImageUrl="~/images/FindV3.png" runat="server" CommandName="Busq" ToolTip="Buscar" OnClientClick="target ='';" />
                                                         </ContentTemplate>
                                                         <Triggers>
                                                             <asp:PostBackTrigger ControlID="IbtBusq" />

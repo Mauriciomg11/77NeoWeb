@@ -1799,9 +1799,10 @@ namespace _77NeoWeb.Forms.Ingenieria
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
-                    VBQuery = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 8,'','','','','VALIDA',{0},0,0,{1},'01-01-01','01-01-01','01-01-01'", IDContaSrvManto, Session["!dC!@"]);
+                    VBQuery = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 8,'','','','','VALIDA',{0},0,0, @ICC,'01-01-01','01-01-01','01-01-01'", IDContaSrvManto);
 
                     SqlCommand Comando = new SqlCommand(VBQuery, sqlCon);
+                    Comando.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataReader registro = Comando.ExecuteReader();
                     if (registro.Read())
                     {
@@ -3247,7 +3248,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = "UPDATE TblAdjuntos SET Descripcion = @Desc ," + VblSiAdjunto + "  UsuMod= @Us, FechaMod=GETDATE()  WHERE IdAdjuntos = @I";
+                    VBQuery = "UPDATE TblAdjuntos SET Descripcion = @Desc ," + VblSiAdjunto + "  UsuMod= @Us, FechaMod=GETDATE()  WHERE IdAdjuntos = @I AND IdConfigCia = @ICC";
                     using (SqlCommand SqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
@@ -3294,12 +3295,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                     int VblId = Convert.ToInt32(GrdAdj.DataKeys[e.RowIndex].Values["IdAdjuntos"].ToString());
                     string VblRuta = GrdAdj.DataKeys[e.RowIndex].Values["Ruta"].ToString();
 
-                    string VBQuery = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 13,'{0}','{1}','','','',{2},{3},0,0,'01-01-01','01-01-01','01-01-01'"
+                    string VBQuery = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 13,'{0}','{1}','','','',{2},{3},0, @ICC,'01-01-01','01-01-01','01-01-01'"
                            , Session["C77U"].ToString(), VblRuta, VblId, TxtId.Text);
                     using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
                         {
+                            sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             sqlCmd.ExecuteNonQuery();
                             Transac.Commit();
                             BindDataAll();

@@ -89,6 +89,8 @@ namespace _77NeoWeb.Prg.prgMro
                         {
                             sqlCmd.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = sqlCmd.Parameters.AddWithValue("@CurDetPptSvcs", TblDetallePropuestaSvcManto);
+                            SqlParameter Prmtrs1 = sqlCmd.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
+
                             Prmtrs.SqlDbType = SqlDbType.Structured;
                             SqlDataReader SDR = sqlCmd.ExecuteReader();
                             if (SDR.Read())

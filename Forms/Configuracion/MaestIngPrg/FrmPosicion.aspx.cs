@@ -176,10 +176,11 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 Cnx.SelecBD();
                 using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbTxtSql = " EXEC  SP_PANTALLA_PROPUESTA_V2 17,'','','','','DataPpl',0,0,0,@ICC,'01-01-01','02-01-01','03-01-01'";
+                    string VbTxtSql = " EXEC  SP_PANTALLA_PROPUESTA_V2 17,'','','','','DataPpl',0,0,@Idm,@ICC,'01-01-01','02-01-01','03-01-01'";
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]); 
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
 
                         using (SqlDataAdapter SDA = new SqlDataAdapter())
