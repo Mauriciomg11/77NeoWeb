@@ -31,7 +31,7 @@ namespace _77NeoWeb.Forms.Seguridad
                     Session["V$U@"] = "sa";
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
-                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -120,9 +120,7 @@ namespace _77NeoWeb.Forms.Seguridad
             }
         }
         protected void IbtConsultar_Click(object sender, ImageClickEventArgs e)
-        {
-            BindData(TxtBusqueda.Text);
-        }
+        {            BindData(TxtBusqueda.Text);        }
         protected void GrdDatos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
@@ -147,9 +145,7 @@ namespace _77NeoWeb.Forms.Seguridad
                     }
                 }
                 if (e.CommandName == "Select")
-                {
-                    int index = int.Parse(e.CommandArgument.ToString());
-                }
+                {                    int index = int.Parse(e.CommandArgument.ToString());                }
             }
             catch (Exception ex)
             {
@@ -159,10 +155,7 @@ namespace _77NeoWeb.Forms.Seguridad
             }
         }
         protected void GrdDatos_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            GrdDatos.EditIndex = e.NewEditIndex;
-            BindData(TxtBusqueda.Text);
-        }
+        {            GrdDatos.EditIndex = e.NewEditIndex;            BindData(TxtBusqueda.Text);        }
         protected void GrdDatos_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             try
@@ -189,10 +182,7 @@ namespace _77NeoWeb.Forms.Seguridad
             }
         }
         protected void GrdDatos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            GrdDatos.EditIndex = -1;
-            BindData(TxtBusqueda.Text);
-        }
+        {            GrdDatos.EditIndex = -1;            BindData(TxtBusqueda.Text);        }
         protected void GrdDatos_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
@@ -201,9 +191,10 @@ namespace _77NeoWeb.Forms.Seguridad
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
                     sqlCon.Open();
-                    string query = "EXEC SP_ConfiguracionV2_ 11,'','','','','',@id,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    string query = "EXEC SP_ConfiguracionV2_ 11,'','','','','',@id,0,0, @ICC,'01-01-1','02-01-1','03-01-1'";
                     SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
                     sqlCmd.Parameters.AddWithValue("@id", GrdDatos.DataKeys[e.RowIndex].Value.ToString());
+                    sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     sqlCmd.ExecuteNonQuery();
                     sqlCon.Close();
                     BindData(TxtBusqueda.Text);
@@ -236,15 +227,9 @@ namespace _77NeoWeb.Forms.Seguridad
             }
         }
         protected void GrdDatos_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GrdDatos.PageIndex = e.NewPageIndex;
-            BindData(TxtBusqueda.Text);
-        }
+        {            GrdDatos.PageIndex = e.NewPageIndex;            BindData(TxtBusqueda.Text);        }
         protected override void OnPreRender(EventArgs e)
-        {
-            base.OnPreRender(e);
-            SetFixedHeightForGridIfRowsAreLess(GrdDatos);
-        }
+        {            base.OnPreRender(e);            SetFixedHeightForGridIfRowsAreLess(GrdDatos);        }
         public void SetFixedHeightForGridIfRowsAreLess(GridView gv)
         {
             double headerFooterHeight = gv.HeaderStyle.Height.Value + 22; // height style=35px and there no footer  height so assume footer also same

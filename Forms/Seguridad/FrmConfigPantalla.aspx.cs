@@ -34,7 +34,7 @@ namespace _77NeoWeb.Forms.Seguridad
                     Session["V$U@"] = "sa";
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
-                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -158,9 +158,7 @@ namespace _77NeoWeb.Forms.Seguridad
             TxtDescripcion.Text = "";
         }
         protected void IbtConsultar_Click(object sender, ImageClickEventArgs e)
-        {
-            BindData(TxtBusqueda.Text);
-        }
+        { BindData(TxtBusqueda.Text); }
         protected void BtnModificar_Click(object sender, EventArgs e)
         {
             if ((int)Session["IdForm"] > 0)
@@ -184,29 +182,17 @@ namespace _77NeoWeb.Forms.Seguridad
                                 int Ppal = 0, ing = 0, Mod = 0, Cons = 0, Impr = 0, Elim = 0;
 
                                 if (CkbPpl.Checked == true)
-                                {
-                                    Ppal = 1;
-                                }
+                                { Ppal = 1; }
                                 if (CkbIng.Checked == true)
-                                {
-                                    ing = 1;
-                                }
+                                { ing = 1; }
                                 if (CkbMod.Checked == true)
-                                {
-                                    Mod = 1;
-                                }
+                                { Mod = 1; }
                                 if (CkbCons.Checked == true)
-                                {
-                                    Cons = 1;
-                                }
+                                { Cons = 1; }
                                 if (CkbImpr.Checked == true)
-                                {
-                                    Impr = 1;
-                                }
+                                { Impr = 1; }
                                 if (CkbElim.Checked == true)
-                                {
-                                    Elim = 1;
-                                }
+                                { Elim = 1; }
                                 string Txtsql = "UPDATE TblUsrFormulario SET IngresarF=@ing, ModificarF=@Mod, ConsultarF=@Cons, ImprimirF=@Impr, EliminarF=@Elim, CasoEspeciaLF1=@CE1," +
                                     "CasoEspeciaLF2=@CE2,CasoEspeciaLF3 =@CE3, CasoEspeciaLF4=@CE4, CasoEspeciaLF5=@CE5, CasoEspeciaLF6=@CE6, Principal=@Ppal  WHERE CodIdFormulario=@ID";
                                 SqlCommand sqlCmd = new SqlCommand(Txtsql, sqlCon);
@@ -255,7 +241,6 @@ namespace _77NeoWeb.Forms.Seguridad
                 Cnx.SelecBD();
                 using (SqlConnection sqlConx = new SqlConnection(Cnx.GetConex()))
                 {
-
                     string LtxtSql = "SP_ConfiguracionV2_ 12,'','','','',''," + ((int)Session["IdForm"]).ToString() + ",0,0,0,'01-01-01','02-01-01','03-01-01'";
                     SqlCommand Comando = new SqlCommand(LtxtSql, sqlConx);
                     sqlConx.Open();
@@ -283,7 +268,6 @@ namespace _77NeoWeb.Forms.Seguridad
                         }
                         BtnModificar.Text = "Modificar";
                     }
-
                 }
             }
         }
@@ -293,10 +277,7 @@ namespace _77NeoWeb.Forms.Seguridad
             BindData(TxtBusqueda.Text);
         }
         protected override void OnPreRender(EventArgs e)
-        {
-            base.OnPreRender(e);
-            SetFixedHeightForGridIfRowsAreLess(GrdDatos);
-        }
+        {            base.OnPreRender(e);            SetFixedHeightForGridIfRowsAreLess(GrdDatos);        }
         public void SetFixedHeightForGridIfRowsAreLess(GridView gv)
         {
             double headerFooterHeight = gv.HeaderStyle.Height.Value + 20; // height style=35px and there no footer  height so assume footer also same

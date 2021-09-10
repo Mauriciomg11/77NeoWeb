@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmPropuestaReciboElemV2.aspx.cs" Inherits="_77NeoWeb.Forms.MRO.FrmPropuestaReciboElemV2" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmCargaInicial.aspx.cs" Inherits="_77NeoWeb.Forms.Almacen.FrmCargaInicial" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
@@ -44,6 +44,10 @@
             width: 100%;
             height: 400px;
         }
+
+        .TextR {
+            text-align: right;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
@@ -63,10 +67,24 @@
             }
             return true;
         }
+        function Decimal(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode == 46) {
+                var inputValue = $("#inputfield").val()
+                if (inputValue.indexOf('.') < 1) {
+                    return true;
+                }
+                return false;
+            }
+            if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
         function myFuncionddl() {
             $('[id *=DdlAlmaPP]').chosen();
             $('[id *=DdlBodegPP]').chosen();
-            $('[id *=DdlPnP],[id *=DdlSNPP]').chosen();
+            $('[id *=DdlPnP]').chosen();
         }
     </script>
 </asp:Content>
@@ -80,12 +98,6 @@
             <div class="CentrarContenedor DivMarco">
                 <div class="row">
                     <div class="col-sm-12">
-                        <asp:Label ID="LblIndicaciones" runat="server" CssClass="LblEtiquet" Text="indicaciones" />
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-sm-12">
                         <asp:Label ID="LblObserv" runat="server" CssClass="LblEtiquet" Text="Observaciones" />
                         <asp:TextBox ID="TxtObserv" runat="server" CssClass="form-control-sm" Width="100%" MaxLength="350" TextMode="MultiLine" />
                     </div>
@@ -94,7 +106,8 @@
                 <div class="row">
                     <div class="col-sm-7">
                         <asp:Button ID="BtnIngresar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="13%" OnClick="BtnIngresar_Click" OnClientClick="target ='';" Text="nuevo" />
-                        <asp:Button ID="BtnOpenElem" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnOpenElem_Click" OnClientClick="target ='_blank';" Text="elemento" />
+                        <asp:Button ID="BtnOpenElem" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnOpenElem_Click" OnClientClick="target ='_blank';" Text="elemento" />&nbsp&nbsp&nbsp&nbsp                           
+                        <asp:CheckBox ID="CkbConsign" runat="server" Text="consig" ForeColor="#990000" />
                     </div>
                 </div>
                 <div class="ScrollDet1">
@@ -102,7 +115,7 @@
                         CssClass="DiseñoGrid table-sm" GridLines="Both" Width="100%"
                         OnRowCommand="GrdDetalle_RowCommand" OnRowDeleting="GrdDetalle_RowDeleting" OnRowDataBound="GrdDetalle_RowDataBound">
                         <Columns>
-                            <asp:TemplateField HeaderText="P/N" HeaderStyle-Width="10%">
+                            <asp:TemplateField HeaderText="P/N" HeaderStyle-Width="14%">
                                 <ItemTemplate>
                                     <asp:Label Text='<%# Eval("PN") %>' runat="server" Width="100%" />
                                 </ItemTemplate>
@@ -123,16 +136,31 @@
                                     <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" />
                                 </ItemTemplate>
                                 <FooterTemplate>
-                                    <asp:TextBox ID="TxtDescPNPP" runat="server" MaxLength="80" Width="100%" Enabled="false" />
+                                    <asp:TextBox ID="TxtDescPNPP" runat="server" Width="100%" Enabled="false" TextMode="MultiLine" />
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="S/N" HeaderStyle-Width="10%">
+                            <asp:TemplateField HeaderText="S/N" HeaderStyle-Width="7%">
                                 <ItemTemplate>
                                     <asp:Label Text='<%# Eval("SN") %>' runat="server" Width="100%" />
                                 </ItemTemplate>
                                 <FooterTemplate>
-                                    <asp:DropDownList ID="DdlSNPP" runat="server" Width="100%" Height="28px" AutoPostBack="true" OnTextChanged="DdlSNPP_TextChanged" />
-                                    <asp:TextBox ID="TxtSNPP" runat="server" MaxLength="80" Width="100%" Visible="false" />
+                                    <asp:TextBox ID="TxtSNPP" runat="server" MaxLength="80" Width="100%" />
+                                </FooterTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Lote" HeaderStyle-Width="7%">
+                                <ItemTemplate>
+                                    <asp:Label Text='<%# Eval("Lote") %>' runat="server" Width="100%" />
+                                </ItemTemplate>
+                                <FooterTemplate>
+                                    <asp:TextBox ID="TxtLotPP" runat="server" MaxLength="80" Width="100%" />
+                                </FooterTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Valor" HeaderStyle-Width="8%">
+                                <ItemTemplate>
+                                    <asp:Label Text='<%# Eval("Valor") %>' runat="server" Width="100%" />
+                                </ItemTemplate>
+                                <FooterTemplate>
+                                    <asp:TextBox ID="TxtVlr" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" step="0.01" TextMode="Number" onkeypress="return Decimal(event);" />
                                 </FooterTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="cantidad" HeaderStyle-Width="5%">
@@ -148,7 +176,7 @@
                                     <asp:Label Text='<%# Eval("NomAlmacen") %>' runat="server" />
                                 </ItemTemplate>
                                 <FooterTemplate>
-                                    <asp:DropDownList ID="DdlAlmaPP" runat="server" Width="100%" Height="28px" />
+                                    <asp:DropDownList ID="DdlAlmaPP" runat="server" Width="100%" Height="28px" AutoPostBack="true" OnTextChanged="DdlAlmaPP_TextChanged" />
                                 </FooterTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Bodega" HeaderStyle-Width="8%">
@@ -159,7 +187,14 @@
                                     <asp:DropDownList ID="DdlBodegPP" runat="server" Width="100%" Height="28px" />
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <%-- --%>
+                            <asp:TemplateField HeaderText="Fecha Exp" HeaderStyle-Width="1%">
+                                <ItemTemplate>
+                                    <asp:Label Text='<%# Eval("FechaExp") %>' runat="server" Width="100%" />
+                                </ItemTemplate>
+                                <FooterTemplate>
+                                    <asp:TextBox ID="TxtFechExp" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
+                                </FooterTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField FooterStyle-Width="1%">
                                 <ItemTemplate>
                                     <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />

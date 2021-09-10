@@ -33,7 +33,7 @@ namespace _77NeoWeb.Forms.Seguridad
                     Session["V$U@"] = "sa";
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
-                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -56,7 +56,7 @@ namespace _77NeoWeb.Forms.Seguridad
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
 
-            if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }          
+            if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
             if (ClsP.GetIngresar() == 0)
             {
                 ViewState["VblIngMS"] = 0;
@@ -185,10 +185,7 @@ namespace _77NeoWeb.Forms.Seguridad
             ActivarControles();
         }
         protected void IbtIr_Click(object sender, ImageClickEventArgs e)
-        {
-            PnlRol.Visible = false;
-            PnlPerfil.Visible = true;
-        }
+        { PnlRol.Visible = false; PnlPerfil.Visible = true; }
         protected void IbtRegresar_Click(object sender, ImageClickEventArgs e)
         { PnlRol.Visible = true; PnlPerfil.Visible = false; }
         protected void IbnBusUsu_Click(object sender, ImageClickEventArgs e)
@@ -393,9 +390,7 @@ namespace _77NeoWeb.Forms.Seguridad
                 int index = int.Parse(e.CommandArgument.ToString());
                 ViewState["CodidUsrPerfil"] = GrdPerfilAsig.DataKeys[index].Value.ToString();
                 string borr = GrdPerfilAsig.DataKeys[index].Value.ToString();
-
             }
-
         }
         protected void GrdPerfilAsig_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -517,12 +512,8 @@ namespace _77NeoWeb.Forms.Seguridad
             {
                 string VbNomFormWeb = DataBinder.Eval(e.Row.DataItem, "NomFormWeb").ToString();
 
-                if (VbNomFormWeb == string.Empty)
-                {
-                    e.Row.BackColor = System.Drawing.Color.DarkOrange;
-                }
+                if (VbNomFormWeb == string.Empty) { e.Row.BackColor = System.Drawing.Color.DarkOrange; }
             }
-
         }
         protected void GrdSinAsig_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -631,11 +622,7 @@ namespace _77NeoWeb.Forms.Seguridad
             {
                 string VbNomFormWeb = DataBinder.Eval(e.Row.DataItem, "NomFormWeb").ToString();
 
-                if (VbNomFormWeb == string.Empty)
-                {
-                    e.Row.BackColor = System.Drawing.Color.DarkOrange;
-                }
-
+                if (VbNomFormWeb == string.Empty) { e.Row.BackColor = System.Drawing.Color.DarkOrange; }
             }
         }
         protected void GrdSinAsig_PageIndexChanging(object sender, GridViewPageEventArgs e)

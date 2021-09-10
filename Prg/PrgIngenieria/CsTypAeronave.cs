@@ -111,7 +111,6 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                             SDR.Close();
                             transaction.Commit();
                             sqlCon.Close();
-
                         }
                         catch (Exception Ex)
                         {

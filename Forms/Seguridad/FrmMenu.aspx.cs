@@ -17,8 +17,6 @@ namespace _77NeoWeb.Forms.Seguridad
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
             if (Session["Login77"] == null)
             {
                 if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
@@ -36,7 +34,7 @@ namespace _77NeoWeb.Forms.Seguridad
                     Session["V$U@"] = "sa";
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
-                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -56,7 +54,7 @@ namespace _77NeoWeb.Forms.Seguridad
 
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), "FrmMenu.aspx");
-            if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }          
+            if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
             if (ClsP.GetIngresar() == 0)
             {
                 ViewState["VblIngMS"] = 0;
@@ -175,30 +173,20 @@ namespace _77NeoWeb.Forms.Seguridad
         {
             foreach (GridViewRow Row in GrdDatos.Rows)
             {
-
                 if ((int)ViewState["VblModMS"] == 0)
                 {
                     ImageButton imgE = Row.FindControl("IbtEdit") as ImageButton;
-                    if (imgE != null)
-                    {
-                        Row.Cells[10].Controls.Remove(imgE);
-                    }
+                    if (imgE != null) { Row.Cells[10].Controls.Remove(imgE); }
                 }
                 if ((int)ViewState["VblEliMS"] == 0)
                 {
                     ImageButton imgD = Row.FindControl("IbtDelete") as ImageButton;
-                    if (imgD != null)
-                    {
-                        Row.Cells[10].Controls.Remove(imgD);
-                    }
+                    if (imgD != null) { Row.Cells[10].Controls.Remove(imgD); }
                 }
             }
         }
         protected void IbtConsultar_Click(object sender, ImageClickEventArgs e)
-        {
-            BindData(TxtBusqueda.Text);
-            PerfilesGrid();
-        }
+        { BindData(TxtBusqueda.Text); PerfilesGrid(); }
         protected void GrdDatos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
@@ -284,10 +272,7 @@ namespace _77NeoWeb.Forms.Seguridad
             }
         }
         protected void GrdDatos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            GrdDatos.EditIndex = -1;
-            BindData(TxtBusqueda.Text);
-        }
+        { GrdDatos.EditIndex = -1; BindData(TxtBusqueda.Text); }
         protected void GrdDatos_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
@@ -338,18 +323,12 @@ namespace _77NeoWeb.Forms.Seguridad
             if ((int)ViewState["VblModMS"] == 0)
             {
                 ImageButton img = e.Row.FindControl("IbtEdit") as ImageButton;
-                if (img != null)
-                {
-                    e.Row.Cells[10].Controls.Remove(img);
-                }
+                if (img != null) { e.Row.Cells[10].Controls.Remove(img); }
             }
             if ((int)ViewState["VblEliMS"] == 0)
             {
                 ImageButton imgD = e.Row.FindControl("IbtDelete") as ImageButton;
-                if (imgD != null)
-                {
-                    e.Row.Cells[10].Controls.Remove(imgD);
-                }
+                if (imgD != null) { e.Row.Cells[10].Controls.Remove(imgD); }
             }
             if (e.Row.RowType == DataControlRowType.Footer)
             {
@@ -386,19 +365,13 @@ namespace _77NeoWeb.Forms.Seguridad
                 {
                     e.Row.BackColor = System.Drawing.Color.LightGray;
                     TextBox TxtDescP = e.Row.FindControl("TxtIdDescrP") as TextBox;
-                    if (TxtDescP != null)
-                    {
-                        TxtDescP.BackColor = System.Drawing.Color.LightGray;
-                    }
+                    if (TxtDescP != null) { TxtDescP.BackColor = System.Drawing.Color.LightGray; }
                 }
                 if (sangr == 1)
                 {
                     e.Row.BackColor = System.Drawing.Color.DarkOrange;
                     TextBox TxtDescP = e.Row.FindControl("TxtIdDescrP") as TextBox;
-                    if (TxtDescP != null)
-                    {
-                        TxtDescP.BackColor = System.Drawing.Color.DarkOrange;
-                    }
+                    if (TxtDescP != null) { TxtDescP.BackColor = System.Drawing.Color.DarkOrange; }
                 }
                 if (sangr == 2)
                 {

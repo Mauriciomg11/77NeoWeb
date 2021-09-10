@@ -183,6 +183,7 @@
     <Content Include="Forms\Manto\FrmReporte.aspx" />
     <Content Include="Forms\Manto\FrmReporteCO.aspx" />
     <Content Include="Forms\MRO\FrmAlertaPNNuevos.aspx" />
+    <Content Include="Forms\Almacen\FrmCargaInicial.aspx" />
     <Content Include="Forms\MRO\FrmInformePropuesta.aspx" />
     <Content Include="Forms\MRO\FrmPropuesta.aspx" />
     <Content Include="Forms\MRO\FrmPropuestaEntregaElem.aspx" />
@@ -715,6 +716,13 @@
     </Compile>
     <Compile Include="Forms\MRO\FrmAlertaPNNuevos.aspx.designer.cs">
       <DependentUpon>FrmAlertaPNNuevos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmCargaInicial.aspx.cs">
+      <DependentUpon>FrmCargaInicial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmCargaInicial.aspx.designer.cs">
+      <DependentUpon>FrmCargaInicial.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\MRO\FrmInformePropuesta.aspx.cs">
       <DependentUpon>FrmInformePropuesta.aspx</DependentUpon>

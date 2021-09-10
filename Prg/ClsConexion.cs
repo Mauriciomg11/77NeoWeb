@@ -252,5 +252,6 @@ namespace _77NeoWeb.prg
         public string GetProduccion() { return Produccion; }
         public int GetIdCia() { return 1; }
         public string GetIdm() { return "4"; }//  4 español | 5 ingles
+        public string GetNit() { return "901338233-1"; }
     }
 }

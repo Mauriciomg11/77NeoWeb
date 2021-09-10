@@ -33,7 +33,7 @@ namespace _77NeoWeb.Forms.Seguridad
                     Session["V$U@"] = "sa";
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
-                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -109,11 +109,12 @@ namespace _77NeoWeb.Forms.Seguridad
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
-                string LtxtSql = " EXEC SP_ConfiguracionV2_ 2,@H77,@H775,'','','',@PI,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                string LtxtSql = " EXEC SP_ConfiguracionV2_ 2,@H77,@H775,'','','',@PI,0,0, @ICC,'01-01-1','02-01-1','03-01-1'";
                 SqlCommand Comando = new SqlCommand(LtxtSql, sqlCon);
                 Comando.Parameters.AddWithValue("@H77", TxtUsuario.Text);
                 Comando.Parameters.AddWithValue("@H775", TxtClave.Text);
                 Comando.Parameters.AddWithValue("@PI", Session["77IDM"].ToString().Trim());
+                Comando.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                 sqlCon.Open();
                 SqlDataReader registro = Comando.ExecuteReader();
                 if (registro.Read())

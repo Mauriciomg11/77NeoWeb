@@ -44,7 +44,7 @@ namespace _77NeoWeb.Forms.Manto
                     Session["V$U@"] = "sa";
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
-                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -1201,91 +1201,8 @@ namespace _77NeoWeb.Forms.Manto
                     ViewState["IDMroRepOT"] = Convert.ToInt32(DSTRTE.Tables[0].Rows[0]["IDMroRepOT"].ToString());
                     ViewState["BloquearDetalle"] = Convert.ToInt32(DSTRTE.Tables[0].Rows[0]["BloquearDetalle"].ToString());
                     ViewState["TtlRegDet"] = Convert.ToInt32(DSTRTE.Tables[0].Rows[0]["TtlRegDet"].ToString());
-                    ViewState["CarpetaCargaMasiva"] = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["CargaMasiva"].ToString().Trim());
-                    // ViewState["CarpetaCargaMasiva"] = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["CargaMasiva"].ToString().Trim());                   
-                }
-                /*using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
-                {
-                    string VbFecha;
-                    Cnx2.Open();
-                    string LtxtSql =  "EXEC SP_PANTALLA_Reporte_Manto2 2,'','','','','',@NR,0,0,@CC,'01-01-1','02-01-1','03-01-1'";
-                    SqlCommand SqlC = new SqlCommand(LtxtSql, Cnx2);
-                    SqlC.Parameters.AddWithValue("@NR", NumRte);
-                    SqlC.Parameters.AddWithValue("@CC", Session["!dC!@"]);
-                   
-                 SqlDataReader SDR = SqlC.ExecuteReader();
-                    if (SDR.Read())
-                    {
-                        string VbCodCat = SDR["CodCategoriaMel"].ToString().Trim();
-                        string VbLicGen = SDR["NumLicTecAbre"].ToString().Trim();
-                        string VbLicCump = SDR["NumLicTecCierre"].ToString().Trim();
-                        string VbLicVer = SDR["NumLicenciaRM"].ToString().Trim();
-                        string VbCodTall = SDR["CodTaller"].ToString().Trim();
-                        string VbCodClasf = SDR["CodClasifReporteManto"].ToString().Trim();
-                        string VbCodPos = SDR["Posicion"].ToString().Trim();
-                        string UsuGen = SDR["ReportadoPor"].ToString().Trim();
-                        string UsuCump = SDR["CodTecnico"].ToString().Trim();
-                        string UsuDif = SDR["CodUsuarioDiferido"].ToString().Trim();
-                        string UsuVer = SDR["CodInspectorVerifica"].ToString().Trim();
-                        string VbOT = SDR["OtPrincipal"].ToString().Trim();
-                        ViewState["ESTAPPT"] = SDR["EstaPPT"].ToString().Trim();
-                        ViewState["CodPrioridad"] = HttpUtility.HtmlDecode(SDR["CodPrioridad"].ToString().Trim());
-                        BindDdlRteCondicional(0, 1, VbCodCat, VbLicGen, VbLicCump, VbLicVer, VbCodTall, VbCodClasf, VbCodPos, UsuGen, UsuCump, UsuDif, UsuVer, VbOT);
-                        DdlAeroRte.Text = SDR["CodAeronave"].ToString();
-                        TxtNroRte.Text = SDR["NumReporte"].ToString();
-                        TxtNumLv.Text = HttpUtility.HtmlDecode(SDR["CodLibroVuelo"].ToString().Trim());
-                        TxtConsTall.Text = SDR["ConsecutivoROTP"].ToString().Trim();
-                        DdlTipRte.SelectedValue = SDR["TipoReporte"].ToString();
-                        DdlFuente.SelectedValue = SDR["Fuente"].ToString().Trim();
-                        TxtCas.Text = SDR["NumCasilla"].ToString();
-                        DdlTall.Text = VbCodTall;
-                        DdlEstad.SelectedValue = SDR["Estado"].ToString().Trim();
-                        CkbNotif.Checked = Convert.ToBoolean(SDR["Notificado"].ToString());
-                        BtnNotificar.Enabled = CkbNotif.Checked == true ? false : true;
-                        DdlClasf.SelectedValue = VbCodClasf;
-                        DdlCatgr.SelectedValue = VbCodCat;
-                        TxtDocRef.Text = SDR["DocumentoRef"].ToString().Trim();
-                        DdlPosRte.SelectedValue = VbCodPos;
-                        DdlAtaRte.SelectedValue = SDR["UbicacionTecnica"].ToString().Trim();
-                        DdlGenerado.SelectedValue = UsuGen;
-                        DdlLicGene.SelectedValue = VbLicGen;
-                        VbFecha = HttpUtility.HtmlDecode(SDR["FechaReporte"].ToString().Trim());
-                        TxtFecDet.Text = VbFecha.Trim().Equals("") ? "" : String.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(VbFecha));
-                        VbFecha = HttpUtility.HtmlDecode(SDR["FechaProyectada"].ToString().Trim());
-                        TxtFecPry.Text = VbFecha.Trim().Equals("") ? "" : String.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(VbFecha));
-                        DdlOtRte.SelectedValue = VbOT;
-                        DdlBasRte.SelectedValue = SDR["CodBase"].ToString().Trim();
-                        DdlCumpl.SelectedValue = UsuCump;
-                        DdlLicCump.SelectedValue = VbLicCump;
-                        VbFecha = HttpUtility.HtmlDecode(SDR["FechaCumplimiento"].ToString().Trim());
-                        TxtFecCump.Text = VbFecha.Trim().Equals("") ? "" : String.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(VbFecha));
-                        RdbPgSi.Checked = Convert.ToBoolean(SDR["ProgramadoSi"].ToString());
-                        RdbPgNo.Checked = Convert.ToBoolean(SDR["ProgramadoNo"].ToString());
-                        RdbFlCSi.Checked = Convert.ToBoolean(SDR["FallaConfirmadaSi"].ToString());
-                        RdbFlCNo.Checked = Convert.ToBoolean(SDR["FallaConfirmadaNo"].ToString());
-                        CkbRII.Checked = Convert.ToBoolean(SDR["RII"].ToString());
-                        DdlPnRte.Text = SDR["ParteNumero"].ToString().Trim();
-                        TxtSnRte.Text = HttpUtility.HtmlDecode(SDR["SerieNumero"].ToString().Trim());
-                        TxtTtlAKSN.Text = SDR["TT_A_C"].ToString().Trim();
-                        TxtHPrxCu.Text = SDR["HraProxCump"].ToString().Trim();
-                        TxtNexDue.Text = SDR["Next_Due"].ToString().Trim();
-                        TxtDescRte.Text = HttpUtility.HtmlDecode(SDR["Reporte"].ToString().Trim());
-                        txtAccCrr.Text = HttpUtility.HtmlDecode(SDR["AccionCorrectiva"].ToString().Trim());
-                        TxtAcciParc.Text = HttpUtility.HtmlDecode(SDR["AccionParcial"].ToString().Trim());
-                        DdlTecDif.SelectedValue = UsuDif;
-                        DdlVerif.SelectedValue = UsuVer;
-                        DdlLicVer.SelectedValue = VbLicVer;
-                        CkbTearDown.Checked = Convert.ToBoolean(SDR["TearDown"].ToString());
-                        ViewState["PasoOT"] = HttpUtility.HtmlDecode(SDR["PasoOT"].ToString().Trim());
-                        TxtOtSec.Text = SDR["OtSec"].ToString().Trim();
-                        ViewState["IDMroRepOT"] = Convert.ToInt32(SDR["IDMroRepOT"].ToString());
-                        ViewState["BloquearDetalle"] = Convert.ToInt32(SDR["BloquearDetalle"].ToString());
-                        ViewState["TtlRegDet"] = Convert.ToInt32(SDR["TtlRegDet"].ToString());
-                       
-                    }
-                    SDR.Close();
-                    Cnx2.Close();
-                }*/
+                    ViewState["CarpetaCargaMasiva"] = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["CargaMasiva"].ToString().Trim());                               
+                }               
             }
             catch (Exception Ex)
             {

@@ -37,7 +37,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Session["V$U@"] = "sa";
                     Session["P@$"] = "admindemp";
                     Session["N77U"] = Session["D[BX"];
-                    Session["Nit77Cia"] = "811035879-1"; // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -477,7 +477,18 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CultureInfo Culture = new CultureInfo("en-US");
                 string VblTxtCant = (GrdHisC1.FooterRow.FindControl("TxtVlrIndivPP") as TextBox).Text.Trim().Equals("") ? "0" : (GrdHisC1.FooterRow.FindControl("TxtVlrIndivPP") as TextBox).Text.Trim();
                 double VblCant = VblTxtCant.Length == 0 ? 0 : Convert.ToDouble(VblTxtCant, Culture);
-
+                string VbFecha = (GrdHisC1.FooterRow.FindControl("TxtHC1FechaPP") as TextBox).Text.Trim();
+                Cnx.ValidarFechas(VbFecha.Trim(), "", 1);
+                var Mensj = Cnx.GetMensj();
+                if (!Mensj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString();
+                    return;
+                }
                 Cnx.SelecBD();
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
@@ -497,7 +508,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 SC.Parameters.AddWithValue("@CHK", VbHK);
                                 SC.Parameters.AddWithValue("@CEl", DdlHisC1SN.Text.Trim());
                                 SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                                SC.Parameters.AddWithValue("@FI", Convert.ToDateTime((GrdHisC1.FooterRow.FindControl("TxtHC1FechaPP") as TextBox).Text.Trim()));
+                                SC.Parameters.AddWithValue("@FI", Convert.ToDateTime(VbFecha));
                                 SC.Parameters.AddWithValue("@Vr", VblCant);
                                 SC.ExecuteNonQuery();
                                 Transac.Commit();
