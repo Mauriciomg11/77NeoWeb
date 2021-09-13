@@ -184,12 +184,14 @@
     <Content Include="Forms\Manto\FrmReporteCO.aspx" />
     <Content Include="Forms\MRO\FrmAlertaPNNuevos.aspx" />
     <Content Include="Forms\Almacen\FrmCargaInicial.aspx" />
+    <Content Include="Forms\MRO\FrmCertificadosControlCalidad.aspx" />
     <Content Include="Forms\MRO\FrmInformePropuesta.aspx" />
     <Content Include="Forms\MRO\FrmPropuesta.aspx" />
     <Content Include="Forms\MRO\FrmPropuestaEntregaElem.aspx" />
     <Content Include="Forms\MRO\FrmPropuestaReciboElemV2.aspx" />
     <Content Include="Forms\MRO\FrmPropuestaValorizacion.aspx" />
     <Content Include="Forms\MRO\FrmReparacionMayor.aspx" />
+    <Content Include="Forms\MRO\FrmSalidaConsignacion.aspx" />
     <Content Include="Forms\MRO\FrmServiciosSinCrear.aspx" />
     <Content Include="Forms\Seguridad\FrmCambioPass.aspx" />
     <Content Include="Forms\Seguridad\FrmConfigPantalla.aspx" />
@@ -724,6 +726,13 @@
     <Compile Include="Forms\Almacen\FrmCargaInicial.aspx.designer.cs">
       <DependentUpon>FrmCargaInicial.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MRO\FrmCertificadosControlCalidad.aspx.cs">
+      <DependentUpon>FrmCertificadosControlCalidad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\MRO\FrmCertificadosControlCalidad.aspx.designer.cs">
+      <DependentUpon>FrmCertificadosControlCalidad.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MRO\FrmInformePropuesta.aspx.cs">
       <DependentUpon>FrmInformePropuesta.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -765,6 +774,13 @@
     </Compile>
     <Compile Include="Forms\MRO\FrmReparacionMayor.aspx.designer.cs">
       <DependentUpon>FrmReparacionMayor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MRO\FrmSalidaConsignacion.aspx.cs">
+      <DependentUpon>FrmSalidaConsignacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\MRO\FrmSalidaConsignacion.aspx.designer.cs">
+      <DependentUpon>FrmSalidaConsignacion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\MRO\FrmServiciosSinCrear.aspx.cs">
       <DependentUpon>FrmServiciosSinCrear.aspx</DependentUpon>

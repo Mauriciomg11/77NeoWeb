@@ -237,11 +237,13 @@ namespace _77NeoWeb.Forms.Almacen
                     Identificador = Row["Identificador"].ToString().Trim(),
                     Descripcion = Row["Descripcion"].ToString().Trim(),
                     Cantidad = Convert.ToDouble(Row["Cantidad"].ToString().Trim()),
+                    CantidadAnt = Convert.ToDouble(0),
                     Valor = Convert.ToDouble(Row["Valor"].ToString().Trim()),
                     CodUndMed = "",
                     IdAlmacen = Convert.ToInt32(Row["IdAlmacen"].ToString().Trim()),
                     CodBodega = Row["CodBodega"].ToString().Trim(),
                     CodShippingOrder = "0",
+                    Posicion = "0",
                     CodAeronave = 0,
                     Matricula = "",
                     CCosto = "",
@@ -267,7 +269,8 @@ namespace _77NeoWeb.Forms.Almacen
             if (!Mensj.Equals(""))
             {
                 VblPn = ClaseIEA.GetPn().Trim().Equals("") ? "" : "  [P/N: " + ClaseIEA.GetPn().Trim() + "]  ";
-                VblSn = ClaseIEA.GetSn().Trim().Equals("") ? "" : " [S/N: " + ClaseIEA.GetSn().Trim() + "]";
+                VblSn = ClaseIEA.GetSn().Trim().Equals("") ? "" : " [S/N: " + ClaseIEA.GetSn().Trim() + "] ";
+                string VbLote = ClaseIEA.GetLote().Trim().Equals("") ? "" : " [LT/N: " + ClaseIEA.GetLote().Trim() + "]";
                 Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                 foreach (DataRow row in Result)
                 { Mensj = row["Texto"].ToString().Trim(); }
@@ -505,6 +508,10 @@ namespace _77NeoWeb.Forms.Almacen
                             return;
                         }
                     }
+
+                    Result = Idioma.Select("Objeto= 'BtnIngresarOnCl2'");
+                    foreach (DataRow row in Result)
+                    { BtnIngresar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
                 }
                 else
                 {
@@ -519,11 +526,15 @@ namespace _77NeoWeb.Forms.Almacen
                             return;
                         }
                     }
+
+                    Result = Idioma.Select("Objeto= 'BtnIngresarOnCl1'");
+                    foreach (DataRow row in Result)
+                    { BtnIngresar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
                 }
                 VbFecha = VbFecha.Equals("") ? "01/01/1900" : VbFecha;
                 TblDetalle.Rows.Add(VbPN, VbRef, VbSN, VbLot, VbDesc, Convert.ToDouble(VbVlr), Convert.ToInt32(VbCant), Convert.ToInt32(VbIdAlmac), VbNomAlma, VbCodBod, VbNomBod, Convert.ToDateTime(VbFecha), ViewState["CodTipoElem"], ViewState["TipoElem"], ViewState["Identif"].ToString());
                 BindDDetTmp();
-                CkbConsign.Enabled = false;
+                CkbConsign.Enabled = false;               
             }
         }
         protected void GrdDetalle_RowDeleting(object sender, GridViewDeleteEventArgs e)

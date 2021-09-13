@@ -132,7 +132,6 @@
                             </td>
                             <td width="30%" rowspan="6">
                                 <asp:Panel ID="Panel2" runat="server" CssClass="PanelMaestroArt">
-                                    <%--<h6 class="TituloMA">Maestro de artículo</h6>--%>
                                     <h6 class="TextoSuperior">
                                         <asp:Label ID="LblTitMaesArt" runat="server" Text="Maestro de artículo" /></h6>
                                     <table width="100%">
@@ -142,11 +141,8 @@
                                             <td width="10%">
                                                 <asp:TextBox ID="TxtStockM" runat="server" CssClass="form-control Campos" Enabled="false" Width="100%" /></td>
                                             <td width="45%">
-                                                <asp:CheckBox ID="CkbVerif" runat="server" CssClass="LblEtiquet" Text="Verificado" Enabled="false" />
+                                                <asp:CheckBox ID="CkbVerif" runat="server" CssClass="LblEtiquet" Text="Verificado" Enabled="false" ForeColor="#990000" />
                                             </td>
-                                            <%-- <td width="25%" class="LblEtiquet">Verificado:</td>
-                                            <td width="20%">
-                                                <asp:CheckBox ID="CkbVerif" runat="server" Enabled="false" /></td>--%>
                                         </tr>
                                         <tr>
                                             <td>

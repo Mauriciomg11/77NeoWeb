@@ -28,11 +28,13 @@ namespace _77NeoWeb.Prg.PrgAlmacen
         public string Identificador { get; set; }
         public string Descripcion { get; set; }
         public double Cantidad { get; set; }
+        public double CantidadAnt { get; set; }
         public double Valor { get; set; }
         public string CodUndMed { get; set; }
         public int IdAlmacen { get; set; }
         public string CodBodega { get; set; }
         public string CodShippingOrder { get; set; }
+        public string Posicion { get; set; }
         public int CodAeronave { get; set; }
         public string Matricula { get; set; }
         public string CCosto { get; set; }
@@ -63,11 +65,13 @@ namespace _77NeoWeb.Prg.PrgAlmacen
             TblDetalle.Columns.Add("Identificador", typeof(string));
             TblDetalle.Columns.Add("Descripcion", typeof(string));
             TblDetalle.Columns.Add("Cantidad", typeof(double));
+            TblDetalle.Columns.Add("CantidadAnt", typeof(double));
             TblDetalle.Columns.Add("Valor", typeof(double));
             TblDetalle.Columns.Add("CodUndMed", typeof(string));
             TblDetalle.Columns.Add("IdAlmacen", typeof(int));
             TblDetalle.Columns.Add("CodBodega", typeof(string));
             TblDetalle.Columns.Add("CodShippingOrder", typeof(string));
+            TblDetalle.Columns.Add("Posicion", typeof(string));
             TblDetalle.Columns.Add("CodAeronave", typeof(int));
             TblDetalle.Columns.Add("Matricula", typeof(string));
             TblDetalle.Columns.Add("CCosto", typeof(string));
@@ -96,11 +100,13 @@ namespace _77NeoWeb.Prg.PrgAlmacen
                     Campo.Identificador,
                     Campo.Descripcion,
                     Campo.Cantidad,
+                    Campo.CantidadAnt,
                     Campo.Valor,
                     Campo.CodUndMed,
                     Campo.IdAlmacen,
                     Campo.CodBodega,
                     Campo.CodShippingOrder,
+                    Campo.Posicion,
                     Campo.CodAeronave,
                     Campo.Matricula,
                     Campo.CCosto,
