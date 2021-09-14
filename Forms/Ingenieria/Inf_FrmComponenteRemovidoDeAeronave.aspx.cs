@@ -27,13 +27,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
-                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -132,7 +132,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     GrdProcesar.Columns[2].HeaderText = bO.Equals("GrPrcsAcum") ? bT : GrdProcesar.Columns[2].HeaderText;
                     GrdProcesar.Columns[3].HeaderText = bO.Equals("GrdPrcsLv") ? bT : GrdProcesar.Columns[3].HeaderText;
                     GrdProcesar.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdProcesar.EmptyDataText;
-                }                
+                }
                 DataRow[] Result1 = Idioma.Select("Objeto= 'BtnPrcsContOnC'");
                 foreach (DataRow row in Result1)
                 { BtnPrcsCont.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
@@ -332,7 +332,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataReader SDR = SC.ExecuteReader();
                     if (SDR.Read()) { VbFecF = SDR["FechaMontaje"].ToString(); }
-                    if (VbFecF.Equals("")) {
+                    if (VbFecF.Equals(""))
+                    {
                         //TxtFechHast.Text = VbFecF;
                         DateTime VbFecFD = DateTime.Now;
                         TxtFechHast.Text = String.Format("{0:yyyy-MM-dd}", VbFecFD);
@@ -605,7 +606,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
             FechaI = Convert.ToDateTime(TxtFechMyr.Text);
             FechaF = Convert.ToDateTime("01/01/1900");
-            Comparar = DateTime.Compare( FechaI, FechaF);
+            Comparar = DateTime.Compare(FechaI, FechaF);
             if (Comparar < 0) //-1 menor; 0 igual; 1 mayor
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens01HIR'");
@@ -641,7 +642,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
                     string VBQuery = "EXEC SP_PANTALLA_Formulario_Historico 9,@CE,@SN,@CT,@Us,@Hk,0,0,@ICC,@FI,@FF,'01-01-1900'";
-  
+
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@CE", DdlSN.Text.Trim());

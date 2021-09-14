@@ -35,13 +35,13 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas(); //"admindemp";
                     Session["N77U"] = Session["D[BX"];
-                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -158,7 +158,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 ViewState["TablaIdioma"] = Idioma;
             }
         }
-        protected void BindDataDdlCntr( string Accion)
+        protected void BindDataDdlCntr(string Accion)
         {
             if (Accion.Equals("UPD"))
             {
@@ -181,7 +181,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                                 SDA.Fill(DSTDdl);
                                 DSTDdl.Tables[0].TableName = "Contador";
                                 DSTDdl.Tables[1].TableName = "UndMed";
-                                DSTDdl.Tables[2].TableName = "Identificdr";                                
+                                DSTDdl.Tables[2].TableName = "Identificdr";
                                 ViewState["DSDdl"] = DSTDdl;
                             }
                         }

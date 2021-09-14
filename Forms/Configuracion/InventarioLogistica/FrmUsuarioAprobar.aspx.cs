@@ -28,13 +28,13 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
-                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -180,59 +180,59 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             DdlUsuTrmAlt1.DataBind();
 
             ViewState["IDUsAp"] = "0";
-            
+
             if (DSTDdl.Tables[1].Rows.Count > 0)
             {
                 DdllUsuPpl.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuario"].ToString().Trim());
                 DdllUsuPpl.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuario"].ToString().Trim());
                 DdlUsuMyrAlt1.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuAlter1"].ToString().Trim());
-                 DdlUsuMyrAlt2.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuAlter2"].ToString().Trim());
-                 DdlUsuMnrPpl.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuarioAprobMenor"].ToString().Trim());
-                 DdlUsuMnrAlt1.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuAprobMenorAlter"].ToString().Trim());
-                 DdlUsuTrmPpl.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["Usr1CrearTrm"].ToString().Trim());
-                 DdlUsuTrmAlt1.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["Usr2CrearTrm"].ToString().Trim());
-                 MonLocal.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["MonLocal"].ToString().Trim());
-                 MonUSD.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["MonUSD"].ToString().Trim());
-                 MonEUR.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["MonEUR"].ToString().Trim());
-                 TxtMonedaLocal.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["ValorCOP"].ToString().Trim());
-                 TxtDolar.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["ValorUSD"].ToString().Trim());
-                 TxtEuro.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["ValorEURO"].ToString().Trim());
-                 ViewState["IDUsAp"] = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["Id"].ToString().Trim());/**/
+                DdlUsuMyrAlt2.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuAlter2"].ToString().Trim());
+                DdlUsuMnrPpl.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuarioAprobMenor"].ToString().Trim());
+                DdlUsuMnrAlt1.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuAprobMenorAlter"].ToString().Trim());
+                DdlUsuTrmPpl.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["Usr1CrearTrm"].ToString().Trim());
+                DdlUsuTrmAlt1.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["Usr2CrearTrm"].ToString().Trim());
+                MonLocal.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["MonLocal"].ToString().Trim());
+                MonUSD.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["MonUSD"].ToString().Trim());
+                MonEUR.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["MonEUR"].ToString().Trim());
+                TxtMonedaLocal.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["ValorCOP"].ToString().Trim());
+                TxtDolar.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["ValorUSD"].ToString().Trim());
+                TxtEuro.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["ValorEURO"].ToString().Trim());
+                ViewState["IDUsAp"] = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["Id"].ToString().Trim());/**/
             }
 
         }
-       /* protected void Traerdatos()
-        {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
-            Cnx.SelecBD();
-            using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
-            {
-                Cnx2.Open();
-                string LtxtSql = "EXEC SP_TablasGeneral 10,'','','','','','','','','',0,0,0,0,2,@Prmtr,'01-01-1','02-01-1','03-01-1'";
-                SqlCommand SC = new SqlCommand(LtxtSql, Cnx2);
-                SC.Parameters.AddWithValue("@Prmtr", Session["!dC!@"]);
-                SqlDataReader SDR = SC.ExecuteReader();
-                if (SDR.Read())
-                {
-                    DdllUsuPpl.Text = HttpUtility.HtmlDecode(SDR["CodUsuario"].ToString().Trim());
-                    DdlUsuMyrAlt1.Text = HttpUtility.HtmlDecode(SDR["CodUsuAlter1"].ToString().Trim());
-                    DdlUsuMyrAlt2.Text = HttpUtility.HtmlDecode(SDR["CodUsuAlter2"].ToString().Trim());
-                    DdlUsuMnrPpl.Text = HttpUtility.HtmlDecode(SDR["CodUsuarioAprobMenor"].ToString().Trim());
-                    DdlUsuMnrAlt1.Text = HttpUtility.HtmlDecode(SDR["CodUsuAprobMenorAlter"].ToString().Trim());
-                    DdlUsuTrmPpl.Text = HttpUtility.HtmlDecode(SDR["Usr1CrearTrm"].ToString().Trim());
-                    DdlUsuTrmAlt1.Text = HttpUtility.HtmlDecode(SDR["Usr2CrearTrm"].ToString().Trim());
-                    MonLocal.Text = HttpUtility.HtmlDecode(SDR["MonLocal"].ToString().Trim());
-                    MonUSD.Text = HttpUtility.HtmlDecode(SDR["MonUSD"].ToString().Trim());
-                    MonEUR.Text = HttpUtility.HtmlDecode(SDR["MonEUR"].ToString().Trim());
-                    TxtMonedaLocal.Text = HttpUtility.HtmlDecode(SDR["ValorCOP"].ToString().Trim());
-                    TxtDolar.Text = HttpUtility.HtmlDecode(SDR["ValorUSD"].ToString().Trim());
-                    TxtEuro.Text = HttpUtility.HtmlDecode(SDR["ValorEURO"].ToString().Trim());
-                    ViewState["IDUsAp"] = HttpUtility.HtmlDecode(SDR["Id"].ToString().Trim());
-                }
-                SDR.Close();
-                Cnx2.Close();
-            }
-        }*/
+        /* protected void Traerdatos()
+         {
+             Idioma = (DataTable)ViewState["TablaIdioma"];
+             Cnx.SelecBD();
+             using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
+             {
+                 Cnx2.Open();
+                 string LtxtSql = "EXEC SP_TablasGeneral 10,'','','','','','','','','',0,0,0,0,2,@Prmtr,'01-01-1','02-01-1','03-01-1'";
+                 SqlCommand SC = new SqlCommand(LtxtSql, Cnx2);
+                 SC.Parameters.AddWithValue("@Prmtr", Session["!dC!@"]);
+                 SqlDataReader SDR = SC.ExecuteReader();
+                 if (SDR.Read())
+                 {
+                     DdllUsuPpl.Text = HttpUtility.HtmlDecode(SDR["CodUsuario"].ToString().Trim());
+                     DdlUsuMyrAlt1.Text = HttpUtility.HtmlDecode(SDR["CodUsuAlter1"].ToString().Trim());
+                     DdlUsuMyrAlt2.Text = HttpUtility.HtmlDecode(SDR["CodUsuAlter2"].ToString().Trim());
+                     DdlUsuMnrPpl.Text = HttpUtility.HtmlDecode(SDR["CodUsuarioAprobMenor"].ToString().Trim());
+                     DdlUsuMnrAlt1.Text = HttpUtility.HtmlDecode(SDR["CodUsuAprobMenorAlter"].ToString().Trim());
+                     DdlUsuTrmPpl.Text = HttpUtility.HtmlDecode(SDR["Usr1CrearTrm"].ToString().Trim());
+                     DdlUsuTrmAlt1.Text = HttpUtility.HtmlDecode(SDR["Usr2CrearTrm"].ToString().Trim());
+                     MonLocal.Text = HttpUtility.HtmlDecode(SDR["MonLocal"].ToString().Trim());
+                     MonUSD.Text = HttpUtility.HtmlDecode(SDR["MonUSD"].ToString().Trim());
+                     MonEUR.Text = HttpUtility.HtmlDecode(SDR["MonEUR"].ToString().Trim());
+                     TxtMonedaLocal.Text = HttpUtility.HtmlDecode(SDR["ValorCOP"].ToString().Trim());
+                     TxtDolar.Text = HttpUtility.HtmlDecode(SDR["ValorUSD"].ToString().Trim());
+                     TxtEuro.Text = HttpUtility.HtmlDecode(SDR["ValorEURO"].ToString().Trim());
+                     ViewState["IDUsAp"] = HttpUtility.HtmlDecode(SDR["Id"].ToString().Trim());
+                 }
+                 SDR.Close();
+                 Cnx2.Close();
+             }
+         }*/
         protected void ActivarBtn(bool In, bool Md, bool El, bool Ip, bool Otr)
         { BtnModificar.Enabled = Md; }
         protected void ActivarCampos(bool Ing, bool Edi, bool Vble, bool VbCurrent, string accion)

@@ -29,13 +29,13 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
-                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -314,7 +314,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     VBQuery = "EXEC SP_TablasGeneral 5,'',@US,@Cd,'','','','','','DELETE',0,@ID,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
-                        SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());   
+                        SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@Cd", GrdDatos.DataKeys[e.RowIndex].Values["CodFabricante"].ToString());
                         SC.Parameters.AddWithValue("@ID", GrdDatos.DataKeys[e.RowIndex].Value.ToString());
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);

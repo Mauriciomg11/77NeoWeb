@@ -30,11 +30,11 @@ namespace _77NeoWeb.Forms.MRO
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
@@ -120,7 +120,7 @@ namespace _77NeoWeb.Forms.MRO
                     GrdDetalle.Columns[6].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdDetalle.Columns[6].HeaderText;
                     GrdDetalle.Columns[7].HeaderText = bO.Equals("CantMst") ? bT : GrdDetalle.Columns[7].HeaderText;
                     GrdDetalle.Columns[8].HeaderText = bO.Equals("GrdCantStockMstr") ? bT : GrdDetalle.Columns[8].HeaderText;
-                   
+
                     GrdDetalle.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDetalle.EmptyDataText;/*  */
                 }
                 DataRow[] Result = Idioma.Select("Objeto= 'BtnEntregarOnCl'");
@@ -222,7 +222,7 @@ namespace _77NeoWeb.Forms.MRO
             foreach (GridViewRow Row in GrdDetalle.Rows)
             {
                 string VbSn, VblLote;
-               
+
 
                 CheckBox CkbSelP = Row.FindControl("CkbSelP") as CheckBox;
 
@@ -287,7 +287,7 @@ namespace _77NeoWeb.Forms.MRO
                 string Mensj = ClaseIEA.GetMensj();
                 if (!Mensj.Equals(""))
                 {
-                    
+
                     string VbPNMen = ClaseIEA.GetPn().Trim().Equals("") ? "" : "[P/N: " + ClaseIEA.GetPn().Trim() + "]";
                     string VbSNMen = ClaseIEA.GetSn().Trim().Equals("") ? "" : "[S/N: " + ClaseIEA.GetSn().Trim() + "]";
                     string VbLot = ClaseIEA.GetLote().Trim().Equals("") ? "" : "[LT/N: " + ClaseIEA.GetLote().Trim() + "]";

@@ -45,13 +45,13 @@ namespace _77NeoWeb.Forms.MRO
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
-                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -526,7 +526,7 @@ namespace _77NeoWeb.Forms.MRO
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
-                        SC.Parameters.AddWithValue("@idm", Session["77IDM"]); 
+                        SC.Parameters.AddWithValue("@idm", Session["77IDM"]);
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter SDA = new SqlDataAdapter())
                         {
@@ -1757,7 +1757,7 @@ namespace _77NeoWeb.Forms.MRO
                     ViewState["Accion"] = "";
                     Result = Idioma.Select("Objeto= 'BotonMod'");
                     foreach (DataRow row in Result)
-                    { BtnModificar.Text = row["Texto"].ToString().Trim(); }              
+                    { BtnModificar.Text = row["Texto"].ToString().Trim(); }
                     ActivarCampos(false, false, "UPDATE");
                     Traerdatos(TxtNumPpt.Text.Trim());
                     BtnModificar.OnClientClick = "";

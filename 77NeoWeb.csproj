@@ -176,6 +176,7 @@
     <Content Include="Forms\Ingenieria\Frm_InfIngenieria.aspx" />
     <Content Include="Forms\Ingenieria\Inf_FrmComponenteRemovidoDeAeronave.aspx" />
     <Content Include="Forms\InventariosCompras\FrmElemento.aspx" />
+    <Content Include="Forms\InventariosCompras\FrmModPnTotal.aspx" />
     <Content Include="Forms\InventariosCompras\FrmReferencia.aspx" />
     <Content Include="Forms\Manto\FrmAlertaCarryOver.aspx" />
     <Content Include="Forms\Manto\FrmDiferidos.aspx" />
@@ -669,6 +670,13 @@
     </Compile>
     <Compile Include="Forms\InventariosCompras\FrmElemento.aspx.designer.cs">
       <DependentUpon>FrmElemento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\FrmModPnTotal.aspx.cs">
+      <DependentUpon>FrmModPnTotal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\FrmModPnTotal.aspx.designer.cs">
+      <DependentUpon>FrmModPnTotal.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\InventariosCompras\FrmReferencia.aspx.cs">
       <DependentUpon>FrmReferencia.aspx</DependentUpon>

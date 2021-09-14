@@ -38,13 +38,13 @@ namespace _77NeoWeb.Forms.MRO
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
-                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -2267,7 +2267,7 @@ namespace _77NeoWeb.Forms.MRO
                     {
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter SDA = new SqlDataAdapter())
-                        { SDA.SelectCommand = SC;  SDA.Fill(DTAdj); ViewState["DTAdj"] = DTAdj; }                      
+                        { SDA.SelectCommand = SC; SDA.Fill(DTAdj); ViewState["DTAdj"] = DTAdj; }
                     }
                 }
             }
@@ -2406,7 +2406,7 @@ namespace _77NeoWeb.Forms.MRO
             }
         }
         protected void GrdAdj_RowEditing(object sender, GridViewEditEventArgs e)
-        {            GrdAdj.EditIndex = e.NewEditIndex;            BindDAdjunto("SELECT");        }
+        { GrdAdj.EditIndex = e.NewEditIndex; BindDAdjunto("SELECT"); }
         protected void GrdAdj_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -2960,7 +2960,7 @@ namespace _77NeoWeb.Forms.MRO
                 ImageButton IbtAddNew = (e.Row.FindControl("IbtAddNew") as ImageButton);
                 IbtAddNew.Enabled = true;
                 Result = Idioma.Select("Objeto= 'IbtAddNew'");
-                foreach (DataRow row in Result)                { IbtAddNew.ToolTip = row["Texto"].ToString().Trim(); }
+                foreach (DataRow row in Result) { IbtAddNew.ToolTip = row["Texto"].ToString().Trim(); }
                 if (CkbBloqRec.Checked == true)
                 {
                     Result = Idioma.Select("Objeto= 'Mens18SM'");
@@ -2988,14 +2988,14 @@ namespace _77NeoWeb.Forms.MRO
                 {
                     imgE.Enabled = true;
                     DataRow[] Result1 = Idioma.Select("Objeto='IbtEdit'");
-                    foreach (DataRow RowIdioma in Result1)                    { imgE.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                    foreach (DataRow RowIdioma in Result1) { imgE.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
                 }
                 if (imgD != null)
                 {
                     Result = Idioma.Select("Objeto='IbtDelete'");
-                    foreach (DataRow RowIdioma in Result)                    { imgD.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                    foreach (DataRow RowIdioma in Result) { imgD.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
                     Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
-                    foreach (DataRow row in Result)                    { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                    foreach (DataRow row in Result) { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
                 }
             }
         }

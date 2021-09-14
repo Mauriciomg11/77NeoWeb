@@ -44,13 +44,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                 Session["VldrCntdr"] = "S";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
-                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = 21;
                     Session["77IDM"] = "4"; // 4 español | 5 ingles  */
                 }
@@ -152,7 +152,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["CE6"] = 0;
                 CkbBloqRec.Visible = false;
             }
-            IdiomaControles();           
+            IdiomaControles();
         }
         protected void IdiomaControles()
         {
@@ -521,7 +521,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         }
                     }
                 }
-            }           
+            }
         }
         protected void TipoPantalla()
         {
@@ -580,7 +580,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     }
                 }
             }
-        }       
+        }
         protected void BindDTraerdatos(string Prmtr, string Tipo, string Accion)
         {
             try
@@ -721,7 +721,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 break;
                         }
                     }
-                }               
+                }
             }
             catch (Exception ex)
             {
@@ -938,7 +938,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 foreach (DataRow SDR in Result)
                 { TxtConsAta.Text = SDR["MAXI"].ToString(); }
-            }            
+            }
         }
         protected void IbtAdd_Click(object sender, ImageClickEventArgs e)
         {
@@ -1340,7 +1340,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 SC.Parameters.AddWithValue("@Pll", Session["PllaSrvManto"]);
                                 SC.Parameters.AddWithValue("@IdElem", ViewState["IdCodElem"]);
                                 SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                              
+
 
                                 var Mensj = SC.ExecuteScalar();
                                 if (!Mensj.ToString().Trim().Equals(""))
@@ -1404,7 +1404,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     foreach (DataRow row in Result)
                     { GrdAeron.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
                     GrdAeron.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-                }               
+                }
                 Page.Title = ViewState["PageTit"].ToString();
             }
             catch (Exception Ex)
@@ -2033,7 +2033,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     foreach (DataRow row in Result)
                     { GrdPN.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
                     GrdPN.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-                }               
+                }
                 Page.Title = ViewState["PageTit"].ToString();
             }
             catch (Exception Ex)
@@ -2488,7 +2488,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     foreach (DataRow row in Result)
                     { GrdSN.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
                     GrdSN.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-                }              
+                }
                 Page.Title = ViewState["PageTit"].ToString();
             }
             catch (Exception Ex)

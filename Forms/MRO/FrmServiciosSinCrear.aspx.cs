@@ -29,13 +29,13 @@ namespace _77NeoWeb.Forms.MRO
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
-                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -152,7 +152,7 @@ namespace _77NeoWeb.Forms.MRO
             }
             DS = (DataSet)ViewState["DS"];
             GrdDet.DataSource = DS.Tables[0]; GrdDet.DataBind();
-        }       
+        }
         protected void BtnAbrirSrvcs_Click(object sender, EventArgs e)
         { Response.Redirect("~/Forms/Ingenieria/FrmServicioManto.aspx"); }
         protected void GrdDet_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -248,8 +248,8 @@ namespace _77NeoWeb.Forms.MRO
                             try
                             {
                                 SC.Parameters.AddWithValue("@Dsc", ((TextBox)RowG.FindControl("TxtNomSvc")).Text.ToString().Trim());
-                                SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());                               
-                                SC.Parameters.AddWithValue("@Ctd", GrdBusq.DataKeys[gvr.RowIndex].Values["CodContador"].ToString());                               
+                                SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
+                                SC.Parameters.AddWithValue("@Ctd", GrdBusq.DataKeys[gvr.RowIndex].Values["CodContador"].ToString());
                                 SC.Parameters.AddWithValue("@ISv", GrdBusq.DataKeys[gvr.RowIndex].Values["IdSrvManto"].ToString());
                                 SC.Parameters.AddWithValue("@PP", ViewState["PPT"]);
                                 SC.Parameters.AddWithValue("@IDPS", ViewState["IdDetPropSrv"]);

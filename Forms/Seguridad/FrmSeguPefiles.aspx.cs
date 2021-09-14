@@ -19,19 +19,19 @@ namespace _77NeoWeb.Forms.Seguridad
             if (Session["Login77"] == null)
             {
                 if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
-            }   
+            }
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
-                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -52,7 +52,7 @@ namespace _77NeoWeb.Forms.Seguridad
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), "FrmSeguPefiles.aspx");
 
-            if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }            
+            if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
             if (ClsP.GetIngresar() == 0)
             {
                 ViewState["VblIngMS"] = 0;
@@ -120,7 +120,7 @@ namespace _77NeoWeb.Forms.Seguridad
             }
         }
         protected void IbtConsultar_Click(object sender, ImageClickEventArgs e)
-        {            BindData(TxtBusqueda.Text);        }
+        { BindData(TxtBusqueda.Text); }
         protected void GrdDatos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
@@ -145,7 +145,7 @@ namespace _77NeoWeb.Forms.Seguridad
                     }
                 }
                 if (e.CommandName == "Select")
-                {                    int index = int.Parse(e.CommandArgument.ToString());                }
+                { int index = int.Parse(e.CommandArgument.ToString()); }
             }
             catch (Exception ex)
             {
@@ -155,7 +155,7 @@ namespace _77NeoWeb.Forms.Seguridad
             }
         }
         protected void GrdDatos_RowEditing(object sender, GridViewEditEventArgs e)
-        {            GrdDatos.EditIndex = e.NewEditIndex;            BindData(TxtBusqueda.Text);        }
+        { GrdDatos.EditIndex = e.NewEditIndex; BindData(TxtBusqueda.Text); }
         protected void GrdDatos_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             try
@@ -182,7 +182,7 @@ namespace _77NeoWeb.Forms.Seguridad
             }
         }
         protected void GrdDatos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {            GrdDatos.EditIndex = -1;            BindData(TxtBusqueda.Text);        }
+        { GrdDatos.EditIndex = -1; BindData(TxtBusqueda.Text); }
         protected void GrdDatos_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
@@ -227,9 +227,9 @@ namespace _77NeoWeb.Forms.Seguridad
             }
         }
         protected void GrdDatos_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {            GrdDatos.PageIndex = e.NewPageIndex;            BindData(TxtBusqueda.Text);        }
+        { GrdDatos.PageIndex = e.NewPageIndex; BindData(TxtBusqueda.Text); }
         protected override void OnPreRender(EventArgs e)
-        {            base.OnPreRender(e);            SetFixedHeightForGridIfRowsAreLess(GrdDatos);        }
+        { base.OnPreRender(e); SetFixedHeightForGridIfRowsAreLess(GrdDatos); }
         public void SetFixedHeightForGridIfRowsAreLess(GridView gv)
         {
             double headerFooterHeight = gv.HeaderStyle.Height.Value + 22; // height style=35px and there no footer  height so assume footer also same

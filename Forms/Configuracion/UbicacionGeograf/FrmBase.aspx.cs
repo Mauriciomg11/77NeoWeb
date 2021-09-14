@@ -29,13 +29,13 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
-                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -164,7 +164,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
             VbCodAnt = CodUG.Trim();
             DT = DSTDdl.Tables[1].Clone();
 
-            Result = DSTDdl.Tables[1].Select("CodUbicaGeogr='"+ CodUG.Trim()+"'");// trae el codigo actual por si esta inactivo
+            Result = DSTDdl.Tables[1].Select("CodUbicaGeogr='" + CodUG.Trim() + "'");// trae el codigo actual por si esta inactivo
             foreach (DataRow Row in Result)
             { DT.ImportRow(Row); }
 
@@ -250,7 +250,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                 TxtFax.Text = HttpUtility.HtmlDecode(SDR["Fax"].ToString().Trim());
                 TxtDir.Text = HttpUtility.HtmlDecode(SDR["Direccion"].ToString().Trim());
                 string VbUbica = HttpUtility.HtmlDecode(SDR["CodUbicaGeogr"].ToString().Trim());
-                BindDdl(VbUbica, "SEL");                
+                BindDdl(VbUbica, "SEL");
                 TxtDescrip.Text = HttpUtility.HtmlDecode(SDR["Descripcion"].ToString().Trim());
                 CkbActivo.Checked = Convert.ToBoolean(HttpUtility.HtmlDecode(SDR["Activo"].ToString().Trim()));
             }

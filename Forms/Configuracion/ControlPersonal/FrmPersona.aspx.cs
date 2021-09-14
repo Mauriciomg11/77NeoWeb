@@ -31,13 +31,13 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
-                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -46,7 +46,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             {
                 ModSeguridad();
                 ViewState["EmpAnt"] = "";
-               BindBDdl("UPD");
+                BindBDdl("UPD");
                 ViewState["Accion"] = "";
                 MultVw.ActiveViewIndex = 0;
             }
@@ -247,7 +247,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             DdlCargo.DataTextField = "Descripcion";
             DdlCargo.DataValueField = "CodCargo";
             DdlCargo.DataBind();
-            DdlCargo.Text = VbCodAnt;            
+            DdlCargo.Text = VbCodAnt;
         }
         protected void LimpiarCampos()
         {
@@ -496,7 +496,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     foreach (DataRow row in Result)
                     { BtnIngresar.Text = row["Texto"].ToString().Trim(); }//
                     ActivarCampos(false, false, "Ingresar");
-                    DdlBusqPers.Enabled = true;                   
+                    DdlBusqPers.Enabled = true;
                     BindBDdl("UPD");
                     DdlBusqPers.Text = ClsPersona.GetCodPersn().ToString().Trim();
                     Traerdatos(ClsPersona.GetCodPersn().ToString().Trim());

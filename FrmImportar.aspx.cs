@@ -21,27 +21,27 @@ namespace _77NeoWeb
         ClsConexion Cnx = new ClsConexion();
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
             BtnExportar.Text = "Exportar ";
             if (Session["C77U"] == null)
             {
                 /*Session["C77U"] = ""; */
-                Session["C77U"] = "00000082";
+                Session["C77U"] = Cnx.GetUsr();
                 Session["D[BX"] = "DbNeoAda"; //DbNeoAda
-                Session["$VR"] = "77NEO01";
-                Session["V$U@"] = "sa";
-                Session["P@$"] = "admindemp";
+                Session["$VR"] = Cnx.GetSvr();
+                Session["V$U@"] = Cnx.GetUsSvr();
+                Session["P@$"] = Cnx.GetPas();
                 Session["N77U"] = Session["D[BX"];
-                 Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                 Session["!dC!@"] = 0;
                 Session["77IDM"] = "5"; // 4 español | 5 ingles   */
                 ViewState["Validar"] = "S";
 
-                /*  Session["C77U"] = "00000082";
-                 Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                 Session["$VR"] = "77NEO01";
-                 Session["V$U@"] = "sa";
-                 Session["P@$"] = "admindemp";
+                /*  Session["C77U"] = Cnx.GetUsr();
+                 Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                 Session["$VR"] = Cnx.GetSvr();
+               Session["V$U@"] = Cnx.GetUsSvr();
+                 Session["P@$"] = Cnx.GetPas();
                  Session["N77U"] = Session["D[BX"];
                   Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                  Session["!dC!@"] = 0;
@@ -200,13 +200,13 @@ namespace _77NeoWeb
             try
             {
                 string StSql;
-                int VbOpc=0;
+                int VbOpc = 0;
 
                 if (RdbAK.Checked == true) { VbOpc = 1; ViewState["NomBtnExp"] = "Vw_Aeronave"; }
                 if (RdbRtes.Checked == true) { VbOpc = 5; ViewState["NomBtnExp"] = "Vw_ReporteMantenimiento"; }
                 if (RdbPlantMstra.Checked == true) { VbOpc = 6; ViewState["NomBtnExp"] = "Vw_PlantillaMaestra"; }
                 if (RdbInvHK.Checked == true) { VbOpc = 3; ViewState["NomBtnExp"] = "Vw_ElementosInstaladosAeronave"; }
-                if (RdbHHK.Checked == true) { VbOpc = 2; ViewState["NomBtnExp"] = "Vw_HistoricoContadorAeroanve"; }                
+                if (RdbHHK.Checked == true) { VbOpc = 2; ViewState["NomBtnExp"] = "Vw_HistoricoContadorAeroanve"; }
                 if (RdbHistSN.Checked == true) { VbOpc = 4; ViewState["NomBtnExp"] = "Vw_HistoricoContadorElemento"; }
                 if (RdbSvcMnto.Checked == true) { VbOpc = 7; ViewState["NomBtnExp"] = "Vw_ServicioMantenimiento"; }
                 if (RdbRcsoFscoSM.Checked == true) { VbOpc = 8; ViewState["NomBtnExp"] = "Vw_RecursoServicioMantenimiento"; }
@@ -214,18 +214,18 @@ namespace _77NeoWeb
                 if (RdbOT.Checked == true) { VbOpc = 10; ViewState["NomBtnExp"] = "Vw_OrdenTrabajo_OT"; }
                 if (RdbWS.Checked == true) { VbOpc = 11; ViewState["NomBtnExp"] = "Vw_WorkSheet_WS"; }
                 if (RdbHisSvcCumpl.Checked == true) { VbOpc = 13; ViewState["NomBtnExp"] = "Vw_HistoricoServicioCumplidos"; }
-                if (RdbInventr.Checked == true) { VbOpc = 12; ViewState["NomBtnExp"] = "Vw_Inventario"; }               
+                if (RdbInventr.Checked == true) { VbOpc = 12; ViewState["NomBtnExp"] = "Vw_Inventario"; }
                 if (RdbLV.Checked == true) { VbOpc = 14; ViewState["NomBtnExp"] = "Vw_LibroVuelo"; }
-                if (RdbStatusRprt.Checked == true) { VbOpc = 15; ViewState["NomBtnExp"] = "Vw_StatusReport"; }               
+                if (RdbStatusRprt.Checked == true) { VbOpc = 15; ViewState["NomBtnExp"] = "Vw_StatusReport"; }
 
-                StSql = "EXEC ProyectoUsa @Op";              
+                StSql = "EXEC ProyectoUsa @Op";
                 Cnx.SelecBD();
                 using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
                 {
                     using (SqlCommand SC = new SqlCommand(StSql, con))
                     {
                         SC.CommandTimeout = 90000000;
-                        SC.Parameters.AddWithValue("@Op", VbOpc);     
+                        SC.Parameters.AddWithValue("@Op", VbOpc);
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             SC.Connection = con;
@@ -268,7 +268,7 @@ namespace _77NeoWeb
         protected void BtnExportar2_Click(object sender, EventArgs e)
         {
             CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
-            CursorIdioma.Alimentar("CURRESERVA","5");
+            CursorIdioma.Alimentar("CURRESERVA", "5");
 
         }
     }

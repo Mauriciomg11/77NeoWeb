@@ -28,13 +28,13 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
-                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -119,14 +119,14 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 }
 
                 if ((int)ViewState["VblModMS"] == 0)
-                {                    
+                {
                     if (imgE != null)
                     {
                         Row.Cells[2].Controls.Remove(imgE);
                     }
                 }
                 if ((int)ViewState["VblEliMS"] == 0)
-                {                   
+                {
                     if (imgD != null)
                     {
                         Row.Cells[2].Controls.Remove(imgD);
@@ -180,8 +180,8 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             PerfilesGrid();
             if (e.CommandName.Equals("AddNew"))
             {
-                string VbDesc,VbCod, VBQuery;
-                
+                string VbDesc, VbCod, VBQuery;
+
                 VbCod = (GrdDatos.FooterRow.FindControl("TxtCodTipPP") as TextBox).Text.Trim();
                 if (VbCod.Trim().Equals(""))
                 {

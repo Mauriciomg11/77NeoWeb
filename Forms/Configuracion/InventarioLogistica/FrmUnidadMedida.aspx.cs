@@ -32,13 +32,13 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000082"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
-                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -136,7 +136,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
         protected void BindData(string VbConsultar, string Accion)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            DataRow[] Result;   
+            DataRow[] Result;
             if (Accion.Equals("UPD"))
             {
                 Cnx.SelecBD();
@@ -148,7 +148,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     {
                         SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                        
+
                         using (SqlDataAdapter SDA = new SqlDataAdapter())
                         {
                             using (DataSet DSTDdl = new DataSet())
@@ -179,7 +179,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 DV.Sort = "CodUnidMedida";
                 DT = DV.ToTable();
                 GrdDatos.DataSource = DT;
-                GrdDatos.DataBind();               
+                GrdDatos.DataBind();
             }
             else
             {
@@ -406,7 +406,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             DSTDdl = (DataSet)ViewState["DSTDdl"];
             PerfilesGrid();
             if (e.Row.RowType == DataControlRowType.Footer)
-            {               
+            {
                 DropDownList DdlTipoUMPP = (e.Row.FindControl("DdlTipoUMPP") as DropDownList);
                 DdlTipoUMPP.DataSource = DSTDdl.Tables[1];
                 DdlTipoUMPP.DataTextField = "Descripcion";
@@ -420,7 +420,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 e.Row.Cells[3].HorizontalAlign = HorizontalAlign.Center;
             }
             if ((e.Row.RowState & DataControlRowState.Edit) > 0)
-            {               
+            {
                 DropDownList DdlTipoUM = (e.Row.FindControl("DdlTipoUM") as DropDownList);
                 DdlTipoUM.DataSource = DSTDdl.Tables[1];
                 DdlTipoUM.DataTextField = "Descripcion";

@@ -31,12 +31,12 @@ namespace _77NeoWeb.Forms.Almacen
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
                     Session["C77U"] = "00000133"; //00000082|00000133
-                    Session["D[BX"] = "DbNeoDempV2";//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                    Session["$VR"] = "77NEO01";
-                    Session["V$U@"] = "sa";
-                    Session["P@$"] = "admindemp";
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
-                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
@@ -62,7 +62,7 @@ namespace _77NeoWeb.Forms.Almacen
             if (ClsP.GetCE1() == 0) { ViewState["VblCE1"] = 0; }//Trasferir entre bodegas 
             if (ClsP.GetCE2() == 0) { ViewState["VblCE2"] = 0; }// Bodega Repa
             if (ClsP.GetCE3() == 0) { ViewState["VblCE3"] = 0; }//Cambio de lotes
-          
+
             IdiomaControles();
         }
         protected void IdiomaControles()

@@ -77,7 +77,6 @@ namespace _77NeoWeb
             FormsAuthentication.SignOut();
             Session.Abandon();
         }
-
         protected void Application_End(object sender, EventArgs e)
         {
 
