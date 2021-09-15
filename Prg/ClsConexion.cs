@@ -252,10 +252,10 @@ namespace _77NeoWeb.prg
         public string GetProduccion() { return Produccion; }
         //******************* cONEXION TEMPORAL ********
         public string GetUsr() { return "00000082"; }//00000082|00000133
-        public int GetIdCia() { return 2; }//2 HCT PRUEBA|21 Demp|
+        public int GetIdCia() { return 1; }//2 HCT PRUEBA|21 Demp|
         public string GetIdm() { return "4"; }//  4 español | 5 ingles
-        public string GetNit() { return "860064038-4"; } // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-        public string GetBD() { return "DbNeoHCT"; }//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+        public string GetNit() { return "811035879-1"; } // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+        public string GetBD() { return "DbNeoDempV2"; }//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
         public string GetSvr() { return "77NEO01"; }//  "77NEO01";
         public string GetUsSvr() { return "sa"; }//  "sa"
         public string GetPas() { return "admindemp"; }//"admindemp";
