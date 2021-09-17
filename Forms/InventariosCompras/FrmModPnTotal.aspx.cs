@@ -202,7 +202,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 }
             }
         }
-
         protected void GrdBusq_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         { GrdBusq.EditIndex = -1; BindData(TxtBusqueda.Text, "SEL"); }
         protected void GrdBusq_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -234,11 +233,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     }
                     else { imgE.Visible = false; }
                 }
-
-
             }
         }
-
-
     }
 }

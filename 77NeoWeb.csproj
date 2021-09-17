@@ -175,9 +175,11 @@
     <Content Include="Forms\Ingenieria\FrmWorkSheet.aspx" />
     <Content Include="Forms\Ingenieria\Frm_InfIngenieria.aspx" />
     <Content Include="Forms\Ingenieria\Inf_FrmComponenteRemovidoDeAeronave.aspx" />
+    <Content Include="Forms\Almacen\FrmAlertaReservaPenRevisar.aspx" />
     <Content Include="Forms\InventariosCompras\FrmElemento.aspx" />
     <Content Include="Forms\InventariosCompras\FrmModPnTotal.aspx" />
     <Content Include="Forms\InventariosCompras\FrmReferencia.aspx" />
+    <Content Include="Forms\Almacen\FrmReserva.aspx" />
     <Content Include="Forms\Manto\FrmAlertaCarryOver.aspx" />
     <Content Include="Forms\Manto\FrmDiferidos.aspx" />
     <Content Include="Forms\Manto\FrmIncoming.aspx" />
@@ -664,6 +666,13 @@
     <Compile Include="Forms\Ingenieria\Inf_FrmComponenteRemovidoDeAeronave.aspx.designer.cs">
       <DependentUpon>Inf_FrmComponenteRemovidoDeAeronave.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Almacen\FrmAlertaReservaPenRevisar.aspx.cs">
+      <DependentUpon>FrmAlertaReservaPenRevisar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmAlertaReservaPenRevisar.aspx.designer.cs">
+      <DependentUpon>FrmAlertaReservaPenRevisar.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\InventariosCompras\FrmElemento.aspx.cs">
       <DependentUpon>FrmElemento.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -684,6 +693,13 @@
     </Compile>
     <Compile Include="Forms\InventariosCompras\FrmReferencia.aspx.designer.cs">
       <DependentUpon>FrmReferencia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmReserva.aspx.cs">
+      <DependentUpon>FrmReserva.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmReserva.aspx.designer.cs">
+      <DependentUpon>FrmReserva.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Manto\FrmAlertaCarryOver.aspx.cs">
       <DependentUpon>FrmAlertaCarryOver.aspx</DependentUpon>
