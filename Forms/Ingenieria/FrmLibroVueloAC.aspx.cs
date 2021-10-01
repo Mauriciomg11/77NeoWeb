@@ -4640,6 +4640,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             IPC = TxtIPCRF.Text.Trim(),
                             Usu = Session["C77U"].ToString(),
                             CodAeronave = Convert.ToInt32(DdlAeroRte.Text),
+                            ProcesoOrigen = "RESERVA",
                             Accion = "TEMPORAL",
                         };
                         ObjSubirRsva.Add(TypSubirRsva);
@@ -4697,6 +4698,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     IPC = TxtIPCRF.Text.Trim(),
                     Usu = Session["C77U"].ToString(),
                     CodAeronave = Convert.ToInt32(DdlAeroRte.Text),
+                    ProcesoOrigen = "RESERVA",
                     Accion = "INSERT",
                 };
                 ObjSubirRsva.Add(TypSubirRsva);

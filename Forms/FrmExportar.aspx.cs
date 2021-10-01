@@ -69,11 +69,11 @@ namespace _77NeoWeb.Forms
                     case "Exportar Referencias":
                         if (Rdb1.Checked == true)
                         {
-                            VbPrmtrAnt = "EXEC SP_PANTALLA_ReferenciaV2 13,@PN,'','','','VERIFICAR',0,0,0,0,'01-01-01','02-01-01','03-01-01'";
+                            VbPrmtrAnt = "EXEC SP_PANTALLA_ReferenciaV2 13,@PN,'','','','VERIFICAR',0,0,0,@ICC,'01-01-01','02-01-01','03-01-01'";
                         }
                         if (Rdb2.Checked == true)
                         {
-                            VbPrmtrAnt = "EXEC SP_PANTALLA_ReferenciaV2 13,@PN,'','','','UNDCOMPRA',0,0,0,0,'01-01-01','02-01-01','03-01-01'";
+                            VbPrmtrAnt = "EXEC SP_PANTALLA_ReferenciaV2 13,@PN,'','','','UNDCOMPRA',0,0,0,@ICC,'01-01-01','02-01-01','03-01-01'";
                         }
                         break;
                     default:
@@ -84,6 +84,7 @@ namespace _77NeoWeb.Forms
                 sqlCon.Open();
                 SqlCommand SC = new SqlCommand(VbTxtSql, sqlCon);
                 SC.Parameters.AddWithValue("@PN", TxtBusqueda.Text);
+                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                 SqlDataAdapter SDA = new SqlDataAdapter();
                 SDA.SelectCommand = SC;
                 SDA.Fill(dtbl);
@@ -150,11 +151,11 @@ namespace _77NeoWeb.Forms
                     case "Exportar Referencias":
                         if (Rdb1.Checked == true)
                         {
-                            VbPrmtrAnt = "EXEC SP_PANTALLA_ReferenciaV2 13,@PN,'','','','VERIFICAR',0,0,0,0,'01-01-01','02-01-01','03-01-01'";
+                            VbPrmtrAnt = "EXEC SP_PANTALLA_ReferenciaV2 13,@PN,'','','','VERIFICAR',0,0,0,@ICC,'01-01-01','02-01-01','03-01-01'";
                         }
                         if (Rdb2.Checked == true)
                         {
-                            VbPrmtrAnt = "EXEC SP_PANTALLA_ReferenciaV2 13,@PN,'','','','UNDCOMPRA',0,0,0,0,'01-01-01','02-01-01','03-01-01'";
+                            VbPrmtrAnt = "EXEC SP_PANTALLA_ReferenciaV2 13,@PN,'','','','UNDCOMPRA',0,0,0,@ICC,'01-01-01','02-01-01','03-01-01'";
                         }
                         break;
                     default:
@@ -169,6 +170,7 @@ namespace _77NeoWeb.Forms
                     {
                         SC.CommandTimeout = 90000000;
                         SC.Parameters.AddWithValue("@PN", TxtBusqueda.Text);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             SC.Connection = con;

@@ -56,8 +56,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DateTime VbFecID = Convert.ToDateTime(fecha);
                 TxtFechIPpl.Text = string.Format("{0:yyyy-MM-dd}", VbFecID);
                 TxtFechFPpl.Text = string.Format("{0:yyyy-MM-dd}", DateTime.UtcNow);
-                //Page.Title = "Histórico contadores";
-                //TitForm.Text = "Histórico de Contadores";
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }

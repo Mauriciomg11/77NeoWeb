@@ -316,10 +316,7 @@ namespace _77NeoWeb.Forms.MRO
             else { MultVw.ActiveViewIndex = 2; }
         }
         protected void BtnSolPed_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        { Page.Title = ViewState["PageTit"].ToString().Trim(); Response.Redirect("~/Forms/Almacen/FrmSolicitudPedido.aspx"); }
         protected void BtnCotizacion_Click(object sender, EventArgs e)
         {
 

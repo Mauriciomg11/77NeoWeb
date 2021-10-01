@@ -22,6 +22,7 @@ namespace _77NeoWeb.Prg
         public string IPC { get; set; }
         public string Usu { get; set; }
         public int CodAeronave { get; set; }
+        public string ProcesoOrigen { get; set; }
         public string Accion { get; set; }
         public void Alimentar(IEnumerable<CsTypSubirReserva> Rsva)
         {
@@ -37,6 +38,7 @@ namespace _77NeoWeb.Prg
             TblRsva.Columns.Add("IPC", typeof(string));
             TblRsva.Columns.Add("Usu", typeof(string));
             TblRsva.Columns.Add("CodAeronave", typeof(int));
+            TblRsva.Columns.Add("ProcesoOrigen", typeof(string));
             TblRsva.Columns.Add("Accion", typeof(string));
             foreach (var Campos in Rsva)
             {
@@ -51,6 +53,7 @@ namespace _77NeoWeb.Prg
                 Campos.IPC,
                 Campos.Usu,
                 Campos.CodAeronave,
+                Campos.ProcesoOrigen,
                 Campos.Accion,
                 });
             }

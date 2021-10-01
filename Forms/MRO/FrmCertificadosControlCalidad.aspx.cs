@@ -127,7 +127,7 @@ namespace _77NeoWeb.Forms.MRO
         protected void BindData(string VbConsultar, string Accion)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            DataRow[] Result;
+            //DataRow[] Result;
             if (Accion.Equals("UPD"))
             {
                 Cnx.SelecBD();
@@ -158,7 +158,6 @@ namespace _77NeoWeb.Forms.MRO
                 }
             }
             DSTDdl = (DataSet)ViewState["DSTDdl"];
-
 
         }
         //*************************************** BUSQUEDA ***************************************

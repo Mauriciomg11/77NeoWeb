@@ -513,347 +513,7 @@ namespace _77NeoWeb.Forms.Manto
             DdlAeroRte.DataTextField = "Matricula";
             DdlAeroRte.DataValueField = "CodAeronave";
             DdlAeroRte.DataBind();
-        }
-        /* protected void BindDdlRte()
-         {
-             string LtxtSql = "";
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','FTE',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
-             DdlFuente.DataSource = Cnx.DSET(LtxtSql);
-             DdlFuente.DataMember = "Datos";
-             DdlFuente.DataTextField = "Descripcion";
-             DdlFuente.DataValueField = "Codigo";
-             DdlFuente.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','STD',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
-             DdlEstad.DataSource = Cnx.DSET(LtxtSql);
-             DdlEstad.DataMember = "Datos";
-             DdlEstad.DataTextField = "Descripcion";
-             DdlEstad.DataValueField = "CodStatus";
-             DdlEstad.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','ATA',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
-             DdlAtaRte.DataSource = Cnx.DSET(LtxtSql);
-             DdlAtaRte.DataMember = "Datos";
-             DdlAtaRte.DataTextField = "Descripcion";
-             DdlAtaRte.DataValueField = "CodCapitulo";
-             DdlAtaRte.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','PNRTE',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", Session["!dC!@"]);
-             DdlPnRte.DataSource = Cnx.DSET(LtxtSql);
-             DdlPnRte.DataMember = "Datos";
-             DdlPnRte.DataTextField = "PN";
-             DdlPnRte.DataValueField = "Codigo";
-             DdlPnRte.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_LibroVuelo 20,'','','','MTR',{0},{1},{2},{3},'01-1-2009','01-01-1900','01-01-1900'", 1, 2, 0, Session["!dC!@"]);
-             DdlAeroRte.DataSource = Cnx.DSET(LtxtSql);
-             DdlAeroRte.DataMember = "Datos";
-             DdlAeroRte.DataTextField = "Matricula";
-             DdlAeroRte.DataValueField = "CodAeronave";
-             DdlAeroRte.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_LibroVuelo 20,'','','','BAS',0,0,0,{0},'01-1-2009','01-01-1900','01-01-1900'", Session["!dC!@"]);
-             DdlBasRte.DataSource = Cnx.DSET(LtxtSql);
-             DdlBasRte.DataMember = "Datos";
-             DdlBasRte.DataTextField = "NomBase";
-             DdlBasRte.DataValueField = "CodBase";
-             DdlBasRte.DataBind();
-         }*/
-        /* protected void BindDdlRteCondicional(string Categ, string LicGen, string LicCump, string LicVer, string OT)
-         {
-             DSTGrDtsRpt = (DataSet)ViewState["DSTGrDtsRpt"];
-             DataRow[] Result;
-
-             if (DSTGrDtsRpt.Tables["TipRte"].Rows.Count > 0)
-             {
-                 DataTable DTTipRt = new DataTable();
-                 DTTipRt = DSTGrDtsRpt.Tables[2].Clone();
-
-                 Result = DSTGrDtsRpt.Tables[2].Select("CodReporte=" + ViewState["TipRteAnt"]);// trae el codigo actual por si esta inactivo
-                 foreach (DataRow Row in Result)
-                 { DTTipRt.ImportRow(Row); }
-
-                 Result = DSTGrDtsRpt.Tables[2].Select("Activo=1");
-                 foreach (DataRow Row in Result)
-                 { DTTipRt.ImportRow(Row); }
-
-                 DdlTipRte.DataSource = DTTipRt;
-                 DdlTipRte.DataTextField = "TipoReporte";
-                 DdlTipRte.DataValueField = "CodReporte";
-                 DdlTipRte.DataBind();
-             }
-
-             DdlFuente.DataSource = DSTGrDtsRpt.Tables[3];
-             DdlFuente.DataTextField = "Descripcion";
-             DdlFuente.DataValueField = "Codigo";
-             DdlFuente.DataBind();
-
-             if (DSTGrDtsRpt.Tables["Tll"].Rows.Count > 0)
-             {
-                 DataTable DTTll = new DataTable();
-                 DTTll = DSTGrDtsRpt.Tables[4].Clone();
-
-                 Result = DSTGrDtsRpt.Tables[4].Select("CodTaller= '" + ViewState["TllAnt"] + "'");
-                 foreach (DataRow Row in Result)
-                 { DTTll.ImportRow(Row); }
-
-                 Result = DSTGrDtsRpt.Tables[4].Select("Activo=1");
-                 foreach (DataRow Row in Result)
-                 { DTTll.ImportRow(Row); }
-
-                 DdlTall.DataSource = DTTll;
-                 DdlTall.DataTextField = "NomTaller";
-                 DdlTall.DataValueField = "CodTaller";
-                 DdlTall.DataBind();
-             }
-
-             DdlEstad.DataSource = DSTGrDtsRpt.Tables[5];
-             DdlEstad.DataTextField = "Descripcion";
-             DdlEstad.DataValueField = "CodStatus";
-             DdlEstad.DataBind();
-
-             if (DSTGrDtsRpt.Tables["Clsfcn"].Rows.Count > 0)
-             {
-                 DataTable DTClsf = new DataTable();
-                 DTClsf = DSTGrDtsRpt.Tables[6].Clone();
-
-                 Result = DSTGrDtsRpt.Tables[6].Select("Codigo= '" + ViewState["ClsfcnAnt"] + "'");
-                 foreach (DataRow Row in Result)
-                 { DTClsf.ImportRow(Row); }
-
-                 Result = DSTGrDtsRpt.Tables[6].Select("Activo=1");
-                 foreach (DataRow Row in Result)
-                 { DTClsf.ImportRow(Row); }
-
-                 DdlClasf.DataSource = DTClsf;
-                 DdlClasf.DataTextField = "Descripcion";
-                 DdlClasf.DataValueField = "Codigo";
-                 DdlClasf.DataBind();
-             }
-
-             string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{2}',{3},'','CatM',{1},0,0,{4},'01-01-1','02-01-1','03-01-1'",
-                DdlClasf.Text, DdlClasf.SelectedValue.Equals("") ? "0" : DdlAeroRte.Text, Categ, Session["77IDM"], Session["!dC!@"]);
-             DdlCatgr.DataSource = Cnx.DSET(LtxtSql);
-             DdlCatgr.DataTextField = "CodCategoriaMel";
-             DdlCatgr.DataValueField = "IdCategoria";
-             DdlCatgr.DataBind();
-
-             if (DSTGrDtsRpt.Tables["Pscn"].Rows.Count > 0)
-             {
-                 DataTable DTPscn = new DataTable();
-                 DTPscn = DSTGrDtsRpt.Tables[7].Clone();
-
-                 Result = DSTGrDtsRpt.Tables[7].Select("Codigo= '" + ViewState["PscnAnt"] + "'");
-                 foreach (DataRow Row in Result)
-                 { DTPscn.ImportRow(Row); }
-
-                 Result = DSTGrDtsRpt.Tables[7].Select("Activo=1");
-                 foreach (DataRow Row in Result)
-                 { DTPscn.ImportRow(Row); }
-
-                 DdlPosRte.DataSource = DTPscn;
-                 DdlPosRte.DataTextField = "Descripcion";
-                 DdlPosRte.DataValueField = "Codigo";
-                 DdlPosRte.DataBind();
-             }
-
-             DdlAtaRte.DataSource = DSTGrDtsRpt.Tables[8];
-             DdlAtaRte.DataTextField = "Descripcion";
-             DdlAtaRte.DataValueField = "CodCapitulo";
-             DdlAtaRte.DataBind();
-
-             if (DSTGrDtsRpt.Tables["Gnrd"].Rows.Count > 0) // Datos de tecnicos abrir, cierre, difiere y verificado
-             {
-                 DataTable DTGnrd = new DataTable();
-                 DataTable DTCmpl = new DataTable();
-                 DataTable DTDfr = new DataTable();
-                 DataTable DTVrfc = new DataTable();
-
-                 DTGnrd = DSTGrDtsRpt.Tables[9].Clone();
-                 Result = DSTGrDtsRpt.Tables[9].Select("CodPersona= '" + ViewState["GnrdAnt"] + "'");
-                 foreach (DataRow Row in Result)
-                 { DTGnrd.ImportRow(Row); }
-
-                 DTCmpl = DSTGrDtsRpt.Tables[9].Clone();
-                 Result = DSTGrDtsRpt.Tables[9].Select("CodPersona= '" + ViewState["CmplAnt"] + "'");
-                 foreach (DataRow Row in Result)
-                 { DTCmpl.ImportRow(Row); }
-
-                 DTDfr = DSTGrDtsRpt.Tables[9].Clone();
-                 Result = DSTGrDtsRpt.Tables[9].Select("CodPersona= '" + ViewState["DfrAnt"] + "'");
-                 foreach (DataRow Row in Result)
-                 { DTDfr.ImportRow(Row); }
-
-                 DTVrfc = DSTGrDtsRpt.Tables[9].Clone();
-                 Result = DSTGrDtsRpt.Tables[9].Select("CodPersona= '" + ViewState["VrfcAnt"] + "'");
-                 foreach (DataRow Row in Result)
-                 { DTVrfc.ImportRow(Row); }
-
-                 Result = DSTGrDtsRpt.Tables[9].Select("CrearReporte= 1 AND Estado = 'ACTIVO'");
-                 foreach (DataRow Row in Result)
-                 { DTGnrd.ImportRow(Row); DTCmpl.ImportRow(Row); DTDfr.ImportRow(Row); DTVrfc.ImportRow(Row); }
-
-                 DdlGenerado.DataSource = DTGnrd;
-                 DdlGenerado.DataTextField = "Tecnico";
-                 DdlGenerado.DataValueField = "CodPersona";
-                 DdlGenerado.DataBind();
-
-                 DdlCumpl.DataSource = DTCmpl;
-                 DdlCumpl.DataTextField = "Tecnico";
-                 DdlCumpl.DataValueField = "CodPersona";
-                 DdlCumpl.DataBind();
-
-                 DdlTecDif.DataSource = DTDfr;
-                 DdlTecDif.DataTextField = "Tecnico";
-                 DdlTecDif.DataValueField = "CodPersona";
-                 DdlTecDif.DataBind();
-
-                 DdlVerif.DataSource = DTVrfc;
-                 DdlVerif.DataTextField = "Tecnico";
-                 DdlVerif.DataValueField = "CodPersona";
-                 DdlVerif.DataBind();
-
-                 LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}',{2},'','LICTA',0,0,0,{3},'01-01-1','02-01-1','03-01-1'", ViewState["GnrdAnt"].ToString().Trim(), LicGen, Session["77IDM"], Session["!dC!@"]);
-                 DdlLicGene.DataSource = Cnx.DSET(LtxtSql);
-                 DdlLicGene.DataTextField = "Licencia";
-                 DdlLicGene.DataValueField = "Codigo";
-                 DdlLicGene.DataBind();
-
-                 LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}',{2},'','LICTA',0,0,0,{3},'01-01-1','02-01-1','03-01-1'", ViewState["CmplAnt"].ToString().Trim(), LicCump, Session["77IDM"], Session["!dC!@"]);
-                 DdlLicCump.DataSource = Cnx.DSET(LtxtSql);
-                 DdlLicCump.DataTextField = "Licencia";
-                 DdlLicCump.DataValueField = "Codigo";
-                 DdlLicCump.DataBind();
-
-                 LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}',{2},'','LICTA',0,0,0,{3},'01-01-1','02-01-1','03-01-1'", ViewState["VrfcAnt"].ToString().Trim(), LicVer, Session["77IDM"], Session["!dC!@"]);
-                 DdlLicVer.DataSource = Cnx.DSET(LtxtSql);
-                 DdlLicVer.DataTextField = "Licencia";
-                 DdlLicVer.DataValueField = "Codigo";
-                 DdlLicVer.DataBind();
-             }
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','OTPP',{0},{1},0,{2},'01-01-1','02-01-1','03-01-1'", DdlAeroRte.Text, OT, Session["!dC!@"]);
-
-             DdlOtRte.DataSource = Cnx.DSET(LtxtSql);
-             DdlOtRte.DataTextField = "OT";
-             DdlOtRte.DataValueField = "CodNumOrdenTrab";
-             DdlOtRte.DataBind();
-
-             DdlPnRte.DataSource = DSTGrDtsRpt.Tables[10];
-             DdlPnRte.DataTextField = "PN";
-             DdlPnRte.DataValueField = "Codigo";
-             DdlPnRte.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','',{1},'','PRIO',0,0,0,{2},'01-01-1','02-01-1','03-01-1'", ViewState["CodPrioridad"].ToString(), Session["77IDM"], Session["!dC!@"]);
-             DdlPrioridadOT.DataSource = Cnx.DSET(LtxtSql);
-             DdlPrioridadOT.DataTextField = "Descripcion";
-             DdlPrioridadOT.DataValueField = "CodPrioridadSolicitudMat";
-             DdlPrioridadOT.DataBind();
-         }*/
-        /* protected void BindDdlRteCondicional(int Act, int Inact, string Categ, string LicGen, string LicCump, string LicVer, string CodTall, string CodClasf,
-            string CodPos, string UsuGen, string UsuCump, string UsuDif, string UsuVer, string OT)
-         {
-             string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','TLLR',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", CodTall, Session["!dC!@"]);
-             DdlTall.DataSource = Cnx.DSET(LtxtSql);
-             DdlTall.DataMember = "Datos";
-             DdlTall.DataTextField = "NomTaller";
-             DdlTall.DataValueField = "CodTaller";
-             DdlTall.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','CSF',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", CodClasf, Session["!dC!@"]);
-             DdlClasf.DataSource = Cnx.DSET(LtxtSql);
-             DdlClasf.DataMember = "Datos";
-             DdlClasf.DataTextField = "Descripcion";
-             DdlClasf.DataValueField = "Codigo";
-             DdlClasf.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{2}','','','CatM',{1},0,0,{3},'01-01-1','02-01-1','03-01-1'",
-                DdlClasf.Text, DdlClasf.SelectedValue.Equals("") ? "0" : DdlAeroRte.Text, Categ, Session["!dC!@"]);
-             DdlCatgr.DataSource = Cnx.DSET(LtxtSql);
-             DdlCatgr.DataMember = "Datos";
-             DdlCatgr.DataTextField = "CodCategoriaMel";
-             DdlCatgr.DataValueField = "IdCategoria";
-             DdlCatgr.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','PosR',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", CodPos, Session["!dC!@"]);
-             DdlPosRte.DataSource = Cnx.DSET(LtxtSql);
-             DdlPosRte.DataMember = "Datos";
-             DdlPosRte.DataTextField = "Descripcion";
-             DdlPosRte.DataValueField = "Codigo";
-             DdlPosRte.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','TECA',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", UsuGen, Session["!dC!@"]);
-             DdlGenerado.DataSource = Cnx.DSET(LtxtSql);
-             DdlGenerado.DataMember = "Datos";
-             DdlGenerado.DataTextField = "Tecnico";
-             DdlGenerado.DataValueField = "CodPersona";
-             DdlGenerado.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','TECA',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", UsuCump, Session["!dC!@"]);
-             DdlCumpl.DataSource = Cnx.DSET(LtxtSql);
-             DdlCumpl.DataMember = "Datos";
-             DdlCumpl.DataTextField = "Tecnico";
-             DdlCumpl.DataValueField = "CodPersona";
-             DdlCumpl.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','TECA',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", UsuDif, Session["!dC!@"]);
-             DdlTecDif.DataSource = Cnx.DSET(LtxtSql);
-             DdlTecDif.DataMember = "Datos";
-             DdlTecDif.DataTextField = "Tecnico";
-             DdlTecDif.DataValueField = "CodPersona";
-             DdlTecDif.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','TECA',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", UsuVer, Session["!dC!@"]);
-             DdlVerif.DataSource = Cnx.DSET(LtxtSql);
-             DdlVerif.DataMember = "Datos";
-             DdlVerif.DataTextField = "Tecnico";
-             DdlVerif.DataValueField = "CodPersona";
-             DdlVerif.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}','','','LICTA',0,0,0,{2},'01-01-1','02-01-1','03-01-1'", UsuGen, LicGen, Session["!dC!@"]);
-             DdlLicGene.DataSource = Cnx.DSET(LtxtSql);
-             DdlLicGene.DataMember = "Datos";
-             DdlLicGene.DataTextField = "Licencia";
-             DdlLicGene.DataValueField = "Codigo";
-             DdlLicGene.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}','','','LICTA',0,0,0,{2},'01-01-1','02-01-1','03-01-1'", UsuCump, LicCump, Session["!dC!@"]);
-             DdlLicCump.DataSource = Cnx.DSET(LtxtSql);
-             DdlLicCump.DataMember = "Datos";
-             DdlLicCump.DataTextField = "Licencia";
-             DdlLicCump.DataValueField = "Codigo";
-             DdlLicCump.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}','','','LICTA',0,0,0,{2},'01-01-1','02-01-1','03-01-1'", UsuVer, LicVer, Session["!dC!@"]);
-             DdlLicVer.DataSource = Cnx.DSET(LtxtSql);
-             DdlLicVer.DataMember = "Datos";
-             DdlLicVer.DataTextField = "Licencia";
-             DdlLicVer.DataValueField = "Codigo";
-             DdlLicVer.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','OTPP',{0},{1},0,{2},'01-01-1','02-01-1','03-01-1'", DdlAeroRte.Text, OT, Session["!dC!@"]);
-             DdlOtRte.DataSource = Cnx.DSET(LtxtSql);
-             DdlOtRte.DataMember = "Datos";
-             DdlOtRte.DataTextField = "OT";
-             DdlOtRte.DataValueField = "CodNumOrdenTrab";
-             DdlOtRte.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'','','','','TpRte',{0},{1},{2},{3},'01-01-1','02-01-1','03-01-1'", Act, Inact, DdlTipRte.Text.Equals("") ? "0" : DdlTipRte.Text, Session["!dC!@"]);
-             DdlTipRte.DataSource = Cnx.DSET(LtxtSql);
-             DdlTipRte.DataMember = "Datos";
-             DdlTipRte.DataTextField = "TipoReporte";
-             DdlTipRte.DataValueField = "CodReporte";
-             DdlTipRte.DataBind();
-
-             LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','PRIO',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", ViewState["CodPrioridad"].ToString(), Session["!dC!@"]);
-             DdlPrioridadOT.DataSource = Cnx.DSET(LtxtSql);
-             DdlPrioridadOT.DataMember = "Datos";
-             DdlPrioridadOT.DataTextField = "Descripcion";
-             DdlPrioridadOT.DataValueField = "CodPrioridadSolicitudMat";
-             DdlPrioridadOT.DataBind();
-
-         }*/
+        }       
         protected void BindDdlRteCondicional(string Categ, string LicGen, string LicCump, string LicVer)
         {
             DSTOTGrl = (DataSet)ViewState["DSTOTGrl"];
@@ -1577,7 +1237,7 @@ namespace _77NeoWeb.Forms.Manto
             catch (Exception Ex)
             {
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "ValidarRpte", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "ValidarRpte", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void CalcularFechaPry()
@@ -1846,7 +1506,7 @@ namespace _77NeoWeb.Forms.Manto
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Inconveniente en el ingreso')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INGRESAR REPORTE", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INGRESAR REPORTE", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void BtnModificar_Click(object sender, EventArgs e)
@@ -2002,7 +1662,7 @@ namespace _77NeoWeb.Forms.Manto
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Inconveniente en la actualización')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "MODIFICAR REPORTE", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "MODIFICAR REPORTE", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void BtnEliminar_Click(object sender, EventArgs e)
@@ -2047,7 +1707,7 @@ namespace _77NeoWeb.Forms.Manto
                             foreach (DataRow row in Result)
                             { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en la eliminación')", true);
                             string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE Reporte Manto", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE Reporte Manto", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                         }
                     }
                 }
@@ -2099,7 +1759,7 @@ namespace _77NeoWeb.Forms.Manto
                             Transac.Rollback();
                             ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('Error en el ingreso')", true);
                             string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Notificar Rte", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Notificar Rte", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                         }
                     }
                 }
@@ -2248,7 +1908,7 @@ namespace _77NeoWeb.Forms.Manto
             catch (Exception Ex)
             {
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "BindDSN", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "BindDSN", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void IbtConsulPnRecurRte_Click(object sender, ImageClickEventArgs e)
@@ -2374,12 +2034,12 @@ namespace _77NeoWeb.Forms.Manto
                                                     sqlCmd.Parameters.AddWithValue("@CodOT", Convert.ToInt32(TxtRecurSubOt.Text));
                                                     sqlCmd.ExecuteNonQuery();
                                                 }
-                                                catch (Exception ex)
+                                                catch (Exception Ex)
                                                 {
                                                     DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                                                     foreach (DataRow row in Result)
                                                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//EError en el proceso de eliminación')", true);
-                                                    Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString(), "PLANOS Generar Nueva Reserva", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                                                    Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString(), "PLANOS Generar Nueva Reserva", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                                                 }
                                             }
                                         }
@@ -2396,7 +2056,7 @@ namespace _77NeoWeb.Forms.Manto
                                     foreach (DataRow row in Result)
                                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
                                     string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                                    Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Recurso Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                                    Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Recurso Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                                 }
                             }
                         }
@@ -2409,7 +2069,7 @@ namespace _77NeoWeb.Forms.Manto
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Recurso", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Recurso", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void GrdRecursoF_RowEditing(object sender, GridViewEditEventArgs e)
@@ -2499,7 +2159,7 @@ namespace _77NeoWeb.Forms.Manto
                                 foreach (DataRow row in Result)
                                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE Recurso Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE Recurso Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                             }
                         }
                     }
@@ -2511,7 +2171,7 @@ namespace _77NeoWeb.Forms.Manto
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Recurso", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Recurso", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void GrdRecursoF_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -2582,7 +2242,7 @@ namespace _77NeoWeb.Forms.Manto
                                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el proceso de eliminación')", true);
                                 Transac.Rollback();
                                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE Recurso Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE Recurso Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                             }
 
                         }
@@ -2593,7 +2253,7 @@ namespace _77NeoWeb.Forms.Manto
             {
                 ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('Error en el proceso de eliminación')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "VALIDACIÓN ELIMINAR DET S/N SRV MANTO", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "VALIDACIÓN ELIMINAR DET S/N SRV MANTO", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void GrdRecursoF_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -2712,7 +2372,7 @@ namespace _77NeoWeb.Forms.Manto
             catch (Exception Ex)
             {
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "BindDRecursoF", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "BindDRecursoF", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void DdlLicenRFPP_TextChanged(object sender, EventArgs e)
@@ -2786,7 +2446,7 @@ namespace _77NeoWeb.Forms.Manto
                                     foreach (DataRow row in Result)
                                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso
                                     string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                                    Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Licencia REPORTE", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                                    Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Licencia REPORTE", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                                 }
                             }
                         }
@@ -2799,7 +2459,7 @@ namespace _77NeoWeb.Forms.Manto
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Recurso REPORTE", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Recurso REPORTE", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void GrdLicen_RowEditing(object sender, GridViewEditEventArgs e)
@@ -2849,7 +2509,7 @@ namespace _77NeoWeb.Forms.Manto
                                 foreach (DataRow row in Result)
                                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// Error en el editar')", true);
                                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE Licencia Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE Licencia Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                             }
                         }
                     }
@@ -2859,7 +2519,7 @@ namespace _77NeoWeb.Forms.Manto
             {
                 ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('Error en el ingreso')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "GrdLicen_RowUpdating Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "GrdLicen_RowUpdating Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void GrdLicen_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -2906,7 +2566,7 @@ namespace _77NeoWeb.Forms.Manto
                             foreach (DataRow row in Result)
                             { ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//
                             string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE Licencia Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE Licencia Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                         }
                     }
                 }
@@ -3082,6 +2742,7 @@ namespace _77NeoWeb.Forms.Manto
                             IPC = TxtIPCRF.Text.Trim(),
                             Usu = Session["C77U"].ToString(),
                             CodAeronave = Convert.ToInt32(DdlAeroRte.Text),
+                            ProcesoOrigen = "RESERVA",
                             Accion = "TEMPORAL",
                         };
                         ObjSubirRsva.Add(TypSubirRsva);
@@ -3110,7 +2771,7 @@ namespace _77NeoWeb.Forms.Manto
             catch (Exception Ex)
             {
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "VALIDACIÓN ELIMINAR DET S/N SRV MANTO", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "VALIDACIÓN ELIMINAR DET S/N SRV MANTO", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void IbtGuardarCargaMax_Click(object sender, ImageClickEventArgs e)
@@ -3140,6 +2801,7 @@ namespace _77NeoWeb.Forms.Manto
                     IPC = TxtIPCRF.Text.Trim(),
                     Usu = Session["C77U"].ToString(),
                     CodAeronave = Convert.ToInt32(DdlAeroRte.Text),
+                    ProcesoOrigen = "RESERVA",
                     Accion = "INSERT",
                 };
                 ObjSubirRsva.Add(TypSubirRsva);
@@ -3224,7 +2886,7 @@ namespace _77NeoWeb.Forms.Manto
             catch (Exception Ex)
             {
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "BindDSN", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "BindDSN", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void IbtCerrarSnOnOff_Click(object sender, ImageClickEventArgs e)
@@ -3450,7 +3112,7 @@ namespace _77NeoWeb.Forms.Manto
                                 foreach (DataRow row in Result)
                                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
                                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT SN ON OFF", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT SN ON OFF", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                             }
                         }
                     }
@@ -3535,7 +3197,7 @@ namespace _77NeoWeb.Forms.Manto
                             foreach (DataRow row in Result)
                             { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                             string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE SN ON OFF", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE SN ON OFF", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                         }
                     }
                 }
@@ -3577,7 +3239,7 @@ namespace _77NeoWeb.Forms.Manto
                             foreach (DataRow row in Result)
                             { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                             string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE SN ON OFF", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE SN ON OFF", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                         }
                     }
                 }
@@ -3765,7 +3427,7 @@ namespace _77NeoWeb.Forms.Manto
             catch (Exception Ex)
             {
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "BindDHta", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "BindDHta", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void DdlPNHtaPP_TextChanged(object sender, EventArgs e)
@@ -3918,7 +3580,7 @@ namespace _77NeoWeb.Forms.Manto
                                 foreach (DataRow row in Result)
                                 { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }
                                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Herramientas en Reportes", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Herramientas en Reportes", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                             }
                         }
                     }
@@ -3992,7 +3654,7 @@ namespace _77NeoWeb.Forms.Manto
                             foreach (DataRow row in Result)
                             { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                             string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE Herramienta Rte", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE Herramienta Rte", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                         }
                     }
                 }
@@ -4034,7 +3696,7 @@ namespace _77NeoWeb.Forms.Manto
                             foreach (DataRow row in Result)
                             { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en la eliminación')", true);
                             string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE Herramienta Rte", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE Herramienta Rte", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                         }
                     }
                 }
@@ -4242,7 +3904,7 @@ namespace _77NeoWeb.Forms.Manto
             catch (Exception Ex)
             {
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Exportar Excel", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Exportar Excel", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
     }

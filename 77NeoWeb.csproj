@@ -120,6 +120,10 @@
     <Content Include="Css\DisenoFrm.css" />
     <Content Include="Css\GridViewDiseño.css" />
     <Content Include="Css\CssCampos.css" />
+    <Content Include="Forms\Almacen\FrmAlertaSolicitudNueva.aspx" />
+    <Content Include="Forms\Almacen\FrmAlertaSolicitudNuevaRepa.aspx" />
+    <Content Include="Forms\Almacen\FrmAlertaVencSP.aspx" />
+    <Content Include="Forms\Almacen\FrmSolicitudPedido.aspx" />
     <Content Include="Forms\Almacen\FrmUbicacionElemento.aspx" />
     <Content Include="Forms\Configuracion\ConfigManto\FrmCategoriaMel.aspx" />
     <Content Include="Forms\Configuracion\ConfigManto\FrmPrioridadManto.aspx" />
@@ -280,6 +284,34 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmAlertaSolicitudNueva.aspx.cs">
+      <DependentUpon>FrmAlertaSolicitudNueva.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmAlertaSolicitudNueva.aspx.designer.cs">
+      <DependentUpon>FrmAlertaSolicitudNueva.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmAlertaSolicitudNuevaRepa.aspx.cs">
+      <DependentUpon>FrmAlertaSolicitudNuevaRepa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmAlertaSolicitudNuevaRepa.aspx.designer.cs">
+      <DependentUpon>FrmAlertaSolicitudNuevaRepa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmAlertaVencSP.aspx.cs">
+      <DependentUpon>FrmAlertaVencSP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmAlertaVencSP.aspx.designer.cs">
+      <DependentUpon>FrmAlertaVencSP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmSolicitudPedido.aspx.cs">
+      <DependentUpon>FrmSolicitudPedido.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmSolicitudPedido.aspx.designer.cs">
+      <DependentUpon>FrmSolicitudPedido.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Almacen\FrmUbicacionElemento.aspx.cs">
       <DependentUpon>FrmUbicacionElemento.aspx</DependentUpon>

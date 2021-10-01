@@ -189,7 +189,6 @@ namespace _77NeoWeb.Prg.PrgLogistica
                     }
                 }
             }
-
         }
         public string GetMensj()
         {

@@ -197,11 +197,11 @@
                                     CssClass="DiseñoGrid table-sm" GridLines="Both" Width="100%" EmptyDataText="No existen registros ..!" DataKeyNames="CodIdDetalleSalida"
                                     OnRowEditing="GrdUsuario_RowEditing" OnRowUpdating="GrdUsuario_RowUpdating" OnRowCancelingEdit="GrdUsuario_RowCancelingEdit" OnRowDataBound="GrdUsuario_RowDataBound">
                                     <Columns>
-                                        <asp:TemplateField HeaderText="persona" HeaderStyle-Width="60%" >
+                                        <asp:TemplateField HeaderText="persona" HeaderStyle-Width="60%">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblPersn" Text='<%# Eval("Persona") %>' runat="server" Width="100%" />
                                             </ItemTemplate>
-                                             <EditItemTemplate>
+                                            <EditItemTemplate>
                                                 <asp:DropDownList ID="DdlPersona" runat="server" Width="100%" Height="28px" />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
@@ -370,7 +370,7 @@
             </asp:MultiView>
         </ContentTemplate>
         <Triggers>
-           <asp:PostBackTrigger ControlID="BtnExprt" />
+            <asp:PostBackTrigger ControlID="BtnExprt" />
             <asp:PostBackTrigger ControlID="BtnAlerta" />
         </Triggers>
     </asp:UpdatePanel>

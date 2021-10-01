@@ -773,8 +773,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CodIdDetalleResSP = 0,
                 FechaAprob = null,
                 CodAeronaveSP = Convert.ToInt32(TxtCodHk.Text),
-
-
             };
             ObjDetSP.Add(TypDetSP);
 
