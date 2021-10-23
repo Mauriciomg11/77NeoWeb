@@ -165,7 +165,8 @@ namespace _77NeoWeb
                     if (tbl.Read())
                     {                       
                         Session["SigCiaPpal"] = tbl["SiglaCiaPpal"].ToString();
-                        Session["77IDM"] = tbl["Idioma"].ToString(); //Idiioma                      
+                        Session["77IDM"] = tbl["Idioma"].ToString(); //Idiioma
+                        Session["MonLcl"] = tbl["CodMoneda"].ToString(); //Moneda Local
                         DdlBD.Visible = true;
                         LtxtSql = "EXEC SP_Configuracion 1,'" + Session["SigCiaPpal"].ToString() + "','','','','DropDown',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                         DdlBD.DataSource = Cnx.DSET(LtxtSql);

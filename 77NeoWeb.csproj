@@ -123,6 +123,7 @@
     <Content Include="Forms\Almacen\FrmAlertaSolicitudNueva.aspx" />
     <Content Include="Forms\Almacen\FrmAlertaSolicitudNuevaRepa.aspx" />
     <Content Include="Forms\Almacen\FrmAlertaVencSP.aspx" />
+    <Content Include="Forms\Almacen\FrmReferenciaConReservas.aspx" />
     <Content Include="Forms\Almacen\FrmSolicitudPedido.aspx" />
     <Content Include="Forms\Almacen\FrmUbicacionElemento.aspx" />
     <Content Include="Forms\Configuracion\ConfigManto\FrmCategoriaMel.aspx" />
@@ -184,6 +185,7 @@
     <Content Include="Forms\InventariosCompras\FrmModPnTotal.aspx" />
     <Content Include="Forms\InventariosCompras\FrmReferencia.aspx" />
     <Content Include="Forms\Almacen\FrmReserva.aspx" />
+    <Content Include="Forms\InventariosCompras\FrmCotizacion.aspx" />
     <Content Include="Forms\Manto\FrmAlertaCarryOver.aspx" />
     <Content Include="Forms\Manto\FrmDiferidos.aspx" />
     <Content Include="Forms\Manto\FrmIncoming.aspx" />
@@ -305,6 +307,13 @@
     </Compile>
     <Compile Include="Forms\Almacen\FrmAlertaVencSP.aspx.designer.cs">
       <DependentUpon>FrmAlertaVencSP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmReferenciaConReservas.aspx.cs">
+      <DependentUpon>FrmReferenciaConReservas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmReferenciaConReservas.aspx.designer.cs">
+      <DependentUpon>FrmReferenciaConReservas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Almacen\FrmSolicitudPedido.aspx.cs">
       <DependentUpon>FrmSolicitudPedido.aspx</DependentUpon>
@@ -733,6 +742,13 @@
     <Compile Include="Forms\Almacen\FrmReserva.aspx.designer.cs">
       <DependentUpon>FrmReserva.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\InventariosCompras\FrmCotizacion.aspx.cs">
+      <DependentUpon>FrmCotizacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\FrmCotizacion.aspx.designer.cs">
+      <DependentUpon>FrmCotizacion.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Manto\FrmAlertaCarryOver.aspx.cs">
       <DependentUpon>FrmAlertaCarryOver.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -944,6 +960,7 @@
     <Compile Include="Prg\PrgIngenieria\CsTypPasosOT.cs" />
     <Compile Include="Prg\PrgIngenieria\CsTypExportarIdioma.cs" />
     <Compile Include="Prg\PrgAlmacen\ClsTypAsignaciones.cs" />
+    <Compile Include="Prg\PrgLogistica\ClsTypCotizacion.cs" />
     <Compile Include="Prg\PrgMro\ClsTypSolicitudPedidoPPT.cs" />
     <Compile Include="Prg\PrgManto\ClsTypBodega.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypAsingarBodega.cs" />

@@ -26,26 +26,21 @@ namespace _77NeoWeb
             if (Session["C77U"] == null)
             {
                 /*Session["C77U"] = ""; */
-                Session["C77U"] = Cnx.GetUsr();
-                Session["D[BX"] = "DbNeoAda"; //DbNeoAda
-                Session["$VR"] = Cnx.GetSvr();
-                Session["V$U@"] = Cnx.GetUsSvr();
-                Session["P@$"] = Cnx.GetPas();
-                Session["N77U"] = Session["D[BX"];
-                Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                Session["!dC!@"] = 0;
-                Session["77IDM"] = "5"; // 4 español | 5 ingles   */
-                ViewState["Validar"] = "S";
+                if (Cnx.GetProduccion().Trim().Equals("N"))
+                {
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
+                    Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
+                    Session["$VR"] = Cnx.GetSvr();
+                    Session["V$U@"] = Cnx.GetUsSvr();
+                    Session["P@$"] = Cnx.GetPas();
+                    Session["N77U"] = Session["D[BX"];
+                    Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
+                    Session["MonLcl"] = Cnx.GetMonedLcl();// Moneda Local
+                }
 
-                /*  Session["C77U"] = Cnx.GetUsr();
-                 Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
-                 Session["$VR"] = Cnx.GetSvr();
-               Session["V$U@"] = Cnx.GetUsSvr();
-                 Session["P@$"] = Cnx.GetPas();
-                 Session["N77U"] = Session["D[BX"];
-                  Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                 Session["!dC!@"] = 0;
-                 Session["77IDM"] = "5"; // 4 español | 5 ingles   */
+              
             }
         }
 
@@ -112,7 +107,7 @@ namespace _77NeoWeb
             GrdBusq.DataBind();
         }
 
-        // ********************************** Segunda opcion  *******************************************/
+        // ********************************** tercera opcion  *******************************************/
 
         protected void btnUpload_Click(object sender, EventArgs e)
         {
@@ -188,7 +183,7 @@ namespace _77NeoWeb
             GrdBusq.DataBind();
         }
 
-        // ********************************** tercera opcion  *******************************************/
+       
         DataTable dt1 = new DataTable();
         protected void BtnV3_Click(object sender, EventArgs e)
         {
@@ -264,11 +259,56 @@ namespace _77NeoWeb
                 string ble = Ex.ToString();
             }
         }
-
+        // ********************************** Segunda opcion ejecutar proceso  *******************************************/
         protected void BtnExportar2_Click(object sender, EventArgs e)
         {
             CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
             CursorIdioma.Alimentar("CURRESERVA", "5");
+
+
+            ViewState["NomBtnExp"] = TxtNombreArchivo.Text.Trim();
+            string VbNumProces = TxtNumProc.Text.Trim();
+            string StSql = "EXEC ProyectoUsa @NumProc, @Cia";
+            Cnx.SelecBD();
+            using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
+            {
+                using (SqlCommand SC = new SqlCommand(StSql, con))
+                {
+                    SC.CommandTimeout = 90000000;
+                    SC.Parameters.AddWithValue("@NumProc", VbNumProces);
+                    SC.Parameters.AddWithValue("@Cia", Session["!dC!@"]);
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        SC.Connection = con;
+                        sda.SelectCommand = SC;
+                        using (DataSet ds = new DataSet())
+                        {
+                            sda.Fill(ds);
+
+                            ds.Tables[0].TableName = ViewState["NomBtnExp"].ToString();
+                            using (XLWorkbook wb = new XLWorkbook())
+                            {
+                                foreach (DataTable dt in ds.Tables)
+                                {
+                                    wb.Worksheets.Add(dt);
+                                }
+                                Response.Clear();
+                                Response.Buffer = true;
+                                Response.ContentType = "application/ms-excel";
+                                Response.AddHeader("content-disposition", string.Format("attachment;filename={0}.xlsx", ViewState["NomBtnExp"].ToString()));
+                                Response.Charset = "";
+                                using (MemoryStream MyMemoryStream = new MemoryStream())
+                                {
+                                    wb.SaveAs(MyMemoryStream);
+                                    MyMemoryStream.WriteTo(Response.OutputStream);
+                                    Response.Flush();
+                                    Response.End();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
         }
     }

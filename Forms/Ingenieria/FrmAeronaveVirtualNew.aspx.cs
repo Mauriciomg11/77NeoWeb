@@ -3823,11 +3823,12 @@ namespace _77NeoWeb.Forms.Ingenieria
             /* Cnx.SelecBD();
               using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
               {
-                  string VbTxtSql = string.Format("EXEC SP_PANTALLA_Elemento 6,@P,'','','',0,0,0,0,'01-1-2009','01-01-1900','01-01-1900'");
+                  string VbTxtSql = string.Format("EXEC SP_PANTALLA_Elemento 6,@P,'','','',0,0,0, @ICC,'01-1-2009','01-01-1900','01-01-1900'");
                   sqlConB.Open();
                   using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                   {
                       SC.Parameters.AddWithValue("@P", DdlCrearElemPn.Text.Trim());
+                      SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                       using (SqlDataAdapter DAB = new SqlDataAdapter())
                       {
                           DAB.SelectCommand = SC;

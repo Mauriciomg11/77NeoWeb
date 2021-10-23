@@ -79,10 +79,10 @@ namespace _77NeoWeb.Forms.Almacen
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
-            if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; BtnIngresar.Visible = false; BtnCargaMaxiva.Visible = false; }//GrdCursos.ShowFooter = false;
+            if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; BtnIngresar.Visible = false; BtnCargaMaxiva.Visible = false; GrdDetSP.ShowFooter = false; }
             if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; BtnModificar.Visible = false; }
             if (ClsP.GetConsultar() == 0) { }
-            if (ClsP.GetImprimir() == 0) { ViewState["VblImpMS"] = 0; }//BtnExportar.Visible = false;
+            if (ClsP.GetImprimir() == 0) { ViewState["VblImpMS"] = 0; }//
             if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; BtnEliminar.Visible = false; }
             if (ClsP.GetCE1() == 0) { ViewState["VblCE1"] = 0; } // Cambio de Tipo
             if (ClsP.GetCE2() == 0) { ViewState["VblCE2"] = 0; }//
@@ -836,10 +836,6 @@ namespace _77NeoWeb.Forms.Almacen
                     }
                 }
             }
-
-
-
-
         }
         protected void BtnAlert_Click(object sender, EventArgs e)
         {
@@ -1318,7 +1314,6 @@ namespace _77NeoWeb.Forms.Almacen
                 }
             }
         }
-
         //****************************** Busqueda **************************************
         protected void BtnConsultar_Click(object sender, EventArgs e)
         { MultVw.ActiveViewIndex = 1; Page.Title = ViewState["PageTit"].ToString().Trim(); TxtBusqueda.Text = ""; TxtBusqueda.Focus(); }
@@ -1390,7 +1385,6 @@ namespace _77NeoWeb.Forms.Almacen
         //******************************************  Subir Recurso maxivamente *********************************************************
         protected void BtnCargaMaxiva_Click(object sender, EventArgs e)
         {
-
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (TxtCodPedd.Text.Equals(""))
             { return; }
