@@ -316,17 +316,23 @@ namespace _77NeoWeb.Forms.MRO
             else { MultVw.ActiveViewIndex = 2; }
         }
         protected void BtnSolPed_Click(object sender, EventArgs e)
-        { Page.Title = ViewState["PageTit"].ToString().Trim(); Response.Redirect("~/Forms/Almacen/FrmSolicitudPedido.aspx"); }
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string SP = "window.open('/Forms/Almacen/FrmSolicitudPedido.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), SP, true);
+        }
         protected void BtnCotizacion_Click(object sender, EventArgs e)
         {
-
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string SP = "window.open('/Forms/InventariosCompras/FrmCotizacion.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), SP, true);
         }
-
         protected void BtnCuadroComprtv_Click(object sender, EventArgs e)
         {
-
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string SP = "window.open('/Forms/InventariosCompras/FrmCuadroComparativoCotiza.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), SP, true);
         }
-
         protected void BtnValorizar_Click(object sender, EventArgs e)
         {
             if (DdlNumPpt.Text.Equals("0")) { return; }
@@ -805,5 +811,6 @@ namespace _77NeoWeb.Forms.MRO
         }
         protected void IbtClosePNoValorizado_Click(object sender, ImageClickEventArgs e)
         { MultVw.ActiveViewIndex = 0; Page.Title = ViewState["PageTit"].ToString().Trim(); }
+       
     }
 }

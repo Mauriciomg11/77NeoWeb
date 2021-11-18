@@ -55,6 +55,7 @@ namespace _77NeoWeb
             Session["77IDM"] = "ES";
             Session["!dC!@"] = 1; //id Cia
             Session["MonLcl"] = ""; // Moneda
+            Session["PCodOT"] = "0"; // Para llamar el numero desde la reparación
 
         }
 

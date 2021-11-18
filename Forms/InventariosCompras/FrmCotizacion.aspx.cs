@@ -503,6 +503,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     TxtFechTRM.Text = VbFecSt.Equals("01/01/1900") ? "" : string.Format("{0:yyyy-MM-dd}", VbFecDT);
                     TxtTRM.Text = DSTPpl.Tables[0].Rows[0]["TRMT"].ToString().Trim();
                     ViewState["TRM_ANT"] = DSTPpl.Tables[0].Rows[0]["TRM"].ToString().Trim();
+                    TxtSnRepa.Text = DSTPpl.Tables[0].Rows[0]["SN"].ToString().Trim();
 
                     ViewState["TtlRegDet"] = Convert.ToInt32(DSTPpl.Tables[0].Rows[0]["TtlRegDet"].ToString());
                     ViewState["CarpetaCargaMasiva"] = HttpUtility.HtmlDecode(DSTPpl.Tables[0].Rows[0]["CargaMasiva"].ToString().Trim());
@@ -615,7 +616,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             TxtOtrImpt.Text = "0";
             TxtTtl.Text = "0";
             ViewState["IdCotiza"] = "0";
-                      TblDetalle.Clear();
+            TblDetalle.Clear();
             TblDetalle.AcceptChanges();
             BindDDetTmp();
 
@@ -813,16 +814,16 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 {
                     TblDetalle = (DataTable)ViewState["TblDetalle"];
                     ValidarCampos("UPD");
-                    if (ViewState["Validar"].Equals("N"))                    { return; }
+                    if (ViewState["Validar"].Equals("N")) { return; }
                     string VbTipoCotiza;
                     switch (ViewState["TipoCotiza"].ToString().Trim())
                     {
                         case "01": // COMPRA
-                            VbTipoCotiza = "C";                            break;
+                            VbTipoCotiza = "C"; break;
                         case "02": // REPA
-                            VbTipoCotiza = "P";                            break;
+                            VbTipoCotiza = "P"; break;
                         default: // INTERCAMBIO
-                            VbTipoCotiza = "I";                            break;
+                            VbTipoCotiza = "I"; break;
                     }
                     DateTime? VbFecPlzRsp, VbFecRsp, VbFecVig, VbFTRM;
                     string VbDiaT, VbMesT, VbAnoT;
@@ -1041,17 +1042,17 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 {
                     TblDetalle = (DataTable)ViewState["TblDetalle"];
                     ValidarCampos("UPD");
-                    if (ViewState["Validar"].Equals("N"))                    { return; }
+                    if (ViewState["Validar"].Equals("N")) { return; }
 
                     string VbTipoCotiza;
                     switch (ViewState["TipoCotiza"].ToString().Trim())
                     {
                         case "01": // COMPRA
-                            VbTipoCotiza = "C";                            break;
+                            VbTipoCotiza = "C"; break;
                         case "02": // REPA
-                            VbTipoCotiza = "P";                            break;
+                            VbTipoCotiza = "P"; break;
                         default: // INTERCAMBIO
-                            VbTipoCotiza = "I";                            break;
+                            VbTipoCotiza = "I"; break;
                     }
 
                     DateTime? VbFecPlzRsp, VbFecRsp, VbFecVig, VbFTRM, VbFTRM_Ant;
@@ -1270,7 +1271,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             Idioma = (DataTable)ViewState["TablaIdioma"];
             Page.Title = ViewState["PageTit"].ToString().Trim();
 
-            if (TxtNumCotiza.Text.Equals(""))            { return; }
+            if (TxtNumCotiza.Text.Equals("")) { return; }
 
             if (ViewState["TblDetalle"] != null)
             {
@@ -1324,7 +1325,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             Page.Title = ViewState["PageTit"].ToString().Trim();
-            if (TxtNumCotiza.Text.Equals(""))            { return; }
+            if (TxtNumCotiza.Text.Equals("")) { return; }
 
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))

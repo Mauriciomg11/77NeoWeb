@@ -34,6 +34,11 @@
         .LicenciaRva {
             width: 50%;
         }
+
+        .Font_btnCrud {
+            font-size: 12px;
+            font-stretch: condensed;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
@@ -250,16 +255,36 @@
                         <asp:TextBox ID="TxtCSR" runat="server" CssClass="form-control-sm heightCampo" Width="6%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false" />
                     </div>
                     <br />
-                    <div id="Botones">
-                        <asp:Button ID="BtnOtModificar" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnOtModificar_Click" Text="Modificar" />
-                        <asp:Button ID="BtnOTDetTec" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnOTDetTec_Click" Text="Técnicos" />
-                        <asp:Button ID="BtnOTReserva" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnOTReserva_Click" Text="Reserva" />
-                        <asp:Button ID="BtnOTConsultar" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnOTConsultar_Click" Text="Consultar" />
-                        <asp:Button ID="BtnOTImprimir" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnOTImprimir_Click" Text="Imprimir" />
-                        <asp:Button ID="BtnOTEliminar" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnOTEliminar_Click" Text="Eliminar" OnClientClick="return confirm('¿Desea eliminar el registro?');" />
-                        <asp:Button ID="BtnOTReporte" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnOtReporte_Click" Text="Reportes" />
-                        <asp:Button ID="BtnOTAbiertas8PasCump" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnOtAbiertas8PasCump_Click" Text="O.T. Abiertas" ToolTip="O.T. abiertas con el paso 8 cumplido" Visible="false" />
-                        <asp:Button ID="BtNOTExportar" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtNOTExportar_Click" Text="Exportar" />
+                    <div id="BotonesOT" class="row">
+                        <div class="col-sm-1">
+                            <asp:Button ID="BtnOTConsultar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnOTConsultar_Click" OnClientClick="target ='';" Text="Consultar" />
+                        </div>
+                        <div class="col-sm-1">
+                            <asp:Button ID="BtnOtModificar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnOtModificar_Click" OnClientClick="target ='';" Text="Modificar" />
+                        </div>
+                        <div class="col-sm-1">
+                            <asp:Button ID="BtnOTDetTec" runat="server" CssClass=" btn btn-success Font_btnCrud" Width="100%" OnClientClick="target ='';" OnClick="BtnOTDetTec_Click" Text="Técnicos" />
+                        </div>
+                        <div class="col-sm-1">
+                            <asp:Button ID="BtnOTReserva" runat="server" CssClass=" btn btn-success Font_btnCrud" Width="100%" OnClientClick="target ='';" OnClick="BtnOTReserva_Click" Text="Reserva" />
+                        </div>                       
+                        <div class="col-sm-1">
+                            <asp:Button ID="BtnOTEliminar" runat="server" CssClass=" btn btn-success Font_btnCrud" Width="100%" OnClick="BtnOTEliminar_Click" Text="Eliminar" OnClientClick="return confirm('¿Desea eliminar el registro?');" />
+                        </div>
+                        <div class="col-sm-1">
+                            <asp:Button ID="BtnOTReporte" runat="server" CssClass=" btn btn-success Font_btnCrud" Width="100%" OnClientClick="target ='';" OnClick="BtnOtReporte_Click" Text="Reportes" />
+                        </div>
+                         <div class="col-sm-1">
+                            <asp:Button ID="BtnOTImprimir" runat="server" CssClass=" btn btn-primary Font_btnCrud" Width="100%" OnClientClick="target ='';" OnClick="BtnOTImprimir_Click" Text="Imprimir" />
+                        </div>
+                        <div class="col-sm-1">
+                            <asp:Button ID="BtNOTExportar" runat="server" CssClass=" btn btn-primary Font_btnCrud" Width="100%" OnClientClick="target ='';" OnClick="BtNOTExportar_Click" Text="Exportar" />
+                        </div>
+                        <div class="col-sm-1">
+                            <asp:Button ID="BtnOTAbiertas8PasCump" runat="server" CssClass=" btn btn-primary Font_btnCrud" Width="100%" OnClientClick="target ='';" OnClick="BtnOtAbiertas8PasCump_Click" Text="O.T. Abiertas" ToolTip="O.T. abiertas con el paso 8 cumplido" Visible="false" />
+                        </div>
+
+
                     </div>
                 </ContentTemplate>
                 <Triggers>
@@ -811,7 +836,7 @@
                     <asp:Label ID="LblRteNumPaso" runat="server" CssClass="LblEtiquet" Text="Paso:"></asp:Label>
                     <asp:TextBox ID="TxtNumPaso" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />&nbsp&nbsp&nbsp
                     <asp:Label ID="LblNotif" runat="server" CssClass="LblEtiquet" Text="Notif:" Visible="false" />
-                     <asp:CheckBox ID="CkbNotif" runat="server" CssClass="LblEtiquet" Font-Size="12px" Text="" Enabled="false" Visible="false" />
+                    <asp:CheckBox ID="CkbNotif" runat="server" CssClass="LblEtiquet" Font-Size="12px" Text="" Enabled="false" Visible="false" />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitRteManto" runat="server" Text="Reportes de mantenimiento"></asp:Label></h6>
                     <asp:Table runat="server">
@@ -851,11 +876,11 @@
                             </asp:TableCell>
                             <asp:TableCell Width="1%">
                                 <asp:Label ID="LblEstad" runat="server" CssClass="LblEtiquet" Text="Estado:" />
-                            </asp:TableCell>                           
-                             <asp:TableCell ColumnSpan="3" Width="6%">
+                            </asp:TableCell>
+                            <asp:TableCell ColumnSpan="3" Width="6%">
                                 <asp:DropDownList ID="DdlRteEstad" runat="server" CssClass="heightCampo" Enabled="false" Width="95%" OnTextChanged="DdlRteEstad_TextChanged" AutoPostBack="true" />
                             </asp:TableCell>
-                            
+
                         </asp:TableRow>
                         <asp:TableRow>
                             <asp:TableCell>

@@ -165,6 +165,9 @@
                     <div class="CentrarContenedor DivMarco">
                         <div id="Botones" class="row">
                             <div class="col-sm-1">
+                                <asp:Button ID="BtnConsultar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnConsultar_Click" OnClientClick="target ='';" Text="consultar" />
+                            </div>
+                            <div class="col-sm-1">
                                 <asp:Button ID="BtnIngresar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnIngresar_Click" OnClientClick="target ='';" Text="nuevo" />
                             </div>
                             <div class="col-sm-1">
@@ -172,16 +175,15 @@
                             </div>
                             <div class="col-sm-1">
                                 <asp:Button ID="BtnCargaMaxiva" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnCargaMaxiva_Click" Text="Carga masiva" Width="100%" />
-                            </div>
-                            <div class="col-sm-1">
-                                <asp:Button ID="BtnConsultar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnConsultar_Click" OnClientClick="target ='';" Text="consultar" />
-                            </div>
+                            </div>                            
                             <div class="col-sm-1">
                                 <asp:Button ID="BtnEliminar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnEliminar_Click" OnClientClick="target ='';" Text="eliminar" />
                             </div>                           
                             <div class="col-sm-1">
-                                 <asp:Button ID="BtnAlert" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnAlert_Click" OnClientClick="target ='';" Text="alertas" />
-                               <%-- <asp:Button ID="BtnAlert" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnAlert_Click" OnClientClick="target ='_blank';" Text="alertas" />--%>
+                                 <asp:Button ID="BtnAlert" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnAlert_Click" OnClientClick="target ='';" Text="alertas" />                             
+                            </div>
+                             <div class="col-sm-1">
+                                 <asp:Button ID="BtnOpenCotiza" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnOpenCotiza_Click" OnClientClick="target ='';" Text="alertas" />                             
                             </div>
                              <%--<div class="col-sm-1">
                                 <asp:Button ID="BtnExportar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnExportar_Click" OnClientClick="target ='';" Text="exportar" />
@@ -189,7 +191,7 @@
                         </div>
                         <br />
                         <div class="row">
-                            <div class="col-sm-2">
+                            <div class="col-sm-1">
                                 <asp:Label ID="LblCodPedd" runat="server" CssClass="LblEtiquet" Text="pedido Nro.:" />
                                 <asp:TextBox ID="TxtCodPedd" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" />
                             </div>
@@ -208,6 +210,10 @@
                             <div class="col-sm-2">
                                 <asp:Label ID="LblPpt" runat="server" CssClass="LblEtiquet" Text="propuesta" />
                                 <asp:DropDownList ID="DdlPpt" runat="server" CssClass="heightCampo" Width="100%" Enabled="false" />
+                            </div>
+                            <div class="col-sm-1">
+                                <asp:Label ID="LblCotiza" runat="server" CssClass="LblEtiquet" Text="Cotización" />
+                                <asp:TextBox ID="TxtCotiza" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" />
                             </div>
                         </div>
                         <div class="row">

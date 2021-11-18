@@ -1026,8 +1026,6 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             PerfilesGrid();
             if (e.CommandName.Equals("AddNew"))
             {
-                try
-                {
                     string VBQuery = "";
                     DateTime VbFechaVenc;
                     string VbNombre = (GrdCursos.FooterRow.FindControl("DdlNombrePP") as DropDownList).Text.Trim();
@@ -1090,12 +1088,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                                 }/**/
                             }
                         }
-                    }
-                }
-                catch (Exception Ex)
-                {
-                    string borr = Ex.ToString().Trim();
-                }
+                    }               
             }
         }
         protected void GrdCursos_RowEditing(object sender, GridViewEditEventArgs e)

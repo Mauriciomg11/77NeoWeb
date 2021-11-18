@@ -39,7 +39,6 @@
 
         .CentrarContenedor {
             position: absolute;
-          
             left: 50%;
             /*determinamos una anchura*/
             width: 98%;
@@ -126,9 +125,9 @@
                                 <asp:Button ID="BtnPlantilla" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnPlantilla_Click" OnClientClick="target ='';" Text="Plantilla" />
                                 <asp:Button ID="BtnExportar" runat="server" CssClass="btn btn-primary Font_btnCrud" OnClick="BtnExportar_Click" OnClientClick="target ='';" Text="exportar" />&nbsp&nbsp
                                 <asp:Button ID="BtnPNSinValorizar" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnPNSinValorizar_Click" OnClientClick="target ='';" Text="PN sin Valorizar" />
-                                <asp:Button ID="BtnSolPed" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnSolPed_Click" OnClientClick="target ='_blank';" Text="solicitud pedido" />
-                                <asp:Button ID="BtnCotizacion" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnCotizacion_Click" OnClientClick="target ='_blank';" Text="cotización" />
-                                <asp:Button ID="BtnCuadroComprtv" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnCuadroComprtv_Click" OnClientClick="target ='_blank';" Text="cuadro comparativo" />
+                                <asp:Button ID="BtnSolPed" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnSolPed_Click" OnClientClick="target ='';" Text="solicitud pedido" />
+                                <asp:Button ID="BtnCotizacion" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnCotizacion_Click" OnClientClick="target ='';" Text="cotización" />
+                                <asp:Button ID="BtnCuadroComprtv" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnCuadroComprtv_Click" OnClientClick="target ='';" Text="cuadro comparativo" />
                             </div>
                         </div>
                         <div class="row">
@@ -137,7 +136,7 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <asp:ImageButton ID="IbtAprDet1All" runat="server" ImageUrl="~/images/Check1.png" ImageAlign="AbsBottom" Height="30px" Width="30px" OnClick="IbtAprDet1All_Click" /></td>
+                                            <asp:ImageButton ID="IbtAprDet1All" runat="server" ImageUrl="~/images/Check1.png" ImageAlign="AbsBottom" Height="30px" Width="30px" OnClick="IbtAprDet1All_Click" /></td>                                           
                                         <td>
                                             <asp:ImageButton ID="IbtGrarSP" runat="server" ImageUrl="~/images/AddOrder.png" ImageAlign="AbsBottom" Height="30px" Width="30px" OnClick="IbtGrarSP_Click" /></td>
                                     </tr>
@@ -366,8 +365,7 @@
         </ContentTemplate>
         <Triggers>
             <asp:PostBackTrigger ControlID="BtnDetPpt" />
-            <asp:PostBackTrigger ControlID="BtnExpPlantilla" />
-            <%--            <asp:PostBackTrigger ControlID="IbtAprDet1All" />--%>
+            <asp:PostBackTrigger ControlID="BtnExpPlantilla" />          
         </Triggers>
     </asp:UpdatePanel>
 

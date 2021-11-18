@@ -75,10 +75,14 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["LicInsptPsAnt"] = "";
                 ViewState["TecPsAnt"] = "";
                 ViewState["LicTecPsAnt"] = "";
-                TraerDatosBusqOT(0, "UPD");
+                int CodOTRepa = Convert.ToInt32(Session["PCodOT"].ToString());
+                if (CodOTRepa > 0) // OT
+                { TraerDatosBusqOT(CodOTRepa, "UPD"); Session["PCodOT"] = "0"; }
+                else { TraerDatosBusqOT(0, "UPD"); }
                 BindDdlOTCondicional("");
                 PerfilesGrid();
                 CalPasoFechI.EndDate = DateTime.Now;
+
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }

@@ -132,6 +132,15 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.View Vw0Datos;
 
         /// <summary>
+        /// Control BtnConsultar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnConsultar;
+
+        /// <summary>
         /// Control BtnIngresar.
         /// </summary>
         /// <remarks>
@@ -159,15 +168,6 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.Button BtnCargaMaxiva;
 
         /// <summary>
-        /// Control BtnConsultar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnConsultar;
-
-        /// <summary>
         /// Control BtnEliminar.
         /// </summary>
         /// <remarks>
@@ -184,6 +184,15 @@ namespace _77NeoWeb.Forms.Almacen
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnAlert;
+
+        /// <summary>
+        /// Control BtnOpenCotiza.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnOpenCotiza;
 
         /// <summary>
         /// Control LblCodPedd.
@@ -274,6 +283,24 @@ namespace _77NeoWeb.Forms.Almacen
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DdlPpt;
+
+        /// <summary>
+        /// Control LblCotiza.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblCotiza;
+
+        /// <summary>
+        /// Control TxtCotiza.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtCotiza;
 
         /// <summary>
         /// Control LblEstd.

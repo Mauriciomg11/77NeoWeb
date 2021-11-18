@@ -141,6 +141,9 @@ namespace _77NeoWeb.Forms.Almacen
                     // BtnExportar.Text = bO.Equals("BtnExportMstr") ? bT : BtnExportar.Text;
                     BtnAlert.Text = bO.Equals("BtnAlert") ? bT : BtnAlert.Text;
                     BtnAlert.ToolTip = bO.Equals("BtnAlertTT") ? bT : BtnAlert.ToolTip;
+                    BtnOpenCotiza.Text = bO.Equals("BtnOpenCotiza") ? bT : BtnOpenCotiza.Text;
+                    BtnOpenCotiza.ToolTip = bO.Equals("BtnOpenCotizaTT") ? bT : BtnOpenCotiza.ToolTip;
+                    LblCotiza.Text = bO.Equals("BtnOpenCotiza") ? bT : LblCotiza.Text;
                     //**************************************** Modal Asignar PN ****************************************
                     RdbMOdalBusqDesc.Text = bO.Equals("Descripcion") ? bT : RdbMOdalBusqDesc.Text;
                     CkbIngrPNNuevo.Text = bO.Equals("CkbIngrPNNuevo") ? "&nbsp" + bT : CkbIngrPNNuevo.Text;
@@ -431,6 +434,7 @@ namespace _77NeoWeb.Forms.Almacen
                     TxtObsrvcn.Text = DSTPpl.Tables[0].Rows[0]["Obsevacion"].ToString().Trim();
                     ViewState["TieneCotiza"] = DSTPpl.Tables[0].Rows[0]["TieneCotiza"].ToString().Trim();
                     ViewState["TtlRegDet"] = Convert.ToInt32(DSTPpl.Tables[0].Rows[0]["TtlRegDet"].ToString());
+                    TxtCotiza.Text = DSTPpl.Tables[0].Rows[0]["CodCotizacion"].ToString().Trim();
                     ViewState["CarpetaCargaMasiva"] = HttpUtility.HtmlDecode(DSTPpl.Tables[0].Rows[0]["CargaMasiva"].ToString().Trim());
                     if (ViewState["TipoAnt"].ToString().Trim().Equals("01") && (int)ViewState["VblIngMS"] == 1) { BtnCargaMaxiva.Visible = true; }// Solo se puede cargar masivamente compras
                     else { BtnCargaMaxiva.Visible = false; }
@@ -454,6 +458,7 @@ namespace _77NeoWeb.Forms.Almacen
             DSTDdl = (DataSet)ViewState["DSTDdl"];
             TblDetalle = (DataTable)ViewState["TblDetalle"];
             TxtCodPedd.Text = "";
+            TxtCotiza.Text = "";
             TxtFech.Text = "";
             DdlPriord.Text = "";
             DdlTipo.Text = "";
@@ -848,6 +853,12 @@ namespace _77NeoWeb.Forms.Almacen
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), SPRp, true);
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), SPVenc, true);
             //Response.Redirect("~/Forms/Almacen/FrmAlertaSolicitudNuevaRepa.aspx");
+        }
+        protected void BtnOpenCotiza_Click(object sender, EventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string CT = "window.open('/Forms/InventariosCompras/FrmCotizacion.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
         }
         //************************** MODAL buscar PN para asignar en la PPT ***********************************************
         protected void BindModalBusqPN()
@@ -1267,7 +1278,9 @@ namespace _77NeoWeb.Forms.Almacen
                 ImageButton IbtBusqPn = (e.Row.FindControl("IbtBusqPn") as ImageButton);
                 Result = Idioma.Select("Objeto= 'IbtBusqPnTT'");
                 foreach (DataRow row in Result)
-                { IbtBusqPn.ToolTip = row["Texto"].ToString().Trim(); }
+                { IbtBusqPn.ToolTip = row["Texto"].ToString().Trim(); }         
+                if (DdlTipo.Text.Trim().Equals("02") || DdlTipo.Text.Trim().Equals("03"))
+                { IbtAddNew.Visible = false; IbtBusqPn.Visible = false; }
             }
             if ((e.Row.RowState & DataControlRowState.Edit) > 0)
             {
@@ -1300,6 +1313,8 @@ namespace _77NeoWeb.Forms.Almacen
                     DataRow[] Result = Idioma.Select("Objeto='IbtEdit'");
                     foreach (DataRow RowIdioma in Result)
                     { imgE.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                    if (DdlTipo.Text.Trim().Equals("02") || DdlTipo.Text.Trim().Equals("03"))
+                    { imgE.Visible = false; }
                 }
 
                 ImageButton imgD = e.Row.FindControl("IbtDelete") as ImageButton;
@@ -1311,7 +1326,10 @@ namespace _77NeoWeb.Forms.Almacen
                     Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
                     foreach (DataRow row in Result)
                     { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                    if (DdlTipo.Text.Trim().Equals("02") || DdlTipo.Text.Trim().Equals("03"))
+                    { imgD.Visible = false; }
                 }
+                
             }
         }
         //****************************** Busqueda **************************************

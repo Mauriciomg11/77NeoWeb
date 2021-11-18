@@ -61,13 +61,13 @@
     height: 25px;
 }
 
-.GridCabecera {
+.GridCabecera1 {
     /*position: absolute;*/
     position: relative;
     top: expression(this.offsetParent.scrollTop-3);
-    background-color: #0000ff;
+   background-color: #0000ff;
     font-weight: bold;
-    color: white;
+    color: white; 
     text-align: center;
     height: 25px;
 }
