@@ -1146,7 +1146,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     List<ClsTypCotizacion> ObjDetCot = new List<ClsTypCotizacion>();
                     foreach (GridViewRow Row in GrdDet.Rows)
                     {
-                        string borr = GrdDet.DataKeys[Row.RowIndex].Values["ObservacionesDC"].ToString().Trim();
                         string VbPn = (Row.FindControl("DdlPN") as DropDownList).Text.Trim();
                         string VbPn_Ant = GrdDet.DataKeys[Row.RowIndex].Values["PN"].ToString().Trim();
                         if (!VbPn.Equals(VbPn_Ant)) { VbAccionDet = "UPD"; }
@@ -1469,7 +1468,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 string VbTxtSql = " EXEC PNTLL_Cotizac 2,@Tpc,@Prmtr,'','','',@Opc,0,0,0,@Idm, @ICC,'01-01-01','02-01-01','03-01-01'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
-                {
+                {                   
                     SC.Parameters.AddWithValue("@Tpc", ViewState["TipoCotiza"]);
                     SC.Parameters.AddWithValue("@Prmtr", TxtBusqueda.Text.Trim());
                     SC.Parameters.AddWithValue("@Opc", VbOpcion.Trim());
@@ -1678,7 +1677,10 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected void GrdDet_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("AddNew"))
-            { BindModalBusqCot(); ScriptManager.RegisterStartupScript(Page, Page.GetType(), "ModalBusqSP", "$('#ModalBusqSP').modal();", true); }
+            { BindModalBusqCot(); 
+                //ScriptManager.RegisterStartupScript(Page, Page.GetType(), "ModalBusqSP", "$('#ModalBusqSP').modal();", true);
+                ScriptManager.RegisterStartupScript((sender as Control), this.GetType(), "Popup", "ShowPopup();", true);
+            }
         }
         protected void GrdDet_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {

@@ -184,6 +184,7 @@
     <Content Include="Forms\InventariosCompras\FrmCuadroComparativoCotiza.aspx" />
     <Content Include="Forms\InventariosCompras\FrmElemento.aspx" />
     <Content Include="Forms\InventariosCompras\FrmModPnTotal.aspx" />
+    <Content Include="Forms\InventariosCompras\FrmOrdenCompra.aspx" />
     <Content Include="Forms\InventariosCompras\FrmReferencia.aspx" />
     <Content Include="Forms\Almacen\FrmReserva.aspx" />
     <Content Include="Forms\InventariosCompras\FrmCotizacion.aspx" />
@@ -284,6 +285,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataSet1.cs">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DataSet11.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -737,6 +741,13 @@
     <Compile Include="Forms\InventariosCompras\FrmModPnTotal.aspx.designer.cs">
       <DependentUpon>FrmModPnTotal.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\InventariosCompras\FrmOrdenCompra.aspx.cs">
+      <DependentUpon>FrmOrdenCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\FrmOrdenCompra.aspx.designer.cs">
+      <DependentUpon>FrmOrdenCompra.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\InventariosCompras\FrmReferencia.aspx.cs">
       <DependentUpon>FrmReferencia.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -976,6 +987,7 @@
     <Compile Include="Prg\PrgIngenieria\CsTypPasosOT.cs" />
     <Compile Include="Prg\PrgIngenieria\CsTypExportarIdioma.cs" />
     <Compile Include="Prg\PrgAlmacen\ClsTypAsignaciones.cs" />
+    <Compile Include="Prg\PrgLogistica\ClsTypCompra.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypCotizacion.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypReparacion.cs" />
     <Compile Include="Prg\PrgMro\ClsTypSolicitudPedidoPPT.cs" />
@@ -1032,6 +1044,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Report\Logistica\Inf_ImprsOrdenCompra.rdlc" />
     <EmbeddedResource Include="Report\Logistica\Inf_ReparacionStdr.rdlc" />
     <EmbeddedResource Include="Report\Manto\Inf_FrmReporteCO.rdlc" />
     <EmbeddedResource Include="Report\Ing\Advice.rdlc" />

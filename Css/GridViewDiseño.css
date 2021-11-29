@@ -61,7 +61,7 @@
     height: 25px;
 }
 
-.GridCabecera1 {
+.GridCabecera {
     /*position: absolute;*/
     position: relative;
     top: expression(this.offsetParent.scrollTop-3);

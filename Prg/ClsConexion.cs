@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
-using System.Data.Sql;
+using System.Data.SqlClient;
 
 namespace _77NeoWeb.prg
 {
@@ -260,7 +256,5 @@ namespace _77NeoWeb.prg
         public string GetUsSvr() { return "sa"; }//  "sa"
         public string GetPas() { return "admindemp"; }//"admindemp";
         public string GetIdm() { return "5"; }//  4 español | 5 ingles
-       
-       
     }
 }

@@ -736,7 +736,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// Debe ingresar la descripción en la opción otros.
                 ViewState["Validar"] = "N"; TxtOtros.Focus(); return;
             }
-
             if (TxtlPN.Text.Trim().Equals("") && TxtHK.Text.Trim().Equals(""))
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens19Repa'");
@@ -744,7 +743,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// El campo P/N es requerido.
                 ViewState["Validar"] = "N"; return;
             }
-
         }
         protected void BtnIngresar_Click(object sender, EventArgs e)
         {

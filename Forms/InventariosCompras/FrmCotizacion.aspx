@@ -100,6 +100,13 @@
             $('#<%=DdlLugarEntrg.ClientID%>').chosen();
             $('#<%=DdlMedioCot.ClientID%>').chosen();
         }
+        function ShowPopup() {
+            $('#ModalBusqSP').modal('show');
+            $('#ModalBusqSP').on('shown.bs.modal', function () {
+                document.getElementById('<%= TxtModalBusq.ClientID %>').focus();
+                document.getElementById('<%= TxtModalBusq.ClientID %>').select();
+            });
+        }
         $(':text').on("focus", function () {
             //here set in localStorage id of the textbox
             localStorage.setItem("focusItem", this.id);

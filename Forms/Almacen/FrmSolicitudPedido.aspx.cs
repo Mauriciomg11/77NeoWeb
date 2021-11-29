@@ -318,7 +318,7 @@ namespace _77NeoWeb.Forms.Almacen
                 DataTable DT = new DataTable();
                 if (ViewState["TipoAnt"].ToString().Trim().Equals("02"))// Repa
                 {
-                    DR = DSTDdl.Tables[1].Select("CodTipoSolPed IN ('','02')");
+                    DR = DSTDdl.Tables[1].Select("CodTipoSolPed IN ('02','03')");
                     if (IsIENumerableLleno(DR))
                     { DT = DR.CopyToDataTable(); }
                 }
@@ -525,8 +525,9 @@ namespace _77NeoWeb.Forms.Almacen
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DdlTipo.ToolTip = "";
             DdlPriord.Enabled = Edi;
-            if (!ViewState["TipoAnt"].ToString().Trim().Equals("02"))// Repa
-            { DdlTipo.Enabled = Edi; }
+            //if (!ViewState["TipoAnt"].ToString().Trim().Equals("02"))// Repa
+            //{ DdlTipo.Enabled = Edi; }
+            DdlTipo.Enabled = Edi;
             if (Accion.Equals("UPD"))
             {
                 if (ViewState["TieneCotiza"].ToString().Equals("S")) { DdlTipo.Enabled = false; }
