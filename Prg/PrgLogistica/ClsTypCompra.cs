@@ -10,7 +10,6 @@ namespace _77NeoWeb.Prg.PrgLogistica
 {
     public class ClsTypCompra
     {
-
         ClsConexion Cnx = new ClsConexion();
         static public string PMensj, PCodCompra, VbAccion;
         public string CodOrdenCompra { get; set; }
@@ -203,10 +202,10 @@ namespace _77NeoWeb.Prg.PrgLogistica
                         {
                             string VbUsu, VbPantalla, VbcatVer, VbcatAct;
                             VbUsu = System.Web.HttpContext.Current.Session["C77U"].ToString();
-                            VbPantalla = "Generar Cotizacion";
+                            VbPantalla = "Generar Compra";
                             VbcatVer = System.Web.HttpContext.Current.Session["77Version"].ToString();
                             VbcatAct = System.Web.HttpContext.Current.Session["77Act"].ToString();
-                            Cnx.UpdateErrorV2(VbUsu, VbPantalla, "ClsTypCotizacion", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+                            Cnx.UpdateErrorV2(VbUsu, VbPantalla, "ClsTypCompra", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                             transaction.Rollback();
                         }
                     }

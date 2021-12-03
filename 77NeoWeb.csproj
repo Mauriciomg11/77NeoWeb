@@ -189,6 +189,7 @@
     <Content Include="Forms\Almacen\FrmReserva.aspx" />
     <Content Include="Forms\InventariosCompras\FrmCotizacion.aspx" />
     <Content Include="Forms\InventariosCompras\FrmReparacion.aspx" />
+    <Content Include="Forms\InventariosCompras\Frm_Fclientes.aspx" />
     <Content Include="Forms\Manto\FrmAlertaCarryOver.aspx" />
     <Content Include="Forms\Manto\FrmDiferidos.aspx" />
     <Content Include="Forms\Manto\FrmIncoming.aspx" />
@@ -776,6 +777,13 @@
     <Compile Include="Forms\InventariosCompras\FrmReparacion.aspx.designer.cs">
       <DependentUpon>FrmReparacion.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\InventariosCompras\Frm_Fclientes.aspx.cs">
+      <DependentUpon>Frm_Fclientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\Frm_Fclientes.aspx.designer.cs">
+      <DependentUpon>Frm_Fclientes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Manto\FrmAlertaCarryOver.aspx.cs">
       <DependentUpon>FrmAlertaCarryOver.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -990,6 +998,7 @@
     <Compile Include="Prg\PrgLogistica\ClsTypCompra.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypCotizacion.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypReparacion.cs" />
+    <Compile Include="Prg\PrgLogistica\ClsTypTercero.cs" />
     <Compile Include="Prg\PrgMro\ClsTypSolicitudPedidoPPT.cs" />
     <Compile Include="Prg\PrgManto\ClsTypBodega.cs" />
     <Compile Include="Prg\PrgLogistica\ClsTypAsingarBodega.cs" />
