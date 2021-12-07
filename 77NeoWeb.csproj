@@ -132,6 +132,7 @@
     <Content Include="Forms\Configuracion\ControlPersonal\FrmAreaOrganizacional.aspx" />
     <Content Include="Forms\Configuracion\ControlPersonal\FrmCargo.aspx" />
     <Content Include="Forms\Configuracion\ControlPersonal\FrmPersona.aspx" />
+    <Content Include="Forms\Configuracion\ControlPersonal\TipoContrato.aspx" />
     <Content Include="Forms\Configuracion\FrmCierreContable.aspx" />
     <Content Include="Forms\Configuracion\MaestIngPrg\FrmCicloDiscosMotor.aspx" />
     <Content Include="Forms\Configuracion\MaestIngPrg\FrmContador.aspx" />
@@ -189,7 +190,9 @@
     <Content Include="Forms\Almacen\FrmReserva.aspx" />
     <Content Include="Forms\InventariosCompras\FrmCotizacion.aspx" />
     <Content Include="Forms\InventariosCompras\FrmReparacion.aspx" />
+    <Content Include="Forms\InventariosCompras\Frm_FCentroCostos.aspx" />
     <Content Include="Forms\InventariosCompras\Frm_Fclientes.aspx" />
+    <Content Include="Forms\InventariosCompras\Frm_FMonedas.aspx" />
     <Content Include="Forms\Manto\FrmAlertaCarryOver.aspx" />
     <Content Include="Forms\Manto\FrmDiferidos.aspx" />
     <Content Include="Forms\Manto\FrmIncoming.aspx" />
@@ -206,6 +209,7 @@
     <Content Include="Forms\MRO\FrmReparacionMayor.aspx" />
     <Content Include="Forms\MRO\FrmSalidaConsignacion.aspx" />
     <Content Include="Forms\MRO\FrmServiciosSinCrear.aspx" />
+    <Content Include="Forms\Operaciones\FrmOperacionLicencia.aspx" />
     <Content Include="Forms\Seguridad\FrmCambioPass.aspx" />
     <Content Include="Forms\Seguridad\FrmConfigPantalla.aspx" />
     <Content Include="FrmAcceso.aspx" />
@@ -377,6 +381,13 @@
     </Compile>
     <Compile Include="Forms\Configuracion\ControlPersonal\FrmPersona.aspx.designer.cs">
       <DependentUpon>FrmPersona.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Configuracion\ControlPersonal\TipoContrato.aspx.cs">
+      <DependentUpon>TipoContrato.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Configuracion\ControlPersonal\TipoContrato.aspx.designer.cs">
+      <DependentUpon>TipoContrato.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Configuracion\FrmCierreContable.aspx.cs">
       <DependentUpon>FrmCierreContable.aspx</DependentUpon>
@@ -777,12 +788,26 @@
     <Compile Include="Forms\InventariosCompras\FrmReparacion.aspx.designer.cs">
       <DependentUpon>FrmReparacion.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\InventariosCompras\Frm_FCentroCostos.aspx.cs">
+      <DependentUpon>Frm_FCentroCostos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\Frm_FCentroCostos.aspx.designer.cs">
+      <DependentUpon>Frm_FCentroCostos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\InventariosCompras\Frm_Fclientes.aspx.cs">
       <DependentUpon>Frm_Fclientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Forms\InventariosCompras\Frm_Fclientes.aspx.designer.cs">
       <DependentUpon>Frm_Fclientes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\Frm_FMonedas.aspx.cs">
+      <DependentUpon>Frm_FMonedas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\Frm_FMonedas.aspx.designer.cs">
+      <DependentUpon>Frm_FMonedas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Manto\FrmAlertaCarryOver.aspx.cs">
       <DependentUpon>FrmAlertaCarryOver.aspx</DependentUpon>
@@ -895,6 +920,13 @@
     </Compile>
     <Compile Include="Forms\MRO\FrmServiciosSinCrear.aspx.designer.cs">
       <DependentUpon>FrmServiciosSinCrear.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Operaciones\FrmOperacionLicencia.aspx.cs">
+      <DependentUpon>FrmOperacionLicencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Operaciones\FrmOperacionLicencia.aspx.designer.cs">
+      <DependentUpon>FrmOperacionLicencia.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Seguridad\FrmCambioPass.aspx.cs">
       <DependentUpon>FrmCambioPass.aspx</DependentUpon>
@@ -1043,6 +1075,7 @@
     <None Include="Properties\PublishProfiles\77NeoWeb - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\77NeoWeb - Web Deploy1.pubxml" />
     <None Include="Properties\PublishProfiles\77NeoWeb - Web Deploy2.pubxml" />
+    <None Include="Properties\PublishProfiles\77NeoWeb.pubxml" />
     <None Include="Properties\PublishProfiles\77NeoWeb26Jul2020.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">

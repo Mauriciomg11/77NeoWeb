@@ -1,17 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmCategoriaMA.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.InventarioLogistica.FrmCategoriaMA" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmOperacionLicencia.aspx.cs" Inherits="_77NeoWeb.Forms.Operaciones.FrmOperacionLicencia" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <title>TA</title>
-    <style type="text/css">
-        .DivGrid {
-            position: absolute;
-            width: 80%;
-            height: 600px;
-            top: 15%;
-            left: 28%;
-            margin-top: 0px;
-        }
-
+       <style type="text/css">
         .CentrarContenedor {
             /*vertical-align: top;*/
             background: #e0e0e0;
@@ -47,13 +36,29 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
+       <script type="text/javascript">  
+           function Decimal(evt) {
+               var charCode = (evt.which) ? evt.which : event.keyCode
+               if (charCode == 46) {
+                   var inputValue = $("#inputfield").val()
+                   if (inputValue.indexOf('.') < 1) {
+                       return true;
+                   }
+                   return false;
+               }
+               if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                   return false;
+               }
+               return true;
+           }
+       </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1>
+      <h1>
         <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
-    <asp:UpdatePanel ID="UpPanel" runat="server">
+      <asp:UpdatePanel ID="UpPanel" runat="server">
         <ContentTemplate>
             <div class="CentrarContenedor DivMarco">
                 <div class="CentrarTable">
@@ -69,55 +74,49 @@
                     </table>
                      <div class="row ">
                          <div class="col-sm-6 CentrarBoton ">
-                    <%--<div class="DivGrid DivContendorGrid">--%>
-                        <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdCategoriaMA, CodCategoriaMA"
-                            CssClass="DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
+                        <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodIdLicencia, CodLicencia"
+                            CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                             OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating"
                             OnRowCancelingEdit="GrdDatos_RowCancelingEdit" OnRowDeleting="GrdDatos_RowDeleting" OnRowDataBound="GrdDatos_RowDataBound"
                             OnPageIndexChanging="GrdDatos_PageIndexChanging">
                             <Columns>
                                 <asp:TemplateField HeaderText="Cód">
                                     <ItemTemplate>
-                                        <asp:Label Text='<%# Eval("CodCategoriaMA") %>' runat="server" Width="50px" />
+                                        <asp:Label Text='<%# Eval("CodLicencia") %>' runat="server" Width="50px" />
                                     </ItemTemplate>
+                                     <EditItemTemplate>
+                                        <asp:TextBox ID="TxtCod" Text='<%# Eval("CodLicencia") %>' runat="server" MaxLength="15" Width="100%" />
+                                    </EditItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:TextBox ID="TxtCodPP" runat="server" MaxLength="15" Width="100%" />
+                                    </FooterTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Descripc" HeaderStyle-Width="40%">
                                     <ItemTemplate>
                                         <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" />
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="TxtDesc" Text='<%# Eval("Descripcion") %>' runat="server" MaxLength="200" Width="100%" />
+                                        <asp:TextBox ID="TxtDesc" Text='<%# Eval("Descripcion") %>' runat="server" MaxLength="50" Width="100%" />
                                     </EditItemTemplate>
                                     <FooterTemplate>
-                                        <asp:TextBox ID="TxtDescPP" runat="server" MaxLength="200" Width="100%" />
+                                        <asp:TextBox ID="TxtDescPP" runat="server" MaxLength="50" Width="100%" />
                                     </FooterTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Químic">
+                                </asp:TemplateField>                             
+                                <asp:TemplateField HeaderText="valor hora">
                                     <ItemTemplate>
-                                        <asp:CheckBox ID="CkbQuimP" Checked='<%# Eval("QuimicoCMA").ToString()=="1" ? true : false %>' runat="server" Enabled="false" />
+                                         <asp:Label Text='<%# Eval("ValorHoraTL") %>' runat="server" Width="100%" />
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:CheckBox ID="CkbQuim" Checked='<%# Eval("QuimicoCMA").ToString()=="1" ? true : false %>' runat="server" />
+                                           <asp:TextBox ID="TxtVlrH" Text='<%# Eval("ValorHoraTL") %>' runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);"/>
                                     </EditItemTemplate>
                                     <FooterTemplate>
-                                        <asp:CheckBox ID="CkbQuimPP" runat="server" />
-                                    </FooterTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Acti">
-                                    <ItemTemplate>
-                                        <asp:CheckBox ID="CkbActP" Checked='<%# Eval("Activo").ToString()=="1" ? true : false %>' runat="server" Enabled="false" />
-                                    </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <asp:CheckBox ID="CkbAct" Checked='<%# Eval("Activo").ToString()=="1" ? true : false %>' runat="server" />
-                                    </EditItemTemplate>
-                                    <FooterTemplate>
-                                        <asp:CheckBox ID="CkbActPP" runat="server" Checked="true" Enabled="false" />
+                                          <asp:TextBox ID="TxtVlrHPP" runat="server" Width="100%" TextMode="Number"  step="0.01" onkeypress="return Decimal(event);"/>
                                     </FooterTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField FooterStyle-Width="10%">
                                     <ItemTemplate>
                                         <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />
-                                        <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
+                                       <%-- <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />--%>
                                     </ItemTemplate>
                                     <EditItemTemplate>
                                         <asp:ImageButton ID="IbtUpdate" CssClass="BotonUpdateGrid" ImageUrl="~/images/Save.png" runat="server" CommandName="Update" ToolTip="Actualizar" />
@@ -134,7 +133,6 @@
                             <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                             <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                         </asp:GridView>
-                   <%-- </div>--%>
                 </div></div></div>
             </div>
         </ContentTemplate>

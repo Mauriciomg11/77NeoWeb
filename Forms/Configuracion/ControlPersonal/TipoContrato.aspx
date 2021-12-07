@@ -1,17 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmCategoriaMA.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.InventarioLogistica.FrmCategoriaMA" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="TipoContrato.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.ControlPersonal.TipoContrato" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <title>TA</title>
-    <style type="text/css">
-        .DivGrid {
-            position: absolute;
-            width: 80%;
-            height: 600px;
-            top: 15%;
-            left: 28%;
-            margin-top: 0px;
-        }
-
+      <style type="text/css">
         .CentrarContenedor {
             /*vertical-align: top;*/
             background: #e0e0e0;
@@ -49,11 +38,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1>
+     <h1>
         <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
-    <asp:UpdatePanel ID="UpPanel" runat="server">
+       <asp:UpdatePanel ID="UpPanel" runat="server">
         <ContentTemplate>
             <div class="CentrarContenedor DivMarco">
                 <div class="CentrarTable">
@@ -69,16 +58,15 @@
                     </table>
                      <div class="row ">
                          <div class="col-sm-6 CentrarBoton ">
-                    <%--<div class="DivGrid DivContendorGrid">--%>
-                        <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdCategoriaMA, CodCategoriaMA"
-                            CssClass="DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
-                            OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating"
-                            OnRowCancelingEdit="GrdDatos_RowCancelingEdit" OnRowDeleting="GrdDatos_RowDeleting" OnRowDataBound="GrdDatos_RowDataBound"
-                            OnPageIndexChanging="GrdDatos_PageIndexChanging">
+                        <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodTipoContrPer"
+                            CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
+                            OnRowCommand="GrdDatos_RowCommand"  OnRowEditing="GrdDatos_RowEditing"  OnRowUpdating="GrdDatos_RowUpdating"
+                            OnRowCancelingEdit="GrdDatos_RowCancelingEdit"  OnRowDeleting="GrdDatos_RowDeleting"  OnRowDataBound="GrdDatos_RowDataBound"
+                            OnPageIndexChanging="GrdDatos_PageIndexChanging" >
                             <Columns>
                                 <asp:TemplateField HeaderText="Cód">
                                     <ItemTemplate>
-                                        <asp:Label Text='<%# Eval("CodCategoriaMA") %>' runat="server" Width="50px" />
+                                        <asp:Label Text='<%# Eval("CodTipoContrPer") %>' runat="server" Width="50px" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Descripc" HeaderStyle-Width="40%">
@@ -91,18 +79,7 @@
                                     <FooterTemplate>
                                         <asp:TextBox ID="TxtDescPP" runat="server" MaxLength="200" Width="100%" />
                                     </FooterTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Químic">
-                                    <ItemTemplate>
-                                        <asp:CheckBox ID="CkbQuimP" Checked='<%# Eval("QuimicoCMA").ToString()=="1" ? true : false %>' runat="server" Enabled="false" />
-                                    </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <asp:CheckBox ID="CkbQuim" Checked='<%# Eval("QuimicoCMA").ToString()=="1" ? true : false %>' runat="server" />
-                                    </EditItemTemplate>
-                                    <FooterTemplate>
-                                        <asp:CheckBox ID="CkbQuimPP" runat="server" />
-                                    </FooterTemplate>
-                                </asp:TemplateField>
+                                </asp:TemplateField>                             
                                 <asp:TemplateField HeaderText="Acti">
                                     <ItemTemplate>
                                         <asp:CheckBox ID="CkbActP" Checked='<%# Eval("Activo").ToString()=="1" ? true : false %>' runat="server" Enabled="false" />
@@ -134,7 +111,6 @@
                             <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                             <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                         </asp:GridView>
-                   <%-- </div>--%>
                 </div></div></div>
             </div>
         </ContentTemplate>
