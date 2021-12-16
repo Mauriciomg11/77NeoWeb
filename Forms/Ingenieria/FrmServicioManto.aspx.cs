@@ -51,8 +51,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Session["P@$"] = Cnx.GetPas();
                     Session["N77U"] = Session["D[BX"];
                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
-                    Session["!dC!@"] = 21;
-                    Session["77IDM"] = "4"; // 4 español | 5 ingles  */
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
                 }
             }
             if (!IsPostBack)
@@ -73,6 +73,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 BindDataAll();
                 GrdAeron.Visible = true;
                 ViewState["TipoAccion"] = "";
+                MultVw.ActiveViewIndex = 0;
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
@@ -98,7 +99,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             if (ClsP.GetIngresar() == 0)
             {
                 ViewState["VblIngMS"] = 0;
-                IbtAdd.Visible = false;
+                IbtAdd.Visible = false; BtnConfigContdrInic.Visible = false;
                 GrdAeron.ShowFooter = false;
                 GrdPN.ShowFooter = false;
                 GrdHKAsig.ShowFooter = false;
@@ -292,6 +293,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ViewState["OrdenInf"] = bO.Equals("OrdenInf") ? bT : ViewState["OrdenInf"];
                     ViewState["ContInf2"] = bO.Equals("ContInf2") ? bT : ViewState["ContInf2"];
                     ViewState["VlrInf"] = bO.Equals("VlrInf") ? bT : ViewState["VlrInf"];
+                    // **************** Configurar contador inicial HK  ***********************
+                    BtnConfigContdrInic.Text = bO.Equals("BtnConfigContdrInic") ? bT : BtnConfigContdrInic.Text;
+                    LblTitConfgIniCntd.Text = bO.Equals("BtnConfigContdrInic") ? bT : LblTitConfgIniCntd.Text;
+                    IbtCloseConfIniCF.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCloseConfIniCF.ToolTip;
+                    GrdConfInic.Columns[0].HeaderText = bO.Equals("GrdCont") ? bT : GrdConfInic.Columns[0].HeaderText;
+                    GrdConfInic.Columns[1].HeaderText = bO.Equals("GrdFrec") ? bT : GrdConfInic.Columns[1].HeaderText;
+                    GrdConfInic.Columns[2].HeaderText = bO.Equals("GrdDias") ? bT : GrdConfInic.Columns[2].HeaderText;
                 }
                 DataRow[] Result = Idioma.Select("Objeto= 'IbtDeleteOnCl'");
                 foreach (DataRow row in Result)
@@ -587,17 +595,19 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
                 DataRow[] Result;
-
+                string VbCatalogo = Session["PllaSrvManto"].ToString().Trim();
                 if (Accion.Equals("UPD"))
                 {
                     Cnx.SelecBD();
                     using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                     {
+                        string borr = Session["!dC!@"].ToString();
+
                         string VbTxtSql = "EXEC SP_PANTALLA__Servicio_Manto2 5,@Catlgo,'','','','',0,0,@Idm,@ICC,'01-01-01','01-01-01','01-01-01'";
                         sqlConB.Open();
                         using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                         {
-                            SC.Parameters.AddWithValue("@Catlgo", Session["PllaSrvManto"]);
+                            SC.Parameters.AddWithValue("@Catlgo", VbCatalogo);
                             SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                             SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             using (SqlDataAdapter SDA = new SqlDataAdapter())
@@ -618,6 +628,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                     DSTDet.Tables[9].TableName = "HKxSvc";
                                     DSTDet.Tables[10].TableName = "PNDdlGrdPN";
                                     DSTDet.Tables[11].TableName = "MaxCsctvo";
+                                    DSTDet.Tables[12].TableName = "ConfIniCntdrHk";
                                     ViewState["DSTDet"] = DSTDet;
                                 }
                             }
@@ -629,7 +640,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DataTable DTBusq = new DataTable();
                 string VbCodAnt = @Prmtr;
                 DTBusq = DSTDet.Tables[0].Clone();
-                Result = DSTDet.Tables[0].Select("BadPlan='" + Tipo.Trim() + "' AND Catalogo='" + Session["PllaSrvManto"] + "'");
+                Result = DSTDet.Tables[0].Select("BadPlan='" + Tipo.Trim() + "' AND Catalogo='" + VbCatalogo + "'");
                 foreach (DataRow SDR in Result)
                 { DTBusq.ImportRow(SDR); }
 
@@ -814,6 +825,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlTipo.Text = "0";
             TxtEstadoOT.Text = "";
             TxtMatric.Text = "";
+            BtnConfigContdrInic.Visible = false;
         }
         protected void ValidarSvcManto(string Accion)
         {
@@ -958,6 +970,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 BindDPN();
                 BindDSN();
                 DdlBusq.SelectedValue = "0";
+                CkbVisuStat.Checked = true;
                 Result = Idioma.Select("Objeto= 'IbtAddOnCl'");
                 foreach (DataRow row in Result)
                 { IbtAdd.OnClientClick = row["Texto"].ToString().Trim(); };
@@ -1139,6 +1152,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ActivarBotones(true, true, true, true, true);
                     ActivarCampos(false, false, "Modificar");
                     IbtUpdate.OnClientClick = "";
+                    BindDTraerdatos(TxtId.Text.ToString(), ViewState["TIPO"].ToString().Equals("A") ? "" : "P", "UPD");
+                    switch (ViewState["TIPO"].ToString())
+                    {
+                        case "A":
+                            BindDAK();
+                            break;
+                        case "P":
+                        default:
+                            BindDPN();
+                            break;
+                    }
                     BindDataAll();
                 }
                 catch (Exception Ex)
@@ -1369,7 +1393,6 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
             Page.Title = ViewState["PageTit"].ToString();
         }
-
         // ****************Detalle Aeronave ***********************
         protected void BindDAK()
         {
@@ -1501,7 +1524,11 @@ namespace _77NeoWeb.Forms.Ingenieria
             GrdAeron.Visible = true;
             GrdPN.Visible = false;
             GrdSN.Visible = false;
+            LblAkAsing.Visible = false;
             GrdHKAsig.Visible = false;
+
+            if ((int)ViewState["VblIngMS"] == 1)
+            { BtnConfigContdrInic.Visible = true; }
             IbtAdd.Enabled = true;
             LimpiarCampos();
             BindDataAll();
@@ -2120,7 +2147,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             GrdAeron.Visible = false;
             GrdPN.Visible = true;
             GrdSN.Visible = false;
+            LblAkAsing.Visible = true;
             GrdHKAsig.Visible = true;
+            BtnConfigContdrInic.Visible = false;
             IbtAdd.Enabled = true;
             if (ViewState["TIPO"].ToString().Equals("A")) { LimpiarCampos(); BindDTraerdatos("0", "P", "SEL"); }
             else { BindDTraerdatos(DdlBusq.Text, "P", "SEL"); }
@@ -2562,7 +2591,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             GrdAeron.Visible = false;
             GrdPN.Visible = false;
             GrdSN.Visible = true;
+            LblAkAsing.Visible = true;
             GrdHKAsig.Visible = true;
+            BtnConfigContdrInic.Visible = false;
             IbtAdd.Enabled = false;
             if (ViewState["TIPO"].ToString().Equals("A")) { LimpiarCampos(); BindDTraerdatos("0", "P", "SEL"); }
             else { BindDTraerdatos(DdlBusq.Text, "P", "SEL"); }
@@ -4268,6 +4299,288 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ScriptManager.RegisterClientScriptBlock(this.UpPnlInforme, UpPnlInforme.GetType(), "IdntificadorBloqueScript", "alert('error')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Exportar Excel", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
+        }
+        // **************** Configurar contador inicial HK  ***********************
+        protected void BtnConfigContdrInic_Click(object sender, EventArgs e)
+        {
+            if (TxtId.Text.Equals(""))
+            { return; }
+            MultVw.ActiveViewIndex = 1; BindDConfIniCntdrHK();
+        }
+        protected void BindDConfIniCntdrHK()
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            DSTDet = (DataSet)ViewState["DSTDet"];
+            DataRow[] Result;
+            DataTable DT = new DataTable();
+            DT = DSTDet.Tables[12].Clone();
+            string VbId = TxtId.Text.Equals("") ? "0" : TxtId.Text;
+            Result = DSTDet.Tables[12].Select("IdSrvMantoCntdrSMHK = " + VbId);
+            foreach (DataRow DR in Result)
+            {
+                DT.ImportRow(DR);
+            }
+            if (DT.Rows.Count > 0)
+            {
+                DataView DV = DT.DefaultView;
+                DV.Sort = "CodContador";
+                DT = DV.ToTable();
+                GrdConfInic.DataSource = DT;
+                GrdConfInic.DataBind();
+            }
+            else
+            {
+                DT.Rows.Add(DT.NewRow());
+                GrdConfInic.DataSource = DT;
+                GrdConfInic.DataBind();
+                GrdConfInic.Rows[0].Cells.Clear();
+                GrdConfInic.Rows[0].Cells.Add(new TableCell());
+                Result = Idioma.Select("Objeto= 'SinRegistros'");
+                foreach (DataRow row in Result)
+                { GrdConfInic.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
+                GrdConfInic.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+            }
+        }
+        protected void IbtCloseConfIniCF_Click(object sender, ImageClickEventArgs e)
+        { MultVw.ActiveViewIndex = 0; }
+        protected void GrdConfInic_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            PerfilesGrid();
+            if (e.CommandName.Equals("AddNew"))
+            {
+                if (DdlModel.Text.Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= 'Mens33SM'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//  El servicio debe tener un modelo asignado.
+                    return;
+                }
+                string VbContdr = (GrdConfInic.FooterRow.FindControl("TxtCodCntdrPP") as TextBox).Text.Trim();
+                if (VbContdr.Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= 'Mens08SM'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//  Debe ingresar un contador.
+                    return;
+                }
+                double VbFrec = Convert.ToDouble((GrdConfInic.FooterRow.FindControl("TxtFrecPP") as TextBox).Text.Trim().Equals("") ? "0" : (GrdConfInic.FooterRow.FindControl("TxtFrecPP") as TextBox).Text.Trim());
+                int VbFrecD = Convert.ToInt32((GrdConfInic.FooterRow.FindControl("TxtFrecDPP") as TextBox).Text.Trim().Equals("") ? "0" : (GrdConfInic.FooterRow.FindControl("TxtFrecDPP") as TextBox).Text.Trim());
+                if (VbFrec + VbFrecD <= 0)
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= 'Mens10SM'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//  Debe ingresar una frecuencia.
+                    return;
+                }
+
+                Cnx.SelecBD();
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+                {
+                    sqlCon.Open();
+                    using (SqlTransaction Transac = sqlCon.BeginTransaction())
+                    {
+                        string VBQuery = "EXEC SP_TablasIngenieria 18,@Cntd,@US, '','','','','','','INSERT', @Id,@IdSvc,@Frc,@FrcD,0,@ICC,NULL,'02-01-1','03-01-1'";
+                        using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
+                        {
+                            SC.Parameters.AddWithValue("@Cntd", VbContdr.ToUpper());
+                            SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                            SC.Parameters.AddWithValue("@Id", 0);
+                            SC.Parameters.AddWithValue("@IdSvc", TxtId.Text.Equals("") ? "0" : TxtId.Text.Trim());
+                            SC.Parameters.AddWithValue("@Frc", VbFrec);
+                            SC.Parameters.AddWithValue("@FrcD", VbFrecD);
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                            try
+                            {
+                                var Mensj = SC.ExecuteScalar();
+                                if (!Mensj.ToString().Trim().Equals(""))
+                                {
+                                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                                    foreach (DataRow row in Result)
+                                    { Mensj = row["Texto"].ToString().Trim(); }
+                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                                    Transac.Rollback();
+                                    return;
+                                }
+                                Transac.Commit();
+                                string VbTpo = ViewState["TIPO"].ToString().Equals("A") ? "" : "P";
+                                BindDTraerdatos(TxtCod.Text.Trim(), VbTpo, "UPD");
+                                BindDConfIniCntdrHK(); BindDAK();
+                            }
+                            catch (Exception ex)
+                            {
+                                Transac.Rollback();
+                                DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
+                                foreach (DataRow row in Result)
+                                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
+                                Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "INSERT", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        protected void GrdConfInic_RowEditing(object sender, GridViewEditEventArgs e)
+        { GrdConfInic.EditIndex = e.NewEditIndex; BindDConfIniCntdrHK(); }
+        protected void GrdConfInic_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            PerfilesGrid();
+            string VbContdr = GrdConfInic.DataKeys[e.RowIndex].Values["CodContador"].ToString().Trim();
+            double VbFrec = Convert.ToDouble((GrdConfInic.Rows[e.RowIndex].FindControl("TxtFrec") as TextBox).Text.Trim().Equals("") ? "0" : (GrdConfInic.Rows[e.RowIndex].FindControl("TxtFrec") as TextBox).Text.Trim());
+            int VbFrecD = Convert.ToInt32((GrdConfInic.Rows[e.RowIndex].FindControl("TxtFrecD") as TextBox).Text.Trim().Equals("") ? "0" : (GrdConfInic.Rows[e.RowIndex].FindControl("TxtFrecD") as TextBox).Text.Trim());
+            if (VbFrec + VbFrecD <= 0)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens10SM'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//  Debe ingresar una frecuencia.
+                return;
+            }
+
+            Cnx.SelecBD();
+            using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+            {
+                sqlCon.Open();
+                using (SqlTransaction Transac = sqlCon.BeginTransaction())
+                {
+
+                    string VBQuery = "EXEC SP_TablasIngenieria 18,@Cntd,@US, '','','','','','','UPDATE', @Id,@IdSvc,@Frc,@FrcD,0,@ICC,NULL,'02-01-1','03-01-1'";
+                    using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
+                    {
+                        SC.Parameters.AddWithValue("@Cntd", VbContdr.ToUpper());
+                        SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                        SC.Parameters.AddWithValue("@Id", GrdConfInic.DataKeys[e.RowIndex].Values["IdConfIni"].ToString());
+                        SC.Parameters.AddWithValue("@IdSvc", TxtId.Text.Equals("") ? "0" : TxtId.Text.Trim());
+                        SC.Parameters.AddWithValue("@Frc", VbFrec);
+                        SC.Parameters.AddWithValue("@FrcD", VbFrecD);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        try
+                        {
+                            var Mensj = SC.ExecuteScalar();
+                            if (!Mensj.ToString().Trim().Equals(""))
+                            {
+                                DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                                foreach (DataRow row in Result)
+                                { Mensj = row["Texto"].ToString().Trim(); }
+                                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                                Transac.Rollback();
+                                return;
+                            }
+                            Transac.Commit();
+                            GrdConfInic.EditIndex = -1;
+                            string VbTpo = ViewState["TIPO"].ToString().Equals("A") ? "" : "P";
+                            BindDTraerdatos(TxtCod.Text.Trim(), VbTpo, "UPD");
+                            BindDConfIniCntdrHK(); BindDAK();
+                        }
+                        catch (Exception ex)
+                        {
+                            Transac.Rollback();
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "UPDATE", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                        }
+                    }
+                }
+            }
+        }
+        protected void GrdConfInic_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        { GrdConfInic.EditIndex = -1; BindDConfIniCntdrHK(); }
+        protected void GrdConfInic_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            try
+            {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                PerfilesGrid();
+
+                Cnx.SelecBD();
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+                {
+                    sqlCon.Open();
+                    using (SqlTransaction Transac = sqlCon.BeginTransaction())
+                    {
+                        string VBQuery = "EXEC SP_TablasIngenieria 18,@Cntd,@US, '','','','','','','DELETE', @Id,@IdSvc,0,0,0,@ICC,'01-01-01','02-01-1','03-01-1'";
+
+                        using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
+                        {
+                            SC.Parameters.AddWithValue("@Cntd", GrdConfInic.DataKeys[e.RowIndex].Values["CodContador"].ToString());
+                            SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                            SC.Parameters.AddWithValue("@Id", GrdConfInic.DataKeys[e.RowIndex].Values["IdConfIni"].ToString());
+                            SC.Parameters.AddWithValue("@IdSvc", TxtId.Text.Equals("") ? "0" : TxtId.Text.Trim());
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                            var Mensj = SC.ExecuteScalar();
+                            if (!Mensj.ToString().Trim().Equals(""))
+                            {
+                                DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                                foreach (DataRow row in Result)
+                                { Mensj = row["Texto"].ToString().Trim(); }
+                                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                                Transac.Rollback();
+                                return;
+                            }
+                            Transac.Commit();
+                            string VbTpo = ViewState["TIPO"].ToString().Equals("A") ? "" : "P";
+                            BindDTraerdatos(TxtCod.Text.Trim(), VbTpo, "UPD");
+                            BindDConfIniCntdrHK();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrEli'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.UpPnlRF, UpPnlRF.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                //  Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE Recurso", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
+        }
+        protected void GrdConfInic_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            PerfilesGrid();
+            if (e.Row.RowType == DataControlRowType.Footer)
+            {              
+                ImageButton IbtAddNew = (e.Row.FindControl("IbtAddNew") as ImageButton);
+                IbtAddNew.Enabled = true;
+                DataRow[] Result = Idioma.Select("Objeto= 'IbtAddNew'");
+                foreach (DataRow row in Result)
+                { IbtAddNew.ToolTip = row["Texto"].ToString().Trim(); }               
+            }
+            if ((e.Row.RowState & DataControlRowState.Edit) > 0)
+            {
+                ImageButton IbtUpdate = (e.Row.FindControl("IbtUpdate") as ImageButton);
+                DataRow[] Result = Idioma.Select("Objeto= 'IbtUpdate'");
+                foreach (DataRow row in Result)
+                { IbtUpdate.ToolTip = row["Texto"].ToString().Trim(); }
+                ImageButton IbtCancel = (e.Row.FindControl("IbtCancel") as ImageButton);
+                Result = Idioma.Select("Objeto= 'IbtCancel'");
+                foreach (DataRow row in Result)
+                { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
+            }
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+
+
+                ImageButton imgE = e.Row.FindControl("IbtEdit") as ImageButton;
+                ImageButton imgD = e.Row.FindControl("IbtDelete") as ImageButton;
+                if (imgE != null)
+                {
+                    imgE.Enabled = true;
+                    DataRow[] Result1 = Idioma.Select("Objeto='IbtEdit'");
+                    foreach (DataRow RowIdioma in Result1)
+                    { imgE.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                }
+                if (imgD != null)
+                {
+                    DataRow[] Result = Idioma.Select("Objeto='IbtDelete'");
+                    foreach (DataRow RowIdioma in Result)
+                    { imgD.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                    Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
+                    foreach (DataRow row in Result)
+                    { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                }
             }
         }
     }

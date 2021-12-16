@@ -190,6 +190,7 @@
     <Content Include="Forms\Almacen\FrmReserva.aspx" />
     <Content Include="Forms\InventariosCompras\FrmCotizacion.aspx" />
     <Content Include="Forms\InventariosCompras\FrmReparacion.aspx" />
+    <Content Include="Forms\InventariosCompras\FrmReportesLogistica.aspx" />
     <Content Include="Forms\InventariosCompras\Frm_FCentroCostos.aspx" />
     <Content Include="Forms\InventariosCompras\Frm_Fclientes.aspx" />
     <Content Include="Forms\InventariosCompras\Frm_FMonedas.aspx" />
@@ -787,6 +788,13 @@
     </Compile>
     <Compile Include="Forms\InventariosCompras\FrmReparacion.aspx.designer.cs">
       <DependentUpon>FrmReparacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\FrmReportesLogistica.aspx.cs">
+      <DependentUpon>FrmReportesLogistica.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\FrmReportesLogistica.aspx.designer.cs">
+      <DependentUpon>FrmReportesLogistica.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\InventariosCompras\Frm_FCentroCostos.aspx.cs">
       <DependentUpon>Frm_FCentroCostos.aspx</DependentUpon>

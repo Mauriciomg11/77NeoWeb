@@ -24,6 +24,24 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label TitForm;
 
         /// <summary>
+        /// Control MultVw.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.MultiView MultVw;
+
+        /// <summary>
+        /// Control Vw0Datos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.View Vw0Datos;
+
+        /// <summary>
         /// Control PnlCampos.
         /// </summary>
         /// <remarks>
@@ -202,6 +220,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtDesc;
+
+        /// <summary>
+        /// Control BtnConfigContdrInic.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnConfigContdrInic;
 
         /// <summary>
         /// Control LblAkAsing.
@@ -850,5 +877,41 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Microsoft.Reporting.WebForms.ReportViewer RprvSvcActivos;
+
+        /// <summary>
+        /// Control Vw1ConfigIniCntdrHk.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.View Vw1ConfigIniCntdrHk;
+
+        /// <summary>
+        /// Control LblTitConfgIniCntd.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblTitConfgIniCntd;
+
+        /// <summary>
+        /// Control IbtCloseConfIniCF.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton IbtCloseConfIniCF;
+
+        /// <summary>
+        /// Control GrdConfInic.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GrdConfInic;
     }
 }

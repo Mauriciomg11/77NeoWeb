@@ -35,7 +35,8 @@
             /*indicamos que el margen superior, es la mitad de la altura*/
             padding: 5px;
         }
-         .CentrarGrdHistrc {
+
+        .CentrarGrdHistrc {
             position: absolute;
             /*nos posicionamos en el centro del navegador*/
             /*top: 50%;*/
@@ -212,10 +213,10 @@
                                         <asp:Label ID="LblBusquedaH" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
                                     <td>
                                         <asp:TextBox ID="TxtBusqMon" runat="server" Width="90px" Height="28px" CssClass="form-control" placeholder="moneda" /></td>
-                                      <td>
+                                    <td>
                                         <asp:TextBox ID="TxtBusqAno" runat="server" Width="80px" Height="28px" CssClass="form-control" placeholder="ano" TextMode="Number" onkeypress="return solonumeros(event);" /></td>
-                                      <td>
-                                        <asp:TextBox ID="TxtBusqMes" runat="server" Width="90px" Height="28px" CssClass="form-control" placeholder="mes" TextMode="Number" onkeypress="return solonumeros(event);"/></td>
+                                    <td>
+                                        <asp:TextBox ID="TxtBusqMes" runat="server" Width="90px" Height="28px" CssClass="form-control" placeholder="mes" TextMode="Number" onkeypress="return solonumeros(event);" /></td>
                                     <td>
                                         <asp:ImageButton ID="IbtConsultarH" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultarH_Click" /></td>
                                 </tr>
@@ -224,10 +225,10 @@
                                 <div class="col-sm-4 CentrarGrdHistrc ">
                                     <asp:GridView ID="GrdDatosH" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" DataKeyNames="CodIdTasa, UltFecMod"
                                         CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true"
-                                        OnRowEditing="GrdDatosH_RowEditing" OnRowUpdating="GrdDatosH_RowUpdating" OnRowCancelingEdit="GrdDatosH_RowCancelingEdit" 
+                                        OnRowEditing="GrdDatosH_RowEditing" OnRowUpdating="GrdDatosH_RowUpdating" OnRowCancelingEdit="GrdDatosH_RowCancelingEdit"
                                         OnRowDataBound="GrdDatosH_RowDataBound">
-                                        <Columns>                                   
-                                            <asp:TemplateField HeaderText="TRM actual" HeaderStyle-Width ="30%">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="TRM actual" HeaderStyle-Width="30%">
                                                 <ItemTemplate>
                                                     <asp:Label Text='<%# Eval("VlrTasa") %>' runat="server" Width="100%" />
                                                 </ItemTemplate>
@@ -242,7 +243,7 @@
                                                 <EditItemTemplate>
                                                     <asp:Label Text='<%# Eval("UltFecMod") %>' runat="server" Width="100%" />
                                                 </EditItemTemplate>
-                                            </asp:TemplateField>                                       
+                                            </asp:TemplateField>
                                             <asp:TemplateField FooterStyle-Width="30%">
                                                 <ItemTemplate>
                                                     <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />
@@ -250,7 +251,7 @@
                                                 <EditItemTemplate>
                                                     <asp:ImageButton ID="IbtUpdate" CssClass="BotonUpdateGrid" ImageUrl="~/images/Save.png" runat="server" CommandName="Update" ToolTip="Actualizar" />
                                                     <asp:ImageButton ID="IbtCancel" CssClass="BotonCancelGrid" ImageUrl="~/images/Cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancelar" />
-                                                </EditItemTemplate>                                               
+                                                </EditItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
                                         <FooterStyle CssClass="GridFooterStyle" />

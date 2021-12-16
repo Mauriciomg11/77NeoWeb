@@ -153,9 +153,9 @@
                     <asp:Label ID="LblPosicInsElem" runat="server" CssClass="LblEtiquet" Text="Posicion:" />
                     <asp:DropDownList ID="DdlPosicInsElem" runat="server" CssClass="heightCampo" Width="10%" />
                     <asp:Label ID="LblFechaInsElem" runat="server" CssClass="LblEtiquet" Text="Fecha:" />
-                    <asp:ImageButton ID="IbtFechaInsElem" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                    <asp:TextBox ID="TxtFechaInsElem" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="8%" OnTextChanged="TxtFechaInsElem_TextChanged" AutoPostBack="true" />
-                    <ajaxToolkit:CalendarExtender ID="CalFechaInsElem" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFechaInsElem" TargetControlID="TxtFechaInsElem" Format="dd/MM/yyyy" />
+                    <%--<asp:ImageButton ID="IbtFechaInsElem" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />--%>
+                    <asp:TextBox ID="TxtFechaInsElem" runat="server" CssClass="form-control-sm heightCampo" onKeyDown="return false" TextMode="Date" Width="11%" OnTextChanged="TxtFechaInsElem_TextChanged" AutoPostBack="true" />
+                    <%--<ajaxToolkit:CalendarExtender ID="CalFechaInsElem" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFechaInsElem" TargetControlID="TxtFechaInsElem" Format="dd/MM/yyyy" />--%>
                     <asp:Button ID="BtnCompensac" CssClass="btn btn-danger" runat="server" Height="25px" Width="18px" Text="C" Font-Size="9px" ToolTip="Libros de vuelo para la compensación" OnClick="BtnCompensac_Click" OnClientClick="return confirm('¿Desea realizar la compensación?');" Visible="false" />
                     <asp:Label ID="LblMotivInsElem" runat="server" CssClass="LblEtiquet" Text="Motivo:" />
                     <asp:TextBox ID="TxtMotivInsElem" runat="server" CssClass="form-control-sm" TextMode="MultiLine" MaxLength="240" Width="15%" Height="1%" />
@@ -447,9 +447,9 @@
                     <asp:Label ID="LblPosicRemElem" runat="server" CssClass="LblEtiquet" Text="Posicion:" />
                     <asp:DropDownList ID="DdlPosicRemElem" runat="server" CssClass="heightCampo" Width="10%" Enabled="false" />
                     <asp:Label ID="LblFechaRemElem" runat="server" CssClass="LblEtiquet" Text="Fecha:" />
-                    <asp:ImageButton ID="IbtFechaRemElem" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                    <asp:TextBox ID="TxtFechaRemElem" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="8%" OnTextChanged="TxtFechaRemElem_TextChanged" AutoPostBack="true" />
-                    <ajaxToolkit:CalendarExtender ID="CalFechaRemElem" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFechaRemElem" TargetControlID="TxtFechaRemElem" Format="dd/MM/yyyy" />
+                    <%--<asp:ImageButton ID="IbtFechaRemElem" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />--%>
+                    <asp:TextBox ID="TxtFechaRemElem" runat="server" CssClass="form-control-sm heightCampo" onKeyDown="return false" TextMode="Date" Width="12%" OnTextChanged="TxtFechaRemElem_TextChanged" AutoPostBack="true" />
+                    <%--<ajaxToolkit:CalendarExtender ID="CalFechaRemElem" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFechaRemElem" TargetControlID="TxtFechaRemElem" Format="dd/MM/yyyy" />--%>
                     <asp:Button ID="BtnRemCompensac" CssClass="btn btn-danger" runat="server" Height="25px" Width="18px" Text="C" Font-Size="9px" ToolTip="Libros de vuelo para la compensación" OnClick="BtnRemCompensac_Click" OnClientClick="return confirm('¿Desea realizar la compensación?');" Visible="false" />
                     <asp:Label ID="LblMotivRemElem" runat="server" CssClass="LblEtiquet" Text="Motivo:" />
                     <asp:TextBox ID="TxtMotivRemElem" runat="server" CssClass="form-control-sm" TextMode="MultiLine" MaxLength="240" Width="15%" Height="1%" />

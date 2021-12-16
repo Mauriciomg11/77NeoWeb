@@ -54,8 +54,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["ValidaFechaSvc"] = "N";
                 ViewState["TieneCompensacion"] = "N";
                 ViewState["Propiedad"] = 2;// 0= Propiedad Cia| 1=ajeno (Cliente) para la creacion de los componentes
-                CalFechaInsElem.EndDate = DateTime.Now;
-                CalFechaRemElem.EndDate = DateTime.Now;
+                //CalFechaInsElem.EndDate = DateTime.Now;
+               // CalFechaRemElem.EndDate = DateTime.Now;
                 CalFechaInsMay.EndDate = DateTime.Now;
                 CalFechaRemMay.EndDate = DateTime.Now;
                 CalFechaInsSubC.EndDate = DateTime.Now;
@@ -962,6 +962,18 @@ namespace _77NeoWeb.Forms.Ingenieria
         { GrdBusq.PageIndex = e.NewPageIndex; BIndDataBusq(); }
         protected void TxtFechaInsElem_TextChanged(object sender, EventArgs e) // OK Valida si tiene Hojas para compensar
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            Cnx.ValidarFechas(TxtFechaInsElem.Text.Trim(), "", 1);
+            var MensjF = Cnx.GetMensj();
+            if (!MensjF.ToString().Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                foreach (DataRow row in Result)
+                { MensjF = row["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                Page.Title = ViewState["PageTit"].ToString();
+                return;
+            }
             if (!DdlAeroInsElem.Text.Equals("0") && !TxtSnInsElem.Text.Equals(""))
             {
                 Cnx.SelecBD();
@@ -1024,6 +1036,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens05HkVrt'");
                     foreach (DataRow row in Result1)
                     { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha
+                    return;
+                }
+                Cnx.ValidarFechas(TxtFechaInsElem.Text.Trim(), "", 1);
+                var MensjF = Cnx.GetMensj();
+                if (!MensjF.ToString().Trim().Equals(""))
+                {
+                   Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { MensjF = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString();
                     return;
                 }
                 if (TxtMotivInsElem.Text.Equals(""))
@@ -1589,6 +1612,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha')", true);
                     return;
                 }
+                Cnx.ValidarFechas(TxtFechaRemElem.Text.Trim(), "", 1);
+                var MensjF = Cnx.GetMensj();
+                if (!MensjF.ToString().Trim().Equals(""))
+                {
+                   DataRow[] Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { MensjF = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString();
+                    return;
+                }
                 if (TxtMotivRemElem.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens06HkVrt'");
@@ -1753,6 +1787,18 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void TxtFechaRemElem_TextChanged(object sender, EventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            Cnx.ValidarFechas(TxtFechaRemElem.Text.Trim(), "", 1);
+            var MensjF = Cnx.GetMensj();
+            if (!MensjF.ToString().Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                foreach (DataRow row in Result)
+                { MensjF = row["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                Page.Title = ViewState["PageTit"].ToString();
+                return;
+            }
             if (!DdlAeroRemElem.Text.Equals("0") && !TxtSnRemElem.Text.Equals(""))
             {
                 Cnx.SelecBD();

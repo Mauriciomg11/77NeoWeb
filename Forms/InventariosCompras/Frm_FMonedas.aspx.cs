@@ -255,7 +255,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
         { GrdDatos.EditIndex = e.NewEditIndex; BindData(TxtBusqueda.Text, "SEL"); }
         protected void GrdDatos_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-
             Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
             string VbDesc = (GrdDatos.Rows[e.RowIndex].FindControl("TxtDesc") as TextBox).Text.Trim();

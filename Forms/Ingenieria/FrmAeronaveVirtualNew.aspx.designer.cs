@@ -303,15 +303,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label LblFechaInsElem;
 
         /// <summary>
-        /// Control IbtFechaInsElem.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtFechaInsElem;
-
-        /// <summary>
         /// Control TxtFechaInsElem.
         /// </summary>
         /// <remarks>
@@ -319,15 +310,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtFechaInsElem;
-
-        /// <summary>
-        /// Control CalFechaInsElem.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalFechaInsElem;
 
         /// <summary>
         /// Control BtnCompensac.
@@ -744,15 +726,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label LblFechaRemElem;
 
         /// <summary>
-        /// Control IbtFechaRemElem.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtFechaRemElem;
-
-        /// <summary>
         /// Control TxtFechaRemElem.
         /// </summary>
         /// <remarks>
@@ -760,15 +733,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtFechaRemElem;
-
-        /// <summary>
-        /// Control CalFechaRemElem.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalFechaRemElem;
 
         /// <summary>
         /// Control BtnRemCompensac.
