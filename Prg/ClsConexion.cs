@@ -15,7 +15,7 @@ namespace _77NeoWeb.prg
         public ClsConexion()
         {
             this.VblConexion = "";
-            Produccion = "N";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion 
+            Produccion = "Y";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion 
         }
         public void SelecBD()
         {
@@ -79,7 +79,7 @@ namespace _77NeoWeb.prg
             try
             {
                 string VbNitErr, VbCiaErr, VblNomBDErr;
-                using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+                using (SqlConnection sqlCon = new SqlConnection(BaseDatosPrmtr()))
                 {
                     VbNitErr = System.Web.HttpContext.Current.Session["Nit77Cia"].ToString();
                     VbCiaErr = System.Web.HttpContext.Current.Session["NomCiaPpal"].ToString();
@@ -114,7 +114,7 @@ namespace _77NeoWeb.prg
             try
             {
                 string VbNitErr, VbCiaErr, VblNomBDErr;
-                using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+                using (SqlConnection sqlCon = new SqlConnection(BaseDatosPrmtr()))
                 {
                     VbNitErr = System.Web.HttpContext.Current.Session["Nit77Cia"].ToString();
                     VbCiaErr = System.Web.HttpContext.Current.Session["NomCiaPpal"].ToString();
@@ -149,7 +149,8 @@ namespace _77NeoWeb.prg
 
             if (VbNomBD == string.Empty)
             {
-                this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString);
+                //this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString);
+                BaseDatosPrmtr();
             }
             else
             {
@@ -164,6 +165,8 @@ namespace _77NeoWeb.prg
                 }
             }
         }
+        public string BaseDatosPrmtr()
+        { return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "77NEO01", "DbConfigWeb", "sa", "admindemp"); }
         public string GetConex() { return this.VblConexion; }
         public void RetirarPuntos(string VbCampo)
         {
@@ -255,6 +258,6 @@ namespace _77NeoWeb.prg
         public string GetSvr() { return "77NEO01"; }//  "77NEO01";
         public string GetUsSvr() { return "sa"; }//  "sa"
         public string GetPas() { return "admindemp"; }//"admindemp";
-        public string GetIdm() { return "4"; }//  4 español | 5 ingles
+        public string GetIdm() { return "5"; }//  4 español | 5 ingles
     }
 }

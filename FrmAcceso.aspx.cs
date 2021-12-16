@@ -44,7 +44,7 @@ namespace _77NeoWeb
         {
             Idioma.Columns.Add("Objeto", typeof(string));
             Idioma.Columns.Add("Texto", typeof(string));
-            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+            using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
             {
                 string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
                 SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
@@ -87,13 +87,14 @@ namespace _77NeoWeb
                     VbUsu = VbUsu.Replace(" ", "");
                 }
                 TxtUsuario.Text = VbUsu;
-                using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+                //  using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
                 {
                     LtxtSql = "EXEC SP_Configuracion  1,@P1,@P3,'','','',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                     SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
                     SC.Parameters.AddWithValue("@P1", Session["SigCiaPpal"].ToString());
                     SC.Parameters.AddWithValue("@P3", DdlBD.SelectedValue);
-                   
+
                     sqlCon.Open();
                     SqlDataReader tbl = SC.ExecuteReader();
                     if (tbl.Read())
@@ -154,7 +155,8 @@ namespace _77NeoWeb
                     VbPassCia = VbPassCia.Replace(" ", "");
                 }
                 TxtPassEmsa.Text = VbPassCia;
-                using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+               // using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
                 {
                     LtxtSql = "EXEC SP_ACCESO_WEB 2,@E71,@E59,'','','',0, 0,0,0,'01-01-1','01-01-1'";
                     SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
@@ -194,7 +196,7 @@ namespace _77NeoWeb
         }
         protected void DdlNit_TextChanged(object sender, EventArgs e)
         {
-            using (SqlConnection sqlConx = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+            using (SqlConnection sqlConx = new SqlConnection(Cnx.BaseDatosPrmtr()))
             {
                 Session["Login77"] = null;
                 Session["C77U"] = "";

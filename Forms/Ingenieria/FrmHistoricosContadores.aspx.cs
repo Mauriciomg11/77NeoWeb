@@ -90,7 +90,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             Idioma.Columns.Add("Objeto", typeof(string));
             Idioma.Columns.Add("Texto", typeof(string));
-            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+            using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
             {
                 string Idima = Session["77IDM"].ToString().Trim();
                 string NomF = ViewState["PFileName"].ToString().Trim();

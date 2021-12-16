@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _77NeoWeb.prg;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -12,6 +13,7 @@ namespace _77NeoWeb
 {
     public partial class MasterTransac : System.Web.UI.MasterPage
     {
+        ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,7 +24,7 @@ namespace _77NeoWeb
         {
             Idioma.Columns.Add("Objeto", typeof(string));
             Idioma.Columns.Add("Texto", typeof(string));
-            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+            using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
             {
                 string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
                 SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);

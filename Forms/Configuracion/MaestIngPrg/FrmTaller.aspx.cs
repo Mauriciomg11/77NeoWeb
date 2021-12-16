@@ -95,7 +95,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         {
             Idioma.Columns.Add("Objeto", typeof(string));
             Idioma.Columns.Add("Texto", typeof(string));
-            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+            using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
             {
                 string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
                 SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);

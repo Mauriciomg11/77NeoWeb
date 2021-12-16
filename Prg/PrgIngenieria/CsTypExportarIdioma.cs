@@ -62,7 +62,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
             Tb77lIdioma.Columns.Add("C43", typeof(string));
             Tb77lIdioma.Columns.Add("C44", typeof(string));
             Tb77lIdioma.Columns.Add("C45", typeof(string));
-            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString))
+            using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
             {
                 string C01="", C02 = "", C03 = "", C04 = "", C05 = "", C06 = "", C07 = "", C08 = "", C09 = "", C10 = "", C11 = "", C12 = "", C13 = "", C14 = "",C15 = "", C16 = "";
                 string C17 = "", C18 = "", C19 = "", C20 = "", C21 = "", C22 = "", C23 = "", C24 = "", C25 = "", C26 = "", C27 = "", C28 = "", C29 = "", C30 = "", C31 = "", C32 = "", 
