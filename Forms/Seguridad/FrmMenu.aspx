@@ -63,6 +63,8 @@
                         <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
                     <td>
                         <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
+                      <td>
+                        <asp:ImageButton ID="IbtAbrirIdioma" runat="server" Visible="false" ToolTip="Abrir Idioma" ImageUrl="~/images/IrV2.png" Width="30px" Height="30px" OnClick="IbtAbrirIdioma_Click" /></td>
                 </tr>
             </table>
             <div class="ScrollDet">

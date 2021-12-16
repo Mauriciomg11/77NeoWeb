@@ -11,7 +11,7 @@ namespace _77NeoWeb.Forms.Seguridad
 {
 
 
-    public partial class FrmMenu
+    public partial class FrmIdioma
     {
 
         /// <summary>
@@ -42,6 +42,24 @@ namespace _77NeoWeb.Forms.Seguridad
         protected global::System.Web.UI.WebControls.Label LblBusqueda;
 
         /// <summary>
+        /// Control RdbObj.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RdbObj;
+
+        /// <summary>
+        /// Control RdbDesc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RdbDesc;
+
+        /// <summary>
         /// Control TxtBusqueda.
         /// </summary>
         /// <remarks>
@@ -49,6 +67,15 @@ namespace _77NeoWeb.Forms.Seguridad
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtBusqueda;
+
+        /// <summary>
+        /// Control CkbSinCorr.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CkbSinCorr;
 
         /// <summary>
         /// Control IbtConsultar.
@@ -60,13 +87,13 @@ namespace _77NeoWeb.Forms.Seguridad
         protected global::System.Web.UI.WebControls.ImageButton IbtConsultar;
 
         /// <summary>
-        /// Control IbtAbrirIdioma.
+        /// Control DdlForm.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtAbrirIdioma;
+        protected global::System.Web.UI.WebControls.DropDownList DdlForm;
 
         /// <summary>
         /// Control GrdDatos.

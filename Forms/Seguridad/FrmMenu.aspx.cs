@@ -43,6 +43,7 @@ namespace _77NeoWeb.Forms.Seguridad
             {
                 ModSeguridad();
                 BindData(TxtBusqueda.Text);
+                if (Session["C77U"].ToString().Trim().Equals("00000082")) { IbtAbrirIdioma.Visible = true; }
             }
         }
         void ModSeguridad()
@@ -432,5 +433,12 @@ namespace _77NeoWeb.Forms.Seguridad
         }
         protected void IbtAbrir_Click(object sender, ImageClickEventArgs e)
         { }
+
+        protected void IbtAbrirIdioma_Click(object sender, ImageClickEventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string CT = "window.open('/Forms/Seguridad/FrmIdioma.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
+        }
     }
 }

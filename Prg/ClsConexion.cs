@@ -15,7 +15,7 @@ namespace _77NeoWeb.prg
         public ClsConexion()
         {
             this.VblConexion = "";
-            Produccion = "Y";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion 
+            Produccion = "N";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion 
         }
         public void SelecBD()
         {

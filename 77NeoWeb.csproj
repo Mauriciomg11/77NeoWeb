@@ -213,6 +213,7 @@
     <Content Include="Forms\Operaciones\FrmOperacionLicencia.aspx" />
     <Content Include="Forms\Seguridad\FrmCambioPass.aspx" />
     <Content Include="Forms\Seguridad\FrmConfigPantalla.aspx" />
+    <Content Include="Forms\Seguridad\FrmIdioma.aspx" />
     <Content Include="FrmAcceso.aspx" />
     <Content Include="Forms\Seguridad\FrmInicio.aspx" />
     <Content Include="Forms\Seguridad\FrmMenu.aspx" />
@@ -949,6 +950,13 @@
     </Compile>
     <Compile Include="Forms\Seguridad\FrmConfigPantalla.aspx.designer.cs">
       <DependentUpon>FrmConfigPantalla.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Seguridad\FrmIdioma.aspx.cs">
+      <DependentUpon>FrmIdioma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Seguridad\FrmIdioma.aspx.designer.cs">
+      <DependentUpon>FrmIdioma.aspx</DependentUpon>
     </Compile>
     <Compile Include="FrmAcceso.aspx.cs">
       <DependentUpon>FrmAcceso.aspx</DependentUpon>
