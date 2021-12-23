@@ -386,11 +386,11 @@
                         </div>
                         <div class="row">
                             <div class="col-md-3" style="">
-                                <asp:Label ID="LblFacReferc" runat="server" CssClass="LblEtiquet" Text="referencia" />
+                                <asp:Label ID="LblFacReferc" runat="server" CssClass="LblEtiquet" Text=" cotizacion referencia" />
                                 <asp:TextBox ID="TxtFacReferc" runat="server" CssClass="form-control-sm heightCampo" MaxLength="100" Enabled="false" Width="100%" TextMode="MultiLine" Height="40px" />
                             </div>
                             <div class="col-sm-2">
-                                <asp:Label ID="LblFactura" runat="server" CssClass="LblEtiquet" Text="factura" />
+                                <asp:Label ID="LblFactura" runat="server" CssClass="LblEtiquet" Text="factura ref" />
                                 <asp:TextBox ID="TxtFactura" runat="server" CssClass="form-control-sm heightCampo TextR" MaxLength="240" Width="100%" step="0.01" onkeypress="return Decimal(event);" Enabled="false" />
                             </div>
                             <div class="col-md-3" style="">
@@ -425,7 +425,7 @@
                             <div class="col-sm-2">
                                 <asp:Label ID="LblOtrImpt" runat="server" CssClass="LblEtiquet" Text="otros impuestos" />
                                 <asp:TextBox ID="TxtOtrImptM" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" Enabled="false" />
-                                <asp:TextBox ID="TxtOtrImpt" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false" OnTextChanged="TxtOtrImpt_TextChanged" AutoPostBack="true" Visible="false"/>
+                                <asp:TextBox ID="TxtOtrImpt" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false" OnTextChanged="TxtOtrImpt_TextChanged" AutoPostBack="true" Visible="false" />
                             </div>
                             <div class="col-sm-2">
                                 <asp:Label ID="LblRetencion" runat="server" CssClass="LblEtiquet" Text="retención" />
@@ -435,7 +435,7 @@
                                             <asp:TextBox ID="TxtTasaRetefte" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" OnTextChanged="TxtTasaRetefte_TextChanged" AutoPostBack="true" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false" />
                                         </asp:TableCell>
                                         <asp:TableCell Width="150px">
-                                             <asp:TextBox ID="TxtRetefteM" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" Enabled="false" />
+                                            <asp:TextBox ID="TxtRetefteM" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" Enabled="false" />
                                             <asp:TextBox ID="TxtRetefte" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false" Visible="false" />
                                         </asp:TableCell>
                                     </asp:TableRow>
@@ -450,7 +450,7 @@
                                         </asp:TableCell>
                                         <asp:TableCell Width="150px">
                                             <asp:TextBox ID="TxtICAM" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" Enabled="false" />
-                                            <asp:TextBox ID="TxtICA" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false"  Visible="false" />
+                                            <asp:TextBox ID="TxtICA" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false" Visible="false" />
                                         </asp:TableCell>
                                     </asp:TableRow>
                                 </asp:Table>
@@ -463,8 +463,8 @@
                                             <asp:TextBox ID="TxtTasaDescto" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" OnTextChanged="TxtTasaDescto_TextChanged" AutoPostBack="true" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false" />
                                         </asp:TableCell>
                                         <asp:TableCell Width="150px">
-                                             <asp:TextBox ID="TxtDesctoM" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" Enabled="false" />
-                                            <asp:TextBox ID="TxtDescto" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false"  Visible="false" />
+                                            <asp:TextBox ID="TxtDesctoM" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" Enabled="false" />
+                                            <asp:TextBox ID="TxtDescto" runat="server" CssClass="form-control-sm heightCampo TextR" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false" Visible="false" />
                                         </asp:TableCell>
                                     </asp:TableRow>
                                 </asp:Table>
@@ -547,12 +547,52 @@
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitExport" runat="server" Text="Exportar" />
                     </h6>
-                    <asp:ImageButton ID="IbtCloseExport" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCloseExport_Click"/>
+                    <asp:ImageButton ID="IbtCloseExport" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCloseExport_Click" />
                     <div class="CentrarExportar DivMarco">
                         <div id="BtnesExport" class="row">
                             <div class="col-sm-6">
                                 <asp:Button ID="BtnExportHistorico" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnExportHistorico_Click" OnClientClick="target ='';" Text="histo" />
-                            </div>                            
+                            </div>
+                        </div>
+                    </div>
+                </asp:View>
+                <asp:View ID="Vw3Asentar" runat="server">
+                    <h6 class="TextoSuperior">
+                        <asp:Label ID="LblTitAsentar" runat="server" Text="Aprobar / Asentar Compra" />
+                    </h6>
+                    <asp:ImageButton ID="IbtCloseAsentar" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCloseAsentar_Click" />
+                    <div class="CentrarExportar DivMarco">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h6 class="TextoSuperior">
+                                            <asp:Label ID="LblTitOpcAprob" runat="server" Text="aprbar" />
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <asp:ImageButton ID="IbtAprobar" runat="server" ToolTip="aprobación" Width="60px" Height ="60px" ImageUrl="~/images/UnCheck.png" OnClick="IbtAprobar_Click" />
+                                        <asp:ImageButton ID="IbtDesAprobar" runat="server" ToolTip="desaprobación"  Width="60px" Height ="60px" ImageUrl="~/images/Check1.png" OnClick="IbtDesAprobar_Click" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h6 class="TextoSuperior">
+                                            <asp:Label ID="LblTitOpcAsentr" runat="server" Text="asentar" />
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <asp:ImageButton ID="IbtAsentar" runat="server" ToolTip="asentar" Width="60px" Height ="60px" ImageUrl="~/images/UnCheck.png" OnClick="IbtAsentar_Click" />
+                                        <asp:ImageButton ID="IbtDesasentar" runat="server" ToolTip="desasentar" Width="60px" Height ="60px" ImageUrl="~/images/Check1.png" OnClick="IbtDesasentar_Click" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </asp:View>

@@ -94,12 +94,12 @@ namespace _77NeoWeb.Forms.InventariosCompras
             ClsPermisos ClsP = new ClsPermisos();
             ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
-            if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; BtnIngresar.Visible = false; } // grd.ShowFooter = false;
-            if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; BtnModificar.Visible = false; }//BtnCargaMaxiva.Visible = false;
+            if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; BtnIngresar.Visible = false; }
+            if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; BtnModificar.Visible = false; }
             if (ClsP.GetConsultar() == 0) { }
             if (ClsP.GetImprimir() == 0) { ViewState["VblImpMS"] = 0; }//
-            if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; }//BtnEliminar.Visible = false;
-            if (ClsP.GetCE1() == 0) { ViewState["VblCE1"] = 0; } // 
+            if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; }
+            if (ClsP.GetCE1() == 0) { ViewState["VblCE1"] = 0; BtnAsentar.Visible = false; } // asentar
             if (ClsP.GetCE2() == 0) { ViewState["VblCE2"] = 0; }//
             if (ClsP.GetCE3() == 0) { ViewState["VblCE3"] = 0; }//
             if (ClsP.GetCE4() == 0) { ViewState["VblCE4"] = 0; }//          
@@ -206,7 +206,28 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     IbtCloseExport.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCloseExport.ToolTip;
                     BtnExportHistorico.Text = bO.Equals("BtnExportHistorico") ? bT : BtnExportHistorico.Text;
                     BtnExportHistorico.ToolTip = bO.Equals("BtnExportHistoricoTT") ? bT : BtnExportHistorico.ToolTip;
+                    // ************************************************* Aprobar / Asentar *************************************************
+                    LblTitAsentar.Text = bO.Equals("LblTitAsentar") ? bT : LblTitAsentar.Text;
+                    IbtCloseAsentar.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCloseAsentar.ToolTip;
+                    LblTitOpcAprob.Text = bO.Equals("LblTitOpcAprob") ? bT : LblTitOpcAprob.Text; 
+                    LblTitOpcAsentr.Text = bO.Equals("BtnAsentar") ? bT : LblTitOpcAsentr.Text; 
+                    IbtAprobar.ToolTip = bO.Equals("IbtAprobar") ? bT : IbtAprobar.ToolTip;
+                    IbtDesAprobar.ToolTip = bO.Equals("IbtDesAprobar") ? bT : IbtDesAprobar.ToolTip;
+                    IbtAsentar.ToolTip = bO.Equals("BtnAsentar") ? bT : IbtAsentar.ToolTip;
+                    IbtDesasentar.ToolTip = bO.Equals("IbtDesasentar") ? bT : IbtDesasentar.ToolTip;
                 }
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens18Compra'");
+                foreach (DataRow row in Result) { IbtAprobar.OnClientClick = "return confirm('" + row["Texto"].ToString().Trim() + "');"; }//Desea aprobar la compra?
+
+                Result = Idioma.Select("Objeto= 'Mens19Compra'");
+                foreach (DataRow row in Result) { IbtDesAprobar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }// Desea desaprobar la compra?
+
+                Result = Idioma.Select("Objeto= 'Mens20Compra'");
+                foreach (DataRow row in Result) { IbtAsentar.OnClientClick = "return confirm('" + row["Texto"].ToString().Trim() + "');"; }//Desea asentar la compra?
+
+                Result = Idioma.Select("Objeto= 'Mens21Compra'");
+                foreach (DataRow row in Result) { IbtDesasentar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }// Desea revertir el asiento la compra?
+
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
             }
@@ -237,7 +258,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             DSTDdl = (DataSet)ViewState["DSTDdl"];
             if (DSTDdl.Tables["Autorizado"].Rows.Count > 0)
             {
-                DSTDdl = (DataSet)ViewState["DSTDdl"];
+                //DSTDdl = (DataSet)ViewState["DSTDdl"];
                 DataRow[] DR = DSTDdl.Tables[2].Select("TipoUsu= 'P' AND Rango = 'Igual_Mayor'");
                 foreach (DataRow row in DR)
                 { ViewState["AutorizadPpal"] = row["CodUsuario"].ToString().Trim(); }//Usuario autorizacion principal.
@@ -300,8 +321,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 string VbQry = "";
                 DataTable DT = new DataTable();
                 if (TipoCompra.Equals("ALL")) { VbQry = "Activo=1 OR CodIdTipoUbicaFac= '" + ViewState["LugarFacAnt"] + "'"; }
-                if (TipoCompra.Equals("N")) { VbQry = "Activo=1 AND TipoUbicacionNI ='N' OR CodIdTipoUbicaFac= '" + ViewState["LugarEAnt"] + "'"; }
-                if (TipoCompra.Equals("I")) { VbQry = "Activo=1 AND TipoUbicacionNI ='I' OR CodIdTipoUbicaFac= '" + ViewState["LugarEAnt"] + "'"; }
+                if (TipoCompra.Equals("N")) { VbQry = "Activo=1 AND TipoUbicacionNI ='N' OR CodIdTipoUbicaFac= '" + ViewState["LugarFacAnt"] + "'"; }
+                if (TipoCompra.Equals("I")) { VbQry = "Activo=1 AND TipoUbicacionNI ='I' OR CodIdTipoUbicaFac= '" + ViewState["LugarFacAnt"] + "'"; }
                 DataRow[] DR = DSTDdl.Tables[7].Select(VbQry);
                 if (IsIENumerableLleno(DR))
                 { DT = DR.CopyToDataTable(); }
@@ -505,7 +526,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     TxtTtl.Text = DSTPpl.Tables[0].Rows[0]["ValorTotalM"].ToString().Trim();
                     ViewState["CodTerceroAnt"] = DSTPpl.Tables[0].Rows[0]["CodProveedor"].ToString().Trim();
                     DdlEmplead.Text = DSTPpl.Tables[0].Rows[0]["CodEmpleado"].ToString().Trim();
-                    string borr = DSTPpl.Tables[0].Rows[0]["CodAutorizador"].ToString().Trim();
                     ViewState["AutorizadAnt"] = DSTPpl.Tables[0].Rows[0]["CodAutorizador"].ToString().Trim();
                     ViewState["Total"] = DSTPpl.Tables[0].Rows[0]["ValorTotal"].ToString().Trim();
                     DdlTipo.Text = DSTPpl.Tables[0].Rows[0]["TipoOrdenCompra"].ToString().Trim();
@@ -515,7 +535,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     DdlEstd.Text = DSTPpl.Tables[0].Rows[0]["CodEstadoCompra"].ToString().Trim();
                     ViewState["LugarEAnt"] = DSTPpl.Tables[0].Rows[0]["CodUbicaCia"].ToString().Trim();
                     ViewState["LugarFacAnt"] = DSTPpl.Tables[0].Rows[0]["CodIdTipoUbicaFac"].ToString().Trim();
-                    TxtFacReferc.Text = DSTPpl.Tables[0].Rows[0]["Referencia"].ToString().Trim();
+                    TxtFacReferc.Text = DSTPpl.Tables[0].Rows[0]["Referencia"].ToString().Trim();// cotizacion referencia
                     TxtFactura.Text = DSTPpl.Tables[0].Rows[0]["NumFacturaOC"].ToString().Trim();
                     TxtObsrv.Text = DSTPpl.Tables[0].Rows[0]["Observacion"].ToString().Trim();
                     CkbAprobad.Checked = DSTPpl.Tables[0].Rows[0]["Aprobado"].ToString().Trim().Equals("1") ? true : false;
@@ -533,6 +553,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     TxtTasaDescto.Text = DSTPpl.Tables[0].Rows[0]["TasaDescuento"].ToString().Trim();
                     TxtDesctoM.Text = DSTPpl.Tables[0].Rows[0]["ValorDescuentoM"].ToString().Trim();
                     TxtDescto.Text = DSTPpl.Tables[0].Rows[0]["ValorDescuento"].ToString().Trim();
+                    ViewState["TtlRegDet"] = DSTPpl.Tables[0].Rows[0]["TtlRegDet"].ToString().Trim();                    
+                    if (CkbAsentada.Checked == true) { IbtAprobar.Visible = false; IbtDesAprobar.Visible = false; IbtAsentar.Visible = false; IbtDesasentar.Visible = true; }
+                    else
+                    {
+                        if (CkbAprobad.Checked == true) { IbtAprobar.Visible = false; IbtDesAprobar.Visible = true; IbtAsentar.Visible = true; IbtDesasentar.Visible = false; }
+                        else { IbtAprobar.Visible = true; IbtDesAprobar.Visible = false; IbtAsentar.Visible = false; IbtDesasentar.Visible = false; }
+                    }
                     BindBDdl("SEL");
                 }
                 if (DSTPpl.Tables["DetCompra"].Rows.Count > 0)
@@ -1000,11 +1027,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
         }
         protected void BtnAuxiliares_Click(object sender, EventArgs e)
         { MultVw.ActiveViewIndex = 2; }
-        protected void BtnAsentar_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected void BtnOpenCotiza_Click(object sender, EventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
@@ -1481,6 +1503,310 @@ namespace _77NeoWeb.Forms.InventariosCompras
                                     Response.End();
                                 }
                             }
+                        }
+                    }
+                }
+            }
+        }
+        //****************************** Aprobar / Asentar **************************************       
+        protected void BtnAsentar_Click(object sender, EventArgs e)
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            if (TxtNumCompra.Text.Equals(""))
+            { return; }
+          
+            if (ViewState["TtlRegDet"].ToString().Trim().Equals("0"))
+            { return; }          
+           
+
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+            DataRow[] DR;
+            DataTable DT = new DataTable();
+            if (DSTDdl.Tables["Autorizado"].Rows.Count > 0)
+            {               
+                DR = DSTDdl.Tables[2].Select("Rango = 'Igual_Mayor' AND CodUsuario = '" + Session["C77U"].ToString().Trim() + "'");
+                if (IsIENumerableLleno(DR))
+                { DT = DR.CopyToDataTable(); }
+                else
+                {
+                    string VbQuery = "";
+                    switch (TxtMoned.Text.Trim())
+                    {
+                        case "COP":
+                            VbQuery = "Rango = 'Menor' AND CodUsuario = '" + Session["C77U"].ToString().Trim() + "' AND ValorCop >" + ViewState["Total"].ToString();
+                            break;
+                        case "USD":
+                            VbQuery = "Rango = 'Menor' AND CodUsuario = '" + Session["C77U"].ToString().Trim() + "' AND ValorUSD >" + ViewState["Total"].ToString();
+                            break;
+                        default:
+                            VbQuery = "Rango = 'Menor' AND CodUsuario = '" + Session["C77U"].ToString().Trim() + "' AND ValorEURO >" + ViewState["Total"].ToString();
+                            break;
+                    }
+                    DR = DSTDdl.Tables[2].Select(VbQuery);
+                    if (IsIENumerableLleno(DR))
+                    { DT = DR.CopyToDataTable(); }
+                    else
+                    {
+                        DataRow[] Result = Idioma.Select("Objeto= 'Mens17Compra'");
+                        foreach (DataRow row in Result)
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Acceso denegado, verificar configuración aprobacion compras.
+                        return;
+                    }
+                }
+            }
+
+            MultVw.ActiveViewIndex = 3;
+
+        }
+        protected void IbtCloseAsentar_Click(object sender, ImageClickEventArgs e)
+        { MultVw.ActiveViewIndex = 0; }
+        protected void IbtAprobar_Click(object sender, ImageClickEventArgs e)
+        {
+            string VbEjecPlano = "N";
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            Cnx.SelecBD();
+            using (SqlConnection SCX = new SqlConnection(Cnx.GetConex()))
+            {
+                SCX.Open();
+                using (SqlTransaction Transac = SCX.BeginTransaction())
+                {
+                    string VBQuery = "EXEC SP_PANTALLA_Asentar_OrdenCompra 16, @PO, @FR, @US,'APROBAR',0,0,0, @ICC,'01-1-2009','01-01-1900','01-01-1900'";
+
+                    using (SqlCommand SC = new SqlCommand(VBQuery, SCX, Transac))
+                    {
+                        SC.Parameters.AddWithValue("@PO", TxtNumCompra.Text.Trim());
+                        SC.Parameters.AddWithValue("@FR", TxtFactura.Text.Trim());
+                        SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        try
+                        {
+                            //var Mensj = SC.ExecuteScalar();
+                            SqlDataReader SDR = SC.ExecuteReader();
+                            if (SDR.Read())
+                            {
+                                string VbMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
+                                VbEjecPlano = HttpUtility.HtmlDecode(SDR["EjecPlano"].ToString().Trim());
+                                string VbOtrosDatos = HttpUtility.HtmlDecode(SDR["OtrosDatos"].ToString().Trim());
+                                if (!VbOtrosDatos.Trim().Equals("")) { VbOtrosDatos = " [" + VbOtrosDatos.Trim() + "]"; }
+
+                                if (!VbMensj.ToString().Trim().Equals(""))
+                                {
+                                    DataRow[] Result = Idioma.Select("Objeto= '" + VbMensj.ToString().Trim() + "'");
+                                    foreach (DataRow row in Result)
+                                    { VbMensj = row["Texto"].ToString().Trim(); }
+                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMensj+ VbOtrosDatos + "');", true);
+                                    SDR.Close();
+                                    Transac.Rollback();
+                                    return;
+                                }
+                            }
+                            SDR.Close();
+                            Transac.Commit();
+                        }
+                        catch (Exception Ex)
+                        {
+                            Transac.Rollback();
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "Aprobar Compra", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                        }
+                    }
+
+                }
+            }
+            Traerdatos(TxtNumCompra.Text.Trim(), "UPD");
+            if (VbEjecPlano.Trim().Equals("S"))
+            {
+                Cnx.SelecBD();
+                using (SqlConnection SCXP = new SqlConnection(Cnx.GetConex()))
+                {
+                    SCXP.Open();
+                    string VBQuery = "EXEC SP_PANTALLA_Asentar_OrdenCompra 17, @PO, '', @US,'APROBAR',0,0,0, @ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                    using (SqlCommand SC = new SqlCommand(VBQuery, SCXP))
+                    {
+                        SC.Parameters.AddWithValue("@PO", TxtNumCompra.Text.Trim());
+                        SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        try
+                        { SC.ExecuteNonQuery(); }
+                        catch (Exception ex)
+                        {
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); } //Error en el proceso de eliminación')", true);
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString(), "PLANOS Nuevo P/N", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                        }
+                    }
+                }
+            }
+        }
+        protected void IbtDesAprobar_Click(object sender, ImageClickEventArgs e)
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            Cnx.SelecBD();
+            using (SqlConnection SCX = new SqlConnection(Cnx.GetConex()))
+            {
+                SCX.Open();
+                using (SqlTransaction Transac = SCX.BeginTransaction())
+                {
+                    string VBQuery = "EXEC SP_PANTALLA_Asentar_OrdenCompra 16, @PO, @FR, @US,'DESAPROBAR',0,0,0, @ICC,'01-1-2009','01-01-1900','01-01-1900'";
+
+                    using (SqlCommand SC = new SqlCommand(VBQuery, SCX, Transac))
+                    {
+                        SC.Parameters.AddWithValue("@PO", TxtNumCompra.Text.Trim());
+                        SC.Parameters.AddWithValue("@FR", TxtFactura.Text.Trim());
+                        SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        try
+                        {
+                            SqlDataReader SDR = SC.ExecuteReader();
+                            if (SDR.Read())
+                            {
+                                string VbMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
+
+                                if (!VbMensj.ToString().Trim().Equals(""))
+                                {
+                                    DataRow[] Result = Idioma.Select("Objeto= '" + VbMensj.ToString().Trim() + "'");
+                                    foreach (DataRow row in Result)
+                                    { VbMensj = row["Texto"].ToString().Trim(); }
+                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMensj + "');", true);
+                                    Transac.Rollback();
+                                    
+                                    return;
+                                }
+                            }
+                            SDR.Close();
+                            Transac.Commit();
+                            Traerdatos(TxtNumCompra.Text.Trim(), "UPD");
+                        }
+                        catch (Exception Ex)
+                        {
+                            Transac.Rollback();
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "UPDATE", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                        }
+                    }  
+                }
+            }            
+        }
+        protected void IbtAsentar_Click(object sender, ImageClickEventArgs e)
+        {
+           Idioma = (DataTable)ViewState["TablaIdioma"];
+
+            if (TxtFactura.Text.Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens16Compra'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar  la factura de referencia.
+                return;
+            }
+
+            Cnx.SelecBD();
+            using (SqlConnection SCX = new SqlConnection(Cnx.GetConex()))
+            {
+                SCX.Open();
+                using (SqlTransaction Transac = SCX.BeginTransaction())
+                {
+                    string VBQuery = "EXEC SP_PANTALLA_Asentar_OrdenCompra 18, @PO, @FR, @US,'ASENTAR',0,0,0, @ICC,'01-1-2009','01-01-1900','01-01-1900'";
+
+                    using (SqlCommand SC = new SqlCommand(VBQuery, SCX, Transac))
+                    {
+                        SC.Parameters.AddWithValue("@PO", TxtNumCompra.Text.Trim());
+                        SC.Parameters.AddWithValue("@FR", TxtFactura.Text.Trim());
+                        SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        try
+                        {
+                            SqlDataReader SDR = SC.ExecuteReader();
+                            if (SDR.Read())
+                            {
+                                string VbMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
+
+                                if (!VbMensj.ToString().Trim().Equals(""))
+                                {
+                                    DataRow[] Result = Idioma.Select("Objeto= '" + VbMensj.ToString().Trim() + "'");
+                                    foreach (DataRow row in Result)
+                                    { VbMensj = row["Texto"].ToString().Trim(); }
+                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMensj + "');", true);
+                                    SDR.Close();
+                                    Transac.Rollback();
+                                    return;
+                                }
+                            }
+                            SDR.Close();
+                            Transac.Commit();
+                        }
+                        catch (Exception Ex)
+                        {
+                            Transac.Rollback();
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "Asentar Compra", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                        }
+                    }
+
+                }
+            }
+            Traerdatos(TxtNumCompra.Text.Trim(), "UPD");
+        }
+        protected void IbtDesasentar_Click(object sender, ImageClickEventArgs e)
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];           
+            if (TxtNumCompra.Text.Trim().Substring(0,2).Equals("33"))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens24Compra'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar  la factura de referencia.
+                return;
+            }
+
+            Cnx.SelecBD();
+            using (SqlConnection SCX = new SqlConnection(Cnx.GetConex()))
+            {
+                SCX.Open();
+                using (SqlTransaction Transac = SCX.BeginTransaction())
+                {
+                    string VBQuery = "EXEC SP_PANTALLA_Asentar_OrdenCompra 18, @PO, @FR, @US,'DESASENTAR',0,0,0, @ICC,'01-1-2009','01-01-1900','01-01-1900'";
+
+                    using (SqlCommand SC = new SqlCommand(VBQuery, SCX, Transac))
+                    {
+                        SC.Parameters.AddWithValue("@PO", TxtNumCompra.Text.Trim());
+                        SC.Parameters.AddWithValue("@FR", TxtFactura.Text.Trim());
+                        SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        try
+                        {
+                            SqlDataReader SDR = SC.ExecuteReader();
+                            if (SDR.Read())
+                            {
+                                string VbMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
+
+                                if (!VbMensj.ToString().Trim().Equals(""))
+                                {
+                                    DataRow[] Result = Idioma.Select("Objeto= '" + VbMensj.ToString().Trim() + "'");
+                                    foreach (DataRow row in Result)
+                                    { VbMensj = row["Texto"].ToString().Trim(); }
+                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMensj + "');", true);
+                                    Transac.Rollback();
+
+                                    return;
+                                }
+                            }
+                            SDR.Close();
+                            Transac.Commit();
+                            Traerdatos(TxtNumCompra.Text.Trim(), "UPD");
+                        }
+                        catch (Exception Ex)
+                        {
+                            Transac.Rollback();
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "Desasentar compra", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                         }
                     }
                 }

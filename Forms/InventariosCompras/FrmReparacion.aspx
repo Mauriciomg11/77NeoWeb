@@ -34,6 +34,15 @@
         .SubTituloLicencia {
             width: 60%;
         }
+
+        .CentrarExportar {
+            position: absolute;
+            left: 50%;
+            width: 40%;
+            margin-left: -20%;
+            height: 15%;
+            padding: 5px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
@@ -287,6 +296,19 @@
                     <div class="col-sm-4">
                         <asp:TextBox ID="TxtCCosto" runat="server" CssClass="form-control-sm heightCampo" Width="100%" Height="35px" Enabled="false" ToolTip="centro de costo" />
                     </div>
+                    <div class="col-sm-2">
+                                              <asp:Table ID="TblAprob" runat="server">
+                            <asp:TableRow>
+                                <asp:TableCell>
+                                    <asp:CheckBox ID="CkbAprobad" runat="server" CssClass="LblEtiquet" Text="Aprobada" Enabled="false" />
+                                </asp:TableCell>
+                                <asp:TableCell>&nbsp&nbsp</asp:TableCell>
+                                <asp:TableCell>
+                                    <asp:CheckBox ID="CkbAsentada" runat="server" CssClass="LblEtiquet" Text="Asentada" Enabled="false" />
+                                </asp:TableCell>
+                            </asp:TableRow>
+                        </asp:Table>
+                    </div>
                 </div>
             </div>
             <asp:MultiView ID="MultVw" runat="server">
@@ -357,18 +379,8 @@
                                 <asp:TextBox ID="TxtPpt" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" />
                             </div>
                             <div class="col-sm-2">
-                                <br />
-                                <asp:Table ID="TblAprob" runat="server">
-                                    <asp:TableRow>
-                                        <asp:TableCell>
-                                            <asp:CheckBox ID="CkbAprobad" runat="server" CssClass="LblEtiquet" Text="Aprobada" Enabled="false" />
-                                        </asp:TableCell>
-                                        <asp:TableCell>&nbsp&nbsp</asp:TableCell>
-                                        <asp:TableCell>
-                                            <asp:CheckBox ID="CkbAsentada" runat="server" CssClass="LblEtiquet" Text="Asentada" Enabled="false" />
-                                        </asp:TableCell>
-                                    </asp:TableRow>
-                                </asp:Table>
+                                 <asp:Label ID="LblFactura" runat="server" CssClass="LblEtiquet" Text="factura ref" />
+                                <asp:TextBox ID="TxtFactura" runat="server" CssClass="form-control-sm heightCampo TextR" MaxLength="50" Width="100%" step="0" onkeypress="return solonumeros(event);" Enabled="false" />
                             </div>
                         </div>
                         <div class="row">
@@ -689,11 +701,51 @@
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitImpresion" runat="server" Text="Impresión" />
                     </h6>
-                   <%-- <asp:Button ID="BtnImprPpal" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="5%" OnClick="BtnImprPpal_Click" Text="Principal" />
+                    <%-- <asp:Button ID="BtnImprPpal" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="5%" OnClick="BtnImprPpal_Click" Text="Principal" />
                     <asp:Button ID="BtnImprDet" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="5%" OnClick="BtnImprDet_Click" Text="Detalle" />--%>
                     <asp:ImageButton ID="IbtCerrarImpr" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarImpr_Click" />
                     <br />
                     <RpVw:ReportViewer ID="RpVwAll" runat="server" Width="98%" />
+                </asp:View>
+                <asp:View ID="Vw4Asentar" runat="server">
+                    <h6 class="TextoSuperior">
+                        <asp:Label ID="LblTitAsentar" runat="server" Text="Aprobar / Asentar Compra" />
+                    </h6>
+                    <asp:ImageButton ID="IbtCloseAsentar" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCloseAsentar_Click" />
+                    <div class="CentrarExportar DivMarco">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h6 class="TextoSuperior">
+                                            <asp:Label ID="LblTitOpcAprob" runat="server" Text="aprbar" />
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <asp:ImageButton ID="IbtAprobar" runat="server" ToolTip="aprobación" Width="60px" Height="60px" ImageUrl="~/images/UnCheck.png" OnClick="IbtAprobar_Click" />
+                                        <asp:ImageButton ID="IbtDesAprobar" runat="server" ToolTip="desaprobación" Width="60px" Height="60px" ImageUrl="~/images/Check1.png" OnClick="IbtDesAprobar_Click" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h6 class="TextoSuperior">
+                                            <asp:Label ID="LblTitOpcAsentr" runat="server" Text="asentar" />
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <asp:ImageButton ID="IbtAsentar" runat="server" ToolTip="asentar" Width="60px" Height="60px" ImageUrl="~/images/UnCheck.png" OnClick="IbtAsentar_Click" />
+                                        <asp:ImageButton ID="IbtDesasentar" runat="server" ToolTip="desasentar" Width="60px" Height="60px" ImageUrl="~/images/Check1.png" OnClick="IbtDesasentar_Click" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </asp:View>
             </asp:MultiView>
         </ContentTemplate>
@@ -702,6 +754,7 @@
             <asp:PostBackTrigger ControlID="BtnRepaLocal" />
             <asp:PostBackTrigger ControlID="BtnConsultar" />
             <asp:PostBackTrigger ControlID="BtnImprimir" />
+            <%--<asp:PostBackTrigger ControlID="IbtDesAprobar" />--%>
         </Triggers>
     </asp:UpdatePanel>
 </asp:Content>

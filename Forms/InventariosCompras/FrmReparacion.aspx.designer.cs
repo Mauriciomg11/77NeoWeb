@@ -222,6 +222,33 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected global::System.Web.UI.WebControls.TextBox TxtCCosto;
 
         /// <summary>
+        /// Control TblAprob.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table TblAprob;
+
+        /// <summary>
+        /// Control CkbAprobad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CkbAprobad;
+
+        /// <summary>
+        /// Control CkbAsentada.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CkbAsentada;
+
+        /// <summary>
         /// Control MultVw.
         /// </summary>
         /// <remarks>
@@ -474,31 +501,22 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected global::System.Web.UI.WebControls.TextBox TxtPpt;
 
         /// <summary>
-        /// Control TblAprob.
+        /// Control LblFactura.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table TblAprob;
+        protected global::System.Web.UI.WebControls.Label LblFactura;
 
         /// <summary>
-        /// Control CkbAprobad.
+        /// Control TxtFactura.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CkbAprobad;
-
-        /// <summary>
-        /// Control CkbAsentada.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CkbAsentada;
+        protected global::System.Web.UI.WebControls.TextBox TxtFactura;
 
         /// <summary>
         /// Control LblProvee.
@@ -1255,5 +1273,86 @@ namespace _77NeoWeb.Forms.InventariosCompras
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Microsoft.Reporting.WebForms.ReportViewer RpVwAll;
+
+        /// <summary>
+        /// Control Vw4Asentar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.View Vw4Asentar;
+
+        /// <summary>
+        /// Control LblTitAsentar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblTitAsentar;
+
+        /// <summary>
+        /// Control IbtCloseAsentar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton IbtCloseAsentar;
+
+        /// <summary>
+        /// Control LblTitOpcAprob.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblTitOpcAprob;
+
+        /// <summary>
+        /// Control IbtAprobar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton IbtAprobar;
+
+        /// <summary>
+        /// Control IbtDesAprobar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton IbtDesAprobar;
+
+        /// <summary>
+        /// Control LblTitOpcAsentr.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblTitOpcAsentr;
+
+        /// <summary>
+        /// Control IbtAsentar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton IbtAsentar;
+
+        /// <summary>
+        /// Control IbtDesasentar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton IbtDesasentar;
     }
 }

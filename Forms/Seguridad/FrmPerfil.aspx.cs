@@ -278,7 +278,7 @@ namespace _77NeoWeb.Forms.Seguridad
         protected void GrdDatosUsin_PageIndexChanging(object sender, GridViewPageEventArgs e)
         { GrdDatosUsin.PageIndex = e.NewPageIndex; BindData(TxtBusqueda.Text, TxtBusqUsu.Text, "SEL"); }
         protected void IbtConsultar_Click(object sender, ImageClickEventArgs e)
-        { BindData(TxtBusqueda.Text, TxtBusqUsu.Text, "SEL"); }
+        { BindData(TxtBusqueda.Text, TxtBusqUsu.Text, "UPD"); }
         protected void IbtAsignarPerfil_Click(object sender, ImageClickEventArgs e)
         {
             string VbCRUD = "";

@@ -94,7 +94,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             if (ClsP.GetImprimir() == 0) { ViewState["VblImpMS"] = 0; }//
             if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; }
             if (ClsP.GetCE1() == 0) { ViewState["VblCE1"] = 0; } // 
-            if (ClsP.GetCE2() == 0) { ViewState["VblCE2"] = 0; }//
+            if (ClsP.GetCE2() == 0) { ViewState["VblCE2"] = 0; BtnAsentar.Visible = false; }// asentar
             if (ClsP.GetCE3() == 0) { ViewState["VblCE3"] = 0; }//
             if (ClsP.GetCE4() == 0) { ViewState["VblCE4"] = 0; }//          
 
@@ -232,7 +232,28 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     LblOTAccParc.Text = bO.Equals("LblOTAccParc") ? bT : LblOTAccParc.Text;
                     LblTitImpresion.Text = bO.Equals("LblTitImpresionMstr") ? bT : LblTitImpresion.Text;
                     IbtCerrarImpr.ToolTip = bO.Equals("BtnCerrarMst") ? bT : IbtCerrarImpr.ToolTip;
+                    // ************************************************* Aprobar / Asentar *************************************************
+                    LblFactura.Text = bO.Equals("LblFactura") ? bT : LblFactura.Text;
+                    LblTitAsentar.Text = bO.Equals("LblTitAsentar") ? bT : LblTitAsentar.Text;
+                    IbtCloseAsentar.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCloseAsentar.ToolTip;
+                    LblTitOpcAprob.Text = bO.Equals("LblTitOpcAprob") ? bT : LblTitOpcAprob.Text;
+                    LblTitOpcAsentr.Text = bO.Equals("BtnAsentar") ? bT : LblTitOpcAsentr.Text;
+                    IbtAprobar.ToolTip = bO.Equals("IbtAprobar") ? bT : IbtAprobar.ToolTip;
+                    IbtDesAprobar.ToolTip = bO.Equals("IbtDesAprobar") ? bT : IbtDesAprobar.ToolTip;
+                    IbtAsentar.ToolTip = bO.Equals("BtnAsentar") ? bT : IbtAsentar.ToolTip;
+                    IbtDesasentar.ToolTip = bO.Equals("IbtDesasentar") ? bT : IbtDesasentar.ToolTip;
                 }
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens29Repa'");
+                foreach (DataRow row in Result) { IbtAprobar.OnClientClick = "return confirm('" + row["Texto"].ToString().Trim() + "');"; }//Desea aprobar la Repa?
+
+                Result = Idioma.Select("Objeto= 'Mens30Repa'");
+                foreach (DataRow row in Result) { IbtDesAprobar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }// Desea desaprobar la repa?
+
+                Result = Idioma.Select("Objeto= 'Mens31Repa'");
+                foreach (DataRow row in Result) { IbtAsentar.OnClientClick = "return confirm('" + row["Texto"].ToString().Trim() + "');"; }//Desea asentar la repa?
+
+                Result = Idioma.Select("Objeto= 'Mens32Repa'");
+                foreach (DataRow row in Result) { IbtDesasentar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }// Desea revertir el asiento la repa?
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
             }
@@ -504,6 +525,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     TxtHK.Text = DSTPpl.Tables[0].Rows[0]["Matricula"].ToString().Trim();
                     CkbAprobad.Checked = DSTPpl.Tables[0].Rows[0]["Aprobado"].ToString().Trim().Equals("1") ? true : false;
                     CkbAsentada.Checked = DSTPpl.Tables[0].Rows[0]["Asentado"].ToString().Trim().Equals("1") ? true : false;
+                    TxtFactura.Text = DSTPpl.Tables[0].Rows[0]["NumFactura"].ToString().Trim();
                     ViewState["CodTerceroAnt"] = DSTPpl.Tables[0].Rows[0]["CodProveedor"].ToString().Trim();
                     DdlEmplead.Text = DSTPpl.Tables[0].Rows[0]["CodEmpleado"].ToString().Trim();
                     ViewState["AutorizadAnt"] = DSTPpl.Tables[0].Rows[0]["CodAutorizador"].ToString().Trim();
@@ -569,6 +591,22 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     }
                     if (TxtOT.Text.Equals("0")) { BtnOTNew.Enabled = true; }
                     else { BtnOTNew.Enabled = false; }
+                    if (ViewState["RepaExtLocal"].ToString().Equals("E"))
+                    {
+                        if ((int)ViewState["VblCE2"] == 1)
+                        {
+                            BtnAsentar.Visible = true;
+
+                            if (CkbAsentada.Checked == true) { IbtAprobar.Visible = false; IbtDesAprobar.Visible = false; IbtAsentar.Visible = false; IbtDesasentar.Visible = true; }
+                            else
+                            {
+                                if (CkbAprobad.Checked == true) { IbtAprobar.Visible = false; IbtDesAprobar.Visible = true; IbtAsentar.Visible = true; IbtDesasentar.Visible = false; }
+                                else { IbtAprobar.Visible = true; IbtDesAprobar.Visible = false; IbtAsentar.Visible = false; IbtDesasentar.Visible = false; }
+                            }
+                        }
+                    }
+                    else { BtnAsentar.Visible = false; }
+
                     BindBDdl("SEL");
                 }
             }
@@ -588,8 +626,18 @@ namespace _77NeoWeb.Forms.InventariosCompras
             BtnRepaExterna.CssClass = "btn btn-outline-primary";
             BtnRepaLocal.CssClass = "btn btn-outline-primary";
             ViewState["RepaExtLocal"] = Tipo;
-            if (Tipo.Equals("E")) { BtnRepaExterna.CssClass = "btn btn-primary"; BtnSolPedInter.Visible = false; }
-            else { BtnRepaLocal.CssClass = "btn btn-primary"; BtnSolPedInter.Visible = true; }
+            if (Tipo.Equals("E"))
+            {
+                BtnRepaExterna.CssClass = "btn btn-primary"; BtnSolPedInter.Visible = false; CkbAprobad.Visible = true; CkbAsentada.Visible = true;
+                LblFactura.Visible = true; TxtFactura.Visible = true;
+                if ((int)ViewState["VblCE2"] == 1)
+                { BtnAsentar.Visible = true; }
+            }
+            else
+            {
+                BtnRepaLocal.CssClass = "btn btn-primary"; BtnSolPedInter.Visible = true; BtnAsentar.Visible = false;
+                CkbAprobad.Visible = false; CkbAsentada.Visible = false; LblFactura.Visible = false; TxtFactura.Visible = false;
+            }
             GrdModalBusqRepa.DataSource = null; GrdModalBusqRepa.DataBind();
             LimpiarCampos(""); MultVw.ActiveViewIndex = 0;
         }
@@ -632,6 +680,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             DdlAutoriz.Enabled = Edi;
             DdlEstd.Enabled = Edi;
             if (ViewState["RepaExtLocal"].ToString().Equals("E")) { DdlTransp.Enabled = Edi; }
+            if (ViewState["RepaExtLocal"].ToString().Equals("E")) { TxtFactura.Enabled = Edi; }
             DdlUbicac.Enabled = Edi;
             TxtRazonRemoc.Enabled = Edi;
             TxtObserv.Enabled = Edi;
@@ -668,6 +717,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             TxtPpt.Text = "";
             CkbAprobad.Checked = false;
             CkbAsentada.Checked = false;
+            TxtFactura.Text = "";
             DdlProvee.Text = "";
             DdlEmplead.Text = Session["C77U"].ToString().Trim();
             DdlAutoriz.Text = ViewState["AutorizadPpal"].ToString().Trim();
@@ -830,7 +880,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         Cantidad = Convert.ToDouble(TxtCant.Text.Trim().Equals("") ? "0" : TxtCant.Text.Trim()),
                         ReembolsableProv = "",
                         CuentaPuc = "",
-                        NumFactura = "",
+                        NumFactura = TxtFactura.Text.Trim(),
                         PNRepa = TxtlPN.Text.Trim(),
                         CodAeronaveRO = Convert.ToInt32(ViewState["CodHK"].ToString()),
                         PPT = Convert.ToInt32(TxtPpt.Text.Trim()),
@@ -972,7 +1022,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         Cantidad = Convert.ToDouble(TxtCant.Text.Trim().Equals("") ? "0" : TxtCant.Text.Trim()),
                         ReembolsableProv = "",
                         CuentaPuc = "",
-                        NumFactura = "",
+                        NumFactura = TxtFactura.Text.Trim(),
                         PNRepa = TxtlPN.Text.Trim(),
                         CodAeronaveRO = Convert.ToInt32(ViewState["CodHK"].ToString()),
                         PPT = Convert.ToInt32(TxtPpt.Text.Trim()),
@@ -1033,11 +1083,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "MODIFICAR Reparación", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
-        protected void BtnAsentar_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected void BtnOpenCotiza_Click(object sender, EventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
@@ -1406,7 +1451,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
             MultVw.ActiveViewIndex = 2;
         }
         protected void ActivarBtnOT(bool In, bool Md, bool Otr, string Accion)
-        {            BtnOpenOT.Enabled = Otr;            BtnOTCerrar.Enabled = Otr;
+        {
+            BtnOpenOT.Enabled = Otr; BtnOTCerrar.Enabled = Otr;
         }
         protected void LimpiarCamposOT(string Accion)
         {
@@ -1681,27 +1727,27 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
             Result = Idioma.Select("Objeto= 'InfDescto'");
             foreach (DataRow row in Result) { DR["MltlC23"] = row["Texto"].ToString().Trim() + ":"; }// descuento
-           
+
             Result = Idioma.Select("Objeto= 'InfMonto'");
             foreach (DataRow row in Result) { DR["MltlC24"] = row["Texto"].ToString().Trim() + ":"; }// Monto
 
             Result = Idioma.Select("Objeto= 'InfFecTRM'");
             foreach (DataRow row in Result) { DR["MltlC25"] = row["Texto"].ToString().Trim() + ":"; }// Valor TRM
-           
-            DR["MltlC26"] = "";
-            if (CkbRepair.Checked == true) { DR["MltlC26"] = DR["MltlC26"]+ CkbRepair.Text; }
-            if (CkbBancoPrueb.Checked == true) { DR["MltlC26"] = DR["MltlC26"]+ " - " + CkbBancoPrueb.Text; }
-            if (CkbOH.Checked == true) { DR["MltlC26"] = DR["MltlC26"]+ " - " + CkbOH.Text; }
-            if (CkbModifc.Checked == true) { DR["MltlC26"] =  DR["MltlC26"]+ " - " +CkbModifc.Text; }
-            if (CkbCalibrac.Checked == true) { DR["MltlC26"] = DR["MltlC26"]+ " - " + CkbCalibrac.Text; }
-            if (CkbOtros.Checked == true) { DR["MltlC26"] = DR["MltlC26"]+ " - " + CkbOtros.Text; }
 
-            DR["MltlC27"] = LblTitInstruc.Text+":";          
+            DR["MltlC26"] = "";
+            if (CkbRepair.Checked == true) { DR["MltlC26"] = DR["MltlC26"] + CkbRepair.Text; }
+            if (CkbBancoPrueb.Checked == true) { DR["MltlC26"] = DR["MltlC26"] + " - " + CkbBancoPrueb.Text; }
+            if (CkbOH.Checked == true) { DR["MltlC26"] = DR["MltlC26"] + " - " + CkbOH.Text; }
+            if (CkbModifc.Checked == true) { DR["MltlC26"] = DR["MltlC26"] + " - " + CkbModifc.Text; }
+            if (CkbCalibrac.Checked == true) { DR["MltlC26"] = DR["MltlC26"] + " - " + CkbCalibrac.Text; }
+            if (CkbOtros.Checked == true) { DR["MltlC26"] = DR["MltlC26"] + " - " + CkbOtros.Text; }
+
+            DR["MltlC27"] = LblTitInstruc.Text + ":";
 
             Result = Idioma.Select("Objeto= 'InfBoltIng'");
             foreach (DataRow row in Result) { DR["MltlC28"] = row["Texto"].ToString().Trim() + ":"; }// Beletines Ingeniería
 
-            DR["MltlC29"] = LblObserv.Text+":";
+            DR["MltlC29"] = LblObserv.Text + ":";
 
             Result = Idioma.Select("Objeto= 'InfDevoluc'");
             foreach (DataRow row in Result) { DR["MltlC30"] = row["Texto"].ToString().Trim() + ":"; }// La Unidad Se Debe Devolver Con
@@ -1714,7 +1760,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
             DR["MltlC33"] = "";
             if (CkbLibera1.Checked == true) { DR["MltlC33"] = CkbLibera1.Text + "." + "\n"; }
-            if (CkbCertifCalib2.Checked == true) { DR["MltlC33"] = DR["MltlC33"] +CkbCertifCalib2.Text+"." + "\n"; }
+            if (CkbCertifCalib2.Checked == true) { DR["MltlC33"] = DR["MltlC33"] + CkbCertifCalib2.Text + "." + "\n"; }
             if (CkbTrabaPedi3.Checked == true) { DR["MltlC33"] = DR["MltlC33"] + CkbTrabaPedi3.Text + "." + "\n"; }
             if (CkbEstandUtili4.Checked == true) { DR["MltlC33"] = DR["MltlC33"] + CkbEstandUtili4.Text + "." + "\n"; }
             if (CkbCumplirTodoBolet5.Checked == true) { DR["MltlC33"] = DR["MltlC33"] + CkbCumplirTodoBolet5.Text + "." + "\n"; }
@@ -1724,12 +1770,12 @@ namespace _77NeoWeb.Forms.InventariosCompras
             foreach (DataRow row in Result) { DR["MltlC34"] = row["Texto"].ToString().Trim(); }// Preparado Por
 
             Result = Idioma.Select("Objeto= 'InfAutorPor'");
-            foreach (DataRow row in Result) { DR["MltlC35"] = row["Texto"].ToString().Trim() ; }// Firma Autorizada
+            foreach (DataRow row in Result) { DR["MltlC35"] = row["Texto"].ToString().Trim(); }// Firma Autorizada
 
             DR["MltlC36"] = CkbOtros.Text + ":";
 
             DTMultL.AcceptChanges();
-            string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim() );
+            string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
             Cnx.SelecBD();
             using (SqlConnection SCnx1 = new SqlConnection(Cnx.GetConex()))
             {
@@ -1748,6 +1794,304 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 RpVwAll.LocalReport.SetParameters(parameters);
                 RpVwAll.LocalReport.Refresh();
 
+            }
+        }
+        //****************************** Aprobar / Asentar **************************************       
+        protected void BtnAsentar_Click(object sender, EventArgs e)
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            if (TxtNumRepa.Text.Equals(""))
+            { return; }
+
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+            DataRow[] DR;
+            DataTable DT = new DataTable();
+            if (DSTDdl.Tables["Autorizado"].Rows.Count > 0)
+            {
+                DR = DSTDdl.Tables[2].Select("Rango = 'Igual_Mayor' AND CodUsuario = '" + Session["C77U"].ToString().Trim() + "'");
+                if (IsIENumerableLleno(DR))
+                { DT = DR.CopyToDataTable(); }
+                else
+                {
+                    string VbQuery = "";
+                    switch (TxtMoned.Text.Trim())
+                    {
+                        case "COP":
+                            VbQuery = "Rango = 'Menor' AND CodUsuario = '" + Session["C77U"].ToString().Trim() + "' AND ValorCop >" + ViewState["Total"].ToString();
+                            break;
+                        case "USD":
+                            VbQuery = "Rango = 'Menor' AND CodUsuario = '" + Session["C77U"].ToString().Trim() + "' AND ValorUSD >" + ViewState["Total"].ToString();
+                            break;
+                        default:
+                            VbQuery = "Rango = 'Menor' AND CodUsuario = '" + Session["C77U"].ToString().Trim() + "' AND ValorEURO >" + ViewState["Total"].ToString();
+                            break;
+                    }
+                    DR = DSTDdl.Tables[2].Select(VbQuery);
+                    if (IsIENumerableLleno(DR))
+                    { DT = DR.CopyToDataTable(); }
+                    else
+                    {
+                        DataRow[] Result = Idioma.Select("Objeto= 'Mens24Repa'");
+                        foreach (DataRow row in Result)
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Acceso denegado, verificar configuración aprobacion compras.
+                        return;
+                    }
+                }
+            }
+
+            MultVw.ActiveViewIndex = 4;
+
+        }
+        protected void IbtCloseAsentar_Click(object sender, ImageClickEventArgs e)
+        { MultVw.ActiveViewIndex = 0; }
+        protected void IbtAprobar_Click(object sender, ImageClickEventArgs e)
+        {
+            string VbEjecPlano = "N";
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            Cnx.SelecBD();
+            using (SqlConnection SCX = new SqlConnection(Cnx.GetConex()))
+            {
+                SCX.Open();
+                using (SqlTransaction Transac = SCX.BeginTransaction())
+                {
+                    string VBQuery = "EXEC SP_Pantalla_Asentar_Repa 9, @PO, @FR, @US,'APROBAR','',0, 0,0, @ICC,'01-01-1','01-01-1'";
+
+                    using (SqlCommand SC = new SqlCommand(VBQuery, SCX, Transac))
+                    {
+                        SC.Parameters.AddWithValue("@PO", TxtNumRepa.Text.Trim());
+                        SC.Parameters.AddWithValue("@FR", TxtFactura.Text.Trim());// 
+                        SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        try
+                        {
+                            //var Mensj = SC.ExecuteScalar();
+                            SqlDataReader SDR = SC.ExecuteReader();
+                            if (SDR.Read())
+                            {
+                                string VbMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
+                                VbEjecPlano = HttpUtility.HtmlDecode(SDR["EjecPlano"].ToString().Trim());
+                                string VbOtrosDatos = HttpUtility.HtmlDecode(SDR["OtrosDatos"].ToString().Trim());
+                                if (!VbOtrosDatos.Trim().Equals("")) { VbOtrosDatos = " [" + VbOtrosDatos.Trim() + "]"; }
+
+                                if (!VbMensj.ToString().Trim().Equals(""))
+                                {
+                                    DataRow[] Result = Idioma.Select("Objeto= '" + VbMensj.ToString().Trim() + "'");
+                                    foreach (DataRow row in Result)
+                                    { VbMensj = row["Texto"].ToString().Trim(); }
+                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMensj + VbOtrosDatos + "');", true);
+                                    SDR.Close();
+                                    Transac.Rollback();
+                                    return;
+                                }
+                            }
+                            SDR.Close();
+                            Transac.Commit();
+                        }
+                        catch (Exception Ex)
+                        {
+                            Transac.Rollback();
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "Aprobar Compra", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                        }
+                    }
+
+                }
+            }
+            Traerdatos(TxtNumRepa.Text.Trim(), "UPD");
+            if (VbEjecPlano.Trim().Equals("S"))
+            {
+                Cnx.SelecBD();
+                using (SqlConnection SCXP = new SqlConnection(Cnx.GetConex()))
+                {
+                    SCXP.Open();
+                    string VBQuery = "EXEC SP_Pantalla_Asentar_Repa 10, @PO, '', @US,'','',0, 0,0, @ICC,'01-01-1','01-01-1'";
+                    using (SqlCommand SC = new SqlCommand(VBQuery, SCXP))
+                    {
+                        SC.Parameters.AddWithValue("@PO", TxtNumRepa.Text.Trim());
+                        SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        try
+                        { SC.ExecuteNonQuery(); }
+                        catch (Exception ex)
+                        {
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); } //Error en el proceso de eliminación')", true);
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString(), "PLANOS Aprobar Repa", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                        }
+                    }
+                }
+            }
+        }
+        protected void IbtDesAprobar_Click(object sender, ImageClickEventArgs e)
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            Cnx.SelecBD();
+            using (SqlConnection SCX = new SqlConnection(Cnx.GetConex()))
+            {
+                SCX.Open();
+                using (SqlTransaction Transac = SCX.BeginTransaction())
+                {
+                    string VBQuery = "EXEC SP_Pantalla_Asentar_Repa 9, @PO, @FR, @US,'DESAPROBAR','',0, 0,0, @ICC,'01-01-1','01-01-1'";
+
+                    using (SqlCommand SC = new SqlCommand(VBQuery, SCX, Transac))
+                    {
+                        SC.Parameters.AddWithValue("@PO", TxtNumRepa.Text.Trim());
+                        SC.Parameters.AddWithValue("@FR", TxtFactura.Text.Trim());
+                        SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        try
+                        {
+                            SqlDataReader SDR = SC.ExecuteReader();
+                            if (SDR.Read())
+                            {
+                                string VbMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
+
+                                if (!VbMensj.ToString().Trim().Equals(""))
+                                {
+                                    DataRow[] Result = Idioma.Select("Objeto= '" + VbMensj.ToString().Trim() + "'");
+                                    foreach (DataRow row in Result)
+                                    { VbMensj = row["Texto"].ToString().Trim(); }
+                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMensj + "');", true);
+                                    Transac.Rollback();
+
+                                    return;
+                                }
+                            }
+                            SDR.Close();
+                            Transac.Commit();
+                            Traerdatos(TxtNumRepa.Text.Trim(), "UPD");
+                        }
+                        catch (Exception Ex)
+                        {
+                            Transac.Rollback();
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "UPDATE", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                        }
+                    }
+                }
+            }
+        }
+        protected void IbtAsentar_Click(object sender, ImageClickEventArgs e)
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+
+            if (TxtFactura.Text.Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens33Repa'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// Debe ingresar  la factura del proveedor.
+                return;
+            }
+
+            Cnx.SelecBD();
+            using (SqlConnection SCX = new SqlConnection(Cnx.GetConex()))
+            {
+                SCX.Open();
+                using (SqlTransaction Transac = SCX.BeginTransaction())
+                {
+                    string VBQuery = "EXEC SP_Pantalla_Asentar_Repa 11, @PO, @FR, @US,'ASENTAR','',0, 0,0,@ICC,'01-01-1','01-01-1'";
+
+                    using (SqlCommand SC = new SqlCommand(VBQuery, SCX, Transac))
+                    {
+                        SC.Parameters.AddWithValue("@PO", TxtNumRepa.Text.Trim());
+                        SC.Parameters.AddWithValue("@FR", TxtFactura.Text.Trim());
+                        SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        try
+                        {
+                            SqlDataReader SDR = SC.ExecuteReader();
+                            if (SDR.Read())
+                            {
+                                string VbMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
+                                string VbOtrosDatos = HttpUtility.HtmlDecode(SDR["OtrosDatos"].ToString().Trim());
+
+                                if (!VbOtrosDatos.Trim().Equals("")) { VbOtrosDatos = " [" + VbOtrosDatos.Trim() + "]"; }
+
+                                if (!VbMensj.ToString().Trim().Equals(""))
+                                {
+                                    DataRow[] Result = Idioma.Select("Objeto= '" + VbMensj.ToString().Trim() + "'");
+                                    foreach (DataRow row in Result)
+                                    { VbMensj = row["Texto"].ToString().Trim(); }
+                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMensj + VbOtrosDatos + "');", true);
+                                    SDR.Close();
+                                    Transac.Rollback();
+                                    return;
+                                }
+                            }
+                            SDR.Close();
+                            Transac.Commit();
+                        }
+                        catch (Exception Ex)
+                        {
+                            Transac.Rollback();
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "Asentar Compra", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                        }
+                    }
+
+                }
+            }
+            Traerdatos(TxtNumRepa.Text.Trim(), "UPD");
+        }
+        protected void IbtDesasentar_Click(object sender, ImageClickEventArgs e)
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            if (TxtNumRepa.Text.Trim().Substring(0, 2).Equals("28"))
+            { return; }
+
+            Cnx.SelecBD();
+            using (SqlConnection SCX = new SqlConnection(Cnx.GetConex()))
+            {
+                SCX.Open();
+                using (SqlTransaction Transac = SCX.BeginTransaction())
+                {
+                    string VBQuery = "EXEC SP_Pantalla_Asentar_Repa 11, @PO, @FR, @US,'DESASENTAR','',0, 0,0,@ICC,'01-01-1','01-01-1'";
+
+                    using (SqlCommand SC = new SqlCommand(VBQuery, SCX, Transac))
+                    {
+                        SC.Parameters.AddWithValue("@PO", TxtNumRepa.Text.Trim());
+                        SC.Parameters.AddWithValue("@FR", TxtFactura.Text.Trim());
+                        SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        try
+                        {
+                            SqlDataReader SDR = SC.ExecuteReader();
+                            if (SDR.Read())
+                            {
+                                string VbMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
+
+                                if (!VbMensj.ToString().Trim().Equals(""))
+                                {
+                                    DataRow[] Result = Idioma.Select("Objeto= '" + VbMensj.ToString().Trim() + "'");
+                                    foreach (DataRow row in Result)
+                                    { VbMensj = row["Texto"].ToString().Trim(); }
+                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMensj + "');", true);
+                                    Transac.Rollback();
+
+                                    return;
+                                }
+                            }
+                            SDR.Close();
+                            Transac.Commit();
+                            Traerdatos(TxtNumRepa.Text.Trim(), "UPD");
+                        }
+                        catch (Exception Ex)
+                        {
+                            Transac.Rollback();
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "Desasentar Reparación", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                        }
+                    }
+                }
             }
         }
     }
