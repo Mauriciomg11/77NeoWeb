@@ -1,15 +1,14 @@
-﻿using System;
+﻿using _77NeoWeb.prg;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using _77NeoWeb.prg;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web;
 
 namespace _77NeoWeb.Prg.PrgIngenieria
 {
     public class CsTypeServicioManto
-    {        
+    {
         static public int VbID;
         public int IdSrvManto { get; set; }
         public string CodServicioManto { get; set; }
@@ -40,7 +39,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         public int VisualizarStatus { get; set; }
         public string ServicioMayor { get; set; }
         public string Accion { get; set; }
-        public string Aplicabilidad { get; set; }       
+        public string Aplicabilidad { get; set; }
 
         public void Alimentar(IEnumerable<CsTypeServicioManto> TblServicioManto)
         {
@@ -105,7 +104,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                         Campos.SubComponenteSM,
                         Campos.CodTaller,
                         Campos.CodReferenciaSrv,
-                         Campos.Catalogo,
+                        Campos.Catalogo,
                         Campos.ValidarRecurso,
                         Campos.VisualizarStatus,
                         Campos.ServicioMayor,
@@ -130,8 +129,8 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                             Prmtrs.SqlDbType = SqlDbType.Structured;
                             //sqlCmd.ExecuteNonQuery();
                             var Id = sqlCmd.ExecuteScalar();
-                            if (Id!=null)
-                            { VbID = Convert.ToInt32(Id.ToString()); }                            
+                            if (Id != null)
+                            { VbID = Convert.ToInt32(Id.ToString()); }
                             transaction.Commit();
                         }
                         catch (Exception Ex)

@@ -1,11 +1,8 @@
 ﻿using _77NeoWeb.prg;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -199,7 +196,7 @@ namespace _77NeoWeb.Forms.Almacen
         protected void BtnAprobar_Click(object sender, EventArgs e)
         {
             DTConslt = (DataTable)ViewState["DTConslt"];
-           // DTConslt.AcceptChanges();
+            // DTConslt.AcceptChanges();
             DataTable TblDetPedido = new DataTable();
             TblDetPedido.Columns.Add("IdDetPedido", typeof(int));
             TblDetPedido.Columns.Add("CodReferencia", typeof(string));
@@ -234,11 +231,11 @@ namespace _77NeoWeb.Forms.Almacen
                     double VbCntT = Convert.ToDouble((Row.FindControl("LblCant") as Label).Text.Trim());
                     int VbPosc = Convert.ToInt32((Row.FindControl("LblPosc") as Label).Text.Trim());
                     string VbDescr = (Row.FindControl("LblDescr") as Label).Text.Trim();
-                    string VbFec = (Row.FindControl("LblFecha") as Label).Text.Trim();
+                    string VbFec = Cnx.ReturnFecha(GrdBusq.DataKeys[Row.RowIndex].Values["FechaDMY"].ToString());
 
                     TblDetPedido.Rows.Add(IdDetPed, VbRef, VbPn, "UndMed", VbCntT, 1, 0, 1, VbPosc, 1, "SOL", VbDescr, 1, 1, "Notas", 0, 0, 0, 0, 0, Convert.ToDateTime(VbFec), 0);
                 }
-            }               
+            }
             Cnx.SelecBD();
             using (SqlConnection SCX = new SqlConnection(Cnx.GetConex()))
             {

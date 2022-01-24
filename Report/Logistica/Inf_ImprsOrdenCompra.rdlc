@@ -965,8 +965,8 @@
             <DataSetName>DataSet1</DataSetName>
             <Top>0.12206cm</Top>
             <Left>0.01588cm</Left>
-            <Height>0.93543cm</Height>
-            <Width>18.82256cm</Width>
+            <Height>0.93542cm</Height>
+            <Width>18.82255cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1673,7 +1673,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Globals!ExecutionTime</Value>
+                      <Value>=Format(CDate(Globals!ExecutionTime), First(Fields!MltlC32.Value, "DataSet2"))</Value>
                       <Style>
                         <FontSize>8pt</FontSize>
                       </Style>

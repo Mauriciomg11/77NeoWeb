@@ -221,6 +221,14 @@
           <DataField>MltlHH</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="FechPpt">
+          <DataField>FechPpt</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CodigoPPT">
+          <DataField>CodigoPPT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DataSet1</rd:DataSetName>
@@ -1303,7 +1311,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -4604,7 +4611,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!IdPropuesta.Value, "DataSet1")</Value>
+                      <Value>=First(Fields!CodigoPPT.Value, "DataSet1")</Value>
                       <Style>
                         <FontSize>9pt</FontSize>
                       </Style>
@@ -4619,42 +4626,8 @@
               <Top>2.40493cm</Top>
               <Left>3.30732cm</Left>
               <Height>0.52062cm</Height>
-              <Width>1.94312cm</Width>
+              <Width>2.26062cm</Width>
               <ZIndex>4</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox2">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Globals!ExecutionTime</Value>
-                      <Style>
-                        <FontSize>8pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.47244in</Top>
-              <Left>5.75784in</Left>
-              <Height>0.25in</Height>
-              <Width>1.44791in</Width>
-              <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4687,7 +4660,7 @@
               <Left>10.40634cm</Left>
               <Height>0.52062cm</Height>
               <Width>3.07801cm</Width>
-              <ZIndex>6</ZIndex>
+              <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4721,7 +4694,7 @@
               <Left>13.71365cm</Left>
               <Height>0.52062cm</Height>
               <Width>4.58896cm</Width>
-              <ZIndex>7</ZIndex>
+              <ZIndex>6</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4754,7 +4727,7 @@
               <Left>10.40634cm</Left>
               <Height>0.52062cm</Height>
               <Width>3.07801cm</Width>
-              <ZIndex>8</ZIndex>
+              <ZIndex>7</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4772,7 +4745,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!FechaPropuesta.Value, "DataSet1")</Value>
+                      <Value>=First(Fields!FechPpt.Value, "DataSet1")</Value>
                       <Style>
                         <FontSize>9pt</FontSize>
                       </Style>
@@ -4788,7 +4761,7 @@
               <Left>13.71365cm</Left>
               <Height>0.52062cm</Height>
               <Width>4.58896cm</Width>
-              <ZIndex>9</ZIndex>
+              <ZIndex>8</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4821,7 +4794,7 @@
               <Left>0.00001cm</Left>
               <Height>0.52062cm</Height>
               <Width>3.07801cm</Width>
-              <ZIndex>10</ZIndex>
+              <ZIndex>9</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4855,7 +4828,7 @@
               <Left>3.30732cm</Left>
               <Height>0.52062cm</Height>
               <Width>6.66625cm</Width>
-              <ZIndex>11</ZIndex>
+              <ZIndex>10</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4887,7 +4860,7 @@
               <Top>3.76367cm</Top>
               <Height>0.52062cm</Height>
               <Width>3.07801cm</Width>
-              <ZIndex>12</ZIndex>
+              <ZIndex>11</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4921,7 +4894,7 @@
               <Left>3.30731cm</Left>
               <Height>0.52062cm</Height>
               <Width>5.52855cm</Width>
-              <ZIndex>13</ZIndex>
+              <ZIndex>12</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4954,7 +4927,7 @@
               <Left>10.40634cm</Left>
               <Height>0.52062cm</Height>
               <Width>3.07801cm</Width>
-              <ZIndex>14</ZIndex>
+              <ZIndex>13</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4988,7 +4961,7 @@
               <Left>13.71365cm</Left>
               <Height>0.52062cm</Height>
               <Width>4.58896cm</Width>
-              <ZIndex>15</ZIndex>
+              <ZIndex>14</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -5003,7 +4976,7 @@
               <Top>2.3151cm</Top>
               <Height>0cm</Height>
               <Width>18.3877cm</Width>
-              <ZIndex>16</ZIndex>
+              <ZIndex>15</ZIndex>
               <Style>
                 <Border>
                   <Style>Solid</Style>
@@ -5014,7 +4987,7 @@
               <Top>3.04535cm</Top>
               <Height>0cm</Height>
               <Width>18.3877cm</Width>
-              <ZIndex>17</ZIndex>
+              <ZIndex>16</ZIndex>
               <Style>
                 <Border>
                   <Style>Solid</Style>
@@ -5025,7 +4998,7 @@
               <Top>3.7121cm</Top>
               <Height>0cm</Height>
               <Width>18.3877cm</Width>
-              <ZIndex>18</ZIndex>
+              <ZIndex>17</ZIndex>
               <Style>
                 <Border>
                   <Style>Solid</Style>
@@ -5054,7 +5027,7 @@
               <Left>5.83252cm</Left>
               <Height>0.52062cm</Height>
               <Width>2.7658cm</Width>
-              <ZIndex>19</ZIndex>
+              <ZIndex>18</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -5088,7 +5061,7 @@
               <Left>8.69184cm</Left>
               <Height>0.52062cm</Height>
               <Width>1.15473cm</Width>
-              <ZIndex>20</ZIndex>
+              <ZIndex>19</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -5103,7 +5076,7 @@
               <Top>4.34975cm</Top>
               <Height>0cm</Height>
               <Width>18.3877cm</Width>
-              <ZIndex>21</ZIndex>
+              <ZIndex>20</ZIndex>
               <Style>
                 <Border>
                   <Style>Solid</Style>

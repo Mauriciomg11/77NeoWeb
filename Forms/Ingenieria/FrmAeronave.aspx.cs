@@ -4,14 +4,11 @@ using _77NeoWeb.Prg.PrgLogistica;
 using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace _77NeoWeb.Forms.Ingenieria
 {
@@ -331,6 +328,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["Validar"] = "N";
                 return;
             }
+
+            string VbMnsj = Cnx.ValidarFechas2(TxtFecFabr.Text.Trim(), TxtFecIngr.Text.Trim(), 2);
+            if (!VbMnsj.ToString().Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                foreach (DataRow row in Result)
+                { VbMnsj = row["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                Page.Title = ViewState["PageTit"].ToString(); TxtFecFabr.Focus(); ViewState["Validar"] = "N";
+                return;
+            }
         }
         protected void Traerdatos(string Prmtr, string Accion)
         {
@@ -394,9 +402,7 @@ namespace _77NeoWeb.Forms.Ingenieria
 
             DataRow[] Result = DSTDet.Tables[1].Select("CodAeronave = " + DdlBusqHK.Text.Trim());
             foreach (DataRow SDR in Result)
-            {
-                string VbFecha;
-                DateTime? FechaD;
+            {               
                 TxtCodHk.Text = SDR["CodAeronave"].ToString();
                 string CodEstado = HttpUtility.HtmlDecode(SDR["CodEstadoAeronave"].ToString().Trim());
                 string CodCC = HttpUtility.HtmlDecode(SDR["CentroDeCosto"].ToString().Trim());
@@ -404,28 +410,20 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CkbActiva.Checked = Convert.ToBoolean(SDR["Activa"].ToString());
                 TxtMatr.Text = HttpUtility.HtmlDecode(SDR["Matricula"].ToString().Trim());
                 TxtSn.Text = HttpUtility.HtmlDecode(SDR["SN"].ToString().Trim());
-                VbFecha = HttpUtility.HtmlDecode(SDR["FechaFabricante"].ToString().Trim());
-                if (!VbFecha.Trim().Equals(""))
-                { FechaD = Convert.ToDateTime(VbFecha); TxtFecFabr.Text = String.Format("{0:dd/MM/yyyy}", FechaD); }
-                else
-                { TxtFecFabr.Text = ""; }
+                TxtFecFabr.Text = Cnx.ReturnFecha(SDR["FechaFabricante"].ToString().Trim());
+               
                 CkbAdmon.Checked = Convert.ToBoolean(SDR["Administrada"].ToString());
                 CkbPropiedad.Checked = Convert.ToBoolean(SDR["Propiedad"].ToString());
                 DdlModelo.Text = HttpUtility.HtmlDecode(SDR["CodModelo"].ToString().Trim());
                 DdlTipo.Text = HttpUtility.HtmlDecode(SDR["CodTipoAeronave"].ToString().Trim());
                 DdlPropie.Text = HttpUtility.HtmlDecode(SDR["CodPropietario"].ToString().Trim());
-                VbFecha = HttpUtility.HtmlDecode(SDR["FechaIngreso"].ToString().Trim());
-                if (!VbFecha.Trim().Equals(""))
-                { FechaD = Convert.ToDateTime(VbFecha); TxtFecIngr.Text = String.Format("{0:dd/MM/yyyy}", FechaD); }
-                else
-                { TxtFecIngr.Text = ""; }
+                TxtFecIngr.Text = Cnx.ReturnFecha(SDR["FechaIngreso"].ToString().Trim()); ;               
                 TxtTSN.Text = SDR["TSN"].ToString().Trim();
                 TxtCSN.Text = SDR["CSN"].ToString();
                 TxtDescri.Text = HttpUtility.HtmlDecode(SDR["Descripcion"].ToString().Trim());
                 ViewState["AC_Virtual"] = Convert.ToInt32(SDR["AC_Virtual"].ToString().Trim());
                 DdlModelo.ToolTip = "";
             }
-
         }
         protected void ActivarBtn(bool In, bool Md, bool El, bool Ip, bool Otr)
         {
@@ -447,7 +445,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             CkbAdmon.Enabled = Edi;
             TxtSn.Enabled = Edi;
             DdlCcosto.Enabled = Edi;
-            IbtFecFabr.Enabled = Edi;
+            TxtFecFabr.Enabled = Edi;
 
             CkbPropiedad.Enabled = Edi;
             DdlModelo.Enabled = Edi;
@@ -457,7 +455,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlTipo.Enabled = Edi;
             DdlPropie.Enabled = Edi;
             DdlEstado.Enabled = Edi;
-            IbtFecIngr.Enabled = Edi;
+            TxtFecIngr.Enabled = Edi;
             TxtDescri.Enabled = Edi;
 
         }

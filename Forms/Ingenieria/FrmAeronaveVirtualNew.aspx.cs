@@ -3,7 +3,6 @@ using _77NeoWeb.Prg.PrgIngenieria;
 using AjaxControlToolkit;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -53,13 +52,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["CodModelo"] = "";
                 ViewState["ValidaFechaSvc"] = "N";
                 ViewState["TieneCompensacion"] = "N";
-                ViewState["Propiedad"] = 2;// 0= Propiedad Cia| 1=ajeno (Cliente) para la creacion de los componentes
-                //CalFechaInsElem.EndDate = DateTime.Now;
-               // CalFechaRemElem.EndDate = DateTime.Now;
-                CalFechaInsMay.EndDate = DateTime.Now;
-                CalFechaRemMay.EndDate = DateTime.Now;
-                CalFechaInsSubC.EndDate = DateTime.Now;
-                CalFechaRemSubC.EndDate = DateTime.Now;
+                ViewState["Propiedad"] = 2;// 0= Propiedad Cia| 1=ajeno (Cliente) para la creacion de los componentes               
                 CalCrearElemFechRec.EndDate = DateTime.Now;
                 CalCrearElemFechFabr.EndDate = DateTime.Now;
                 MultVw.ActiveViewIndex = 0;
@@ -912,6 +905,24 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void TxtFecUltCumpl_TextChanged(object sender, EventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+
+            var Cntrl = (Control)sender;
+            GridViewRow row = (GridViewRow)Cntrl.NamingContainer;
+            int rowIndex = row.RowIndex;
+            TextBox TxtFecUltCumpl = (TextBox)GrdSvcInsElem.Rows[rowIndex].FindControl("TxtFecUltCumpl");
+
+            Cnx.ValidarFechas(TxtFecUltCumpl.Text.Trim(), "", 1);
+            var MensjF = Cnx.GetMensj();
+            if (!MensjF.ToString().Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                foreach (DataRow DR in Result)
+                { MensjF = DR["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                Page.Title = ViewState["PageTit"].ToString();
+                return;
+            }
             ViewState["ValidaFechaSvc"] = "N";
         }
         protected void GrdBusq_SelectedIndexChanged(object sender, EventArgs e) //OK
@@ -1042,7 +1053,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 var MensjF = Cnx.GetMensj();
                 if (!MensjF.ToString().Trim().Equals(""))
                 {
-                   Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                    Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
                     foreach (DataRow row in Result)
                     { MensjF = row["Texto"].ToString().Trim(); }
                     ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
@@ -1180,7 +1191,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     foreach (DataRow row in Result1)
                     { Mensj = row["Texto"].ToString().Trim(); }
 
-                    ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
                     return;
                 }
                 BIndDHisElemInsElem(ViewState["CodElemento"].ToString().Trim());
@@ -1210,13 +1221,12 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GrdSvcInsElem_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            string VbFecSt;
+            DateTime? VbFecDT;
             Idioma = (DataTable)ViewState["TablaIdioma"];
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                CalendarExtender CalFecUltCumpl = e.Row.FindControl("CalFecUltCumpl") as CalendarExtender;
-                CalFecUltCumpl.EndDate = DateTime.Now;
-
                 DataRowView dr = e.Row.DataItem as DataRowView;
                 string VbContEsReset = dr["Reseteable"].ToString();
                 string VbSvcEsReset = dr["Reseteable"].ToString();
@@ -1246,6 +1256,20 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens20HkVrt'");
                     foreach (DataRow row in Result)
                     { TxtCumpHist.ToolTip = row["Texto"].ToString().Trim(); }//Tiene hojas procesadas en el histórico de contadores.";
+                }
+
+                VbFecSt = dr["FechaVencWeb"].ToString().Trim().Equals("") ? "01/01/1900" : dr["FechaVencWeb"].ToString().Trim();
+                VbFecDT = Convert.ToDateTime(VbFecSt);
+
+                if (MultVw.ActiveViewIndex == 8) //Instalar SubComp
+                {
+                    TextBox TxtFecUltCumplInsSubC = e.Row.FindControl("TxtFecUltCumplInsSubC") as TextBox;
+                    TxtFecUltCumplInsSubC.Text = VbFecSt.Trim().Equals("01/01/1900") ? "" : string.Format("{0:yyyy-MM-dd}", VbFecDT);
+                }
+                else//Instalar Componente
+                {
+                    TextBox TxtFecUltCumpl = e.Row.FindControl("TxtFecUltCumpl") as TextBox;
+                    TxtFecUltCumpl.Text = VbFecSt.Trim().Equals("01/01/1900") ? "" : string.Format("{0:yyyy-MM-dd}", VbFecDT);
                 }
             }
         }
@@ -1616,7 +1640,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 var MensjF = Cnx.GetMensj();
                 if (!MensjF.ToString().Trim().Equals(""))
                 {
-                   DataRow[] Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                    DataRow[] Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
                     foreach (DataRow row in Result)
                     { MensjF = row["Texto"].ToString().Trim(); }
                     ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
@@ -2168,6 +2192,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una posición
                     return;
                 }
+                Cnx.ValidarFechas(TxtFechaInsMay.Text.Trim(), "", 1);
+                var MensjF = Cnx.GetMensj();
+                if (!MensjF.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result1 = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                    foreach (DataRow row in Result1)
+                    { MensjF = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString();
+                    return;
+                }
                 if (TxtFechaInsMay.Text.Equals(""))
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens05HkVrt'");
@@ -2335,6 +2370,18 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void TxtFechaInsMay_TextChanged(object sender, EventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            Cnx.ValidarFechas(TxtFechaInsMay.Text.Trim(), "", 1);
+            var MensjF = Cnx.GetMensj();
+            if (!MensjF.ToString().Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                foreach (DataRow row in Result)
+                { MensjF = row["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                Page.Title = ViewState["PageTit"].ToString();
+                return;
+            }
             if (!DdlAeroInsMay.Text.Equals("0") && !TxtSnInsMay.Text.Equals(""))
             {
                 Cnx.SelecBD();
@@ -2444,11 +2491,14 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GrdSvcInsMay_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            string VbFecSt;
+            DateTime? VbFecDT;
+
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 CalendarExtender CalFecUltCumplMay = e.Row.FindControl("CalFecUltCumplMay") as CalendarExtender;
-                CalFecUltCumplMay.EndDate = DateTime.Now;
+                //CalFecUltCumplMay.EndDate = DateTime.Now;
 
                 DataRowView dr = e.Row.DataItem as DataRowView;
                 string VbContEsReset = dr["Reseteable"].ToString();
@@ -2480,10 +2530,33 @@ namespace _77NeoWeb.Forms.Ingenieria
                     foreach (DataRow row in Result)
                     { TxtCumpHist.ToolTip = row["Texto"].ToString().Trim(); }//Tiene hojas procesadas en el histórico de contadores.
                 }
+
+                TextBox TxtFecUltCumplMay = e.Row.FindControl("TxtFecUltCumplMay") as TextBox;
+                VbFecSt = dr["FechaVencWeb"].ToString().Trim().Equals("") ? "01/01/1900" : dr["FechaVencWeb"].ToString().Trim();
+                VbFecDT = Convert.ToDateTime(VbFecSt);
+                TxtFecUltCumplMay.Text = VbFecSt.Trim().Equals("01/01/1900") ? "" : string.Format("{0:yyyy-MM-dd}", VbFecDT);
             }
         }
         protected void TxtFecUltCumplMay_TextChanged(object sender, EventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+
+            var Cntrl = (Control)sender;
+            GridViewRow row = (GridViewRow)Cntrl.NamingContainer;
+            int rowIndex = row.RowIndex;
+            TextBox TxtFecUltCumplMay = (TextBox)GrdSvcInsMay.Rows[rowIndex].FindControl("TxtFecUltCumplMay");
+
+            Cnx.ValidarFechas(TxtFecUltCumplMay.Text.Trim(), "", 1);
+            var MensjF = Cnx.GetMensj();
+            if (!MensjF.ToString().Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                foreach (DataRow DR in Result)
+                { MensjF = DR["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                Page.Title = ViewState["PageTit"].ToString();
+                return;
+            }
             ViewState["ValidaFechaSvc"] = "N";
         }
         //******************************************  VISUALIZAR MAYORES Y SUB-COMPONENTES *********************************************************
@@ -2781,7 +2854,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
                     return;
                 }
-
+                Cnx.ValidarFechas(TxtFechaRemMay.Text.Trim(), "", 1);
+                var MensjF = Cnx.GetMensj();
+                if (!MensjF.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result1 = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                    foreach (DataRow row in Result1)
+                    { MensjF = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString();
+                    return;
+                }
                 List<ClsTypAeronaveVirtual> ObjRemMayor = new List<ClsTypAeronaveVirtual>();
                 var TypRemMayor = new ClsTypAeronaveVirtual()
                 {
@@ -2937,6 +3020,18 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void TxtFechaRemMay_TextChanged(object sender, EventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            Cnx.ValidarFechas(TxtFechaRemMay.Text.Trim(), "", 1);
+            var MensjF = Cnx.GetMensj();
+            if (!MensjF.ToString().Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                foreach (DataRow row in Result)
+                { MensjF = row["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                Page.Title = ViewState["PageTit"].ToString();
+                return;
+            }
             if (!DdlAeroRemMay.Text.Equals("0") && !TxtSnRemMay.Text.Equals(""))
             {
                 Cnx.SelecBD();
@@ -3052,16 +3147,10 @@ namespace _77NeoWeb.Forms.Ingenieria
                         DAB.Fill(DtB);
 
                         if (DtB.Rows.Count > 0)
-                        {
-                            GrdBusqInsSubC.DataSource = DtB;
-                            GrdBusqInsSubC.DataBind();
-                            ViewState["ValidaFechaSvc"] = "S";
-                        }
+                        { GrdBusqInsSubC.DataSource = DtB; ViewState["ValidaFechaSvc"] = "S"; }
                         else
-                        {
-                            GrdBusqInsSubC.DataSource = null;
-                            GrdBusqInsSubC.DataBind();
-                        }
+                        { GrdBusqInsSubC.DataSource = null; }
+                        GrdBusqInsSubC.DataBind();
                     }
                 }
             }
@@ -3270,6 +3359,18 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
                     return;
                 }
+
+                Cnx.ValidarFechas(TxtFechaInsSubC.Text.Trim(), "", 1);
+                var MensjF = Cnx.GetMensj();
+                if (!MensjF.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result2 = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                    foreach (DataRow row in Result2)
+                    { MensjF = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString();
+                    return;
+                }
                 foreach (GridViewRow Row in GrdSvcInsSubC.Rows)
                 {
 
@@ -3434,6 +3535,24 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void TxtFecUltCumplInsSubC_TextChanged(object sender, EventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+
+            var Cntrl = (Control)sender;
+            GridViewRow row = (GridViewRow)Cntrl.NamingContainer;
+            int rowIndex = row.RowIndex;
+            TextBox TxtFecUltCumplInsSubC = (TextBox)GrdSvcInsSubC.Rows[rowIndex].FindControl("TxtFecUltCumplInsSubC");
+
+            Cnx.ValidarFechas(TxtFecUltCumplInsSubC.Text.Trim(), "", 1);
+            var MensjF = Cnx.GetMensj();
+            if (!MensjF.ToString().Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                foreach (DataRow DR in Result)
+                { MensjF = DR["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                Page.Title = ViewState["PageTit"].ToString();
+                return;
+            }
             ViewState["ValidaFechaSvc"] = "N";
         }
         //******************************************  REMOVER SUB-COMPONENTE *********************************************************

@@ -3,12 +3,9 @@ using _77NeoWeb.Prg.PrgIngenieria;
 using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -174,7 +171,7 @@ namespace _77NeoWeb.Forms.Almacen
                     {
                         using (SqlCommand SC = new SqlCommand(StSql, con))
                         {
-                            SC.Parameters.AddWithValue("@Rv", TxtNumRva.Text.Trim());
+                            SC.Parameters.AddWithValue("@Rv", TxtIdRva.Text.Trim());
                             SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             SC.CommandTimeout = 90000000;
                             using (SqlDataAdapter sda = new SqlDataAdapter())
@@ -293,9 +290,10 @@ namespace _77NeoWeb.Forms.Almacen
             {
                 GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
                 int rowIndex = row.RowIndex;
-                string vbcod = ((Label)row.FindControl("LblOT")).Text.ToString().Trim();
                 GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
-                TxtNumRva.Text = vbcod;
+                string vbcod = GrdBusq.DataKeys[gvr.RowIndex].Values["CodNumOrdenTrab"].ToString().Trim();
+                TxtIdRva.Text = vbcod;
+                TxtNumRva.Text = ((Label)row.FindControl("LblOT")).Text.ToString().Trim();
                 ViewState["CodHK"] = ((Label)row.FindControl("LblCodHk")).Text.ToString().Trim();
                 TxtEstado.Text = ((Label)row.FindControl("LblEstado")).Text.ToString().Trim();
                 TxtFechaRv.Text = ((Label)row.FindControl("LblFechOt")).Text.ToString().Trim();

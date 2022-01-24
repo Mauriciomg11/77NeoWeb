@@ -2,11 +2,8 @@
 using _77NeoWeb.Prg.PrgAlmacen;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -482,8 +479,7 @@ namespace _77NeoWeb.Forms.Almacen
                 }
                 if (ViewState["FechaVencPN"].ToString().Equals("1"))
                 {
-                    Cnx.ValidarFechas(VbFecha.Trim(), "", 1);
-                    var Mensj = Cnx.GetMensj();
+                    string Mensj = Cnx.ValidarFechas2(VbFecha.Trim(), "", 1);
                     if (!Mensj.ToString().Trim().Equals(""))
                     {
                         Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
@@ -531,6 +527,7 @@ namespace _77NeoWeb.Forms.Almacen
                     foreach (DataRow row in Result)
                     { BtnIngresar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
                 }
+                VbFecha = Cnx.ReturnFecha(VbFecha);//
                 VbFecha = VbFecha.Equals("") ? "01/01/1900" : VbFecha;
                 TblDetalle.Rows.Add(VbPN, VbRef, VbSN, VbLot, VbDesc, Convert.ToDouble(VbVlr), Convert.ToInt32(VbCant), Convert.ToInt32(VbIdAlmac), VbNomAlma, VbCodBod, VbNomBod, Convert.ToDateTime(VbFecha), ViewState["CodTipoElem"], ViewState["TipoElem"], ViewState["Identif"].ToString());
                 BindDDetTmp();

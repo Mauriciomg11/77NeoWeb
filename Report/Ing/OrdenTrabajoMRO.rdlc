@@ -289,6 +289,10 @@
           <DataField>FechaFinal</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="CodigoOT">
+          <DataField>CodigoOT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DataSet1</rd:DataSetName>
@@ -629,7 +633,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!CodNumOrdenTrab.Value</Value>
+                                  <Value>=Fields!CodigoOT.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -664,6 +668,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1915,7 +1920,7 @@
             <Top>0.67454in</Top>
             <Left>0.09518in</Left>
             <Height>0.47708in</Height>
-            <Width>6.5861in</Width>
+            <Width>6.58609in</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -2220,7 +2225,7 @@
             <DataSetName>DataSet1</DataSetName>
             <Top>1.9162in</Top>
             <Left>0.09518in</Left>
-            <Height>0.30952in</Height>
+            <Height>0.30953in</Height>
             <Width>6.58733in</Width>
             <ZIndex>5</ZIndex>
             <Style>
@@ -10309,7 +10314,7 @@
             <DataSetName>DataSet1</DataSetName>
             <Top>6.84129in</Top>
             <Left>3.3421in</Left>
-            <Height>0.32084in</Height>
+            <Height>0.32083in</Height>
             <Width>1.02039in</Width>
             <ZIndex>49</ZIndex>
             <Style>
@@ -10683,7 +10688,7 @@
             <DataSetName>DataSet1</DataSetName>
             <Top>6.84129in</Top>
             <Left>5.63842in</Left>
-            <Height>0.32084in</Height>
+            <Height>0.32083in</Height>
             <Width>1.04539in</Width>
             <ZIndex>51</ZIndex>
             <Style>

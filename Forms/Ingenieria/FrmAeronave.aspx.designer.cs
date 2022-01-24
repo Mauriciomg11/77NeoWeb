@@ -168,15 +168,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label LblFecFabr;
 
         /// <summary>
-        /// Control IbtFecFabr.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtFecFabr;
-
-        /// <summary>
         /// Control TxtFecFabr.
         /// </summary>
         /// <remarks>
@@ -184,15 +175,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtFecFabr;
-
-        /// <summary>
-        /// Control CldFecFabr.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CldFecFabr;
 
         /// <summary>
         /// Control CkbAdmon.
@@ -312,15 +294,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label LblFecIngr;
 
         /// <summary>
-        /// Control IbtFecIngr.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtFecIngr;
-
-        /// <summary>
         /// Control TxtFecIngr.
         /// </summary>
         /// <remarks>
@@ -328,15 +301,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtFecIngr;
-
-        /// <summary>
-        /// Control CldFecIng.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CldFecIng;
 
         /// <summary>
         /// Control LblTSN.

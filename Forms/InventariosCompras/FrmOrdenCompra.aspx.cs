@@ -5,7 +5,6 @@ using ClosedXML.Excel;
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -47,6 +46,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                     Session["MonLcl"] = Cnx.GetMonedLcl();// Moneda Local
+                    Session["FormatFecha"] = Cnx.GetFormatFecha();// 103 formato europeo dd/MM/yyyy | 101 formato EEUU M/dd/yyyyy
                 }
             }
             if (!IsPostBack)
@@ -209,8 +209,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     // ************************************************* Aprobar / Asentar *************************************************
                     LblTitAsentar.Text = bO.Equals("LblTitAsentar") ? bT : LblTitAsentar.Text;
                     IbtCloseAsentar.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCloseAsentar.ToolTip;
-                    LblTitOpcAprob.Text = bO.Equals("LblTitOpcAprob") ? bT : LblTitOpcAprob.Text; 
-                    LblTitOpcAsentr.Text = bO.Equals("BtnAsentar") ? bT : LblTitOpcAsentr.Text; 
+                    LblTitOpcAprob.Text = bO.Equals("LblTitOpcAprob") ? bT : LblTitOpcAprob.Text;
+                    LblTitOpcAsentr.Text = bO.Equals("BtnAsentar") ? bT : LblTitOpcAsentr.Text;
                     IbtAprobar.ToolTip = bO.Equals("IbtAprobar") ? bT : IbtAprobar.ToolTip;
                     IbtDesAprobar.ToolTip = bO.Equals("IbtDesAprobar") ? bT : IbtDesAprobar.ToolTip;
                     IbtAsentar.ToolTip = bO.Equals("BtnAsentar") ? bT : IbtAsentar.ToolTip;
@@ -519,9 +519,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 if (DSTPpl.Tables["Compra"].Rows.Count > 0)
                 {
                     TxtNumCompra.Text = DSTPpl.Tables[0].Rows[0]["CodOrdenCompra"].ToString().Trim();
-                    string VbFecSt = DSTPpl.Tables[0].Rows[0]["FechaOC"].ToString().Trim().Equals("") ? "01/01/1900" : DSTPpl.Tables[0].Rows[0]["FechaOC"].ToString().Trim();
-                    DateTime VbFecDT = Convert.ToDateTime(VbFecSt);
-                    TxtFecha.Text = string.Format("{0:yyyy-MM-dd}", VbFecDT);
+                    // string VbFecSt = DSTPpl.Tables[0].Rows[0]["FechaOC"].ToString().Trim().Equals("") ? "01/01/1900" : DSTPpl.Tables[0].Rows[0]["FechaOC"].ToString().Trim();
+                    // DateTime VbFecDT = Convert.ToDateTime(VbFecSt);
+                    TxtFecha.Text = Cnx.ReturnFecha(DSTPpl.Tables[0].Rows[0]["FechaOCMDY"].ToString().Trim());
 
                     TxtTtl.Text = DSTPpl.Tables[0].Rows[0]["ValorTotalM"].ToString().Trim();
                     ViewState["CodTerceroAnt"] = DSTPpl.Tables[0].Rows[0]["CodProveedor"].ToString().Trim();
@@ -553,7 +553,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     TxtTasaDescto.Text = DSTPpl.Tables[0].Rows[0]["TasaDescuento"].ToString().Trim();
                     TxtDesctoM.Text = DSTPpl.Tables[0].Rows[0]["ValorDescuentoM"].ToString().Trim();
                     TxtDescto.Text = DSTPpl.Tables[0].Rows[0]["ValorDescuento"].ToString().Trim();
-                    ViewState["TtlRegDet"] = DSTPpl.Tables[0].Rows[0]["TtlRegDet"].ToString().Trim();                    
+                    ViewState["TtlRegDet"] = DSTPpl.Tables[0].Rows[0]["TtlRegDet"].ToString().Trim();
                     if (CkbAsentada.Checked == true) { IbtAprobar.Visible = false; IbtDesAprobar.Visible = false; IbtAsentar.Visible = false; IbtDesasentar.Visible = true; }
                     else
                     {
@@ -1352,7 +1352,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             DTMultL.Columns.Add("MltlC29", typeof(string));
             DTMultL.Columns.Add("MltlC30", typeof(string));
             DTMultL.Columns.Add("MltlC31", typeof(string));
-            DTMultL.Columns.Add("MltlC32", typeof(string));
+            DTMultL.Columns.Add("MltlC32", typeof(string));// formato fecha impresion fecha y hora
             DTMultL.Columns.Add("MltlC33", typeof(string));
             DTMultL.Columns.Add("MltlC34", typeof(string));
             DTMultL.Columns.Add("MltlC35", typeof(string));
@@ -1368,6 +1368,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected void BtnImprimir_Click(object sender, EventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString();
+            if (CkbAprobad.Checked == false) { return; }
+
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DSTPpl = (DataSet)ViewState["DSTPpl"];
             CampoMultiL();
@@ -1431,6 +1433,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
             DR["MltlC29"] = GrdDet.Columns[3].HeaderText;//desc
             DR["MltlC30"] = GrdDet.Columns[6].HeaderText;//und
             DR["MltlC31"] = GrdDet.Columns[6].HeaderText;//valor und
+            if (Session["FormatFecha"].ToString().Equals("101")) { DR["MltlC32"] = "MM/dd/yyyy HH:mm"; }
+            else { { DR["MltlC32"] = "dd/MM/yyyy HH:mm"; } }
+            //valor und
 
             DTMultL.AcceptChanges();
             string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
@@ -1514,16 +1519,16 @@ namespace _77NeoWeb.Forms.InventariosCompras
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (TxtNumCompra.Text.Equals(""))
             { return; }
-          
+
             if (ViewState["TtlRegDet"].ToString().Trim().Equals("0"))
-            { return; }          
-           
+            { return; }
+
 
             DSTDdl = (DataSet)ViewState["DSTDdl"];
             DataRow[] DR;
             DataTable DT = new DataTable();
             if (DSTDdl.Tables["Autorizado"].Rows.Count > 0)
-            {               
+            {
                 DR = DSTDdl.Tables[2].Select("Rango = 'Igual_Mayor' AND CodUsuario = '" + Session["C77U"].ToString().Trim() + "'");
                 if (IsIENumerableLleno(DR))
                 { DT = DR.CopyToDataTable(); }
@@ -1594,7 +1599,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                                     DataRow[] Result = Idioma.Select("Objeto= '" + VbMensj.ToString().Trim() + "'");
                                     foreach (DataRow row in Result)
                                     { VbMensj = row["Texto"].ToString().Trim(); }
-                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMensj+ VbOtrosDatos + "');", true);
+                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMensj + VbOtrosDatos + "');", true);
                                     SDR.Close();
                                     Transac.Rollback();
                                     return;
@@ -1672,7 +1677,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                                     { VbMensj = row["Texto"].ToString().Trim(); }
                                     ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMensj + "');", true);
                                     Transac.Rollback();
-                                    
+
                                     return;
                                 }
                             }
@@ -1688,13 +1693,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
                             { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
                             Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "UPDATE", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                         }
-                    }  
+                    }
                 }
-            }            
+            }
         }
         protected void IbtAsentar_Click(object sender, ImageClickEventArgs e)
         {
-           Idioma = (DataTable)ViewState["TablaIdioma"];
+            Idioma = (DataTable)ViewState["TablaIdioma"];
 
             if (TxtFactura.Text.Equals(""))
             {
@@ -1755,8 +1760,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
         }
         protected void IbtDesasentar_Click(object sender, ImageClickEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];           
-            if (TxtNumCompra.Text.Trim().Substring(0,2).Equals("33"))
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            if (TxtNumCompra.Text.Trim().Substring(0, 2).Equals("33"))
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens24Compra'");
                 foreach (DataRow row in Result)

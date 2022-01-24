@@ -1,16 +1,15 @@
-﻿using System;
+﻿using _77NeoWeb.prg;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-using _77NeoWeb.prg;
+using System.Web;
 
 namespace _77NeoWeb.Prg.PrgLogistica
 {
     public class ClsTypSolicitudPedido
     {
-        static public string PMensj, PCodPedido,PPN;
+        static public string PMensj, PCodPedido, PPN;
         static public int PIdPedido;
         public int IdPedido { get; set; }
         public string CodPedido { get; set; }
@@ -164,15 +163,15 @@ namespace _77NeoWeb.Prg.PrgLogistica
                             SqlParameter Prmtrs = SC.Parameters.AddWithValue("@EncSP", TblEncPedido);
                             SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@DetSP", TblDetPedido);
                             SqlParameter Prmtrs3 = SC.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
-                            Prmtrs.SqlDbType = SqlDbType.Structured;                           
+                            Prmtrs.SqlDbType = SqlDbType.Structured;
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())
                             {
                                 PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 PIdPedido = Convert.ToInt32(SDR["IdPedido"].ToString().Trim());
-                                PCodPedido = HttpUtility.HtmlDecode(SDR["CodPedido"].ToString().Trim());       
-                                PPN= HttpUtility.HtmlDecode(SDR["PN"].ToString().Trim());
-                            }                           
+                                PCodPedido = HttpUtility.HtmlDecode(SDR["CodPedido"].ToString().Trim());
+                                PPN = HttpUtility.HtmlDecode(SDR["PN"].ToString().Trim());
+                            }
                             SDR.Close();
                             transaction.Commit();
                         }

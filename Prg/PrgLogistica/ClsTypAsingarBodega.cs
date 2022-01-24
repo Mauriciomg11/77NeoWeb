@@ -1,16 +1,15 @@
-﻿using System;
+﻿using _77NeoWeb.prg;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-using _77NeoWeb.prg;
+using System.Web;
 
 namespace _77NeoWeb.Prg.PrgLogistica
 {
     public class ClsTypAsingarBodega
     {
-        
+
         public int CodIdUbicacion { get; set; }
         public string CodElemento { get; set; }
         public int CodAlmacen { get; set; }
@@ -30,7 +29,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
             TblElementoBodega.Columns.Add("CodBodega", typeof(string));
             TblElementoBodega.Columns.Add("Cantidad", typeof(double));
             TblElementoBodega.Columns.Add("Usu", typeof(string));
-            TblElementoBodega.Columns.Add("Accion", typeof(string));           
+            TblElementoBodega.Columns.Add("Accion", typeof(string));
 
             foreach (var Campos in ElementoBodega)
             {
@@ -40,10 +39,10 @@ namespace _77NeoWeb.Prg.PrgLogistica
                     Campos.CodAlmacen,
                     Campos.CodBodega,
                     Campos.Cantidad,
-                    Campos.Usu,                   
+                    Campos.Usu,
                     Campos.Accion,
                 });
-            }     
+            }
             Cnx.SelecBD();
             using (SqlConnection SCX = new SqlConnection(Cnx.GetConex()))
             {
@@ -54,12 +53,12 @@ namespace _77NeoWeb.Prg.PrgLogistica
                     using (SqlCommand SC = new SqlCommand(VBQuery, SCX, transaction))
                     {
                         try
-                        {                          
+                        {
                             SC.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = SC.Parameters.AddWithValue("@CurElemBod", TblElementoBodega);
                             SqlParameter Prmtrs1 = SC.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
                             Prmtrs.SqlDbType = SqlDbType.Structured;
-                            SC.ExecuteNonQuery();                           
+                            SC.ExecuteNonQuery();
                             transaction.Commit();
                         }
                         catch (Exception Ex)
@@ -76,6 +75,6 @@ namespace _77NeoWeb.Prg.PrgLogistica
                 }
             }
 
-        }       
+        }
     }
 }

@@ -73,6 +73,10 @@
           <DataField>SerieNumero</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="CodOT">
+          <DataField>CodOT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DataSet1</rd:DataSetName>
@@ -92,7 +96,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>0.60417in</Width>
+                  <Width>0.71167in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.51091in</Width>
@@ -119,7 +123,7 @@
                   <Width>0.49517in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.03372in</Width>
+                  <Width>1.91651in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.10875in</Width>
@@ -517,7 +521,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Nroreporte.Value</Value>
+                                  <Value>=Fields!Nroreporte.Value &amp; Fields!CodOT.Value</Value>
                                   <Style>
                                     <FontSize>7pt</FontSize>
                                   </Style>
@@ -538,6 +542,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -890,7 +895,7 @@
             <DataSetName>DataSet1</DataSetName>
             <Top>0.03125in</Top>
             <Height>0.58333in</Height>
-            <Width>10.06178in</Width>
+            <Width>10.05207in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -898,10 +903,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>2.61937cm</Height>
+        <Height>1.58749cm</Height>
         <Style />
       </Body>
-      <Width>25.55691cm</Width>
+      <Width>25.55692cm</Width>
       <Page>
         <PageHeader>
           <Height>4.27777cm</Height>

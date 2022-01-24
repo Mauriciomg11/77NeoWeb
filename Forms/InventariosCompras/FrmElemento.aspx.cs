@@ -1,6 +1,5 @@
 ﻿using _77NeoWeb.prg;
 using System;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web;
@@ -213,7 +212,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 }
             }
             if (ViewState["FechaVenceE"].Equals("S"))
-            { IbtFechaI.Enabled = Edi; }
+            { TxtFecShelfLife.Enabled = Edi; }
         }
         protected void TraerDatos(string Accion)
         {
@@ -250,7 +249,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             }
             DST = (DataSet)ViewState["DST"];
 
-            string VbCodAnt, TxtFecha;
+            string VbCodAnt;
 
             VbCodAnt = DdlGrupo.Text.Trim();
             DdlGrupo.DataSource = DST.Tables[1];
@@ -262,21 +261,15 @@ namespace _77NeoWeb.Forms.InventariosCompras
             if (DST.Tables[0].Rows.Count > 0)
             {
                 TxtRef.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["CodReferencia"].ToString().Trim());
-                DdlPN.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["PN"].ToString().Trim());
                 ViewState["PN"] = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["PN"].ToString().Trim());
                 BindDataDdl("SEL");
+                DdlPN.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["PN"].ToString().Trim());
                 TxtSN.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["Sn"].ToString().Trim());
                 ViewState["PNAntEle"] = DdlPN.Text.Trim();
                 ViewState["SNAntEle"] = TxtSN.Text.Trim();
                 TxtLote.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["NumLote"].ToString().Trim());
                 TxtDescr.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["Descripcion"].ToString().Trim());
-                TxtFecha = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["FechaRecibo"].ToString().Trim());
-                if (!TxtFecha.Trim().Equals(""))
-                {
-                    FechaD = Convert.ToDateTime(TxtFecha);
-                    TxtFecRec.Text = String.Format("{0:yyyy-MM-dd}", FechaD);
-                }
-                else { TxtFecRec.Text = ""; }
+                TxtFecRec.Text = Cnx.ReturnFecha(DST.Tables[0].Rows[0]["FechaRecibo"].ToString().Trim()); ;
                 TxtUndMed.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["CodUnidadMedida"].ToString().Trim());
                 DdlGrupo.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["CodGrupo"].ToString().Trim());
                 ViewState["GrupoEle"] = DdlGrupo.Text.Trim();
@@ -285,13 +278,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 TxtHK.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["Aeronave"].ToString().Trim());
                 TxtMayor.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["Mayor"].ToString().Trim());
                 TxtUbiTec.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["CodUbicacionFisica"].ToString().Trim());
-                TxtFecha = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["FechaShelfLife"].ToString().Trim());
-                if (!TxtFecha.Trim().Equals(""))
-                {
-                    FechaD = Convert.ToDateTime(TxtFecha);
-                    TxtFecShelfLife.Text = String.Format("{0:dd/MM/yyyy}", FechaD);
-                }
-                else { TxtFecShelfLife.Text = ""; }
+                TxtFecShelfLife.Text = Cnx.ReturnFecha(DST.Tables[0].Rows[0]["FechaShelfLife"].ToString().Trim());
                 TxtEstado.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["Estado"].ToString().Trim());
                 ViewState["FechaVenceE"] = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["FechaVence"].ToString().Trim());
                 CkbApu.Checked = DST.Tables[0].Rows[0]["APU"].ToString().Trim().Equals("S") ? true : false;
@@ -458,7 +445,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         return;
                     }
                 }
-                TraerDatos("SEL");
                 ActivarBotones(false, true, false, false, false);
                 ViewState["Accion"] = "Aceptar";
                 DataRow[] Result1 = Idioma.Select("Objeto= 'BotonIngOk'");
@@ -476,6 +462,18 @@ namespace _77NeoWeb.Forms.InventariosCompras
             {
                 AsignarValores();
                 if (Session["VldrElem"].ToString() == "N") { return; }
+
+                string VbMnsj = Cnx.ValidarFechas2(TxtFecRec.Text.Trim(), TxtFecShelfLife.Text.Trim(), 2);
+                if (!VbMnsj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { VbMnsj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFecShelfLife.Focus();
+                    return;
+                }
+
                 Cnx.SelecBD();
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
@@ -491,7 +489,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                                 SC.Parameters.AddWithValue("@PN", DdlPN.SelectedValue);
                                 SC.Parameters.AddWithValue("@SN", TxtSN.Text.Trim());
                                 SC.Parameters.AddWithValue("@Act", RdbActivo.Checked == true ? 1 : 0);
-                                SC.Parameters.AddWithValue("@FecSL", TxtFecShelfLife.Text);
+                                SC.Parameters.AddWithValue("@FecSL", Convert.ToDateTime(TxtFecShelfLife.Text));
                                 SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 SC.ExecuteNonQuery();
                                 Transac.Commit();
@@ -520,6 +518,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                                 Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmElemento", "UPDATE", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                             }
                         }
+                        TraerDatos("UPD");
                     }
                 }
             }
@@ -530,42 +529,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
         { BIndDataBusq(TxtBusqueda.Text); }
         protected void IbtCerrar_Click(object sender, ImageClickEventArgs e)
         { PnlBusq.Visible = false; PnlCampos.Visible = true; }
-        protected void IbtFechaI_Click(object sender, ImageClickEventArgs e)
-        {
-            /* BtnConsultar.Visible = false;
-             Session["CalP"] = "I";
-             if (TxtFecShelfLife.Text != String.Empty)
-             {
-                 if (TxtFecShelfLife.Text.Equals("1900-01-01"))
-                 {
-                     Calendar1.TodaysDate = DateTime.Today;
-                 }
-                 else { Calendar1.TodaysDate = Convert.ToDateTime(TxtFecShelfLife.Text); }
-             }
-             else
-             {
-
-                 Calendar1.TodaysDate = DateTime.Today;
-             }
-
-             if (Calendar1.Visible == false)
-             {
-                 Calendar1.Visible = true;
-             }
-             else
-             {
-                 Calendar1.Visible = false;
-                 if ((int)ViewState["VblConsMS"] == 1)
-                 {
-                     BtnConsultar.Visible = true;
-                 }
-                 if ((int)ViewState["VblModMS"] == 1)
-                 {
-                     BtnModificar.Visible = true;
-                 }
-             }
-             Calendar1.Attributes.Add("style", "position:absolute");*/
-        }
         protected void Calendar1_SelectionChanged(object sender, EventArgs e)
         {
             /* DateTime today = Calendar1.SelectedDate;

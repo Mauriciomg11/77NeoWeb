@@ -310,7 +310,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <asp:Label ID="LblFechPlazRes" runat="server" CssClass="LblEtiquet" Text="fecha plazo respuesta" />
-                                <asp:TextBox ID="TxtFechPlazRes" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="100%" TextMode="Date" MaxLength="10" />
+                                <asp:TextBox ID="TxtFechPlazRes" runat="server" CssClass="form-control-sm heightCampo"  Enabled="false" Width="100%" TextMode="Date" MaxLength="10" />                               
                             </div>
                             <div class="col-sm-2">
                                 <asp:Label ID="LblFechRespt" runat="server" CssClass="LblEtiquet" Text="fecha respuesta" />

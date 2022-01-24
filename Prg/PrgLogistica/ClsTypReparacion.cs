@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 
 namespace _77NeoWeb.Prg.PrgLogistica
@@ -53,7 +52,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
         //-------------  TblDetCotiza --------------------
         public int IDRepaDetSolPed { get; set; }
         public int IdDetPedido { get; set; }
-        public int IdPedido { get; set; }       
+        public int IdPedido { get; set; }
         public int Posicion { get; set; }
 
         public void Accion(string Accion)
@@ -143,14 +142,14 @@ namespace _77NeoWeb.Prg.PrgLogistica
             DataTable TblDetRepa = new DataTable();
             TblDetRepa.Columns.Add("IDRepaDetSolPed", typeof(int));
             TblDetRepa.Columns.Add("IdDetPedido", typeof(int));
-            TblDetRepa.Columns.Add("IdPedido", typeof(int));           
+            TblDetRepa.Columns.Add("IdPedido", typeof(int));
             TblDetRepa.Columns.Add("Posicion", typeof(int));
             foreach (var Campo in TypDetRepa)
             {
                 TblDetRepa.Rows.Add(new object[]{
                     Campo.IDRepaDetSolPed,
                     Campo.IdDetPedido,
-                    Campo.IdPedido,                    
+                    Campo.IdPedido,
                     Campo.Posicion,
                 });
             }

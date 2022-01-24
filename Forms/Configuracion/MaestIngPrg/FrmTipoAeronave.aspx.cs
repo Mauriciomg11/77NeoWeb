@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using _77NeoWeb.prg;
+using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using _77NeoWeb.prg;
-using System.Data;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Configuration;
 
 namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
 {

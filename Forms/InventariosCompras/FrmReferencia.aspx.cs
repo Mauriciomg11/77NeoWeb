@@ -4,7 +4,6 @@ using _77NeoWeb.Prg.PrgLogistica;
 using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -195,6 +194,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     CkbCons.Text = bO.Equals("CkbCons") ? "&nbsp " + bT : CkbCons.Text;
                     CkbMot.Text = bO.Equals("CkbMot") ? "&nbsp " + bT : CkbMot.Text;
                     CkbMay.Text = bO.Equals("CkbMay") ? "&nbsp " + bT : CkbMay.Text;
+                    CkbNiF.Text = bO.Equals("CkbNiF") ? bT + "&nbsp " : CkbNiF.Text;
                     BtnIngresar.Text = bO.Equals("BtnIngresar") ? bT : BtnIngresar.Text;
                     BtnModificar.Text = bO.Equals("BtnModificar") ? bT : BtnModificar.Text;
                     BtnConsultar.Text = bO.Equals("BtnConsultar") ? bT : BtnConsultar.Text;
@@ -204,6 +204,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     BtnCambioRef.Text = bO.Equals("BtnCambioRef") ? bT : BtnCambioRef.Text;
                     GrdPN.Columns[1].HeaderText = bO.Equals("GrdEstad") ? bT : GrdPN.Columns[1].HeaderText;
                     GrdPN.Columns[2].HeaderText = bO.Equals("GrdBloq") ? bT : GrdPN.Columns[2].HeaderText;
+                    GrdPN.Columns[3].HeaderText = bO.Equals("GrdModelPN") ? bT : GrdPN.Columns[3].HeaderText;
                     GrdPN.Columns[4].HeaderText = bO.Equals("BtnUndCompra") ? bT : GrdPN.Columns[4].HeaderText;
                     GrdPN.Columns[5].HeaderText = bO.Equals("GrdEquiv") ? bT : GrdPN.Columns[5].HeaderText;
                     GrdPN.Columns[6].HeaderText = bO.Equals("GrdFecVnc") ? bT : GrdPN.Columns[6].HeaderText;
@@ -844,7 +845,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     BindDataPN("", "UPD");
                     BindDataCont("");
                     BindDataMan("");
-
                     ViewState["CRUD"] = "";
                 }
                 catch (Exception ex)
@@ -876,7 +876,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 ActivarCampos(false, true, "Modificar");
                 Result = Idioma.Select("Objeto= 'IbtUpdateOnC'");
                 foreach (DataRow row in Result)
-                { BtnIngresar.OnClientClick = "return confirm('" + row["Texto"].ToString().Trim() + "');"; }// Desea realizar la actualización?');";
+                { BtnModificar.OnClientClick = "return confirm('" + row["Texto"].ToString().Trim() + "');"; }// Desea realizar la actualización?');";
             }
             else
             {
@@ -957,6 +957,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     BtnModificar.OnClientClick = "";
                     BindDataAll(TxtCod.Text, ViewState["VbPNSI"].ToString());
                     ViewState["CRUD"] = "";
+                    BindDataPN(TxtCod.Text, "SEL");
                 }
                 catch (Exception ex)
                 {
@@ -1529,8 +1530,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         return;
                     }
 
-                    string VbPlano = TblPN.GetMensj();
-                    if (!VbPlano.Trim().Equals("S"))
+                    string VbPlano = TblPN.GetPlano();
+                    if (VbPlano.Trim().Equals("S"))
                     {
                         Cnx.SelecBD();
                         using (SqlConnection SCnxPln = new SqlConnection(Cnx.GetConex()))
@@ -2153,7 +2154,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             }
         }
         protected void IbtCerrarUMC_Click(object sender, ImageClickEventArgs e)
-        { PnlCampos.Visible = true; PnlUnidadCompra.Visible = true; }
+        { PnlCampos.Visible = true; PnlUnidadCompra.Visible = false; BindDataPN(TxtCod.Text, "SEL"); }
         protected void GrdCamUC_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];

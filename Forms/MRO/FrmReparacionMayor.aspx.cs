@@ -2,12 +2,10 @@
 using _77NeoWeb.Prg.PrgIngenieria;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -68,7 +66,7 @@ namespace _77NeoWeb.Forms.MRO
                 GrdAeron.Visible = true;
                 ViewState["TipoAccion"] = "";
                 ViewState["CodSvcAnt"] = "";
-
+                ViewState["TieneRegDet"] = "0";
 
                 MultVw.ActiveViewIndex = 0;
             }
@@ -507,9 +505,6 @@ namespace _77NeoWeb.Forms.MRO
                                 DSTPpal.Tables[2].TableName = "Licencia";
 
                                 ViewState["DSTPpal"] = DSTPpal;
-                                //SqlDataReader SDRP = SC.ExecuteReader();
-                                //DTSrvcConsultado.Load(SDRP);
-                                // ViewState["DTSrvcConsultado"] = DTSrvcConsultado;
                             }
                         }
                     }
@@ -537,6 +532,8 @@ namespace _77NeoWeb.Forms.MRO
                     Ddltaller.Text = HttpUtility.HtmlDecode(SDR["CodTaller"].ToString().Trim());
                     DdlAta.Text = HttpUtility.HtmlDecode(SDR["CodCapitulo"].ToString().Trim());
                     CkbBloqRec.Checked = HttpUtility.HtmlDecode(SDR["ValidarRecurso"].ToString().Trim()) == "S" ? true : false;
+                    string borr = HttpUtility.HtmlDecode(SDR["TieneRegDet"].ToString().Trim());
+                    ViewState["TieneRegDet"] = HttpUtility.HtmlDecode(SDR["TieneRegDet"].ToString().Trim());
 
                     switch (ViewState["TIPO"])
                     {
@@ -563,12 +560,18 @@ namespace _77NeoWeb.Forms.MRO
                 GrdRecursoF.Rows[0].Cells[0].Text = "Empty..!";
                 GrdRecursoF.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
             }
-            if (DSTPpal.Tables[2].Rows.Count > 0)// LIcencias
-            { GrdLicen.DataSource = DSTPpal.Tables[2]; GrdLicen.DataBind(); }
+
+            string VbIdSvc = TxtId.Text.Equals("") ? "0" : TxtId.Text.Trim();
+            DataTable DT = DSTPpal.Tables["Licencia"].Clone();
+            DataRow[] DR = DSTPpal.Tables[2].Select("IdSrvManto = " + VbIdSvc);
+            if (Cnx.ValidaDataRowVacio(DR))
+            { DT = DR.CopyToDataTable(); }
+
+            if (DT.Rows.Count > 0) { GrdLicen.DataSource = DT; GrdLicen.DataBind(); }
             else
             {
-                DSTPpal.Tables[2].Rows.Add(DSTPpal.Tables[2].NewRow());
-                GrdLicen.DataSource = DSTPpal.Tables[2];
+                DT.Rows.Add(DT.NewRow());
+                GrdLicen.DataSource = DT;
                 GrdLicen.DataBind();
                 GrdLicen.Rows[0].Cells.Clear();
                 GrdLicen.Rows[0].Cells.Add(new TableCell());
@@ -600,7 +603,7 @@ namespace _77NeoWeb.Forms.MRO
             TxtDesc.Enabled = Edi;
             DdlGrupo.Enabled = Ing;
             TxtDoc.Enabled = Edi;
-            DdlModel.Enabled = Edi;
+            if (ViewState["TieneRegDet"].ToString().Equals("0")) { DdlModel.Enabled = Edi; }
             Ddltaller.Enabled = Edi;
             DdlAta.Enabled = Edi;
             CkbBloqRec.Enabled = Edi;
@@ -927,6 +930,7 @@ namespace _77NeoWeb.Forms.MRO
             DataRow[] Result;
             if (ViewState["TipoAccion"].ToString().Equals(""))
             {
+                ViewState["TieneRegDet"] = "0";
                 ActivarBotones(true, false, false, false, false);
                 GrdPN.DataSource = null; GrdPN.DataBind();
                 GrdSN.DataSource = null; GrdSN.DataBind();
@@ -1120,6 +1124,7 @@ namespace _77NeoWeb.Forms.MRO
                     ActivarBotones(true, true, true, true, true);
                     ActivarCampos(false, false, "Modificar");
                     BindDDdl("SELECT", "UPDATE");
+                    BindDTraerdatos(TxtId.Text, "UPDATE", "ALL");
                     BtnModificar.OnClientClick = "";
                     BindDataAll();
                 }
@@ -1176,6 +1181,7 @@ namespace _77NeoWeb.Forms.MRO
         }
         protected void BtnEliminar_Click(object sender, EventArgs e)
         {
+            ViewState["TieneRegDet"] = "0";
             Idioma = (DataTable)ViewState["TablaIdioma"];
             try
             {
@@ -1409,7 +1415,7 @@ namespace _77NeoWeb.Forms.MRO
                         CsTypContaSrvMant ContaSrvMant = new CsTypContaSrvMant();
                         ContaSrvMant.Alimentar(ObjTypContaSM);
                         BindDataAll();
-                        BindDAK("UPDATE");
+                        BindDTraerdatos(TxtId.Text.ToString(), "UPDATE", "ALL");
                     }
                 }
             }
@@ -1563,7 +1569,7 @@ namespace _77NeoWeb.Forms.MRO
                                 sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 sqlCmd.ExecuteNonQuery();
                                 Transac.Commit();
-                                BindDAK("UPDATE");
+                                BindDTraerdatos(TxtId.Text.ToString(), "UPDATE", "ALL");
                                 BindDataAll();
                             }
                             catch (Exception Ex)
@@ -1608,9 +1614,12 @@ namespace _77NeoWeb.Forms.MRO
             {
                 if (e.Row.RowType == DataControlRowType.Footer)
                 {
+                    string VbCondHK;
                     DropDownList DdlHKPP = (e.Row.FindControl("DdlHKPP") as DropDownList);
                     DataTable DT = new DataTable();
-                    DataRow[] DR = DSDdl.Tables[5].Select("CodModelo= '" + DdlModel.SelectedValue + "' OR CodModelo = ''");
+                    if (DdlModel.Text.Trim().Equals("")) { VbCondHK = "CodModelo<> '77NEODemp'"; }
+                    else { VbCondHK = "CodModelo= '" + DdlModel.Text.Trim() + "' OR CodModelo = ''"; }
+                    DataRow[] DR = DSDdl.Tables[5].Select(VbCondHK);
                     if (IsIENumerableLleno(DR))
                     { DT = DR.CopyToDataTable(); }
                     DdlHKPP.DataSource = DT;
@@ -1793,7 +1802,7 @@ namespace _77NeoWeb.Forms.MRO
                         TypeContSrvPn ContSrvPn = new TypeContSrvPn();
                         ContSrvPn.Alimentar(ObjContSrvPn);
                         BindDataAll();
-                        BindDPN("UPDATE");
+                        BindDTraerdatos(TxtId.Text.ToString(), "UPDATE", "ALL");
                     }
                 }
             }
@@ -1920,7 +1929,7 @@ namespace _77NeoWeb.Forms.MRO
                                 sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 sqlCmd.ExecuteNonQuery();
                                 Transac.Commit();
-                                BindDPN("UPDATE");
+                                BindDTraerdatos(TxtId.Text.ToString(), "UPDATE", "ALL");
                                 BindDataAll();
                             }
                             catch (Exception Ex)
@@ -3192,6 +3201,7 @@ namespace _77NeoWeb.Forms.MRO
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
+            DataRow[] Result;
             string LtxtSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 3,'','','','','LICRF',{0},0,{2},{1},'01-01-01','01-01-01','01-01-01'", TxtId.Text, Session["!dC!@"], Session["77IDM"]);
             if (e.Row.RowType == DataControlRowType.Footer)
             {
@@ -3203,14 +3213,14 @@ namespace _77NeoWeb.Forms.MRO
 
                 ImageButton IbtAddNew = (e.Row.FindControl("IbtAddNew") as ImageButton);
                 IbtAddNew.Enabled = true;
-                DataRow[] Result = Idioma.Select("Objeto= 'IbtAddNew'");
+                Result = Idioma.Select("Objeto= 'IbtAddNew'");
                 foreach (DataRow row in Result)
                 { IbtAddNew.ToolTip = row["Texto"].ToString().Trim(); }
             }
             if ((e.Row.RowState & DataControlRowState.Edit) > 0)
             {
                 ImageButton IbtUpdate = (e.Row.FindControl("IbtUpdate") as ImageButton);
-                DataRow[] Result = Idioma.Select("Objeto= 'IbtUpdate'");
+                Result = Idioma.Select("Objeto= 'IbtUpdate'");
                 foreach (DataRow row in Result)
                 { IbtUpdate.ToolTip = row["Texto"].ToString().Trim(); }
                 ImageButton IbtCancel = (e.Row.FindControl("IbtCancel") as ImageButton);
@@ -3221,20 +3231,25 @@ namespace _77NeoWeb.Forms.MRO
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
 
-
                 ImageButton imgE = e.Row.FindControl("IbtEdit") as ImageButton;
                 ImageButton imgD = e.Row.FindControl("IbtDelete") as ImageButton;
-                imgE.Enabled = true;
-                DataRow[] Result = Idioma.Select("Objeto='IbtEdit'");
-                foreach (DataRow RowIdioma in Result)
-                { imgE.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                if (imgE != null)
+                {
+                    imgE.Enabled = true;
+                    Result = Idioma.Select("Objeto='IbtEdit'");
+                    foreach (DataRow RowIdioma in Result)
+                    { imgE.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                }
+                if (imgD != null)
+                {
+                    Result = Idioma.Select("Objeto='IbtDelete'");
+                    foreach (DataRow RowIdioma in Result)
+                    { imgD.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
 
-                Result = Idioma.Select("Objeto='IbtDelete'");
-                foreach (DataRow RowIdioma in Result)
-                { imgD.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
-                Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
-                foreach (DataRow row in Result)
-                { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                    Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
+                    foreach (DataRow row in Result)
+                    { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                }
             }
         }
     }

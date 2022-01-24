@@ -182,6 +182,7 @@
     <Content Include="Forms\Ingenieria\Frm_InfIngenieria.aspx" />
     <Content Include="Forms\Ingenieria\Inf_FrmComponenteRemovidoDeAeronave.aspx" />
     <Content Include="Forms\Almacen\FrmAlertaReservaPenRevisar.aspx" />
+    <Content Include="Forms\InventariosCompras\FrmAlertaCalibracionHer.aspx" />
     <Content Include="Forms\InventariosCompras\FrmCuadroComparativoCotiza.aspx" />
     <Content Include="Forms\InventariosCompras\FrmElemento.aspx" />
     <Content Include="Forms\InventariosCompras\FrmModPnTotal.aspx" />
@@ -733,6 +734,14 @@
     </Compile>
     <Compile Include="Forms\Almacen\FrmAlertaReservaPenRevisar.aspx.designer.cs">
       <DependentUpon>FrmAlertaReservaPenRevisar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\ExcelDataReader.cs" />
+    <Compile Include="Forms\InventariosCompras\FrmAlertaCalibracionHer.aspx.cs">
+      <DependentUpon>FrmAlertaCalibracionHer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\InventariosCompras\FrmAlertaCalibracionHer.aspx.designer.cs">
+      <DependentUpon>FrmAlertaCalibracionHer.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\InventariosCompras\FrmCuadroComparativoCotiza.aspx.cs">
       <DependentUpon>FrmCuadroComparativoCotiza.aspx</DependentUpon>

@@ -1,10 +1,9 @@
-﻿using System;
+﻿using _77NeoWeb.prg;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-using _77NeoWeb.prg;
+using System.Web;
 
 namespace _77NeoWeb.Prg.PrgIngenieria
 {
@@ -210,7 +209,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                             {
                                 PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 PCodIdRte = Convert.ToInt32(SDR["CodIdRte"].ToString().Trim());
-                            }                           
+                            }
                             SDR.Close();
                             transaction.Commit();
                         }

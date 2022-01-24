@@ -104,10 +104,12 @@
             $('[id *=DdlPNOn]').chosen();
             $('[id *=DdlPNOff]').chosen();
             $('[id *=DdlPNHta]').chosen();
-
-
-
         }
+        $(':text').on("focus", function () {
+            //here set in localStorage id of the textbox
+            localStorage.setItem("focusItem", this.id);
+            //console.log(localStorage.getItem("focusItem"));test the focus element id
+        });
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
@@ -119,10 +121,11 @@
         <asp:View ID="Vw0Manto" runat="server">
             <asp:UpdatePanel ID="UpPnlRte" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <asp:DropDownList ID="DdlBusqRte" runat="server" CssClass="Campos" OnTextChanged="DdlBusqRte_TextChanged" AutoPostBack="true" Width="20%"></asp:DropDownList>
+                    <asp:DropDownList ID="DdlBusqRte" runat="server" CssClass="Campos" OnTextChanged="DdlBusqRte_TextChanged" AutoPostBack="true" Width="20%" />
                     <asp:Label ID="LblAeroRte" runat="server" CssClass="LblEtiquet" Text="Aeronave:"></asp:Label>
-                    <asp:DropDownList ID="DdlAeroRte" runat="server" CssClass="Campos" OnTextChanged="DdlAeroRte_TextChanged" AutoPostBack="true" Width="15%" Enabled="false"></asp:DropDownList>
-                    <asp:Label ID="LblOtSec" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:"></asp:Label>
+                    <asp:DropDownList ID="DdlAeroRte" runat="server" CssClass="Campos" OnTextChanged="DdlAeroRte_TextChanged" AutoPostBack="true" Width="15%" Enabled="false" />
+                    <asp:Label ID="LblOtSec" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:" />
+                    <asp:TextBox ID="TxtCodigoOtSec" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:TextBox ID="TxtOtSec" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:Label ID="LblNumLv" runat="server" CssClass="LblEtiquet" Text="Libro Vuelo:"></asp:Label>
                     <asp:TextBox ID="TxtNumLv" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />&nbsp&nbsp&nbsp
@@ -133,10 +136,11 @@
                     <asp:Table runat="server">
                         <asp:TableRow>
                             <asp:TableCell Width="1%">
-                                <asp:Label ID="LblNroRte" runat="server" CssClass="LblEtiquet" Text="Número:"></asp:Label>
+                                <asp:Label ID="LblNroRte" runat="server" CssClass="LblEtiquet" Text="Número:" />
                             </asp:TableCell>
-                            <asp:TableCell Width="3%">
-                                <asp:TextBox ID="TxtNroRte" runat="server" CssClass="form-control heightCampo" Enabled="false" TextMode="Number" onkeypress="return solonumeros(event);" Text="0" Width="100%"></asp:TextBox>
+                            <asp:TableCell Width="4%">
+                                <asp:TextBox ID="TxtNroRte" runat="server" CssClass="form-control heightCampo" Enabled="false" TextMode="Number" onkeypress="return solonumeros(event);" Text="0" Width="100%" Visible="false" />
+                                <asp:TextBox ID="TxtCodigoRte" runat="server" CssClass="form-control heightCampo" Enabled="false" Text="" Width="100%" />
                             </asp:TableCell>
                             <asp:TableCell Width="4%">
                                 <asp:TextBox ID="TxtConsTall" runat="server" CssClass="form-control heightCampo" MaxLength="15" Enabled="false" Width="90%"></asp:TextBox>
@@ -168,7 +172,7 @@
                             <asp:TableCell Width="1%">
                                 <asp:Label ID="LblEstad" runat="server" CssClass="LblEtiquet" Text="Estado:" />
                             </asp:TableCell>
-                           <asp:TableCell ColumnSpan="3" Width="6%">
+                            <asp:TableCell ColumnSpan="3" Width="6%">
                                 <asp:DropDownList ID="DdlEstad" runat="server" CssClass="heightCampo" Enabled="false" Width="95%" OnTextChanged="DdlEstad_TextChanged" AutoPostBack="true" />
                             </asp:TableCell>
                         </asp:TableRow>
@@ -221,18 +225,12 @@
                                         <td>
                                             <asp:Label ID="LblFecDet" runat="server" CssClass="LblEtiquet" Text="Fecha:" /></td>
                                         <td>
-                                            <asp:ImageButton ID="IbtFecDet" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="19px" Width="15px" Enabled="false" /></td>
-                                        <td>
-                                            <asp:TextBox ID="TxtFecDet" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="90%" Font-Size="11px" OnTextChanged="TxtFecDet_TextChanged" AutoPostBack="true"></asp:TextBox>
-                                            <ajaxToolkit:CalendarExtender ID="CldFecDet" runat="server" CssClass=" MyCalendar" PopupButtonID="IbtFecDet" TargetControlID="TxtFecDet" Format="dd/MM/yyyy" />
+                                            <asp:TextBox ID="TxtFecDet" runat="server" CssClass="form-control heightCampo" Enabled="false" onKeyDown="return false" TextMode="Date" Width="90%" Font-Size="11px" OnTextChanged="TxtFecDet_TextChanged" AutoPostBack="true"></asp:TextBox>                                          
                                         </td>
                                         <td>
-                                            <asp:Label ID="LblFecProy" runat="server" CssClass="LblEtiquet" Text="Proyec.:" /></td>
+                                            <asp:Label ID="LblFecProy" runat="server" CssClass="LblEtiquet" Text="Proyec.:" /></td>                                       
                                         <td>
-                                            <asp:ImageButton ID="IbtFecPry" runat="server" CssClass="BtnImagenCalender DiseñoCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="19px" Width="15px" Enabled="false" /></td>
-                                        <td>
-                                            <asp:TextBox ID="TxtFecPry" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="90%" Font-Size="10.5px"></asp:TextBox>
-                                            <ajaxToolkit:CalendarExtender ID="CldFecPry" runat="server" CssClass=" MyCalendar" PopupButtonID="IbtFecPry" TargetControlID="TxtFecPry" Format="dd/MM/yyyy" />
+                                            <asp:TextBox ID="TxtFecPry" runat="server" CssClass="form-control heightCampo" Enabled="false" TextMode="Date" Width="90%" Font-Size="10.5px"></asp:TextBox>
                                         </td>
                                     </tr>
                                 </table>
@@ -266,13 +264,9 @@
                             </asp:TableCell>
                             <asp:TableCell ID="TbClFecCump">
                                 <asp:Table runat="server">
-                                    <asp:TableRow>
+                                    <asp:TableRow>                                        
                                         <asp:TableCell>
-                                            <asp:ImageButton ID="IbtFecCump" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="19px" Width="15px" Enabled="false" />
-                                        </asp:TableCell>
-                                        <asp:TableCell>
-                                            <asp:TextBox ID="TxtFecCump" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="90%" Font-Size="11px"></asp:TextBox>
-                                            <ajaxToolkit:CalendarExtender ID="CldFecCump" runat="server" CssClass=" MyCalendar" PopupButtonID="IbtFecCump" TargetControlID="TxtFecCump" Format="dd/MM/yyyy" />
+                                            <asp:TextBox ID="TxtFecCump" runat="server" CssClass="form-control heightCampo" Enabled="false" TextMode="Date" Width="90%" Font-Size="11px"/>                                           
                                         </asp:TableCell>
                                     </asp:TableRow>
                                 </asp:Table>
@@ -455,7 +449,7 @@
                     <asp:PostBackTrigger ControlID="BtnConsultar" />
                     <asp:PostBackTrigger ControlID="BtnImprimir" />
                     <asp:PostBackTrigger ControlID="BtnSnOnOf" />
-                    <asp:PostBackTrigger ControlID="BtnExporRte" />
+                    <asp:PostBackTrigger ControlID="BtnExporRte" />                    
                 </Triggers>
             </asp:UpdatePanel>
         </asp:View>
@@ -518,9 +512,11 @@
             <asp:UpdatePanel ID="UpPnlRecursoRte" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
                     <asp:Label ID="LblRecsNumRte" runat="server" CssClass="LblEtiquet" Text="Reporte:" />
-                    <asp:TextBox ID="TxtRecurNumRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
+                    <asp:TextBox ID="TxtRecurNumRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible ="false"/>
+                    <asp:TextBox ID="TxtRecurCodRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:Label ID="LblRecsSubOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:" />
-                    <asp:TextBox ID="TxtRecurSubOt" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
+                    <asp:TextBox ID="TxtRecurSubOt" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible="true" />
+                    <asp:TextBox ID="TxtRecurSubCodigoOt" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:Label ID="LblPrioridadOT" runat="server" CssClass="LblEtiquet" Text="Prioridad:" />
                     <asp:DropDownList ID="DdlPrioridadOT" runat="server" CssClass="Campos" Width="15%" />
                     <h6 class="TextoSuperior">
@@ -728,7 +724,8 @@
             <asp:UpdatePanel ID="UpPnlCargaMasiva" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
                     <asp:Label ID="LblCargaMasRte" runat="server" CssClass="LblEtiquet" Text="Reporte:"></asp:Label>
-                    <asp:TextBox ID="TxtCargaMasiRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
+                    <asp:TextBox ID="TxtCargaMasiRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible="false" />
+                    <asp:TextBox ID="TxtCargaMasiCodRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:Label ID="LblCargaMasOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:"></asp:Label>
                     <asp:TextBox ID="TxtCargaMasiOT" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:ImageButton ID="IbtCerrarSubMaxivo" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarSubMaxivo_Click" ImageAlign="Right" />
@@ -805,7 +802,8 @@
             <asp:UpdatePanel ID="UplSnOnOff" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
                     <asp:Label ID="LblSnONOfNumRte" runat="server" CssClass="LblEtiquet" Text="Reporte:" />
-                    <asp:TextBox ID="TxtSnOnOffNumRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
+                    <asp:TextBox ID="TxtSnOnOffNumRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible="false" />
+                    <asp:TextBox ID="TxtSnOnOffCodRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:ImageButton ID="IbtCerrarSnOnOff" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarSnOnOff_Click" ImageAlign="Right" />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LlTitSnOnOff" runat="server" Text="Ingreseso de elementos On - Off" /></h6>
@@ -819,14 +817,10 @@
                                     <asp:Label ID="LblFec" Text='<%# Eval("FechaRemocion") %>' runat="server" Width="100%" />
                                 </ItemTemplate>
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="TxtFec" Text='<%# Eval("FechaRemocion") %>' runat="server" Width="75%" Enabled="false" />
-                                    <asp:ImageButton ID="IbtFecha" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                                    <ajaxToolkit:CalendarExtender ID="CalFech" runat="server" PopupButtonID="IbtFecha" TargetControlID="TxtFec" Format="dd/MM/yyyy" CssClass="MyCalendar" />
+                                    <asp:TextBox ID="TxtFec" Text='<%# Eval("FechaRemocion") %>' runat="server" Width="100%" TextMode="Date"  MaxLength="10"/>                                   
                                 </EditItemTemplate>
                                 <FooterTemplate>
-                                    <asp:TextBox ID="TxtFecPP" runat="server" Width="75%" Enabled="false" />
-                                    <asp:ImageButton ID="IbtFechaPP" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                                    <ajaxToolkit:CalendarExtender ID="CalFechPP" runat="server" PopupButtonID="IbtFechaPP" TargetControlID="TxtFecPP" Format="dd/MM/yyyy" CssClass="MyCalendar" />
+                                    <asp:TextBox ID="TxtFecPP" runat="server" Width="100%"  TextMode="Date"  MaxLength="10"/>                                   
                                 </FooterTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Razón del evento" HeaderStyle-Width="14%">
@@ -988,14 +982,10 @@
                                     <asp:Label ID="LblFecVce" Text='<%# Eval("FechaVence") %>' runat="server" Width="100%" />
                                 </ItemTemplate>
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="TxtFecVce" Text='<%# Eval("FechaVence") %>' runat="server" Width="75%" Enabled="false" />
-                                    <asp:ImageButton ID="IbtFechaVce" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                                    <ajaxToolkit:CalendarExtender ID="CalFechVce" runat="server" PopupButtonID="IbtFechaVce" TargetControlID="TxtFecVce" Format="dd/MM/yyyy" CssClass="MyCalendar" />
+                                    <asp:TextBox ID="TxtFecVce" Text='<%# Eval("FechaVence") %>' runat="server" Width="100%" TextMode="Date" MaxLength="10" />
                                 </EditItemTemplate>
                                 <FooterTemplate>
-                                    <asp:TextBox ID="TxtFechVcePP" runat="server" Width="75%" Enabled="false" />
-                                    <asp:ImageButton ID="IbtFechVcePP" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                                    <ajaxToolkit:CalendarExtender ID="CalFechVcePP" runat="server" PopupButtonID="IbtFechVcePP" TargetControlID="TxtFechVcePP" Format="dd/MM/yyyy" CssClass="MyCalendar" />
+                                    <asp:TextBox ID="TxtFechVcePP" runat="server" Width="100%" TextMode="Date" MaxLength="10" />
                                 </FooterTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField FooterStyle-Width="5%">

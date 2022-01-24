@@ -227,9 +227,9 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Ultimo Cumplim" HeaderStyle-Width="10%">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="TxtFecUltCumpl" Text='<%# Eval("FechaVencWeb") %>' runat="server" Width="75%" Enabled="false" OnTextChanged="TxtFecUltCumpl_TextChanged" />
-                                                    <asp:ImageButton ID="IbtFecUltCumpl" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                                                    <ajaxToolkit:CalendarExtender ID="CalFecUltCumpl" runat="server" PopupButtonID="IbtFecUltCumpl" TargetControlID="TxtFecUltCumpl" Format="dd/MM/yyyy" CssClass="MyCalendar" />
+                                                    <asp:TextBox ID="TxtFecUltCumpl" Text='<%# Eval("FechaVencWeb") %>' runat="server" Width="100%" onKeyDown="return false" TextMode="Date" OnTextChanged="TxtFecUltCumpl_TextChanged" />
+                                                    <%--<asp:ImageButton ID="IbtFecUltCumpl" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
+                                                    <ajaxToolkit:CalendarExtender ID="CalFecUltCumpl" runat="server" PopupButtonID="IbtFecUltCumpl" TargetControlID="TxtFecUltCumpl" Format="dd/MM/yyyy" CssClass="MyCalendar" />--%>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Reset" HeaderStyle-Width="6%">
@@ -284,6 +284,8 @@
                     </asp:Table>
                 </ContentTemplate>
                 <Triggers>
+                    <asp:PostBackTrigger ControlID="BtnGuardarInsElem" />
+                    <asp:PostBackTrigger ControlID="BtnAKVirtualInsElem" />
                     <asp:PostBackTrigger ControlID="BtnAKVirtualInsElem" />
                     <asp:PostBackTrigger ControlID="BtnCompensac" />
                     <asp:AsyncPostBackTrigger ControlID="TxtFechaInsElem" EventName="TextChanged" />
@@ -604,9 +606,9 @@
                     <asp:Label ID="LblPosicInsMay" runat="server" CssClass="LblEtiquet" Text="Posicion:" />
                     <asp:DropDownList ID="DdlPosicInsMay" runat="server" CssClass="heightCampo" Width="10%" OnTextChanged="DdlPosicInsMay_TextChanged" AutoPostBack="true" />
                     <asp:Label ID="LblFechaInsMay" runat="server" CssClass="LblEtiquet" Text="Fecha:" />
-                    <asp:ImageButton ID="IbtFechaInsMay" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                    <asp:TextBox ID="TxtFechaInsMay" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="8%" OnTextChanged="TxtFechaInsMay_TextChanged" AutoPostBack="true" />
-                    <ajaxToolkit:CalendarExtender ID="CalFechaInsMay" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFechaInsMay" TargetControlID="TxtFechaInsMay" Format="dd/MM/yyyy" />
+                    <%--<asp:ImageButton ID="IbtFechaInsMay" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />--%>
+                   <asp:TextBox ID="TxtFechaInsMay" runat="server" CssClass="form-control-sm heightCampo"  onKeyDown="return false" TextMode="Date" Width="11%" OnTextChanged="TxtFechaInsMay_TextChanged" AutoPostBack="true" />  <%--Enabled="false"--%>
+                    <%--<ajaxToolkit:CalendarExtender ID="CalFechaInsMay" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFechaInsMay" TargetControlID="TxtFechaInsMay" Format="dd/MM/yyyy" />--%>
                     <asp:Button ID="BtnCompensacInsMay" CssClass="btn btn-danger" runat="server" Height="25px" Width="18px" Text="C" Font-Size="9px" ToolTip="Libros de vuelo para la compensación" OnClick="BtnCompensacInsMay_Click" OnClientClick="return confirm('¿Desea realizar la compensación?');" Visible="false" />
                     <asp:Label ID="LblMotivInsMay" runat="server" CssClass="LblEtiquet" Text="Motivo:" />
                     <asp:TextBox ID="TxtMotivInsMay" runat="server" CssClass="form-control-sm" TextMode="MultiLine" MaxLength="240" Width="15%" Height="1%" />
@@ -678,9 +680,9 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Ultimo Cumplim" HeaderStyle-Width="10%">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="TxtFecUltCumplMay" Text='<%# Eval("FechaVencWeb") %>' runat="server" Width="75%" Enabled="false" OnTextChanged="TxtFecUltCumplMay_TextChanged" />
-                                                    <asp:ImageButton ID="IbtFecUltCumplMay" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                                                    <ajaxToolkit:CalendarExtender ID="CalFecUltCumplMay" runat="server" PopupButtonID="IbtFecUltCumplMay" TargetControlID="TxtFecUltCumplMay" Format="dd/MM/yyyy" CssClass="MyCalendar" />
+                                                    <asp:TextBox ID="TxtFecUltCumplMay" Text='<%# Eval("FechaVencWeb") %>' runat="server" Width="100%" onKeyDown="return false" TextMode="Date" OnTextChanged="TxtFecUltCumplMay_TextChanged" AutoPostBack="true" />
+                                                    <%--<asp:ImageButton ID="IbtFecUltCumplMay" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />--%>
+                                                    <%--<ajaxToolkit:CalendarExtender ID="CalFecUltCumplMay" runat="server" PopupButtonID="IbtFecUltCumplMay" TargetControlID="TxtFecUltCumplMay" Format="dd/MM/yyyy" CssClass="MyCalendar" />--%>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Reset" HeaderStyle-Width="6%">
@@ -738,6 +740,7 @@
                     <asp:PostBackTrigger ControlID="BtnAKVirtualInsMay" />
                     <asp:PostBackTrigger ControlID="BtnCompensacInsMay" />
                     <asp:PostBackTrigger ControlID="BtnVisualizarMay" />
+                    <asp:PostBackTrigger ControlID="BtnGuardarInsMay" />
                     <asp:AsyncPostBackTrigger ControlID="TxtFechaInsMay" EventName="TextChanged" />
                     <asp:AsyncPostBackTrigger ControlID="DdlPosicInsMay" EventName="TextChanged" />
                 </Triggers>
@@ -828,9 +831,9 @@
                     <asp:Label ID="LblPosicRemMay" runat="server" CssClass="LblEtiquet" Text="Posicion:" />
                     <asp:DropDownList ID="DdlPosicRemMay" runat="server" CssClass="heightCampo" Width="10%" Enabled="false" />
                     <asp:Label ID="LblFechaRemMay" runat="server" CssClass="LblEtiquet" Text="Fecha:" />
-                    <asp:ImageButton ID="IbtFechaRemMay" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                    <asp:TextBox ID="TxtFechaRemMay" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="8%" OnTextChanged="TxtFechaRemMay_TextChanged" AutoPostBack="true" />
-                    <ajaxToolkit:CalendarExtender ID="CalFechaRemMay" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFechaRemMay" TargetControlID="TxtFechaRemMay" Format="dd/MM/yyyy" />
+                    <%--<asp:ImageButton ID="IbtFechaRemMay" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />--%>
+                    <asp:TextBox ID="TxtFechaRemMay" runat="server" CssClass="form-control-sm heightCampo" onKeyDown="return false" TextMode="Date" Width="11%" OnTextChanged="TxtFechaRemMay_TextChanged" AutoPostBack="true" />
+                    <%--<ajaxToolkit:CalendarExtender ID="CalFechaRemMay" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFechaRemMay" TargetControlID="TxtFechaRemMay" Format="dd/MM/yyyy" />--%>
                     <asp:Button ID="BtnRemMayCompensac" CssClass="btn btn-danger" runat="server" Height="25px" Width="18px" Text="C" Font-Size="9px" ToolTip="Libros de vuelo para la compensación" OnClick="BtnRemMayCompensac_Click" OnClientClick="return confirm('¿Desea realizar la compensación?');" Visible="false" />
                     <asp:Label ID="LblMotivRemMay" runat="server" CssClass="LblEtiquet" Text="Motivo:" />
                     <asp:TextBox ID="TxtMotivRemMay" runat="server" CssClass="form-control-sm" TextMode="MultiLine" MaxLength="240" Width="15%" Height="1%" />
@@ -890,6 +893,7 @@
                     </asp:Table>
                 </ContentTemplate>
                 <Triggers>
+                    <asp:PostBackTrigger ControlID="BtnGuardarRemMay" />
                     <asp:PostBackTrigger ControlID="BtnAKVirtualRemMay" />
                     <asp:PostBackTrigger ControlID="BtnVisualizarRemMay" />
                     <asp:PostBackTrigger ControlID="BtnRemMayCompensac" />
@@ -927,9 +931,7 @@
                     <asp:Label ID="LblPosicInsSubC" runat="server" CssClass="LblEtiquet" Text="Posicion:" />
                     <asp:DropDownList ID="DdlPosicInsSubC" runat="server" CssClass="heightCampo" Width="10%" />
                     <asp:Label ID="LblFechaInsSubC" runat="server" CssClass="LblEtiquet" Text="Fecha:" />
-                    <asp:ImageButton ID="IbtFechaInsSubC" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                    <asp:TextBox ID="TxtFechaInsSubC" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="8%" />
-                    <ajaxToolkit:CalendarExtender ID="CalFechaInsSubC" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFechaInsSubC" TargetControlID="TxtFechaInsSubC" Format="dd/MM/yyyy" />
+                    <asp:TextBox ID="TxtFechaInsSubC" runat="server" CssClass="form-control-sm heightCampo" onKeyDown="return false" TextMode="Date" Width="11%" />                
                     <asp:Label ID="LblMotivInsSubC" runat="server" CssClass="LblEtiquet" Text="Motivo:" />
                     <asp:TextBox ID="TxtMotivInsSubC" runat="server" CssClass="form-control-sm" TextMode="MultiLine" MaxLength="240" Width="15%" Height="1%" />
                     <br />
@@ -1000,9 +1002,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Ultimo Cumplim" HeaderStyle-Width="10%">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="TxtFecUltCumplInsSubC" Text='<%# Eval("FechaVencWeb") %>' runat="server" Width="75%" Enabled="false" OnTextChanged="TxtFecUltCumplInsSubC_TextChanged" />
-                                                    <asp:ImageButton ID="IbtFecUltCumpl" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                                                    <ajaxToolkit:CalendarExtender ID="CalFecUltCumpl" runat="server" PopupButtonID="IbtFecUltCumpl" TargetControlID="TxtFecUltCumplInsSubC" Format="dd/MM/yyyy" CssClass="MyCalendar" />
+                                                    <asp:TextBox ID="TxtFecUltCumplInsSubC" Text='<%# Eval("FechaVencWeb") %>' runat="server" Width="100%" onKeyDown="return false" TextMode="Date" OnTextChanged="TxtFecUltCumplInsSubC_TextChanged" />                                               
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Reset" HeaderStyle-Width="6%">
@@ -1060,6 +1060,7 @@
                     <asp:AsyncPostBackTrigger ControlID="DdlPNInsSubC" EventName="TextChanged" />
                     <asp:AsyncPostBackTrigger ControlID="DdlSNInsSubC" EventName="TextChanged" />
                     <asp:AsyncPostBackTrigger ControlID="DdlModelInsSubC" EventName="TextChanged" />
+                    <asp:PostBackTrigger ControlID="BtnGuardarInsSubC" />
                     <asp:PostBackTrigger ControlID="BtnPNInsSubC" />
                     <asp:PostBackTrigger ControlID="BtnSNInsSubC" />
                     <asp:PostBackTrigger ControlID="BtnUltNivInsSubC" />

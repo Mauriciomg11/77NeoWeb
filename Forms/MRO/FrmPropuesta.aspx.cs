@@ -5,12 +5,10 @@ using ClosedXML.Excel;
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -639,8 +637,9 @@ namespace _77NeoWeb.Forms.MRO
             DataTable PptPpl = new DataTable();
             VbCodAnt = DdlPptSuper.Text.Trim();
             PptPpl = DtDdlPptPpal.Clone();
+            string borr = "IdCliente = " + (Cod.Trim().Equals("") ? "0" : Cod.Trim() + ""); //"IdCliente = "  + 
             PptPpl.Rows.Add(" - ", "", 0, "");
-            DataRow[] Result = DtDdlPptPpal.Select("CodCliente='" + Cod.Trim() + "'");
+            DataRow[] Result = DtDdlPptPpal.Select("IdCliente = " + (Cod.Trim().Equals("") ? "0" : Cod.Trim()));
             foreach (DataRow Row in Result)
             { PptPpl.ImportRow(Row); }
             DdlPptSuper.DataSource = PptPpl;
@@ -676,7 +675,8 @@ namespace _77NeoWeb.Forms.MRO
                             string VbFecSt;
                             DateTime? VbFecDT;
                             TxtNumPpt.Text = SDR["IdPropuesta"].ToString().Trim();
-                            TxtFecha.Text = SDR["FechaPropuesta"].ToString().Trim();
+                            TxtCodigoPpt.Text = SDR["CodigoPPT"].ToString().Trim();
+                            TxtFecha.Text = Cnx.ReturnFecha(SDR["FechaPropuesta"].ToString().Trim()); //;
                             DdlTipo.Text = SDR["CodTipoPropuesta"].ToString().Trim();
                             DdlCliente.Text = SDR["IdTercero"].ToString().Trim();
                             DdlFormPag.Text = SDR["CodTipoPago"].ToString().Trim();
@@ -693,13 +693,13 @@ namespace _77NeoWeb.Forms.MRO
                             VbFecSt = SDR["FechaAprobacion"].ToString().Trim().Equals("") ? "01/01/1900" : SDR["FechaAprobacion"].ToString().Trim();
                             VbFecDT = Convert.ToDateTime(VbFecSt);
                             TxtFechAprob.Text = VbFecSt.Equals("01/01/1900") ? "" : String.Format("{0:yyyy-MM-dd}", VbFecDT);
-                            VbFecSt = HttpUtility.HtmlDecode(SDR["FechaEntrega"].ToString().Trim());
+                            VbFecSt = HttpUtility.HtmlDecode(SDR["FechaEntrega"].ToString().Trim().Equals("") ? "01/01/1900" : SDR["FechaEntrega"].ToString().Trim()); //SDR["FechaEntrega"].ToString().Trim()
                             VbFecDT = Convert.ToDateTime(VbFecSt);
                             TxtFechEntreg.Text = String.Format("{0:yyyy-MM-dd}", VbFecDT);
-                            VbFecSt = HttpUtility.HtmlDecode(SDR["FechaValidez"].ToString().Trim());
+                            VbFecSt = HttpUtility.HtmlDecode(SDR["FechaValidez"].ToString().Trim().Equals("") ? "01/01/1900" : SDR["FechaValidez"].ToString().Trim()); // HttpUtility.HtmlDecode(SDR["FechaValidez"].ToString().Trim());
                             VbFecDT = Convert.ToDateTime(VbFecSt);
                             TxtFechValidez.Text = String.Format("{0:yyyy-MM-dd}", VbFecDT);
-                            VbFecSt = HttpUtility.HtmlDecode(SDR["FechaEntregaTrabajo"].ToString().Trim());
+                            VbFecSt = HttpUtility.HtmlDecode(SDR["FechaEntregaTrabajo"].ToString().Trim().Equals("") ? "01/01/1900" : SDR["FechaEntregaTrabajo"].ToString().Trim()); //   HttpUtility.HtmlDecode(SDR["FechaEntregaTrabajo"].ToString().Trim());
                             VbFecDT = Convert.ToDateTime(VbFecSt);
                             TxtFechEntregTrab.Text = String.Format("{0:yyyy-MM-dd}", VbFecDT);
                             DdlTipoSol.Text = SDR["IdTipoSolicitudPropuesta"].ToString().Trim();
@@ -758,6 +758,7 @@ namespace _77NeoWeb.Forms.MRO
         protected void LimpiarCampos()
         {
             TxtNumPpt.Text = "0";
+            TxtCodigoPpt.Text = "";
             TxtFecha.Text = "";
             DdlTipo.Text = "";
             DdlCliente.Text = "";
@@ -1506,12 +1507,19 @@ namespace _77NeoWeb.Forms.MRO
                     TxtValorTrm.Text = TxtValorTrm.Text.Equals("") ? "0" : TxtValorTrm.Text.Trim();
                     double VbIVlrTRM = Convert.ToDouble(TxtValorTrm.Text);
 
-                    DateTime? VbFecApr;
+                    DateTime? VbFecApr, VbFecValid, VbFecEntrTrab;
                     if (TxtFechAprob.Text.Trim().Equals("")) { VbFecApr = null; }
                     else { VbFecApr = Convert.ToDateTime(TxtFechAprob.Text); }
                     DateTime? VbFecTrm;
                     if (TxtFechTRM.Text.Trim().Equals("")) { VbFecTrm = null; }
                     else { VbFecTrm = Convert.ToDateTime(TxtFechTRM.Text); }
+
+                    if (TxtFechValidez.Text.Trim().Equals("")) { VbFecValid = null; }
+                    else { VbFecValid = Convert.ToDateTime(TxtFechValidez.Text); }
+
+                    if (TxtFechEntregTrab.Text.Trim().Equals("")) { VbFecEntrTrab = null; }
+                    else { VbFecEntrTrab = Convert.ToDateTime(TxtFechEntregTrab.Text); }
+                    string VbCodcia = Session["!dC!@"].ToString().Trim();
 
                     List<CsTypEncPropuesta> ObjEncPropuesta = new List<CsTypEncPropuesta>();
                     var TypEncPropuesta = new CsTypEncPropuesta()
@@ -1530,7 +1538,7 @@ namespace _77NeoWeb.Forms.MRO
                         CodTipoMoneda = DdlMoned.Text.Trim(),
                         TRM = VbFecTrm,
                         FechaEntrega = Convert.ToDateTime(TxtFechEntreg.Text),
-                        FechaValidez = Convert.ToDateTime(TxtFechValidez.Text),
+                        FechaValidez = VbFecValid,
                         CodEstadoPropuesta = DdlEstado.Text.Trim(),
                         IdTipoSolicitudPropuesta = DdlTipoSol.Text.Trim(),
                         ValorBruto = VbVlrSubTt,
@@ -1544,7 +1552,7 @@ namespace _77NeoWeb.Forms.MRO
                         Impuesto = VbIVlrmpt,
                         VlorTotalHHEP = VbVlrHH,
                         VlrRepuestoEP = VbVlrRecF,
-                        FechaEntregaTrabajo = Convert.ToDateTime(TxtFechEntregTrab.Text),
+                        FechaEntregaTrabajo = VbFecEntrTrab,
                         ValorTRM = VbIVlrTRM,
                         GananciaNAL = Convert.ToDouble(TxtGanacNacional.Text.Trim()),
                         GananciaInta = Convert.ToDouble(TxtGanacInter.Text.Trim()),
@@ -1557,7 +1565,7 @@ namespace _77NeoWeb.Forms.MRO
                         IntegradorNeoS = 0,
                         Miscelaneos = VbVlrAjus,
                         AvancePPT = 0,
-                        IdConfigCia = (int)Session["!dC!@"],
+                        IdConfigCia = Convert.ToInt32(VbCodcia),
                         ClienteAnt = "",
                         Accion = "INSERT",
                     };
@@ -1665,7 +1673,7 @@ namespace _77NeoWeb.Forms.MRO
                 {
                     ValidarCampos("UPDATE");
                     if (ViewState["Validar"].Equals("N"))
-                    { return; }/**/
+                    { return; }
                     TxtGarant.Text = TxtGarant.Text.Equals("") ? "0" : TxtGarant.Text.Trim();
                     TxtGanacInter.Text = TxtGanacInter.Text.Equals("") ? "0" : TxtGanacInter.Text.Trim();
                     TxtGanacNacional.Text = TxtGanacNacional.Text.Equals("") ? "0" : TxtGanacNacional.Text.Trim();
@@ -1692,7 +1700,7 @@ namespace _77NeoWeb.Forms.MRO
                     DateTime? VbFecTrm;
                     if (TxtFechTRM.Text.Trim().Equals("")) { VbFecTrm = null; }
                     else { VbFecTrm = Convert.ToDateTime(TxtFechTRM.Text); }
-
+                    string VbCodcia = Session["!dC!@"].ToString().Trim();
                     List<CsTypEncPropuesta> ObjEncPropuesta = new List<CsTypEncPropuesta>();
                     var TypEncPropuesta = new CsTypEncPropuesta()
                     {
@@ -1737,8 +1745,8 @@ namespace _77NeoWeb.Forms.MRO
                         IntegradorNeoS = 0,
                         Miscelaneos = VbVlrAjus,
                         AvancePPT = 0,
-                        IdConfigCia = (int)Session["!dC!@"],
-                        ClienteAnt = ViewState["ClienteAnt"].ToString().Trim(),/**/
+                        IdConfigCia = Convert.ToInt32(VbCodcia),
+                        ClienteAnt = ViewState["ClienteAnt"].ToString().Trim(),
                         Accion = "UPDATE",
                     };
                     ObjEncPropuesta.Add(TypEncPropuesta);
@@ -1753,13 +1761,13 @@ namespace _77NeoWeb.Forms.MRO
                         ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
                         return;
                     }
-                    ActivarBtn(true, true, true);
                     ViewState["Accion"] = "";
                     Result = Idioma.Select("Objeto= 'BotonMod'");
                     foreach (DataRow row in Result)
-                    { BtnModificar.Text = row["Texto"].ToString().Trim(); }
-                    ActivarCampos(false, false, "UPDATE");
+                    { BtnModificar.Text = row["Texto"].ToString().Trim(); }/**/
                     Traerdatos(TxtNumPpt.Text.Trim());
+                    ActivarBtn(true, true, true);
+                    ActivarCampos(false, false, "UPDATE");
                     BtnModificar.OnClientClick = "";
                 }
             }
@@ -1850,7 +1858,7 @@ namespace _77NeoWeb.Forms.MRO
             if (TxtNumPpt.Text.Trim().Equals("")) { return; }
             Result = Idioma.Select("Objeto= 'Mens43PPT'");
             foreach (DataRow row in Result)
-            { LblTitTrabajos.Text = row["Texto"].ToString().Trim() + " [" + TxtNumPpt.Text.Trim() + "]  [" + DdlTipo.SelectedItem.Text.Trim() + "]"; }//Propuesta Nro:
+            { LblTitTrabajos.Text = row["Texto"].ToString().Trim() + " [" + TxtCodigoPpt.Text.Trim() + "]  [" + DdlTipo.SelectedItem.Text.Trim() + "]"; }//Propuesta Nro:
 
             MultVw.ActiveViewIndex = 4;
         }
@@ -2136,13 +2144,13 @@ namespace _77NeoWeb.Forms.MRO
                             GrdDet1.DataSource = DtDet1;
                             break;
                         case "OT":
-                            Result = DtDet1All.Select("OT=" + TxtBusqDet1.Text.Trim());
+                            Result = DtDet1All.Select("CodigoOT LIKE '%" + TxtBusqDet1.Text.Trim() + "%'");
                             foreach (DataRow Row in Result)
                             { DtDet1.ImportRow(Row); } /**/
                             GrdDet1.DataSource = DtDet1;
                             break;
                         case "RTE":
-                            Result = DtDet1All.Select("Reporte=" + TxtBusqDet1.Text.Trim());
+                            Result = DtDet1All.Select("CodigoRTE LIKE '%" + TxtBusqDet1.Text.Trim() + "%'");
                             foreach (DataRow Row in Result)
                             { DtDet1.ImportRow(Row); } /**/
                             GrdDet1.DataSource = DtDet1;
@@ -2755,8 +2763,8 @@ namespace _77NeoWeb.Forms.MRO
             {
                 GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
                 int rowIndex = row.RowIndex;
-                string vbcod = ((Label)row.FindControl("LblPpt")).Text.ToString().Trim();
                 GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                string vbcod = GrdBusq.DataKeys[gvr.RowIndex].Values["Codigo"].ToString(); //((Label)row.FindControl("LblPpt")).Text.ToString().Trim();
                 string VbCodCli = GrdBusq.DataKeys[gvr.RowIndex].Values["IdTercero"].ToString();
                 string VbCodTipo = GrdBusq.DataKeys[gvr.RowIndex].Values["CodTipoPropuesta"].ToString();
                 TxtNumPpt.Text = vbcod;
@@ -3457,7 +3465,6 @@ namespace _77NeoWeb.Forms.MRO
         //************************** Detalle servicios ***********************************************
         protected void BindServicios(string Accion, string Id)
         {
-            /**/
             if (Accion.Equals("UPDATE"))
             {
                 Cnx.SelecBD();
@@ -3590,7 +3597,7 @@ namespace _77NeoWeb.Forms.MRO
                 string VbIdx = GrdServicios.DataKeys[gvr.RowIndex].Values["IdDetPropSrv"].ToString().Trim();
                 string VbCodSvcM = GrdServicios.DataKeys[gvr.RowIndex].Values["CodServicioManto"].ToString().Trim();
                 string VlRepExt = ((CheckBox)RowG.FindControl("CkbRExtP")).Checked == true ? "1" : "0";
-                string VlOt = ((Label)RowG.FindControl("LblOTP")).Text.ToString().Trim();
+                string VlOt = GrdServicios.DataKeys[gvr.RowIndex].Values["Ot"].ToString().Trim(); //((Label)RowG.FindControl("LblOTP")).Text.ToString().Trim();
                 if (!TxtFechAprob.Text.Trim().Equals(""))
                 {
                     ((CheckBox)RowG.FindControl("CkbRExtP")).Enabled = false;
@@ -3694,8 +3701,9 @@ namespace _77NeoWeb.Forms.MRO
                 if (!ViewState["Accion"].ToString().Trim().Equals("")) { return; }
                 GridViewRow RowG = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
                 ImageButton IbtFilter2 = ((ImageButton)RowG.FindControl("IbtFilter2")) as ImageButton;
-                Label LblRteP = ((Label)RowG.FindControl("LblRteP")) as Label;
+
                 GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                string LblRteP = GrdServicios.DataKeys[gvr.RowIndex].Values["IdReporte"].ToString().Trim();
                 string VbIdx = GrdServicios.DataKeys[gvr.RowIndex].Values["IdDetPropSrv"].ToString().Trim();
                 string VbIdSvc = GrdServicios.DataKeys[gvr.RowIndex].Values["IdSvcManto"].ToString().Trim();
                 string VlPn = GrdServicios.DataKeys[gvr.RowIndex].Values["Pn"].ToString().Trim();
@@ -3706,7 +3714,7 @@ namespace _77NeoWeb.Forms.MRO
                     {
                         IbtFilter2.ImageUrl = "~/images/FilterOut.png";
                         ViewState["FilterPnSugerido"] = "S";
-                        BindPnSugeridos(VlPn, VbIdSvc, VbIdx, LblRteP.Text.Trim());
+                        BindPnSugeridos(VlPn, VbIdSvc, VbIdx, LblRteP);
                     }
                     else
                     {
@@ -3728,7 +3736,7 @@ namespace _77NeoWeb.Forms.MRO
                         ViewState["IdDetPropSrv"] = VbIdx;
                         IbtFilter2.ImageUrl = "~/images/FilterOut.png";
                     }
-                    BindPnSugeridos(VlPn, VbIdSvc, VbIdx, LblRteP.Text.Trim());
+                    BindPnSugeridos(VlPn, VbIdSvc, VbIdx, LblRteP);
                 }
             }
         }
@@ -3739,7 +3747,7 @@ namespace _77NeoWeb.Forms.MRO
             ViewState["Accion"] = "";
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataRow[] Result;
-            string OT = (GrdServicios.Rows[e.RowIndex].FindControl("LblOT") as Label).Text.Trim();
+            string OT = GrdServicios.DataKeys[e.RowIndex].Values["Ot"].ToString(); //(GrdServicios.Rows[e.RowIndex].FindControl("LblOT") as Label).Text.Trim();
             int VbRpExt = (GrdServicios.Rows[e.RowIndex].FindControl("CkbRExt") as CheckBox).Checked == true ? 1 : 0;
 
             if (!OT.Equals("0") && VbRpExt > 0)
@@ -3768,8 +3776,8 @@ namespace _77NeoWeb.Forms.MRO
                     {
                         try
                         {
-                            string borr = ViewState["IdDetPropHk"].ToString();
-                            int borr1 = (GrdServicios.Rows[e.RowIndex].FindControl("CkbAprob") as CheckBox).Checked == true ? 1 : 0;
+                            // string borr = ViewState["IdDetPropHk"].ToString();
+                            //int borr1 = (GrdServicios.Rows[e.RowIndex].FindControl("CkbAprob") as CheckBox).Checked == true ? 1 : 0;
 
                             SC.Parameters.AddWithValue("@TP", DdlTipo.Text.Trim());
                             SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
@@ -4422,24 +4430,24 @@ namespace _77NeoWeb.Forms.MRO
             CampoNewEncVenta();
 
             string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
-            Cnx.SelecBD();
-            using (SqlConnection SCnx1 = new SqlConnection(Cnx.GetConex()))
-            {
-                ReportParameter[] parameters = new ReportParameter[3];
+            //Cnx.SelecBD();
+            // using (SqlConnection SCnx1 = new SqlConnection(Cnx.GetConex()))
+            //  {
+            ReportParameter[] parameters = new ReportParameter[3];
 
-                parameters[0] = new ReportParameter("PrmCia", Session["NomCiaPpal"].ToString().Trim());
-                parameters[1] = new ReportParameter("PrmNit", Session["Nit77Cia"].ToString().Trim());
-                parameters[2] = new ReportParameter("PrmImg", VbLogo, true);
+            parameters[0] = new ReportParameter("PrmCia", Session["NomCiaPpal"].ToString().Trim());
+            parameters[1] = new ReportParameter("PrmNit", Session["Nit77Cia"].ToString().Trim());
+            parameters[2] = new ReportParameter("PrmImg", VbLogo, true);
 
-                RpVwAll.LocalReport.EnableExternalImages = true;
-                if (DdlTipo.Text.Trim().Equals("00001") || DdlTipo.Text.Trim().Equals("00001")) // venta o a todo costo
-                { RpVwAll.LocalReport.ReportPath = "Report/RtesMro/Inf_Propuesta.rdlc"; }
-                else { RpVwAll.LocalReport.ReportPath = "Report/RtesMro/Inf_propuestaRepa.rdlc"; }// Repa                    
-                RpVwAll.LocalReport.DataSources.Clear();
-                RpVwAll.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", DTEncPPT));
-                RpVwAll.LocalReport.SetParameters(parameters);
-                RpVwAll.LocalReport.Refresh();
-            }
+            RpVwAll.LocalReport.EnableExternalImages = true;
+            if (DdlTipo.Text.Trim().Equals("00001") || DdlTipo.Text.Trim().Equals("00001")) // venta o a todo costo
+            { RpVwAll.LocalReport.ReportPath = "Report/RtesMro/Inf_Propuesta.rdlc"; }
+            else { RpVwAll.LocalReport.ReportPath = "Report/RtesMro/Inf_propuestaRepa.rdlc"; }// Repa                    
+            RpVwAll.LocalReport.DataSources.Clear();
+            RpVwAll.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", DTEncPPT));
+            RpVwAll.LocalReport.SetParameters(parameters);
+            RpVwAll.LocalReport.Refresh();
+            // }
         }
         protected void BtnImprDet_Click(object sender, EventArgs e)
         {

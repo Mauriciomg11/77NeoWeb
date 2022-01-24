@@ -1,10 +1,7 @@
 ﻿using _77NeoWeb.prg;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -176,6 +173,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 if (DSTPs.Tables[0].Rows.Count > 0) //Datos
                 {
                     TxtCodOT.Text = HttpUtility.HtmlDecode(DSTPs.Tables[0].Rows[0]["CodOT"].ToString().Trim());
+                    TxtCodigoOT.Text = HttpUtility.HtmlDecode(DSTPs.Tables[0].Rows[0]["CodigoOT"].ToString().Trim());
                     TxtAplica.Text = HttpUtility.HtmlDecode(DSTPs.Tables[0].Rows[0]["Aplicabilidad"].ToString().Trim());
                     DdlStatus.Text = HttpUtility.HtmlDecode(DSTPs.Tables[0].Rows[0]["CodEstOrdTrab1"].ToString().Trim());
                     ViewState["EstadoAnt"] = DdlStatus.Text.Trim();

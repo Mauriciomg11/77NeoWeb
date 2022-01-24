@@ -52,6 +52,14 @@
             width: 100%;
             /* font-size: 18px;*/
         }
+
+        .CentrarCntndr {
+            left: 50%;
+            /*determinamos una anchura*/
+            width: 98%;
+            margin-left: 1%;
+            height: 8%;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
@@ -69,146 +77,104 @@
     <asp:UpdatePanel ID="UpPnlCampos" runat="server">
         <ContentTemplate>
             <asp:Panel ID="PnlCampos" runat="server">
-                <table class="TablaCampos table-sm table table-responsive-sm">
-                    <tr>
-                        <td>
-                            <asp:Label ID="LblCodigo" runat="server" CssClass="LblEtiquet" Text="Código:" /></td>
-                        <td width="1%"></td>
-                        <td width="12%">
-                            <asp:TextBox ID="TxtCod" runat="server" CssClass="form-control Campos" Enabled="false"></asp:TextBox></td>
-                        <td>
-                            <asp:Label ID="LblReferenc" runat="server" CssClass="LblEtiquet" Text="Referencia:" /></td>
-                        <td width="18%">
-                            <asp:TextBox ID="TxtRef" runat="server" CssClass="form-control Campos" Enabled="false"></asp:TextBox></td>
-                        <td class="LblEtiquet">P/N:</td>
-                        <td width="35%">
-                            <asp:DropDownList ID="DdlPN" runat="server" CssClass="form-control Campos" Font-Size="10px" Enabled="false"></asp:DropDownList></td>
-                        <td class="LblEtiquet">S/N:</td>
-                        <td width="35%">
-                            <asp:TextBox ID="TxtSN" runat="server" CssClass="form-control Campos" Enabled="false" MaxLength="80"></asp:TextBox></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="LblDescr" runat="server" CssClass="LblEtiquet" Text="Descripción:" /></td>
-                        <td></td>
-                        <td colspan="5">
-                            <asp:TextBox ID="TxtDescr" runat="server" CssClass="form-control Campos" Enabled="false" /></td>
-                        <td>
-                            <asp:Label ID="LblLote" runat="server" CssClass="LblEtiquet" Text="Lote:" /></td>
-                        <td>
-                            <asp:TextBox ID="TxtLote" runat="server" CssClass="form-control Campos" Enabled="false" /></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="LblFechRec" runat="server" CssClass="LblEtiquet" Text="Fecha Recibo:" /></td>
-                        <td></td>
-                        <td>
-                            <asp:TextBox ID="TxtFecRec" runat="server" CssClass="form-control Campos" TextMode="Date" Enabled="false"></asp:TextBox></td>
-                        <td>
-                            <asp:Label ID="LblUndMed" runat="server" CssClass="LblEtiquet" Text="Und Med:" /></td>
-                        <td>
-                            <asp:TextBox ID="TxtUndMed" runat="server" CssClass="form-control Campos" Enabled="false"></asp:TextBox></td>
+                <div class="CentrarCntndr">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <asp:Label ID="LblCodigo" runat="server" CssClass="LblEtiquet" Text="Código:" />
+                            <asp:TextBox ID="TxtCod" runat="server" Enabled="false" CssClass=" heightCampo" Width="100%" />
+                        </div>
+                        <div class="col-sm-2">
+                            <asp:Label ID="LblReferenc" runat="server" CssClass="LblEtiquet" Text="Referencia:" />
+                            <asp:TextBox ID="TxtRef" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" />
 
-                        <td>
-                            <asp:Label ID="LblGrupo" runat="server" CssClass="LblEtiquet" Text="Grupo:" /></td>
-                        <td>
-                            <asp:DropDownList ID="DdlGrupo" runat="server" CssClass="form-control Campos" Enabled="false"></asp:DropDownList></td>
-                        <td>
-                            <asp:Label ID="LblAta" runat="server" CssClass="LblEtiquet" Text="Capitulo:" /></td>
-                        <td>
-                            <asp:TextBox ID="TxtAta" runat="server" CssClass="form-control Campos" Enabled="false"></asp:TextBox></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="LblPosic" runat="server" CssClass="LblEtiquet" Text="Posición:" /></td>
-                        <td></td>
-                        <td>
-                            <asp:TextBox ID="txtPosic" runat="server" CssClass="form-control Campos" Enabled="false"></asp:TextBox></td>
-
-                        <td>
-                            <asp:Label ID="LblAerona" runat="server" CssClass="LblEtiquet" Text="Aeronave:" /></td>
-                        <td>
-                            <asp:TextBox ID="TxtHK" runat="server" CssClass="form-control Campos" Enabled="false"></asp:TextBox></td>
-
-                        <td>
-                            <asp:Label ID="LblMayor" runat="server" CssClass="LblEtiquet" Text="Mayor:" /></td>
-                        <td>
-                            <asp:TextBox ID="TxtMayor" runat="server" CssClass="form-control Campos" Enabled="false"></asp:TextBox></td>
-                        <td>
-                            <asp:Label ID="LblUbicTec" runat="server" CssClass="LblEtiquet" Text="Ubicación Técnica:" /></td>
-                        <td>
-                            <asp:TextBox ID="TxtUbiTec" runat="server" CssClass="form-control Campos" Enabled="false"></asp:TextBox></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="LblSheLif" runat="server" CssClass="LblEtiquet" Text="Shelf-Life:" /></td>
-                        <td>
-                            <asp:ImageButton ID="IbtFechaI" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" Enabled="false" OnClick="IbtFechaI_Click" /></td>
-                        <td>
-                            <asp:TextBox ID="TxtFecShelfLife" runat="server" CssClass="form-control Campos" Enabled="false"></asp:TextBox>
-                            <ajaxToolkit:CalendarExtender ID="CalFechShelLife" runat="server" PopupButtonID="IbtFechaI" TargetControlID="TxtFecShelfLife" Format="dd/MM/yyyy" />
-                            </div>
-                            <td>
-                                <asp:Label ID="LblEstad" runat="server" CssClass="LblEtiquet" Text="Estado:" /></td>
-                            <td colspan="2">
-                                <asp:TextBox ID="TxtEstado" runat="server" CssClass="form-control Campos" Enabled="false"></asp:TextBox></td>
-                            <td>
-                                <table class="TablaCheck table-responsive">
-                                    <tr>
-                                        <td>
-                                            <asp:CheckBox ID="CkbApu" runat="server" CssClass="LblEtiquet" Text="Apu" Enabled="false" /></td>
-                                        <td>
-                                            <asp:CheckBox ID="CkbMot" runat="server" CssClass="LblEtiquet" Text="Motor" Enabled="false" /></td>
-                                        <td>
-                                            <asp:CheckBox ID="CkbConsig" runat="server" CssClass="LblEtiquet" Text="Consignación" Enabled="false" /></td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td colspan="2">
-                                <table class="TablaActivo table-responsive">
-                                    <tr>
-
-                                        <td>
-                                            <asp:RadioButton ID="RdbActivo" runat="server" GroupName="Activo" Enabled="false" Text="Activo" CssClass="LblEtiquet" /></td>
-                                        <td>
-                                            <asp:RadioButton ID="RdbInactivo" runat="server" GroupName="Activo" Enabled="false" CssClass="LblEtiquet" Text="Inactivo" /></td>
-                                    </tr>
-                                </table>
-                            </td>
-                    </tr>
-                    <tr>
-                        <td colspan="8">
-                            <table class="TablaCampos table-responsive-sm TablaActivo">
-                                <tr>
-                                    <td>
-                                        <asp:Button ID="BtnModificar" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnModificar_Click" Text="Modificar" /></td>
-                                    <td>
-                                        <asp:Button ID="BtnConsultar" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnConsultar_Click" Text="Consultar" /></td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td colspan="7">
-                            <div>
-                                <h6 class="TituloContadoresAsig">
-                                    <asp:Label ID="LblTitContAsig" runat="server" Text="Contadores asignados" /></h6>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="7">
+                        </div>
+                        <div class="col-sm-3">
+                            <asp:Label ID="LblPn" runat="server" CssClass="LblEtiquet" Text="P/N:" />
+                            <asp:DropDownList ID="DdlPN" runat="server" CssClass="heightCampo" Font-Size="10px" Enabled="false" Width="100%" />
+                        </div>
+                        <div class="col-sm-3">
+                            <asp:Label ID="LblSn" runat="server" CssClass="LblEtiquet" Text="S/N:" />
+                            <asp:TextBox ID="TxtSN" runat="server" CssClass="heightCampo" Enabled="false" MaxLength="80" Width="100%" />
+                        </div>
+                        <div class="col-sm-2">
+                            <asp:Label ID="LblLote" runat="server" CssClass="LblEtiquet" Text="Lote:" />
+                            <asp:TextBox ID="TxtLote" runat="server" CssClass="heightCampo" Enabled="false" Width="100%" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <asp:Label ID="LblDescr" runat="server" CssClass="LblEtiquet" Text="Descripción:" />
+                            <asp:TextBox ID="TxtDescr" runat="server" CssClass="heightCampo" Enabled="false" Width="100%" />
+                        </div>
+                        <div class="col-sm-1">
+                            <asp:Label ID="LblUndMed" runat="server" CssClass="LblEtiquet" Text="Und Med:" />
+                            <asp:TextBox ID="TxtUndMed" runat="server" CssClass="heightCampo" Enabled="false" Width="100%" />
+                        </div>
+                        <div class="col-sm-2">
+                            <asp:Label ID="LblGrupo" runat="server" CssClass="LblEtiquet" Text="Grupo:" />
+                            <asp:DropDownList ID="DdlGrupo" runat="server" CssClass="heightCampo" Enabled="false" Width="100%" />
+                        </div>
+                        <div class="col-sm-3">
+                            <asp:Label ID="LblAta" runat="server" CssClass="LblEtiquet" Text="Capitulo:" />
+                            <asp:TextBox ID="TxtAta" runat="server" CssClass="heightCampo" Enabled="false" Width="100%" />
+                        </div>
+                        <div class="col-sm-2">
+                            <asp:Label ID="LblUbicTec" runat="server" CssClass="LblEtiquet" Text="Ubicación Técnica:" />
+                            <asp:TextBox ID="TxtUbiTec" runat="server" CssClass="heightCampo" Enabled="false" Width="100%" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <asp:Label ID="LblAerona" runat="server" CssClass="LblEtiquet" Text="Aeronave:" />
+                            <asp:TextBox ID="TxtHK" runat="server" CssClass="heightCampo" Enabled="false" Width="100%" />
+                        </div>
+                        <div class="col-sm-1">
+                            <asp:Label ID="LblPosic" runat="server" CssClass="LblEtiquet" Text="Posición:" />
+                            <asp:TextBox ID="txtPosic" runat="server" CssClass="heightCampo" Enabled="false" Width="100%" />
+                        </div>
+                        <div class="col-sm-2">
+                            <asp:Label ID="LblMayor" runat="server" CssClass="LblEtiquet" Text="Mayor:" />
+                            <asp:TextBox ID="TxtMayor" runat="server" CssClass="heightCampo" Enabled="false" Width="100%" />
+                        </div>
+                        <div class="col-sm-3">
+                            <asp:Label ID="LblEstad" runat="server" CssClass="LblEtiquet" Text="Estado:" />
+                            <asp:TextBox ID="TxtEstado" runat="server" CssClass="heightCampo" Enabled="false" Width="100%" />
+                        </div>
+                        <div class="col-sm-2">
+                            <asp:Label ID="LblFechRec" runat="server" CssClass="LblEtiquet" Text="Fecha Recibo:" />
+                            <asp:TextBox ID="TxtFecRec" runat="server" CssClass="heightCampo" TextMode="Date" Enabled="false" Width="100%" />
+                        </div>
+                        <div class="col-sm-2">
+                            <asp:Label ID="LblSheLif" runat="server" CssClass="LblEtiquet" Text="Shelf-Life:" />
+                            <asp:TextBox ID="TxtFecShelfLife" runat="server" CssClass="heightCampo" Enabled="false" TextMode="Date" Width="100%" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <asp:CheckBox ID="CkbApu" runat="server" CssClass="LblEtiquet" Text="Apu" Enabled="false" />
+                            <asp:CheckBox ID="CkbMot" runat="server" CssClass="LblEtiquet" Text="Motor" Enabled="false" />
+                            <asp:CheckBox ID="CkbConsig" runat="server" CssClass="LblEtiquet" Text="Consignación" Enabled="false" />
+                        </div>
+                        <div class="col-sm-3">
+                            <asp:RadioButton ID="RdbActivo" runat="server" GroupName="Activo" Enabled="false" Text="Activo" CssClass="LblEtiquet" />
+                            <asp:RadioButton ID="RdbInactivo" runat="server" GroupName="Activo" Enabled="false" CssClass="LblEtiquet" Text="Inactivo" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <asp:Button ID="BtnModificar" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnModificar_Click" Text="Modificar" />
+                        </div>
+                        <div class="col-sm-1">
+                            <asp:Button ID="BtnConsultar" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnConsultar_Click" Text="Consultar" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <br />
+                            <h6 class="TituloContadoresAsig">
+                                <asp:Label ID="LblTitContAsig" runat="server" Text="Contadores asignados" /></h6>
                             <asp:GridView ID="GrdCont" runat="server" EmptyDataText="Sin contadores asignados" AutoGenerateColumns="False"
-                                CssClass="GridControl DiseñoGrid table" GridLines="Both">
+                                CssClass="GridControl DiseñoGrid table  table-sm" GridLines="Both">
                                 <Columns>
                                     <asp:TemplateField HeaderText="Nombre">
                                         <ItemTemplate>
@@ -232,10 +198,9 @@
                                 <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
 
                             </asp:GridView>
-                        </td>
-                    </tr>
-                </table>
-
+                        </div>
+                    </div>
+                </div>           
             </asp:Panel>
             <asp:Panel ID="PnlBusq" runat="server" Visible="false">
                 <h6 class="TextoSuperior">
@@ -302,7 +267,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Fecha Recibo">
                                 <ItemTemplate>
-                                    <asp:Label ID="LblFechaRecibo" Text='<%# Eval("FechaRecibo") %>' runat="server" Width="100%" Enabled="false" />
+                                    <asp:Label ID="LblFechaRecibo" Text='<%# Eval("FechaReciboDMY") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="CodUnidadMedida">
@@ -347,7 +312,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Fecha ShelfLife">
                                 <ItemTemplate>
-                                    <asp:Label ID="LblFechaShelfLife" Text='<%# Eval("FechaShelfLife") %>' runat="server" Width="100%" Enabled="false" />
+                                    <asp:Label ID="LblFechaShelfLife" Text='<%# Eval("FechaShelfLifeDMY") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Estado">

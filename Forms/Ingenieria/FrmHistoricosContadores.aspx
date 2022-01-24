@@ -125,7 +125,7 @@
                                         <Columns>
                                             <asp:TemplateField HeaderText="Fecha" HeaderStyle-Width="15%">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="LblWS" Text='<%# Eval("Fecha") %>' runat="server" Width="90%" Enabled="false" />
+                                                    <asp:Label ID="LblWS" Text='<%# Eval("FechaHist") %>' runat="server" Width="90%" Enabled="false" />
                                                 </ItemTemplate>
                                                 <FooterTemplate>
                                                     <asp:TextBox ID="TxtHC1FechaPP" runat="server" Width="90%" TextMode="Date" MaxLength="10" />
@@ -218,7 +218,7 @@
                                         <Columns>
                                             <asp:TemplateField HeaderText="Fecha" HeaderStyle-Width="15%">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="LblWS2" Text='<%# Eval("Fecha") %>' runat="server" Width="90%" Enabled="false" />
+                                                    <asp:Label ID="LblWS2" Text='<%# Eval("FechaHist") %>' runat="server" Width="90%" Enabled="false" />
                                                 </ItemTemplate>
                                                 <FooterTemplate>
                                                     <asp:TextBox ID="TxtHC2FechaPP" runat="server" Width="90%" TextMode="Date" MaxLength="10" />

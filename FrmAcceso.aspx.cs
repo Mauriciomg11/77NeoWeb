@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using _77NeoWeb.prg;
-using System.Data.SqlClient;
-using System.Configuration;
+﻿using _77NeoWeb.prg;
+using System;
 using System.Data;
+using System.Data.SqlClient;
+using System.Web.UI;
 
 namespace _77NeoWeb
 {
@@ -155,22 +150,23 @@ namespace _77NeoWeb
                     VbPassCia = VbPassCia.Replace(" ", "");
                 }
                 TxtPassEmsa.Text = VbPassCia;
-               // using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
+                // using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
                 {
-                    LtxtSql = "EXEC SP_ACCESO_WEB 2,@E71,@E59,'','','',0, 0,0,0,'01-01-1','01-01-1'";
+                    LtxtSql = "EXEC SP_ACCESO_WEB 2,@E71,@E59,'','','',0, 0,0,0,'01-01-1','01-01-1'";//Valida idcia y Contraseña Ensa | DbConfigWeb
                     SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
                     SC.Parameters.AddWithValue("@E71", DdlNit.SelectedValue);
                     SC.Parameters.AddWithValue("@E59", TxtPassEmsa.Text);
                     sqlCon.Open();
                     SqlDataReader tbl = SC.ExecuteReader();
                     if (tbl.Read())
-                    {                       
+                    {
                         Session["SigCiaPpal"] = tbl["SiglaCiaPpal"].ToString();
                         Session["77IDM"] = tbl["Idioma"].ToString(); //Idiioma
                         Session["MonLcl"] = tbl["CodMoneda"].ToString(); //Moneda Local
+                        Session["FormatFecha"] = tbl["FormatoFecha"].ToString(); // 103 formato europeo dd/MM/yyyy | 101 formato EEUU M/dd/yyyyy
                         DdlBD.Visible = true;
-                        LtxtSql = "EXEC SP_Configuracion 1,'" + Session["SigCiaPpal"].ToString() + "','','','','DropDown',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                        LtxtSql = "EXEC SP_Configuracion 1,'" + Session["SigCiaPpal"].ToString() + "','','','','DropDown',0,0,0,0,'01-01-1','02-01-1','03-01-1'";// Muestra las BD que tiene registrada la Empsa  | DbConfigWeb
                         DdlBD.DataSource = Cnx.DSET(LtxtSql);
                         DdlBD.DataMember = "Datos";
                         DdlBD.DataTextField = "RazonSocial";
@@ -188,7 +184,7 @@ namespace _77NeoWeb
                     }
                     else
                     {
-                       ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Sin acceso o clave inválida.')", true); 
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('No access or invalid password.')", true);
                     }
                     sqlCon.Close();
                 }
@@ -202,7 +198,7 @@ namespace _77NeoWeb
                 Session["C77U"] = "";
                 Session["N77U"] = "";
                 Session["!dC!@"] = "0";
-                TbnIngresar.Text = "Validar compañía";
+                TbnIngresar.Text = "Confirm Company";
                 //DdlBD.SelectedValue = "";
                 DdlBD.Visible = false;
                 TxtClave.Visible = false;

@@ -1459,7 +1459,7 @@
             <DataSetName>DataSet1</DataSetName>
             <Top>4.02186cm</Top>
             <Left>0.07541cm</Left>
-            <Height>1.45104cm</Height>
+            <Height>1.45105cm</Height>
             <Width>18.82624cm</Width>
             <ZIndex>2</ZIndex>
             <Style>
@@ -1676,7 +1676,7 @@
             <DataSetName>DataSet1</DataSetName>
             <Top>5.56286cm</Top>
             <Left>0.07541cm</Left>
-            <Height>0.98334cm</Height>
+            <Height>0.98333cm</Height>
             <Width>18.83844cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
@@ -3043,7 +3043,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -4188,7 +4187,7 @@
             <Top>15.16655cm</Top>
             <Left>0.03771cm</Left>
             <Height>0.48917cm</Height>
-            <Width>18.88672cm</Width>
+            <Width>18.88674cm</Width>
             <ZIndex>10</ZIndex>
             <Style>
               <Border>
@@ -4466,7 +4465,7 @@
             <Top>19.46641cm</Top>
             <Left>0.03771cm</Left>
             <Height>1.60979cm</Height>
-            <Width>9.12031cm</Width>
+            <Width>9.12032cm</Width>
             <ZIndex>12</ZIndex>
             <Style>
               <Border>
@@ -4749,7 +4748,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Globals!ExecutionTime</Value>
+                      <Value>=Format(CDate(Globals!ExecutionTime), First(Fields!MltlC37.Value, "DataSet2"))</Value>
                       <Style>
                         <FontSize>8pt</FontSize>
                       </Style>

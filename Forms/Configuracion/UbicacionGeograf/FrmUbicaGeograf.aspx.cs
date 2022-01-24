@@ -2,13 +2,10 @@
 using _77NeoWeb.Prg.PrgManto;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
 {
@@ -182,42 +179,53 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
         protected void ValidarCampos(string Accion)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            DataRow[] Result;
-            string VbDatoRequerido = "";
-            Result = Idioma.Select("Objeto= 'MensCampoReq'");
-            foreach (DataRow row in Result)
-            { VbDatoRequerido = row["Texto"].ToString(); }// Campo Requerdio.
-
-            ViewState["Validar"] = "S";
-            if (TxtCod.Text.Trim().Equals(""))
+            try
             {
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbDatoRequerido + "');", true);
-                ViewState["Validar"] = "N"; TxtCod.Focus(); return;
-            }
-            if (TxtNombre.Text.Trim().Equals(""))
-            {
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbDatoRequerido + "');", true);
-                ViewState["Validar"] = "N"; TxtNombre.Focus(); return;
-            }
-            if (DdlTipoUbc.Text.Trim().Equals(""))
-            {
-                Result = Idioma.Select("Objeto= 'Mens01UG'");
+                DataRow[] Result;
+                string VbDatoRequerido = "";
+                Result = Idioma.Select("Objeto= 'MensCampoReq'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//La ubicación es requerida.
-                ViewState["Validar"] = "N"; return;
-            }
-            if (DdlUbicaSupr.Text.Trim().Equals(""))
-            {
-                DSTDdl = (DataSet)ViewState["DSTDdl"];
+                { VbDatoRequerido = row["Texto"].ToString(); }// Campo Requerdio.
 
-                Result = DSTDdl.Tables[0].Select("Nombre LIKE '%%'");
-                if (Result.Length != 1)
+                ViewState["Validar"] = "S";
+                if (TxtCod.Text.Trim().Equals(""))
                 {
-                    Result = Idioma.Select("Objeto= 'Mens02UG'");
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbDatoRequerido + "');", true);
+                    ViewState["Validar"] = "N"; TxtCod.Focus(); return;
+                }
+                if (TxtNombre.Text.Trim().Equals(""))
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbDatoRequerido + "');", true);
+                    ViewState["Validar"] = "N"; TxtNombre.Focus(); return;
+                }
+                if (DdlTipoUbc.Text.Trim().Equals(""))
+                {
+                    Result = Idioma.Select("Objeto= 'Mens01UG'");
                     foreach (DataRow row in Result)
                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//La ubicación es requerida.
                     ViewState["Validar"] = "N"; return;
                 }
+                if (DdlUbicaSupr.Text.Trim().Equals("") && !DdlTipoUbc.Text.Trim().Equals("01"))
+                {
+                    DSTDdl = (DataSet)ViewState["DSTDdl"];
+
+                    Result = DSTDdl.Tables[0].Select("Nombre LIKE '%%'");
+                    if (Result.Length != 1)
+                    {
+                        Result = Idioma.Select("Objeto= 'Mens02UG'");
+                        foreach (DataRow row in Result)
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//La ubicación superior es requerida.
+                        ViewState["Validar"] = "N"; return;
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Validar Campos UbicaGeografica", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void ActivarBtn(bool In, bool Md, bool El, bool Ip, bool Otr)
@@ -294,9 +302,9 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                     if (ViewState["Validar"].Equals("N"))
                     { return; }
                     double VblVlrTasa = 0;
+                    string VbIdCia = Session["!dC!@"].ToString();
                     if (TxtVlrTasa.Text.Trim().Equals("")) { VblVlrTasa = Convert.ToDouble(0); }
                     else { VblVlrTasa = Convert.ToDouble(TxtVlrTasa.Text.Trim()); }
-
                     List<ClsUbicaGeograf> ObjUbGeo = new List<ClsUbicaGeograf>();
                     var TypUbGeo = new ClsUbicaGeograf()
                     {
@@ -310,7 +318,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                         VlorTasa = VblVlrTasa,
                         Activa = CkbActivo.Checked == true ? 1 : 0,
                         RutaFrecuente = CkbRutaFrec.Checked == true ? 1 : 0,
-                        IdConfigCia = (int)Session["!dC!@"],
+                        IdConfigCia = Convert.ToInt32(VbIdCia),//(int)Session["!dC!@"],
                         Accion = "INSERT",
                     };
                     ObjUbGeo.Add(TypUbGeo);
@@ -350,16 +358,18 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
         }
         protected void BtnModificar_Click(object sender, EventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                DataRow[] Result;
+
                 if (TxtCod.Text.Equals("") || DdlBusq.Text.Trim().Equals("0"))
                 { return; }
 
                 if (ViewState["Accion"].ToString().Equals(""))
                 {
                     ActivarBtn(false, true, false, false, false);
-                    DataRow[] Result = Idioma.Select("Objeto= 'BotonIngOk'");
+                    Result = Idioma.Select("Objeto= 'BotonIngOk'");
                     foreach (DataRow row in Result)
                     { BtnModificar.Text = row["Texto"].ToString().Trim(); }//
                     ViewState["Accion"] = "Aceptar";
@@ -378,7 +388,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                     double VblVlrTasa = 0;
                     if (TxtVlrTasa.Text.Trim().Equals("")) { VblVlrTasa = Convert.ToDouble(0); }
                     else { VblVlrTasa = Convert.ToDouble(TxtVlrTasa.Text.Trim()); }
-
+                    string VbIdCia = Session["!dC!@"].ToString();
                     List<ClsUbicaGeograf> ObjUbGeo = new List<ClsUbicaGeograf>();
                     var TypUbGeo = new ClsUbicaGeograf()
                     {
@@ -391,7 +401,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                         VlorTasa = VblVlrTasa,
                         Activa = CkbActivo.Checked == true ? 1 : 0,
                         RutaFrecuente = CkbRutaFrec.Checked == true ? 1 : 0,
-                        IdConfigCia = (int)Session["!dC!@"],
+                        IdConfigCia = Convert.ToInt32(VbIdCia),
                         Accion = "UPDATE",
                     };
                     ObjUbGeo.Add(TypUbGeo);
@@ -407,14 +417,13 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                         return;
                     }
                     ActivarBtn(true, true, true, true, true);
-                    DataRow[] Result = Idioma.Select("Objeto= 'BotonMod'");
+                    Result = Idioma.Select("Objeto= 'BotonMod'");
                     foreach (DataRow row in Result)
                     { BtnModificar.Text = row["Texto"].ToString().Trim(); }
                     ViewState["Accion"] = "";
                     ActivarCampos(false, false, "UPDATE");
                     DdlBusq.Enabled = true;
                     BindBDdl("UPD");
-                    DdlBusq.Text = ClsUbicaGeograf.GetId().ToString().Trim();
                     Traerdatos(DdlBusq.Text);
                     BtnModificar.OnClientClick = "";
                 }
@@ -439,7 +448,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                 double VblVlrTasa = 0;
                 if (TxtVlrTasa.Text.Trim().Equals("")) { VblVlrTasa = Convert.ToDouble(0); }
                 else { VblVlrTasa = Convert.ToDouble(TxtVlrTasa.Text.Trim()); }
-
+                string VbIdCia = Session["!dC!@"].ToString();
                 List<ClsUbicaGeograf> ObjUbGeo = new List<ClsUbicaGeograf>();
                 var TypUbGeo = new ClsUbicaGeograf()
                 {
@@ -452,7 +461,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                     VlorTasa = VblVlrTasa,
                     Activa = CkbActivo.Checked == true ? 1 : 0,
                     RutaFrecuente = CkbRutaFrec.Checked == true ? 1 : 0,
-                    IdConfigCia = (int)Session["!dC!@"],
+                    IdConfigCia = Convert.ToInt32(VbIdCia),
                     Accion = "DELETE",
                 };
                 ObjUbGeo.Add(TypUbGeo);

@@ -1,24 +1,19 @@
-﻿using System;
+﻿using _77NeoWeb.prg;
+using _77NeoWeb.Prg;
+using _77NeoWeb.Prg.PrgIngenieria;
+using ClosedXML.Excel;
+using Microsoft.Reporting.WebForms;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.OleDb;
+using System.Data.SqlClient;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using _77NeoWeb.prg;
-using System.Data;
-using System.Data.SqlClient;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using System.Runtime.InteropServices.WindowsRuntime;
-using _77NeoWeb.Prg.PrgIngenieria;
-using AjaxControlToolkit;
-using System.Globalization;
-using ClosedXML.Excel;
-using System.IO;
-using System.Data.OleDb;
-using _77NeoWeb.Prg;
-using Microsoft.Reporting.WebForms;
-using DocumentFormat.OpenXml.Drawing.Wordprocessing;
-using System.Configuration;
 
 namespace _77NeoWeb.Forms.Ingenieria
 {
@@ -59,10 +54,6 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
             if (!IsPostBack)
             {
-                CalFecha.EndDate = DateTime.Now;
-                CldFecDet.EndDate = DateTime.Now;
-                CldFecCump.EndDate = DateTime.Now;
-                CldFecPry.EndDate = DateTime.Now.AddDays(120);
                 ViewState["PageTit"] = "";
                 ViewState["UltimoDestino"] = "";
                 ViewState["ViewOrigen"] = "LV";
@@ -369,8 +360,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     BtnEliminar.Text = tbl["Objeto"].ToString().Trim().Equals("BtnEliminar") ? tbl["Texto"].ToString().Trim() : BtnEliminar.Text;
                     BtnSnOnOf.Text = tbl["Objeto"].ToString().Trim().Equals("BtnSnOnOf") ? tbl["Texto"].ToString().Trim() : BtnSnOnOf.Text;
                     BtnSnOnOf.ToolTip = tbl["Objeto"].ToString().Trim().Equals("BtnSnOnOf1") ? tbl["Texto"].ToString().Trim() : BtnSnOnOf.ToolTip;
-                    BtnExporRte.Text = tbl["Objeto"].ToString().Trim().Equals("BtnExporRte") ? tbl["Texto"].ToString().Trim() : BtnExporRte.Text;
-                    BtnExporRte.ToolTip = tbl["Objeto"].ToString().Trim().Equals("BtnExporRte1") ? tbl["Texto"].ToString().Trim() : BtnExporRte.ToolTip;
+                    // BtnExporRte.Text = tbl["Objeto"].ToString().Trim().Equals("BtnExporRte") ? tbl["Texto"].ToString().Trim() : BtnExporRte.Text;
+                    //  BtnExporRte.ToolTip = tbl["Objeto"].ToString().Trim().Equals("BtnExporRte1") ? tbl["Texto"].ToString().Trim() : BtnExporRte.ToolTip;
                     BtnNotificar.Text = tbl["Objeto"].ToString().Trim().Equals("BtnNotificar") ? tbl["Texto"].ToString().Trim() : BtnNotificar.Text;
                     BtnNotificar.ToolTip = tbl["Objeto"].ToString().Trim().Equals("BtnNotificar1") ? tbl["Texto"].ToString().Trim() : BtnNotificar.ToolTip;
                     //****************************************  Recuso Fisico --------------------
@@ -867,10 +858,15 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                                     if (DSTGrDtsRpt.Tables[0].Rows.Count > 0)
                                     {
-                                        string VbFecha;
-                                        VbFecha = HttpUtility.HtmlDecode(DSTGrDtsRpt.Tables[0].Rows[0]["FechaReporte"].ToString().Trim());
-                                        if (!VbFecha.Trim().Equals("")) { FechaD = Convert.ToDateTime(VbFecha); TxtFecha.Text = String.Format("{0:dd/MM/yyyy}", FechaD); }
-                                        else { TxtFecha.Text = ""; }
+
+
+                                        //string VbFecha;                                     
+
+
+                                        //VbFecha = HttpUtility.HtmlDecode(DSTGrDtsRpt.Tables[0].Rows[0]["FechaReporte"].ToString().Trim());
+                                        //if (!VbFecha.Trim().Equals("")) { FechaD = Convert.ToDateTime(VbFecha); TxtFecha.Text = String.Format("{0:dd/MM/yyyy}", FechaD); }
+                                        //else { TxtFecha.Text = ""; }
+                                        TxtFecha.Text = Cnx.ReturnFecha(DSTGrDtsRpt.Tables[0].Rows[0]["FechaReporte"].ToString().Trim());
                                         ViewState["CodAntHKLV"] = HttpUtility.HtmlDecode(DSTGrDtsRpt.Tables[0].Rows[0]["CodAeronave"].ToString());
                                         ViewState["CodAntBaseLV"] = HttpUtility.HtmlDecode(DSTGrDtsRpt.Tables[0].Rows[0]["CodBase"].ToString().Trim());
                                         ViewState["CodAntHKRte"] = "0";
@@ -962,7 +958,7 @@ namespace _77NeoWeb.Forms.Ingenieria
 
             if (ViewState["Procesado"].ToString().Equals("N"))
             {
-                IbtFecha.Enabled = Edi;
+                TxtFecha.Enabled = Edi;
                 DdlMatri.Enabled = (int)ViewState["TtlRtes"] == 0 ? Edi : false;
                 DdlMatri.ToolTip = (int)ViewState["TtlRtes"] == 0 ? "" : "El libro de vuelo tiene reportes asignados";
                 TxtNumVuelo.Enabled = ViewState["HabilitaVuelos"].Equals("S") ? Edi : false;
@@ -1247,7 +1243,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ActivarBotones(true, true, true, true, true);
                     ActivarCampos(false, false, "Ingresar");
                     IbtAdd.OnClientClick = "";
-                    IbtFecha.Visible = true;
+                    // IbtFecha.Visible = true;
                     Traerdatos(LibroVuelo.GetNewLv(), "UPD");
                     TblBtnPpal.Enabled = true;
                     BindDDdl("UPD");
@@ -1436,7 +1432,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ActivarBotones(true, true, true, true, true);
                     ActivarCampos(false, false, "Modificar");
                     IbtUpdate.OnClientClick = "";
-                    IbtFecha.Visible = true;
+                    //IbtFecha.Visible = true;
                     TxtHrAPU.Enabled = false;
                     Traerdatos(LibroVuelo.GetNewLv().Trim(), "UPD");
                     BindDDdl("UPD");
@@ -1532,8 +1528,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                             if (Comparar <= 0)
                             { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "IdntificadorBloqueScript", "alert('La  fecha ingresada es anterior o igual a las procesadas, si almacena el libro de vuelo actual debe reprocesar la aeronave.')", true); }
                             if (!DdlMatri.SelectedValue.Equals("0"))
-                            { IbtFecha.Visible = false; }
-                            else { IbtFecha.Visible = true; }
+                            { TxtFecha.Enabled = false; }
+                            else { TxtFecha.Enabled = true; }
 
                         }
                     }
@@ -1542,10 +1538,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void TxtFecha_TextChanged(object sender, EventArgs e)
         {
-            if (!DdlMatri.Text.Equals("0"))
-            {
-                ValidaDatosAeronave();
-            }
+            if (!DdlMatri.Text.Equals("0")) { ValidaDatosAeronave(); }
         }
         protected void DdlMatri_TextChanged(object sender, EventArgs e)
         {
@@ -1578,14 +1571,14 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         //**************************************** <Informes del libro de vuelo> ******************************************
         protected void IbtCerrarInfLV_Click(object sender, ImageClickEventArgs e)
-        {
-            MultVieLV.ActiveViewIndex = 0;
-        }
+        { Page.Title = ViewState["PageTit"].ToString(); MultVieLV.ActiveViewIndex = 0; }
         protected void BtnInfLibroVuelos_Click(object sender, EventArgs e)
         {
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
+                Page.Title = ViewState["PageTit"].ToString();
+
                 if (TxtFIInfLV.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens07LV'");
@@ -1600,6 +1593,19 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { ScriptManager.RegisterClientScriptBlock(this.UplInfLV, UplInfLV.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar una fecha final
                     return;
                 }
+
+                Cnx.ValidarFechas(TxtFIInfLV.Text, TxtFFInfLV.Text, 2);
+                string Mensj = Cnx.GetMensj();
+                if (!Mensj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    TxtFIInfLV.Focus(); ViewState["Validar"] = "N";
+                    return;
+                }
+
                 string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
                 DataSet ds = new DataSet();
                 Cnx.SelecBD();
@@ -1656,6 +1662,8 @@ namespace _77NeoWeb.Forms.Ingenieria
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
+                Page.Title = ViewState["PageTit"].ToString();
+
                 if (TxtFIInfLV.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens07LV'");
@@ -1668,6 +1676,18 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens08LV'");
                     foreach (DataRow row in Result)
                     { ScriptManager.RegisterClientScriptBlock(this.UplInfLV, UplInfLV.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar una fecha final
+                    return;
+                }
+
+                Cnx.ValidarFechas(TxtFIInfLV.Text, TxtFFInfLV.Text, 2);
+                string Mensj = Cnx.GetMensj();
+                if (!Mensj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    TxtFIInfLV.Focus(); ViewState["Validar"] = "N";
                     return;
                 }
                 string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
@@ -1862,6 +1882,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         DataRow[] Result = Idioma.Select("Objeto= 'Mens09LV'");
                         foreach (DataRow row in Result)
                         { ScriptManager.RegisterClientScriptBlock(this.UpPnlTray, UpPnlTray.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Debe ingresar un origen')", true); return;
+                        return;
                     }
                     string VbDest = (GrdTray.FooterRow.FindControl("DdlDestPP") as DropDownList).SelectedValue;
                     if (VbDest.Trim().Equals(""))
@@ -1869,6 +1890,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         DataRow[] Result = Idioma.Select("Objeto= 'Mens10LV'");
                         foreach (DataRow row in Result)
                         { ScriptManager.RegisterClientScriptBlock(this.UpPnlTray, UpPnlTray.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar un destino
+                        return;
                     }
                     string VbHS = (GrdTray.FooterRow.FindControl("TxtHMSPP") as TextBox).Text;
                     if (VbHS.Trim().Equals(""))
@@ -1876,6 +1898,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         DataRow[] Result = Idioma.Select("Objeto= 'Mens11LV'");
                         foreach (DataRow row in Result)
                         { ScriptManager.RegisterClientScriptBlock(this.UpPnlTray, UpPnlTray.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar una hora de salida
+                        return;
                     }
                     string VbHLl = (GrdTray.FooterRow.FindControl("TxtHMLPP") as TextBox).Text;
                     if (VbHLl.Trim().Equals(""))
@@ -1883,10 +1906,36 @@ namespace _77NeoWeb.Forms.Ingenieria
                         DataRow[] Result = Idioma.Select("Objeto= 'Mens12LV'");
                         foreach (DataRow row in Result)
                         { ScriptManager.RegisterClientScriptBlock(this.UpPnlTray, UpPnlTray.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar una hora de llegada')", true); return;
+                        return;
                     }
 
                     FechaI = Convert.ToDateTime((GrdTray.FooterRow.FindControl("TxtFecSalPP") as TextBox).Text);
                     FechaF = Convert.ToDateTime((GrdTray.FooterRow.FindControl("TxtFecLlePP") as TextBox).Text);
+
+                    Cnx.ValidarFechas(TxtFecha.Text, (GrdTray.FooterRow.FindControl("TxtFecSalPP") as TextBox).Text, 2);
+                    string MensjM = Cnx.GetMensj();
+                    if (!MensjM.ToString().Trim().Equals(""))
+                    {
+                        DataRow[] Result = Idioma.Select("Objeto= '" + MensjM.ToString().Trim() + "'");
+                        foreach (DataRow row in Result)
+                        { MensjM = row["Texto"].ToString().Trim(); }
+                        ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjM + "');", true);
+                        Page.Title = ViewState["PageTit"].ToString(); TxtFecPry.Focus(); ViewState["Validar"] = "N";
+                        (GrdTray.FooterRow.FindControl("TxtFecSalPP") as TextBox).Focus(); return;
+                    }
+
+                    Cnx.ValidarFechas((GrdTray.FooterRow.FindControl("TxtFecSalPP") as TextBox).Text, (GrdTray.FooterRow.FindControl("TxtFecLlePP") as TextBox).Text, 2);
+                    MensjM = Cnx.GetMensj();
+                    if (!MensjM.ToString().Trim().Equals(""))
+                    {
+                        DataRow[] Result = Idioma.Select("Objeto= '" + MensjM.ToString().Trim() + "'");
+                        foreach (DataRow row in Result)
+                        { MensjM = row["Texto"].ToString().Trim(); }
+                        ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjM + "');", true);
+                        Page.Title = ViewState["PageTit"].ToString(); TxtFecPry.Focus(); ViewState["Validar"] = "N";
+                        (GrdTray.FooterRow.FindControl("TxtFecLlePP") as TextBox).Focus(); return;
+                    }
+
                     CalculoHoras(FechaI, FechaF, VbHS, VbHLl, "INSERT");
                     if (ViewState["Validar"].Equals("N"))
                     { return; }
@@ -1969,6 +2018,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens09LV'");
                     foreach (DataRow row in Result)
                     { ScriptManager.RegisterClientScriptBlock(this.UpPnlTray, UpPnlTray.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar un origen')", true); return; 
+                    return;
                 }
                 string VbDest = (GrdTray.Rows[(int)ViewState["Index"]].FindControl("DdlDest") as DropDownList).SelectedValue;
                 if (VbDest.Trim().Equals(""))
@@ -1976,6 +2026,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens10LV'");
                     foreach (DataRow row in Result)
                     { ScriptManager.RegisterClientScriptBlock(this.UpPnlTray, UpPnlTray.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar un destino')", true); return; 
+                    return;
                 }
                 string VbHS = (GrdTray.Rows[(int)ViewState["Index"]].FindControl("TxtHMS") as TextBox).Text;
                 if (VbHS.Trim().Equals(""))
@@ -1983,6 +2034,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens11LV'");
                     foreach (DataRow row in Result)
                     { ScriptManager.RegisterClientScriptBlock(this.UpPnlTray, UpPnlTray.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar una hora de salida')", true); return; 
+                    return;
                 }
                 string VbHLl = (GrdTray.Rows[(int)ViewState["Index"]].FindControl("TxtHML") as TextBox).Text;
                 if (VbHLl.Trim().Equals(""))
@@ -1990,9 +2042,34 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens12LV'");
                     foreach (DataRow row in Result)
                     { ScriptManager.RegisterClientScriptBlock(this.UpPnlTray, UpPnlTray.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar una hora de llegada')", true); return; 
+                    return;
                 }
                 FechaI = Convert.ToDateTime((GrdTray.Rows[(int)ViewState["Index"]].FindControl("TxtFecSal") as TextBox).Text);
                 FechaF = Convert.ToDateTime((GrdTray.Rows[(int)ViewState["Index"]].FindControl("TxtFecLle") as TextBox).Text);
+
+                Cnx.ValidarFechas(TxtFecha.Text, (GrdTray.Rows[(int)ViewState["Index"]].FindControl("TxtFecSal") as TextBox).Text, 2);
+                string MensjM = Cnx.GetMensj();
+                if (!MensjM.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + MensjM.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { MensjM = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjM + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFecPry.Focus(); ViewState["Validar"] = "N";
+                    (GrdTray.Rows[(int)ViewState["Index"]].FindControl("TxtFecSal") as TextBox).Focus(); return;
+                }
+
+                Cnx.ValidarFechas((GrdTray.Rows[(int)ViewState["Index"]].FindControl("TxtFecSal") as TextBox).Text, (GrdTray.Rows[(int)ViewState["Index"]].FindControl("TxtFecLle") as TextBox).Text, 2);
+                MensjM = Cnx.GetMensj();
+                if (!MensjM.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + MensjM.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { MensjM = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjM + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFecPry.Focus(); ViewState["Validar"] = "N";
+                    (GrdTray.Rows[(int)ViewState["Index"]].FindControl("TxtFecLle") as TextBox).Focus(); return;
+                }
                 CalculoHoras(FechaI, FechaF, VbHS, VbHLl, "UPDATE");
                 if (ViewState["Validar"].Equals("N"))
                 { return; }
@@ -2129,17 +2206,17 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                     TextBox TxtFecSalPP = (e.Row.FindControl("TxtFecSalPP") as TextBox);
                     TxtFecSalPP.Text = TxtFecha.Text;
-                    CalendarExtender CalFechSPP = (e.Row.FindControl("CalFechSPP") as CalendarExtender);
+                    //CalendarExtender CalFechSPP = (e.Row.FindControl("CalFechSPP") as CalendarExtender);
                     DateTime DiaI = Convert.ToDateTime(TxtFecha.Text);
-                    CalFechSPP.StartDate = Convert.ToDateTime(TxtFecha.Text);
-                    CalFechSPP.EndDate = DiaI.AddDays(1);
+                    //CalFechSPP.StartDate = Convert.ToDateTime(TxtFecha.Text);
+                    //CalFechSPP.EndDate = DiaI.AddDays(1);
 
                     TextBox TxtFecLlePP = (e.Row.FindControl("TxtFecLlePP") as TextBox);
                     TxtFecLlePP.Text = TxtFecha.Text;
-                    CalendarExtender CalFechLPP = (e.Row.FindControl("CalFechLPP") as CalendarExtender);
+                    //CalendarExtender CalFechLPP = (e.Row.FindControl("CalFechLPP") as CalendarExtender);
                     DiaI = Convert.ToDateTime(TxtFecha.Text);
-                    CalFechLPP.StartDate = Convert.ToDateTime(TxtFecha.Text);
-                    CalFechLPP.EndDate = DiaI.AddDays(1);
+                    //CalFechLPP.StartDate = Convert.ToDateTime(TxtFecha.Text);
+                    //CalFechLPP.EndDate = DiaI.AddDays(1);
                     ImageButton IbtAddNew = e.Row.FindControl("IbtAddNew") as ImageButton;
                     if (ViewState["Procesado"].Equals("S"))
                     {
@@ -2192,6 +2269,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Result = Idioma.Select("Objeto= 'IbtCancel'");
                     foreach (DataRow row in Result)
                     { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
+
+                    TextBox TxtFecSal = (e.Row.FindControl("TxtFecSal") as TextBox);
+                    TextBox TxtFecLle = (e.Row.FindControl("TxtFecLle") as TextBox);
+                    TxtFecSal.Text = Cnx.ReturnFecha(dr["FecDespDMY"].ToString().Trim());
+                    TxtFecLle.Text = Cnx.ReturnFecha(dr["FecAterDMY"].ToString().Trim());
                 }
                 if (e.Row.RowType == DataControlRowType.DataRow)
                 {
@@ -2394,6 +2476,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                 Page.Title = ViewState["PageTit"].ToString().Trim();
             }
         }
+        public bool IsIENumerableLleno(IEnumerable<DataRow> ieNumerable)
+        {
+            bool isFull = false;
+            foreach (DataRow item in ieNumerable)
+            { isFull = true; break; }
+            return isFull;
+        }
         protected void BindDdlRteCondicional(string Categ, string LicGen, string LicCump, string LicVer)
         {
             DSTGrDtsRpt = (DataSet)ViewState["DSTGrDtsRpt"];
@@ -2423,20 +2512,16 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlFuente.DataTextField = "Descripcion";
             DdlFuente.DataValueField = "Codigo";
             DdlFuente.DataBind();
+            string borr = ViewState["FteAnt"].ToString().Trim();
             DdlFuente.Text = ViewState["FteAnt"].ToString().Trim();
 
             if (DSTGrDtsRpt.Tables["Tll"].Rows.Count > 0)
             {
                 DataTable DTTll = new DataTable();
                 DTTll = DSTGrDtsRpt.Tables[4].Clone();
-
-                Result = DSTGrDtsRpt.Tables[4].Select("CodTaller= '" + ViewState["TllAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DTTll.ImportRow(Row); }
-
-                Result = DSTGrDtsRpt.Tables[4].Select("Activo=1");
-                foreach (DataRow Row in Result)
-                { DTTll.ImportRow(Row); }
+                DataRow[] DR = DSTGrDtsRpt.Tables[4].Select("Activo=1 OR CodTaller = '" + ViewState["TllAnt"] + "'");
+                if (IsIENumerableLleno(DR))
+                { DTTll = DR.CopyToDataTable(); }
 
                 DdlTall.DataSource = DTTll;
                 DdlTall.DataTextField = "NomTaller";
@@ -2481,14 +2566,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataTable DTPscn = new DataTable();
                 DTPscn = DSTGrDtsRpt.Tables[7].Clone();
-
-                Result = DSTGrDtsRpt.Tables[7].Select("Codigo= '" + ViewState["PscnAnt"] + "'");
-                foreach (DataRow Row in Result)
-                { DTPscn.ImportRow(Row); }
-
-                Result = DSTGrDtsRpt.Tables[7].Select("Activo=1");
-                foreach (DataRow Row in Result)
-                { DTPscn.ImportRow(Row); }
+                DataRow[] DR = DSTGrDtsRpt.Tables[7].Select("Activo=1 OR Codigo= '" + ViewState["PscnAnt"] + "'");
+                if (IsIENumerableLleno(DR))
+                { DTPscn = DR.CopyToDataTable(); }
 
                 DdlPosRte.DataSource = DTPscn;
                 DdlPosRte.DataTextField = "Descripcion";
@@ -2646,7 +2726,6 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                 if (DSTRTE.Tables[0].Rows.Count > 0)
                 {
-                    string VbFecha;
                     ViewState["TipRteAnt"] = DSTRTE.Tables[0].Rows[0]["TipoReporte"].ToString();
                     string VbCodCat = DSTRTE.Tables[0].Rows[0]["CodCategoriaMel"].ToString().Trim();
                     string VbLicGen = DSTRTE.Tables[0].Rows[0]["NumLicTecAbre"].ToString().Trim();
@@ -2675,6 +2754,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DdlClasf.SelectedValue = ViewState["ClsfcnAnt"].ToString().Trim();
                     DdlCatgr.SelectedValue = VbCodCat;
                     TxtNroRte.Text = DSTRTE.Tables[0].Rows[0]["NumReporte"].ToString();
+                    TxtCodigoRte.Text = DSTRTE.Tables[0].Rows[0]["CodigoRTE"].ToString();
                     TxtConsTall.Text = DSTRTE.Tables[0].Rows[0]["ConsecutivoROTP"].ToString().Trim();
                     TxtCas.Text = DSTRTE.Tables[0].Rows[0]["NumCasilla"].ToString();
                     CkbNotif.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["Notificado"].ToString());
@@ -2683,15 +2763,25 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DdlPosRte.SelectedValue = ViewState["PscnAnt"].ToString().Trim();
                     DdlGenerado.SelectedValue = ViewState["GnrdAnt"].ToString().Trim();
                     DdlLicGene.SelectedValue = VbLicGen;
-                    VbFecha = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["FechaReporte"].ToString().Trim());
-                    TxtFecDet.Text = VbFecha.Trim().Equals("") ? "" : String.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(VbFecha));
-                    VbFecha = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["FechaProyectada"].ToString().Trim());
-                    TxtFecPry.Text = VbFecha.Trim().Equals("") ? "" : String.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(VbFecha));
+
+                    string VbFecSt;
+                    DateTime? VbFecDT;
+
+                    VbFecSt = DSTRTE.Tables[0].Rows[0]["FechaReporte"].ToString().Trim().Equals("") ? "01/01/1900" : DSTRTE.Tables[0].Rows[0]["FechaReporte"].ToString().Trim();
+                    VbFecDT = Convert.ToDateTime(VbFecSt);
+                    TxtFecDet.Text = VbFecSt.Equals("01/01/1900") ? "" : string.Format("{0:yyyy-MM-dd}", VbFecDT);
+
+                    VbFecSt = DSTRTE.Tables[0].Rows[0]["FechaProyectada"].ToString().Trim().Equals("") ? "01/01/1900" : DSTRTE.Tables[0].Rows[0]["FechaProyectada"].ToString().Trim();
+                    VbFecDT = Convert.ToDateTime(VbFecSt);
+                    TxtFecPry.Text = VbFecSt.Equals("01/01/1900") ? "" : string.Format("{0:yyyy-MM-dd}", VbFecDT);
+
+                    VbFecSt = DSTRTE.Tables[0].Rows[0]["FechaCumplimiento"].ToString().Trim().Equals("") ? "01/01/1900" : DSTRTE.Tables[0].Rows[0]["FechaCumplimiento"].ToString().Trim();
+                    VbFecDT = Convert.ToDateTime(VbFecSt);
+                    TxtFecCump.Text = VbFecSt.Equals("01/01/1900") ? "" : string.Format("{0:yyyy-MM-dd}", VbFecDT);
+
                     DdlBasRte.SelectedValue = DSTRTE.Tables[0].Rows[0]["CodBase"].ToString().Trim();
                     DdlCumpl.SelectedValue = ViewState["CmplAnt"].ToString().Trim();
                     DdlLicCump.SelectedValue = VbLicCump;
-                    VbFecha = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["FechaCumplimiento"].ToString().Trim());
-                    TxtFecCump.Text = VbFecha.Trim().Equals("") ? "" : String.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(VbFecha));
                     RdbPgSi.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["ProgramadoSi"].ToString());
                     RdbPgNo.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["ProgramadoNo"].ToString());
                     RdbFlCSi.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["FallaConfirmadaSi"].ToString());
@@ -2711,6 +2801,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     CkbTearDown.Checked = Convert.ToBoolean(DSTRTE.Tables[0].Rows[0]["TearDown"].ToString());
                     ViewState["PasoOT"] = HttpUtility.HtmlDecode(DSTRTE.Tables[0].Rows[0]["PasoOT"].ToString().Trim());
                     TxtOtSec.Text = DSTRTE.Tables[0].Rows[0]["OtSec"].ToString().Trim();
+                    TxtCodigoOtSec.Text = DSTRTE.Tables[0].Rows[0]["CodigoOTSec"].ToString().Trim();
                     ViewState["IDMroRepOT"] = Convert.ToInt32(DSTRTE.Tables[0].Rows[0]["IDMroRepOT"].ToString());
                     ViewState["BloquearDetalle"] = Convert.ToInt32(DSTRTE.Tables[0].Rows[0]["BloquearDetalle"].ToString());
                     ViewState["TtlRegDet"] = Convert.ToInt32(DSTRTE.Tables[0].Rows[0]["TtlRegDet"].ToString());
@@ -2732,7 +2823,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             BtnImprimir.Enabled = Ip;
             BtnEliminar.Enabled = El;
             BtnSnOnOf.Enabled = Otr;
-            BtnExporRte.Enabled = Otr;
+            //BtnExporRte.Enabled = Otr;
             BtnDatos.Enabled = Otr;
             BtnVuelos.Enabled = Otr;
             BtnManto.Enabled = Otr;
@@ -2774,14 +2865,14 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DdlAtaRte.Enabled = Edi;
                 DdlGenerado.Enabled = ViewState["UsuDefecto"].Equals("S") ? false : Edi;
                 DdlLicGene.Enabled = Edi;
-                IbtFecDet.Enabled = Edi;
-                IbtFecPry.Enabled = Edi;
+                TxtFecDet.Enabled = Edi;
+                TxtFecPry.Enabled = Edi;
                 if (DdlOtRte.Text.Equals("0") && !LblNumLVTit.Text.Trim().Equals(""))
                 { DdlOtRte.Enabled = Edi; }
                 DdlBasRte.Enabled = Edi;
                 DdlCumpl.Enabled = ViewState["UsuDefecto"].Equals("S") ? false : Edi;
                 DdlLicCump.Enabled = Edi;
-                IbtFecCump.Enabled = Edi;
+                TxtFecCump.Enabled = Edi;
                 RdbPgSi.Enabled = Edi;
                 RdbPgNo.Enabled = Edi;
                 RdbFlCSi.Enabled = Edi;
@@ -2836,7 +2927,9 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void LimpiarCamposRte()
         {
             TxtOtSec.Text = "0";
+            TxtCodigoOtSec.Text = "";
             TxtNroRte.Text = "0";
+            TxtCodigoRte.Text = "";
             TxtConsTall.Text = "";
             DdlTipRte.Text = "7777";
             DdlFuente.Text = "";
@@ -3088,6 +3181,66 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ViewState["Validar"] = "N";
                     return;
                 }
+
+                Cnx.ValidarFechas(TxtFecPry.Text, "", 1);
+                string Mensj = Cnx.GetMensj();
+                if (!Mensj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFecPry.Focus(); ViewState["Validar"] = "N";
+                    return;
+                }
+
+                Cnx.ValidarFechas(TxtFecCump.Text, "", 1);
+                Mensj = Cnx.GetMensj();
+                if (!Mensj.ToString().Trim().Equals("") && !TxtFecCump.Text.Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFecCump.Focus(); ViewState["Validar"] = "N";
+                    return;
+                }
+
+                Cnx.ValidarFechas(TxtFecha.Text, TxtFecDet.Text, 2);
+                Mensj = Cnx.GetMensj();
+                if (!Mensj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFecDet.Focus(); ViewState["Validar"] = "N";
+                    return;
+                }
+
+                Cnx.ValidarFechas(TxtFecDet.Text, TxtFecPry.Text, 2);
+                Mensj = Cnx.GetMensj();
+                if (!Mensj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFecPry.Focus(); ViewState["Validar"] = "N";
+                    return;
+                }
+
+                Cnx.ValidarFechas(TxtFecDet.Text, TxtFecCump.Text, 2);
+                Mensj = Cnx.GetMensj();
+                if (!Mensj.ToString().Trim().Equals("") && !TxtFecCump.Text.Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFecCump.Focus(); ViewState["Validar"] = "N";
+                    return;
+                }
             }
             catch (Exception Ex)
             {
@@ -3109,8 +3262,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                 if (SDR.Read())
                 {
                     int VbCritDias = Convert.ToInt32(SDR["CriterioDias"].ToString());
-                    DateTime VbProy = Convert.ToDateTime(TxtFecDet.Text).AddDays(VbCritDias);
-                    TxtFecPry.Text = String.Format("{0:dd/MM/yyyy}", VbProy);
+                    DateTime? VbFecDT;
+                    VbFecDT = Convert.ToDateTime(TxtFecDet.Text).AddDays(VbCritDias);
+                    TxtFecPry.Text = string.Format("{0:yyyy-MM-dd}", VbFecDT);
                 }
             }
         }
@@ -3180,9 +3334,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlCatgr.DataBind();
             DdlCatgr.Text = "";
             if (DdlClasf.Text.Equals("CARRY OVER"))
-            { IbtFecPry.Enabled = false; }
+            { TxtFecPry.Enabled = false; }
             else
-            { IbtFecPry.Enabled = true; }
+            { TxtFecPry.Enabled = true; }
         }
         protected void DdlCatgr_TextChanged(object sender, EventArgs e)
         {
@@ -3190,8 +3344,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void TxtFecDet_TextChanged(object sender, EventArgs e)
         {
-            CldFecPry.StartDate = Convert.ToDateTime(TxtFecDet.Text);
-            CldFecCump.StartDate = Convert.ToDateTime(TxtFecDet.Text);
             if (DdlCatgr.Text.Equals(""))
             { TxtFecPry.Text = TxtFecDet.Text; }
             else { CalcularFechaPry(); }
@@ -3222,8 +3374,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DdlAeroRte.Text = DdlMatri.Text;
                     TxtFecDet.Text = String.Format("{0:dd/MM/yyyy}", DateTime.Now);
                     TxtFecPry.Text = TxtFecDet.Text;
-                    CldFecPry.StartDate = Convert.ToDateTime(TxtFecDet.Text);
-                    CldFecCump.StartDate = Convert.ToDateTime(TxtFecDet.Text);
                     ActivarCampRte(true, true, "Ingresar");
                     string vbleUsuGe = ViewState["UsuDefecto"].Equals("S") ? Session["C77U"].ToString() : DdlGenerado.SelectedValue;
 
@@ -3235,11 +3385,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ViewState["CmplAnt"] = "-1";
                     ViewState["DfrAnt"] = "-1";
                     ViewState["VrfcAnt"] = "-1";
-                    ViewState["FteAnt"] = "-1";
-                    ViewState["StdAnt"] = "-1";
-                    ViewState["AtaAnt"] = "-1";
-                    ViewState["OTAnt"] = "-1";
-                    ViewState["PNAnt"] = "-1";
+                    ViewState["FteAnt"] = "";
+                    ViewState["StdAnt"] = "A";
+                    ViewState["AtaAnt"] = "";
+                    ViewState["OTAnt"] = "0";
+                    ViewState["PNAnt"] = "";
                     BindDdlRteCondicional("", "", "", "");
                     DdlGenerado.SelectedValue = vbleUsuGe.Trim();
                     DdlBusqRte.SelectedValue = "0";
@@ -3409,8 +3559,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ActivarCampRte(true, true, "UPDATE");
                     DdlBusqRte.SelectedValue = "0";
                     DdlBusqRte.Enabled = false;
-                    CldFecCump.StartDate = Convert.ToDateTime(TxtFecDet.Text);
-                    CldFecPry.StartDate = Convert.ToDateTime(TxtFecDet.Text);
                     Result1 = Idioma.Select("Objeto= 'MensConfMod'");
                     foreach (DataRow row in Result1)
                     { BtnModificar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }//¿Desea realizar la edición?     
@@ -3626,6 +3774,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         //******************************************  Opciones de busqueda *********************************************************
         protected void IbtFind_Click(object sender, ImageClickEventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             ViewState["ViewOrigen"] = "LVLO";
 
@@ -3763,7 +3912,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             if (!TxtNroRte.Text.Equals("0"))
             {
                 TxtRecurNumRte.Text = TxtNroRte.Text;
+                TxtRecurCodRte.Text = TxtCodigoRte.Text;
                 TxtRecurSubOt.Text = TxtOtSec.Text;
+                TxtRecurSubCodigoOt.Text = TxtCodigoOtSec.Text;
                 DdlPrioridadOT.Text = ViewState["CodPrioridad"].ToString().Trim();
                 if (DdlEstad.Text.Equals("C") || (int)ViewState["BloquearDetalle"] == 1)
                 { DdlPrioridadOT.Enabled = false; BtnCargaMaxiva.Enabled = false; }
@@ -3831,6 +3982,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void IbtCerrarRec_Click(object sender, ImageClickEventArgs e)
         {
             TxtOtSec.Text = TxtRecurSubOt.Text;
+            TxtCodigoOtSec.Text = TxtRecurSubCodigoOt.Text;
             ViewState["CodPrioridad"] = DdlPrioridadOT.Text.Trim();
             MultVieLV.ActiveViewIndex = 2;
         }
@@ -3909,14 +4061,16 @@ namespace _77NeoWeb.Forms.Ingenieria
                                     SC.Parameters.AddWithValue("@CodHK", Convert.ToInt32(DdlAeroRte.Text));
                                     SC.Parameters.AddWithValue("@IdRte", Convert.ToInt32(TxtNroRte.Text));
 
-                                    string Mensj = "OK";
+                                    string Mensj = "OK", VbCodigoOT = TxtRecurSubCodigoOt.Text.Trim();
                                     int VblSubOt = Convert.ToInt32(TxtRecurSubOt.Text);
+
                                     SqlDataReader SDR = SC.ExecuteReader();
                                     if (SDR.Read())
                                     {
                                         Mensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                         VblSubOt = Convert.ToInt32(SDR["SubOT"].ToString().Trim());
                                         VbEjecPlano = HttpUtility.HtmlDecode(SDR["EjecPlano"].ToString().Trim());
+                                        VbCodigoOT = HttpUtility.HtmlDecode(SDR["CodigoOT"].ToString().Trim());
 
                                     }
                                     SDR.Close();
@@ -3930,6 +4084,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                         return;
                                     }
                                     TxtRecurSubOt.Text = VblSubOt.ToString();
+                                    TxtRecurSubCodigoOt.Text = VbCodigoOT.ToString();
 
                                     TxtConsulPnRecurRte.Text = "";
                                     TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
@@ -4572,6 +4727,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 return;
             }
             TxtCargaMasiRte.Text = TxtRecurNumRte.Text;
+            TxtCargaMasiCodRte.Text = TxtRecurCodRte.Text;
             TxtCargaMasiOT.Text = TxtRecurSubOt.Text;
             IbtGuardarCargaMax.Enabled = false;
             Page.Title = ViewState["PageTit"].ToString().Trim();
@@ -4731,6 +4887,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             if (TxtNroRte.Text.Equals("0"))
             { return; }
             MultVieLV.ActiveViewIndex = 6;
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
             DSTRTE = (DataSet)ViewState["DSTRTE"];
 
@@ -4749,13 +4906,14 @@ namespace _77NeoWeb.Forms.Ingenieria
             Page.Title = ViewState["PageTit"].ToString();
         }
         protected void IbtCerrarImpresion_Click(object sender, ImageClickEventArgs e)
-        { MultVieLV.ActiveViewIndex = 2; }
+        { MultVieLV.ActiveViewIndex = 2; Page.Title = ViewState["PageTit"].ToString().Trim(); }
         //******************************************  SN On Off  *********************************************************
         protected void BtnSnOnOf_Click(object sender, EventArgs e)
         {
             if (TxtNroRte.Text.Equals("0"))
             { return; }
             TxtSnOnOffNumRte.Text = TxtNroRte.Text;
+            TxtSnOnOffCodRte.Text = TxtCodigoRte.Text;
             BindDSnOnOff();
             BindDHta();
             PerfilesGrid();
@@ -4949,13 +5107,40 @@ namespace _77NeoWeb.Forms.Ingenieria
             if (e.CommandName.Equals("AddNew"))
             {
                 int VbRte = Convert.ToInt32(TxtSnOnOffNumRte.Text);
-                if ((GrdSnOnOff.FooterRow.FindControl("TxtFecPP") as TextBox).Text.Equals(""))
+                TextBox TxtFecPP = (GrdSnOnOff.FooterRow.FindControl("TxtFecPP") as TextBox);
+                TxtFecPP.Attributes.Add("onfocus", "this.select();");
+                if (TxtFecPP.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens11'");
                     foreach (DataRow row in Result)
                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una fecha')", true);
                     return;
                 }
+
+                Cnx.ValidarFechas(TxtFecPP.Text, "", 1);
+                string Mensj = Cnx.GetMensj();
+                if (!Mensj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFecPP.Focus();
+                    return;
+                }
+
+                Cnx.ValidarFechas(TxtFecDet.Text, TxtFecPP.Text, 2);
+                Mensj = Cnx.GetMensj();
+                if (!Mensj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFecPP.Focus();
+                    return;
+                }
+
                 DateTime? VbFe = Convert.ToDateTime((GrdSnOnOff.FooterRow.FindControl("TxtFecPP") as TextBox).Text);
                 string VbRazR = (GrdSnOnOff.FooterRow.FindControl("DdlRazonRPP") as DropDownList).Text.Trim();
                 string VbPos = (GrdSnOnOff.FooterRow.FindControl("DdlPosicPP") as DropDownList).Text.Trim();
@@ -5033,14 +5218,39 @@ namespace _77NeoWeb.Forms.Ingenieria
             int Idx = e.RowIndex;
             int VblId = Convert.ToInt32(GrdSnOnOff.DataKeys[Idx].Value.ToString());
             int VbRte = Convert.ToInt32(TxtSnOnOffNumRte.Text);
+            TextBox TxtFec = (GrdSnOnOff.Rows[Idx].FindControl("TxtFec") as TextBox);
+            TxtFec.Attributes.Add("onfocus", "this.select();");
             if ((GrdSnOnOff.Rows[Idx].FindControl("TxtFec") as TextBox).Text.Equals(""))
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'RteMens11'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una fecha')", true);
+                TxtFec.Focus(); return;
+            }
+            Cnx.ValidarFechas(TxtFec.Text, "", 1);
+            string Mensj = Cnx.GetMensj();
+            if (!Mensj.ToString().Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                foreach (DataRow row in Result)
+                { Mensj = row["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                Page.Title = ViewState["PageTit"].ToString(); TxtFec.Focus();
                 return;
             }
-            DateTime? VbFe = Convert.ToDateTime((GrdSnOnOff.Rows[Idx].FindControl("TxtFec") as TextBox).Text);
+
+            Cnx.ValidarFechas(TxtFecDet.Text, TxtFec.Text, 2);
+            Mensj = Cnx.GetMensj();
+            if (!Mensj.ToString().Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                foreach (DataRow row in Result)
+                { Mensj = row["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                Page.Title = ViewState["PageTit"].ToString(); TxtFec.Focus();
+                return;
+            }
+            DateTime? VbFe = Convert.ToDateTime(TxtFec.Text);
             string VbRazR = (GrdSnOnOff.Rows[Idx].FindControl("DdlRazonR") as DropDownList).Text.Trim();
             string VbPos = (GrdSnOnOff.Rows[Idx].FindControl("DdlPosic") as DropDownList).Text.Trim();
             string VbPnOn = (GrdSnOnOff.Rows[Idx].FindControl("DdlPNOn") as DropDownList).Text.Trim();
@@ -5188,10 +5398,7 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                 TextBox TxtFecPP = (e.Row.FindControl("TxtFecPP") as TextBox);
                 TxtFecPP.Text = TxtFecDet.Text;
-                CalendarExtender CalFechPP = (e.Row.FindControl("CalFechPP") as CalendarExtender);
                 DateTime DiaI = Convert.ToDateTime(TxtFecha.Text);
-                CalFechPP.StartDate = Convert.ToDateTime(TxtFecPP.Text);
-                CalFechPP.EndDate = DateTime.Now;
 
                 ImageButton IbtAddNew = e.Row.FindControl("IbtAddNew") as ImageButton;
                 if (DdlEstad.Text.Equals("C"))
@@ -5249,11 +5456,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DdlPNOff.DataValueField = "CodPn";
                 DdlPNOff.DataBind();
                 DdlPNOff.SelectedValue = DrPNOf["CodPnOff"].ToString().Trim();
-
-                CalendarExtender CalFech = (e.Row.FindControl("CalFech") as CalendarExtender);
                 DateTime DiaI = Convert.ToDateTime(TxtFecDet.Text);
-                CalFech.StartDate = Convert.ToDateTime(TxtFecDet.Text);
-                CalFech.EndDate = DateTime.Now;
 
                 ImageButton IbtUpdate = (e.Row.FindControl("IbtUpdate") as ImageButton);
                 DataRow[] Result = Idioma.Select("Objeto= 'IbtUpdate'");
@@ -5263,6 +5466,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                 Result = Idioma.Select("Objeto= 'IbtCancel'");
                 foreach (DataRow row in Result)
                 { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
+
+                string VbFecSt;
+                DateTime? VbFecDT;
+                TextBox TxtFec = (e.Row.FindControl("TxtFec") as TextBox);
+                VbFecSt = DrP["FechaDMA"].ToString().Trim();
+                VbFecDT = Convert.ToDateTime(VbFecSt);
+                TxtFec.Text = string.Format("{0:yyyy-MM-dd}", VbFecDT);
             }
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
@@ -5422,8 +5632,6 @@ namespace _77NeoWeb.Forms.Ingenieria
             PerfilesGrid();
             if (e.CommandName.Equals("AddNew"))
             {
-
-                int borrar = GrdHta.Rows.Count;
                 if (GrdHta.Rows.Count > 2)
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens31'");
@@ -5431,15 +5639,41 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//Solo es posible ingresar 3 herramientas')", true);
                     return;
                 }
-                int VbRte = Convert.ToInt32(TxtSnOnOffNumRte.Text);
-                if ((GrdHta.FooterRow.FindControl("TxtFechVcePP") as TextBox).Text.Equals(""))
+                TextBox TxtFechVcePP = (GrdHta.FooterRow.FindControl("TxtFechVcePP") as TextBox);
+                TxtFechVcePP.Attributes.Add("onfocus", "this.select();");
+                if (TxtFechVcePP.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens32'");
                     foreach (DataRow row in Result)
                     { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//la fecha vencimiento se encuentra vacía')", true);
+                    TxtFechVcePP.Focus(); return;
+                }
+
+                Cnx.ValidarFechas(TxtFechVcePP.Text, "", 1);
+                string Mensj = Cnx.GetMensj();
+                if (!Mensj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFechVcePP.Focus();
                     return;
                 }
-                DateTime? VbFe = Convert.ToDateTime((GrdHta.FooterRow.FindControl("TxtFechVcePP") as TextBox).Text);
+
+                Cnx.ValidarFechas(TxtFecDet.Text, TxtFechVcePP.Text, 2);
+                Mensj = Cnx.GetMensj();
+                if (!Mensj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFechVcePP.Focus();
+                    return;
+                }
+
+                DateTime? VbFe = Convert.ToDateTime(TxtFechVcePP.Text);
                 string VbPn = (GrdHta.FooterRow.FindControl("DdlPNHtaPP") as DropDownList).Text.Trim();
                 string VbSn = (GrdHta.FooterRow.FindControl("TxtSNHtaPP") as TextBox).Text.Trim();
                 string VbDes = (GrdHta.FooterRow.FindControl("TxtDescHtaPP") as TextBox).Text.Trim();
@@ -5506,14 +5740,41 @@ namespace _77NeoWeb.Forms.Ingenieria
             int Idx = e.RowIndex;
             int VblId = Convert.ToInt32(GrdHta.DataKeys[Idx].Value.ToString());
             int VbRte = Convert.ToInt32(TxtSnOnOffNumRte.Text);
+
+            TextBox TxtFecVce = (GrdHta.Rows[Idx].FindControl("TxtFecVce") as TextBox);
+            TxtFecVce.Attributes.Add("onfocus", "this.select();");
             if ((GrdHta.Rows[Idx].FindControl("TxtFecVce") as TextBox).Text.Equals(""))
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'RteMens32'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//La fecha se encuetra vacía')", true);
+                TxtFecVce.Focus(); return;
+            }
+
+            Cnx.ValidarFechas(TxtFecVce.Text, "", 1);
+            string Mensj = Cnx.GetMensj();
+            if (!Mensj.ToString().Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                foreach (DataRow row in Result)
+                { Mensj = row["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                Page.Title = ViewState["PageTit"].ToString(); TxtFecVce.Focus();
                 return;
             }
-            DateTime? VbFe = Convert.ToDateTime((GrdHta.Rows[Idx].FindControl("TxtFecVce") as TextBox).Text);
+
+            Cnx.ValidarFechas(TxtFecDet.Text, TxtFecVce.Text, 2);
+            Mensj = Cnx.GetMensj();
+            if (!Mensj.ToString().Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                foreach (DataRow row in Result)
+                { Mensj = row["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                Page.Title = ViewState["PageTit"].ToString(); TxtFecVce.Focus();
+                return;
+            }
+            DateTime? VbFe = Convert.ToDateTime(TxtFecVce.Text);
             string VbPn = (GrdHta.Rows[Idx].FindControl("DdlPNHta") as DropDownList).Text.Trim();
             string VbSn = (GrdHta.Rows[Idx].FindControl("TxtSNHta") as TextBox).Text.Trim();
             string VbDes = (GrdHta.Rows[Idx].FindControl("TxtDescHta") as TextBox).Text.Trim();
@@ -5629,9 +5890,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DdlPNHtaPP.DataValueField = "CodPN";
                 DdlPNHtaPP.DataBind();
 
-                CalendarExtender CalFechVcePP = (e.Row.FindControl("CalFechVcePP") as CalendarExtender);
-                CalFechVcePP.StartDate = DateTime.Now;
-
                 ImageButton IbtAddNew = e.Row.FindControl("IbtAddNew") as ImageButton;
                 if (DdlEstad.Text.Equals("C"))
                 {
@@ -5664,9 +5922,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DdlPNHta.DataBind();
                 DdlPNHta.SelectedValue = DrPN["PN"].ToString().Trim();
 
-                CalendarExtender CalFechVce = (e.Row.FindControl("CalFechVce") as CalendarExtender);
-                CalFechVce.StartDate = DateTime.Now;
-
                 ImageButton IbtUpdate = (e.Row.FindControl("IbtUpdate") as ImageButton);
                 DataRow[] Result = Idioma.Select("Objeto= 'IbtUpdate'");
                 foreach (DataRow row in Result)
@@ -5676,6 +5931,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                 Result = Idioma.Select("Objeto= 'IbtCancel'");
                 foreach (DataRow row in Result)
                 { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
+
+                string VbFecSt;
+                DateTime? VbFecDT;
+                TextBox TxtFecVce = (e.Row.FindControl("TxtFecVce") as TextBox);
+                VbFecSt = DrPN["FechaDMY"].ToString().Trim();
+                VbFecDT = Convert.ToDateTime(VbFecSt);
+                TxtFecVce.Text = string.Format("{0:yyyy-MM-dd}", VbFecDT);
             }
             if (e.Row.RowType == DataControlRowType.DataRow)
             {

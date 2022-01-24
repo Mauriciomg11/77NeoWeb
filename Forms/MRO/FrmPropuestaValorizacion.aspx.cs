@@ -5,13 +5,10 @@ using _77NeoWeb.Prg.PrgMro;
 using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -213,15 +210,15 @@ namespace _77NeoWeb.Forms.MRO
             DS = (DataSet)ViewState["DS"];
             DtDdlPpal = DS.Tables["PPTS"].Clone();
             DtDdlPpal = DS.Tables["PPTS"];
-            DtDdlPpal.Rows.Add(" - ", "", "", "", "", "", "", "", "", "", "01/01/1900", "0");
+            DtDdlPpal.Rows.Add(" - ", "", "", "", "", "", "", "", "", "", "01/01/1900", "0", " - ");
             DataView DV = DtDdlPpal.DefaultView;
-            DV.Sort = "OrdenPpta";
+            DV.Sort = "CodigoPPT";
             DtDdlPpal = DV.ToTable();
             ViewState["DtDdlPpal"] = DtDdlPpal;
 
             DdlNumPpt.DataSource = DtDdlPpal;
-            DdlNumPpt.DataTextField = "IdPropuesta";
-            DdlNumPpt.DataValueField = "OrdenPpta";
+            DdlNumPpt.DataTextField = "CodigoPPT";
+            DdlNumPpt.DataValueField = "IdPropuesta";
             DdlNumPpt.DataBind();
         }
         protected void BindDetalle(string Accion)
@@ -811,6 +808,6 @@ namespace _77NeoWeb.Forms.MRO
         }
         protected void IbtClosePNoValorizado_Click(object sender, ImageClickEventArgs e)
         { MultVw.ActiveViewIndex = 0; Page.Title = ViewState["PageTit"].ToString().Trim(); }
-       
+
     }
 }

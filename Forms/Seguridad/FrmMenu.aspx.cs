@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Configuration;
-using _77NeoWeb.prg;
+﻿using _77NeoWeb.prg;
+using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace _77NeoWeb.Forms.Seguridad
 {
@@ -43,7 +39,7 @@ namespace _77NeoWeb.Forms.Seguridad
             {
                 ModSeguridad();
                 BindData(TxtBusqueda.Text);
-                if (Session["C77U"].ToString().Trim().Equals("00000082")) { IbtAbrirIdioma.Visible = true; }
+                if (Session["C77U"].ToString().Trim().Equals("00000082") || (Session["C77U"].ToString().Trim().Equals("00000083") && Session["!dC!@"].ToString().Trim().Equals("1"))) { IbtAbrirIdioma.Visible = true; }
             }
         }
         void ModSeguridad()
@@ -364,23 +360,23 @@ namespace _77NeoWeb.Forms.Seguridad
 
                 if (sangr == 0)
                 {
-                    e.Row.BackColor = System.Drawing.Color.LightGray;
+                    e.Row.BackColor = System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor.LightGray);
                     TextBox TxtDescP = e.Row.FindControl("TxtIdDescrP") as TextBox;
-                    if (TxtDescP != null) { TxtDescP.BackColor = System.Drawing.Color.LightGray; }
+                    if (TxtDescP != null) { TxtDescP.BackColor = System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor.LightGray); }
                 }
                 if (sangr == 1)
                 {
-                    e.Row.BackColor = System.Drawing.Color.DarkOrange;
+                    e.Row.BackColor = System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor.Wheat);
                     TextBox TxtDescP = e.Row.FindControl("TxtIdDescrP") as TextBox;
-                    if (TxtDescP != null) { TxtDescP.BackColor = System.Drawing.Color.DarkOrange; }
+                    if (TxtDescP != null) { TxtDescP.BackColor = System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor.Wheat); }
                 }
                 if (sangr == 2)
                 {
-                    e.Row.BackColor = System.Drawing.Color.Yellow;
+                    e.Row.BackColor = System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor.LemonChiffon);
                     TextBox TxtDescP = e.Row.FindControl("TxtIdDescrP") as TextBox;
                     if (TxtDescP != null)
                     {
-                        TxtDescP.BackColor = System.Drawing.Color.Yellow;
+                        TxtDescP.BackColor = System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor.LemonChiffon);
                     }
                 }
                 if (sangr == 3)

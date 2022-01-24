@@ -2,15 +2,10 @@
 using _77NeoWeb.Prg.PrgIngenieria;
 using ClosedXML.Excel;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace _77NeoWeb.Forms.InventariosCompras
 {
@@ -86,7 +81,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     LblFechI.Text = bO.Equals("LblFechI") ? bT : LblFechI.Text;
                     LblFechF.Text = bO.Equals("LblFechF") ? bT : LblFechF.Text;
                     IbtExcelRepa.ToolTip = bO.Equals("BtnExportMstr") ? bT : IbtExcelRepa.ToolTip;
-                               
+
                 }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
@@ -139,11 +134,11 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 {
                     cmd.CommandTimeout = 90000000;
                     cmd.Parameters.AddWithValue("@FI", Convert.ToDateTime(TxtFechI.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@FF", Convert.ToDateTime(TxtFechF.Text.Trim()));                 
-                    cmd.Parameters.AddWithValue("@NA", "CurExportLogstcRepa");                 
-                    cmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);                 
+                    cmd.Parameters.AddWithValue("@FF", Convert.ToDateTime(TxtFechF.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@NA", "CurExportLogstcRepa");
+                    cmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                     cmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                  
+
                     using (SqlDataAdapter sda = new SqlDataAdapter())
                     {
                         cmd.Connection = con;

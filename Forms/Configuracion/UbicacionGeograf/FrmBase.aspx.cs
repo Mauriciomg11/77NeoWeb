@@ -2,13 +2,10 @@
 using _77NeoWeb.Prg.PrgManto;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
 {
@@ -153,7 +150,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
             DataRow[] Result;
             string VbCodAnt = "";
 
-            VbCodAnt = DdlBusq.Text.Trim();
+            VbCodAnt = CodUG.Equals("") ? "0" : DdlBusq.Text.Trim();
             DdlBusq.DataSource = DSTDdl.Tables[0];
             DdlBusq.DataTextField = "NomBase";
             DdlBusq.DataValueField = "IdBase";
@@ -284,12 +281,13 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                     ValidarCampos("INSERT");
                     if (ViewState["Validar"].Equals("N"))
                     { return; }
+                    string VbCodcia = Session["!dC!@"].ToString().Trim();
 
                     List<ClsTypBodega> ObjBase = new List<ClsTypBodega>();
                     var TypBodega = new ClsTypBodega()
                     {
                         IdBase = 0,
-                        CodBase = TxtCod.Text.Trim(),
+                        CodBase = TxtCod.Text.Trim().ToUpper(),
                         NomBase = TxtNombre.Text.Trim(),
                         CodUbicaGeogr = DdlUbica.Text.Trim(),
                         Descripcion = TxtDescrip.Text.Trim(),
@@ -300,7 +298,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                         Direccion = TxtDir.Text.Trim(),
                         Usu = Session["C77U"].ToString(),
                         Activo = CkbActivo.Checked == true ? 1 : 0,
-                        IdConfigCia = (int)Session["!dC!@"],
+                        IdConfigCia = Convert.ToInt32(VbCodcia),//(int)Session["!dC!@"],
                         Accion = "INSERT",
                     };
                     ObjBase.Add(TypBodega);
@@ -367,12 +365,12 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                     ValidarCampos("UPDATE");
                     if (ViewState["Validar"].Equals("N"))
                     { return; }
-
+                    string VbCodcia = Session["!dC!@"].ToString().Trim();
                     List<ClsTypBodega> ObjBase = new List<ClsTypBodega>();
                     var TypBase = new ClsTypBodega()
                     {
                         IdBase = Convert.ToInt32(DdlBusq.Text.Trim()),
-                        CodBase = TxtCod.Text.Trim(),
+                        CodBase = TxtCod.Text.Trim().ToUpper(),
                         NomBase = TxtNombre.Text.Trim(),
                         CodUbicaGeogr = DdlUbica.Text.Trim(),
                         Descripcion = TxtDescrip.Text.Trim(),
@@ -383,7 +381,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                         Direccion = TxtDir.Text.Trim(),
                         Usu = Session["C77U"].ToString(),
                         Activo = CkbActivo.Checked == true ? 1 : 0,
-                        IdConfigCia = (int)Session["!dC!@"],
+                        IdConfigCia = Convert.ToInt32(VbCodcia),
                         Accion = "UPDATE",
                     };
                     ObjBase.Add(TypBase);
@@ -428,7 +426,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
 
                 if (TxtCod.Text.Equals("") || DdlBusq.Text.Trim().Equals("0"))
                 { return; }
-
+                string VbCodcia = Session["!dC!@"].ToString().Trim();
                 List<ClsTypBodega> ObjBase = new List<ClsTypBodega>();
                 var TypBase = new ClsTypBodega()
                 {
@@ -444,7 +442,7 @@ namespace _77NeoWeb.Forms.Configuracion.UbicacionGeograf
                     Direccion = TxtDir.Text.Trim(),
                     Usu = Session["C77U"].ToString(),
                     Activo = CkbActivo.Checked == true ? 1 : 0,
-                    IdConfigCia = (int)Session["!dC!@"],
+                    IdConfigCia = Convert.ToInt32(VbCodcia),
                     Accion = "DELETE",
                 };
                 ObjBase.Add(TypBase);

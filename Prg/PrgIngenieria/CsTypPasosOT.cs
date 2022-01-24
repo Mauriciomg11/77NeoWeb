@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 
 namespace _77NeoWeb.Prg.PrgIngenieria
@@ -97,7 +96,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                 using (SqlTransaction transaction = sqlCon.BeginTransaction())
                 {
                     PMensj = "";
-                    PCodIdPaso=0;
+                    PCodIdPaso = 0;
                     string VBQuery = "INS_UPD_PasosOT";
                     using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon, transaction))
                     {
@@ -106,7 +105,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                             sqlCmd.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = sqlCmd.Parameters.AddWithValue("@CurPasoOT", TblPasos);
                             SqlParameter Prmtrs1 = sqlCmd.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
-                            Prmtrs.SqlDbType = SqlDbType.Structured; 
+                            Prmtrs.SqlDbType = SqlDbType.Structured;
                             SqlDataReader SDR = sqlCmd.ExecuteReader();
                             if (SDR.Read())
                             {

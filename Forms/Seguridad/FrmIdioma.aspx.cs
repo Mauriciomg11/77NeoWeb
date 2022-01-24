@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -61,20 +59,30 @@ namespace _77NeoWeb.Forms.Seguridad
                     }
                 }
                 BindData("UPD");
+
+                if (Session["C77U"].ToString().Trim().Equals("00000082")) { TxtIdCia.Visible = true; TxtPassCia.Visible = true; IbtCambioPassCia.Visible = true; }
+
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
+        public bool IsIENumerableLleno(IEnumerable<DataRow> ieNumerable)
+        {
+            bool isFull = false;
+            foreach (DataRow item in ieNumerable)
+            { isFull = true; break; }
+            return isFull;
+        }
         protected void BindData(string Accion)
         {
-            DataRow[] Result;
             if (Accion.Equals("UPD"))
             {
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
                 {
-                    string VbTxtSql = " EXEC SP_Configuracion 2,'','','','','',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    string VbTxtSql = " EXEC SP_Configuracion 2, @Frm,'','','','',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
                     sqlCon.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlCon))
                     {
+                        SC.Parameters.AddWithValue("@Frm", DdlForm.Text.Trim());
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
 
                         SqlDataAdapter SDA = new SqlDataAdapter();
@@ -85,10 +93,7 @@ namespace _77NeoWeb.Forms.Seguridad
                 }
             }
             string StrCondic = "";
-            string VbForm = "";
             string VbCorreg = "";
-            if (!DdlForm.Text.Trim().Equals("-1"))
-            { VbForm = " AND IdFormulario = " + DdlForm.Text.Trim(); }
 
             if (CkbSinCorr.Checked == true)
             { VbCorreg = " AND Aleman = ''"; }
@@ -96,13 +101,13 @@ namespace _77NeoWeb.Forms.Seguridad
             DTDet = (DataTable)ViewState["DTDet"];
             DataTable DT = new DataTable();
             DT = DTDet.Clone();
-            if (RdbObj.Checked == true) { StrCondic = "Objeto LIKE '%" + TxtBusqueda.Text.Trim() + "%'" + VbForm + VbCorreg; }
-            if (RdbDesc.Checked == true) { StrCondic = " Descripcion LIKE '%" + TxtBusqueda.Text.Trim() + "%'" + VbForm + VbCorreg; }
-            Result = DTDet.Select(StrCondic);
-            foreach (DataRow DR in Result)
-            {
-                DT.ImportRow(DR);
-            }
+            if (RdbMens.Checked == true) { StrCondic = " Espanol LIKE '%" + TxtBusqueda.Text.Trim() + "%'" + VbCorreg; }
+            if (RdbObj.Checked == true) { StrCondic = "Objeto LIKE '%" + TxtBusqueda.Text.Trim() + "%'" + VbCorreg; }
+            if (RdbDesc.Checked == true) { StrCondic = " Descripcion LIKE '%" + TxtBusqueda.Text.Trim() + "%'" + VbCorreg; }
+            DataRow[] DR = DTDet.Select(StrCondic);
+            if (IsIENumerableLleno(DR))
+            { DT = DR.CopyToDataTable(); }
+
             if (DT.Rows.Count > 0)
             {
                 DataView DV = DT.DefaultView;
@@ -155,7 +160,35 @@ namespace _77NeoWeb.Forms.Seguridad
         }
         protected void GrdDatos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         { GrdDatos.EditIndex = -1; BindData("SEL"); }
-        protected void GrdDatos_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        { GrdDatos.PageIndex = e.NewPageIndex; BindData("SEL"); }       
+        protected void DdlForm_TextChanged(object sender, EventArgs e)
+        { BindData("UPD"); }
+
+        protected void IbtCambioPassCia_Click(object sender, ImageClickEventArgs e)
+        {
+            if (Convert.ToInt32(TxtIdCia.Text) > 0 && !TxtPassCia.Text.Trim().Equals(""))
+            {
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
+                {
+                    sqlCon.Open();
+                    using (SqlTransaction Transac = sqlCon.BeginTransaction())
+                    {
+                        string VBQuery = "EXEC SP_ACCESO_WEB 3, @P,'','','','', 0, 0,0, @I,'01-01-1','01-01-1'";
+                        using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
+                        {
+                            SC.Parameters.AddWithValue("@I", TxtIdCia.Text);
+                            SC.Parameters.AddWithValue("@P", TxtPassCia.Text.Trim());
+                            try
+                            {
+                                SC.ExecuteNonQuery();
+                                Transac.Commit();
+                                TxtIdCia.Visible = false; TxtPassCia.Visible = false; IbtCambioPassCia.Visible = false;
+                            }
+                            catch (Exception)
+                            { Transac.Rollback(); }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

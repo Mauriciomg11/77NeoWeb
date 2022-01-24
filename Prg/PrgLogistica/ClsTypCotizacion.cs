@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 
 namespace _77NeoWeb.Prg.PrgLogistica
@@ -51,8 +50,8 @@ namespace _77NeoWeb.Prg.PrgLogistica
         public string CodTipoCodigo { get; set; }
         public int PeticionEC { get; set; }
         public int IdConfigCia { get; set; }
-        public DateTime? FechaTRM { get; set; }        
-        public DateTime? FechaTRM_Ant { get; set; }        
+        public DateTime? FechaTRM { get; set; }
+        public DateTime? FechaTRM_Ant { get; set; }
         public string CodProveedor_ANT { get; set; }
         public string CodTipoCotizacion_ANT { get; set; }
 

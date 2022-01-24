@@ -1,10 +1,7 @@
 ﻿using _77NeoWeb.prg;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 
 namespace _77NeoWeb.Prg.PrgIngenieria
@@ -64,8 +61,8 @@ namespace _77NeoWeb.Prg.PrgIngenieria
             Tb77lIdioma.Columns.Add("C45", typeof(string));
             using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
             {
-                string C01="", C02 = "", C03 = "", C04 = "", C05 = "", C06 = "", C07 = "", C08 = "", C09 = "", C10 = "", C11 = "", C12 = "", C13 = "", C14 = "",C15 = "", C16 = "";
-                string C17 = "", C18 = "", C19 = "", C20 = "", C21 = "", C22 = "", C23 = "", C24 = "", C25 = "", C26 = "", C27 = "", C28 = "", C29 = "", C30 = "", C31 = "", C32 = "", 
+                string C01 = "", C02 = "", C03 = "", C04 = "", C05 = "", C06 = "", C07 = "", C08 = "", C09 = "", C10 = "", C11 = "", C12 = "", C13 = "", C14 = "", C15 = "", C16 = "";
+                string C17 = "", C18 = "", C19 = "", C20 = "", C21 = "", C22 = "", C23 = "", C24 = "", C25 = "", C26 = "", C27 = "", C28 = "", C29 = "", C30 = "", C31 = "", C32 = "",
                     C33 = "", C34 = "", C35 = "", C36 = "", C37 = "", C38 = "", C39 = "";
                 string LtxtSql = "EXEC Idioma @I,@F,'','',''";
                 SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
@@ -115,7 +112,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                     C38 = tbl["Objeto"].ToString().Trim() == "C38" ? tbl["Texto"].ToString().Trim() : C38;
                     C39 = tbl["Objeto"].ToString().Trim() == "C39" ? tbl["Texto"].ToString().Trim() : C39;
                 }
-                Tb77lIdioma.Rows.Add(Vista.Trim(),C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25,
+                Tb77lIdioma.Rows.Add(Vista.Trim(), C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25,
                     C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, "40", "41", "42", "43", "44", "45");
 
                 Cnx.SelecBD();
@@ -156,8 +153,8 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                         }
                     }
                 }
-            }          
-           
-        }        
+            }
+
+        }
     }
 }

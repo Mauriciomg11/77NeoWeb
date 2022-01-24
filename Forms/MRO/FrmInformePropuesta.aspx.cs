@@ -2,13 +2,9 @@
 using _77NeoWeb.Prg.PrgIngenieria;
 using ClosedXML.Excel;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -126,7 +122,7 @@ namespace _77NeoWeb.Forms.MRO
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = "EXEC SP_PANTALLA_Propuesta 20,@Prmtr,@ICC,'','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                string VbTxtSql = "EXEC SP_PANTALLA_Propuesta 20,@Prmtr,'','','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {

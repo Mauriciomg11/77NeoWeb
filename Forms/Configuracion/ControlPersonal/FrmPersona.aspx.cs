@@ -3,11 +3,9 @@ using _77NeoWeb.Prg.PrgIngenieria;
 using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -1026,69 +1024,69 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             PerfilesGrid();
             if (e.CommandName.Equals("AddNew"))
             {
-                    string VBQuery = "";
-                    DateTime VbFechaVenc;
-                    string VbNombre = (GrdCursos.FooterRow.FindControl("DdlNombrePP") as DropDownList).Text.Trim();
-                    if (!(GrdCursos.FooterRow.FindControl("TxtFecVenPP") as TextBox).Text.Trim().Equals(""))
-                    { VbFechaVenc = Convert.ToDateTime((GrdCursos.FooterRow.FindControl("TxtFecVenPP") as TextBox).Text.Trim()); }
-                    else
-                    {
-                        DataRow[] Result = Idioma.Select("Objeto= 'Mens12Persn'");
-                        foreach (DataRow row in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una fecha de vencimiento.
-                        BindDCurso(TxtCodUsu.Text.Trim()); PerfilesGrid(); return;
-                    }
+                string VBQuery = "";
+                DateTime VbFechaVenc;
+                string VbNombre = (GrdCursos.FooterRow.FindControl("DdlNombrePP") as DropDownList).Text.Trim();
+                if (!(GrdCursos.FooterRow.FindControl("TxtFecVenPP") as TextBox).Text.Trim().Equals(""))
+                { VbFechaVenc = Convert.ToDateTime((GrdCursos.FooterRow.FindControl("TxtFecVenPP") as TextBox).Text.Trim()); }
+                else
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= 'Mens12Persn'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una fecha de vencimiento.
+                    BindDCurso(TxtCodUsu.Text.Trim()); PerfilesGrid(); return;
+                }
 
-                    if (VbNombre.Equals("0"))
-                    {
-                        DataRow[] Result = Idioma.Select("Objeto= 'Mens14Persn'");
-                        foreach (DataRow row in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar un curso.
-                        BindDCurso(TxtCodUsu.Text.Trim()); PerfilesGrid(); return;
-                    }
+                if (VbNombre.Equals("0"))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= 'Mens14Persn'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar un curso.
+                    BindDCurso(TxtCodUsu.Text.Trim()); PerfilesGrid(); return;
+                }
 
-                    Cnx.SelecBD();
-                    using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+                Cnx.SelecBD();
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+                {
+                    sqlCon.Open();
+                    using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        sqlCon.Open();
-                        using (SqlTransaction Transac = sqlCon.BeginTransaction())
+                        VBQuery = "EXEC SP_TablasGeneral 2,@CP,@CCrs,@US,'','','','','','INSERT',@Ac,0,0,0,0,@ICC,@FV,'02-01-1','03-01-1'";
+                        using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
-                            VBQuery = "EXEC SP_TablasGeneral 2,@CP,@CCrs,@US,'','','','','','INSERT',@Ac,0,0,0,0,@ICC,@FV,'02-01-1','03-01-1'";
-                            using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
+                            SC.Parameters.AddWithValue("@CP", TxtCodUsu.Text.Trim());
+                            SC.Parameters.AddWithValue("@Ac", (GrdCursos.FooterRow.FindControl("CkbActivoPP") as CheckBox).Checked == false ? 0 : 1);
+                            SC.Parameters.AddWithValue("@CCrs", VbNombre);
+                            SC.Parameters.AddWithValue("@FV", VbFechaVenc);
+                            SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                            try
                             {
-                                SC.Parameters.AddWithValue("@CP", TxtCodUsu.Text.Trim());
-                                SC.Parameters.AddWithValue("@Ac", (GrdCursos.FooterRow.FindControl("CkbActivoPP") as CheckBox).Checked == false ? 0 : 1);
-                                SC.Parameters.AddWithValue("@CCrs", VbNombre);
-                                SC.Parameters.AddWithValue("@FV", VbFechaVenc);
-                                SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
-                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                                try
+                                var Mensj = SC.ExecuteScalar();
+                                if (!Mensj.ToString().Trim().Equals(""))
                                 {
-                                    var Mensj = SC.ExecuteScalar();
-                                    if (!Mensj.ToString().Trim().Equals(""))
-                                    {
-                                        DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
-                                        foreach (DataRow row in Result)
-                                        { Mensj = row["Texto"].ToString().Trim(); }
-                                        ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
-                                        Transac.Rollback();
-                                        return;
-                                    }
-                                    Transac.Commit();
-                                    BindBDdl("UPD");
-                                    BindDCurso(TxtCodUsu.Text.Trim());
-                                }
-                                catch (Exception ex)
-                                {
-                                    Transac.Rollback();
-                                    DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
+                                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                     foreach (DataRow row in Result)
-                                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
-                                    Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "INSERT", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
-                                }/**/
+                                    { Mensj = row["Texto"].ToString().Trim(); }
+                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                                    Transac.Rollback();
+                                    return;
+                                }
+                                Transac.Commit();
+                                BindBDdl("UPD");
+                                BindDCurso(TxtCodUsu.Text.Trim());
                             }
+                            catch (Exception ex)
+                            {
+                                Transac.Rollback();
+                                DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
+                                foreach (DataRow row in Result)
+                                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
+                                Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "INSERT", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                            }/**/
                         }
-                    }               
+                    }
+                }
             }
         }
         protected void GrdCursos_RowEditing(object sender, GridViewEditEventArgs e)

@@ -1,11 +1,7 @@
 ﻿using _77NeoWeb.prg;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -21,11 +17,8 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
             }
-            {
-                if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
-            }
             ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo 
-            Page.Title = string.Format("Configuración_Tipo_Aeronave");
+            Page.Title = ViewState["PFileName"].ToString();
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
@@ -56,7 +49,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             ViewState["VblEliMS"] = 1;
             // ViewState["VblImpMS"] = 1;
             ClsPermisos ClsP = new ClsPermisos();
-            ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
+            ClsP.Acceder(Session["C77U"].ToString(), "FrmTipoSrv.aspx");
             if (ClsP.GetAccesoFrm() == 0)
             { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
             if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; GrdDatos.ShowFooter = false; }

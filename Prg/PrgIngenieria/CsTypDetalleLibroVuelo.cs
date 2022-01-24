@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 
 namespace _77NeoWeb.Prg.PrgIngenieria
@@ -12,7 +11,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
     {
         ClsConexion Cnx = new ClsConexion();
         static public string PMensj;
-        static public string PTTHLV,PHrMn;
+        static public string PTTHLV, PHrMn;
         static public int PTtlVuelos;
         public int CodIdDetLibroVuelo { get; set; }
         public string CodLibroVuelo { get; set; }
@@ -138,6 +137,6 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         {
             return PTtlVuelos;
         }
-        
+
     }
 }

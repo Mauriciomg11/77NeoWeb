@@ -3,7 +3,6 @@ using _77NeoWeb.Prg.PrgIngenieria;
 using ClosedXML.Excel;
 using Microsoft.Reporting.WebForms;
 using System;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;

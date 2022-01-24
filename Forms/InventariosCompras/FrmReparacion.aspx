@@ -149,7 +149,7 @@
                     </table>
                     <div class="CentrarGrid pre-scrollable">
                         <asp:GridView ID="GrdModalBusqRepa" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="CodReparacion"
-                            CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowCommand="GrdBusq_RowCommand" OnRowDataBound="GrdBusq_RowDataBound">
+                            CssClass="GridControl DiseñoGrid" GridLines="Both" AllowPaging="true" OnRowCommand="GrdBusq_RowCommand" OnRowDataBound="GrdBusq_RowDataBound">
                             <Columns>
                                 <asp:TemplateField HeaderText="Select">
                                     <ItemTemplate>
@@ -178,12 +178,12 @@
                                         <asp:Label Text='<%# Eval("FechaReparacion") %>' runat="server" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="P/N">
+                                <asp:TemplateField HeaderText="P/N" HeaderStyle-Width="25%">
                                     <ItemTemplate>
                                         <asp:Label Text='<%# Eval("PN") %>' runat="server" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="S/N">
+                                <asp:TemplateField HeaderText="S/N"  HeaderStyle-Width="10%">
                                     <ItemTemplate>
                                         <asp:Label ID="LblSN" Text='<%# Eval("SN") %>' runat="server" />
                                     </ItemTemplate>
@@ -360,7 +360,8 @@
                             </div>
                             <div class="col-sm-1">
                                 <asp:Label ID="LblOT" runat="server" CssClass="LblEtiquet" Text="num O.T." />
-                                <asp:TextBox ID="TxtOT" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" />
+                                <asp:TextBox ID="TxtOT" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" Visible ="false" />
+                                <asp:TextBox ID="TxtCodigoOT" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" />
                             </div>
                             <div class="col-sm-1">
                                 <asp:Label ID="LblReserva" runat="server" CssClass="LblEtiquet" Text="reserva" />
@@ -651,7 +652,8 @@
                             </div>
                             <div class="col-sm-2">
                                 <asp:Label ID="LblOtNumOT" runat="server" CssClass="LblEtiquet" Text="O.T." />
-                                <asp:TextBox ID="TxtOtNumOT" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="60%" Height="30px" />
+                                <asp:TextBox ID="TxtOtNumOT" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="60%" Height="30px" Visible ="false" />
+                                <asp:TextBox ID="TxtOtCodigoOT" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="60%" Height="30px" />
                             </div>
                         </div>
                         <br />

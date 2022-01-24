@@ -165,6 +165,10 @@
           <DataField>Difiere</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="CodigoRTE">
+          <DataField>CodigoRTE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DataSet1</rd:DataSetName>
@@ -2102,7 +2106,7 @@
             <Top>2.81556in</Top>
             <Left>0.01784in</Left>
             <Height>0.89583in</Height>
-            <Width>6.6995in</Width>
+            <Width>6.69952in</Width>
             <ZIndex>6</ZIndex>
             <Style>
               <Border>
@@ -2594,7 +2598,7 @@
             <Top>4.22141in</Top>
             <Left>3.1844in</Left>
             <Height>0.61458in</Height>
-            <Width>2.17654in</Width>
+            <Width>2.17655in</Width>
             <ZIndex>8</ZIndex>
             <Style>
               <Border>
@@ -3366,7 +3370,7 @@
             <DataSetName>DataSet1</DataSetName>
             <Top>5.41585in</Top>
             <Left>0.03034in</Left>
-            <Height>0.44791in</Height>
+            <Height>0.44792in</Height>
             <Width>6.687in</Width>
             <ZIndex>11</ZIndex>
             <Style>
@@ -3487,7 +3491,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox14</rd:DefaultName>
               <Top>0.50439in</Top>
-              <Left>5.06034in</Left>
+              <Left>4.97284in</Left>
               <Height>0.23758in</Height>
               <Width>0.83333in</Width>
               <ZIndex>3</ZIndex>
@@ -3519,7 +3523,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox14</rd:DefaultName>
               <Top>0.33486in</Top>
-              <Left>5.06757in</Left>
+              <Left>4.98007in</Left>
               <Height>0.23758in</Height>
               <Width>0.35417in</Width>
               <ZIndex>4</ZIndex>
@@ -3551,7 +3555,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox14</rd:DefaultName>
               <Top>0.67791in</Top>
-              <Left>5.06034in</Left>
+              <Left>4.97284in</Left>
               <Height>0.23758in</Height>
               <Width>0.83333in</Width>
               <ZIndex>5</ZIndex>
@@ -3572,7 +3576,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!Reporte_Nro.Value, "DataSet1")</Value>
+                      <Value>=First(Fields!CodigoRTE.Value, "DataSet1")</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -3585,9 +3589,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox14</rd:DefaultName>
               <Top>0.33486in</Top>
-              <Left>5.86826in</Left>
+              <Left>5.76826in</Left>
               <Height>0.23758in</Height>
-              <Width>0.875in</Width>
+              <Width>0.925in</Width>
               <ZIndex>6</ZIndex>
               <Style>
                 <Border>
@@ -3608,6 +3612,7 @@
                     <TextRun>
                       <Value>=First(Fields!OTPpal.Value, "DataSet1")</Value>
                       <Style>
+                        <FontSize>9pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -3619,9 +3624,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox14</rd:DefaultName>
               <Top>0.50439in</Top>
-              <Left>5.86826in</Left>
+              <Left>5.76826in</Left>
               <Height>0.23758in</Height>
-              <Width>0.875in</Width>
+              <Width>0.925in</Width>
               <ZIndex>7</ZIndex>
               <Style>
                 <Border>
@@ -3653,9 +3658,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox14</rd:DefaultName>
               <Top>0.67791in</Top>
-              <Left>5.86826in</Left>
+              <Left>5.76826in</Left>
               <Height>0.23758in</Height>
-              <Width>0.875in</Width>
+              <Width>0.925in</Width>
               <ZIndex>8</ZIndex>
               <Style>
                 <Border>
@@ -3669,7 +3674,7 @@
             </Textbox>
             <Line Name="Line4">
               <Top>1.04343in</Top>
-              <Left>5.01201in</Left>
+              <Left>4.92451in</Left>
               <Height>-0.81797in</Height>
               <Width>0in</Width>
               <ZIndex>9</ZIndex>

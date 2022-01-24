@@ -109,7 +109,7 @@
                     </div>
                     <div class="col-sm-2">
                         <asp:Button ID="BtnEliminar" runat="server" CssClass="btn btn-success botones" Width="100%" OnClick="BtnEliminar_Click" Text="Elimina" />
-                    </div>
+                    </div>                    
                 </div>
                 <br />
             </div>

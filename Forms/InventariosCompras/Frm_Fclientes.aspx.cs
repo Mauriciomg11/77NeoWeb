@@ -4,12 +4,9 @@ using _77NeoWeb.Prg.PrgLogistica;
 using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -57,6 +54,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 ViewState["CodBancoAnt"] = "";
                 ViewState["CodPaisAnt"] = "";
                 ViewState["CiudadAnt"] = "0";
+                ViewState["EstadoAnt"] = "0";
                 BindBDdl("UPD");
                 ViewState["Accion"] = "";
                 RdbMdlOpcBusqProv.Checked = true;
@@ -144,6 +142,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     RdbCtaNA.Text = bO.Equals("RdbCtaNA") ? "&nbsp" + bT : RdbCtaNA.Text;
                     LblPais.Text = bO.Equals("LblPais") ? bT : LblPais.Text;
                     LblCiudad.Text = bO.Equals("LblCiudad") ? bT : LblCiudad.Text;
+                    LblEstado.Text = bO.Equals("LblEstado") ? bT : LblEstado.Text;
                     LblIVA.Text = bO.Equals("LblIVA") ? bT : LblIVA.Text;
                     LblObservac.Text = bO.Equals("LblObsMst") ? bT : LblObservac.Text;
                     LblTitContactoDefecto.Text = bO.Equals("LblTitContactoDefecto") ? bT : LblTitContactoDefecto.Text;
@@ -161,8 +160,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     if (bO.Equals("placeholder"))
                     { TxtModalBusq.Attributes.Add("placeholder", bT); }
                     LblTitModalBusqTerc.Text = bO.Equals("LblTitOTOpcBusqueda") ? bT : LblTitModalBusqTerc.Text;
-                    RdbMdlOpcBusqCod.Text = bO.Equals("LblRazonSoc") ? "&nbsp" + bT : RdbMdlOpcBusqCod.Text;
-                    RdbMdlOpcBusqProv.Text = bO.Equals("LblNit") ? "&nbsp" + bT : RdbMdlOpcBusqProv.Text;
+                    RdbMdlOpcBusqProv.Text = bO.Equals("LblRazonSoc") ? "&nbsp" + bT : RdbMdlOpcBusqProv.Text;
+                    RdbMdlOpcBusqCod.Text = bO.Equals("LblNit") ? "&nbsp" + bT : RdbMdlOpcBusqCod.Text;
                     LblModalBusq.Text = bO.Equals("MstrLblBusq") ? bT + ":" : LblModalBusq.Text;
                     IbtModalBusq.ToolTip = bO.Equals("BtnConsultar") ? bT : IbtModalBusq.ToolTip;
                     GrdModalBusqTercero.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdModalBusqTercero.EmptyDataText;
@@ -179,25 +178,25 @@ namespace _77NeoWeb.Forms.InventariosCompras
         }
         protected void PerfilesGrid()
         {
-             foreach (GridViewRow Row in GrdContacto.Rows)
-              {
-                  if ((int)ViewState["VblModMS"] == 0)
-                  {
-                      ImageButton imgE = Row.FindControl("IbtEdit") as ImageButton;
-                      if (imgE != null)
-                      {
-                          Row.Cells[5].Controls.Remove(imgE);
-                      }
-                  }
-                  if ((int)ViewState["VblEliMS"] == 0)
-                  {
-                      ImageButton imgD = Row.FindControl("IbtDelete") as ImageButton;
-                      if (imgD != null)
-                      {
-                          Row.Cells[5].Controls.Remove(imgD);
-                      }
-                  }
-              }
+            foreach (GridViewRow Row in GrdContacto.Rows)
+            {
+                if ((int)ViewState["VblModMS"] == 0)
+                {
+                    ImageButton imgE = Row.FindControl("IbtEdit") as ImageButton;
+                    if (imgE != null)
+                    {
+                        Row.Cells[5].Controls.Remove(imgE);
+                    }
+                }
+                if ((int)ViewState["VblEliMS"] == 0)
+                {
+                    ImageButton imgD = Row.FindControl("IbtDelete") as ImageButton;
+                    if (imgD != null)
+                    {
+                        Row.Cells[5].Controls.Remove(imgD);
+                    }
+                }
+            }
         }
         public bool IsIENumerableLleno(IEnumerable<DataRow> ieNumerable)
         {
@@ -220,6 +219,18 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 DdlCiudad.DataValueField = "IdUbicaGeogr";
                 DdlCiudad.DataBind();
                 DdlCiudad.Text = ViewState["CiudadAnt"].ToString().Trim();
+            }
+            if (DSTDdl.Tables["Estado"].Rows.Count > 0)
+            {
+                DataTable DT = new DataTable();
+                DataRow[] DR = DSTDdl.Tables[10].Select("Activa = 1 AND CodUbicaGeoSup = '" + CodPais + "' OR CodUbicaGeogr = '' OR IdUbicaGeogr = " + ViewState["EstadoAnt"]);
+                if (IsIENumerableLleno(DR))
+                { DT = DR.CopyToDataTable(); }
+                DdlEstado.DataSource = DT;
+                DdlEstado.DataTextField = "Nombre";
+                DdlEstado.DataValueField = "IdUbicaGeogr";
+                DdlEstado.DataBind();
+                DdlEstado.Text = ViewState["EstadoAnt"].ToString().Trim();
             }
         }
         protected void BindBDdl(string Accion)
@@ -251,6 +262,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                                 DSTDdl.Tables[7].TableName = "Banco";
                                 DSTDdl.Tables[8].TableName = "Pais";
                                 DSTDdl.Tables[9].TableName = "Ciudad";
+                                DSTDdl.Tables[10].TableName = "Estado";
 
                                 ViewState["DSTDdl"] = DSTDdl;
                             }
@@ -428,6 +440,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     RdbCtaNA.Checked = DSTPpl.Tables[0].Rows[0]["ClaseCta"].ToString().Trim().Equals("3") ? true : false;
                     ViewState["CodPaisAnt"] = DSTPpl.Tables[0].Rows[0]["Pais"].ToString().Trim();
                     ViewState["CiudadAnt"] = DSTPpl.Tables[0].Rows[0]["Ciudad"].ToString().Trim();
+                    ViewState["EstadoAnt"] = DSTPpl.Tables[0].Rows[0]["Estado"].ToString().Trim();
                     TxtSwift.Text = DSTPpl.Tables[0].Rows[0]["SwiftCode"].ToString().Trim();
                     TxtAba.Text = DSTPpl.Tables[0].Rows[0]["ABA"].ToString().Trim();
                     TxtIVA.Text = DSTPpl.Tables[0].Rows[0]["IVA"].ToString().Trim();
@@ -477,6 +490,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             RdbCtaNA.Checked = false;
             DdlPais.Text = "";
             DdlCiudad.Text = "0";
+            DdlEstado.Text = "0";
             TxtSwift.Text = "";
             TxtAba.Text = "";
             TxtObservac.Text = "";
@@ -615,6 +629,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             RdbCtaNA.Enabled = Edi;
             DdlPais.Enabled = Edi;
             DdlCiudad.Enabled = Edi;
+            DdlEstado.Enabled = Edi;
             TxtSwift.Enabled = Edi;
             TxtAba.Enabled = Edi;
             TxtIVA.Enabled = Edi;
@@ -622,9 +637,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
         }
         protected void BtnConsultar_Click(object sender, EventArgs e)
         {
-            Page.Title = ViewState["PageTit"].ToString().Trim();            
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             ScriptManager.RegisterStartupScript((sender as Control), this.GetType(), "Popup", "ShowPopup();", true);
-           }
+        }
         protected void BtnIngresar_Click(object sender, EventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -668,6 +683,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         Fax = TxtFax.Text.Trim(),
                         Correo = TxtCorreo.Text.Trim(),
                         CodUbicaGeogr = Convert.ToInt32(DdlCiudad.Text.Trim()),
+                        Estado = Convert.ToInt32(DdlEstado.Text.Trim()),
                         Comentario = TxtObservac.Text.Trim(),
                         CodClaseServicio = "",
                         CodTipoPago = DdlFormaPago.Text.Trim(),
@@ -788,6 +804,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         Fax = TxtFax.Text.Trim(),
                         Correo = TxtCorreo.Text.Trim(),
                         CodUbicaGeogr = Convert.ToInt32(DdlCiudad.Text.Trim()),
+                        Estado = Convert.ToInt32(DdlEstado.Text.Trim()),
                         Comentario = TxtObservac.Text.Trim(),
                         CodClaseServicio = "",
                         CodTipoPago = DdlFormaPago.Text.Trim(),
@@ -872,7 +889,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             Cnx.SelecBD();
             using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
             {
-                string VbProv="", VbClnt="", VbAmb = "";
+                string VbProv = "", VbClnt = "", VbAmb = "";
                 DataRow[] Result;
                 Result = Idioma.Select("Objeto= 'RdbProvdr'");
                 foreach (DataRow row in Result)
@@ -884,14 +901,14 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
                 Result = Idioma.Select("Objeto= 'RdbAmbos'");
                 foreach (DataRow row in Result)
-                { VbAmb = row["Texto"].ToString().Trim(); }               
+                { VbAmb = row["Texto"].ToString().Trim(); }
 
                 CursorIdioma.Alimentar("CurExportTercero", Session["77IDM"].ToString().Trim());
                 StSql = "EXEC SP_PANTALLA_Tercero 2, @Pr, @Cl, @Amb,'CurExportTercero',0,0,@Idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
 
                 using (SqlCommand SC = new SqlCommand(StSql, con))
                 {
-                   Result = Idioma.Select("Objeto= 'NomArchivExp'");
+                    Result = Idioma.Select("Objeto= 'NomArchivExp'");
                     foreach (DataRow row in Result)
                     { VbNomRpt = row["Texto"].ToString().Trim(); }
 
@@ -935,7 +952,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             }
         }
         protected void DdlPais_TextChanged(object sender, EventArgs e)
-        { ViewState["CiudadAnt"] = "0"; BindCiudad(DdlPais.Text.Trim()); }
+        { ViewState["CiudadAnt"] = "0"; ViewState["EstadoAnt"] = "0"; BindCiudad(DdlPais.Text.Trim()); }
         //****************************** MOdal Busq **************************************
         protected void BindModalBusqTercero()
         {
@@ -1185,8 +1202,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
-            string VbId= GrdContacto.DataKeys[e.RowIndex].Values["IdContacto"].ToString();
-            string VbPpl= GrdContacto.DataKeys[e.RowIndex].Values["Ppal"].ToString();
+            string VbId = GrdContacto.DataKeys[e.RowIndex].Values["IdContacto"].ToString();
+            string VbPpl = GrdContacto.DataKeys[e.RowIndex].Values["Ppal"].ToString();
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {

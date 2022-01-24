@@ -4,7 +4,6 @@ using _77NeoWeb.Prg.PrgLogistica;
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -44,6 +43,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                     Session["MonLcl"] = Cnx.GetMonedLcl();// Moneda Local
+                    Session["FormatFecha"] = Cnx.GetFormatFecha();// 103 formato europeo dd/MM/yyyy | 101 formato EEUU M/dd/yyyyy
                 }
             }
             if (!IsPostBack)
@@ -290,8 +290,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 string VbQry = "";
                 DataTable DT = new DataTable();
                 if (TipoRepa.Equals("ALL")) { VbQry = "Activo=1 OR CodIdTipoUbicaCia= '" + ViewState["LugarEAnt"] + "'"; }
-                if (TipoRepa.Equals("N") || TipoRepa.Equals("E")) { VbQry = "Activo=1 AND TipoUbicacion ='N' OR CodIdTipoUbicaCia= '" + ViewState["LugarEAnt"] + "'"; }
-                if (TipoRepa.Equals("I")) { VbQry = "Activo=1 AND TipoUbicacion ='I' OR CodIdTipoUbicaCia= '" + ViewState["LugarEAnt"] + "'"; }
+                if (TipoRepa.Equals("N") || TipoRepa.Equals("E")) { VbQry = "Activo=1 OR CodIdTipoUbicaCia= '" + ViewState["LugarEAnt"] + "'"; }//AND TipoUbicacion ='N' 
+                if (TipoRepa.Equals("I")) { VbQry = "Activo=1  OR CodIdTipoUbicaCia= '" + ViewState["LugarEAnt"] + "'"; }//AND TipoUbicacion ='I'
                 DataRow[] DR = DSTDdl.Tables[6].Select(VbQry);
                 if (IsIENumerableLleno(DR))
                 { DT = DR.CopyToDataTable(); }
@@ -516,10 +516,11 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 if (DSTPpl.Tables["Repa"].Rows.Count > 0)
                 {
                     TxtNumRepa.Text = DSTPpl.Tables[0].Rows[0]["CodReparacion"].ToString().Trim();
-                    string VbFecSt = DSTPpl.Tables[0].Rows[0]["FechaReparacion"].ToString().Trim().Equals("") ? "01/01/1900" : DSTPpl.Tables[0].Rows[0]["FechaReparacion"].ToString().Trim();
+                    string VbFecSt = DSTPpl.Tables[0].Rows[0]["FechaRepaDMY"].ToString().Trim().Equals("") ? "01/01/1900" : DSTPpl.Tables[0].Rows[0]["FechaRepaDMY"].ToString().Trim();
                     DateTime VbFecDT = Convert.ToDateTime(VbFecSt);
                     TxtFecha.Text = string.Format("{0:yyyy-MM-dd}", VbFecDT);
                     TxtOT.Text = DSTPpl.Tables[0].Rows[0]["CodNumOrdenTrab"].ToString().Trim();
+                    TxtCodigoOT.Text = DSTPpl.Tables[0].Rows[0]["CodigoOT"].ToString().Trim();
                     TxtReserva.Text = DSTPpl.Tables[0].Rows[0]["CodNumReserva"].ToString().Trim();
                     ViewState["CodHK"] = DSTPpl.Tables[0].Rows[0]["CodAeronaveRO"].ToString().Trim();
                     TxtHK.Text = DSTPpl.Tables[0].Rows[0]["Matricula"].ToString().Trim();
@@ -565,6 +566,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     TxtBoletines.Text = DSTPpl.Tables[0].Rows[0]["Boletines"].ToString().Trim();
                     ViewState["BloqueoGarantia"] = DSTPpl.Tables[0].Rows[0]["BloqueoGarantia"].ToString().Trim();
                     TxtOtNumOT.Text = DSTPpl.Tables[0].Rows[0]["CodNumOrdenTrab"].ToString().Trim();
+                    TxtOtCodigoOT.Text = DSTPpl.Tables[0].Rows[0]["CodigoOT"].ToString().Trim();
                     DdlOtEstado.Text = DSTPpl.Tables[0].Rows[0]["CodEstOrdTrab1"].ToString().Trim();
                     ViewState["CodPriordAnt"] = DSTPpl.Tables[0].Rows[0]["CodPrioridad"].ToString().Trim();
                     ViewState["CodTallerAnt"] = DSTPpl.Tables[0].Rows[0]["CodTaller"].ToString().Trim();
@@ -711,6 +713,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             TxtNumRepa.Text = "";
             TxtFecha.Text = "";
             TxtOT.Text = "";
+            TxtCodigoOT.Text = "";
             TxtReserva.Text = "";
             TxtHK.Text = "";
             TxtMoned.Text = "";
@@ -801,7 +804,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             {
                 if (ViewState["Accion"].ToString().Equals(""))
                 {
-                    if (ViewState["RepaExtLocal"].ToString().Equals("E")) { ActivarBtn(false, true, true, false, false, false, "INS"); }
+                    if (ViewState["RepaExtLocal"].ToString().Equals("E")) { ActivarBtn(true, false, true, false, false, false, "INS"); }
                     else { ActivarBtn(false, true, false, false, false, false, "INS"); }
 
                     ViewState["Accion"] = "Aceptar";
@@ -888,24 +891,26 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     ObjRepa.Add(TypRepa);
 
                     List<ClsTypReparacion> ObjDetRepa = new List<ClsTypReparacion>();
-
-                    if (TblDetalle.Rows.Count > 0)
+                    if (ViewState["RepaExtLocal"].ToString().Equals("L"))
                     {
-                        foreach (DataRow DR in TblDetalle.Rows)
+                        if (TblDetalle.Rows.Count > 0)
                         {
-
-                            string IdxDetPed = DR["IdDetPedido"].ToString().Trim();
-                            string IdxPed = DR["IdPedido"].ToString().Trim();
-                            string VbPos = DR["Posicion"].ToString().Trim();
-
-                            var TypDetRepa = new ClsTypReparacion()
+                            foreach (DataRow DR in TblDetalle.Rows)
                             {
-                                IDRepaDetSolPed = Convert.ToInt32(0),
-                                IdDetPedido = Convert.ToInt32(IdxDetPed),
-                                IdPedido = Convert.ToInt32(IdxPed),
-                                Posicion = Convert.ToInt32(VbPos),
-                            };
-                            ObjDetRepa.Add(TypDetRepa);
+
+                                string IdxDetPed = DR["IdDetPedido"].ToString().Trim();
+                                string IdxPed = DR["IdPedido"].ToString().Trim();
+                                string VbPos = DR["Posicion"].ToString().Trim();
+
+                                var TypDetRepa = new ClsTypReparacion()
+                                {
+                                    IDRepaDetSolPed = Convert.ToInt32(0),
+                                    IdDetPedido = Convert.ToInt32(IdxDetPed),
+                                    IdPedido = Convert.ToInt32(IdxPed),
+                                    Posicion = Convert.ToInt32(VbPos),
+                                };
+                                ObjDetRepa.Add(TypDetRepa);
+                            }
                         }
                     }
                     ClsTypReparacion ClsRepa = new ClsTypReparacion();
@@ -1028,7 +1033,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         PPT = Convert.ToInt32(TxtPpt.Text.Trim()),
                     };
                     ObjRepa.Add(TypRepa);
-
 
                     List<ClsTypReparacion> ObjDetRepa = new List<ClsTypReparacion>();
                     if (TblDetalle.Rows.Count > 0)
@@ -1202,6 +1206,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 DdlProvee.Text = GrdMdlBusCotiza.DataKeys[gvr.RowIndex].Values["CodTercero"].ToString().Trim();
                 DdlTipo.Text = GrdMdlBusCotiza.DataKeys[gvr.RowIndex].Values["CodTipoCotizacion"].ToString().Trim();
                 BindDdlLugarEntrega(DdlTipo.Text);
+                string borr = GrdMdlBusCotiza.DataKeys[gvr.RowIndex].Values["LugarEntrega"].ToString().Trim();
                 DdlUbicac.Text = GrdMdlBusCotiza.DataKeys[gvr.RowIndex].Values["LugarEntrega"].ToString().Trim();
                 TxtCotizac.Text = ((Label)row.FindControl("LblCodCtzc")).Text.ToString().Trim();
                 TxtPedido.Text = GrdMdlBusCotiza.DataKeys[gvr.RowIndex].Values["CodPedido"].ToString().Trim();
@@ -1589,7 +1594,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     foreach (DataRow row in Result)
                     { BtnOTNew.Text = row["Texto"].ToString().Trim(); }//
                     ActivarCamposOT(false, false, "INS");
-                    Traerdatos(TxtOtNumRepa.Text.ToString().Trim(), "UPD");
+                    Traerdatos(TxtNumRepa.Text.ToString().Trim(), "UPD");
                     BtnOTNew.OnClientClick = "";
                     if (ViewState["RepaExtLocal"].Equals("L")) { BindSolPedInter(); PerfilesGrid(); }
                 }
@@ -1656,7 +1661,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             DTMultL.Columns.Add("MltlC34", typeof(string));
             DTMultL.Columns.Add("MltlC35", typeof(string));
             DTMultL.Columns.Add("MltlC36", typeof(string));
-            DTMultL.Columns.Add("MltlC37", typeof(string));
+            DTMultL.Columns.Add("MltlC37", typeof(string));// Formato fecha y hora
             DTMultL.Columns.Add("MltlC38", typeof(string));
             DTMultL.Columns.Add("MltlC39", typeof(string));
             if (DTMultL.Rows.Count == 0)
@@ -1667,6 +1672,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected void BtnImprimir_Click(object sender, EventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString();
+            if (TxtNumRepa.Text.Equals("")) { return; }
+            if (CkbAprobad.Checked == false) { return; }
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DSTPpl = (DataSet)ViewState["DSTPpl"];
             CampoMultiL();
@@ -1773,6 +1780,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
             foreach (DataRow row in Result) { DR["MltlC35"] = row["Texto"].ToString().Trim(); }// Firma Autorizada
 
             DR["MltlC36"] = CkbOtros.Text + ":";
+
+           if (Session["FormatFecha"].ToString().Equals("101")) { DR["MltlC37"] = "MM/dd/yyyy HH:mm"; }
+           else { { DR["MltlC37"] = "dd/MM/yyyy HH:mm"; } }
 
             DTMultL.AcceptChanges();
             string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());

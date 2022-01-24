@@ -2,8 +2,6 @@
 using _77NeoWeb.Prg.PrgIngenieria;
 using ClosedXML.Excel;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -154,8 +152,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 bool VbRslt = double.TryParse(TxtBusqueda.Text.Trim(), out NumPR_PT);
                 VbSDoc = NumPR_PT.ToString();
                 VbPN = TxtBusqPN.Text.Trim();
-                if (RdbBusqCot.Checked == true) { VbTipoDoc = "CT"; VbCotiza = VbSDoc.Trim(); }
-                if (RdbBusqSP.Checked == true) { VbTipoDoc = "SP"; VbCotiza = VbSDoc.Trim(); }
+                if (RdbBusqCot.Checked == true) { VbTipoDoc = "CT"; VbCotiza = TxtBusqueda.Text.Trim(); }
+                if (RdbBusqSP.Checked == true) { VbTipoDoc = "SP"; VbCotiza = TxtBusqueda.Text.Trim(); }
                 if (RdbBusqPet.Checked == true) { VbTipoDoc = "PE"; VbPEPR = VbSDoc.Trim(); }
                 if (RdbBusqPPT.Checked == true) { VbTipoDoc = "PR"; VbPEPR = VbSDoc.Trim(); }
                 if (RdbBusqPN.Checked == true) { VbTipoDoc = "PN"; VbPN = TxtBusqPN.Text.Trim(); }
@@ -169,6 +167,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         sqlConB.Open();
                         using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                         {
+                            TblDetalle.Clear();
                             SC.Parameters.AddWithValue("@Pn", VbPN);
                             SC.Parameters.AddWithValue("@TC", VbTipoDoc);
                             SC.Parameters.AddWithValue("@Doc", VbCotiza.Trim());
@@ -196,12 +195,15 @@ namespace _77NeoWeb.Forms.InventariosCompras
         { BindCuadroComprt("UPD"); Page.Title = ViewState["PageTit"].ToString().Trim(); }
         protected void BtnOpenCompra_Click(object sender, EventArgs e)
         {
-
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string SP = "window.open('/Forms/InventariosCompras/FrmOrdenCompra.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), SP, true);
         }
-
         protected void BtnOpenRepa_Click(object sender, EventArgs e)
         {
-
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string SP = "window.open('/Forms/InventariosCompras/FrmReparacion.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), SP, true);
         }
 
         protected void BtnExport_Click(object sender, EventArgs e)

@@ -4,7 +4,6 @@ using _77NeoWeb.Prg.PrgLogistica;
 using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
@@ -461,6 +460,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 DataRow[] Result;
                 if (DSTPpl.Tables["Cotiza"].Rows.Count > 0)
                 {
+                    //var dateValue = DateTime.Parse(dateString, new CultureInfo(usCulture, false));
                     string VbFecSt;
                     DateTime? VbFecDT;
                     TxtNumCotiza.Text = DSTPpl.Tables[0].Rows[0]["CodCotizacion"].ToString().Trim();
@@ -769,7 +769,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             EnablGridDet("Enabled", Edi);
             if (Accion.Equals("UPD"))
             {
-                DdlEstd.Enabled = Edi;
+                DdlEstd.Enabled = Edi; TxtNumPetcn.Enabled = Edi;
                 if (!ViewState["DocAprobado"].ToString().Trim().Equals("S") || !ViewState["PeriodCerrado"].ToString().Trim().Equals("S") || !ViewState["TieneSOMvtoAlma"].ToString().Trim().Equals("S"))
                 {
                     DdlProvee.Enabled = Edi; DdlMoned.Enabled = Edi; TxtOtrImpt.Enabled = Edi;
@@ -1248,7 +1248,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     DataRow[] Result = Idioma.Select("Objeto= 'BotonMod'");
                     foreach (DataRow row in Result)
                     { BtnModificar.Text = row["Texto"].ToString().Trim(); }
-                    ActivarCampos(false, false, "INS");
+                    ActivarCampos(false, false, "UPD");
                     Traerdatos(ViewState["IdCotiza"].ToString().Trim(), "UPD");
                     BtnModificar.OnClientClick = "";
                     EnablGridDet("Enabled", false);
@@ -1271,55 +1271,85 @@ namespace _77NeoWeb.Forms.InventariosCompras
             Page.Title = ViewState["PageTit"].ToString().Trim();
 
             if (TxtNumCotiza.Text.Equals("")) { return; }
-
             if (ViewState["TblDetalle"] != null)
             {
-                TblDetalle = (DataTable)ViewState["TblDetalle"];
-                DSTDdl = (DataSet)ViewState["DSTDdl"];
-                DataTable DT = new DataTable();
-                string conexion = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ViewState["CarpetaCargaMasiva"].ToString().Trim() + ViewState["NomArchivoCM"].ToString().Trim() + ";Extended Properties='Excel 12.0 Xml;HDR=YES;'";
-                using (OleDbConnection cnn = new OleDbConnection(conexion))
+                var dt = new DataTable();
+                using (var reader = new ExcelDataReader(@"test.xlsx"))
+                    dt.Load(reader);
+                Console.WriteLine("Read DataTable done: " + dt.Rows.Count);
+
+                DataHelper.CreateTableIfNotExists(ConnectionString, TableName, dt.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray());
+                Console.WriteLine("Create table done.");
+
+                using (var bulkCopy = new SqlBulkCopy(ConnectionString))
                 {
-                    cnn.Open();
-                    DataTable dtExcelSchema;
-                    dtExcelSchema = cnn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                    string SheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
-                    cnn.Close();
+                    bulkCopy.DestinationTableName = TableName;
+                    foreach (DataColumn dc in dt.Columns)
+                        bulkCopy.ColumnMappings.Add(dc.ColumnName, dc.ColumnName);
 
-                    cnn.Open();
-                    string sql = "SELECT * From [" + SheetName + "]";
-                    OleDbCommand command = new OleDbCommand(sql, cnn);
-                    OleDbDataAdapter DA = new OleDbDataAdapter(command);
-
-                    DA.Fill(DT);
-                    if (DT.Rows.Count > 0)
+                    bulkCopy.WriteToServer(dt);
+                }
+                Console.WriteLine("Copy data to database done (DataTable).");
+            }
+                /*if (ViewState["TblDetalle"] != null)
+                {
+                    TblDetalle = (DataTable)ViewState["TblDetalle"];
+                    DSTDdl = (DataSet)ViewState["DSTDdl"];
+                    DataTable DT = new DataTable();
+                    string conexion = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ViewState["CarpetaCargaMasiva"].ToString().Trim() + ViewState["NomArchivoCM"].ToString().Trim() + ";Extended Properties='Excel 12.0 Xml;HDR=YES;'";
+                    using (OleDbConnection cnn = new OleDbConnection(conexion))
                     {
-                        foreach (DataRow DRExcel in DT.Rows)
+                        try
                         {
-                            foreach (DataRow DRDetCot in TblDetalle.Rows)
-                            {
-                                if (DRDetCot["PN"].ToString().Trim().Equals(DRExcel["PN"].ToString().Trim()))
-                                {
-                                    DataRow[] DR = DSTDdl.Tables[10].Select("CodCondicionElem='" + DRExcel["Status_Estado"].ToString().Trim() + "'");
-                                    if (IsIENumerableLleno(DR))
-                                    { DRDetCot["CodEstdo"] = DRExcel["Status_Estado"].ToString().Trim(); }
+                            cnn.Open();
+                            DataTable dtExcelSchema;
+                            dtExcelSchema = cnn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                            string SheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
+                            cnn.Close();
 
-                                    DRDetCot["ValorUnidad"] = DRExcel["Value_Valor"].ToString().Trim().Equals("") ? "0" : DRExcel["Value_Valor"].ToString().Trim();
-                                    DRDetCot["TiempoEntrega"] = DRExcel["DeliveryTimeDays_TiempoEntregaDias"].ToString().Trim().Equals("") ? "0" : DRExcel["DeliveryTimeDays_TiempoEntregaDias"].ToString().Trim();
-                                    DRDetCot["UndMinimaCompra"] = DRExcel["Min_Qty_CantMinima"].ToString().Trim().Equals("") ? "0" : DRExcel["Min_Qty_CantMinima"].ToString().Trim();
-                                    DRDetCot["Alterno"] = DRExcel["Alternate_PN_Alterno"].ToString().Trim();
-                                    DRDetCot["ObservacionesDC"] = DRExcel["Observations_Observaciones"].ToString().Trim();
+                            cnn.Open();
+                            string sql = "SELECT * From [" + SheetName + "]";
+                            OleDbCommand command = new OleDbCommand(sql, cnn);
+                            OleDbDataAdapter DA = new OleDbDataAdapter(command);
+
+                            DA.Fill(DT);
+                            if (DT.Rows.Count > 0)
+                            {
+                                foreach (DataRow DRExcel in DT.Rows)
+                                {
+                                    foreach (DataRow DRDetCot in TblDetalle.Rows)
+                                    {
+                                        if (DRDetCot["PN"].ToString().Trim().Equals(DRExcel["PN"].ToString().Trim()))
+                                        {
+                                            DataRow[] DR = DSTDdl.Tables[10].Select("CodCondicionElem='" + DRExcel["Status_Estado"].ToString().Trim() + "'");
+                                            if (IsIENumerableLleno(DR))
+                                            { DRDetCot["CodEstdo"] = DRExcel["Status_Estado"].ToString().Trim(); }
+
+                                            DRDetCot["ValorUnidad"] = DRExcel["Value_Valor"].ToString().Trim().Equals("") ? "0" : DRExcel["Value_Valor"].ToString().Trim();
+                                            DRDetCot["TiempoEntrega"] = DRExcel["DeliveryTimeDays_TiempoEntregaDias"].ToString().Trim().Equals("") ? "0" : DRExcel["DeliveryTimeDays_TiempoEntregaDias"].ToString().Trim();
+                                            DRDetCot["UndMinimaCompra"] = DRExcel["Min_Qty_CantMinima"].ToString().Trim().Equals("") ? "0" : DRExcel["Min_Qty_CantMinima"].ToString().Trim();
+                                            DRDetCot["Alterno"] = DRExcel["Alternate_PN_Alterno"].ToString().Trim();
+                                            DRDetCot["ObservacionesDC"] = DRExcel["Observations_Observaciones"].ToString().Trim();
+                                        }
+                                    }
                                 }
                             }
+                            cnn.Close();
+                            TblDetalle.AcceptChanges();
+                            GrdDet.DataSource = TblDetalle; GrdDet.DataBind();
+                            Valores();
+                        }
+                        catch (Exception Ex)
+                        {
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
+                            string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                            Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Carga Masiva Cotización", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                         }
                     }
-                    cnn.Close();
-                    TblDetalle.AcceptChanges();
-                    GrdDet.DataSource = TblDetalle; GrdDet.DataBind();
-                    Valores();
-                }
+                }*/
             }
-        }
         protected void BtnEliminar_Click(object sender, EventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -1468,7 +1498,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 string VbTxtSql = " EXEC PNTLL_Cotizac 2,@Tpc,@Prmtr,'','','',@Opc,0,0,0,@Idm, @ICC,'01-01-01','02-01-01','03-01-01'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
-                {                   
+                {
                     SC.Parameters.AddWithValue("@Tpc", ViewState["TipoCotiza"]);
                     SC.Parameters.AddWithValue("@Prmtr", TxtBusqueda.Text.Trim());
                     SC.Parameters.AddWithValue("@Opc", VbOpcion.Trim());
@@ -1677,7 +1707,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected void GrdDet_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("AddNew"))
-            { BindModalBusqCot(); 
+            {
+                BindModalBusqCot();
                 //ScriptManager.RegisterStartupScript(Page, Page.GetType(), "ModalBusqSP", "$('#ModalBusqSP').modal();", true);
                 ScriptManager.RegisterStartupScript((sender as Control), this.GetType(), "Popup", "ShowPopup();", true);
             }
@@ -1854,7 +1885,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     default: // INTERCAMBIO
                         VbTipoCotiza = "I"; break;
                 }
-                if (RdbMOdalBusqSP.Checked == true) { VbTipoDoc = "SP"; }
+                if (RdbMOdalBusqSP.Checked == true) { VbTipoDoc = "SP"; VbSDoc = TxtModalBusq.Text.Trim(); }
                 if (RdbMOdalBusqPPT.Checked == true) { VbTipoDoc = "PR"; }
                 if (RdbMOdalBusqPet.Checked == true) { VbTipoDoc = "PT"; }
 
@@ -1956,7 +1987,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                Idioma = (DataTable)ViewState["TablaIdioma"]; Page.Title = ViewState["PageTit"].ToString().Trim();
                 string StSql, VbNomRpt = "";
 
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
@@ -2014,7 +2045,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                Idioma = (DataTable)ViewState["TablaIdioma"]; Page.Title = ViewState["PageTit"].ToString().Trim();
                 string StSql, VbNomRpt = "";
 
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();

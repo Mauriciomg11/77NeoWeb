@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 
 namespace _77NeoWeb.Prg.PrgLogistica
@@ -19,6 +18,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
         public string Fax { get; set; }
         public string Correo { get; set; }
         public int CodUbicaGeogr { get; set; }
+        public int Estado { get; set; }
         public string Comentario { get; set; }
         public string CodClaseServicio { get; set; }
         public string CodTipoPago { get; set; }
@@ -69,6 +69,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
             TblTercero.Columns.Add("Fax", typeof(string));
             TblTercero.Columns.Add("Correo", typeof(string));
             TblTercero.Columns.Add("CodUbicaGeogr", typeof(int));
+            TblTercero.Columns.Add("Estado", typeof(int));
             TblTercero.Columns.Add("Comentario", typeof(string));
             TblTercero.Columns.Add("CodClaseServicio", typeof(string));
             TblTercero.Columns.Add("CodTipoPago", typeof(string));
@@ -117,6 +118,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
                 Campo.Fax,
                 Campo.Correo,
                 Campo.CodUbicaGeogr,
+                Campo.Estado,
                 Campo.Comentario,
                 Campo.CodClaseServicio,
                 Campo.CodTipoPago,

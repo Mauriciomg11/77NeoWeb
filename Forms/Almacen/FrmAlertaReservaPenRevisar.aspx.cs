@@ -2,18 +2,14 @@
 using _77NeoWeb.Prg.PrgIngenieria;
 using ClosedXML.Excel;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace _77NeoWeb.Forms.Almacen
-{   
+{
     public partial class FrmAlertaReservaPenRevisar : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
@@ -75,7 +71,7 @@ namespace _77NeoWeb.Forms.Almacen
                     { Page.Title = bT; ViewState["PageTit"] = bT; }
                     TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
                     LblTitAlrt.Text = bO.Equals("Titulo") ? bT : LblTitAlrt.Text;
-                    LblTitAlerta.Text = bO.Equals("LblTitAlerta") ? bT : LblTitAlerta.Text; 
+                    LblTitAlerta.Text = bO.Equals("LblTitAlerta") ? bT : LblTitAlerta.Text;
                     GrdAlrta.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdAlrta.EmptyDataText;
                     GrdAlrta.Columns[0].HeaderText = bO.Equals("LblOTMstr") ? bT : GrdAlrta.Columns[0].HeaderText;
                     GrdAlrta.Columns[1].HeaderText = bO.Equals("GrdPos") ? bT : GrdAlrta.Columns[1].HeaderText;
@@ -116,7 +112,7 @@ namespace _77NeoWeb.Forms.Almacen
                         ViewState["DT"] = DT;
                     }
                 }
-            } 
+            }
         }
         protected void BtnExportarModl_Click(object sender, EventArgs e)
         {
@@ -185,6 +181,6 @@ namespace _77NeoWeb.Forms.Almacen
                 DataRowView dr = e.Row.DataItem as DataRowView;
                 if (dr["Revisado"].ToString().Equals("0")) { e.Row.BackColor = System.Drawing.Color.Yellow; }
             }
-        }        
+        }
     }
 }

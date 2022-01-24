@@ -429,6 +429,15 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected global::System.Web.UI.WebControls.TextBox TxtOT;
 
         /// <summary>
+        /// Control TxtCodigoOT.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtCodigoOT;
+
+        /// <summary>
         /// Control LblReserva.
         /// </summary>
         /// <remarks>
@@ -1075,6 +1084,15 @@ namespace _77NeoWeb.Forms.InventariosCompras
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtOtNumOT;
+
+        /// <summary>
+        /// Control TxtOtCodigoOT.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtOtCodigoOT;
 
         /// <summary>
         /// Control LblOtEstado.

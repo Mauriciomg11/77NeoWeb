@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Security;
-using System.Web.SessionState;
 using System.Web.UI;
 namespace _77NeoWeb
 {
@@ -42,7 +38,7 @@ namespace _77NeoWeb
             Session["P@$"] = ""; // login
             Session["IdForm"] = 0; //FrmConfigPantalla
             Session["IdGrupoRP"] = 0; // FrmPefil
-            Session["IdUsuRP"]=""; // FrmPefil
+            Session["IdUsuRP"] = ""; // FrmPefil
             Session["CodidUsrPerfil"] = 0; // FrmPefil
             Session["IdFormRP"] = 0; // FrmPefil
             Session["D[BX"] = ""; //NomBD DbNeoSinDatos
@@ -56,6 +52,7 @@ namespace _77NeoWeb
             Session["!dC!@"] = 1; //id Cia
             Session["MonLcl"] = ""; // Moneda
             Session["PCodOT"] = "0"; // Para llamar el numero desde la reparación
+            Session["FormatFecha"] = "103"; // 103 formato europeo dd/MM/yyyy | 101 formato EEUU M/dd/yyyyy
 
         }
 

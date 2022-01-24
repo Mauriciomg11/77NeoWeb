@@ -1,10 +1,9 @@
-﻿using System;
+﻿using _77NeoWeb.prg;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-using _77NeoWeb.prg;
+using System.Web;
 
 namespace _77NeoWeb.Prg.PrgMro
 {
@@ -170,14 +169,14 @@ namespace _77NeoWeb.Prg.PrgMro
                             SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@DetSP", TblDetPedido);
                             SqlParameter Prmtrs3 = SC.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
                             SqlParameter Prmtrs4 = SC.Parameters.AddWithValue("@IdPpt", VbIdPpt);
-                            Prmtrs.SqlDbType = SqlDbType.Structured;                           
+                            Prmtrs.SqlDbType = SqlDbType.Structured;
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())
                             {
                                 PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 PIdPedido = Convert.ToInt32(SDR["IdPedido"].ToString().Trim());
-                                PCodPedido = HttpUtility.HtmlDecode(SDR["CodPedido"].ToString().Trim());       
-                            }                           
+                                PCodPedido = HttpUtility.HtmlDecode(SDR["CodPedido"].ToString().Trim());
+                            }
                             SDR.Close();
                             transaction.Commit();
                         }

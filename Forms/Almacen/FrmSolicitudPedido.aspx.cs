@@ -3,12 +3,10 @@ using _77NeoWeb.Prg;
 using _77NeoWeb.Prg.PrgLogistica;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -846,7 +844,7 @@ namespace _77NeoWeb.Forms.Almacen
         protected void BtnAlert_Click(object sender, EventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
-          // Response.Redirect("~/Forms/Almacen/FrmAlertaSolicitudNueva.aspx");
+            // Response.Redirect("~/Forms/Almacen/FrmAlertaSolicitudNueva.aspx");
             string SPNw = "window.open('/Forms/Almacen/FrmAlertaSolicitudNueva.aspx', '_blank');";
             string SPRp = "window.open('/Forms/Almacen/FrmAlertaSolicitudNuevaRepa.aspx', '_blank');";
             string SPVenc = "window.open('/Forms/Almacen/FrmAlertaVencSP.aspx', '_blank');";
@@ -1279,7 +1277,7 @@ namespace _77NeoWeb.Forms.Almacen
                 ImageButton IbtBusqPn = (e.Row.FindControl("IbtBusqPn") as ImageButton);
                 Result = Idioma.Select("Objeto= 'IbtBusqPnTT'");
                 foreach (DataRow row in Result)
-                { IbtBusqPn.ToolTip = row["Texto"].ToString().Trim(); }         
+                { IbtBusqPn.ToolTip = row["Texto"].ToString().Trim(); }
                 if (DdlTipo.Text.Trim().Equals("02") || DdlTipo.Text.Trim().Equals("03"))
                 { IbtAddNew.Visible = false; IbtBusqPn.Visible = false; }
             }
@@ -1330,7 +1328,7 @@ namespace _77NeoWeb.Forms.Almacen
                     if (DdlTipo.Text.Trim().Equals("02") || DdlTipo.Text.Trim().Equals("03"))
                     { imgD.Visible = false; }
                 }
-                
+
             }
         }
         //****************************** Busqueda **************************************

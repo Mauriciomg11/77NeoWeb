@@ -1,10 +1,9 @@
-﻿using System;
+﻿using _77NeoWeb.prg;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-using _77NeoWeb.prg;
+using System.Web;
 
 namespace _77NeoWeb.Prg.PrgIngenieria
 {
@@ -12,6 +11,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
     {
         static public string PMensj;
         static public string PMensjAlterno;
+        static public string PCodigoOT;
         //-------------  Trabajo --------------------
         public int CodNumOrdenTrab { get; set; }
         public string Descripcion { get; set; }
@@ -52,13 +52,13 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         public double OCSR { get; set; }
         public int EjecPasos { get; set; }
         public int CancelOT { get; set; }
-        public string WS { get;  set; }
+        public string WS { get; set; }
         public int OKOT { get; set; }
         public string AccionOT { get; set; }
 
         ClsConexion Cnx = new ClsConexion();
         public void Alimentar(IEnumerable<ClsTypOrdenTrabajo> OrdenTrabajo)
-        {  
+        {
             DataTable TblORdenTrabajo = new DataTable();
             TblORdenTrabajo.Columns.Add("CodNumOrdenTrab", typeof(int));
             TblORdenTrabajo.Columns.Add("Descripcion", typeof(string));
@@ -159,19 +159,19 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                     string VBQuery = "UPD_OrdenTrabajo";
                     using (SqlCommand SC = new SqlCommand(VBQuery, SCX, transaction))
                     {
-                        PMensj = "";
+                        PMensj = ""; PCodigoOT = "";
                         try
                         {
-                            SC.CommandType = CommandType.StoredProcedure;                              
+                            SC.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = SC.Parameters.AddWithValue("@CurOT", TblORdenTrabajo);
                             SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
-                            Prmtrs.SqlDbType = SqlDbType.Structured;                          
+                            Prmtrs.SqlDbType = SqlDbType.Structured;
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())
                             {
                                 PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
-                                PMensjAlterno = SDR["MensAlterno"].ToString().Trim(); 
-                                string borrar = SDR["MensjcumplirSvc"].ToString().Trim();
+                                PMensjAlterno = SDR["MensAlterno"].ToString().Trim();
+                                PCodigoOT = SDR["CodigoOT"].ToString().Trim();
                             }
                             SDR.Close();
                             transaction.Commit();
@@ -198,6 +198,10 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         public string GetMensjAlterno()
         {
             return PMensjAlterno;
+        }
+        public string GetCodigoOT()
+        {
+            return PCodigoOT;
         }
     }
 }

@@ -3,13 +3,9 @@ using _77NeoWeb.Prg.PrgIngenieria;
 using ClosedXML.Excel;
 using Microsoft.Reporting.WebForms;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -265,7 +261,7 @@ namespace _77NeoWeb.Forms.Manto
                 parameters[8] = new ReportParameter("PEstd", LblStatus.Text.Trim());
                 parameters[9] = new ReportParameter("PFGnr", GrdDatos.Columns[5].HeaderText.Trim());
                 parameters[10] = new ReportParameter("PLV", GrdDatos.Columns[12].HeaderText.Trim());
-                parameters[11] = new ReportParameter("PRdoPor", GrdDatos.Columns[3].HeaderText.Trim());
+                parameters[11] = new ReportParameter("PRdoPor", GrdDatos.Columns[4].HeaderText.Trim());
                 parameters[12] = new ReportParameter("PRte", GrdDatos.Columns[6].HeaderText.Trim());
                 parameters[13] = new ReportParameter("PAccC", GrdDatos.Columns[8].HeaderText.Trim());
                 parameters[14] = new ReportParameter("POT", DdlOTPpl.Text.Trim());

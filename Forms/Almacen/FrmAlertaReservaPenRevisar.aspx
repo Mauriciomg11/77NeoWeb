@@ -111,7 +111,7 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="fecha">
                                                     <ItemTemplate>
-                                                        <asp:Label Text='<%# Eval("FechaMod") %>' runat="server" />
+                                                        <asp:Label Text='<%# Eval("FechaModText") %>' runat="server" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>

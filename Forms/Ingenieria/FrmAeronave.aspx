@@ -108,9 +108,9 @@
                                 </asp:TableCell>
                                 <asp:TableCell Width="9%">
                                     <asp:Label ID="LblFecFabr" runat="server" CssClass="LblEtiquet" Text="Fecha Fabricación:" />&nbsp
-                                     <asp:ImageButton ID="IbtFecFabr" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="19px" Width="15px" Enabled="false" />
-                                    <asp:TextBox ID="TxtFecFabr" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="35%" Font-Size="10px" />
-                                    <ajaxToolkit:CalendarExtender ID="CldFecFabr" runat="server" CssClass=" MyCalendar" PopupButtonID="IbtFecFabr" TargetControlID="TxtFecFabr" Format="dd/MM/yyyy" />
+                                     <%--<asp:ImageButton ID="IbtFecFabr" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="19px" Width="15px" Enabled="false" />--%>
+                                    <asp:TextBox ID="TxtFecFabr" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="60%" Font-Size="11px" TextMode ="Date" />
+                                    <%--<ajaxToolkit:CalendarExtender ID="CldFecFabr" runat="server" CssClass=" MyCalendar" PopupButtonID="IbtFecFabr" TargetControlID="TxtFecFabr" Format="dd/MM/yyyy" />--%>
                                 </asp:TableCell>
                                 <asp:TableCell Width="3%">
                                     <asp:CheckBox ID="CkbAdmon" runat="server" Text="" Enabled="false" ForeColor="#990000" />
@@ -149,9 +149,9 @@
                             <asp:TableRow>
                                 <asp:TableCell>
                                     <asp:Label ID="LblFecIngr" runat="server" CssClass="LblEtiquet" Text="Fecha Ingreso:" />&nbsp
-                                     <asp:ImageButton ID="IbtFecIngr" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="19px" Width="15px" Enabled="false" />
-                                    <asp:TextBox ID="TxtFecIngr" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="35%" Font-Size="11px"></asp:TextBox>
-                                    <ajaxToolkit:CalendarExtender ID="CldFecIng" runat="server" CssClass=" MyCalendar" PopupButtonID="IbtFecIngr" TargetControlID="TxtFecIngr" Format="dd/MM/yyyy" />
+                                     <%--<asp:ImageButton ID="IbtFecIngr" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="19px" Width="15px" Enabled="false" />--%>
+                                    <asp:TextBox ID="TxtFecIngr" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="60%" Font-Size="11px" TextMode ="Date" />
+                                    <%--<ajaxToolkit:CalendarExtender ID="CldFecIng" runat="server" CssClass=" MyCalendar" PopupButtonID="IbtFecIngr" TargetControlID="TxtFecIngr" Format="dd/MM/yyyy" />--%>
                                 </asp:TableCell>
                                 <asp:TableCell>
                                     <asp:Label ID="LblTSN" runat="server" CssClass="LblEtiquet" Text="TSN:" />&nbsp

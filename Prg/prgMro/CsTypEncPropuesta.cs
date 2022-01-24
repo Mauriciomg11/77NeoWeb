@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 
 namespace _77NeoWeb.Prg.prgMro
@@ -27,7 +26,7 @@ namespace _77NeoWeb.Prg.prgMro
         public string CodTipoMoneda { get; set; }
         public DateTime? TRM { get; set; }
         public DateTime FechaEntrega { get; set; }
-        public DateTime FechaValidez { get; set; }
+        public DateTime? FechaValidez { get; set; }
         public string CodEstadoPropuesta { get; set; }
         public string IdTipoSolicitudPropuesta { get; set; }
         public double ValorBruto { get; set; }
@@ -41,7 +40,7 @@ namespace _77NeoWeb.Prg.prgMro
         public double Impuesto { get; set; }
         public double VlorTotalHHEP { get; set; }
         public double VlrRepuestoEP { get; set; }
-        public DateTime FechaEntregaTrabajo { get; set; }
+        public DateTime? FechaEntregaTrabajo { get; set; }
         public double ValorTRM { get; set; }
         public double GananciaNAL { get; set; }
         public double GananciaInta { get; set; }

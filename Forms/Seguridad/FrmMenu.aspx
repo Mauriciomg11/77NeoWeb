@@ -55,7 +55,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
         <ContentTemplate>
-            <table class="TablaBusqueda">
+            <table >
                 <tr>
                     <td>
                         <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>

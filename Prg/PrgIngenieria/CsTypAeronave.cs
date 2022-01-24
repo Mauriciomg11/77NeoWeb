@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 
 namespace _77NeoWeb.Prg.PrgIngenieria
@@ -12,7 +11,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
     {
         ClsConexion Cnx = new ClsConexion();
         static public string PMensj;
-        static public int  PCodHK;
+        static public int PCodHK;
         public int CodAeronave { get; set; }
         public string SN { get; set; }
         public string Matricula { get; set; }
@@ -92,7 +91,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                 using (SqlTransaction transaction = sqlCon.BeginTransaction())
                 {
                     PMensj = "";
-                    PCodHK =0;
+                    PCodHK = 0;
                     string VBQuery = "INSERT_UPDATE_TypAeronave";
                     using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon, transaction))
                     {
@@ -101,7 +100,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                             sqlCmd.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs = sqlCmd.Parameters.AddWithValue("@CurHK", TblAeronave);
                             SqlParameter Prmtrs1 = sqlCmd.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
-                            Prmtrs.SqlDbType = SqlDbType.Structured; 
+                            Prmtrs.SqlDbType = SqlDbType.Structured;
                             SqlDataReader SDR = sqlCmd.ExecuteReader();
                             if (SDR.Read())
                             {
@@ -133,6 +132,6 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         public int GetCodHK()
         {
             return PCodHK;
-        }        
+        }
     }
 }

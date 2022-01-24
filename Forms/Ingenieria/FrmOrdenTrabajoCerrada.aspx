@@ -66,10 +66,16 @@
                 <asp:View ID="Vw0Datos" runat="server">
                     <div class="CentrarContenedor DivMarco">
                         <div class="row">
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <asp:Label ID="LblCodOT" runat="server" CssClass="LblEtiquet" Text="orden de trabajo" />
-                                <asp:TextBox ID="TxtCodOT" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="100%" />
-
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <asp:TextBox ID="TxtCodOT" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="100%" />
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <asp:TextBox ID="TxtCodigoOT" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="100%" />
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-sm-5">
                                 <asp:Label ID="LblAplica" runat="server" CssClass="LblEtiquet" Text=" aplicabilidad" />
@@ -160,7 +166,7 @@
                                             <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
                                             <asp:TemplateField HeaderText="ot">
                                                 <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("Orden") %>' runat="server" />
+                                                    <asp:Label Text='<%# Eval("CodigoOT") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="aplicabilidad">
@@ -196,7 +202,7 @@
                         </table>
                         <br />
                         <div class="CentrarGrid pre-scrollable">
-                            <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="Codigo"
+                            <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="CodNumOrdenTrab"
                                 CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both"
                                 OnSelectedIndexChanged="GrdBusq_SelectedIndexChanged">
                                 <Columns>

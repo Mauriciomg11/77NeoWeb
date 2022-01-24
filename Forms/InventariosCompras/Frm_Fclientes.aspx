@@ -98,7 +98,7 @@
             $('#<%=DdlBanco.ClientID%>').chosen();
             $('#<%=DdlPais.ClientID%>').chosen();
             $('#<%=DdlCiudad.ClientID%>').chosen();
-
+            $('#<%=DdlEstado.ClientID%>').chosen();
         }
         $(':text').on("focus", function () {
             //here set in localStorage id of the textbox
@@ -195,7 +195,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
-                    <div class="CentrarContenedor DivMarco">
+                    <div class="CentrarContenedor">
                         <div id="Botones" class="row">
                             <div class="col-sm-1">
                                 <asp:Button ID="BtnConsultar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnConsultar_Click" OnClientClick="target ='';" Text="consultar" />
@@ -315,6 +315,12 @@
                                         <asp:DropDownList ID="DdlPais" runat="server" CssClass="heightCampo" Width="100%" Enabled="false" OnTextChanged="DdlPais_TextChanged" AutoPostBack="true" />
                                     </div>
                                     <div class="col-sm-6">
+                                        <asp:Label ID="LblEstado" runat="server" CssClass="LblEtiquet" Text="estad" />
+                                        <asp:DropDownList ID="DdlEstado" runat="server" CssClass="heightCampo" Width="100%" Enabled="false" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
                                         <asp:Label ID="LblCiudad" runat="server" CssClass="LblEtiquet" Text="ciudad" />
                                         <asp:DropDownList ID="DdlCiudad" runat="server" CssClass="heightCampo" Width="100%" Enabled="false" />
                                     </div>
@@ -400,10 +406,10 @@
                                                 <asp:Label ID="LblTelP" Text='<%# Eval("Telefono") %>' runat="server" />
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="TxtTel" Text='<%# Eval("Telefono") %>' runat="server" MaxLength="40" Width="100%"  TextMode="Phone"/>
+                                                <asp:TextBox ID="TxtTel" Text='<%# Eval("Telefono") %>' runat="server" MaxLength="40" Width="100%" TextMode="Phone" />
                                             </EditItemTemplate>
                                             <FooterTemplate>
-                                                <asp:TextBox ID="TxtTelPP" runat="server" MaxLength="40" Width="100%" TextMode="Phone"/>
+                                                <asp:TextBox ID="TxtTelPP" runat="server" MaxLength="40" Width="100%" TextMode="Phone" />
                                             </FooterTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="correo" HeaderStyle-Width="35%">

@@ -67,7 +67,8 @@
                 <div class="CentrarGrid pre-scrollable">
                      <asp:Button ID="BtnAprobar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnAprobar_Click" OnClientClick="target ='';" Text="aprobar" />
                      <asp:ImageButton ID="IbtAprDetAll" runat="server" ImageUrl="~/images/Check1.png" ImageAlign="AbsBottom" Height="30px" Width="30px" OnClick="IbtAprDetAll_Click" />                   
-                    <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="IdDetPedido, CodPrioridad, CodEstadoPn,Bloquear,CodtipoSolPedido"
+                    <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" 
+                        DataKeyNames="IdDetPedido, CodPrioridad, CodEstadoPn,Bloquear,CodtipoSolPedido,FechaDMY"
                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowDataBound="GrdBusq_RowDataBound">
                         <Columns>
                             <asp:TemplateField HeaderText="">

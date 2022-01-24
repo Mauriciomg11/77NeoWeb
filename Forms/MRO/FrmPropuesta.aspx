@@ -364,11 +364,12 @@
                             &nbsp;&nbsp
                             <div class="col-sm-3">
                                 <asp:Label ID="LblNumPpt" runat="server" CssClass="LblEtiquet" Text="Propuesta Nro.:" />
-                                <asp:TextBox ID="TxtNumPpt" runat="server" CssClass=" heightCampo" Enabled="false" Width="30%" />
+                                <asp:TextBox ID="TxtNumPpt" runat="server" CssClass=" heightCampo" Enabled="false" Width="30%" Visible ="false" />
+                                <asp:TextBox ID="TxtCodigoPpt" runat="server" CssClass=" heightCampo" Enabled="false" Width="30%" />
                                 <asp:Label ID="LblMaster" runat="server" Text="MASTER" ForeColor="DarkRed" Font-Bold="true" />
                             </div>
                             <div class="col-sm-1">
-                                <asp:TextBox ID="TxtFecha" runat="server" CssClass=" heightCampo" Enabled="false" Width="150%" />
+                                <asp:TextBox ID="TxtFecha" runat="server" CssClass=" heightCampo" Enabled="false" Width="150%" TextMode="Date" />
                             </div>
                         </div>
                         <table>
@@ -633,7 +634,7 @@
                                 </table>
                                 <div class="ScrollDet1">
                                     <asp:GridView ID="GrdDet1" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true"
-                                        DataKeyNames="IdDetPropuesta,IdDetPropSrv,IdServicio,Reporte,Posicion"
+                                        DataKeyNames="IdDetPropuesta,IdDetPropSrv,IdServicio,Reporte,Posicion,OT"
                                         CssClass="DiseñoGrid table table-sm" GridLines="Both" Width="200%" EmptyDataText="No existen registros ..!"
                                         OnRowCommand="GrdDet1_RowCommand" OnRowEditing="GrdDet1_RowEditing" OnRowUpdating="GrdDet1_RowUpdating"
                                         OnRowCancelingEdit="GrdDet1_RowCancelingEdit" OnRowDeleting="GrdDet1_RowDeleting" OnRowDataBound="GrdDet1_RowDataBound">
@@ -697,7 +698,7 @@
                                                     <asp:Label Text='<%# Eval("CodReferencia") %>' runat="server" Width="100%" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Descripcion" HeaderStyle-Width="15%">
+                                            <asp:TemplateField HeaderText="Descripcion" HeaderStyle-Width="10%">
                                                 <ItemTemplate>
                                                     <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" />
                                                 </ItemTemplate>
@@ -705,7 +706,7 @@
                                                     <asp:TextBox ID="TxtDescPNPP" runat="server" MaxLength="80" Width="100%" />
                                                 </FooterTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Cant. Sol">
+                                            <asp:TemplateField HeaderText="Cant. Sol" HeaderStyle-Width="3%">
                                                 <ItemTemplate>
                                                     <asp:Label Text='<%# Eval("CantidadSol") %>' runat="server" Width="100%" />
                                                 </ItemTemplate>
@@ -808,12 +809,12 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Reporte">
                                                 <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("Reporte") %>' runat="server" Width="100%" />
+                                                    <asp:Label Text='<%# Eval("CodigoRTE") %>' runat="server" Width="100%" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="OT">
                                                 <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("OT") %>' runat="server" Width="100%" />
+                                                    <asp:Label Text='<%# Eval("CodigoOT") %>' runat="server" Width="100%" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Serv" HeaderStyle-Width="30%">
@@ -898,7 +899,7 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Ppt">
                                         <ItemTemplate>
-                                            <asp:Label ID="LblPpt" Text='<%# Eval("Codigo") %>' runat="server" />
+                                            <asp:Label ID="LblPpt" Text='<%# Eval("CodigoPPT") %>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Matricula">
@@ -924,6 +925,16 @@
                                     <asp:TemplateField HeaderText="DescripcionEstado">
                                         <ItemTemplate>
                                             <asp:Label Text='<%# Eval("DescripcionEstado") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                     <asp:TemplateField HeaderText="W.O.">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblOT" Text='<%# Eval("CodigoOT") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                     <asp:TemplateField HeaderText="NR">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblRTE" Text='<%# Eval("CodigoRTE") %>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
@@ -1227,7 +1238,7 @@
                                     <asp:Label ID="LblTitOt" runat="server" Text="trabajos" /></h6>
                                 <div class="ScrollDet2">
                                     <asp:GridView ID="GrdServicios" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true"
-                                        DataKeyNames="IdDetPropSrv,Ot,IdSvcManto, Pn,CodServicioManto"
+                                        DataKeyNames="IdDetPropSrv,Ot,IdSvcManto, Pn,CodServicioManto,IdReporte"
                                         CssClass="DiseñoGrid table-sm" GridLines="Both" Width="100%"
                                         OnRowCommand="GrdServicios_RowCommand" OnRowEditing="GrdServicios_RowEditing" OnRowUpdating="GrdServicios_RowUpdating"
                                         OnRowCancelingEdit="GrdServicios_RowCancelingEdit" OnRowDeleting="GrdServicios_RowDeleting" OnRowDataBound="GrdServicios_RowDataBound">
@@ -1267,7 +1278,7 @@
                                                 <FooterTemplate>
                                                 </FooterTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="servicios" HeaderStyle-Width="55%">
+                                            <asp:TemplateField HeaderText="servicios" HeaderStyle-Width="50%">
                                                 <ItemTemplate>
                                                     <asp:TextBox ID="TxtDesSvcP" Text='<%# Eval("DescricionServicio") %>' runat="server" Width="100%" TextMode="MultiLine" Enabled="false" />
                                                 </ItemTemplate>
@@ -1290,20 +1301,20 @@
                                                     </asp:UpdatePanel>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="OT">
+                                            <asp:TemplateField HeaderText="OT" HeaderStyle-Width="10%">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="LblOTP" Text='<%# Eval("Ot") %>' runat="server" Width="100%" />
+                                                    <asp:Label ID="LblOTP" Text='<%# Eval("CodigoOT") %>' runat="server" Width="100%" />
                                                 </ItemTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:Label ID="LblOT" Text='<%# Eval("Ot") %>' runat="server" Width="100%" />
+                                                    <asp:Label ID="LblOT" Text='<%# Eval("CodigoOT") %>' runat="server" Width="100%" />
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Rpt">
+                                            <asp:TemplateField HeaderText="Rpt"  HeaderStyle-Width="10%">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="LblRteP" Text='<%# Eval("IdReporte") %>' runat="server" Width="100%" />
+                                                    <asp:Label ID="LblRteP" Text='<%# Eval("CodigoRTE") %>' runat="server" Width="100%" />
                                                 </ItemTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:Label ID="LblRte" Text='<%# Eval("IdReporte") %>' runat="server" Width="100%" />
+                                                    <asp:Label ID="LblRte" Text='<%# Eval("CodigoRTE") %>' runat="server" Width="100%" />
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Externa" HeaderStyle-Width="1%">
@@ -1442,12 +1453,12 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Nro. Reporte">
                                         <ItemTemplate>
-                                            <asp:Label ID="LblIdRte" Text='<%# Eval("IdReporte") %>' runat="server" />
+                                            <asp:Label ID="LblIdRte" Text='<%# Eval("CodigoRTE") %>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="OT Principal">
                                         <ItemTemplate>
-                                            <asp:Label ID="LblOtPpal" Text='<%# Eval("CodOTPrta") %>' runat="server" />
+                                            <asp:Label ID="LblOtPpal" Text='<%# Eval("CodigoOT") %>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Descripcion">

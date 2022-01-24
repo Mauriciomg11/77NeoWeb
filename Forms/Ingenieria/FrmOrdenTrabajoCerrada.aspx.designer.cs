@@ -69,6 +69,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.TextBox TxtCodOT;
 
         /// <summary>
+        /// Control TxtCodigoOT.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtCodigoOT;
+
+        /// <summary>
         /// Control LblAplica.
         /// </summary>
         /// <remarks>

@@ -78,7 +78,7 @@
                                 <td>
                                     <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
                                 <td>
-                                    <asp:TextBox ID="TxtBusqueda" runat="server" Width="100%" Height="28px" CssClass="form-control" Font-Size="11px" TextMode="Number" step="1" onkeypress="return solonumeros(event);" placeholder="Ingrese el número" /></td>
+                                    <asp:TextBox ID="TxtBusqueda" runat="server" Width="100%" Height="28px" CssClass="form-control" Font-Size="11px"  placeholder="Ingrese el número" /></td>
                                 <td>
                                     <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
                             </tr>

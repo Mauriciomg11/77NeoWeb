@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace _77NeoWeb.Forms.Seguridad
+namespace _77NeoWeb.Forms.InventariosCompras
 {
 
 
-    public partial class FrmIdioma
+    public partial class FrmAlertaCalibracionHer
     {
 
         /// <summary>
@@ -24,120 +24,111 @@ namespace _77NeoWeb.Forms.Seguridad
         protected global::System.Web.UI.WebControls.Label TitForm;
 
         /// <summary>
-        /// Control UpPanel.
+        /// Control UpPnlBtnPpl.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpPanel;
+        protected global::System.Web.UI.UpdatePanel UpPnlBtnPpl;
 
         /// <summary>
-        /// Control LblBusqueda.
+        /// Control BtnSinConfigurar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblBusqueda;
+        protected global::System.Web.UI.WebControls.Button BtnSinConfigurar;
 
         /// <summary>
-        /// Control RdbMens.
+        /// Control LblTipo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbMens;
+        protected global::System.Web.UI.WebControls.Label LblTipo;
 
         /// <summary>
-        /// Control RdbObj.
+        /// Control DdlTipo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbObj;
+        protected global::System.Web.UI.WebControls.DropDownList DdlTipo;
 
         /// <summary>
-        /// Control RdbDesc.
+        /// Control MultVw.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbDesc;
+        protected global::System.Web.UI.WebControls.MultiView MultVw;
 
         /// <summary>
-        /// Control TxtBusqueda.
+        /// Control Vw0Datos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtBusqueda;
+        protected global::System.Web.UI.WebControls.View Vw0Datos;
 
         /// <summary>
-        /// Control CkbSinCorr.
+        /// Control LblTitProxVenc.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CkbSinCorr;
+        protected global::System.Web.UI.WebControls.Label LblTitProxVenc;
 
         /// <summary>
-        /// Control IbtConsultar.
+        /// Control GrdProxVenc.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtConsultar;
+        protected global::System.Web.UI.WebControls.GridView GrdProxVenc;
 
         /// <summary>
-        /// Control TxtIdCia.
+        /// Control Vw1SinConfigurar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtIdCia;
+        protected global::System.Web.UI.WebControls.View Vw1SinConfigurar;
 
         /// <summary>
-        /// Control TxtPassCia.
+        /// Control IbtCloseSinConfg.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtPassCia;
+        protected global::System.Web.UI.WebControls.ImageButton IbtCloseSinConfg;
 
         /// <summary>
-        /// Control IbtCambioPassCia.
+        /// Control LblTitSinConf.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtCambioPassCia;
+        protected global::System.Web.UI.WebControls.Label LblTitSinConf;
 
         /// <summary>
-        /// Control DdlForm.
+        /// Control GrdSinConfg.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DdlForm;
-
-        /// <summary>
-        /// Control GrdDatos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GrdDatos;
+        protected global::System.Web.UI.WebControls.GridView GrdSinConfg;
     }
 }

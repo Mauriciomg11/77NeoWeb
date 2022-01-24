@@ -2,13 +2,9 @@
 using _77NeoWeb.Prg.PrgIngenieria;
 using ClosedXML.Excel;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -82,7 +78,7 @@ namespace _77NeoWeb.Forms.Almacen
                     GrdAlrta.Columns[3].HeaderText = bO.Equals("Descripcion") ? bT : GrdAlrta.Columns[3].HeaderText;
                     GrdAlrta.Columns[4].HeaderText = bO.Equals("CantMst") ? bT : GrdAlrta.Columns[4].HeaderText;
                     GrdAlrta.Columns[5].HeaderText = bO.Equals("FechaMstr") ? bT : GrdAlrta.Columns[5].HeaderText;
-                    GrdAlrta.Columns[6].HeaderText = bO.Equals("LblUsrMstr") ? bT : GrdAlrta.Columns[6].HeaderText;                  
+                    GrdAlrta.Columns[6].HeaderText = bO.Equals("LblUsrMstr") ? bT : GrdAlrta.Columns[6].HeaderText;
                     BtnExportarModl.Text = bO.Equals("BtnExportMstr") ? bT : BtnExportarModl.Text;
                     BtnCerrarAlerta.Text = bO.Equals("BtnCerrarMst") ? bT : BtnCerrarAlerta.Text;
                 }

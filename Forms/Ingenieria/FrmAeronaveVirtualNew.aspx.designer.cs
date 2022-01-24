@@ -1050,15 +1050,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label LblFechaInsMay;
 
         /// <summary>
-        /// Control IbtFechaInsMay.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtFechaInsMay;
-
-        /// <summary>
         /// Control TxtFechaInsMay.
         /// </summary>
         /// <remarks>
@@ -1066,15 +1057,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtFechaInsMay;
-
-        /// <summary>
-        /// Control CalFechaInsMay.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalFechaInsMay;
 
         /// <summary>
         /// Control BtnCompensacInsMay.
@@ -1446,15 +1428,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label LblFechaRemMay;
 
         /// <summary>
-        /// Control IbtFechaRemMay.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtFechaRemMay;
-
-        /// <summary>
         /// Control TxtFechaRemMay.
         /// </summary>
         /// <remarks>
@@ -1462,15 +1435,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtFechaRemMay;
-
-        /// <summary>
-        /// Control CalFechaRemMay.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalFechaRemMay;
 
         /// <summary>
         /// Control BtnRemMayCompensac.
@@ -1779,15 +1743,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label LblFechaInsSubC;
 
         /// <summary>
-        /// Control IbtFechaInsSubC.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtFechaInsSubC;
-
-        /// <summary>
         /// Control TxtFechaInsSubC.
         /// </summary>
         /// <remarks>
@@ -1795,15 +1750,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtFechaInsSubC;
-
-        /// <summary>
-        /// Control CalFechaInsSubC.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalFechaInsSubC;
 
         /// <summary>
         /// Control LblMotivInsSubC.

@@ -78,6 +78,15 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected global::System.Web.UI.WebControls.TextBox TxtRef;
 
         /// <summary>
+        /// Control LblPn.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblPn;
+
+        /// <summary>
         /// Control DdlPN.
         /// </summary>
         /// <remarks>
@@ -87,6 +96,15 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected global::System.Web.UI.WebControls.DropDownList DdlPN;
 
         /// <summary>
+        /// Control LblSn.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblSn;
+
+        /// <summary>
         /// Control TxtSN.
         /// </summary>
         /// <remarks>
@@ -94,24 +112,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtSN;
-
-        /// <summary>
-        /// Control LblDescr.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblDescr;
-
-        /// <summary>
-        /// Control TxtDescr.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtDescr;
 
         /// <summary>
         /// Control LblLote.
@@ -132,22 +132,22 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected global::System.Web.UI.WebControls.TextBox TxtLote;
 
         /// <summary>
-        /// Control LblFechRec.
+        /// Control LblDescr.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblFechRec;
+        protected global::System.Web.UI.WebControls.Label LblDescr;
 
         /// <summary>
-        /// Control TxtFecRec.
+        /// Control TxtDescr.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtFecRec;
+        protected global::System.Web.UI.WebControls.TextBox TxtDescr;
 
         /// <summary>
         /// Control LblUndMed.
@@ -204,22 +204,22 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected global::System.Web.UI.WebControls.TextBox TxtAta;
 
         /// <summary>
-        /// Control LblPosic.
+        /// Control LblUbicTec.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblPosic;
+        protected global::System.Web.UI.WebControls.Label LblUbicTec;
 
         /// <summary>
-        /// Control txtPosic.
+        /// Control TxtUbiTec.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPosic;
+        protected global::System.Web.UI.WebControls.TextBox TxtUbiTec;
 
         /// <summary>
         /// Control LblAerona.
@@ -240,6 +240,24 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected global::System.Web.UI.WebControls.TextBox TxtHK;
 
         /// <summary>
+        /// Control LblPosic.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblPosic;
+
+        /// <summary>
+        /// Control txtPosic.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPosic;
+
+        /// <summary>
         /// Control LblMayor.
         /// </summary>
         /// <remarks>
@@ -258,60 +276,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected global::System.Web.UI.WebControls.TextBox TxtMayor;
 
         /// <summary>
-        /// Control LblUbicTec.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblUbicTec;
-
-        /// <summary>
-        /// Control TxtUbiTec.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtUbiTec;
-
-        /// <summary>
-        /// Control LblSheLif.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblSheLif;
-
-        /// <summary>
-        /// Control IbtFechaI.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtFechaI;
-
-        /// <summary>
-        /// Control TxtFecShelfLife.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtFecShelfLife;
-
-        /// <summary>
-        /// Control CalFechShelLife.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalFechShelLife;
-
-        /// <summary>
         /// Control LblEstad.
         /// </summary>
         /// <remarks>
@@ -328,6 +292,42 @@ namespace _77NeoWeb.Forms.InventariosCompras
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtEstado;
+
+        /// <summary>
+        /// Control LblFechRec.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFechRec;
+
+        /// <summary>
+        /// Control TxtFecRec.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtFecRec;
+
+        /// <summary>
+        /// Control LblSheLif.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblSheLif;
+
+        /// <summary>
+        /// Control TxtFecShelfLife.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtFecShelfLife;
 
         /// <summary>
         /// Control CkbApu.

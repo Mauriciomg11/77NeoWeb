@@ -1,17 +1,12 @@
 ﻿using _77NeoWeb.prg;
 using _77NeoWeb.Prg.PrgIngenieria;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace _77NeoWeb
@@ -40,7 +35,7 @@ namespace _77NeoWeb
                     Session["MonLcl"] = Cnx.GetMonedLcl();// Moneda Local
                 }
 
-              
+
             }
         }
 
@@ -183,7 +178,7 @@ namespace _77NeoWeb
             GrdBusq.DataBind();
         }
 
-       
+
         DataTable dt1 = new DataTable();
         protected void BtnV3_Click(object sender, EventArgs e)
         {

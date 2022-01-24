@@ -1,12 +1,7 @@
 ﻿using _77NeoWeb.prg;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Globalization;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -102,7 +97,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     { TxtBusqueda.Attributes.Add("placeholder", bT); }
                     IbtConsultar.ToolTip = bO.Equals("IbtConsultarTTMst") ? bT : IbtConsultar.ToolTip;
                     IbtConsultarH.ToolTip = bO.Equals("IbtConsultarTTMst") ? bT : IbtConsultarH.ToolTip;
-                    BtnEditarHistrc.Text = bO.Equals("BtnEditarHistrc") ? bT  : BtnEditarHistrc.Text;
+                    BtnEditarHistrc.Text = bO.Equals("BtnEditarHistrc") ? bT : BtnEditarHistrc.Text;
                     BtnEditarHistrc.ToolTip = bO.Equals("BtnEditarHistrcTT") ? bT : BtnEditarHistrc.ToolTip;
                     GrdDatos.Columns[0].HeaderText = bO.Equals("Caption") ? bT : GrdDatos.Columns[0].HeaderText;
                     GrdDatos.Columns[1].HeaderText = bO.Equals("Descripcion") ? bT : GrdDatos.Columns[1].HeaderText;

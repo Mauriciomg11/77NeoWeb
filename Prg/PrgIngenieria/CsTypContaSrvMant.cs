@@ -1,15 +1,14 @@
-﻿using System;
+﻿using _77NeoWeb.prg;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using _77NeoWeb.prg;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web;
 
 namespace _77NeoWeb.Prg.PrgIngenieria
 {
     public class CsTypContaSrvMant
-    {       
+    {
         public int CodIdContaSrvManto { get; set; }
         public int? CodAeronave { get; set; }
         public int? CodElemento { get; set; }

@@ -1,10 +1,9 @@
-﻿using System;
+﻿using _77NeoWeb.prg;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-using _77NeoWeb.prg;
+using System.Web;
 
 namespace _77NeoWeb.Prg.PrgIngenieria
 {
@@ -14,7 +13,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         static public string borrar;
         public string TipoEvento { get; set; }
         public int CodAeronave { get; set; }
-        public string CodModelo  { get; set; }
+        public string CodModelo { get; set; }
         public string NivelElemento { get; set; }
         public string Motor { get; set; }
         public string UltimoNivel { get; set; }
@@ -29,7 +28,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
 
         //-------------  Servicios --------------------
         public int CodIdContadorElem { get; set; }
-        public string CodElementoSvc { get; set; }        
+        public string CodElementoSvc { get; set; }
         public DateTime? FechaVence { get; set; }
         public DateTime? FechaVenceAnt { get; set; }
         public int Resetear { get; set; }
@@ -37,9 +36,9 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         public int CodIdContaSrvManto { get; set; }
         public string NumReporte { get; set; }
         public double ValorUltCump { get; set; }
-        public string GeneraHist { get; set; }        
+        public string GeneraHist { get; set; }
 
-       
+
 
         ClsConexion Cnx = new ClsConexion();
         public void Alimentar(IEnumerable<ClsTypAeronaveVirtualCrearElem> AeronaveVirtual, IEnumerable<ClsTypAeronaveVirtualCrearElem> ServicioManto)
@@ -122,11 +121,11 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                             SqlParameter Prmtrs = SC.Parameters.AddWithValue("@CurAeroVirtual", TblAeronaveVirtual);
                             SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@CurServManto", TblServicios);
                             SqlParameter Prmtrs1 = SC.Parameters.AddWithValue("@IdConfigCia", HttpContext.Current.Session["!dC!@"].ToString());
-                            Prmtrs.SqlDbType = SqlDbType.Structured;                          
+                            Prmtrs.SqlDbType = SqlDbType.Structured;
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())
                             {
-                                PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim()); 
+                                PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 string CodElemento = HttpUtility.HtmlDecode(SDR["CodElemento"].ToString().Trim());
                             }
                             SDR.Close();

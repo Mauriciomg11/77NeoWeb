@@ -1,21 +1,16 @@
-﻿using System;
+﻿using _77NeoWeb.prg;
+using _77NeoWeb.Prg.PrgIngenieria;
+using ClosedXML.Excel;
+using Microsoft.Reporting.WebForms;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Data;
+using System.Data.SqlClient;
+using System.Globalization;
+using System.IO;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using _77NeoWeb.prg;
-using System.Data;
-using System.Data.SqlClient;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using System.Runtime.InteropServices.WindowsRuntime;
-using _77NeoWeb.Prg.PrgIngenieria;
-using System.IO;
-using ClosedXML.Excel;
-using System.EnterpriseServices;
-using Microsoft.Reporting.WebForms;
-using System.Globalization;
-using System.Configuration;
 
 namespace _77NeoWeb.Forms.Ingenieria
 {
@@ -470,6 +465,13 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtHistorico.Enabled = false;
             TxtHistorico.Text = "";
         }
+        //public bool IsIENumerableLleno(IEnumerable<DataRow> ieNumerable)
+        //{
+        //    bool isFull = false;
+        //    foreach (DataRow item in ieNumerable)
+        //    { isFull = true; break; }
+        //    return isFull;
+        //}
         private decimal LRemanente, LRemanente1, LremanenteDia, LremanenteDia1, LCorridoDias, LCorridoDias1, LCorrido, LCorrido1;
         protected void Cumplimiento(int Id, decimal Ext, decimal ExtDia)
         {
@@ -884,7 +886,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void DdlHKPP_TextChanged(object sender, EventArgs e)
         {
-            PerfilesGrid();
+            //PerfilesGrid();
             DropDownList DdlHKPP = (GrdAeron.FooterRow.FindControl("DdlHKPP") as DropDownList);
             string LtxtSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 3,'{0}','','','','CON',{1},0,0,{2},'01-01-01','01-01-01','01-01-01'", TxtCod.Text, DdlHKPP.SelectedValue, Session["!dC!@"]);
             DropDownList DdlContHKPP = (GrdAeron.FooterRow.FindControl("DdlContHKPP") as DropDownList);
@@ -1054,7 +1056,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ActivarBotones(true, true, true, true, true);
                     ActivarCampos(false, false, "Ingresar");
                     IbtAdd.OnClientClick = "";
-                    BindDTraerdatos(VblIdSvcManto.ToString(), ViewState["TIPO"].ToString(), "UPD");
+                    BindDTraerdatos(VblIdSvcManto.ToString(), ViewState["TIPO"].ToString().Equals("A") ? "" : "P", "UPD");
                     switch (ViewState["TIPO"].ToString())
                     {
                         case "A":
@@ -1644,7 +1646,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         CsTypContaSrvMant ContaSrvMant = new CsTypContaSrvMant();
                         ContaSrvMant.Alimentar(ObjTypContaSM);
                         string VbTpo = ViewState["TIPO"].ToString().Equals("A") ? "" : "P";
-                        BindDTraerdatos("0", "", "UPD");
+                        BindDTraerdatos(DdlBusq.Text.Trim(), "", "UPD");
                         BindDataAll();
                     }
                 }
@@ -2219,7 +2221,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         ObjContSrvPn.Add(Detail);
                         TypeContSrvPn ContSrvPn = new TypeContSrvPn();
                         ContSrvPn.Alimentar(ObjContSrvPn);
-                        BindDTraerdatos("0", "P", "UPD");
+                        BindDTraerdatos(DdlBusq.Text.Trim(), "P", "UPD");
                         BindDataAll();
                     }
                 }
@@ -3887,15 +3889,23 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void BindDLicencia()
         {
             DSTRcso = (DataSet)ViewState["DSTRcso"];
-            if (DSTRcso.Tables[1].Rows.Count > 0)
+
+            string VbIdSvc = TxtId.Text.Equals("") ? "0" : TxtId.Text.Trim();
+
+            DataTable DT = DSTRcso.Tables[1].Clone();
+            DataRow[] DR = DSTRcso.Tables[1].Select("IdSrvManto = " + VbIdSvc);
+            if (Cnx.ValidaDataRowVacio(DR))
+            { DT = DR.CopyToDataTable(); }
+
+            if (DT.Rows.Count > 0)
             {
-                GrdLicen.DataSource = DSTRcso.Tables[1];
+                GrdLicen.DataSource = DT;
                 GrdLicen.DataBind();
             }
             else
             {
-                DSTRcso.Tables[1].Rows.Add(DSTRcso.Tables[1].NewRow());
-                GrdLicen.DataSource = DSTRcso.Tables[1];
+                DT.Rows.Add(DT.NewRow());
+                GrdLicen.DataSource = DT;
                 GrdLicen.DataBind();
                 GrdLicen.Rows[0].Cells.Clear();
                 GrdLicen.Rows[0].Cells.Add(new TableCell());
@@ -4541,12 +4551,12 @@ namespace _77NeoWeb.Forms.Ingenieria
             Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
             if (e.Row.RowType == DataControlRowType.Footer)
-            {              
+            {
                 ImageButton IbtAddNew = (e.Row.FindControl("IbtAddNew") as ImageButton);
                 IbtAddNew.Enabled = true;
                 DataRow[] Result = Idioma.Select("Objeto= 'IbtAddNew'");
                 foreach (DataRow row in Result)
-                { IbtAddNew.ToolTip = row["Texto"].ToString().Trim(); }               
+                { IbtAddNew.ToolTip = row["Texto"].ToString().Trim(); }
             }
             if ((e.Row.RowState & DataControlRowState.Edit) > 0)
             {

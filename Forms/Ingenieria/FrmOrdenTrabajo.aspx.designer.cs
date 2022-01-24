@@ -51,6 +51,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.TextBox TxtOt;
 
         /// <summary>
+        /// Control TxtCodOt.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtCodOt;
+
+        /// <summary>
         /// Control LblOtPpal.
         /// </summary>
         /// <remarks>
@@ -519,42 +528,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.TextBox TxtOTFechFin;
 
         /// <summary>
-        /// Control LblOTFechVenc.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblOTFechVenc;
-
-        /// <summary>
-        /// Control IbtOTFechVenc.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtOTFechVenc;
-
-        /// <summary>
-        /// Control TxtOTFechVenc.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtOTFechVenc;
-
-        /// <summary>
-        /// Control CalOTFechVenc.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalOTFechVenc;
-
-        /// <summary>
         /// Control lblOtInsp.
         /// </summary>
         /// <remarks>
@@ -798,6 +771,24 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.TextBox TxtCSR;
 
         /// <summary>
+        /// Control LblOTFechVenc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblOTFechVenc;
+
+        /// <summary>
+        /// Control TxtOTFechVenc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtOTFechVenc;
+
+        /// <summary>
         /// Control BtnOTConsultar.
         /// </summary>
         /// <remarks>
@@ -987,6 +978,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.TextBox TxtRecurNumRte;
 
         /// <summary>
+        /// Control TxtRecurCodRte.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtRecurCodRte;
+
+        /// <summary>
         /// Control LblRecFSubOt.
         /// </summary>
         /// <remarks>
@@ -1156,6 +1156,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtCargaMasiRte;
+
+        /// <summary>
+        /// Control TxtCargaMasiCodRte.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtCargaMasiCodRte;
 
         /// <summary>
         /// Control LblCargaMasOt.
@@ -1941,6 +1950,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.TextBox TxtNroRte;
 
         /// <summary>
+        /// Control TxtCodigoRte.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtCodigoRte;
+
+        /// <summary>
         /// Control TxtConsTall.
         /// </summary>
         /// <remarks>
@@ -2175,15 +2193,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label LblFecDet;
 
         /// <summary>
-        /// Control IbtFecDet.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtFecDet;
-
-        /// <summary>
         /// Control TxtRteFecDet.
         /// </summary>
         /// <remarks>
@@ -2191,15 +2200,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtRteFecDet;
-
-        /// <summary>
-        /// Control CldFecDet.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CldFecDet;
 
         /// <summary>
         /// Control LblFecProy.
@@ -2211,15 +2211,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label LblFecProy;
 
         /// <summary>
-        /// Control IbtFecPry.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtFecPry;
-
-        /// <summary>
         /// Control TxtFecPry.
         /// </summary>
         /// <remarks>
@@ -2227,15 +2218,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtFecPry;
-
-        /// <summary>
-        /// Control CldFecPry.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CldFecPry;
 
         /// <summary>
         /// Control LblOtRte.
@@ -2254,6 +2236,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtRteOt;
+
+        /// <summary>
+        /// Control TxtRteCodOt.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtRteCodOt;
 
         /// <summary>
         /// Control LblBasRte.
@@ -2328,15 +2319,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.TableCell TbClFecCump;
 
         /// <summary>
-        /// Control IbtFecCump.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtFecCump;
-
-        /// <summary>
         /// Control TxtFecCump.
         /// </summary>
         /// <remarks>
@@ -2344,15 +2326,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtFecCump;
-
-        /// <summary>
-        /// Control CldFecCump.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CldFecCump;
 
         /// <summary>
         /// Control lblProgr.
@@ -2794,6 +2767,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtSnOnOffNumRte;
+
+        /// <summary>
+        /// Control TxtSnOnOffCodRte.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtSnOnOffCodRte;
 
         /// <summary>
         /// Control IbtCerrarSnOnOff.

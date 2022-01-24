@@ -1673,6 +1673,8 @@ namespace _77NeoWeb {
             
             private global::System.Data.DataColumn columnDifiere;
             
+            private global::System.Data.DataColumn columnCodigoRTE;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public ReporteDataTable() {
@@ -2004,6 +2006,14 @@ namespace _77NeoWeb {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CodigoRTEColumn {
+                get {
+                    return this.columnCodigoRTE;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2076,7 +2086,8 @@ namespace _77NeoWeb {
                         string NumLicenciaRM, 
                         string FechaCumpl, 
                         string AccionParcial, 
-                        string Difiere) {
+                        string Difiere, 
+                        string CodigoRTE) {
                 ReporteRow rowReporteRow = ((ReporteRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Reporte_Nro,
@@ -2115,7 +2126,8 @@ namespace _77NeoWeb {
                         NumLicenciaRM,
                         FechaCumpl,
                         AccionParcial,
-                        Difiere};
+                        Difiere,
+                        CodigoRTE};
                 rowReporteRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowReporteRow);
                 return rowReporteRow;
@@ -2175,6 +2187,7 @@ namespace _77NeoWeb {
                 this.columnFechaCumpl = base.Columns["FechaCumpl"];
                 this.columnAccionParcial = base.Columns["AccionParcial"];
                 this.columnDifiere = base.Columns["Difiere"];
+                this.columnCodigoRTE = base.Columns["CodigoRTE"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2254,6 +2267,8 @@ namespace _77NeoWeb {
                 base.Columns.Add(this.columnAccionParcial);
                 this.columnDifiere = new global::System.Data.DataColumn("Difiere", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDifiere);
+                this.columnCodigoRTE = new global::System.Data.DataColumn("CodigoRTE", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCodigoRTE);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3273,6 +3288,8 @@ namespace _77NeoWeb {
             
             private global::System.Data.DataColumn columnFechaFinal;
             
+            private global::System.Data.DataColumn columnCodigoOT;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public OTMRODataTable() {
@@ -3852,6 +3869,14 @@ namespace _77NeoWeb {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CodigoOTColumn {
+                get {
+                    return this.columnCodigoOT;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -3955,7 +3980,8 @@ namespace _77NeoWeb {
                         string LicTecP8, 
                         string InspEjecutado, 
                         string LicIP8, 
-                        string FechaFinal) {
+                        string FechaFinal, 
+                        string CodigoOT) {
                 OTMRORow rowOTMRORow = ((OTMRORow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         CodNumOrdenTrab,
@@ -4025,7 +4051,8 @@ namespace _77NeoWeb {
                         LicTecP8,
                         InspEjecutado,
                         LicIP8,
-                        FechaFinal};
+                        FechaFinal,
+                        CodigoOT};
                 rowOTMRORow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowOTMRORow);
                 return rowOTMRORow;
@@ -4116,6 +4143,7 @@ namespace _77NeoWeb {
                 this.columnInspEjecutado = base.Columns["InspEjecutado"];
                 this.columnLicIP8 = base.Columns["LicIP8"];
                 this.columnFechaFinal = base.Columns["FechaFinal"];
+                this.columnCodigoOT = base.Columns["CodigoOT"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4257,6 +4285,8 @@ namespace _77NeoWeb {
                 base.Columns.Add(this.columnLicIP8);
                 this.columnFechaFinal = new global::System.Data.DataColumn("FechaFinal", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFechaFinal);
+                this.columnCodigoOT = new global::System.Data.DataColumn("CodigoOT", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCodigoOT);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6430,6 +6460,8 @@ namespace _77NeoWeb {
             
             private global::System.Data.DataColumn columnSerieNumero;
             
+            private global::System.Data.DataColumn columnCodOT;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public InformeMantoDataTable() {
@@ -6577,6 +6609,14 @@ namespace _77NeoWeb {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CodOTColumn {
+                get {
+                    return this.columnCodOT;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -6612,7 +6652,7 @@ namespace _77NeoWeb {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public InformeMantoRow AddInformeMantoRow(string Nroreporte, string CodStatus, string Fecha1, string LibroVuelo, string NumCasilla, string PersonaTecnico, string NumLicTecCierre, string Inspector, string NumLicenciaRM, string Reporte, string AccionCorrectiva, string RazonSocial, string ParteNumero, string SerieNumero) {
+            public InformeMantoRow AddInformeMantoRow(string Nroreporte, string CodStatus, string Fecha1, string LibroVuelo, string NumCasilla, string PersonaTecnico, string NumLicTecCierre, string Inspector, string NumLicenciaRM, string Reporte, string AccionCorrectiva, string RazonSocial, string ParteNumero, string SerieNumero, string CodOT) {
                 InformeMantoRow rowInformeMantoRow = ((InformeMantoRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Nroreporte,
@@ -6628,7 +6668,8 @@ namespace _77NeoWeb {
                         AccionCorrectiva,
                         RazonSocial,
                         ParteNumero,
-                        SerieNumero};
+                        SerieNumero,
+                        CodOT};
                 rowInformeMantoRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowInformeMantoRow);
                 return rowInformeMantoRow;
@@ -6665,6 +6706,7 @@ namespace _77NeoWeb {
                 this.columnRazonSocial = base.Columns["RazonSocial"];
                 this.columnParteNumero = base.Columns["ParteNumero"];
                 this.columnSerieNumero = base.Columns["SerieNumero"];
+                this.columnCodOT = base.Columns["CodOT"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6698,6 +6740,8 @@ namespace _77NeoWeb {
                 base.Columns.Add(this.columnParteNumero);
                 this.columnSerieNumero = new global::System.Data.DataColumn("SerieNumero", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSerieNumero);
+                this.columnCodOT = new global::System.Data.DataColumn("CodOT", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCodOT);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6932,6 +6976,10 @@ namespace _77NeoWeb {
             private global::System.Data.DataColumn columnMltlRepuest;
             
             private global::System.Data.DataColumn columnMltlHH;
+            
+            private global::System.Data.DataColumn columnFechPpt;
+            
+            private global::System.Data.DataColumn columnCodigoPPT;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -7376,6 +7424,22 @@ namespace _77NeoWeb {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn FechPptColumn {
+                get {
+                    return this.columnFechPpt;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CodigoPPTColumn {
+                get {
+                    return this.columnCodigoPPT;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -7462,7 +7526,9 @@ namespace _77NeoWeb {
                         string VlrHH, 
                         string MltlAjust, 
                         string MltlRepuest, 
-                        string MltlHH) {
+                        string MltlHH, 
+                        string FechPpt, 
+                        string CodigoPPT) {
                 EncPPTRow rowEncPPTRow = ((EncPPTRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         IdPropuesta,
@@ -7515,7 +7581,9 @@ namespace _77NeoWeb {
                         VlrHH,
                         MltlAjust,
                         MltlRepuest,
-                        MltlHH};
+                        MltlHH,
+                        FechPpt,
+                        CodigoPPT};
                 rowEncPPTRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowEncPPTRow);
                 return rowEncPPTRow;
@@ -7589,6 +7657,8 @@ namespace _77NeoWeb {
                 this.columnMltlAjust = base.Columns["MltlAjust"];
                 this.columnMltlRepuest = base.Columns["MltlRepuest"];
                 this.columnMltlHH = base.Columns["MltlHH"];
+                this.columnFechPpt = base.Columns["FechPpt"];
+                this.columnCodigoPPT = base.Columns["CodigoPPT"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7696,6 +7766,10 @@ namespace _77NeoWeb {
                 base.Columns.Add(this.columnMltlRepuest);
                 this.columnMltlHH = new global::System.Data.DataColumn("MltlHH", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMltlHH);
+                this.columnFechPpt = new global::System.Data.DataColumn("FechPpt", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFechPpt);
+                this.columnCodigoPPT = new global::System.Data.DataColumn("CodigoPPT", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCodigoPPT);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -12264,6 +12338,22 @@ namespace _77NeoWeb {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CodigoRTE {
+                get {
+                    try {
+                        return ((string)(this[this.tableReporte.CodigoRTEColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'CodigoRTE\' de la tabla \'Reporte\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableReporte.CodigoRTEColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsReporte_NroNull() {
                 return this.IsNull(this.tableReporte.Reporte_NroColumn);
             }
@@ -12704,6 +12794,18 @@ namespace _77NeoWeb {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetDifiereNull() {
                 this[this.tableReporte.DifiereColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCodigoRTENull() {
+                return this.IsNull(this.tableReporte.CodigoRTEColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCodigoRTENull() {
+                this[this.tableReporte.CodigoRTEColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -14401,6 +14503,22 @@ namespace _77NeoWeb {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CodigoOT {
+                get {
+                    try {
+                        return ((string)(this[this.tableOTMRO.CodigoOTColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'CodigoOT\' de la tabla \'OTMRO\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableOTMRO.CodigoOTColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsCodNumOrdenTrabNull() {
                 return this.IsNull(this.tableOTMRO.CodNumOrdenTrabColumn);
             }
@@ -15213,6 +15331,18 @@ namespace _77NeoWeb {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetFechaFinalNull() {
                 this[this.tableOTMRO.FechaFinalColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCodigoOTNull() {
+                return this.IsNull(this.tableOTMRO.CodigoOTColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCodigoOTNull() {
+                this[this.tableOTMRO.CodigoOTColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -17560,6 +17690,22 @@ namespace _77NeoWeb {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CodOT {
+                get {
+                    try {
+                        return ((string)(this[this.tableInformeManto.CodOTColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'CodOT\' de la tabla \'InformeManto\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableInformeManto.CodOTColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsNroreporteNull() {
                 return this.IsNull(this.tableInformeManto.NroreporteColumn);
             }
@@ -17724,6 +17870,18 @@ namespace _77NeoWeb {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetSerieNumeroNull() {
                 this[this.tableInformeManto.SerieNumeroColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCodOTNull() {
+                return this.IsNull(this.tableInformeManto.CodOTColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCodOTNull() {
+                this[this.tableInformeManto.CodOTColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -18559,6 +18717,38 @@ namespace _77NeoWeb {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string FechPpt {
+                get {
+                    try {
+                        return ((string)(this[this.tableEncPPT.FechPptColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'FechPpt\' de la tabla \'EncPPT\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEncPPT.FechPptColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CodigoPPT {
+                get {
+                    try {
+                        return ((string)(this[this.tableEncPPT.CodigoPPTColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'CodigoPPT\' de la tabla \'EncPPT\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEncPPT.CodigoPPTColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsIdPropuestaNull() {
                 return this.IsNull(this.tableEncPPT.IdPropuestaColumn);
             }
@@ -19167,6 +19357,30 @@ namespace _77NeoWeb {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetMltlHHNull() {
                 this[this.tableEncPPT.MltlHHColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsFechPptNull() {
+                return this.IsNull(this.tableEncPPT.FechPptColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetFechPptNull() {
+                this[this.tableEncPPT.FechPptColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCodigoPPTNull() {
+                return this.IsNull(this.tableEncPPT.CodigoPPTColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCodigoPPTNull() {
+                this[this.tableEncPPT.CodigoPPTColumn] = global::System.Convert.DBNull;
             }
         }
         

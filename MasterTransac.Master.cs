@@ -1,13 +1,8 @@
 ﻿using _77NeoWeb.prg;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace _77NeoWeb
 {
@@ -17,7 +12,7 @@ namespace _77NeoWeb
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            LblCia.Text = Session["SigCia"].ToString()+" - "+ Session["N77U"].ToString();
+            LblCia.Text = Session["SigCia"].ToString() + " - " + Session["N77U"].ToString();
             IdiomaControles();
         }
         protected void IdiomaControles()
@@ -37,7 +32,7 @@ namespace _77NeoWeb
                 SqlDataReader tbl = SC.ExecuteReader();
                 while (tbl.Read())  //Todos los objetos
                 {
-                    
+
                     string b1 = tbl["Objeto"].ToString();
                     string b2 = tbl["Texto"].ToString();
                     if (b1.Trim().Equals("IbnRegresarToolTip") || b1.Trim().Equals("IbnRegresarOnClick"))
