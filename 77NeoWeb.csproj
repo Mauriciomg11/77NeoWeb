@@ -54,6 +54,15 @@
     <Reference Include="DocumentFormat.OpenXml, Version=2.11.3.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>packages\DocumentFormat.OpenXml.2.11.3\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelMapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ExcelDataReader.Mapping.2.2.2\lib\netstandard2.0\ExcelMapper.dll</HintPath>
+    </Reference>
     <Reference Include="ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
       <HintPath>packages\ExcelNumberFormat.1.0.10\lib\net20\ExcelNumberFormat.dll</HintPath>
     </Reference>
@@ -85,6 +94,7 @@
     <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
       <Private>True</Private>
@@ -735,7 +745,6 @@
     <Compile Include="Forms\Almacen\FrmAlertaReservaPenRevisar.aspx.designer.cs">
       <DependentUpon>FrmAlertaReservaPenRevisar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\InventariosCompras\ExcelDataReader.cs" />
     <Compile Include="Forms\InventariosCompras\FrmAlertaCalibracionHer.aspx.cs">
       <DependentUpon>FrmAlertaCalibracionHer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1111,6 +1120,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Report\Ing\Status_Std - Copia.rdlc" />
     <EmbeddedResource Include="Report\Logistica\Inf_ImprsOrdenCompra.rdlc" />
     <EmbeddedResource Include="Report\Logistica\Inf_ReparacionStdr.rdlc" />
     <EmbeddedResource Include="Report\Manto\Inf_FrmReporteCO.rdlc" />

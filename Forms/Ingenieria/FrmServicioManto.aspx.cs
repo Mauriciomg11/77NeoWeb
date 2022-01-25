@@ -643,8 +643,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                 string VbCodAnt = @Prmtr;
                 DTBusq = DSTDet.Tables[0].Clone();
                 Result = DSTDet.Tables[0].Select("BadPlan='" + Tipo.Trim() + "' AND Catalogo='" + VbCatalogo + "'");
-                foreach (DataRow SDR in Result)
-                { DTBusq.ImportRow(SDR); }
+                if (Cnx.ValidaDataRowVacio(Result))
+                { DTBusq = Result.CopyToDataTable(); }
+
+                //foreach (DataRow SDR in Result)
+               // { DTBusq.ImportRow(SDR); }
 
                 DdlBusq.DataSource = DTBusq;
                 DdlBusq.DataTextField = "Servicio";
@@ -1176,33 +1179,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 }
             }
-        }
-        protected void IbtFind_Click(object sender, ImageClickEventArgs e)
-        {
-            PnlCampos.Visible = false;
-            PnlBusq.Visible = true;
-
-            if (ViewState["TIPO"].ToString().Equals("A"))
-            {
-                TblBusqHK.Visible = true;
-                TblBusqPN.Visible = false;
-                TblBusqSN.Visible = false;
-            }
-            if (ViewState["TIPO"].ToString().Equals("P"))
-            {
-                TblBusqHK.Visible = false;
-                TblBusqPN.Visible = true;
-                TblBusqSN.Visible = false;
-            }
-            if (ViewState["TIPO"].ToString().Equals("S"))
-            {
-                TblBusqHK.Visible = false;
-                TblBusqPN.Visible = false;
-                TblBusqSN.Visible = true;
-            }
-            BIndDataBusq(TxtBusqueda.Text);
-            Page.Title = ViewState["PageTit"].ToString();
-        }
+        }       
         protected void IbtPrint_Click(object sender, ImageClickEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -1406,10 +1383,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DataTable DT = new DataTable();
                 DT = DSTDet.Tables[6].Clone();
                 Result = DSTDet.Tables[6].Select("CodServicioManto ='" + TxtCod.Text.Trim() + "'");
-                foreach (DataRow DR in Result)
-                {
-                    DT.ImportRow(DR);
-                }
+                if (Cnx.ValidaDataRowVacio(Result))
+                { DT = Result.CopyToDataTable(); }
                 if (DT.Rows.Count > 0)
                 {
                     DataView DV = DT.DefaultView;
@@ -1598,11 +1573,20 @@ namespace _77NeoWeb.Forms.Ingenieria
                     {
                         ViewState["NroDia"] = Convert.ToDouble((GrdAeron.FooterRow.FindControl("TxtNumDiaPP") as TextBox).Text.Trim());
                     }
-
-                    if (!(GrdAeron.FooterRow.FindControl("TxtFecVenPP") as TextBox).Text.Trim().Equals(""))
+                    TextBox TxtFecVenPP = (GrdAeron.FooterRow.FindControl("TxtFecVenPP") as TextBox);
+                    if (!TxtFecVenPP.Text.Trim().Equals(""))
                     {
-                        ViewState["FechaVenc"] = Convert.ToDateTime((GrdAeron.FooterRow.FindControl("TxtFecVenPP") as TextBox).Text.Trim());
-                        DateTime borrar = (DateTime)ViewState["FechaVenc"];
+                        string VbMnsj = Cnx.ValidarFechas2(TxtFecVenPP.Text.Trim().Trim(), "", 1);
+                        if (!VbMnsj.ToString().Trim().Equals(""))
+                        {
+                            DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                            foreach (DataRow row in Result)
+                            { VbMnsj = row["Texto"].ToString().Trim(); }
+                            ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                            Page.Title = ViewState["PageTit"].ToString(); TxtFecVenPP.Focus();
+                            return;
+                        }
+                        ViewState["FechaVenc"] = Convert.ToDateTime(TxtFecVenPP.Text.Trim());                       
                     }
                     // validar
                     ValidarHK("INSERT");
@@ -1755,9 +1739,20 @@ namespace _77NeoWeb.Forms.Ingenieria
                 { ViewState["NroDia"] = Convert.ToDouble(0); }
                 else
                 { ViewState["NroDia"] = Convert.ToDouble((GrdAeron.Rows[e.RowIndex].FindControl("TxtNumDia") as TextBox).Text.Trim()); }
-
-                if (!(GrdAeron.Rows[e.RowIndex].FindControl("TxtFecVen") as TextBox).Text.Trim().Equals(""))
-                { ViewState["FechaVenc"] = Convert.ToDateTime((GrdAeron.Rows[e.RowIndex].FindControl("TxtFecVen") as TextBox).Text.Trim()); }
+                TextBox TxtFecVen = (GrdAeron.Rows[e.RowIndex].FindControl("TxtFecVen") as TextBox);
+                if (!TxtFecVen.Text.Trim().Equals(""))
+                {
+                    string VbMnsj = Cnx.ValidarFechas2(TxtFecVen.Text.Trim().Trim(), "", 1);
+                    if (!VbMnsj.ToString().Trim().Equals(""))
+                    {
+                        DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                        foreach (DataRow row in Result)
+                        { VbMnsj = row["Texto"].ToString().Trim(); }
+                        ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                        Page.Title = ViewState["PageTit"].ToString(); TxtFecVen.Focus();
+                        return;
+                    }
+                    ViewState["FechaVenc"] = Convert.ToDateTime(TxtFecVen.Text.Trim()); }
                 // validar
                 ValidarHK("UPDATE");
                 if (ViewState["Validar"].Equals("N"))
@@ -1924,8 +1919,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                         TextBox TxtED = (e.Row.FindControl("TxtExtDiaPP") as TextBox);
                         TxtED.ReadOnly = true;
                         TxtED.Enabled = false;
-                        ImageButton BtnFech = (e.Row.FindControl("IbtFechaPP") as ImageButton);
-                        BtnFech.Enabled = false;
+                        TextBox TxtFecVenPP = (e.Row.FindControl("TxtFecVenPP") as TextBox);
+                        TxtFecVenPP.Enabled = false;
                         CheckBox CkRest = (e.Row.FindControl("CkbResetPP") as CheckBox);
                         CkRest.Enabled = false;
                     }
@@ -1948,6 +1943,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DdlCont.DataValueField = "Cod";
                     DdlCont.DataBind();
                     DataRowView DRVC = e.Row.DataItem as DataRowView;
+                    TextBox TxtFecVen = (e.Row.FindControl("TxtFecVen") as TextBox);
                     DdlCont.SelectedValue = DRVC["CodContador"].ToString();
                     if (DdlCont.SelectedValue.Trim().Equals("CAL") || DdlCont.SelectedValue.Trim().Equals("CTI"))
                     {
@@ -1975,9 +1971,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                         TxtND.Enabled = false;
                         TextBox TxtED = (e.Row.FindControl("TxtExtDia") as TextBox);
                         TxtED.ReadOnly = true;
-                        TxtED.Enabled = false;
-                        ImageButton BtnFech = (e.Row.FindControl("IbtFecha") as ImageButton);
-                        BtnFech.Enabled = false;
+                        TxtED.Enabled = false;                        
+                        TxtFecVen.Enabled = false;
                         CheckBox CkRest = (e.Row.FindControl("CkbReset") as CheckBox);
                         CkRest.Enabled = false;
                         CheckBox CkbHist = (e.Row.FindControl("CkbHist") as CheckBox);
@@ -1991,6 +1986,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Result = Idioma.Select("Objeto= 'IbtCancel'");
                     foreach (DataRow row in Result)
                     { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
+                   
+                    TxtFecVen.Text = Cnx.ReturnFecha(DRVC["FechaVencimiento"].ToString().Trim().Equals("") ? "01/01/1900" : DRVC["FechaVencimiento"].ToString().Trim());
 
                 }
                 if (e.Row.RowType == DataControlRowType.DataRow)
@@ -2021,6 +2018,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     }
                 }
             }
+
         }
         protected void GrdAeron_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
@@ -2039,10 +2037,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DataTable DT = new DataTable();
                 DT = DSTDet.Tables[7].Clone();
                 Result = DSTDet.Tables[7].Select("CodServicioManto ='" + TxtCod.Text.Trim() + "'");
-                foreach (DataRow DR in Result)
-                {
-                    DT.ImportRow(DR);
-                }
+                if (Cnx.ValidaDataRowVacio(Result))
+                { DT = Result.CopyToDataTable(); }
                 if (DT.Rows.Count > 0)
                 {
                     DataView DV = DT.DefaultView;
@@ -2496,10 +2492,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DataTable DT = new DataTable();
                 DT = DSTDet.Tables[8].Clone();
                 Result = DSTDet.Tables[8].Select("CodServicioManto ='" + TxtCod.Text.Trim() + "'");
-                foreach (DataRow DR in Result)
-                {
-                    DT.ImportRow(DR);
-                }
+                if (Cnx.ValidaDataRowVacio(Result))
+                { DT = Result.CopyToDataTable(); }
                 if (DT.Rows.Count > 0)
                 {
                     DataView DV = DT.DefaultView;
@@ -2727,9 +2721,20 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ViewState["NroDia"] = Convert.ToDouble((GrdSN.Rows[e.RowIndex].FindControl("TxtNumDia") as TextBox).Text.Trim());
                 }
 
-                if (!(GrdSN.Rows[e.RowIndex].FindControl("TxtFecVenSN") as TextBox).Text.Trim().Equals(""))
+                TextBox TxtFecVenSN = (GrdSN.Rows[e.RowIndex].FindControl("TxtFecVenSN") as TextBox);
+                if (!TxtFecVenSN.Text.Trim().Equals(""))
                 {
-                    ViewState["FechaVenc"] = Convert.ToDateTime((GrdSN.Rows[e.RowIndex].FindControl("TxtFecVenSN") as TextBox).Text.Trim());
+                    string VbMnsj = Cnx.ValidarFechas2(TxtFecVenSN.Text.Trim().Trim(), "", 1);
+                    if (!VbMnsj.ToString().Trim().Equals(""))
+                    {
+                        DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                        foreach (DataRow row in Result)
+                        { VbMnsj = row["Texto"].ToString().Trim(); }
+                        ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                        Page.Title = ViewState["PageTit"].ToString(); TxtFecVenSN.Focus();
+                        return;
+                    }
+                    ViewState["FechaVenc"] = Convert.ToDateTime(TxtFecVenSN.Text.Trim());
                 }
                 // validar
                 ValidaDetSN();
@@ -2750,7 +2755,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         CodServicioManto = TxtCod.Text.Trim(),
                         Frecuencia = (double)ViewState["Frec"],
                         Extension = (double)ViewState["Ext"],
-                        FechaVencimiento = (GrdSN.Rows[e.RowIndex].FindControl("TxtFecVenSN") as TextBox).Text.Trim().Equals("") ? null : (DateTime?)ViewState["FechaVenc"],//(DateTime)ViewState["FechaVenc"],
+                        FechaVencimiento = TxtFecVenSN.Text.Trim().Equals("") ? null : (DateTime?)ViewState["FechaVenc"],
                         NroDias = (double)ViewState["NroDia"],
                         ExtensionDias = (double)ViewState["ExtDia"],
                         BanOrdenTrabajo = 0,
@@ -2880,6 +2885,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Result = Idioma.Select("Objeto= 'IbtCancel'");
                     foreach (DataRow row in Result)
                     { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
+
+                    DataRowView DRV = e.Row.DataItem as DataRowView;
+                    TextBox TxtFecVenSN = (e.Row.FindControl("TxtFecVenSN") as TextBox);
+                    if (TxtFecVenSN != null)
+                    { TxtFecVenSN.Text = Cnx.ReturnFecha(DRV["FechaVencimiento"].ToString().Trim().Equals("") ? "01/01/1900" : DRV["FechaVencimiento"].ToString().Trim()); }
                 }
                 if (e.Row.RowType == DataControlRowType.DataRow)
                 {
@@ -3427,6 +3437,34 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
         }
         // ****************Opciones de busqueda ***********************
+        protected void IbtFind_Click(object sender, ImageClickEventArgs e)
+        {
+            PnlCampos.Visible = false;
+            PnlBusq.Visible = true;
+
+            if (ViewState["TIPO"].ToString().Equals("A"))
+            {
+                TblBusqHK.Visible = true;
+                RdbBusqDes.Checked = true;               
+                TblBusqPN.Visible = false;
+                TblBusqSN.Visible = false;
+            }
+            if (ViewState["TIPO"].ToString().Equals("P"))
+            {
+                TblBusqHK.Visible = false;
+                TblBusqPN.Visible = true;
+                TblBusqSN.Visible = false;
+            }
+            if (ViewState["TIPO"].ToString().Equals("S"))
+            {
+                TblBusqHK.Visible = false;
+                TblBusqPN.Visible = false;
+                TblBusqSN.Visible = true;
+            }
+            BIndDataBusq(TxtBusqueda.Text);
+            Page.Title = ViewState["PageTit"].ToString();
+            TxtBusqueda.Focus();
+        }
         protected void BIndDataBusq(string Prmtr)
         {
             DataTable DtB = new DataTable();

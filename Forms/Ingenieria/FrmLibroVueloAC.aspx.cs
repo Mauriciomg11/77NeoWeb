@@ -676,6 +676,8 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void cargarLV_Click(object sender, EventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            DataRow[] Result;
             if (FileUpCLV != null && !TxtNumLv.Text.Equals(""))
             {
                 if (FileUpCLV.HasFile)
@@ -683,13 +685,15 @@ namespace _77NeoWeb.Forms.Ingenieria
                     string VblRuta = FileUpCLV.FileName;
                     string VblExt = Path.GetExtension(VblRuta);
                     string VblType = FileUpCLV.PostedFile.ContentType;
-
+                  
 
                     VblExt = VblExt.Substring(VblExt.LastIndexOf(".") + 1).ToLower();
                     string[] formatos = new string[] { "jpg", "jpeg", "bmp", "png", "gif", "pdf" };
                     if (Array.IndexOf(formatos, VblExt) < 0)
                     {
-                        ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "IdntificadorBloqueScript", "alert('Formato de imagen inválido.')", true);
+                        Result = Idioma.Select("Objeto= 'RteMens40'");//Archivo inválido
+                        foreach (DataRow row in Result)
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                         return;
                     }
                     imagenLV = new byte[FileUpCLV.PostedFile.InputStream.Length];
@@ -737,7 +741,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                 }
                 else
                 {
-                    ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar un archivo')", true);
+                    Result = Idioma.Select("Objeto= 'RteMens41'");//Debe seleccionar un archivo.
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                     return;
                 }
             }

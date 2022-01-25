@@ -251,6 +251,7 @@
                             </div>
                             <div class="col-sm-1">
                                 <asp:Button ID="BtnCargaMaxiva" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnCargaMaxiva_Click" Text="Cargar" Width="100%" Enabled="false" />
+                                <asp:FileUpload ID="FileUpCot" runat="server" Font-Size="9px"  Visible="false" />
                             </div>
                             <div class="col-sm-1">
                                 <asp:Button ID="BtnEliminar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnEliminar_Click" OnClientClick="target ='';" Text="eliminar" />
@@ -570,6 +571,7 @@
             <asp:PostBackTrigger ControlID="IbtAprDetAll" />
             <asp:PostBackTrigger ControlID="BtnExportDetCotiza" />
             <asp:PostBackTrigger ControlID="BtnExportDetUnidMed" />
+            <asp:PostBackTrigger ControlID="BtnCargaMaxiva" />
             <%--  <asp:PostBackTrigger ControlID="IbtBusqueda" />
           
             

@@ -217,43 +217,46 @@ namespace _77NeoWeb.Forms.Ingenieria
                             SDA.Fill(DSTProcesar);
                             DSTProcesar.Tables[0].TableName = "LvSinProcesar";
                             DSTProcesar.Tables[1].TableName = "HK";
-                            DSTProcesar.Tables[2].TableName = "LV";
-                            LbxLibrosSinProc.Items.Clear();
-                            foreach (DataRow row in DSTProcesar.Tables[0].Rows) { LbxLibrosSinProc.Items.Add(row[0].ToString()); }
+                            DSTProcesar.Tables[2].TableName = "LV";                            
+                            LbxLibrosSinProc.DataSource = DSTProcesar.Tables[0];
+                            LbxLibrosSinProc.DataTextField = "FechaReporte";
+                            LbxLibrosSinProc.DataValueField = "FechDMY";
+                            LbxLibrosSinProc.DataBind();
                             ViewState["DSTProcesar"] = DSTProcesar;
                         }
                     }
                 }
             }
         }
-        protected void LbxLibrosSinProc_SelectedIndexChanged(object sender, EventArgs e)
+        protected void LbxLibrosSinProc_TextChanged(object sender, EventArgs e)
         { BindBDdlAK(); LimpiarCamposProcesarCont(); DdlCorrContLVSinProcc.Text = "0"; }
         protected void BindBDdlAK()
         {
-            if (!LbxLibrosSinProc.Text.ToString().Equals(""))
+            if (!LbxLibrosSinProc.SelectedItem.Text.Equals(""))
             {
                 DataTable HK = new DataTable();
                 DSTProcesar = (DataSet)ViewState["DSTProcesar"];
                 HK = DSTProcesar.Tables[1].Clone();
-                DataRow[] Result = DSTProcesar.Tables[1].Select("FechaReporte='" + LbxLibrosSinProc.Text.ToString() + "'");
+                DataRow[] Result = DSTProcesar.Tables[1].Select("FechaReporte='" + LbxLibrosSinProc.SelectedItem.Text.ToString() + "' OR CodAeronave =0");
                 foreach (DataRow Row in Result)
                 { HK.ImportRow(Row); }
                 DdlCorrContHK.DataSource = HK;
                 DdlCorrContHK.DataTextField = "Matricula";
                 DdlCorrContHK.DataValueField = "CodAeronave";
                 DdlCorrContHK.DataBind();
+                DdlCorrContHK.Visible = true; DdlCorrContLVSinProcc.Visible = true;
             }
         }
         protected void DdlCorrContHK_TextChanged(object sender, EventArgs e)
         { BindBDdlLVSinProcc(); LimpiarCamposProcesarCont(); }
         protected void BindBDdlLVSinProcc()
         {
-            if (!LbxLibrosSinProc.Text.ToString().Equals(""))
+            if (!LbxLibrosSinProc.SelectedItem.Text.ToString().Equals(""))
             {
                 DataTable LV = new DataTable();
                 DSTProcesar = (DataSet)ViewState["DSTProcesar"];
                 LV = DSTProcesar.Tables[2].Clone();
-                DataRow[] Result = DSTProcesar.Tables[2].Select("FechaReporte='" + LbxLibrosSinProc.Text.ToString().Trim() + "' AND CodAeronave = " + DdlCorrContHK.Text.Trim());
+                DataRow[] Result = DSTProcesar.Tables[2].Select("FechaReporte='" + LbxLibrosSinProc.SelectedItem.Text.ToString().Trim() + "' AND CodAeronave = " + DdlCorrContHK.Text.Trim() + " OR CodAeronave =0");
                 foreach (DataRow Row in Result)
                 { LV.ImportRow(Row); }
 
@@ -316,10 +319,12 @@ namespace _77NeoWeb.Forms.Ingenieria
                     {
                         try
                         {
+                            string VbFechaPrcsr = Cnx.ReturnFecha(LbxLibrosSinProc.SelectedValue.ToString());
+                            DateTime VbDTFec = Convert.ToDateTime(VbFechaPrcsr);
                             sqlCmd.Parameters.AddWithValue("@CodLV", DdlCorrContLVSinProcc.SelectedItem.Text.Trim());
                             sqlCmd.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
                             sqlCmd.Parameters.AddWithValue("@HK", DdlCorrContHK.Text.Trim());
-                            sqlCmd.Parameters.AddWithValue("@FP", LbxLibrosSinProc.SelectedValue);
+                            sqlCmd.Parameters.AddWithValue("@FP", VbDTFec);// LbxLibrosSinProc.SelectedValue
                             sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             SqlDataReader SDR = sqlCmd.ExecuteReader();
                             if (SDR.Read())
@@ -341,7 +346,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             BindBDdlAK();
                             BindBDdlLVSinProcc();
                             LimpiarCamposProcesarCont();
-
+                            DdlCorrContHK.Visible = false; DdlCorrContLVSinProcc.Visible = false;
                         }
                         catch (Exception Ex)
                         {

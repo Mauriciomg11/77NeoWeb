@@ -107,7 +107,7 @@
                         </div>
                         <div class="col-sm-2">
                             <asp:Label ID="LblStsFecCarga" runat="server" CssClass="LblEtiquet" Text="Ultima Fecha Carga" Width="100%" />
-                            <asp:TextBox ID="TxtStsFecCarga" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="60%" />
+                            <asp:TextBox ID="TxtStsFecCarga" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="100%" TextMode ="Date" />
                         </div>
                         <div class="col-sm-1">
                             <asp:Label ID="LblStsTSN" runat="server" CssClass="LblEtiquet" Text="Horas" />

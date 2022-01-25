@@ -58,6 +58,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
     <script type="text/javascript">
         function myFuncionddl() {
+            $('#<%=LbxLibrosSinProc.ClientID%>').chosen();
             $('#<%=DdlCorrContHK.ClientID%>').chosen();
             $('#<%=DdlCorrContLVSinProcc.ClientID%>').chosen();
             $('#<%=DdlExcesPN.ClientID%>').chosen();
@@ -114,7 +115,7 @@
                             <div class="col-sm-2">
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="LblSubTitCorreContLVSinProc" runat="server" Text="Hojas sin procesar" /></h6>
-                                <asp:ListBox ID="LbxLibrosSinProc" runat="server" Font-Size="12px" Width="100%" Height="400px" OnSelectedIndexChanged="LbxLibrosSinProc_SelectedIndexChanged" AutoPostBack="True" />
+                                <asp:DropDownList ID="LbxLibrosSinProc" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="LbxLibrosSinProc_TextChanged" AutoPostBack="true" />                              
                             </div>
                             <div class="col-sm-2">
                                 <h6 class="TextoSuperior">
@@ -336,11 +337,11 @@
                                             <asp:Label ID="LblDeftCodHK" runat="server" CssClass="LblEtiquet" Text="Aeronave" />
                                             <asp:DropDownList ID="DdlDeftCodHK" runat="server" CssClass="heightCampo" Width="100%" />
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-4">
                                             <asp:Label ID="LblDeftFechI" runat="server" CssClass="LblEtiquet" Text="Fecha Mayor a" />
                                             <asp:TextBox ID="TxtDeftFechI" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-4">
                                             <asp:Label ID="LblDeftFechF" runat="server" CssClass="LblEtiquet" Text="Hasta la fecha" />
                                             <asp:TextBox ID="TxtDeftFechF" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
                                         </div>
@@ -456,11 +457,11 @@
                                         <asp:Label ID="LblConvenCodHK" runat="server" CssClass="LblEtiquet" Text="Aeronave" />
                                         <asp:DropDownList ID="DdlConvenCodHK" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="DdlConvenCodHK_TextChanged" AutoPostBack="true" />
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <asp:Label ID="LblConvenFechI" runat="server" CssClass="LblEtiquet" Text="Fecha Mayor a" />
                                         <asp:TextBox ID="TxtConvenFechI" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <asp:Label ID="LblConvenFechF" runat="server" CssClass="LblEtiquet" Text="Hasta la fecha" />
                                         <asp:TextBox ID="TxtConvenFechF" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
                                     </div>

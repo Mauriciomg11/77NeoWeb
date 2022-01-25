@@ -97,203 +97,11 @@
           <DataField>WorkSheet</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="OrdenImpresion">
-          <DataField>OrdenImpresion</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CodPatronManto">
-          <DataField>CodPatronManto</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DesPatronM">
-          <DataField>DesPatronM</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CodBarras">
-          <DataField>CodBarras</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DataSet1</rd:DataSetName>
         <rd:SchemaPath>C:\GoogleDrive\ASP.NET\77NeoWeb\DataSet1.xsd</rd:SchemaPath>
         <rd:TableName>Status_Stdr</rd:TableName>
-        <rd:TableAdapterFillMethod />
-        <rd:TableAdapterGetDataMethod />
-        <rd:TableAdapterName />
-      </rd:DataSetInfo>
-    </DataSet>
-    <DataSet Name="DataSet2">
-      <Query>
-        <DataSourceName>DataSet1</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="ID">
-          <DataField>ID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC01">
-          <DataField>MltlC01</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC02">
-          <DataField>MltlC02</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC03">
-          <DataField>MltlC03</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC04">
-          <DataField>MltlC04</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC05">
-          <DataField>MltlC05</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC06">
-          <DataField>MltlC06</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC07">
-          <DataField>MltlC07</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC08">
-          <DataField>MltlC08</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC09">
-          <DataField>MltlC09</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC10">
-          <DataField>MltlC10</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC11">
-          <DataField>MltlC11</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC12">
-          <DataField>MltlC12</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC13">
-          <DataField>MltlC13</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC14">
-          <DataField>MltlC14</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC15">
-          <DataField>MltlC15</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC16">
-          <DataField>MltlC16</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC17">
-          <DataField>MltlC17</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC18">
-          <DataField>MltlC18</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC19">
-          <DataField>MltlC19</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC20">
-          <DataField>MltlC20</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC21">
-          <DataField>MltlC21</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC22">
-          <DataField>MltlC22</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC23">
-          <DataField>MltlC23</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC24">
-          <DataField>MltlC24</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC25">
-          <DataField>MltlC25</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC26">
-          <DataField>MltlC26</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC27">
-          <DataField>MltlC27</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC28">
-          <DataField>MltlC28</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC29">
-          <DataField>MltlC29</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC30">
-          <DataField>MltlC30</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC31">
-          <DataField>MltlC31</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC32">
-          <DataField>MltlC32</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC33">
-          <DataField>MltlC33</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC34">
-          <DataField>MltlC34</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC35">
-          <DataField>MltlC35</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC36">
-          <DataField>MltlC36</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC37">
-          <DataField>MltlC37</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC38">
-          <DataField>MltlC38</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MltlC39">
-          <DataField>MltlC39</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <rd:DataSetInfo>
-        <rd:DataSetName>DataSet1</rd:DataSetName>
-        <rd:SchemaPath>C:\GoogleDrive\ASP.NET\77NeoWeb\DataSet1.xsd</rd:SchemaPath>
-        <rd:TableName>MultiLenguaje</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />
@@ -311,10 +119,10 @@
                   <Width>1.11065cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.53585cm</Width>
+                  <Width>3.89851cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.21147cm</Width>
+                  <Width>2.30472cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.83913cm</Width>
@@ -344,7 +152,7 @@
                   <Width>1.04544cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.19365cm</Width>
+                  <Width>1.03188cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.23065cm</Width>
@@ -356,10 +164,10 @@
                   <Width>1.00542cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.11125cm</Width>
+                  <Width>1.33402cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.16417cm</Width>
+                  <Width>0.84667cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.27cm</Width>
@@ -367,7 +175,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.83813cm</Height>
+                  <Height>0.86459cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1056,93 +864,6 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.635cm</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="CodPatronManto">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!CodPatronManto.Value</Value>
-                                  <Style>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>CodPatronManto</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="DesPatronM">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!DesPatronM.Value</Value>
-                                  <Style>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>DesPatronM</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <ColSpan>18</ColSpan>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
                   <Height>1.02333cm</Height>
                   <TablixCells>
                     <TablixCell>
@@ -1787,65 +1508,15 @@
                   <RepeatOnNewPage>true</RepeatOnNewPage>
                 </TablixMember>
                 <TablixMember>
-                  <Group Name="CodPatronManto">
-                    <GroupExpressions>
-                      <GroupExpression>=Fields!CodPatronManto.Value</GroupExpression>
-                    </GroupExpressions>
-                  </Group>
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!OrdenImpresion.Value</Value>
-                    </SortExpression>
-                    <SortExpression>
-                      <Value>=Fields!DesPatronM.Value</Value>
-                    </SortExpression>
-                    <SortExpression>
-                      <Value>=Fields!CodBarras.Value</Value>
-                    </SortExpression>
-                  </SortExpressions>
-                  <TablixMembers>
-                    <TablixMember>
-                      <KeepWithGroup>After</KeepWithGroup>
-                    </TablixMember>
-                    <TablixMember>
-                      <Group Name="Detalles">
-                        <GroupExpressions>
-                          <GroupExpression>=Fields!CodCapitulo.Value</GroupExpression>
-                          <GroupExpression>=Fields!Descripcion.Value</GroupExpression>
-                          <GroupExpression>=Fields!NumdoCumento.Value</GroupExpression>
-                          <GroupExpression>=Fields!Pn.Value</GroupExpression>
-                          <GroupExpression>=Fields!Sn.Value</GroupExpression>
-                          <GroupExpression>=Fields!fechaUltiSvc.Value</GroupExpression>
-                          <GroupExpression>=Fields!FechaInst.Value</GroupExpression>
-                          <GroupExpression>=Fields!Frecuencia.Value</GroupExpression>
-                          <GroupExpression>=Fields!UndMed.Value</GroupExpression>
-                          <GroupExpression>=Fields!FrecuenciaDia.Value</GroupExpression>
-                          <GroupExpression>=Fields!TipoSrv.Value</GroupExpression>
-                          <GroupExpression>=Fields!ValorCumpl.Value</GroupExpression>
-                          <GroupExpression>=Fields!Acum.Value</GroupExpression>
-                          <GroupExpression>=Fields!ProxSrv.Value</GroupExpression>
-                          <GroupExpression>=Fields!ProxSrvFech.Value</GroupExpression>
-                          <GroupExpression>=Fields!Remanente.Value</GroupExpression>
-                          <GroupExpression>=Fields!RemanenteDia.Value</GroupExpression>
-                          <GroupExpression>=Fields!OT.Value</GroupExpression>
-                          <GroupExpression>=Fields!Proyec.Value</GroupExpression>
-                        </GroupExpressions>
-                      </Group>
-                      <TablixMembers>
-                        <TablixMember />
-                      </TablixMembers>
-                    </TablixMember>
-                  </TablixMembers>
+                  <Group Name="Detalles" />
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
             <RepeatColumnHeaders>true</RepeatColumnHeaders>
             <FixedColumnHeaders>true</FixedColumnHeaders>
             <DataSetName>DataSet1</DataSetName>
-            <Top>0.02646cm</Top>
-            <Left>0.02646cm</Left>
-            <Height>2.49646cm</Height>
-            <Width>25.53866cm</Width>
+            <Height>1.88792cm</Height>
+            <Width>25.73807cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1853,10 +1524,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>2.93687cm</Height>
+        <Height>2.27541cm</Height>
         <Style />
       </Body>
-      <Width>25.56512cm</Width>
+      <Width>25.73807cm</Width>
       <Page>
         <PageHeader>
           <Height>3.9166cm</Height>
@@ -2019,7 +1690,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Format(CDate(Parameters!PrmFechAct.Value),First(Fields!MltlC33.Value, "DataSet2"))</Value>
+                      <Value>=Parameters!PrmFechAct.Value</Value>
                       <Style>
                         <FontSize>8pt</FontSize>
                         <FontWeight>Bold</FontWeight>
@@ -2087,7 +1758,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Format(CDate(Globals!ExecutionTime),First(Fields!MltlC32.Value, "DataSet2"))</Value>
+                      <Value>=Globals!ExecutionTime</Value>
                       <Style>
                         <FontSize>8pt</FontSize>
                         <FontWeight>Bold</FontWeight>
@@ -2136,9 +1807,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox14</rd:DefaultName>
               <Top>1.30439in</Top>
-              <Left>7.58119in</Left>
+              <Left>7.65619in</Left>
               <Height>0.23758in</Height>
-              <Width>0.25903in</Width>
+              <Width>0.17569in</Width>
               <ZIndex>8</ZIndex>
               <Style>
                 <Border>

@@ -6,6 +6,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -17,6 +18,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
         DataSet DSTGrl = new DataSet();
+        DataTable DTMultL = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
@@ -38,6 +40,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
+                    Session["MonLcl"] = Cnx.GetMonedLcl();// Moneda Local
+                    Session["FormatFecha"] = Cnx.GetFormatFecha();// 103 formato europeo dd/MM/yyyy | 101 formato EEUU M/dd/yyyyy
                 }
             }
             if (!IsPostBack)
@@ -132,6 +136,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                     string b1 = tbl["Objeto"].ToString();
                     string b2 = tbl["Texto"].ToString();
                     Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());
+                    TitForm.Text = b1.Equals("Titulo") ? b2 : TitForm.Text;
+                    if (b1.Equals("Caption"))
+                    { Page.Title = b2; ViewState["PageTit"] = b2; }
                     LblStsHK.Text = b1.Trim().Equals("LblStsHK") ? b2.Trim() : LblStsHK.Text;
                     LblStsModelo.Text = b1.Trim().Equals("LblStsModelo") ? b2.Trim() : LblStsModelo.Text;
                     LblStsFecCarga.Text = b1.Trim().Equals("LblStsFecCarga") ? b2.Trim() : LblStsFecCarga.Text;
@@ -298,7 +305,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
-
+                DateTime VbDate = Convert.ToDateTime(TxtStsFecCarga.Text.Trim().Equals("") ? "01/01/1900" : TxtStsFecCarga.Text.Trim());
                 CursorIdioma.Alimentar("CurStatus", Session["77IDM"].ToString().Trim());
                 string VbTxtSql = "EXEC SP_StatusReport_WEB @CodHk,@UltFech,'NO',@PromUtlH,@PromUtlC,@PromUtlAPU,@Usu,'CurStatus',@Grupo,@Order,'',@ICC";
                 sqlConB.Open();
@@ -309,7 +316,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     if (RdbStsProy.Checked == true) { VbOrden = "PROYECCION"; }
                     if (RdbStsDescrip.Checked == true) { VbOrden = "DESCRIPCION"; }
                     SC.Parameters.AddWithValue("@CodHk", DdlStsHK.Text);
-                    SC.Parameters.AddWithValue("@UltFech", TxtStsFecCarga.Text.Trim());
+                    SC.Parameters.AddWithValue("@UltFech", VbDate);
                     SC.Parameters.AddWithValue("@PromUtlH", TxtStsUtilDiaHr.Text);
                     SC.Parameters.AddWithValue("@PromUtlC", TxtStsUtilDiaCc.Text);
                     SC.Parameters.AddWithValue("@PromUtlAPU", TxtStsUtilDiaAPU.Text);
@@ -319,19 +326,23 @@ namespace _77NeoWeb.Forms.Ingenieria
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
-                        DAB.SelectCommand = SC;
-                        DAB.Fill(DtB);
+                        try
+                        {
+                            DAB.SelectCommand = SC;
+                            DAB.Fill(DtB);
 
-                        if (DtB.Rows.Count > 0)
-                        {
-                            GrdStatusReport.DataSource = DtB;
-                            GrdStatusReport.DataBind();
+                            if (DtB.Rows.Count > 0)
+                            {
+                                GrdStatusReport.DataSource = DtB;
+                                GrdStatusReport.DataBind();
+                            }
+                            else
+                            {
+                                GrdStatusReport.DataSource = null;
+                                GrdStatusReport.DataBind();
+                            }
                         }
-                        else
-                        {
-                            GrdStatusReport.DataSource = null;
-                            GrdStatusReport.DataBind();
-                        }
+                        catch (Exception ex) { }
                     }
                     ViewState["CONSULTA"] = "S";
                 }
@@ -354,7 +365,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     {
                         TxtStsSn.Text = HttpUtility.HtmlDecode(SDR["SN"].ToString().Trim());
                         TxtStsModelo.Text = HttpUtility.HtmlDecode(SDR["NomModelo"].ToString().Trim());
-                        TxtStsFecCarga.Text = HttpUtility.HtmlDecode(SDR["UltFechaProces"].ToString().Trim());
+                        TxtStsFecCarga.Text = Cnx.ReturnFecha(HttpUtility.HtmlDecode(SDR["UltFechaProces"].ToString().Trim()));
                         TxtStsTSN.Text = HttpUtility.HtmlDecode(SDR["TSN"].ToString().Trim());
                         TxtStsCSN.Text = HttpUtility.HtmlDecode(SDR["CSN"].ToString().Trim());
                         TxtStsDiaProy.Text = HttpUtility.HtmlDecode(SDR["NroDiaProy"].ToString().Trim());
@@ -425,6 +436,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnStsImp_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString();
             if (ViewState["CONSULTA"].ToString().Equals("N")) { return; }
             MlVwSt.ActiveViewIndex = 1;
         }
@@ -447,7 +459,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     if (RdbStsProy.Checked == true) { VbOrden = "PROYECCION"; }
                     if (RdbStsDescrip.Checked == true) { VbOrden = "DESCRIPCION"; }
                     SC.Parameters.AddWithValue("@CodHk", DdlStsHK.Text);
-                    SC.Parameters.AddWithValue("@UltFech", TxtStsFecCarga.Text.Trim());
+                    SC.Parameters.AddWithValue("@UltFech", Convert.ToDateTime(TxtStsFecCarga.Text.Trim()));
                     SC.Parameters.AddWithValue("@PromUtlH", TxtStsUtilDiaHr.Text);
                     SC.Parameters.AddWithValue("@PromUtlC", TxtStsUtilDiaCc.Text);
                     SC.Parameters.AddWithValue("@PromUtlAPU", TxtStsUtilDiaAPU.Text);
@@ -495,13 +507,64 @@ namespace _77NeoWeb.Forms.Ingenieria
             GrdStatusReport.Visible = true;
         }
         //**************************** IMPRIMIR *******************************
+        protected void CampoMultiL()
+        {
+            DTMultL.Columns.Add("ID", typeof(int)); // 
+            DTMultL.Columns.Add("MltlC01", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC02", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC03", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC04", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC05", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC06", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC07", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC08", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC09", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC10", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC11", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC12", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC13", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC14", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC15", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC16", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC17", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC18", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC19", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC20", typeof(string)); // 
+            DTMultL.Columns.Add("MltlC21", typeof(string)); //
+            DTMultL.Columns.Add("MltlC22", typeof(string)); //
+            DTMultL.Columns.Add("MltlC23", typeof(string)); //
+            DTMultL.Columns.Add("MltlC24", typeof(string)); //
+            DTMultL.Columns.Add("MltlC25", typeof(string)); //
+            DTMultL.Columns.Add("MltlC26", typeof(string)); //
+            DTMultL.Columns.Add("MltlC27", typeof(string)); //
+            DTMultL.Columns.Add("MltlC28", typeof(string)); //
+            DTMultL.Columns.Add("MltlC29", typeof(string));
+            DTMultL.Columns.Add("MltlC30", typeof(string));
+            DTMultL.Columns.Add("MltlC31", typeof(string));
+            DTMultL.Columns.Add("MltlC32", typeof(string));// formato fecha impresion fecha y hora
+            DTMultL.Columns.Add("MltlC33", typeof(string));
+            DTMultL.Columns.Add("MltlC34", typeof(string));
+            DTMultL.Columns.Add("MltlC35", typeof(string));
+            DTMultL.Columns.Add("MltlC36", typeof(string));
+            DTMultL.Columns.Add("MltlC37", typeof(string));
+            DTMultL.Columns.Add("MltlC38", typeof(string));
+            DTMultL.Columns.Add("MltlC39", typeof(string));
+            if (DTMultL.Rows.Count == 0)
+            { DTMultL.Rows.Add(0, "01", "", "03", "", "", "06", "", "", "09", "", "11", "12", "13", "", "", "16", "", "", "19", ""); }
+
+            ViewState["DTMultL"] = DTMultL;
+        }
         protected void IbtCerrarPrint_Click(object sender, ImageClickEventArgs e)
-        { MlVwSt.ActiveViewIndex = 0; }
+        { MlVwSt.ActiveViewIndex = 0; Page.Title = ViewState["PageTit"].ToString(); }
         protected void BtnImpStsStdr_Click(object sender, EventArgs e)
         {
             try
             {
+                Page.Title = ViewState["PageTit"].ToString();
                 if (ViewState["CONSULTA"].ToString().Equals("N")) { return; }
+
+                CampoMultiL();
+                DTMultL = (DataTable)ViewState["DTMultL"];
                 string StSql = "";
                 string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
                 DataSet ds = new DataSet();
@@ -509,7 +572,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 using (SqlConnection SCnx1 = new SqlConnection(Cnx.GetConex()))
                 {
                     ReportParameter[] parameters = new ReportParameter[35];
-
                     parameters[0] = new ReportParameter("PrmCia", Session["NomCiaPpal"].ToString().Trim());
                     parameters[1] = new ReportParameter("PrmNit", Session["Nit77Cia"].ToString().Trim());
                     parameters[2] = new ReportParameter("PrmImg", VbLogo, true);
@@ -545,6 +607,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                     parameters[32] = new ReportParameter("RteRmnD", ViewState["RteRmnD"].ToString());
                     parameters[33] = new ReportParameter("RteOT", ViewState["RteOT"].ToString());
                     parameters[34] = new ReportParameter("RteProy", ViewState["RteProy"].ToString());
+                    
+                    DataRow DR = DTMultL.AsEnumerable().Where(r => ((int)r["ID"]).Equals(0)).First();
+                    if (Session["FormatFecha"].ToString().Equals("101")) { DR["MltlC32"] = "MM/dd/yyyy HH:mm"; }
+                    else { { DR["MltlC32"] = "dd/MM/yyyy HH:mm"; } }
+
+                    if (Session["FormatFecha"].ToString().Equals("101")) { DR["MltlC33"] = "MM/dd/yyyy"; }
+                    else { { DR["MltlC33"] = "dd/MM/yyyy"; } }
 
                     StSql = "EXEC SP_StatusReport_WEB @CodHk,@UltFech,'NO',@PromUtlH,@PromUtlC,@PromUtlAPU,@Usu,'',@Grupo,@Order,'I', @ICC";
                     using (SqlCommand SC = new SqlCommand(StSql, SCnx1))
@@ -554,7 +623,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         if (RdbStsProy.Checked == true) { VbOrden = "PROYECCION"; }
                         if (RdbStsDescrip.Checked == true) { VbOrden = "DESCRIPCION"; }
                         SC.Parameters.AddWithValue("@CodHk", DdlStsHK.Text);
-                        SC.Parameters.AddWithValue("@UltFech", TxtStsFecCarga.Text.Trim());
+                        SC.Parameters.AddWithValue("@UltFech", Convert.ToDateTime(TxtStsFecCarga.Text.Trim()));
                         SC.Parameters.AddWithValue("@PromUtlH", TxtStsUtilDiaHr.Text);
                         SC.Parameters.AddWithValue("@PromUtlC", TxtStsUtilDiaCc.Text);
                         SC.Parameters.AddWithValue("@PromUtlAPU", TxtStsUtilDiaAPU.Text);
@@ -570,6 +639,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             RvwPrint.LocalReport.ReportPath = Server.MapPath("~/Report/Ing/Status_Std.rdlc");   //"Forms /Ingenieria/Informe/Status_Std.rdlc";
                             RvwPrint.LocalReport.DataSources.Clear();
                             RvwPrint.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
+                            RvwPrint.LocalReport.DataSources.Add(new ReportDataSource("DataSet2", DTMultL));
                             RvwPrint.LocalReport.SetParameters(parameters);
                             RvwPrint.LocalReport.Refresh();
                         }
@@ -583,6 +653,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
+                Page.Title = ViewState["PageTit"].ToString();
                 if (ViewState["CONSULTA"].ToString().Equals("N")) { return; }
                 string StSql = "";
                 string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
@@ -623,6 +694,15 @@ namespace _77NeoWeb.Forms.Ingenieria
                     parameters[29] = new ReportParameter("RteOT", ViewState["RteOT"].ToString());
                     parameters[30] = new ReportParameter("RteProy", ViewState["RteProy"].ToString());
 
+                    CampoMultiL();
+                    DTMultL = (DataTable)ViewState["DTMultL"];
+                    DataRow DR = DTMultL.AsEnumerable().Where(r => ((int)r["ID"]).Equals(0)).First();
+                    if (Session["FormatFecha"].ToString().Equals("101")) { DR["MltlC32"] = "MM/dd/yyyy HH:mm"; }
+                    else { { DR["MltlC32"] = "dd/MM/yyyy HH:mm"; } }
+
+                    if (Session["FormatFecha"].ToString().Equals("101")) { DR["MltlC33"] = "MM/dd/yyyy"; }
+                    else { { DR["MltlC33"] = "dd/MM/yyyy"; } }
+
                     StSql = "EXEC SP_StatusReport_WEB @CodHk,@UltFech,'NO',@PromUtlH,@PromUtlC,@PromUtlAPU,@Usu,'',@Grupo,@Order,'I', @ICC";
                     using (SqlCommand SC = new SqlCommand(StSql, SCnx1))
                     {
@@ -631,7 +711,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         if (RdbStsProy.Checked == true) { VbOrden = "PROYECCION"; }
                         if (RdbStsDescrip.Checked == true) { VbOrden = "DESCRIPCION"; }
                         SC.Parameters.AddWithValue("@CodHk", DdlStsHK.Text);
-                        SC.Parameters.AddWithValue("@UltFech", TxtStsFecCarga.Text.Trim());
+                        SC.Parameters.AddWithValue("@UltFech", Convert.ToDateTime(TxtStsFecCarga.Text.Trim()));
                         SC.Parameters.AddWithValue("@PromUtlH", TxtStsUtilDiaHr.Text);
                         SC.Parameters.AddWithValue("@PromUtlC", TxtStsUtilDiaCc.Text);
                         SC.Parameters.AddWithValue("@PromUtlAPU", TxtStsUtilDiaAPU.Text);
@@ -647,6 +727,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             RvwPrint.LocalReport.ReportPath = Server.MapPath("~/Report/Ing/Status_Compr.rdlc");
                             RvwPrint.LocalReport.DataSources.Clear();
                             RvwPrint.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
+                            RvwPrint.LocalReport.DataSources.Add(new ReportDataSource("DataSet2", DTMultL));
                             RvwPrint.LocalReport.SetParameters(parameters);
                             RvwPrint.LocalReport.Refresh();
                         }
@@ -704,12 +785,21 @@ namespace _77NeoWeb.Forms.Ingenieria
                     parameters[33] = new ReportParameter("RteOT", ViewState["RteOT"].ToString());
                     parameters[34] = new ReportParameter("RteProy", ViewState["RteProy"].ToString());
 
+                    CampoMultiL();
+                    DTMultL = (DataTable)ViewState["DTMultL"];
+                    DataRow DR = DTMultL.AsEnumerable().Where(r => ((int)r["ID"]).Equals(0)).First();
+                    if (Session["FormatFecha"].ToString().Equals("101")) { DR["MltlC32"] = "MM/dd/yyyy HH:mm"; }
+                    else { { DR["MltlC32"] = "dd/MM/yyyy HH:mm"; } }
+
+                    if (Session["FormatFecha"].ToString().Equals("101")) { DR["MltlC33"] = "MM/dd/yyyy"; }
+                    else { { DR["MltlC33"] = "dd/MM/yyyy"; } }
+
                     StSql = "EXEC SP_StatusReport_WEB @CodHk,@UltFech,'NO',@PromUtlH,@PromUtlC,@PromUtlAPU,@Usu,'',@Grupo,@Order,'I', @ICC";
                     using (SqlCommand SC = new SqlCommand(StSql, SCnx1))
                     {
                         string VbOrden = "GRUPOS";
                         SC.Parameters.AddWithValue("@CodHk", DdlStsHK.Text);
-                        SC.Parameters.AddWithValue("@UltFech", TxtStsFecCarga.Text.Trim());
+                        SC.Parameters.AddWithValue("@UltFech", Convert.ToDateTime(TxtStsFecCarga.Text.Trim()));
                         SC.Parameters.AddWithValue("@PromUtlH", TxtStsUtilDiaHr.Text);
                         SC.Parameters.AddWithValue("@PromUtlC", TxtStsUtilDiaCc.Text);
                         SC.Parameters.AddWithValue("@PromUtlAPU", TxtStsUtilDiaAPU.Text);
@@ -725,6 +815,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             RvwPrint.LocalReport.ReportPath = Server.MapPath("~/Report/Ing/Status_Grupos.rdlc");   //"Forms /Ingenieria/Informe/Status_Std.rdlc";
                             RvwPrint.LocalReport.DataSources.Clear();
                             RvwPrint.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
+                            RvwPrint.LocalReport.DataSources.Add(new ReportDataSource("DataSet2", DTMultL));
                             RvwPrint.LocalReport.SetParameters(parameters);
                             RvwPrint.LocalReport.Refresh();
                         }
@@ -963,6 +1054,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         //**************************** Asignar OT a PPT REPA *******************************
         protected void BindDdlOTAsig()
         {
+            DSTGrl = (DataSet)ViewState["DSTGrl"];
             DdlAsigOTPPT.DataSource = DSTGrl.Tables[3];
             DdlAsigOTPPT.DataTextField = "CodOT";
             DdlAsigOTPPT.DataValueField = "CodNumOrdenTrab";
@@ -1258,6 +1350,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         { BindDdlLiberarOT(); MlVwSt.ActiveViewIndex = 4; }
         protected void BindDdlLiberarOT()
         {
+            DSTGrl = (DataSet)ViewState["DSTGrl"];
             DdlLiberarOTNum.DataSource = DSTGrl.Tables[4];
             DdlLiberarOTNum.DataTextField = "OT";
             DdlLiberarOTNum.DataValueField = "CodOT";

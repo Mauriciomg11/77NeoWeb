@@ -309,11 +309,11 @@ namespace _77NeoWeb.prg
         public string GetProduccion() { return Produccion; }
         //******************* cONEXION TEMPORAL ********
         public string GetUsr() { return "00000082"; }//00000082|00000133 | 00000129 |
-        public int GetIdCia() { return 3; }// 1 TwoGoWo |21 Demp |2 HCT PRUEBA| 12 ADA | 20 HCT
-        public string GetMonedLcl() { return "USD"; }//  "COP|USD"
-        public int GetFormatFecha() { return 101; }// 103 formato europeo dd/MM/yyyy | 101 formato EEUU M/dd/yyyyy
-        public string GetNit() { return "P93000086218"; } // 901338233-1 TwoGoWo |811035879-1 Demp |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT |P93000086218 - ALCA
-        public string GetBD() { return "DbNeoDempV2"; }//|DbNeoDempV2  |DbNeoAda | DbNeoHCT ||| BDNeoW
+        public int GetIdCia() { return 12; }// 1 TwoGoWo |21 Demp |2 HCT PRUEBA| 12 ADA | 20 HCT
+        public string GetMonedLcl() { return "COP"; }//  "COP|USD"
+        public int GetFormatFecha() { return 103; }// 103 formato europeo dd/MM/yyyy | 101 formato EEUU M/dd/yyyyy
+        public string GetNit() { return "800019344-4"; } // 901338233-1 TwoGoWo |811035879-1 Demp |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT |P93000086218 - ALCA
+        public string GetBD() { return "DbNeoAda"; }//|DbNeoDempV2  |DbNeoAda | DbNeoHCT ||| BDNeoW
         public string GetSvr() { return "77NEO01"; }//  "77NEO01"; ||| 23.102.100.143
         public string GetUsSvr() { return "sa"; }//  "sa"
         public string GetPas() { return "admindemp"; }//"admindemp";|||Medellin2021**
