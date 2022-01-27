@@ -29,6 +29,7 @@
             margin-left: 1%;
             height: 8%;
         }
+
         .CentrarSinConfg {
             position: absolute;
             left: 50%;
@@ -63,7 +64,10 @@
             <div class="CentrarEncabezado DivMarco">
                 <div class="row">
                     <div class="col-sm-2">
-                        <asp:Button ID="BtnSinConfigurar" CssClass="btn btn-outline-primary" runat="server" Text="Sin configurar" Width="100%" OnClick="BtnSinConfigurar_Click" />
+                        <asp:Button ID="BtnSinConfigurar" CssClass="btn btn-primary Font_btnCrud" runat="server" Text="Sin configurar" Width="100%" OnClick="BtnSinConfigurar_Click" OnClientClick="target ='';" />
+                    </div>
+                    <div class="col-sm-2">
+                        <asp:Button ID="BtnAbrirElem" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnAbrirElem_Click" OnClientClick="target ='';" Text="Elemento" />
                     </div>
                     <div class="col-sm-2">
                     </div>
@@ -150,12 +154,12 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1SinConfigurar" runat="server">
-                       <asp:ImageButton ID="IbtCloseSinConfg" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCloseSinConfg_Click" />
+                    <asp:ImageButton ID="IbtCloseSinConfg" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCloseSinConfg_Click" />
                     <div class="CentrarSinConfg DivMarco">
                         <h6 class="TextoSuperior">
                             <asp:Label ID="LblTitSinConf" runat="server" Text="Elementos sin asingar fecha vencimiento" />
                         </h6>
-                           <div class="GridDis">
+                        <div class="GridDis">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <asp:GridView ID="GrdSinConfg" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false"
@@ -205,7 +209,7 @@
                                                 <ItemTemplate>
                                                     <asp:Label Text='<%# Eval("Cantidad") %>' runat="server" Width="100%" />
                                                 </ItemTemplate>
-                                            </asp:TemplateField>                                           
+                                            </asp:TemplateField>
                                         </Columns>
                                         <FooterStyle CssClass="GridFooterStyle" />
                                         <HeaderStyle CssClass="GridCabecera" />

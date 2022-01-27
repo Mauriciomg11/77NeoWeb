@@ -90,24 +90,36 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     LblTipo.Text = bO.Equals("LblTipo") ? bT : LblTipo.Text;
                     BtnSinConfigurar.Text = bO.Equals("BtnSinConfigurar") ? bT : BtnSinConfigurar.Text;
                     BtnSinConfigurar.ToolTip = bO.Equals("BtnSinConfigurarTT") ? bT : BtnSinConfigurar.ToolTip;
+                    BtnAbrirElem.Text = bO.Equals("BtnAbrirElem") ? bT : BtnAbrirElem.Text;
+                    BtnAbrirElem.ToolTip = bO.Equals("BtnAbrirElemTT") ? bT : BtnAbrirElem.ToolTip;
                     LblTitProxVenc.Text = bO.Equals("LblTitProxVenc") ? bT : LblTitProxVenc.Text;
                     LblTitSinConf.Text = bO.Equals("LblTitSinConf") ? bT : LblTitSinConf.Text;
                     GrdProxVenc.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdProxVenc.EmptyDataText;
                     GrdSinConfg.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdSinConfg.EmptyDataText;
                     GrdProxVenc.Columns[0].HeaderText = bO.Equals("TipoMstr") ? bT : GrdProxVenc.Columns[0].HeaderText;
-                    GrdSinConfg.Columns[0].HeaderText = bO.Equals("TipoMstr") ? bT : GrdProxVenc.Columns[0].HeaderText;
-                    GrdSinConfg.Columns[3].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdProxVenc.Columns[3].HeaderText;
+                    GrdSinConfg.Columns[0].HeaderText = bO.Equals("TipoMstr") ? bT : GrdSinConfg.Columns[0].HeaderText;
+                   
+                    GrdProxVenc.Columns[2].HeaderText = bO.Equals("GrdSnLote") ? bT : GrdProxVenc.Columns[2].HeaderText;
+                    GrdSinConfg.Columns[2].HeaderText = bO.Equals("GrdSnLote") ? bT : GrdSinConfg.Columns[2].HeaderText;
+                   
+                    GrdSinConfg.Columns[3].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdSinConfg.Columns[3].HeaderText;
                     GrdProxVenc.Columns[3].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdProxVenc.Columns[3].HeaderText;
+                   
                     GrdProxVenc.Columns[4].HeaderText = bO.Equals("Descripcion") ? bT : GrdProxVenc.Columns[4].HeaderText;
                     GrdSinConfg.Columns[4].HeaderText = bO.Equals("Descripcion") ? bT : GrdSinConfg.Columns[4].HeaderText;
+                    
                     GrdSinConfg.Columns[5].HeaderText = bO.Equals("GrdFecVen") ? bT : GrdSinConfg.Columns[5].HeaderText;
                     GrdProxVenc.Columns[5].HeaderText = bO.Equals("GrdFecVen") ? bT : GrdProxVenc.Columns[5].HeaderText;
+                   
                     GrdProxVenc.Columns[6].HeaderText = bO.Equals("AlmacenMstr") ? bT : GrdProxVenc.Columns[6].HeaderText;
-                    GrdSinConfg.Columns[6].HeaderText = bO.Equals("AlmacenMstr") ? bT : GrdProxVenc.Columns[6].HeaderText;
-                    GrdSinConfg.Columns[7].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdProxVenc.Columns[7].HeaderText;
+                    GrdSinConfg.Columns[6].HeaderText = bO.Equals("AlmacenMstr") ? bT : GrdSinConfg.Columns[6].HeaderText;
+                   
+                    GrdSinConfg.Columns[7].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdSinConfg.Columns[7].HeaderText;
                     GrdProxVenc.Columns[7].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdProxVenc.Columns[7].HeaderText;
+                   
                     GrdProxVenc.Columns[8].HeaderText = bO.Equals("CantMst") ? bT : GrdProxVenc.Columns[8].HeaderText;
                     GrdSinConfg.Columns[8].HeaderText = bO.Equals("CantMst") ? bT : GrdSinConfg.Columns[8].HeaderText;
+                  
                     GrdProxVenc.Columns[9].HeaderText = bO.Equals("GrdRemnt") ? bT : GrdProxVenc.Columns[9].HeaderText;
                     IbtCloseSinConfg.ToolTip = bO.Equals("BtnCerrarMst") ? bT : IbtCloseSinConfg.ToolTip;
                 }
@@ -208,5 +220,12 @@ namespace _77NeoWeb.Forms.InventariosCompras
         }
         protected void IbtCloseSinConfg_Click(object sender, ImageClickEventArgs e)
         { MultVw.ActiveViewIndex = 0; BtnSinConfigurar.Visible = true; }
+
+        protected void BtnAbrirElem_Click(object sender, EventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string SP = "window.open('/Forms/InventariosCompras/FrmElemento.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), SP, true);
+        }
     }
 }

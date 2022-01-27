@@ -465,13 +465,6 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtHistorico.Enabled = false;
             TxtHistorico.Text = "";
         }
-        //public bool IsIENumerableLleno(IEnumerable<DataRow> ieNumerable)
-        //{
-        //    bool isFull = false;
-        //    foreach (DataRow item in ieNumerable)
-        //    { isFull = true; break; }
-        //    return isFull;
-        //}
         private decimal LRemanente, LRemanente1, LremanenteDia, LremanenteDia1, LCorridoDias, LCorridoDias1, LCorrido, LCorrido1;
         protected void Cumplimiento(int Id, decimal Ext, decimal ExtDia)
         {
@@ -647,7 +640,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 { DTBusq = Result.CopyToDataTable(); }
 
                 //foreach (DataRow SDR in Result)
-               // { DTBusq.ImportRow(SDR); }
+                // { DTBusq.ImportRow(SDR); }
 
                 DdlBusq.DataSource = DTBusq;
                 DdlBusq.DataTextField = "Servicio";
@@ -755,10 +748,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void ActivarBotones(bool In, bool Md, bool El, bool Ip, bool Otr)
         {
-            if (!ViewState["TIPO"].ToString().Equals("S"))
-            {
-                IbtAdd.Enabled = In;
-            }
+            if (!ViewState["TIPO"].ToString().Equals("S")) { IbtAdd.Enabled = In; }
             IbtUpdate.Enabled = Md;
             IbtDelete.Enabled = El;
             IbtFind.Enabled = Otr;
@@ -773,6 +763,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             GrdSN.Enabled = Otr;
             GrdHKAsig.Enabled = Otr;
             GrdAdj.Enabled = Otr;
+            if (ViewState["TIPO"].ToString().Equals("A")) { BtnConfigContdrInic.Enabled = Otr; }
         }
         protected void ActivarCampos(bool Ing, bool Edi, string accion)
         {
@@ -830,7 +821,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlTipo.Text = "0";
             TxtEstadoOT.Text = "";
             TxtMatric.Text = "";
-            BtnConfigContdrInic.Visible = false;
+            // BtnConfigContdrInic.Enabled = false;
         }
         protected void ValidarSvcManto(string Accion)
         {
@@ -1179,7 +1170,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 }
             }
-        }       
+        }
         protected void IbtPrint_Click(object sender, ImageClickEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -1586,7 +1577,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             Page.Title = ViewState["PageTit"].ToString(); TxtFecVenPP.Focus();
                             return;
                         }
-                        ViewState["FechaVenc"] = Convert.ToDateTime(TxtFecVenPP.Text.Trim());                       
+                        ViewState["FechaVenc"] = Convert.ToDateTime(TxtFecVenPP.Text.Trim());
                     }
                     // validar
                     ValidarHK("INSERT");
@@ -1752,7 +1743,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                         Page.Title = ViewState["PageTit"].ToString(); TxtFecVen.Focus();
                         return;
                     }
-                    ViewState["FechaVenc"] = Convert.ToDateTime(TxtFecVen.Text.Trim()); }
+                    ViewState["FechaVenc"] = Convert.ToDateTime(TxtFecVen.Text.Trim());
+                }
                 // validar
                 ValidarHK("UPDATE");
                 if (ViewState["Validar"].Equals("N"))
@@ -1971,7 +1963,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         TxtND.Enabled = false;
                         TextBox TxtED = (e.Row.FindControl("TxtExtDia") as TextBox);
                         TxtED.ReadOnly = true;
-                        TxtED.Enabled = false;                        
+                        TxtED.Enabled = false;
                         TxtFecVen.Enabled = false;
                         CheckBox CkRest = (e.Row.FindControl("CkbReset") as CheckBox);
                         CkRest.Enabled = false;
@@ -1986,7 +1978,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Result = Idioma.Select("Objeto= 'IbtCancel'");
                     foreach (DataRow row in Result)
                     { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
-                   
+
                     TxtFecVen.Text = Cnx.ReturnFecha(DRVC["FechaVencimiento"].ToString().Trim().Equals("") ? "01/01/1900" : DRVC["FechaVencimiento"].ToString().Trim());
 
                 }
@@ -3445,7 +3437,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             if (ViewState["TIPO"].ToString().Equals("A"))
             {
                 TblBusqHK.Visible = true;
-                RdbBusqDes.Checked = true;               
+                RdbBusqDes.Checked = true;
                 TblBusqPN.Visible = false;
                 TblBusqSN.Visible = false;
             }

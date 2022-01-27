@@ -718,20 +718,29 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 {
                     string VbLic = "", VbModel = "", VbEspec = "", VBQuery = "";
                     double VbNNum = 0;
+                    TextBox TxtFecVenPP = (GrdLicencias.FooterRow.FindControl("TxtFecVenPP") as TextBox);
                     DateTime VbFechaVenc;
                     VbLic = (GrdLicencias.FooterRow.FindControl("DdlLicenRFPP") as DropDownList).Text.Trim();
                     VbNNum = Convert.ToDouble((GrdLicencias.FooterRow.FindControl("TxtNumPP") as TextBox).Text.Trim());
-                    if (!(GrdLicencias.FooterRow.FindControl("TxtFecVenPP") as TextBox).Text.Trim().Equals(""))
-                    {
-                        VbFechaVenc = Convert.ToDateTime((GrdLicencias.FooterRow.FindControl("TxtFecVenPP") as TextBox).Text.Trim());
-                    }
+                    if (!TxtFecVenPP.Text.Trim().Equals("")) { VbFechaVenc = Convert.ToDateTime(TxtFecVenPP.Text.Trim()); }
                     else
                     {
                         DataRow[] Result = Idioma.Select("Objeto= 'Mens12Persn'");
                         foreach (DataRow row in Result)
                         { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una fecha de vencimiento.
+                        TxtFecVenPP.Focus(); return;
+                    }
+                    string VbMnsj = Cnx.ValidarFechas2(TxtFecVenPP.Text.Trim(), "", 1);
+                    if (!VbMnsj.ToString().Trim().Equals(""))
+                    {
+                        DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                        foreach (DataRow row in Result)
+                        { VbMnsj = row["Texto"].ToString().Trim(); }
+                        ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                        Page.Title = ViewState["PageTit"].ToString(); TxtFecVenPP.Focus();
                         return;
                     }
+
                     VbModel = (GrdLicencias.FooterRow.FindControl("TxtModPP") as TextBox).Text.Trim();
                     VbEspec = (GrdLicencias.FooterRow.FindControl("TxtEspecPP") as TextBox).Text.Trim();
 
@@ -821,15 +830,25 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar un numero válido.
                 return;
             }
-            if (!(GrdLicencias.Rows[e.RowIndex].FindControl("TxtFecVen") as TextBox).Text.Trim().Equals(""))
-            {
-                VbFechaVenc = Convert.ToDateTime((GrdLicencias.Rows[e.RowIndex].FindControl("TxtFecVen") as TextBox).Text.Trim());
-            }
+            TextBox TxtFecVen = (GrdLicencias.Rows[e.RowIndex].FindControl("TxtFecVen") as TextBox);
+            if (!TxtFecVen.Text.Trim().Equals(""))
+            { VbFechaVenc = Convert.ToDateTime(TxtFecVen.Text.Trim()); }
             else
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens12Persn'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una fecha de vencimiento.
+                TxtFecVen.Focus(); return;
+            }
+
+            string VbMnsj = Cnx.ValidarFechas2(TxtFecVen.Text.Trim(), "", 1);
+            if (!VbMnsj.ToString().Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                foreach (DataRow row in Result)
+                { VbMnsj = row["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                Page.Title = ViewState["PageTit"].ToString(); TxtFecVen.Focus();
                 return;
             }
             Cnx.SelecBD();
@@ -967,6 +986,11 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 Result = Idioma.Select("Objeto= 'IbtCancel'");
                 foreach (DataRow row in Result)
                 { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
+
+                DataRowView DRV = e.Row.DataItem as DataRowView;
+                TextBox TxtFecVen = (e.Row.FindControl("TxtFecVen") as TextBox);
+                if (TxtFecVen != null)
+                { TxtFecVen.Text = Cnx.ReturnFecha(DRV["FechaExpedicion"].ToString().Trim().Equals("") ? "01/01/1900" : DRV["FechaExpedicion"].ToString().Trim()); }
             }
             if (e.Row.RowType == DataControlRowType.Footer)
             {
@@ -1027,14 +1051,25 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 string VBQuery = "";
                 DateTime VbFechaVenc;
                 string VbNombre = (GrdCursos.FooterRow.FindControl("DdlNombrePP") as DropDownList).Text.Trim();
-                if (!(GrdCursos.FooterRow.FindControl("TxtFecVenPP") as TextBox).Text.Trim().Equals(""))
-                { VbFechaVenc = Convert.ToDateTime((GrdCursos.FooterRow.FindControl("TxtFecVenPP") as TextBox).Text.Trim()); }
+                TextBox TxtFecVenPP = (GrdCursos.FooterRow.FindControl("TxtFecVenPP") as TextBox);
+                if (!TxtFecVenPP.Text.Trim().Equals("")) { VbFechaVenc = Convert.ToDateTime(TxtFecVenPP.Text.Trim()); }
                 else
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens12Persn'");
                     foreach (DataRow row in Result)
                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una fecha de vencimiento.
-                    BindDCurso(TxtCodUsu.Text.Trim()); PerfilesGrid(); return;
+                    BindDCurso(TxtCodUsu.Text.Trim()); PerfilesGrid(); TxtFecVenPP.Focus(); return;
+                }
+
+                string VbMnsj = Cnx.ValidarFechas2(TxtFecVenPP.Text.Trim(), "", 1);
+                if (!VbMnsj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { VbMnsj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFecVenPP.Focus();
+                    return;
                 }
 
                 if (VbNombre.Equals("0"))
@@ -1100,15 +1135,23 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             PerfilesGrid();
             DateTime VbFechaVenc;
             int VblId = Convert.ToInt32(GrdCursos.DataKeys[e.RowIndex].Value.ToString());
-            if (!(GrdCursos.Rows[e.RowIndex].FindControl("TxtFecVen") as TextBox).Text.Trim().Equals(""))
-            {
-                VbFechaVenc = Convert.ToDateTime((GrdCursos.Rows[e.RowIndex].FindControl("TxtFecVen") as TextBox).Text.Trim());
-            }
+            TextBox TxtFecVen = (GrdCursos.Rows[e.RowIndex].FindControl("TxtFecVen") as TextBox);
+            if (!TxtFecVen.Text.Trim().Equals("")) { VbFechaVenc = Convert.ToDateTime(TxtFecVen.Text.Trim()); }
             else
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens12Persn'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una fecha de vencimiento.
+                TxtFecVen.Focus(); return;
+            }
+            string VbMnsj = Cnx.ValidarFechas2(TxtFecVen.Text.Trim(), "", 1);
+            if (!VbMnsj.ToString().Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                foreach (DataRow row in Result)
+                { VbMnsj = row["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                Page.Title = ViewState["PageTit"].ToString(); TxtFecVen.Focus();
                 return;
             }
             Cnx.SelecBD();
@@ -1241,6 +1284,11 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 Result = Idioma.Select("Objeto= 'IbtCancel'");
                 foreach (DataRow row in Result)
                 { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
+
+                DataRowView DRV = e.Row.DataItem as DataRowView;
+                TextBox TxtFecVen = (e.Row.FindControl("TxtFecVen") as TextBox);
+                if (TxtFecVen != null)
+                { TxtFecVen.Text = Cnx.ReturnFecha(DRV["FechaVencDMY"].ToString().Trim().Equals("") ? "01/01/1900" : DRV["FechaVencDMY"].ToString().Trim()); }
             }
             if (e.Row.RowType == DataControlRowType.Footer)
             {

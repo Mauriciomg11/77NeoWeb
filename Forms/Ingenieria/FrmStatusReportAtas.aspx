@@ -317,7 +317,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6 CentarGridAsig table-responsive">
-                            <asp:GridView ID="GrdAsigOTPPT" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" DataKeyNames="IdSrvManto"
+                            <asp:GridView ID="GrdAsigOTPPT" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" DataKeyNames="IdSrvManto, CodNumOrdenTrab, IdPropuesta"
                                 CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="7" Width="100%"
                                 OnRowEditing="GrdAsigOTPPT_RowEditing" OnRowUpdating="GrdAsigOTPPT_RowUpdating" OnRowCancelingEdit="GrdAsigOTPPT_RowCancelingEdit"
                                 OnRowDataBound="GrdAsigOTPPT_RowDataBound" OnPageIndexChanging="GrdAsigOTPPT_PageIndexChanging">
@@ -332,18 +332,18 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="O.T.">
                                         <ItemTemplate>
-                                            <asp:Label Text='<%# Eval("CodNumOrdenTrab") %>' runat="server" Width="100%" Enabled="false" />
+                                            <asp:Label Text='<%# Eval("CodigoOT") %>' runat="server" Width="100%" Enabled="false" />
                                         </ItemTemplate>
                                         <EditItemTemplate>
-                                            <asp:Label ID="LblOT" Text='<%# Eval("CodNumOrdenTrab") %>' runat="server" Width="100%" Enabled="false" />
+                                            <asp:Label ID="LblOT" Text='<%# Eval("CodigoOT") %>' runat="server" Width="100%" Enabled="false" />
                                         </EditItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Propuesta">
                                         <ItemTemplate>
-                                            <asp:Label Text='<%# Eval("IdPropuesta") %>' runat="server" Width="100%" Enabled="false" />
+                                            <asp:Label Text='<%# Eval("CodigoPPT") %>' runat="server" Width="100%" Enabled="false" />
                                         </ItemTemplate>
                                         <EditItemTemplate>
-                                            <asp:Label ID="LblPPT" Text='<%# Eval("IdPropuesta") %>' runat="server" Width="100%" Enabled="false" />
+                                            <asp:Label ID="LblPPT" Text='<%# Eval("CodigoPPT") %>' runat="server" Width="100%" Enabled="false" />
                                         </EditItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Matrícula">
@@ -434,10 +434,10 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Propuesta">
                                         <ItemTemplate>
-                                            <asp:Label Text='<%# Eval("IdPropuesta") %>' runat="server" Width="100%" Enabled="false" />
+                                            <asp:Label Text='<%# Eval("CodigoPPT") %>' runat="server" Width="100%" Enabled="false" />
                                         </ItemTemplate>
                                         <EditItemTemplate>
-                                            <asp:Label ID="LblPPT" Text='<%# Eval("IdPropuesta") %>' runat="server" Width="100%" Enabled="false" />
+                                            <asp:Label ID="LblPPT" Text='<%# Eval("CodigoPPT") %>' runat="server" Width="100%" Enabled="false" />
                                         </EditItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Estado">
@@ -493,7 +493,8 @@
                         </div>
                         <div class="col-sm-2">
                             <asp:Label ID="LblLiberarPPT" runat="server" CssClass="LblEtiquet" Text="Propuesta" />
-                            <asp:TextBox ID="TxtLiberarPPT" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="100%" />
+                            <asp:TextBox ID="TxtLiberarPPT" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="100%" Visible="false" />
+                            <asp:TextBox ID="TxtLiberarCodPPT" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="100%" />
                         </div>
                         <div class="col-sm-1">
                             <asp:Label ID="LblBtnLiberar" runat="server" CssClass="LblEtiquet" Text="Ejecutar" />

@@ -217,8 +217,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ViewState["RteFecCum"] = bO.Equals("RteFecCum") ? bT : ViewState["RteFecCum"];
                     ViewState["RteTecnL"] = bO.Equals("RteTecnL") ? bT : ViewState["RteTecnL"];
                     ViewState["RteCodRef"] = bO.Equals("RteCodRef") ? bT : ViewState["RteCodRef"];
-                    ViewState["RteUndMed"] = bO.Equals("RteCantSol") ? bT : ViewState["RteCantSol"];
-                    ViewState["RteCantSol"] = bO.Equals("RteUndMed") ? bT : ViewState["RteUndMed"];
+                    ViewState["RteCantSol"] = bO.Equals("RteCantSol") ? bT : ViewState["RteCantSol"];
                     ViewState["RteUndMed"] = bO.Equals("RteUndMed") ? bT : ViewState["RteUndMed"];
                     ViewState["RteDispon"] = bO.Equals("RteDispon") ? bT : ViewState["RteDispon"];
                     ViewState["RteCantEntr"] = bO.Equals("RteCantEntr") ? bT : ViewState["RteCantEntr"];
@@ -654,7 +653,7 @@ namespace _77NeoWeb.Forms.Ingenieria
 
             DataTable DT = new DataTable();
             DT = DST.Tables[2].Clone();
-            DataRow[] DR = DST.Tables[2].Select("CodHKRva = " + DdlWSHK.Text.Trim() + " AND Orden LIKE '%" + TxtAsigOT_RTE.Text.Trim() + "%'");
+            DataRow[] DR = DST.Tables[2].Select("CodHKRva = " + DdlWSHK.Text.Trim() + " AND CodigoOT LIKE '%" + TxtAsigOT_RTE.Text.Trim() + "%'");
             if (IsIENumerableLleno(DR)) { DT = DR.CopyToDataTable(); }
 
             if (DT.Rows.Count > 0) { GrdServicios.DataSource = DT; GrdServicios.DataBind(); }
@@ -691,9 +690,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                             {
                                 try
                                 {
-                                    GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
-                                    int rowIndex = row.RowIndex;
-                                    VblOT = ((Label)row.FindControl("LblOT")).Text.ToString().Trim();
+                                    //GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
+                                    //VblOT = ((Label)row.FindControl("LblOT")).Text.ToString().Trim();
+                                    GridViewRow GVR = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                                    VblOT = GrdServicios.DataKeys[GVR.RowIndex].Values["Orden"].ToString().Trim();
+
                                     SC.Parameters.AddWithValue("@WS", TxtAsingOTWS.Text.Trim());
                                     SC.Parameters.AddWithValue("@HK", DdlWSHK.Text);
                                     SC.Parameters.AddWithValue("@OT", VblOT);
@@ -768,11 +769,12 @@ namespace _77NeoWeb.Forms.Ingenieria
 
             DataTable DT = new DataTable();
             DT = DST.Tables[3].Clone();
-            DataRow[] DR = DST.Tables[3].Select("CodHKRva = " + DdlWSHK.Text.Trim() + " AND Orden LIKE '%" + TxtAsigOT_RTE.Text.Trim() + "%'");
+            DataRow[] DR = DST.Tables[3].Select("CodHKRva = " + DdlWSHK.Text.Trim() + " AND CodigoRTE LIKE '%" + TxtAsigOT_RTE.Text.Trim() + "%'");
             if (IsIENumerableLleno(DR)) { DT = DR.CopyToDataTable(); }
 
-            if (DST.Tables[3].Rows.Count > 0) { GrdReportes.DataSource = DST.Tables[3]; GrdReportes.DataBind(); }
+            if (DT.Rows.Count > 0) { GrdReportes.DataSource = DT; GrdReportes.DataBind(); }
             else { GrdReportes.DataSource = null; GrdReportes.DataBind(); }
+
         }
         protected void RdbAsigRte_CheckedChanged(object sender, EventArgs e)
         { BIndDWSAOpen("SEL"); BIndDRtesSinAsingar(); GrdServicios.Visible = false; GrdReportes.Visible = true; }
@@ -797,9 +799,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                             {
                                 try
                                 {
-                                    GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
-                                    int rowIndex = row.RowIndex;
-                                    string VbRte = ((Label)row.FindControl("LblRte")).Text.ToString().Trim();
+                                    GridViewRow GVR = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                                    string VbRte = GrdReportes.DataKeys[GVR.RowIndex].Values["Orden"].ToString().Trim();
                                     SC.Parameters.AddWithValue("@WS", TxtAsingOTWS.Text.Trim());
                                     SC.Parameters.AddWithValue("@HK", DdlWSHK.Text);
                                     SC.Parameters.AddWithValue("@Rt", VbRte);
@@ -899,22 +900,32 @@ namespace _77NeoWeb.Forms.Ingenieria
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
                         string VBQuery = string.Format("EXEC INSERT_UPDATE_WORK_SHEET_WS @WS,@HK,@OT,@Rt,@Usu,@FV,@Ej,'UPDATE', @ICC");
-                        DateTime? FechaVence = Convert.ToDateTime("01/01/1900");
+
+                        TextBox TxtFecVence = (GrdOTRteWS.Rows[e.RowIndex].FindControl("TxtFecVence") as TextBox);
+                        string VbMnsj = Cnx.ValidarFechas2(TxtFecVence.Text.Trim().Equals("") ? "01/01/1900" : TxtFecVence.Text.Trim(), "", 1);
+                        if (!VbMnsj.ToString().Trim().Equals(""))
+                        {
+                            DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                            foreach (DataRow row in Result)
+                            { VbMnsj = row["Texto"].ToString().Trim(); }
+                            ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                            Page.Title = ViewState["PageTit"].ToString(); TxtFecVence.Focus();
+                            return;
+                        }
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
                             {
                                 string VbFuente = GrdOTRteWS.DataKeys[e.RowIndex].Values["FuenteWS"].ToString();
-                                if (!(GrdOTRteWS.Rows[e.RowIndex].FindControl("TxtFecVence") as TextBox).Text.Equals(""))
-                                { FechaVence = Convert.ToDateTime((GrdOTRteWS.Rows[e.RowIndex].FindControl("TxtFecVence") as TextBox).Text); }
-                                if (VbFuente.Trim().Equals("OT")) { VblOT = (GrdOTRteWS.Rows[e.RowIndex].FindControl("LblOtE") as Label).Text.Trim(); }
-                                else { VblRte = (GrdOTRteWS.Rows[e.RowIndex].FindControl("LblOtE") as Label).Text.Trim(); }
+
+                                if (VbFuente.Trim().Equals("OT")) { VblOT = GrdOTRteWS.DataKeys[e.RowIndex].Values["Orden"].ToString(); }
+                                else { VblRte = GrdOTRteWS.DataKeys[e.RowIndex].Values["Orden"].ToString(); }
                                 SC.Parameters.AddWithValue("@WS", TxtAsingOTWS.Text.Trim());
                                 SC.Parameters.AddWithValue("@HK", DdlWSHK.Text);
                                 SC.Parameters.AddWithValue("@OT", VblOT);
                                 SC.Parameters.AddWithValue("@Rt", VblRte);
                                 SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
-                                SC.Parameters.AddWithValue("@FV", FechaVence);
+                                SC.Parameters.AddWithValue("@FV", Convert.ToDateTime(TxtFecVence.Text.Trim().Equals("") ? "01/01/1900" : TxtFecVence.Text.Trim()));
                                 SC.Parameters.AddWithValue("@Ej", (GrdOTRteWS.Rows[e.RowIndex].FindControl("CkbPpl") as CheckBox).Checked == true ? "1" : "0");
                                 SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
 
@@ -1042,11 +1053,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRowView dr = e.Row.DataItem as DataRowView;
                 string VbCap = dr["FuenteWS"].ToString();
-                if (VbCap.Equals("RT"))
-                {
-                    e.Row.Cells[1].BackColor = System.Drawing.Color.Bisque;
-                    e.Row.Cells[6].BackColor = System.Drawing.Color.Bisque;
-                }
+                if (VbCap.Trim().Equals("RT"))
+                { e.Row.Cells[1].BackColor = System.Drawing.Color.Bisque; e.Row.Cells[6].BackColor = System.Drawing.Color.Bisque; }
+
                 DataRowView drE = e.Row.DataItem as DataRowView;
                 string VbPpl = drE["EJE"].ToString();
                 if (VbPpl.Equals("1")) { e.Row.Cells[0].BackColor = System.Drawing.Color.Red; }
@@ -1070,12 +1079,19 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ImageButton IbtUpdate = (e.Row.FindControl("IbtUpdate") as ImageButton);
                 DataRow[] Result = Idioma.Select("Objeto= 'IbtUpdate'");
                 foreach (DataRow row in Result) { IbtUpdate.ToolTip = row["Texto"].ToString().Trim(); }
+
                 ImageButton IbtCancel = (e.Row.FindControl("IbtCancel") as ImageButton);
                 Result = Idioma.Select("Objeto= 'IbtCancel'");
                 foreach (DataRow row in Result) { IbtCancel.ToolTip = row["Texto"].ToString().Trim(); }
+
+                DataRowView DRV = e.Row.DataItem as DataRowView;
+                TextBox TxtFecVence = (e.Row.FindControl("TxtFecVence") as TextBox);
+                string VbFte = DRV["FuenteWS"].ToString();
+                if (VbFte.Trim().Equals("RT")) { TxtFecVence.Enabled = false; TxtFecVence.ToolTip = "N/A"; }
+                TxtFecVence.Text = Cnx.ReturnFecha(DRV["FechaVencDMY"].ToString().Trim().Equals("") ? "01/01/1900" : DRV["FechaVencDMY"].ToString().Trim());
             }
         }
         protected void IbtCerrarImpresion_Click(object sender, ImageClickEventArgs e)
-        { MlVw.ActiveViewIndex = 0; }
+        { Page.Title = ViewState["PageTit"].ToString(); MlVw.ActiveViewIndex = 0; }
     }
 }

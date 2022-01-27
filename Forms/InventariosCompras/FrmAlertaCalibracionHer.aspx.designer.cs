@@ -42,6 +42,15 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected global::System.Web.UI.WebControls.Button BtnSinConfigurar;
 
         /// <summary>
+        /// Control BtnAbrirElem.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnAbrirElem;
+
+        /// <summary>
         /// Control LblTipo.
         /// </summary>
         /// <remarks>

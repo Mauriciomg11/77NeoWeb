@@ -234,8 +234,8 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class=" table-responsive Scroll">
-                                            <asp:GridView ID="GrdServicios" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false" DataKeyNames="FuenteWS,CodHKRva"
-                                                CssClass="DiseñoGrid table-sm" GridLines="Both" Width="100%" Visible="false"
+                                            <asp:GridView ID="GrdServicios" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false" 
+                                                DataKeyNames="FuenteWS,CodHKRva, Orden" CssClass="DiseñoGrid table-sm" GridLines="Both" Width="100%" Visible="false"
                                                 OnRowCommand="GrdServicios_RowCommand" OnRowDataBound="GrdServicios_RowDataBound">
                                                 <Columns>
                                                     <asp:TemplateField HeaderText="Servicio">
@@ -253,9 +253,9 @@
                                                             <asp:Label Text='<%# Eval("Sn") %>' runat="server" Width="100%" Enabled="false" />
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="OT">
+                                                    <asp:TemplateField HeaderText="OT" HeaderStyle-Width ="10%">
                                                         <ItemTemplate>
-                                                            <asp:Label ID="LblOT" Text='<%# Eval("Orden") %>' runat="server" />
+                                                            <asp:Label ID="LblOT" Text='<%# Eval("CodigoOT") %>' runat="server" />
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="Proyección">
@@ -274,8 +274,8 @@
                                                 <RowStyle CssClass="GridRowStyle" />
                                                 <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                                             </asp:GridView>
-                                            <asp:GridView ID="GrdReportes" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false" DataKeyNames="FuenteWS,CodHKRva"
-                                                CssClass="DiseñoGrid table-sm" GridLines="Both" Width="100%" Visible="false"
+                                            <asp:GridView ID="GrdReportes" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false" 
+                                                DataKeyNames="FuenteWS,CodHKRva, Orden" CssClass="DiseñoGrid table-sm" GridLines="Both" Width="100%" Visible="false"
                                                 OnRowCommand="GrdReportes_RowCommand" OnRowDataBound="GrdReportes_RowDataBound">
                                                 <Columns>
                                                     <asp:TemplateField HeaderText="Descripción del Reporte">
@@ -295,12 +295,12 @@
                                                     </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="Reporte">
                                                         <ItemTemplate>
-                                                            <asp:Label ID="LblRte" Text='<%# Eval("Orden") %>' runat="server" />
+                                                            <asp:Label ID="LblRte" Text='<%# Eval("CodigoRTE") %>' runat="server" />
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="Proyección">
                                                         <ItemTemplate>
-                                                            <asp:Label ID="LblProy" Text='<%# Eval("FechaProyectada") %>' runat="server" />
+                                                            <asp:Label ID="LblProy" Text='<%# Eval("Proyecc") %>' runat="server" />
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField>
@@ -322,7 +322,7 @@
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="lblTitOTWS" runat="server" Text="Ordenes de trabajo / Reportes asignados" /></h6>
                                 <div class="CentarGridAsig table-responsive Scroll">
-                                    <asp:GridView ID="GrdOTRteWS" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" DataKeyNames="Numerado,FuenteWS"
+                                    <asp:GridView ID="GrdOTRteWS" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" DataKeyNames="Numerado,FuenteWS, Orden"
                                         CssClass="DiseñoGrid table-sm" GridLines="Both" Width="100%" OnRowDeleting="GrdOTRteWS_RowDeleting"
                                         OnRowEditing="GrdOTRteWS_RowEditing" OnRowUpdating="GrdOTRteWS_RowUpdating" OnRowCancelingEdit="GrdOTRteWS_RowCancelingEdit"
                                         OnRowDataBound="GrdOTRteWS_RowDataBound">
@@ -377,10 +377,10 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="OT/RTE">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="LblOTRtP" Text='<%# Eval("Orden") %>' runat="server" Width="100%" Enabled="false" />
+                                                    <asp:Label ID="LblOTRtP" Text='<%# Eval("CodOTRTE") %>' runat="server" Width="100%" Enabled="false" />
                                                 </ItemTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:Label ID="LblOtE" Text='<%# Eval("Orden") %>' runat="server" Width="100%" Enabled="false" />
+                                                    <asp:Label ID="LblOtE" Text='<%# Eval("CodOTRTE") %>' runat="server" Width="100%" Enabled="false" />
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Estado">
@@ -396,9 +396,7 @@
                                                     <asp:Label Text='<%# Eval("FechaVenc") %>' runat="server" Width="100%" Enabled="false" />
                                                 </ItemTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="TxtFecVence" Text='<%# Eval("FechaVenc") %>' runat="server" Width="100%" Enabled="false" />
-                                                    <asp:ImageButton ID="IbtFecVence" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                                                    <ajaxToolkit:CalendarExtender ID="CalFecVence" runat="server" PopupButtonID="IbtFecVence" TargetControlID="TxtFecVence" Format="dd/MM/yyyy" CssClass="MyCalendar" />
+                                                    <asp:TextBox ID="TxtFecVence" Text='<%# Eval("FechaVencDMY") %>' runat="server" Width="100%" TextMode="Date" />
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="proyección">

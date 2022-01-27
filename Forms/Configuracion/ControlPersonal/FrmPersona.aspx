@@ -245,14 +245,10 @@
                                                 <asp:Label ID="LblFecVen" Text='<%# Eval("FechaExp") %>' runat="server" Width="100%" />
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="TxtFecVen" Text='<%# Eval("FechaExp") %>' runat="server" Width="75%" onkeypress="return Fecha(event);" Enabled="false" />
-                                                <asp:ImageButton ID="IbtFecha" runat="server" ImageUrl="~/Images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                                                <ajaxToolkit:CalendarExtender ID="CalFechV" runat="server" PopupButtonID="IbtFecha" TargetControlID="TxtFecVen" Format="dd/MM/yyyy" CssClass=" MyCalendar" />
+                                                <asp:TextBox ID="TxtFecVen" Text='<%# Eval("FechaExpedicion") %>' runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />                                              
                                             </EditItemTemplate>
                                             <FooterTemplate>
-                                                <asp:TextBox ID="TxtFecVenPP" runat="server" Width="75%" onkeypress="return Fecha(event);" Enabled="false" />
-                                                <asp:ImageButton ID="IbtFechaPP" runat="server" ImageUrl="~/Images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                                                <ajaxToolkit:CalendarExtender ID="CalFechVPP" runat="server" PopupButtonID="IbtFechaPP" TargetControlID="TxtFecVenPP" Format="dd/MM/yyyy" CssClass=" MyCalendar" />
+                                                <asp:TextBox ID="TxtFecVenPP" runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />                                               
                                             </FooterTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Modelo" HeaderStyle-Width="18%">
@@ -334,14 +330,10 @@
                                                 <asp:Label ID="LblFecVen" Text='<%# Eval("FechaVenc") %>' runat="server" Width="100%" />
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="TxtFecVen" Text='<%# Eval("FechaVenc") %>' runat="server" Width="75%" onkeypress="return Fecha(event);" Enabled="false" />
-                                                <asp:ImageButton ID="IbtFecha" runat="server" ImageUrl="~/Images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                                                <ajaxToolkit:CalendarExtender ID="CalFechV" runat="server" PopupButtonID="IbtFecha" TargetControlID="TxtFecVen" Format="dd/MM/yyyy" CssClass=" MyCalendar" />
+                                                <asp:TextBox ID="TxtFecVen" Text='<%# Eval("FechaVencDMY") %>' runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />                                                
                                             </EditItemTemplate>
                                             <FooterTemplate>
-                                                <asp:TextBox ID="TxtFecVenPP" runat="server" Width="75%" onkeypress="return Fecha(event);" Enabled="false" />
-                                                <asp:ImageButton ID="IbtFechaPP" runat="server" ImageUrl="~/Images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                                                <ajaxToolkit:CalendarExtender ID="CalFechVPP" runat="server" PopupButtonID="IbtFechaPP" TargetControlID="TxtFecVenPP" Format="dd/MM/yyyy" CssClass=" MyCalendar" />
+                                                <asp:TextBox ID="TxtFecVenPP" runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date"/>
                                             </FooterTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField FooterStyle-Width="15%">

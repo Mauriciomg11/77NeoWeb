@@ -14,7 +14,7 @@
     <Shape ID="DesignTable:OTMRO" ZOrder="12" X="0" Y="18" Height="257" Width="154" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
     <Shape ID="DesignTable:Status_Stdr" ZOrder="11" X="678" Y="49" Height="239" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
     <Shape ID="DesignTable:WSTrabajos" ZOrder="10" X="830" Y="46" Height="239" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
-    <Shape ID="DesignTable:WSRecurso" ZOrder="9" X="992" Y="43" Height="239" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="252" />
+    <Shape ID="DesignTable:WSRecurso" ZOrder="9" X="992" Y="43" Height="257" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
     <Shape ID="DesignTable:Advice" ZOrder="8" X="684" Y="337" Height="239" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
     <Shape ID="DesignTable:InformeManto" ZOrder="7" X="914" Y="347" Height="257" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
     <Shape ID="DesignTable:EncPPT" ZOrder="6" X="1096" Y="313" Height="257" Width="154" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />

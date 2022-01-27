@@ -85,6 +85,10 @@
           <DataField>CantidadEntregada</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Fuente2">
+          <DataField>Fuente2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DataSet1</rd:DataSetName>
@@ -434,7 +438,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!CodNumOrdenTrab.Value &amp; " | " &amp; Fields!Fuente.Value</Value>
+                                  <Value>=Fields!CodNumOrdenTrab.Value &amp; Fields!Fuente2.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Color>Blue</Color>
@@ -951,7 +955,7 @@
             <DataSetName>DataSet1</DataSetName>
             <Top>0.33927cm</Top>
             <Height>1.99375cm</Height>
-            <Width>19.11109cm</Width>
+            <Width>19.11107cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1321,7 +1325,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!NomModelo.Value, "DataSet1")</Value>
+                      <Value>=First(Fields!phkaeronave1.Value, "DataSet1")</Value>
                       <Style>
                         <FontSize>9pt</FontSize>
                       </Style>

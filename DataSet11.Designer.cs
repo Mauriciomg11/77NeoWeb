@@ -5490,6 +5490,8 @@ namespace _77NeoWeb {
             
             private global::System.Data.DataColumn columnCantidadEntregada;
             
+            private global::System.Data.DataColumn columnFuente2;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public WSRecursoDataTable() {
@@ -5661,6 +5663,14 @@ namespace _77NeoWeb {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Fuente2Column {
+                get {
+                    return this.columnFuente2;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -5713,7 +5723,8 @@ namespace _77NeoWeb {
                         string CantidadSolicitada, 
                         string CodUnidadMed, 
                         string Cantidad, 
-                        string CantidadEntregada) {
+                        string CantidadEntregada, 
+                        string Fuente2) {
                 WSRecursoRow rowWSRecursoRow = ((WSRecursoRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Titulo,
@@ -5732,7 +5743,8 @@ namespace _77NeoWeb {
                         CantidadSolicitada,
                         CodUnidadMed,
                         Cantidad,
-                        CantidadEntregada};
+                        CantidadEntregada,
+                        Fuente2};
                 rowWSRecursoRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowWSRecursoRow);
                 return rowWSRecursoRow;
@@ -5772,6 +5784,7 @@ namespace _77NeoWeb {
                 this.columnCodUnidadMed = base.Columns["CodUnidadMed"];
                 this.columnCantidad = base.Columns["Cantidad"];
                 this.columnCantidadEntregada = base.Columns["CantidadEntregada"];
+                this.columnFuente2 = base.Columns["Fuente2"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5811,6 +5824,8 @@ namespace _77NeoWeb {
                 base.Columns.Add(this.columnCantidad);
                 this.columnCantidadEntregada = new global::System.Data.DataColumn("CantidadEntregada", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCantidadEntregada);
+                this.columnFuente2 = new global::System.Data.DataColumn("Fuente2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFuente2);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -16756,6 +16771,22 @@ namespace _77NeoWeb {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Fuente2 {
+                get {
+                    try {
+                        return ((string)(this[this.tableWSRecurso.Fuente2Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Fuente2\' de la tabla \'WSRecurso\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableWSRecurso.Fuente2Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsTituloNull() {
                 return this.IsNull(this.tableWSRecurso.TituloColumn);
             }
@@ -16956,6 +16987,18 @@ namespace _77NeoWeb {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetCantidadEntregadaNull() {
                 this[this.tableWSRecurso.CantidadEntregadaColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsFuente2Null() {
+                return this.IsNull(this.tableWSRecurso.Fuente2Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetFuente2Null() {
+                this[this.tableWSRecurso.Fuente2Column] = global::System.Convert.DBNull;
             }
         }
         
