@@ -36,6 +36,10 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
+                    Session["!dC!@"] = Cnx.GetIdCia();
+                    Session["77IDM"] = Cnx.GetIdm();
+                    Session["MonLcl"] = Cnx.GetMonedLcl();// "COP|USD"
+                    Session["FormatFecha"] = Cnx.GetFormatFecha();// 103 formato europeo dd/MM/yyyy | 101 formato EEUU M/dd/yyyyy
                 }
             }
             if (!IsPostBack)
@@ -125,65 +129,75 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BindData(string Accion)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
-            string VbTxtSql, VbCodAnt;
-            if (Accion.Equals("UPD"))
+            try
             {
-                Cnx.SelecBD();
-                using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                string VbTxtSql, VbCodAnt;
+                if (Accion.Equals("UPD"))
                 {
-                    string VbHK;
-                    if (DdlAeronave.Text.Equals("")) { VbHK = ""; }
-                    else { VbHK = DdlAeronave.SelectedItem.Text.Trim(); }
-                    if (VbHK.Trim().Equals(""))
-                    { VbTxtSql = "EXEC Consultas_General 6, '', '', '',@Todo,@Di, @ICC, '06-01-2012', '06-01-2012'"; }
-                    else
-                    { VbTxtSql = "EXEC Consultas_General 6, @A, '', '',@Todo,@Di, @ICC, '06-01-2012', '06-01-2012'"; }
-
-                    SCnx.Open();
-                    using (SqlCommand SC = new SqlCommand(VbTxtSql, SCnx))
+                    Cnx.SelecBD();
+                    using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
                     {
-                        SC.Parameters.AddWithValue("@Todo", CkbVisualTodo.Checked == true ? 1 : 0);
-                        SC.Parameters.AddWithValue("@Di", TxtDiaVisual.Text);
-                        SC.Parameters.AddWithValue("@A", VbHK);
-                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                        using (SqlDataAdapter SDA = new SqlDataAdapter())
-                        {
-                            using (DataSet DST = new DataSet())
-                            {
-                                SDA.SelectCommand = SC;
-                                SDA.Fill(DST);
-                                DST.Tables[0].TableName = "Servicios";
-                                DST.Tables[1].TableName = "HK";
-                                DST.Tables[2].TableName = "SvcRst";
-                                DST.Tables[3].TableName = "UbicacionSinInst";
+                        string VbHK;
+                        if (DdlAeronave.Text.Equals("")) { VbHK = ""; }
+                        else { VbHK = DdlAeronave.SelectedItem.Text.Trim(); }
+                        if (VbHK.Trim().Equals(""))
+                        { VbTxtSql = "EXEC Consultas_General 6, '', '', '',@Todo,@Di, @ICC, '06-01-2012', '06-01-2012'"; }
+                        else
+                        { VbTxtSql = "EXEC Consultas_General 6, @A, '', '',@Todo,@Di, @ICC, '06-01-2012', '06-01-2012'"; }
 
-                                ViewState["DST"] = DST;
+                        SCnx.Open();
+                        using (SqlCommand SC = new SqlCommand(VbTxtSql, SCnx))
+                        {
+                            SC.Parameters.AddWithValue("@Todo", CkbVisualTodo.Checked == true ? 1 : 0);
+                            SC.Parameters.AddWithValue("@Di", TxtDiaVisual.Text);
+                            SC.Parameters.AddWithValue("@A", VbHK);
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                            using (SqlDataAdapter SDA = new SqlDataAdapter())
+                            {
+                                using (DataSet DST = new DataSet())
+                                {
+                                    SDA.SelectCommand = SC;
+                                    SDA.Fill(DST);
+                                    DST.Tables[0].TableName = "Servicios";
+                                    DST.Tables[1].TableName = "HK";
+                                    DST.Tables[2].TableName = "SvcRst";
+                                    DST.Tables[3].TableName = "UbicacionSinInst";
+
+                                    ViewState["DST"] = DST;
+                                }
                             }
                         }
                     }
                 }
+                DST = (DataSet)ViewState["DST"];
+                if (DST.Tables[0].Rows.Count > 0) { GrdDatos.DataSource = DST.Tables[0]; GrdDatos.DataBind(); }
+                else
+                {
+                    DST.Tables[0].Rows.Add(DST.Tables[0].NewRow());
+                    GrdDatos.DataSource = DST.Tables[0];
+                    GrdDatos.DataBind();
+                    GrdDatos.Rows[0].Cells.Clear();
+                    GrdDatos.Rows[0].Cells.Add(new TableCell());
+                    DataRow[] Result = Idioma.Select("Objeto= 'SinRegistros'");
+                    foreach (DataRow row in Result)
+                    { GrdDatos.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
+                    GrdDatos.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                }
+                VbCodAnt = DdlAeronave.Text.Trim();
+                DdlAeronave.DataSource = DST.Tables[1];
+                DdlAeronave.DataTextField = "Matricula";
+                DdlAeronave.DataValueField = "CodAeronave";
+                DdlAeronave.DataBind();
+                DdlAeronave.Text = VbCodAnt;
             }
-            DST = (DataSet)ViewState["DST"];
-            if (DST.Tables[0].Rows.Count > 0) { GrdDatos.DataSource = DST.Tables[0]; GrdDatos.DataBind(); }
-            else
+            catch (Exception Ex)
             {
-                DST.Tables[0].Rows.Add(DST.Tables[0].NewRow());
-                GrdDatos.DataSource = DST.Tables[0];
-                GrdDatos.DataBind();
-                GrdDatos.Rows[0].Cells.Clear();
-                GrdDatos.Rows[0].Cells.Add(new TableCell());
-                DataRow[] Result = Idioma.Select("Objeto= 'SinRegistros'");
+                DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
                 foreach (DataRow row in Result)
-                { GrdDatos.Rows[0].Cells[0].Text = row["Texto"].ToString(); }
-                GrdDatos.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
+                Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "Consulta Proximos cumplimientos", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
             }
-            VbCodAnt = DdlAeronave.Text.Trim();
-            DdlAeronave.DataSource = DST.Tables[1];
-            DdlAeronave.DataTextField = "Matricula";
-            DdlAeronave.DataValueField = "CodAeronave";
-            DdlAeronave.DataBind();
-            DdlAeronave.Text = VbCodAnt;
         }
         protected void BtnConsultar_Click(object sender, EventArgs e)
         { BindData("UPD"); }
@@ -200,16 +214,16 @@ namespace _77NeoWeb.Forms.Ingenieria
                 switch (VbCap)
                 {
                     case "3":// Vencidos
-                        e.Row.BackColor = System.Drawing.Color.Red;
+                        e.Row.BackColor = System.Drawing.Color.Tomato;
                         e.Row.ForeColor = System.Drawing.Color.White;
                         break;
-                    case "2":// Vencidos Proximos a vencerse
-                        e.Row.BackColor = System.Drawing.Color.Orange;
+                    case "2":// Proximos a vencerse
+                        e.Row.BackColor = System.Drawing.Color.GreenYellow;
                         break;
                 }/**/
                 VbCap = dr["Proyeccion"].ToString();
                 if (VbCap.Equals("")) // No tiene configurada la fecha del ult cumplimiento en servicios
-                { e.Row.Cells[5].BackColor = System.Drawing.Color.DarkRed; }
+                { e.Row.Cells[5].BackColor = System.Drawing.Color.LightSalmon; }
             }
         }
         protected void IbnExcel_Click(object sender, ImageClickEventArgs e)

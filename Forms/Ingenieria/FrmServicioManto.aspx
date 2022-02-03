@@ -524,10 +524,10 @@
                                                                 <asp:Label ID="LblFecVen" Text='<%# Eval("FVFormat") %>' runat="server" Width="100%" />
                                                             </ItemTemplate>
                                                             <EditItemTemplate>
-                                                                <asp:TextBox ID="TxtFecVen" Text='<%# Eval("FechaVencimiento") %>' runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date"/>                                                          
+                                                                <asp:TextBox ID="TxtFecVen" Text='<%# Eval("FechaVencimiento") %>' runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />
                                                             </EditItemTemplate>
                                                             <FooterTemplate>
-                                                                <asp:TextBox ID="TxtFecVenPP" runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />                                                              
+                                                                <asp:TextBox ID="TxtFecVenPP" runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />
                                                             </FooterTemplate>
                                                         </asp:TemplateField>
                                                         <asp:TemplateField HeaderText="Reset" HeaderStyle-Width="7%">
@@ -747,8 +747,6 @@
                                                             </ItemTemplate>
                                                             <EditItemTemplate>
                                                                 <asp:TextBox ID="TxtFecVenSN" Text='<%# Eval("FechaVencimiento") %>' runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />
-                                                              <%--  <asp:ImageButton ID="IbtFechaSN" runat="server" ImageUrl="~/Images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                                                                <ajaxToolkit:CalendarExtender ID="CalFechVSN" runat="server" PopupButtonID="IbtFechaSN" TargetControlID="TxtFecVenSN" Format="dd/MM/yyyy" />--%>
                                                             </EditItemTemplate>
                                                         </asp:TemplateField>
                                                         <asp:TemplateField HeaderText="Reset" HeaderStyle-Width="5%">
@@ -885,7 +883,7 @@
                 <asp:Table ID="TblBusqSN" runat="server" class="TablaBusqueda" Visible="false" Width="30%">
                     <asp:TableRow>
                         <asp:TableCell Width="10%">
-                            <asp:RadioButton ID="RdbBusqDesSN" runat="server" GroupName="BusqS" CssClass="LblTextoBusq" Text="Descripción" Checked="true"/>
+                            <asp:RadioButton ID="RdbBusqDesSN" runat="server" GroupName="BusqS" CssClass="LblTextoBusq" Text="Descripción" Checked="true" />
                         </asp:TableCell>
                         <asp:TableCell Width="10%">
                             <asp:RadioButton ID="RdbBusqPnSN" runat="server" GroupName="BusqS" CssClass="LblTextoBusq" Text="&nbsp P/N" />

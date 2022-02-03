@@ -448,10 +448,8 @@
                     <asp:TextBox ID="TxtUbiTecRemElem" runat="server" Width="5%" CssClass="form-control-sm heightCampo" Enabled="false" />
                     <asp:Label ID="LblPosicRemElem" runat="server" CssClass="LblEtiquet" Text="Posicion:" />
                     <asp:DropDownList ID="DdlPosicRemElem" runat="server" CssClass="heightCampo" Width="10%" Enabled="false" />
-                    <asp:Label ID="LblFechaRemElem" runat="server" CssClass="LblEtiquet" Text="Fecha:" />
-                    <%--<asp:ImageButton ID="IbtFechaRemElem" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />--%>
+                    <asp:Label ID="LblFechaRemElem" runat="server" CssClass="LblEtiquet" Text="Fecha:" />                   
                     <asp:TextBox ID="TxtFechaRemElem" runat="server" CssClass="form-control-sm heightCampo" onKeyDown="return false" TextMode="Date" Width="12%" OnTextChanged="TxtFechaRemElem_TextChanged" AutoPostBack="true" />
-                    <%--<ajaxToolkit:CalendarExtender ID="CalFechaRemElem" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFechaRemElem" TargetControlID="TxtFechaRemElem" Format="dd/MM/yyyy" />--%>
                     <asp:Button ID="BtnRemCompensac" CssClass="btn btn-danger" runat="server" Height="25px" Width="18px" Text="C" Font-Size="9px" ToolTip="Libros de vuelo para la compensación" OnClick="BtnRemCompensac_Click" OnClientClick="return confirm('¿Desea realizar la compensación?');" Visible="false" />
                     <asp:Label ID="LblMotivRemElem" runat="server" CssClass="LblEtiquet" Text="Motivo:" />
                     <asp:TextBox ID="TxtMotivRemElem" runat="server" CssClass="form-control-sm" TextMode="MultiLine" MaxLength="240" Width="15%" Height="1%" />
@@ -1099,9 +1097,7 @@
                     <asp:Label ID="LblPosicRemSubC" runat="server" CssClass="LblEtiquet" Text="Posicion:" />
                     <asp:DropDownList ID="DdlPosicRemSubC" runat="server" CssClass="heightCampo" Width="10%" Enabled="false" />
                     <asp:Label ID="LblFechaRemSubC" runat="server" CssClass="LblEtiquet" Text="Fecha:" />
-                    <asp:ImageButton ID="IbtFechaRemSubC" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                    <asp:TextBox ID="TxtFechaRemSubC" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="8%" />
-                    <ajaxToolkit:CalendarExtender ID="CalFechaRemSubC" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtFechaRemSubC" TargetControlID="TxtFechaRemSubC" Format="dd/MM/yyyy" />
+                    <asp:TextBox ID="TxtFechaRemSubC" runat="server" CssClass="form-control-sm heightCampo" onKeyDown="return false" TextMode="Date" Width="11%" />
                     <asp:Label ID="LblMotivRemSubC" runat="server" CssClass="LblEtiquet" Text="Motivo:" />
                     <asp:TextBox ID="TxtMotivRemSubC" runat="server" CssClass="form-control-sm" TextMode="MultiLine" MaxLength="240" Width="15%" Height="1%" />
                     <br />
@@ -1191,13 +1187,13 @@
                     <asp:Label ID="LblCrearElemSn" runat="server" Text="S/N: " CssClass="LblTextoBusq" />
                     <asp:TextBox ID="TxtCrearElemSn" runat="server" Width="12%" CssClass="form-control-sm heightCampo" />
                     <asp:Label ID="LblCrearElemFechRec" runat="server" CssClass="LblEtiquet" Text="Fecha Recibo:" />
-                    <asp:ImageButton ID="IbtCrearElemFechRec" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                    <asp:TextBox ID="TxtCrearElemFechRec" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="8%" />
-                    <ajaxToolkit:CalendarExtender ID="CalCrearElemFechRec" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtCrearElemFechRec" TargetControlID="TxtCrearElemFechRec" Format="dd/MM/yyyy" />
+                    <%--<asp:ImageButton ID="IbtCrearElemFechRec" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />--%>
+                    <asp:TextBox ID="TxtCrearElemFechRec" runat="server" CssClass="form-control-sm heightCampo" TextMode="Date" Width="11%" />
+                    <%--<ajaxToolkit:CalendarExtender ID="CalCrearElemFechRec" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtCrearElemFechRec" TargetControlID="TxtCrearElemFechRec" Format="dd/MM/yyyy" />--%>
                     <asp:Label ID="LblCrearElemFechFabr" runat="server" CssClass="LblEtiquet" Text="Fecha Fabricación:" />
-                    <asp:ImageButton ID="IbtCrearElemFechFabr" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                    <asp:TextBox ID="TxtCrearElemFechFabr" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="8%" />
-                    <ajaxToolkit:CalendarExtender ID="CalCrearElemFechFabr" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtCrearElemFechFabr" TargetControlID="TxtCrearElemFechFabr" Format="dd/MM/yyyy" />
+                    <%--<asp:ImageButton ID="IbtCrearElemFechFabr" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />--%>
+                    <asp:TextBox ID="TxtCrearElemFechFabr" runat="server" CssClass="form-control-sm heightCampo" TextMode="Date" Width="11%" />
+                    <%--<ajaxToolkit:CalendarExtender ID="CalCrearElemFechFabr" CssClass=" MyCalendar" runat="server" PopupButtonID="IbtCrearElemFechFabr" TargetControlID="TxtCrearElemFechFabr" Format="dd/MM/yyyy" />--%>
                     <br />
                     <br />
                     <asp:Table ID="TblCrearElemCont" runat="server">

@@ -366,9 +366,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                 }
             }
             catch (Exception Ex)
-            {
-                string VbMEns = Ex.ToString().Trim().Substring(1, 50);
-                ScriptManager.RegisterClientScriptBlock(this.UplPpal, UplPpal.GetType(), "IdntificadorBloqueScript", "alert('Inconveniente con la consulta');", true);
+            {               
+                DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
+                Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "Traer datos Status Report", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
             }
         }
         protected void DdlStsHK_TextChanged(object sender, EventArgs e)
@@ -859,7 +861,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             Transac.Rollback();
                             DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
                             foreach (DataRow row in Result)
-                            { ScriptManager.RegisterClientScriptBlock(this.UplOrder, UplOrder.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//
+                            { ScriptManager.RegisterClientScriptBlock(this.UplOrder, UplOrder.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                             string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                             Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE Ordenar impresión grupos", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
                         }
@@ -991,7 +993,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                             }
                                             catch (Exception ex)
                                             {
-                                                ScriptManager.RegisterClientScriptBlock(this.GrdAsigOTPPT, GrdAsigOTPPT.GetType(), "IdntificadorBloqueScript", "alert('Error en la generación del plano');", true);
+                                                ScriptManager.RegisterClientScriptBlock(this.GrdAsigOTPPT, GrdAsigOTPPT.GetType(), "alert", "alert('Error en la generación del plano');", true);
                                                 Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString(), "PLANOS Asingar OT A PPT STATUS", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                                             }
                                         }
@@ -1003,7 +1005,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 Transac.Rollback();
                                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
                                 foreach (DataRow row in Result)
-                                { ScriptManager.RegisterClientScriptBlock(this.UplOrder, UplOrder.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//
+                                { ScriptManager.RegisterClientScriptBlock(this.UplOrder, UplOrder.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE Asignar OT a PPT STATUS", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
                             }
@@ -1120,7 +1122,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             catch (Exception Ex)
             {
                 string VbMEns = Ex.ToString().Trim().Substring(1, 50);
-                ScriptManager.RegisterClientScriptBlock(this.UplPpal, UplPpal.GetType(), "IdntificadorBloqueScript", "alert('Inconveniente con la consulta');", true);
+                ScriptManager.RegisterClientScriptBlock(this.UplPpal, UplPpal.GetType(), "alert", "alert('Inconveniente con la consulta');", true);
             }
         }
         protected void GrdOTPPTRepa_RowEditing(object sender, GridViewEditEventArgs e)
@@ -1179,7 +1181,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                             }
                                             catch (Exception ex)
                                             {
-                                                ScriptManager.RegisterClientScriptBlock(this.GrdAsigOTPPT, GrdAsigOTPPT.GetType(), "IdntificadorBloqueScript", "alert('Error en la generación del plano');", true);
+                                                ScriptManager.RegisterClientScriptBlock(this.GrdAsigOTPPT, GrdAsigOTPPT.GetType(), "alert", "alert('Error en la generación del plano');", true);
                                                 Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString(), "PLANOS Asingar OT A PPT REPA STATUS", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                                             }
                                         }
@@ -1191,7 +1193,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 Transac.Rollback();
                                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
                                 foreach (DataRow row in Result)
-                                { ScriptManager.RegisterClientScriptBlock(this.GrdAsigOTPPT, GrdAsigOTPPT.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//
+                                { ScriptManager.RegisterClientScriptBlock(this.GrdAsigOTPPT, GrdAsigOTPPT.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE Asignar OT a PPT STATUS", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
                             }
@@ -1405,7 +1407,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 Transac.Rollback();
                                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
                                 foreach (DataRow row in Result)
-                                { ScriptManager.RegisterClientScriptBlock(this.GrdAsigOTPPT, GrdAsigOTPPT.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//
+                                { ScriptManager.RegisterClientScriptBlock(this.GrdAsigOTPPT, GrdAsigOTPPT.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "LIBERAR OT DE PPT A TODO CASTO STATUS", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
                             }

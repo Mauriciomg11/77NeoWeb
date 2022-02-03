@@ -343,7 +343,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                                     foreach (DataRow row in Result)
                                     { Mensj = row["Texto"].ToString().Trim(); }
 
-                                    ScriptManager.RegisterClientScriptBlock(this.UpPnlAF, UpPnlAF.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                                    ScriptManager.RegisterClientScriptBlock(this.UpPnlAF, UpPnlAF.GetType(), "alert", "alert('" + Mensj + "');", true);
                                     Transac.Rollback();
                                     return;
                                 }
@@ -610,7 +610,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                                     DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                     foreach (DataRow row in Result)
                                     { Mensj = row["Texto"].ToString().Trim(); }
-                                    ScriptManager.RegisterClientScriptBlock(this.UpPnlAF, UpPnlAF.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                                    ScriptManager.RegisterClientScriptBlock(this.UpPnlAF, UpPnlAF.GetType(), "alert", "alert('" + Mensj + "');", true);
                                     Transac.Rollback();
                                     return;
                                 }

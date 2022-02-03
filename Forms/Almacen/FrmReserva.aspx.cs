@@ -45,6 +45,7 @@ namespace _77NeoWeb.Forms.Almacen
             {
                 TitForm.Text = "";
                 ModSeguridad();
+                RdbBusqNumOT.Checked = true;
                 MlVw.ActiveViewIndex = 0;
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
@@ -220,7 +221,7 @@ namespace _77NeoWeb.Forms.Almacen
         { Page.Title = ViewState["PageTit"].ToString().Trim(); Response.Redirect("~/Forms/Almacen/FrmAlertaReservaPenRevisar.aspx"); }
         //*************************************** BUSQUEDA ***************************************
         protected void BtnConsultar_Click(object sender, EventArgs e)
-        { MlVw.ActiveViewIndex = 1; Page.Title = ViewState["PageTit"].ToString().Trim(); TxtBusqueda.Text = ""; }
+        { MlVw.ActiveViewIndex = 1; Page.Title = ViewState["PageTit"].ToString().Trim(); TxtBusqueda.Text = ""; TxtBusqueda.Focus(); }
         protected void BindDataStok(string Ref)
         {
             DS = (DataSet)ViewState["DS"];
@@ -459,7 +460,7 @@ namespace _77NeoWeb.Forms.Almacen
                             }
                             Transac.Commit();
                             GrdUsuario.EditIndex = -1;
-                            BindDataPpal(TxtNumRva.Text.Trim(), "UPD");
+                            BindDataPpal(TxtIdRva.Text.Trim(), "UPD");
                             BindDataUsu(ViewState["VbPos"].ToString());
                         }
                         catch (Exception ex)

@@ -105,6 +105,15 @@ namespace _77NeoWeb.Forms.MRO
         protected global::System.Web.UI.WebControls.Button BtnPlantilla;
 
         /// <summary>
+        /// Control FileUp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload FileUp;
+
+        /// <summary>
         /// Control BtnExportar.
         /// </summary>
         /// <remarks>

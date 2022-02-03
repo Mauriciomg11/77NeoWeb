@@ -208,16 +208,16 @@
                         </asp:TableRow>
                         <asp:TableRow>
                             <asp:TableCell>
-                                <asp:Label ID="Generado" runat="server" CssClass="LblEtiquet" Text="Generado:"></asp:Label>
+                                <asp:Label ID="Generado" runat="server" CssClass="LblEtiquet" Text="Generado:"/>
                             </asp:TableCell>
                             <asp:TableCell ColumnSpan="2">
-                                <asp:DropDownList ID="DdlGenerado" runat="server" CssClass="heightCampo" Enabled="false" Width="95%" />
+                                <asp:DropDownList ID="DdlGenerado" runat="server" CssClass="heightCampo" Enabled="false" Width="95%" OnTextChanged="DdlGenerado_TextChanged" AutoPostBack ="true" />
                             </asp:TableCell>
                             <asp:TableCell>
-                                <asp:Label ID="LblLicGene" runat="server" CssClass="LblEtiquet" Text="Licencia:"></asp:Label>
+                                <asp:Label ID="LblLicGene" runat="server" CssClass="LblEtiquet" Text="Licencia:"/>
                             </asp:TableCell>
                             <asp:TableCell>
-                                <asp:DropDownList ID="DdlLicGene" runat="server" CssClass="heightCampo" Enabled="false" Width="95%"></asp:DropDownList>
+                                <asp:DropDownList ID="DdlLicGene" runat="server" CssClass="heightCampo" Enabled="false" Width="95%"/>
                             </asp:TableCell>
                             <asp:TableCell ColumnSpan="4">
                                 <table style="width: 100%;">
@@ -225,10 +225,10 @@
                                         <td>
                                             <asp:Label ID="LblFecDet" runat="server" CssClass="LblEtiquet" Text="Fecha:" /></td>
                                         <td>
-                                            <asp:TextBox ID="TxtFecDet" runat="server" CssClass="form-control heightCampo" Enabled="false" onKeyDown="return false" TextMode="Date" Width="90%" Font-Size="11px" OnTextChanged="TxtFecDet_TextChanged" AutoPostBack="true"></asp:TextBox>                                          
+                                            <asp:TextBox ID="TxtFecDet" runat="server" CssClass="form-control heightCampo" Enabled="false" onKeyDown="return false" TextMode="Date" Width="90%" Font-Size="11px" OnTextChanged="TxtFecDet_TextChanged" AutoPostBack="true"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:Label ID="LblFecProy" runat="server" CssClass="LblEtiquet" Text="Proyec.:" /></td>                                       
+                                            <asp:Label ID="LblFecProy" runat="server" CssClass="LblEtiquet" Text="Proyec.:" /></td>
                                         <td>
                                             <asp:TextBox ID="TxtFecPry" runat="server" CssClass="form-control heightCampo" Enabled="false" TextMode="Date" Width="90%" Font-Size="10.5px"></asp:TextBox>
                                         </td>
@@ -248,10 +248,10 @@
                         </asp:TableRow>
                         <asp:TableRow>
                             <asp:TableCell>
-                                <asp:Label ID="LblCumpl" runat="server" CssClass="LblEtiquet" Text="Cumplido:"></asp:Label>
+                                <asp:Label ID="LblCumpl" runat="server" CssClass="LblEtiquet" Text="Cumplido:"/>
                             </asp:TableCell>
                             <asp:TableCell ColumnSpan="2">
-                                <asp:DropDownList ID="DdlCumpl" runat="server" CssClass="heightCampo" Enabled="false" Width="95%"></asp:DropDownList>
+                                <asp:DropDownList ID="DdlCumpl" runat="server" CssClass="heightCampo" Enabled="false" Width="95%" OnTextChanged="DdlCumpl_TextChanged" AutoPostBack="true"/>
                             </asp:TableCell>
                             <asp:TableCell>
                                 <asp:Label ID="LblLicCump" runat="server" CssClass="LblEtiquet" Text="Licencia:"></asp:Label>
@@ -264,9 +264,9 @@
                             </asp:TableCell>
                             <asp:TableCell ID="TbClFecCump">
                                 <asp:Table runat="server">
-                                    <asp:TableRow>                                        
+                                    <asp:TableRow>
                                         <asp:TableCell>
-                                            <asp:TextBox ID="TxtFecCump" runat="server" CssClass="form-control heightCampo" Enabled="false" TextMode="Date" Width="90%" Font-Size="11px"/>                                           
+                                            <asp:TextBox ID="TxtFecCump" runat="server" CssClass="form-control heightCampo" Enabled="false" TextMode="Date" Width="90%" Font-Size="11px" />
                                         </asp:TableCell>
                                     </asp:TableRow>
                                 </asp:Table>
@@ -449,7 +449,7 @@
                     <asp:PostBackTrigger ControlID="BtnConsultar" />
                     <asp:PostBackTrigger ControlID="BtnImprimir" />
                     <asp:PostBackTrigger ControlID="BtnSnOnOf" />
-                    <asp:PostBackTrigger ControlID="BtnExporRte" />                    
+                    <asp:PostBackTrigger ControlID="BtnExporRte" />
                 </Triggers>
             </asp:UpdatePanel>
         </asp:View>
@@ -512,7 +512,7 @@
             <asp:UpdatePanel ID="UpPnlRecursoRte" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
                     <asp:Label ID="LblRecsNumRte" runat="server" CssClass="LblEtiquet" Text="Reporte:" />
-                    <asp:TextBox ID="TxtRecurNumRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible ="false"/>
+                    <asp:TextBox ID="TxtRecurNumRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible="false" />
                     <asp:TextBox ID="TxtRecurCodRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:Label ID="LblRecsSubOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:" />
                     <asp:TextBox ID="TxtRecurSubOt" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible="true" />
@@ -723,16 +723,17 @@
         <asp:View ID="Vw3CargaMasiva" runat="server">
             <asp:UpdatePanel ID="UpPnlCargaMasiva" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <asp:Label ID="LblCargaMasRte" runat="server" CssClass="LblEtiquet" Text="Reporte:"></asp:Label>
+                    <asp:Label ID="LblCargaMasRte" runat="server" CssClass="LblEtiquet" Text="Reporte:" />
                     <asp:TextBox ID="TxtCargaMasiRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible="false" />
                     <asp:TextBox ID="TxtCargaMasiCodRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
-                    <asp:Label ID="LblCargaMasOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:"></asp:Label>
+                    <asp:Label ID="LblCargaMasOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:" />
                     <asp:TextBox ID="TxtCargaMasiOT" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:ImageButton ID="IbtCerrarSubMaxivo" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarSubMaxivo_Click" ImageAlign="Right" />
                     <h6 class="TextoSuperior">
-                        <asp:Label ID="LblTitOTCargMasiv" runat="server" Text="Subir Evaluación"></asp:Label></h6>
-                    <asp:ImageButton ID="IbtSubirCargaMax" runat="server" ToolTip="Cargar archivo..." ImageUrl="~/images/SubirCarga.png" OnClick="IbtSubirCargaMax_Click" Width="30px" Height="30px" />
+                        <asp:Label ID="LblTitOTCargMasiv" runat="server" Text="Subir Evaluación" /></h6>
+                    <asp:ImageButton ID="IbtSubirCargaMax" runat="server" ToolTip="Cargar archivo..." ImageUrl="~/images/SubirCarga.png" OnClick="IbtSubirCargaMax_Click" Width="30px" Height="30px" />                   
                     <asp:ImageButton ID="IbtGuardarCargaMax" runat="server" ToolTip="Guardar" ImageUrl="~/images/Descargar.png" OnClick="IbtGuardarCargaMax_Click" Width="30px" Height="30px" Enabled="false" OnClientClick="javascript:return confirm('¿Desea almacenar la información?', 'Mensaje de sistema')" />
+                    <br /><asp:FileUpload ID="FileUpRva" runat="server" Font-Size="9px" Visible="false" />
                     <asp:GridView ID="GrdCargaMax" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="False"
                         CssClass="DiseñoGrid table table-sm" GridLines="Both">
                         <Columns>
@@ -780,7 +781,7 @@
                 </ContentTemplate>
                 <Triggers>
                     <asp:PostBackTrigger ControlID="IbtCerrarSubMaxivo" />
-                    <%--<asp:PostBackTrigger ControlID="IbtSubirCargaMax" />--%>
+                   <asp:PostBackTrigger ControlID="IbtSubirCargaMax" />
                     <asp:PostBackTrigger ControlID="IbtGuardarCargaMax" />
                 </Triggers>
             </asp:UpdatePanel>
@@ -817,10 +818,10 @@
                                     <asp:Label ID="LblFec" Text='<%# Eval("FechaRemocion") %>' runat="server" Width="100%" />
                                 </ItemTemplate>
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="TxtFec" Text='<%# Eval("FechaRemocion") %>' runat="server" Width="100%" TextMode="Date"  MaxLength="10"/>                                   
+                                    <asp:TextBox ID="TxtFec" Text='<%# Eval("FechaRemocion") %>' runat="server" Width="100%" TextMode="Date" MaxLength="10" />
                                 </EditItemTemplate>
                                 <FooterTemplate>
-                                    <asp:TextBox ID="TxtFecPP" runat="server" Width="100%"  TextMode="Date"  MaxLength="10"/>                                   
+                                    <asp:TextBox ID="TxtFecPP" runat="server" Width="100%" TextMode="Date" MaxLength="10" />
                                 </FooterTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Razón del evento" HeaderStyle-Width="14%">

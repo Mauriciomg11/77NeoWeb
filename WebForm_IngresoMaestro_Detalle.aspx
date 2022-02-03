@@ -41,9 +41,10 @@
 
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
-
+     
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
+           <INPUT id="oFile" type="file" runat="server" NAME="oFile">
             <asp:Button ID="BtnConsult" runat="server" Text="Consultar" ToolTip="Consultar" OnClick="BtnConsult_Click" />
             <asp:Button ID="BtnHabilitar" runat="server" Text="Habilitar" ToolTip="Habilitar" OnClick="BtnHabilitar_Click" />
             <asp:Button ID="BtnNuevo" runat="server" Text="Nuevo" ToolTip="Nuevo" OnClick="BtnNuevo_Click" Enabled="false" />

@@ -144,7 +144,7 @@
                                     </tr>
                                 </table>
                                 <div class="ScrollDet2">
-                                    <asp:GridView ID="GrdReserva" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false" 
+                                    <asp:GridView ID="GrdReserva" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false"
                                         DataKeyNames="CodReferencia,Pn,NumeroPosicion"
                                         CssClass="DiseñoGrid table-sm" GridLines="Both" Width="100%" EmptyDataText="No existen registros ..!"
                                         OnSelectedIndexChanged="GrdReserva_SelectedIndexChanged" OnRowDataBound="GrdReserva_RowDataBound">
@@ -306,7 +306,7 @@
                         </table>
                         <br />
                         <div class="CentrarGrid pre-scrollable">
-                            <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames ="CodNumOrdenTrab"
+                            <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="CodNumOrdenTrab"
                                 CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowCommand="GrdBusq_RowCommand" OnRowDataBound="GrdBusq_RowDataBound">
                                 <Columns>
                                     <asp:TemplateField HeaderText="Select">

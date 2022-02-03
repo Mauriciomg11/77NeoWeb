@@ -444,14 +444,14 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'MensPlaMatr01'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar un ATA
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar un ATA
                     return;
                 }
                 if (DdlFlota.SelectedValue.ToString() == string.Empty)
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'MensPlaMatr02'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar un modelo')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar un modelo')", true);
                     return;
                 }
                 string VblCodPpal, VBQuery;
@@ -460,7 +460,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'MensPlaMatr03'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //El codigo debe tener 2 dígitos')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //El codigo debe tener 2 dígitos')", true);
                     return;
                 }
                 VblCodPpal = ViewState["ATAPM"].ToString().Substring(2, 2) + VblCodPpal;
@@ -470,7 +470,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 {
                     if (VblCodPpal == String.Empty)
                     {
-                        ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar una posición')", true);
+                        ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "alert", "alert('Debe ingresar una posición');", true);
                         return;
                     }
                     sqlCon.Open();
@@ -603,7 +603,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             BindDataPsc("");
             if (ViewState["CodSubAta"].ToString() == string.Empty)
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar una Sub-Ata')", true);
+                ScriptManager.RegisterClientScriptBlock(this.UpPanel, UpPanel.GetType(), "alert", "alert('Debe seleccionar una Sub-Ata');", true);
                 return;
             }
             Cnx.SelecBD();
@@ -759,14 +759,14 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'MensPlaMatr06'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar una SubATA')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar una SubATA')", true);
                     return;
                 }
                 if (DdlFlota.SelectedValue.ToString() == string.Empty)
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'MensPlaMatr02'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar un modelo')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar un modelo')", true);
                     return;
                 }
                 string VblCodPpal;
@@ -775,7 +775,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'MensPlaMatr03'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //El codigo debe tener 2 dígitos')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //El codigo debe tener 2 dígitos')", true);
                     return;
                 }
                 VblCodPpal = ViewState["CodSubAta"].ToString() + VblCodPpal;
@@ -785,7 +785,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 {
                     if (VblCodPpal == String.Empty)
                     {
-                        ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "IdntificadorBloqueScript", "alert('Debe ingresar una ubicación técnica')", true);
+                        ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "alert", "alert('Debe ingresar una ubicación técnica');", true);
                         return;
                     }
                     string VbNumelem = (GrdUltNvl.FooterRow.FindControl("TxtNumEPP") as TextBox).Text.Trim();
@@ -920,7 +920,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             BindDataPsc(ViewState["CodUNPM"].ToString());
             if (ViewState["CodUNPM"].ToString() == string.Empty)
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "IdntificadorBloqueScript", "alert('Debe seleccionar una Ubicación técnica')", true);
+                ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "alert", "alert('Debe seleccionar una Ubicación técnica');", true);
                 return;
             }
             Cnx.SelecBD();
@@ -1086,14 +1086,14 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'MensPlaMatr09'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar una Ubicación técnica')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar una Ubicación técnica')", true);
                     return;
                 }
                 if (DdlFlota.SelectedValue.ToString() == string.Empty)
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'MensPlaMatr02'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar un modelo')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar un modelo')", true);
                     return;
                 }
                 Cnx.SelecBD();
@@ -1234,14 +1234,14 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'MensPlaMatr09'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar una Ubicación técnica')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar una Ubicación técnica')", true);
                     return;
                 }
                 if (DdlFlota.SelectedValue.ToString() == string.Empty)
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'MensPlaMatr02'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar un modelo')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPn2, UpPn2.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); } //Debe seleccionar un modelo')", true);
                     return;
                 }
                 string VBQuery, VbNivelSuper;

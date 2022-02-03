@@ -2,9 +2,11 @@
 using _77NeoWeb.Prg.PrgIngenieria;
 using _77NeoWeb.Prg.prgMro;
 using ClosedXML.Excel;
+using ExcelDataReader;
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
@@ -26,10 +28,7 @@ namespace _77NeoWeb.Forms.MRO
         DataTable DtHKRepa = new DataTable();
         DataTable DtSrvcs = new DataTable();
         DataTable DTPNMat = new DataTable();
-        DataSet DS = new DataSet();
-        DataSet DSDdl = new DataSet();
-        DataSet DSAlerta = new DataSet();
-        DataTable DTEncPPT = new DataTable();
+        DataSet DS = new DataSet(); DataSet DSDdl = new DataSet(); DataSet DSAlerta = new DataSet(); DataTable DTEncPPT = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
@@ -74,6 +73,7 @@ namespace _77NeoWeb.Forms.MRO
                 ViewState["RegistroElemHK"] = "";// valor del PN por el cual se filtra en en el Det2 GrdElementos
                 Alertas();
                 MultVw.ActiveViewIndex = 0;
+                RdbBusqGnrlPpt.Checked = true;
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
@@ -530,7 +530,6 @@ namespace _77NeoWeb.Forms.MRO
                         {
                             using (DataSet DSDdl = new DataSet())
                             {
-
                                 SDA.SelectCommand = SC;
                                 SDA.Fill(DSDdl);
                                 DSDdl.Tables[0].TableName = "HKSinPPT";
@@ -601,13 +600,15 @@ namespace _77NeoWeb.Forms.MRO
             DdlTipoSol.DataValueField = "Codigo";
             DdlTipoSol.DataBind();
             DdlTipoSol.Text = VbCodAnt;
-
-            VbCodAnt = DdlEstado.Text.Trim();
-            DdlEstado.DataSource = DSDdl.Tables["EstadoPT"];
-            DdlEstado.DataTextField = "Descripcion";
-            DdlEstado.DataValueField = "Codigo";
-            DdlEstado.DataBind();
-            DdlEstado.Text = VbCodAnt;
+            if (DSDdl.Tables["EstadoPT"].Rows.Count > 0)
+            {
+                VbCodAnt = DdlEstado.Text.Trim();
+                DdlEstado.DataSource = DSDdl.Tables[6];
+                DdlEstado.DataTextField = "Descripcion";
+                DdlEstado.DataValueField = "Codigo";
+                DdlEstado.DataBind();
+                DdlEstado.Text = VbCodAnt;
+            }
         }
         protected void BindDataDdlPptPpal(string Cod, string Accion)
         {
@@ -1823,7 +1824,7 @@ namespace _77NeoWeb.Forms.MRO
                                 foreach (DataRow row in Result)
                                 { VbMensj = row["Texto"].ToString().Trim(); }
 
-                                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "IdntificadorBloqueScript", "alert('" + VbMensj + "')", true);
+                                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMensj + "');", true);
                                 return;
                             }
                             Transac.Commit();
@@ -1863,7 +1864,7 @@ namespace _77NeoWeb.Forms.MRO
             MultVw.ActiveViewIndex = 4;
         }
         protected void BtnConsultar_Click(object sender, EventArgs e)
-        { MultVw.ActiveViewIndex = 1; Page.Title = ViewState["PageTit"].ToString().Trim(); TxtBusqueda.Text = ""; }
+        { MultVw.ActiveViewIndex = 1; Page.Title = ViewState["PageTit"].ToString().Trim(); TxtBusqueda.Text = ""; TxtBusqueda.Focus(); }
         protected void BtnImprimir_Click(object sender, EventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString();
@@ -2477,7 +2478,7 @@ namespace _77NeoWeb.Forms.MRO
             {
                 Result = Idioma.Select("Objeto= 'BtnCargaMasivaTT1'");
                 foreach (DataRow row in Result)
-                { IbtSubirCargaMax.ToolTip = row["Texto"].ToString() + " " + ViewState["CarpetaCargaMasiva"].ToString() + "PPTSale.xlsx"; }
+                { IbtSubirCargaMax.ToolTip = row["Texto"].ToString(); }
                 MultVw.ActiveViewIndex = 6;
             }
         }
@@ -4214,83 +4215,123 @@ namespace _77NeoWeb.Forms.MRO
         }
         protected void IbtSubirCargaMax_Click(object sender, ImageClickEventArgs e)
         {
+            DataRow[] Result;
             try
             {
                 Page.Title = ViewState["PageTit"].ToString().Trim();
                 Idioma = (DataTable)ViewState["TablaIdioma"];
-                DataRow[] Result;
-                DataTable TablaPlantilla = new DataTable();
-                string FileName = "";
-                string conexion = "";
-                FileName = "PPTSale.xlsx";
-                conexion = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ViewState["CarpetaCargaMasiva"].ToString().Trim() + FileName + ";Extended Properties='Excel 12.0 Xml;HDR=YES;'";
 
-                using (OleDbConnection cnn = new OleDbConnection(conexion))
+                if (TxtNumPpt.Text.Trim().Equals("")) { return; }
+                if (FileUpPPT.Visible == false) { FileUpPPT.Visible = true; }
+                else
                 {
-                    cnn.Open();
-                    DataTable dtExcelSchema;
-                    dtExcelSchema = cnn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                    string SheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
-                    cnn.Close();
-
-                    cnn.Open();
-                    string sql = "SELECT * From [" + SheetName + "]";
-                    OleDbCommand command = new OleDbCommand(sql, cnn);
-                    OleDbDataAdapter DA = new OleDbDataAdapter(command);
-
-                    DA.Fill(TablaPlantilla);
-                    if (TablaPlantilla.Rows.Count > 0) { ViewState["TablaPlantilla"] = TablaPlantilla; }
-                    else { return; }
-                    cnn.Close();
-
-                    Cnx.SelecBD();
-                    using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+                    if (FileUpPPT.HasFile == true)
                     {
-                        string VBQuery = "SubirPlantPPTVenta";
-                        sqlCon.Open();
-                        using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon))
-                        {
-                            string PMensj = "";
-                            Result = Idioma.Select("Objeto= 'LblTitIncosistnc'");
-                            foreach (DataRow row in Result)
-                            { LblTitIncosistnc.Text = row["Texto"].ToString().Trim(); }
-                            SC.CommandType = CommandType.StoredProcedure;
-                            SqlParameter Prmtrs = SC.Parameters.AddWithValue("@CurPltll", TablaPlantilla);
-                            SqlParameter Prmtrs1 = SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
-                            SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@Accion", "TEMPORAL");
-                            SqlParameter Prmtrs3 = SC.Parameters.AddWithValue("@IdCia", Session["!dC!@"]);
-                            SqlParameter Prmtrs4 = SC.Parameters.AddWithValue("@NIT", Session["Nit77Cia"]);
-                            Prmtrs.SqlDbType = SqlDbType.Structured;
-                            using (SqlDataAdapter SDA = new SqlDataAdapter())
-                            {
-                                using (DataSet DST = new DataSet())
-                                {
-                                    SDA.SelectCommand = SC;
-                                    SDA.Fill(DST);
-                                    ViewState["DST"] = DST;
-                                    Result = DST.Tables[2].Select("Pos= '1'");
-                                    foreach (DataRow Row in Result)
-                                    { PMensj = Row["Mensj"].ToString().Trim(); }
-                                    if (PMensj.Trim().Equals(""))
-                                    { IbtGuardarCargaMax.Enabled = true; }
-                                    else
-                                    {
-                                        if (PMensj.Trim().Equals("Mens64PPT")) { IbtGuardarCargaMax.Visible = true; }
-                                        else { IbtGuardarCargaMax.Visible = false; }
-                                        Result = Idioma.Select("Objeto= '" + PMensj.ToString().Trim() + "'");
-                                        foreach (DataRow row in Result)
-                                        { PMensj = row["Texto"].ToString().Trim(); LblTitIncosistnc.Text = PMensj; }
+                        string FolderPath;
+                        string FileName = Path.GetFileName(FileUpPPT.PostedFile.FileName);
+                        string VblExt = Path.GetExtension(FileUpPPT.PostedFile.FileName);
+                        if (Cnx.GetProduccion().Trim().Equals("Y")) { FolderPath = ConfigurationManager.AppSettings["FolderPath"]; }//Azure
+                        else { FolderPath = ConfigurationManager.AppSettings["FoldPathLcl"]; }
 
-                                        ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + PMensj + "');", true);
-                                        GrdCargaMax.DataSource = DST.Tables[0]; GrdCargaMax.DataBind();
-                                        GrdPnNew.DataSource = DST.Tables[1]; GrdPnNew.DataBind();
-                                        GrdInconsist.DataSource = DST.Tables[2]; GrdInconsist.DataBind();
-                                        return;
-                                    }
+                        VblExt = VblExt.Substring(VblExt.LastIndexOf(".") + 1).ToLower();
+                        string[] formatos = new string[] { "xls", "xlsx" };
+                        if (Array.IndexOf(formatos, VblExt) < 0)
+                        {
+                            Result = Idioma.Select("Objeto= 'RteMens40'");//Archivo inválido
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                            return;
+                        }
+                        string FilePath = FolderPath + FileName;
+                        FileUpPPT.SaveAs(FilePath);
+                        Import(FilePath, VblExt);
+                        FileUpPPT.Visible = false;
+                    }
+                    else
+                    {
+                        Result = Idioma.Select("Objeto= 'RteMens41'");//Debe seleccionar un archivo.
+                        foreach (DataRow row in Result)
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                        return;
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+
+                Result = Idioma.Select("Objeto= 'MensErrMod'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Subir Plantilla de PPT", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
+        }
+        protected void Import(string FilePath, string Extension)
+        {
+            DataRow[] Result;
+            try
+            {
+                FileStream stream = File.Open(FilePath, FileMode.Open, FileAccess.Read);
+                IExcelDataReader ExcelReader;
+
+                ExcelReader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream);
+
+                var conf = new ExcelDataSetConfiguration// para que tome la primera fila como titulo de campos
+                {
+                    ConfigureDataTable = _ => new ExcelDataTableConfiguration
+                    { UseHeaderRow = true }
+                };
+                var dataSet = ExcelReader.AsDataSet(conf);
+                DataTable TablaPlantilla = dataSet.Tables[0];
+
+                if (TablaPlantilla.Rows.Count > 0) { ViewState["TablaPlantilla"] = TablaPlantilla; }
+                else { return; }
+
+                Cnx.SelecBD();
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+                {
+                    string VBQuery = "SubirPlantPPTVenta";
+                    sqlCon.Open();
+                    using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon))
+                    {
+                        string PMensj = "";
+                        Result = Idioma.Select("Objeto= 'LblTitIncosistnc'");
+                        foreach (DataRow row in Result)
+                        { LblTitIncosistnc.Text = row["Texto"].ToString().Trim(); }
+                        SC.CommandType = CommandType.StoredProcedure;
+                        SqlParameter Prmtrs = SC.Parameters.AddWithValue("@CurPltll", TablaPlantilla);
+                        SqlParameter Prmtrs1 = SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
+                        SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@Accion", "TEMPORAL");
+                        SqlParameter Prmtrs3 = SC.Parameters.AddWithValue("@IdCia", Session["!dC!@"]);
+                        SqlParameter Prmtrs4 = SC.Parameters.AddWithValue("@NIT", Session["Nit77Cia"]);
+                        Prmtrs.SqlDbType = SqlDbType.Structured;
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            using (DataSet DST = new DataSet())
+                            {
+                                SDA.SelectCommand = SC; SDA.Fill(DST); ViewState["DST"] = DST;
+                                Result = DST.Tables[2].Select("Pos= '1'");
+                                foreach (DataRow Row in Result)
+                                { PMensj = Row["Mensj"].ToString().Trim(); }
+                                if (PMensj.Trim().Equals(""))
+                                { IbtGuardarCargaMax.Enabled = true; IbtGuardarCargaMax.Visible = true; }
+                                else
+                                {
+                                    if (PMensj.Trim().Equals("Mens64PPT")) { IbtGuardarCargaMax.Visible = false; }
+                                    else { IbtGuardarCargaMax.Visible = false; }
+                                    Result = Idioma.Select("Objeto= '" + PMensj.ToString().Trim() + "'");
+                                    foreach (DataRow row in Result)
+                                    { PMensj = row["Texto"].ToString().Trim(); LblTitIncosistnc.Text = PMensj; }
+
+                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + PMensj + "');", true);
                                     GrdCargaMax.DataSource = DST.Tables[0]; GrdCargaMax.DataBind();
                                     GrdPnNew.DataSource = DST.Tables[1]; GrdPnNew.DataBind();
                                     GrdInconsist.DataSource = DST.Tables[2]; GrdInconsist.DataBind();
+                                    return;
                                 }
+                                GrdCargaMax.DataSource = DST.Tables[0]; GrdCargaMax.DataBind();
+                                GrdPnNew.DataSource = DST.Tables[1]; GrdPnNew.DataBind();
+                                GrdInconsist.DataSource = DST.Tables[2]; GrdInconsist.DataBind();
                             }
                         }
                     }
@@ -4298,8 +4339,11 @@ namespace _77NeoWeb.Forms.MRO
             }
             catch (Exception Ex)
             {
+                Result = Idioma.Select("Objeto= 'MensErrMod'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Subir Plantilla de PPT", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Import PPT Venta", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void IbtGuardarCargaMax_Click(object sender, ImageClickEventArgs e)

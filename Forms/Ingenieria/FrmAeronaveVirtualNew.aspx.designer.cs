@@ -2067,15 +2067,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label LblFechaRemSubC;
 
         /// <summary>
-        /// Control IbtFechaRemSubC.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtFechaRemSubC;
-
-        /// <summary>
         /// Control TxtFechaRemSubC.
         /// </summary>
         /// <remarks>
@@ -2083,15 +2074,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtFechaRemSubC;
-
-        /// <summary>
-        /// Control CalFechaRemSubC.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalFechaRemSubC;
 
         /// <summary>
         /// Control LblMotivRemSubC.
@@ -2274,15 +2256,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label LblCrearElemFechRec;
 
         /// <summary>
-        /// Control IbtCrearElemFechRec.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtCrearElemFechRec;
-
-        /// <summary>
         /// Control TxtCrearElemFechRec.
         /// </summary>
         /// <remarks>
@@ -2290,15 +2263,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtCrearElemFechRec;
-
-        /// <summary>
-        /// Control CalCrearElemFechRec.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalCrearElemFechRec;
 
         /// <summary>
         /// Control LblCrearElemFechFabr.
@@ -2310,15 +2274,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label LblCrearElemFechFabr;
 
         /// <summary>
-        /// Control IbtCrearElemFechFabr.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtCrearElemFechFabr;
-
-        /// <summary>
         /// Control TxtCrearElemFechFabr.
         /// </summary>
         /// <remarks>
@@ -2326,15 +2281,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtCrearElemFechFabr;
-
-        /// <summary>
-        /// Control CalCrearElemFechFabr.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalCrearElemFechFabr;
 
         /// <summary>
         /// Control TblCrearElemCont.

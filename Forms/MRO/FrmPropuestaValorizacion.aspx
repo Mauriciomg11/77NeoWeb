@@ -12,14 +12,14 @@
             font-size: 12px;
             font-stretch: condensed;
             font-weight: bold;
-            width: 8%;
+            /*width: 8%;*/
             height: 27px;
         }
 
         .Font_btnSelect {
             font-size: 12px;
             font-stretch: condensed;
-            width: 14%;
+            /*width: 14%;*/
             height: 27px;
         }
 
@@ -119,174 +119,190 @@
                                     </asp:TableRow>
                                 </asp:Table>
                             </div>
-                            <div class="col-sm-9">
-                                <asp:Button ID="BtnValorizar" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnValorizar_Click" OnClientClick="target ='';" Text="Valorizar" />
-                                <asp:Button ID="BtnReValorizar" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnReValorizar_Click" OnClientClick="target ='';" Text="Revalorizar" />
-                                <asp:Button ID="BtnPlantilla" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnPlantilla_Click" OnClientClick="target ='';" Text="Plantilla" />
-                                <asp:Button ID="BtnExportar" runat="server" CssClass="btn btn-primary Font_btnCrud" OnClick="BtnExportar_Click" OnClientClick="target ='';" Text="exportar" />&nbsp&nbsp
-                                <asp:Button ID="BtnPNSinValorizar" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnPNSinValorizar_Click" OnClientClick="target ='';" Text="PN sin Valorizar" />
-                                <asp:Button ID="BtnSolPed" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnSolPed_Click" OnClientClick="target ='';" Text="solicitud pedido" />
-                                <asp:Button ID="BtnCotizacion" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnCotizacion_Click" OnClientClick="target ='';" Text="cotización" />
-                                <asp:Button ID="BtnCuadroComprtv" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnCuadroComprtv_Click" OnClientClick="target ='';" Text="cuadro comparativo" />
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-sm-1">
-                                <br />
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <asp:ImageButton ID="IbtAprDet1All" runat="server" ImageUrl="~/images/Check1.png" ImageAlign="AbsBottom" Height="30px" Width="30px" OnClick="IbtAprDet1All_Click" /></td>                                           
-                                        <td>
-                                            <asp:ImageButton ID="IbtGrarSP" runat="server" ImageUrl="~/images/AddOrder.png" ImageAlign="AbsBottom" Height="30px" Width="30px" OnClick="IbtGrarSP_Click" /></td>
-                                    </tr>
-                                </table>
+                                <asp:Button ID="BtnValorizar" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnValorizar_Click" OnClientClick="target ='';" Text="Valorizar" />
                             </div>
-                            <div class="col-sm-4">
-                                <asp:Label ID="LblCliente" runat="server" CssClass="LblEtiquet" Text="cliente" />
-                                <asp:TextBox ID="TxtCliente" runat="server" CssClass="Form-control  heightCampo" Enabled="false" Width="100%" />
+                            <div class="col-sm-1">
+                                <asp:Button ID="BtnReValorizar" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnReValorizar_Click" OnClientClick="target ='';" Text="Revalorizar" />
+                            </div>
+                            <div class="col-sm-1">
+                                <asp:Button ID="BtnPlantilla" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnPlantilla_Click" OnClientClick="target ='';" Text="Plantilla" />
+                                <asp:FileUpload ID="FileUp" runat="server" Font-Size="9px" Visible="false" />
+                            </div>
+                            <div class="col-sm-1">
+                                <asp:Button ID="BtnExportar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnExportar_Click" OnClientClick="target ='';" Text="exportar" />
                             </div>
                             <div class="col-sm-2">
-                                <asp:Label ID="LblDescTipoPPT" runat="server" CssClass="LblEtiquet" Text="tipo" />
-                                <asp:TextBox ID="TxtDescTipoPPT" runat="server" CssClass="Form-control heightCampo" Enabled="false" Width="100%" />
+                                <asp:Button ID="BtnPNSinValorizar" runat="server" CssClass="btn btn-primary Font_btnSelect" Width="100%" OnClick="BtnPNSinValorizar_Click" OnClientClick="target ='';" Text="PN sin Valorizar" />
                             </div>
-                            <div class="col-sm-2">
-                                <asp:Label ID="LblDesEstado" runat="server" CssClass="LblEtiquet" Text="estado" />
-                                <asp:TextBox ID="TxtDesEstado" runat="server" CssClass="Form-control heightCampo" Enabled="false" Width="100%" />
+                            <div class="col-sm-1">
+                                <asp:Button ID="BtnSolPed" runat="server" CssClass="btn btn-primary Font_btnSelect" Width="100%" OnClick="BtnSolPed_Click" OnClientClick="target ='';" Text="solicitud pedido" />
                             </div>
-                            <div class="col-sm-2">
-                                <asp:Label ID="LblDescPptTipoSol" runat="server" CssClass="LblEtiquet" Text="tipo solicitud" />
-                                <asp:TextBox ID="TxtDescPptTipoSol" runat="server" CssClass="Form-control heightCampo" Enabled="false" Width="100%" />
+                            <div class="col-sm-1">
+                                <asp:Button ID="BtnCotizacion" runat="server" CssClass="btn btn-primary Font_btnSelect" Width="100%" OnClick="BtnCotizacion_Click" OnClientClick="target ='';" Text="cotización" />
+                            </div>
+                            <div class="col-sm-1">
+                                <asp:Button ID="BtnCuadroComprtv" runat="server" CssClass="btn btn-primary Font_btnSelect" Width="100%" OnClick="BtnCuadroComprtv_Click" OnClientClick="target ='';" Text="cuadro comparativo" />
+                            </div>
+
+                        </div>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <br />
+                            <table>
+                                <tr>
+                                    <td>
+                                        <asp:ImageButton ID="IbtAprDet1All" runat="server" ImageUrl="~/images/Check1.png" ImageAlign="AbsBottom" Height="30px" Width="30px" OnClick="IbtAprDet1All_Click" /></td>
+                                    <td>
+                                        <asp:ImageButton ID="IbtGrarSP" runat="server" ImageUrl="~/images/AddOrder.png" ImageAlign="AbsBottom" Height="30px" Width="30px" OnClick="IbtGrarSP_Click" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-sm-4">
+                            <asp:Label ID="LblCliente" runat="server" CssClass="LblEtiquet" Text="cliente" />
+                            <asp:TextBox ID="TxtCliente" runat="server" CssClass="Form-control  heightCampo" Enabled="false" Width="100%" />
+                        </div>
+                        <div class="col-sm-2">
+                            <asp:Label ID="LblDescTipoPPT" runat="server" CssClass="LblEtiquet" Text="tipo" />
+                            <asp:TextBox ID="TxtDescTipoPPT" runat="server" CssClass="Form-control heightCampo" Enabled="false" Width="100%" />
+                        </div>
+                        <div class="col-sm-2">
+                            <asp:Label ID="LblDesEstado" runat="server" CssClass="LblEtiquet" Text="estado" />
+                            <asp:TextBox ID="TxtDesEstado" runat="server" CssClass="Form-control heightCampo" Enabled="false" Width="100%" />
+                        </div>
+                        <div class="col-sm-2">
+                            <asp:Label ID="LblDescPptTipoSol" runat="server" CssClass="LblEtiquet" Text="tipo solicitud" />
+                            <asp:TextBox ID="TxtDescPptTipoSol" runat="server" CssClass="Form-control heightCampo" Enabled="false" Width="100%" />
+                        </div>
+                    </div>
+                    <table>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="ScrollDet1">
+                                <asp:GridView ID="GrdDetValrzc" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false"
+                                    DataKeyNames="IdServicio,CodReferencia,PnStock,CodIdUbicacion,Bodega,StockMinimo,CodTipoCotiza,SelectBodeg, CantidadSolicitud, ObservacionValorizar,
+                                                      NomBodega,IdReporte,UnidMinCompra,CodEstado,PnAlternoPV,IdDetPropSrv,RepaExterna,EquivalenciaPV,CodAeronaveVal,SNElementoV, FecUltCotizDMY"
+                                    CssClass="DiseñoGrid table table-sm" GridLines="Both" Width="120%" EmptyDataText="No existen registros ..!"
+                                    OnRowDataBound="GrdDetValrzc_RowDataBound">
+                                    <Columns>
+                                        <asp:TemplateField HeaderText="Pos">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblPos" Text='<%# Eval("Posicion") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Aprob">
+                                            <ItemTemplate>
+                                                <asp:CheckBox ID="CkbAprobP" Checked='<%# Eval("Aprobado").ToString()=="1" ? true : false %>' runat="server" Enabled="false" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Select SP">
+                                            <ItemTemplate>
+                                                <asp:CheckBox ID="CkbGenrSP" Checked='<%# Eval("SelectSolicitud").ToString()=="1" ? true : false %>' runat="server" OnCheckedChanged="CkbGenrSP_CheckedChanged" AutoPostBack="true" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Cant solicitar" HeaderStyle-Width="2%">
+                                            <ItemTemplate>
+                                                <asp:TextBox ID="TxtCantSP" Text='<%# Eval("CantidadSolicitud") %>' runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="NumPedido">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblNumSP" Text='<%# Eval("NumPedido") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="TipoCotizacion">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblTipoCot" Text='<%# Eval("TipoCotizacion") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="OTVAL">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblOtVal" Text='<%# Eval("OTVAL") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="NomServicio">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblNomSvc" Text='<%# Eval("NomServicio") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="PnPropuesta">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblPnPpt" Text='<%# Eval("PnPropuesta") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Descripcion">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblDescElem" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Cantidad Propuesta" HeaderStyle-Width="1%">
+                                            <ItemTemplate>
+                                                <asp:Label ID="CantPpt" Text='<%# Eval("CantidadPropuesta") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Cant RealPV" HeaderStyle-Width="1%">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblCntReal" Text='<%# Eval("CantRealPV") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="ValorCompra">
+                                            <ItemTemplate>
+                                                <asp:TextBox ID="TxtVlr" Text='<%# Eval("ValorCompra") %>' runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" OnTextChanged="TxtVlr_TextChanged" AutoPostBack="true" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="MonedaProVa" HeaderStyle-Width="3%">
+                                            <ItemTemplate>
+                                                <asp:TextBox ID="TxtMnda" Text='<%# Eval("MonedaProVa") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="UndMedProVa">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblUndMPt" Text='<%# Eval("UndMedProVa") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="UndCompra">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblUndMedCmpra" Text='<%# Eval("UndCompraPV") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="FechaUltimaCompra">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblFechUlmCmp" Text='<%# Eval("FechUltComprText") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Entrega cotiza dias" HeaderStyle-Width="1%">
+                                            <ItemTemplate>
+                                                <asp:TextBox ID="TxtTiemEntrDiaCot" Text='<%# Eval("TiempoEntregaDiasCoti") %>' runat="server" Width="100%" TextMode="Number" step="1" onkeypress="return solonumeros(event);" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="DocReferencia">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblDocRef" Text='<%# Eval("DocReferencia") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="CantStock">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblCntStk" Text='<%# Eval("CantStock") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="MatriculaVal">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblMatric" Text='<%# Eval("MatriculaVal") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                    <FooterStyle CssClass="GridFooterStyle" />
+                                    <HeaderStyle CssClass="GridCabecera" />
+                                    <RowStyle CssClass="GridRowStyle" />
+                                    <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                                </asp:GridView>
                             </div>
                         </div>
-                        <table>
-                            <tr>
-                                <td></td>
-                            </tr>
-                        </table>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="ScrollDet1">
-                                    <asp:GridView ID="GrdDetValrzc" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false"
-                                        DataKeyNames="IdServicio,CodReferencia,PnStock,CodIdUbicacion,Bodega,StockMinimo,CodTipoCotiza,SelectBodeg, CantidadSolicitud, ObservacionValorizar,
-                                                      NomBodega,IdReporte,UnidMinCompra,CodEstado,PnAlternoPV,IdDetPropSrv,RepaExterna,EquivalenciaPV,CodAeronaveVal,SNElementoV"
-                                        CssClass="DiseñoGrid table table-sm" GridLines="Both" Width="120%" EmptyDataText="No existen registros ..!"
-                                        OnRowDataBound="GrdDetValrzc_RowDataBound">
-                                        <Columns>
-                                            <asp:TemplateField HeaderText="Pos">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="LblPos" Text='<%# Eval("Posicion") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Aprob">
-                                                <ItemTemplate>
-                                                    <asp:CheckBox ID="CkbAprobP" Checked='<%# Eval("Aprobado").ToString()=="1" ? true : false %>' runat="server" Enabled="false" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Select SP">
-                                                <ItemTemplate>
-                                                    <asp:CheckBox ID="CkbGenrSP" Checked='<%# Eval("SelectSolicitud").ToString()=="1" ? true : false %>' runat="server" OnCheckedChanged="CkbGenrSP_CheckedChanged" AutoPostBack="true" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Cant solicitar" HeaderStyle-Width="2%">
-                                                <ItemTemplate>
-                                                    <asp:TextBox ID="TxtCantSP" Text='<%# Eval("CantidadSolicitud") %>' runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="NumPedido">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="LblNumSP" Text='<%# Eval("NumPedido") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="TipoCotizacion">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="LblTipoCot" Text='<%# Eval("TipoCotizacion") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="OTVAL">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="LblOtVal" Text='<%# Eval("OTVAL") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="NomServicio">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="LblNomSvc" Text='<%# Eval("NomServicio") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="PnPropuesta">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="LblPnPpt" Text='<%# Eval("PnPropuesta") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Descripcion">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="LblDescElem" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Cantidad Propuesta" HeaderStyle-Width="1%">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="CantPpt" Text='<%# Eval("CantidadPropuesta") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Cant RealPV" HeaderStyle-Width="1%">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="LblCntReal" Text='<%# Eval("CantRealPV") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="ValorCompra">
-                                                <ItemTemplate>
-                                                    <asp:TextBox ID="TxtVlr" Text='<%# Eval("ValorCompra") %>' runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" OnTextChanged="TxtVlr_TextChanged" AutoPostBack="true" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="MonedaProVa" HeaderStyle-Width="3%">
-                                                <ItemTemplate>
-                                                    <asp:TextBox ID="TxtMnda" Text='<%# Eval("MonedaProVa") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="UndMedProVa">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="LblUndMPt" Text='<%# Eval("UndMedProVa") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="UndCompra">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="LblUndMedCmpra" Text='<%# Eval("UndCompraPV") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="FechaUltimaCompra">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="LblFechUlmCmp" Text='<%# Eval("FechUltComprText") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Entrega cotiza dias" HeaderStyle-Width="1%">
-                                                <ItemTemplate>
-                                                    <asp:TextBox ID="TxtTiemEntrDiaCot" Text='<%# Eval("TiempoEntregaDiasCoti") %>' runat="server" Width="100%" TextMode="Number" step="1" onkeypress="return solonumeros(event);" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="DocReferencia">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="LblDocRef" Text='<%# Eval("DocReferencia") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="CantStock">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="LblCntStk" Text='<%# Eval("CantStock") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="MatriculaVal">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="LblMatric" Text='<%# Eval("MatriculaVal") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                        </Columns>
-                                        <FooterStyle CssClass="GridFooterStyle" />
-                                        <HeaderStyle CssClass="GridCabecera" />
-                                        <RowStyle CssClass="GridRowStyle" />
-                                        <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                    </asp:GridView>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Exportar" runat="server">
@@ -365,7 +381,9 @@
         </ContentTemplate>
         <Triggers>
             <asp:PostBackTrigger ControlID="BtnDetPpt" />
-            <asp:PostBackTrigger ControlID="BtnExpPlantilla" />          
+            <asp:PostBackTrigger ControlID="BtnExpPlantilla" />
+            <asp:PostBackTrigger ControlID="BtnPlantilla" />
+            <asp:PostBackTrigger ControlID="BtnValorizar" />
         </Triggers>
     </asp:UpdatePanel>
 

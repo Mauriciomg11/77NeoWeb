@@ -52,9 +52,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["CodModelo"] = "";
                 ViewState["ValidaFechaSvc"] = "N";
                 ViewState["TieneCompensacion"] = "N";
-                ViewState["Propiedad"] = 2;// 0= Propiedad Cia| 1=ajeno (Cliente) para la creacion de los componentes               
-                CalCrearElemFechRec.EndDate = DateTime.Now;
-                CalCrearElemFechFabr.EndDate = DateTime.Now;
+                ViewState["Propiedad"] = 2;// 0= Propiedad Cia| 1=ajeno (Cliente) para la creacion de los componentes 
                 MultVw.ActiveViewIndex = 0;
                 BindDDdl("UPD");
                 BtnInsElem.CssClass = "btn btn-primary";
@@ -933,7 +931,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             string VbApu_Elem = HttpUtility.HtmlDecode(GrdBusq.SelectedRow.Cells[8].Text.Trim());
             if (!VbApu_Ref.Equals(VbApu_Elem))
             {
-                ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('La S/N no se encuentra marcada como APU, debe realizar el cambio en la pantalla [Elemento]')", true);
+                ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "alert", "alert('La S/N no se encuentra marcada como APU, debe realizar el cambio en la pantalla [Elemento]');", true);
                 return;
             }
             TxtPnInsElem.Text = HttpUtility.HtmlDecode(GrdBusq.SelectedRow.Cells[1].Text.Trim());
@@ -942,6 +940,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtUbiTecInsElem.Text = HttpUtility.HtmlDecode(GrdBusq.SelectedRow.Cells[5].Text.Trim());
             string PoscElem = HttpUtility.HtmlDecode(GrdBusq.SelectedRow.Cells[10].Text.Trim());
             BIndDHisElemInsElem(ViewState["CodElemento"].ToString().Trim());
+            string borr = ViewState["CodModelo"].ToString().Trim();
+            string borr1 = Session["!dC!@"].ToString().Trim();
+
             string LtxtSql = string.Format("EXEC Consultas_General_Ingenieria 2,'{0}','{1}','',0, 0,{2},'01-01-1','01-01-1'", TxtUbiTecInsElem.Text, ViewState["CodModelo"].ToString().Trim(), Session["!dC!@"]);
             DdlPosicInsElem.DataSource = Cnx.DSET(LtxtSql);
             DdlPosicInsElem.DataMember = "Datos";
@@ -1018,35 +1019,35 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens01HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Debe seleccionar una aeronave')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Debe seleccionar una aeronave')", true);
                     return;
                 }
                 if (TxtPnInsElem.Text.Equals("") || TxtSnInsElem.Text.Equals("") || ViewState["CodElemento"].Equals(""))
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens02HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un elemento')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un elemento')", true);
                     return;
                 }
                 if (TxtUbiTecInsElem.Text.Equals(""))
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens03HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una ubicación técnica')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una ubicación técnica')", true);
                     return;
                 }
                 if (DdlPosicInsElem.Text.Equals("") && DdlPosicInsElem.Enabled == true)
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens04HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una posición')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una posición')", true);
                     return;
                 }
                 if (TxtFechaInsElem.Text.Equals(""))
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens05HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha
                     return;
                 }
                 Cnx.ValidarFechas(TxtFechaInsElem.Text.Trim(), "", 1);
@@ -1064,7 +1065,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens06HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
                     return;
                 }
                 foreach (GridViewRow Row in GrdSvcInsElem.Rows)
@@ -1078,7 +1079,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         ViewState["ValidaFechaSvc"] = "S";
                         DataRow[] Result1 = Idioma.Select("Objeto= 'Mens07HkVrt'");
                         foreach (DataRow row in Result1)
-                        { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//'Existen servicios en los que se modificaron fechas de cumplimiento y no tienen reporte
+                        { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//'Existen servicios en los que se modificaron fechas de cumplimiento y no tienen reporte
                         return;
                     }
                 }
@@ -1189,9 +1190,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                     foreach (DataRow row in Result1)
-                    { Mensj = row["Texto"].ToString().Trim(); }
+                    { 
+                        ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true);
+                    }
 
-                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                    
                     return;
                 }
                 BIndDHisElemInsElem(ViewState["CodElemento"].ToString().Trim());
@@ -1206,14 +1209,14 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                 Result = Idioma.Select("Objeto= 'Mens18HkVrt'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Proceso exitoso
+                { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Proceso exitoso
 
             }
             catch (Exception Ex)
             {
                 Result = Idioma.Select("Objeto= 'Mens33HkVrt'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//Inconveniente en la instalación')", true);
+                { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Inconveniente en la instalación')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Instalar Componente", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlAeroInsElem.Text = "0";
@@ -1335,13 +1338,14 @@ namespace _77NeoWeb.Forms.Ingenieria
                         e.Row.BackColor = System.Drawing.Color.White;
                         break;
                     case "2":
-                        e.Row.BackColor = System.Drawing.Color.Yellow;
+                        e.Row.BackColor = System.Drawing.Color.Wheat;
                         break;
                     case "3":
-                        e.Row.BackColor = System.Drawing.Color.Silver;
+                        e.Row.BackColor = System.Drawing.Color.LightGray;
                         break;
                     default:
-                        e.Row.BackColor = System.Drawing.Color.Red;
+                      //  e.Row.BackColor = System.Drawing.Color.Red;
+                        e.Row.BackColor = System.Drawing.Color.LightSalmon;
                         e.Row.ForeColor = System.Drawing.Color.White;
                         break;
                 }
@@ -1466,7 +1470,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataRow[] Result = Idioma.Select("Objeto= 'Mens32HkVrt'");
             foreach (DataRow row in Result)
-            { ScriptManager.RegisterClientScriptBlock(this.UplCompensacion, UplCompensacion.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Todos los valores del dia seran tomados por el componente instalado')", true);
+            { ScriptManager.RegisterClientScriptBlock(this.UplCompensacion, UplCompensacion.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Todos los valores del dia seran tomados por el componente instalado')", true);
             GrdCompensLv.Enabled = false;
             CkbCompensInicioDia.Enabled = false;
             ViewState["TieneCompensacion"] = "S";
@@ -1605,35 +1609,35 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens01HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Debe seleccionar una aeronave')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Debe seleccionar una aeronave')", true);
                     return;
                 }
                 if (TxtPnRemElem.Text.Equals("") || TxtSnRemElem.Text.Equals("") || ViewState["CodElemento"].Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens02HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Debe seleccionar un elemento')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Debe seleccionar un elemento')", true);
                     return;
                 }
                 if (TxtUbiTecRemElem.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens03HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una ubicación técnica')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una ubicación técnica')", true);
                     return;
                 }
                 if (DdlPosicRemElem.Text.Equals("") && DdlPosicInsElem.Enabled == true)
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens04HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una posición')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una posición')", true);
                     return;
                 }
                 if (TxtFechaRemElem.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens05HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha')", true);
                     return;
                 }
                 Cnx.ValidarFechas(TxtFechaRemElem.Text.Trim(), "", 1);
@@ -1651,7 +1655,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens06HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
                     return;
                 }
 
@@ -1785,7 +1789,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     foreach (DataRow row in Result)
                     { Mensj = row["Texto"].ToString().Trim(); }
 
-                    ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                    ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "alert", "alert('" + Mensj + "');", true);
                     return;
                 }
                 BIndDHisContRemElem(ViewState["CodElemento"].ToString().Trim());
@@ -1797,13 +1801,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                 GrdCompensLv.DataBind();
                 DataRow[] Result1 = Idioma.Select("Objeto= 'Mens18HkVrt'");
                 foreach (DataRow row in Result1)
-                { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Proceso exitoso')", true);
+                { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Proceso exitoso')", true);
             }
             catch (Exception Ex)
             {
                 DataRow[] Result1 = Idioma.Select("Objeto= 'Mens25HkVrt'");
                 foreach (DataRow row in Result1)
-                { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Inconveniente en la instalación')", true);
+                { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Inconveniente en la instalación')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Remover Componente", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlAeroRemElem.Text = "0";
@@ -1874,7 +1878,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens21HkVrt'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// La S/N no se encuentra marcada como APU, debe realizar el cambio en la pantalla [Elemento]
+                { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// La S/N no se encuentra marcada como APU, debe realizar el cambio en la pantalla [Elemento]
                 return;
             }
             TxtPnRemElem.Text = HttpUtility.HtmlDecode(GrdRemBusqElem.SelectedRow.Cells[1].Text.Trim());
@@ -1938,19 +1942,19 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                                     DataRow[] Result = Idioma.Select("Objeto= 'Mens22HkVrt'");
                                     foreach (DataRow row in Result)
-                                    { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// El componente tiene ordenes de trabajo abierta(s).
+                                    { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// El componente tiene ordenes de trabajo abierta(s).
                                     break;
                                 case "M":
                                     BtnAbrirOTCerrarRemMay.Visible = true;
                                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens23HkVrt'");
                                     foreach (DataRow row in Result1)
-                                    { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// El mayor tiene ordenes de trabajo abierta(s).
+                                    { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// El mayor tiene ordenes de trabajo abierta(s).
                                     break;
                                 default:
                                     BtnAbrirOTCerrarRemSubC.Visible = true;
                                     DataRow[] Result2 = Idioma.Select("Objeto= 'Mens24HkVrt'");
                                     foreach (DataRow row in Result2)
-                                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// El sub-componente tiene ordenes de trabajo abierta(s).
+                                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// El sub-componente tiene ordenes de trabajo abierta(s).
                                     break;
                             }
                         }
@@ -2168,28 +2172,28 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens01HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Debe seleccionar una aeronave
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Debe seleccionar una aeronave
                     return;
                 }
                 if (TxtPnInsMay.Text.Equals("") || TxtSnInsMay.Text.Equals("") || ViewState["CodElemento"].Equals(""))
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens02HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un elemento
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un elemento
                     return;
                 }
                 if (TxtUbiTecInsMay.Text.Equals(""))
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens03HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una ubicación técnica
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una ubicación técnica
                     return;
                 }
                 if (DdlPosicInsMay.Text.Equals("") && DdlPosicInsMay.Enabled == true)
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens04HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una posición
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una posición
                     return;
                 }
                 Cnx.ValidarFechas(TxtFechaInsMay.Text.Trim(), "", 1);
@@ -2207,14 +2211,14 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens05HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha
                     return;
                 }
                 if (TxtMotivInsMay.Text.Equals(""))
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens06HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
                     return;
                 }
                 foreach (GridViewRow Row in GrdSvcInsMay.Rows)
@@ -2228,7 +2232,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         ViewState["ValidaFechaSvc"] = "S";
                         DataRow[] Result1 = Idioma.Select("Objeto= 'Mens07HkVrt'");
                         foreach (DataRow row in Result1)
-                        { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Existen servicios en los que se modificaron fechas de cumplimiento y no tienen reporte
+                        { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Existen servicios en los que se modificaron fechas de cumplimiento y no tienen reporte
                         return;
                     }
                 }
@@ -2343,7 +2347,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DataRow[] Result1 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                     foreach (DataRow row in Result1)
                     { Mensj = row["Texto"].ToString().Trim(); }
-                    ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                    ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "alert", "alert('" + Mensj + "');", true);
                     return;
                 }
                 BIndDHisElemInsMay(ViewState["CodElemento"].ToString().Trim());
@@ -2356,13 +2360,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                 GrdCompensLv.DataBind();
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens18HkVrt'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Proceso exitoso
+                { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Proceso exitoso
             }
             catch (Exception Ex)
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens33HkVrt'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//Inconveniente en la instalación')", true);
+                { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Inconveniente en la instalación')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Instalar MAYOR", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlAeroInsMay.Text = "0";
@@ -2416,7 +2420,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens34HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// La posición de un motor debe ser 1, 2, 3 ó 4
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// La posición de un motor debe ser 1, 2, 3 ó 4
                     DdlPosicInsMay.Text = "";
                 }
             }
@@ -2447,7 +2451,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             string VbApu_Elem = HttpUtility.HtmlDecode(GrdBusqMayDisp.SelectedRow.Cells[8].Text.Trim());
             if (!VbApu_Ref.Equals(VbApu_Elem))
             {
-                ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "IdntificadorBloqueScript", "alert('La S/N no se encuentra marcada como APU, debe realizar el cambio en la pantalla [Elemento]')", true);
+                ScriptManager.RegisterClientScriptBlock(this.UplInsMay, UplInsMay.GetType(), "alert", "alert('La S/N no se encuentra marcada como APU, debe realizar el cambio en la pantalla [Elemento]');", true);
                 return;
             }
             TxtPnInsMay.Text = HttpUtility.HtmlDecode(GrdBusqMayDisp.SelectedRow.Cells[1].Text.Trim());
@@ -2816,42 +2820,42 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens01HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Debe seleccionar una aeronave')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Debe seleccionar una aeronave')", true);
                     return;
                 }
                 if (TxtPnRemMay.Text.Equals("") || TxtSnRemMay.Text.Equals("") || ViewState["CodElemento"].Equals(""))
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens35HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un componente mayor')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un componente mayor')", true);
                     return;
                 }
                 if (TxtUbiTecRemMay.Text.Equals(""))
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens03HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una ubicación técnica')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una ubicación técnica')", true);
                     return;
                 }
                 if (DdlPosicRemMay.Text.Equals("") && DdlPosicRemMay.Enabled == true)
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens04HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una posición')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una posición')", true);
                     return;
                 }
                 if (TxtFechaRemMay.Text.Equals(""))
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens05HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha')", true);
                     return;
                 }
                 if (TxtMotivRemMay.Text.Equals(""))
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= 'Mens06HkVrt'");
                     foreach (DataRow row in Result1)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
                     return;
                 }
                 Cnx.ValidarFechas(TxtFechaRemMay.Text.Trim(), "", 1);
@@ -2994,7 +2998,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DataRow[] Result1 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                     foreach (DataRow row in Result1)
                     { Mensj = row["Texto"].ToString().Trim(); }
-                    ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                    ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "alert", "alert('" + Mensj + "');", true);
                     return;
                 }
                 BIndDHisContRemMay(ViewState["CodElemento"].ToString().Trim());
@@ -3006,13 +3010,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                 GrdCompensLv.DataBind();
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens18HkVrt'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Proceso exitoso')", true);
+                { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Proceso exitoso')", true);
             }
             catch (Exception Ex)
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens25HkVrt'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Inconveniente en la remoción')", true);
+                { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Inconveniente en la remoción')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Remover Mayor", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlAeroRemMay.Text = "0";
@@ -3083,7 +3087,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens21HkVrt'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// La S/N no se encuentra marcada como APU, debe realizar el cambio en la pantalla [Ele
+                { ScriptManager.RegisterClientScriptBlock(this.UplRemMay, UplRemMay.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// La S/N no se encuentra marcada como APU, debe realizar el cambio en la pantalla [Ele
                 return;
             }
             TxtPnRemMay.Text = HttpUtility.HtmlDecode(GrdBusqRemMay.SelectedRow.Cells[1].Text.Trim());
@@ -3314,49 +3318,49 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens36HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar el P/N del mayor.
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar el P/N del mayor.
                     return;
                 }
                 if (DdlSNInsSubC.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens37HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar el S/N del mayor')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar el S/N del mayor')", true);
                     return;
                 }
                 if (TxtPnInsSubC.Text.Equals("") || TxtSnInsSubC.Text.Equals("") || ViewState["CodElemento"].Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens38HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un sub-componente
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un sub-componente
                     return;
                 }
                 if (TxtUbiTecInsSubC.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens03HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una ubicación técnica')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una ubicación técnica')", true);
                     return;
                 }
                 if (DdlPosicInsSubC.Text.Equals("") && DdlPosicInsSubC.Enabled == true)
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens04HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una posición')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una posición')", true);
                     return;
                 }
                 if (TxtFechaInsSubC.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens05HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha')", true);
                     return;
                 }
                 if (TxtMotivInsSubC.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens06HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
                     return;
                 }
 
@@ -3382,7 +3386,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         ViewState["ValidaFechaSvc"] = "S";
                         DataRow[] Result = Idioma.Select("Objeto= 'Mens07HkVrt'");
                         foreach (DataRow row in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Existen servicios en los que se modificaron fechas de cumplimiento y no tienen reporte')", true);
+                        { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Existen servicios en los que se modificaron fechas de cumplimiento y no tienen reporte')", true);
                         return;
                     }
                 }
@@ -3457,7 +3461,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                     foreach (DataRow row in Result)
                     { Mensj = row["Texto"].ToString().Trim(); }
-                    ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                    ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "alert", "alert('" + Mensj + "');", true);
                     return;
                 }
                 BIndDHisElemInsSubC(ViewState["CodElemento"].ToString().Trim());
@@ -3469,13 +3473,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                 GrdCompensLv.DataBind();
                 DataRow[] Result1 = Idioma.Select("Objeto= 'Mens18HkVrt'");
                 foreach (DataRow row in Result1)
-                { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Proceso exitoso')", true);
+                { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Proceso exitoso')", true);
             }
             catch (Exception Ex)
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens33HkVrt'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Inconveniente en la instalación')", true);
+                { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Inconveniente en la instalación')", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Instalar Sub-Componente", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlPNInsSubC.Text = "";
@@ -3494,7 +3498,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens21HkVrt'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//La S/N no se encuentra marcada como APU, debe realizar el cambio en la pantalla [Elemento]')", true);
+                { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//La S/N no se encuentra marcada como APU, debe realizar el cambio en la pantalla [Elemento]')", true);
                 return;
             }
             TxtPnInsSubC.Text = HttpUtility.HtmlDecode(GrdBusqInsSubC.SelectedRow.Cells[1].Text.Trim());
@@ -3717,49 +3721,60 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens08HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un modelo')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un modelo')", true);
                     return;
                 }
                 if (DdlPNRemSubC.Text.Equals("") || DdlSNRemSubC.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens35HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un componente mayor')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un componente mayor')", true);
                     return;
                 }
                 if (TxtPnRemSubC.Text.Equals("") || TxtSnRemSubC.Text.Equals("") || ViewState["CodElemento"].Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens38HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un sub-componente')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un sub-componente')", true);
                     return;
                 }
                 if (TxtUbiTecRemSubC.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens03HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una ubicación técnica')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una ubicación técnica')", true);
                     return;
                 }
                 if (DdlPosicRemSubC.Text.Equals("") && DdlPosicRemSubC.Enabled == true)
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens04HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una posición')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una posición')", true);
                     return;
                 }
                 if (TxtFechaRemSubC.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens05HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha')", true);
                     return;
                 }
+                string VbMnsj = Cnx.ValidarFechas2(TxtFechaRemSubC.Text.Trim(), "", 1);
+                if (!VbMnsj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { VbMnsj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFechaRemSubC.Focus();
+                    return;
+                }
+
                 if (TxtMotivRemSubC.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens06HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
                     return;
                 }
 
@@ -3892,7 +3907,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                     foreach (DataRow row in Result)
                     { Mensj = row["Texto"].ToString().Trim(); }
-                    ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                    ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "alert", "alert('" + Mensj + "');", true);
                     return;
                 }
                 BIndDHisContRemSubC(ViewState["CodElemento"].ToString().Trim());
@@ -3904,13 +3919,13 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                 DataRow[] Result1 = Idioma.Select("Objeto= 'Mens18HkVrt'");
                 foreach (DataRow row in Result1)
-                { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Proceso exitoso
+                { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Proceso exitoso
             }
             catch (Exception Ex)
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens25HkVrt'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Inconveniente
+                { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Inconveniente
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Remover Sub-Componente", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlPNRemSubC.Text = "";
@@ -3930,7 +3945,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens21HkVrt'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// La S/N no se encuentra marcada como APU, debe realizar el cambio en la pantalla [Elemento]
+                { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// La S/N no se encuentra marcada como APU, debe realizar el cambio en la pantalla [Elemento]
                 return;
             }
             TxtPnRemSubC.Text = HttpUtility.HtmlDecode(GrdBusqRemSubC.SelectedRow.Cells[1].Text.Trim());
@@ -4083,28 +4098,48 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens43HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un P/N')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un P/N')", true);
                     return;
                 }
                 if (TxtCrearElemSn.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens42HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar una S/N')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar una S/N')", true);
                     return;
                 }
                 if (TxtCrearElemFechRec.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens41HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha de recibo')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha de recibo')", true);
                     return;
                 }
                 if (TxtCrearElemFechFabr.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens40HkVrt'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha de fabricación')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar una fecha de fabricación')", true);
+                    return;
+                }
+                string VbMnsj = Cnx.ValidarFechas2(TxtCrearElemFechRec.Text.Trim(), "", 1);
+                if (!VbMnsj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { VbMnsj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtCrearElemFechRec.Focus();
+                    return;
+                }
+                 VbMnsj = Cnx.ValidarFechas2(TxtCrearElemFechFabr.Text.Trim(), TxtCrearElemFechRec.Text.Trim(), 2);
+                if (!VbMnsj.ToString().Trim().Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { VbMnsj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtCrearElemFechFabr.Focus();
                     return;
                 }
                 List<ClsTypAeronaveVirtualCrearElem> ObjCrearElem = new List<ClsTypAeronaveVirtualCrearElem>();
@@ -4160,7 +4195,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     foreach (DataRow row in Result)
                     { Mensj = row["Texto"].ToString().Trim(); }
 
-                    ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                    ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "alert", "alert('" + Mensj + "');", true);
                     return;
                 }
                 GrdCrearECont.DataSource = null;
@@ -4170,13 +4205,13 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                 DataRow[] Result1 = Idioma.Select("Objeto= 'Mens18HkVrt'");
                 foreach (DataRow row in Result1)
-                { ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Proceso exitoso')", true);
+                { ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Proceso exitoso')", true);
             }
             catch (Exception Ex)
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//
+                { ScriptManager.RegisterClientScriptBlock(this.UplCrearElem, UplCrearElem.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Crear Elemento", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 DdlCrearElemPn.Text = "";

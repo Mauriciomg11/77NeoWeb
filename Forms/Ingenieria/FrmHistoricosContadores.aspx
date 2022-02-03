@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div class="row GridHisC">
-                        <div class="col-sm-6 table-responsive BorderG">
+                        <div class="col-sm-6">
                             <h6 class="TextoSuperior">
                                 <asp:Label ID="LblTitHisC1Aplicab" runat="server" Text="" /></h6>
                             <div class="row">
@@ -114,9 +114,9 @@
                                     <br />
                                     <asp:ImageButton ID="IbtHisC1Excel" runat="server" ToolTip="Exportar histórico" CssClass=" BtnExpExcel" Height="38px" Width="40px" ImageUrl="~/images/ExcelV1.png" OnClick="IbtHisC1Excel_Click" />
                                 </div>
-                                <div class="CentarGridAsig table-responsive Scroll">
+                                <div class="CentarGridAsig Scroll">
                                     <asp:GridView ID="GrdHisC1" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodIdHist,CodIdCont,SumIndiv,VlrMax,Descripcion"
-                                        CssClass="DiseñoGrid table-sm" GridLines="Both"
+                                        CssClass="DiseñoGrid Table table-sm" GridLines="Both"
                                         OnRowDeleting="GrdHisC1_RowDeleting" OnRowCommand="GrdHisC1_RowCommand" OnRowDataBound="GrdHisC1_RowDataBound">
                                         <FooterStyle CssClass="GridFooterStyle" />
                                         <HeaderStyle CssClass="GridCabecera" />
@@ -162,7 +162,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 table-responsive BorderG">
+                        <div class="col-sm-6">
                             <h6 class="TextoSuperior">
                                 <asp:Label ID="LblTitHisC2Aplicab" runat="server" Text="" /></h6>
                             <div class="row">
@@ -207,7 +207,7 @@
                                     <br />
                                     <asp:ImageButton ID="IbtHisC2Excel" runat="server" ToolTip="Exportar histórico" CssClass=" BtnExpExcel" Height="38px" Width="40px" ImageUrl="~/images/ExcelV1.png" OnClick="IbtHisC2Excel_Click" />
                                 </div>
-                                <div class="CentarGridAsig table-responsive Scroll">
+                                <div class="CentarGridAsig Scroll">
                                     <asp:GridView ID="GrdHisC2" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodIdHist,CodIdCont,SumIndiv,VlrMax,Descripcion"
                                         CssClass="DiseñoGrid table-sm" GridLines="Both"
                                         OnRowCommand="GrdHisC2_RowCommand" OnRowDeleting="GrdHisC2_RowDeleting" OnRowDataBound="GrdHisC2_RowDataBound">
@@ -223,7 +223,7 @@
                                                 <FooterTemplate>
                                                     <asp:TextBox ID="TxtHC2FechaPP" runat="server" Width="90%" TextMode="Date" MaxLength="10" />
                                                 </FooterTemplate>
-                                            </asp:TemplateField>
+                                            </asp:TemplateField> 
                                             <asp:TemplateField HeaderText="Individual">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblHK2" Text='<%# Eval("Horas") %>' runat="server" Width="100%" Enabled="false" />

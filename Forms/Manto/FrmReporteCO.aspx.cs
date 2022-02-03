@@ -37,6 +37,8 @@ namespace _77NeoWeb.Forms.Manto
                     Session["Nit77Cia"] = Cnx.GetNit(); // 811035879-1 TwoGoWo |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
+                    Session["MonLcl"] = Cnx.GetMonedLcl();// "COP|USD"
+                    Session["FormatFecha"] = Cnx.GetFormatFecha();// 103 formato europeo dd/MM/yyyy | 101 formato EEUU M/dd/yyyyy
                 }
             }
             if (!IsPostBack)
@@ -243,12 +245,16 @@ namespace _77NeoWeb.Forms.Manto
                 return;
             }
 
+            string FrmtFech= Session["FormatFecha"].ToString();
+            if (Session["FormatFecha"].ToString().Equals("101")) { FrmtFech = "MM/dd/yyyy HH:mm"; }
+            else { FrmtFech = "dd/MM/yyyy HH:mm"; } 
+
             string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
             DataSet ds = new DataSet();
             Cnx.SelecBD();
             using (SqlConnection SCnx1 = new SqlConnection(Cnx.GetConex()))
             {
-                ReportParameter[] parameters = new ReportParameter[15];
+                ReportParameter[] parameters = new ReportParameter[16];
 
                 parameters[0] = new ReportParameter("PrmCia", Session["NomCiaPpal"].ToString().Trim());
                 parameters[1] = new ReportParameter("PrmNit", Session["Nit77Cia"].ToString().Trim());
@@ -265,6 +271,7 @@ namespace _77NeoWeb.Forms.Manto
                 parameters[12] = new ReportParameter("PRte", GrdDatos.Columns[6].HeaderText.Trim());
                 parameters[13] = new ReportParameter("PAccC", GrdDatos.Columns[8].HeaderText.Trim());
                 parameters[14] = new ReportParameter("POT", DdlOTPpl.Text.Trim());
+                parameters[15] = new ReportParameter("FrmtFech", FrmtFech);
 
                 string StSql = "EXEC Consultas_General_Manto 25,@St,@Ae,@Sn,@Pn, 0, @Ot,@Rt, @ICC,@FI,@FF,'03-10-00'";
                 using (SqlCommand SC = new SqlCommand(StSql, SCnx1))

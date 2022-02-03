@@ -338,7 +338,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 foreach (DataRow row in Result)
                                 { PMensj = row["Texto"].ToString(); }
 
-                                ScriptManager.RegisterClientScriptBlock(this.UplProcesarLV, UplProcesarLV.GetType(), "IdntificadorBloqueScript", "alert('" + PMensj.ToString().Trim() + " " + PCodLV.Trim() + "');", true);
+                                ScriptManager.RegisterClientScriptBlock(this.UplProcesarLV, UplProcesarLV.GetType(), "alert", "alert('" + PMensj.ToString().Trim() + " " + PCodLV.Trim() + "');", true);
                             }
                             SDR.Close();
                             transaction.Commit();
@@ -524,7 +524,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens06PrIng'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplExceso, UplExceso.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//
+                { ScriptManager.RegisterClientScriptBlock(this.UplExceso, UplExceso.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                 TxtExcesFechI.Focus();
                 return;
             }
@@ -562,7 +562,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                 foreach (DataRow row in Result)
                                 { Mensj = row["Texto"].ToString(); }
-                                ScriptManager.RegisterClientScriptBlock(this.UplExceso, UplExceso.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj.ToString() + "');", true);
+                                ScriptManager.RegisterClientScriptBlock(this.UplExceso, UplExceso.GetType(), "alert", "alert('" + Mensj.ToString() + "');", true);
                                 BIndDExcesoContConHis();
                                 return;
                             }
@@ -763,7 +763,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens06PrIng'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplDefecto, UplDefecto.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//
+                { ScriptManager.RegisterClientScriptBlock(this.UplDefecto, UplDefecto.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                 TxtDeftFechI.Focus();
                 return;
             }
@@ -771,7 +771,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens12PrIng'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplDefecto, UplDefecto.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//Se requiere la aeronave
+                { ScriptManager.RegisterClientScriptBlock(this.UplDefecto, UplDefecto.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Se requiere la aeronave
                 return;
             }//
             Cnx.SelecBD();
@@ -810,7 +810,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                 foreach (DataRow row in Result)
                                 { Mensj = row["Texto"].ToString(); }
-                                ScriptManager.RegisterClientScriptBlock(this.UplDefecto, UplDefecto.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj.ToString() + "');", true);
+                                ScriptManager.RegisterClientScriptBlock(this.UplDefecto, UplDefecto.GetType(), "alert", "alert('" + Mensj.ToString() + "');", true);
                                 BIndDDeftContConHis();
                                 return;
                             }
@@ -1039,7 +1039,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens06PrIng'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplConveniencia, UplConveniencia.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//
+                { ScriptManager.RegisterClientScriptBlock(this.UplConveniencia, UplConveniencia.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                 TxtConvenFechI.Focus();
                 return;
             }
@@ -1047,7 +1047,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens12PrIng'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplConveniencia, UplConveniencia.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//Se requiere la aeronave
+                { ScriptManager.RegisterClientScriptBlock(this.UplConveniencia, UplConveniencia.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Se requiere la aeronave
                 return;
             }//
             Cnx.SelecBD();
@@ -1082,7 +1082,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                 foreach (DataRow row in Result)
                                 { Mensj = row["Texto"].ToString(); }
-                                ScriptManager.RegisterClientScriptBlock(this.UplConveniencia, UplConveniencia.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj.ToString() + "');", true);
+                                ScriptManager.RegisterClientScriptBlock(this.UplConveniencia, UplConveniencia.GetType(), "alert", "alert('" + Mensj.ToString() + "');", true);
                                 BIndDConvenContConHis();
                                 return;
                             }

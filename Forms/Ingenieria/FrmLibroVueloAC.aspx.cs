@@ -2,9 +2,11 @@
 using _77NeoWeb.Prg;
 using _77NeoWeb.Prg.PrgIngenieria;
 using ClosedXML.Excel;
+using ExcelDataReader;
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
@@ -380,6 +382,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     IbtConsulPnRecurRte.ToolTip = tbl["Objeto"].ToString().Trim().Equals("BtnConsultar") ? tbl["Texto"].ToString().Trim() : IbtConsulPnRecurRte.ToolTip;
                     IbtExpExcelPnRecurRte.ToolTip = tbl["Objeto"].ToString().Trim().Equals("IbtRecurExpExcelPn") ? tbl["Texto"].ToString().Trim() : IbtExpExcelPnRecurRte.ToolTip;
                     BtnCargaMaxiva.Text = tbl["Objeto"].ToString().Trim().Equals("BtnCargaMasivaTT1") ? tbl["Texto"].ToString().Trim() : BtnCargaMaxiva.Text;
+                    BtnCargaMaxiva.ToolTip = tbl["Objeto"].ToString().Trim().Equals("BtnCargaMasivaTT1") ? tbl["Texto"].ToString().Trim() : BtnCargaMaxiva.ToolTip;
                     LblTitOTCargMasiv.Text = tbl["Objeto"].ToString().Trim().Equals("LblTitCargMasiv") ? tbl["Texto"].ToString().Trim() : LblTitOTCargMasiv.Text;
                     LblCargaMasRte.Text = tbl["Objeto"].ToString().Trim().Equals("LblNroRte") ? tbl["Texto"].ToString().Trim() : LblCargaMasRte.Text;
                     LblCargaMasOt.Text = tbl["Objeto"].ToString().Trim().Equals("LblOtSec") ? tbl["Texto"].ToString().Trim() : LblCargaMasOt.Text;
@@ -685,7 +688,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     string VblRuta = FileUpCLV.FileName;
                     string VblExt = Path.GetExtension(VblRuta);
                     string VblType = FileUpCLV.PostedFile.ContentType;
-                  
+
 
                     VblExt = VblExt.Substring(VblExt.LastIndexOf(".") + 1).ToLower();
                     string[] formatos = new string[] { "jpg", "jpeg", "bmp", "png", "gif", "pdf" };
@@ -845,6 +848,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                     DSTGrDtsRpt.Tables[8].TableName = "Ata";
                                     DSTGrDtsRpt.Tables[9].TableName = "Gnrd";
                                     DSTGrDtsRpt.Tables[10].TableName = "PN";
+                                    DSTGrDtsRpt.Tables[11].TableName = "Lcia";
 
                                     ViewState["DSTGrDtsRpt"] = DSTGrDtsRpt;
                                     ViewState["TipRteAnt"] = "7777";
@@ -3296,16 +3300,28 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             if (DdlTipRte.Enabled == true)
             {
-                string LtxtSql;
+                
+                DSTGrDtsRpt = (DataSet)ViewState["DSTGrDtsRpt"];
                 if (DdlEstad.SelectedValue.Equals("C"))
                 {
                     DdlCumpl.SelectedValue = ViewState["UsuDefecto"].Equals("S") ? Session["C77U"].ToString() : DdlCumpl.SelectedValue;
                     DdlLicCump.Text = "";
-                    LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','LICTA',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", DdlCumpl.SelectedValue, Session["!dC!@"]);
-                    DdlLicCump.DataSource = Cnx.DSET(LtxtSql);
-                    DdlLicCump.DataTextField = "Licencia";
-                    DdlLicCump.DataValueField = "Codigo";
-                    DdlLicCump.DataBind();
+                    if (DSTGrDtsRpt.Tables["Lcia"].Rows.Count > 0) //"Licencia"
+                    {
+                        DataTable DTG = new DataTable();
+                        DTG = DSTGrDtsRpt.Tables[11].Clone();
+                        DataRow[] DR = DSTGrDtsRpt.Tables[11].Select("Activo = 1 AND CodPersona = '" + DdlCumpl.Text.ToString().Trim() + "' OR  Codigo= ''");
+                        if (IsIENumerableLleno(DR)) { DTG = DR.CopyToDataTable(); }
+                        DdlLicCump.DataSource = DTG;
+                        DdlLicCump.DataTextField = "Licencia";
+                        DdlLicCump.DataValueField = "Codigo";
+                        DdlLicCump.DataBind();
+                    }
+                    //LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','LICTA',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", DdlCumpl.SelectedValue, Session["!dC!@"]);
+                    //DdlLicCump.DataSource = Cnx.DSET(LtxtSql);
+                    //DdlLicCump.DataTextField = "Licencia";
+                    //DdlLicCump.DataValueField = "Codigo";
+                    //DdlLicCump.DataBind();
                 }
                 else
                 {
@@ -3314,12 +3330,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                         DdlGenerado.SelectedValue = ViewState["UsuDefecto"].Equals("S") ? Session["C77U"].ToString() : DdlGenerado.SelectedValue;
                         DdlLicGene.Text = "";
                     }
-                    LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','LICTA',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", DdlGenerado.SelectedValue, Session["!dC!@"]);
-                    DdlLicGene.DataSource = Cnx.DSET(LtxtSql);
-                    DdlLicGene.DataMember = "Datos";
-                    DdlLicGene.DataTextField = "Licencia";
-                    DdlLicGene.DataValueField = "Codigo";
-                    DdlLicGene.DataBind();
+                   
+                    if (DSTGrDtsRpt.Tables["Lcia"].Rows.Count > 0) //"Licencia"
+                    {
+                        DataTable DTG = DSTGrDtsRpt.Tables[11].Clone();
+                        DataRow[] DR = DSTGrDtsRpt.Tables[11].Select("Activo = 1 AND CodPersona = '" + DdlGenerado.Text.ToString().Trim() + "' OR  Codigo= ''");
+                        if (IsIENumerableLleno(DR)) { DTG = DR.CopyToDataTable(); }
+                        DdlLicGene.DataSource = DTG;
+                        DdlLicGene.DataTextField = "Licencia";
+                        DdlLicGene.DataValueField = "Codigo";
+                        DdlLicGene.DataBind();
+                    }
                 }
             }
             else
@@ -3347,6 +3368,41 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void DdlCatgr_TextChanged(object sender, EventArgs e)
         {
             if (!DdlCatgr.Text.Equals("")) { CalcularFechaPry(); }
+        }
+        protected void DdlGenerado_TextChanged(object sender, EventArgs e)
+        {
+            if (DdlTipRte.Enabled == true)
+            {
+                DSTGrDtsRpt = (DataSet)ViewState["DSTGrDtsRpt"];
+                if (DSTGrDtsRpt.Tables["Lcia"].Rows.Count > 0) //"Licencia"
+                {
+                    DataTable DTG = DSTGrDtsRpt.Tables[11].Clone();
+                    DataRow[] DR = DSTGrDtsRpt.Tables[11].Select("Activo = 1 AND CodPersona = '" + DdlGenerado.Text.ToString().Trim() + "' OR  Codigo= ''");
+                    if (IsIENumerableLleno(DR)) { DTG = DR.CopyToDataTable(); }
+                    DdlLicGene.DataSource = DTG;
+                    DdlLicGene.DataTextField = "Licencia";
+                    DdlLicGene.DataValueField = "Codigo";
+                    DdlLicGene.DataBind();
+                }
+            }
+        }       
+        protected void DdlCumpl_TextChanged(object sender, EventArgs e)
+        {
+            if (DdlTipRte.Enabled == true)
+            {
+                DSTGrDtsRpt = (DataSet)ViewState["DSTGrDtsRpt"];
+                if (DSTGrDtsRpt.Tables["Lcia"].Rows.Count > 0) //"Licencia"
+                {
+                    DataTable DTG = new DataTable();
+                    DTG = DSTGrDtsRpt.Tables[11].Clone();
+                    DataRow[] DR = DSTGrDtsRpt.Tables[11].Select("Activo = 1 AND CodPersona = '" + DdlCumpl.Text.ToString().Trim() + "' OR  Codigo= ''");
+                    if (IsIENumerableLleno(DR)) { DTG = DR.CopyToDataTable(); }
+                    DdlLicCump.DataSource = DTG;
+                    DdlLicCump.DataTextField = "Licencia";
+                    DdlLicCump.DataValueField = "Codigo";
+                    DdlLicCump.DataBind();
+                }
+            }
         }
         protected void TxtFecDet_TextChanged(object sender, EventArgs e)
         {
@@ -3929,7 +3985,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     BtnCargaMaxiva.Enabled = true;
                     DataRow[] Result = Idioma.Select("Objeto= 'BtnCargaMasivaTT1'");
                     foreach (DataRow row in Result)
-                    { BtnCargaMaxiva.ToolTip = row["Texto"].ToString() + " " + ViewState["CarpetaCargaMasiva"].ToString() + "CargaMasiva.xlsx"; }
+                    { BtnCargaMaxiva.ToolTip = row["Texto"].ToString(); }
                 }
                 BindDRecursoF();
                 BindDLicencia();
@@ -4724,19 +4780,20 @@ namespace _77NeoWeb.Forms.Ingenieria
         //******************************************  Subir Recurso maxivamente *********************************************************
         protected void BtnCargaMaxiva_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString();
             if ((int)ViewState["TtlRegDet"] > 0)
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens12'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "')", true); }//Para realizar la carga masiva la reserva debe estar vacía')", true);
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Para realizar la carga masiva la reserva debe estar vacía')", true);
                 return;
             }
             TxtCargaMasiRte.Text = TxtRecurNumRte.Text;
             TxtCargaMasiCodRte.Text = TxtRecurCodRte.Text;
             TxtCargaMasiOT.Text = TxtRecurSubOt.Text;
-            IbtGuardarCargaMax.Enabled = false;
-            Page.Title = ViewState["PageTit"].ToString().Trim();
+            TxtCargaMasiCodigoOT.Text = TxtRecurSubCodigoOt.Text;
+            IbtGuardarCargaMax.Enabled = false;            
             MultVieLV.ActiveViewIndex = 5;
         }
         protected void IbtSubirCargaMax_Click(object sender, ImageClickEventArgs e)
@@ -4744,93 +4801,131 @@ namespace _77NeoWeb.Forms.Ingenieria
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
+                Page.Title = ViewState["PageTit"].ToString().Trim();
+                DataRow[] Result;
                 if (TxtCargaMasiOT.Text.Equals("0"))
                 {
-                    DataRow[] Result = Idioma.Select("Objeto= 'RteMens42'");
+                     Result = Idioma.Select("Objeto= 'RteMens42'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlCargaMasiva, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "')", true); }//Debe estar generado el número de la reserva
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe estar generado el número de la reserva
                     return;
                 }
-                DataTable DT = new DataTable();
-                string FileName = "";
-                string conexion = "";
-                FileName = "CargaMasiva.xlsx";
-                conexion = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ViewState["CarpetaCargaMasiva"].ToString().Trim() + FileName + ";Extended Properties='Excel 12.0 Xml;HDR=YES;'";
-                using (OleDbConnection cnn = new OleDbConnection(conexion))
+
+                if (FileUpRva.Visible == false) { FileUpRva.Visible = true; }
+                else
                 {
-                    cnn.Open();
-                    DataTable dtExcelSchema;
-                    dtExcelSchema = cnn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                    string SheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
-                    cnn.Close();
-
-                    cnn.Open();
-                    string sql = "SELECT * From [" + SheetName + "]";
-                    OleDbCommand command = new OleDbCommand(sql, cnn);
-                    OleDbDataAdapter DA = new OleDbDataAdapter(command);
-
-                    DA.Fill(DT);
-                    if (DT.Rows.Count > 0)
+                    if (FileUpRva.HasFile == true)
                     {
-                        GrdCargaMax.DataSource = DT;
-                        GrdCargaMax.DataBind();
-                        Session["TablaRsvaResul"] = DT;
-                    }
-                    cnn.Close();
+                        string FolderPath;
+                        string FileName = Path.GetFileName(FileUpRva.PostedFile.FileName);
+                        string VblExt = Path.GetExtension(FileUpRva.PostedFile.FileName);
+                        if (Cnx.GetProduccion().Trim().Equals("Y")) { FolderPath = ConfigurationManager.AppSettings["FolderPath"]; }//Azure
+                        else { FolderPath = ConfigurationManager.AppSettings["FoldPathLcl"]; }
 
-                    List<CsTypSubirReserva> ObjSubirRsva = new List<CsTypSubirReserva>();
-                    foreach (GridViewRow Row in GrdCargaMax.Rows)
-                    {
-                        TextBox TxtPNRF = Row.FindControl("TxtPNRF") as TextBox;
-                        TextBox TxtDesRF = Row.FindControl("TxtDesRF") as TextBox;
-                        TextBox TxtCantRF = Row.FindControl("TxtCantRF") as TextBox;
-                        TextBox TxtUMRF = Row.FindControl("TxtUMRF") as TextBox;
-                        TextBox TxtUMSysRF = Row.FindControl("TxtUMSysRF") as TextBox;
-                        TextBox TxtIPCRF = Row.FindControl("TxtIPCRF") as TextBox;
-                        string VbTxtCant = TxtCantRF.Text.Trim().Equals("") ? "0" : TxtCantRF.Text.Trim();
-                        double VblCant = TxtCantRF.Text.Trim().Length == 0 ? 1 : Convert.ToDouble(VbTxtCant);
-
-                        var TypSubirRsva = new CsTypSubirReserva()
+                        VblExt = VblExt.Substring(VblExt.LastIndexOf(".") + 1).ToLower();
+                        string[] formatos = new string[] { "xls", "xlsx" };
+                        if (Array.IndexOf(formatos, VblExt) < 0)
                         {
-                            IdRsva = Convert.ToInt32(TxtCargaMasiOT.Text),
-                            Posicion = 0,
-                            PN = TxtPNRF.Text.Trim(),
-                            Descripcion = TxtDesRF.Text.Trim(),
-                            Cantidad = VblCant,
-                            UndSolicitada = TxtUMRF.Text.Trim(),
-                            UndSistema = TxtUMSysRF.Text.Trim(),
-                            IPC = TxtIPCRF.Text.Trim(),
-                            Usu = Session["C77U"].ToString(),
-                            CodAeronave = Convert.ToInt32(DdlAeroRte.Text),
-                            ProcesoOrigen = "RESERVA",
-                            Accion = "TEMPORAL",
-                        };
-                        ObjSubirRsva.Add(TypSubirRsva);
+                            Result = Idioma.Select("Objeto= 'RteMens40'");//Archivo inválido
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                            return;
+                        }
+                        string FilePath = FolderPath + FileName;
+                        FileUpRva.SaveAs(FilePath);
+                        Import(FilePath, VblExt);
+                        FileUpRva.Visible = false;
                     }
-                    CsTypSubirReserva SubirRsva = new CsTypSubirReserva();
-
-                    SubirRsva.Alimentar(ObjSubirRsva);// 
-                    string Mensj = SubirRsva.GetMensj();
-                    if (!Mensj.Trim().Equals("OK"))
+                    else
                     {
-                        GrdCargaMax.DataSource = (DataTable)Session["TablaRsvaResul"];
-                        GrdCargaMax.DataBind();
-                        IbtGuardarCargaMax.Enabled = false;
-                        DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                        Result = Idioma.Select("Objeto= 'RteMens41'");//Debe seleccionar un archivo.
                         foreach (DataRow row in Result)
-                        { Mensj = row["Texto"].ToString(); }
-                        ScriptManager.RegisterClientScriptBlock(this.UpPnlCargaMasiva, UpPnlCargaMasiva.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                         return;
                     }
-                    GrdCargaMax.DataSource = (DataTable)Session["TablaRsvaResul"];
-                    GrdCargaMax.DataBind();
-                    IbtGuardarCargaMax.Enabled = true;
                 }
             }
             catch (Exception Ex)
             {
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "VALIDACIÓN ELIMINAR DET S/N SRV MANTO", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Carga Masiva Reserva en Libro vuelo", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
+        }
+        protected void Import(string FilePath, string Extension)
+        {
+            try
+            {
+                FileStream stream = File.Open(FilePath, FileMode.Open, FileAccess.Read);
+                IExcelDataReader ExcelReader;
+
+                ExcelReader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream);
+
+                //// para que tome la primera fila como titulo de campos
+                var conf = new ExcelDataSetConfiguration
+                {
+                    ConfigureDataTable = _ => new ExcelDataTableConfiguration
+                    { UseHeaderRow = true }
+                };
+                var dataSet = ExcelReader.AsDataSet(conf);
+                DataTable DT = dataSet.Tables[0];
+
+                if (DT.Rows.Count > 0)
+                { GrdCargaMax.DataSource = DT; GrdCargaMax.DataBind(); Session["TablaRsvaResul"] = DT; }
+                List<CsTypSubirReserva> ObjSubirRsva = new List<CsTypSubirReserva>();
+                foreach (GridViewRow Row in GrdCargaMax.Rows)
+                {
+                    TextBox TxtPNRF = Row.FindControl("TxtPNRF") as TextBox;
+                    TextBox TxtDesRF = Row.FindControl("TxtDesRF") as TextBox;
+                    TextBox TxtCantRF = Row.FindControl("TxtCantRF") as TextBox;
+                    TextBox TxtUMRF = Row.FindControl("TxtUMRF") as TextBox;
+                    TextBox TxtUMSysRF = Row.FindControl("TxtUMSysRF") as TextBox;
+                    TextBox TxtIPCRF = Row.FindControl("TxtIPCRF") as TextBox;
+                    string VbTxtCant = TxtCantRF.Text.Trim().Equals("") ? "0" : TxtCantRF.Text.Trim();
+                    double VblCant = TxtCantRF.Text.Trim().Length == 0 ? 1 : Convert.ToDouble(VbTxtCant);
+
+                    var TypSubirRsva = new CsTypSubirReserva()
+                    {
+                        IdRsva = Convert.ToInt32(TxtCargaMasiOT.Text),
+                        Posicion = 0,
+                        PN = TxtPNRF.Text.Trim(),
+                        Descripcion = TxtDesRF.Text.Trim(),
+                        Cantidad = VblCant,
+                        UndSolicitada = TxtUMRF.Text.Trim(),
+                        UndSistema = TxtUMSysRF.Text.Trim(),
+                        IPC = TxtIPCRF.Text.Trim(),
+                        Usu = Session["C77U"].ToString(),
+                        CodAeronave = Convert.ToInt32(DdlAeroRte.Text),
+                        ProcesoOrigen = "RESERVA",
+                        Accion = "TEMPORAL",
+                    };
+                    ObjSubirRsva.Add(TypSubirRsva);
+                }
+                CsTypSubirReserva SubirRsva = new CsTypSubirReserva();
+
+                SubirRsva.Alimentar(ObjSubirRsva);// 
+                string Mensj = SubirRsva.GetMensj();
+                if (!Mensj.Trim().Equals("OK"))
+                {
+                    GrdCargaMax.DataSource = (DataTable)Session["TablaRsvaResul"];
+                    GrdCargaMax.DataBind();
+                    IbtGuardarCargaMax.Enabled = false;
+                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    return;
+                }
+                GrdCargaMax.DataSource = (DataTable)Session["TablaRsvaResul"];
+                GrdCargaMax.DataBind();
+                IbtGuardarCargaMax.Enabled = true;
+            }
+            catch (Exception Ex)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Import Reserva en Libro Vuelo", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void IbtGuardarCargaMax_Click(object sender, ImageClickEventArgs e)
@@ -4881,6 +4976,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             IbtGuardarCargaMax.Enabled = false;
             TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
             BindDRecursoF();
+            GrdCargaMax.DataSource = null; GrdCargaMax.DataBind();
             MultVieLV.ActiveViewIndex = 4;
         }
         protected void IbtCerrarSubMaxivo_Click(object sender, ImageClickEventArgs e)
@@ -5836,7 +5932,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     }
                 }
             }
-        }
+        }       
         protected void GrdHta_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         { GrdHta.EditIndex = -1; BindDHta(); }
         protected void GrdHta_RowDeleting(object sender, GridViewDeleteEventArgs e)

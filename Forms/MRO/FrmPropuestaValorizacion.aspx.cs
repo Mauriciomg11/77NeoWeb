@@ -3,8 +3,10 @@ using _77NeoWeb.Prg.PrgIngenieria;
 using _77NeoWeb.Prg.prgMro;
 using _77NeoWeb.Prg.PrgMro;
 using ClosedXML.Excel;
+using ExcelDataReader;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
@@ -170,9 +172,6 @@ namespace _77NeoWeb.Forms.MRO
                 Result = Idioma.Select("Objeto= 'BtnReValorizarOnCl'");
                 foreach (DataRow row in Result) { BtnReValorizar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
 
-                Result = Idioma.Select("Objeto= 'BtnPlantillaOnCl'");
-                foreach (DataRow row in Result) { BtnPlantilla.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
-
                 Result = Idioma.Select("Objeto= 'IbtGrarSPOnCl'");
                 foreach (DataRow row in Result) { IbtGrarSP.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
 
@@ -187,10 +186,11 @@ namespace _77NeoWeb.Forms.MRO
                 Cnx.SelecBD();
                 using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbTxtSql = "SP_PANTALLA_Valorizacion 1,'','','','',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                    string VbTxtSql = "SP_PANTALLA_Valorizacion 1,'','','','',0,0,@Idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter SDA = new SqlDataAdapter())
                         {
@@ -339,14 +339,14 @@ namespace _77NeoWeb.Forms.MRO
             List<CsTypPropuestaValorizada> ObjPropuestaValorizada = new List<CsTypPropuestaValorizada>();
             foreach (GridViewRow Row in GrdDetValrzc.Rows)
             {
-
-
                 string VbUndMedCompr = (Row.FindControl("LblUndMedCmpra") as Label).Text.Trim().Equals(null) ? "" : (Row.FindControl("LblUndMedCmpra") as Label).Text.Trim();
                 double VbEquvl = Convert.ToDouble(GrdDetValrzc.DataKeys[Row.RowIndex].Values["EquivalenciaPV"].ToString().Trim().Equals("") ? "0" : GrdDetValrzc.DataKeys[Row.RowIndex].Values["EquivalenciaPV"].ToString());
-
+                string VblUndMinCompra = GrdDetValrzc.DataKeys[Row.RowIndex].Values["UnidMinCompra"].ToString().Trim();
+                string VbOTVal = (Row.FindControl("LblOtVal") as Label).Text.Trim();
                 DateTime? VbFechUltComp;
                 if ((Row.FindControl("LblFechUlmCmp") as Label).Text.Trim().Equals("")) { VbFechUltComp = null; }
-                else { VbFechUltComp = Convert.ToDateTime((Row.FindControl("LblFechUlmCmp") as Label).Text.Trim()); }
+                else { VbFechUltComp = Convert.ToDateTime(GrdDetValrzc.DataKeys[Row.RowIndex].Values["FecUltCotizDMY"]); }               
+  
                 var TypPropuestaValorizada = new CsTypPropuestaValorizada()
                 {
                     IdValorizacion = Convert.ToInt32(0),
@@ -380,8 +380,8 @@ namespace _77NeoWeb.Forms.MRO
                     NumPedido = (Row.FindControl("LblNumSP") as Label).Text.Trim(),
                     MonedaProVa = (Row.FindControl("TxtMnda") as TextBox).Text.Trim(),
                     UndMedProVa = (Row.FindControl("LblUndMPt") as Label).Text.Trim(),
-                    UnidMinCompra = Convert.ToDouble(GrdDetValrzc.DataKeys[Row.RowIndex].Values[12].ToString().Trim()),
-                    CodEstado = GrdDetValrzc.DataKeys[Row.RowIndex].Values[13].ToString().Trim(),
+                    UnidMinCompra = Convert.ToDouble(VblUndMinCompra.Equals("")?"0": VblUndMinCompra),
+                    CodEstado = GrdDetValrzc.DataKeys[Row.RowIndex].Values["CodEstado"].ToString().Trim(),
                     PnAlternoPV = GrdDetValrzc.DataKeys[Row.RowIndex].Values[14].ToString().Trim(),
                     TipoCotizacion = (Row.FindControl("LblTipoCot") as Label).Text.Trim(),
                     IdDetPropSrv = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values["IdDetPropSrv"].ToString().Trim()),
@@ -389,7 +389,7 @@ namespace _77NeoWeb.Forms.MRO
                     CantRealPV = Convert.ToDouble((Row.FindControl("LblCntReal") as Label).Text.Trim()),
                     UndCompraPV = VbUndMedCompr,
                     EquivalenciaPV = VbEquvl,
-                    OTVal = Convert.ToInt32((Row.FindControl("LblOtVal") as Label).Text.Trim()),
+                    OTVal = Convert.ToInt32(VbOTVal.Equals("")?"0": VbOTVal),
                     CodAeronaveVal = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values["CodAeronaveVal"].ToString().Trim()),
                     MatriculaVal = (Row.FindControl("LblMatric") as Label).Text.Trim(),
                     SNElementoV = GrdDetValrzc.DataKeys[Row.RowIndex].Values["SNElementoV"].ToString().Trim(),
@@ -457,59 +457,110 @@ namespace _77NeoWeb.Forms.MRO
         }
         protected void BtnPlantilla_Click(object sender, EventArgs e)
         {
-            if (DdlNumPpt.Text.Equals("0")) { return; }
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            if (DdlNumPpt.Text.Equals(" - ")) { return; }
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
-
-                DataTable DT = new DataTable();
-                string conexion = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ViewState["CarpetaCargaMasiva"].ToString().Trim() + ViewState["NomArchivoPlantilla"] + ";Extended Properties='Excel 12.0 Xml;HDR=YES;'";
-                using (OleDbConnection cnn = new OleDbConnection(conexion))
+                DataRow[] Result;
+                if (FileUp.Visible == false)
                 {
-                    cnn.Open();
-                    DataTable dtExcelSchema;
-                    dtExcelSchema = cnn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                    string SheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
-                    cnn.Close();
-
-                    cnn.Open();
-                    // string sql = "SELECT *FROM [Tabla$]";
-                    string sql = "SELECT * FROM [" + SheetName + "]";
-                    OleDbCommand command = new OleDbCommand(sql, cnn);
-                    OleDbDataAdapter DA = new OleDbDataAdapter(command);
-
-                    DA.Fill(DT);
-                    if (DT.Rows.Count > 0)
-                    {
-                        DtDet = (DataTable)ViewState["DtDet"];
-
-                        DataRow[] ComprasConVlr = DT.Select("PurchaseValue>0");
-                        foreach (DataRow RCCV in ComprasConVlr)
-                        {
-                            foreach (DataRow R in DtDet.Rows)
-                            {
-                                if (R["PnPropuesta"].ToString().Equals(RCCV["PN"]))
-                                {
-                                    R["ValorCompra"] = RCCV["PurchaseValue"];
-                                    R["MonedaProVa"] = RCCV["Currency"];
-                                    R["TiempoEntregaDiasCoti"] = RCCV["TimeDeliveryDaysQuote"];
-                                    R["CodEstado"] = RCCV["CodeStatus"];
-                                    R["PnAlternoPV"] = RCCV["AlternatePn"];
-                                    R["UnidMinCompra"] = RCCV["UnitMinPurchase"];
-                                }
-                            } /**/
-                        }
-                    }
-                    cnn.Close();
-                    GrdDetValrzc.DataSource = DtDet;
-                    GrdDetValrzc.DataBind();
+                    FileUp.Visible = true;
+                    Result = Idioma.Select("Objeto= 'BtnPlantillaOnCl'");
+                    foreach (DataRow row in Result) { BtnPlantilla.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
                 }
-                Page.Title = ViewState["PageTit"].ToString().Trim();
+                else
+                {
+                    if (FileUp.HasFile == true)
+                    {
+                        string FolderPath;
+                        string FileName = Path.GetFileName(FileUp.PostedFile.FileName);
+                        string VblExt = Path.GetExtension(FileUp.PostedFile.FileName);
+                        if (Cnx.GetProduccion().Trim().Equals("Y")) { FolderPath = ConfigurationManager.AppSettings["FolderPath"]; }//Azure
+                        else { FolderPath = ConfigurationManager.AppSettings["FoldPathLcl"]; }
+
+                        VblExt = VblExt.Substring(VblExt.LastIndexOf(".") + 1).ToLower();
+                        string[] formatos = new string[] { "xls", "xlsx" };
+                        if (Array.IndexOf(formatos, VblExt) < 0)
+                        {
+                            Result = Idioma.Select("Objeto= 'RteMens40'");//Archivo inválido
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                            return;
+                        }
+                        string FilePath = FolderPath + FileName;
+                        FileUp.SaveAs(FilePath);
+                        Import(FilePath, VblExt);
+                        FileUp.Visible = false;
+                        BtnPlantilla.OnClientClick = "";
+                    }
+                    else
+                    {
+                        Result = Idioma.Select("Objeto= 'RteMens41'");//Debe seleccionar un archivo.
+                        foreach (DataRow row in Result)
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                        return;
+                    }
+                }
             }
             catch (Exception Ex)
             {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Valorizar desde Planilla", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
+        }
+        protected void Import(string FilePath, string Extension)
+        {
+            try
+            {
+                FileStream stream = File.Open(FilePath, FileMode.Open, FileAccess.Read);
+                IExcelDataReader ExcelReader;
+
+                ExcelReader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream);
+
+                //// para que tome la primera fila como titulo de campos
+                var conf = new ExcelDataSetConfiguration
+                {
+                    ConfigureDataTable = _ => new ExcelDataTableConfiguration
+                    { UseHeaderRow = true }
+                };
+                var dataSet = ExcelReader.AsDataSet(conf);
+                DataTable DT = dataSet.Tables[0];
+
+                if (DT.Rows.Count > 0)
+                {
+                    DtDet = (DataTable)ViewState["DtDet"];
+
+                    DataRow[] ComprasConVlr = DT.Select("PurchaseValue>0");
+                    foreach (DataRow RCCV in ComprasConVlr)
+                    {
+                        foreach (DataRow R in DtDet.Rows)
+                        {
+                            if (R["PnPropuesta"].ToString().Equals(RCCV["PN"]))
+                            {
+                                R["ValorCompra"] = RCCV["PurchaseValue"];
+                                R["MonedaProVa"] = RCCV["Currency"];
+                                R["TiempoEntregaDiasCoti"] = RCCV["TimeDeliveryDaysQuote"];
+                                R["CodEstado"] = RCCV["CodeStatus"];
+                                R["PnAlternoPV"] = RCCV["AlternatePn"];
+                                R["UnidMinCompra"] = RCCV["UnitMinPurchase"];
+                            }
+                        } /**/
+                    }
+                }
+                GrdDetValrzc.DataSource = DtDet;
+                GrdDetValrzc.DataBind();
+            }
+            catch (Exception Ex)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Import Rte Manto", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void BtnExportar_Click(object sender, EventArgs e)
@@ -769,14 +820,14 @@ namespace _77NeoWeb.Forms.MRO
             string Mensj = TypSolicitudPedido.GetMensj();
             if (!Mensj.Trim().Equals(""))
             {
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
                 return;
             }
             BindDetalle("UPDATE");
             string VbCodPedido = TypSolicitudPedido.GetCodPedido();
             DataRow[] Result1 = Idioma.Select("Objeto= 'MstrMens03'");
             foreach (DataRow row in Result1)
-            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + " [" + VbCodPedido + "]" + "');", true); }// Se generó la solicitud Nro
+            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + " [" + VbCodPedido + "]" + "');", true); }// Se generó la solicitud Nro
 
         }
         //************************** P/N no  valorizados ***********************************************

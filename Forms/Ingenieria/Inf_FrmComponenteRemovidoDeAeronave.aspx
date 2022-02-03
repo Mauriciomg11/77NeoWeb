@@ -123,12 +123,10 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Fecha evento" HeaderStyle-Width="5%">
                                     <ItemTemplate>
-                                        <asp:Label ID="LblFecEvP" Text='<%# Eval("FechaMontaje") %>' runat="server" Width="70%" Enabled="false" />
+                                        <asp:Label ID="LblFecEvP" Text='<%# Eval("FechaMontajeMDY") %>' runat="server" Width="70%" Enabled="false" />
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="TxtFecEv" Text='<%# Eval("FechaMontaje") %>' runat="server" Width="70%" Enabled="false" />
-                                        <asp:ImageButton ID="IbnFecEv" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
-                                        <ajaxToolkit:CalendarExtender ID="CalTxtFecEv" runat="server" PopupButtonID="IbnFecEv" TargetControlID="TxtFecEv" Format="dd/MM/yyyy" CssClass="MyCalendar" />
+                                        <asp:TextBox ID="TxtFecEv" Text='<%# Eval("FechaMontaje") %>' runat="server" Width="100%" TextMode ="Date" />                                       
                                     </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Posicion">

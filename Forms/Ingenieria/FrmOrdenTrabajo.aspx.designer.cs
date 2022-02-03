@@ -1005,6 +1005,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.TextBox TxtRecurSubOt;
 
         /// <summary>
+        /// Control TxtRecurSubCodigoOt.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtRecurSubCodigoOt;
+
+        /// <summary>
         /// Control LblPrioridadOT.
         /// </summary>
         /// <remarks>
@@ -1185,6 +1194,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.TextBox TxtCargaMasiOT;
 
         /// <summary>
+        /// Control TxtCargaMasiCodigoOT.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtCargaMasiCodigoOT;
+
+        /// <summary>
         /// Control LblTitOTCargMasiv.
         /// </summary>
         /// <remarks>
@@ -1219,6 +1237,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton IbtOTGuardarCargaMax;
+
+        /// <summary>
+        /// Control FileUpRva.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload FileUpRva;
 
         /// <summary>
         /// Control GrdOTCargaMax.
@@ -1885,6 +1912,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtOtSec;
+
+        /// <summary>
+        /// Control TxtCodigoOtSec.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtCodigoOtSec;
 
         /// <summary>
         /// Control LblRteNumPaso.

@@ -311,7 +311,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens03Elem'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar el P/N')", true);
+                { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar el P/N')", true);
                 Session["VldrElem"] = "N";
                 return;
             }
@@ -319,7 +319,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens04Elem'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar una S/N')", true);
+                { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe ingresar una S/N')", true);
                 Session["VldrElem"] = "N";
                 return;
             }
@@ -342,7 +342,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     foreach (DataRow row in Result)
                     { Mensj = row["Texto"].ToString().Trim(); }
 
-                    ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                    ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "alert", "alert('" + Mensj + "');", true);
                     Session["VldrElem"] = "N";
                     return;
                 }
@@ -421,7 +421,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     {
                         DataRow[] Result = Idioma.Select("Objeto= 'Mens01Elem'");
                         foreach (DataRow row in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// El elemento se encuentra inactivo
+                        { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// El elemento se encuentra inactivo
                         return;
                     }
                 }
@@ -429,7 +429,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens01Elem'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// El elemento se encuentra inactivo')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// El elemento se encuentra inactivo')", true);
                     return;
                 }
             }
@@ -441,7 +441,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     {
                         DataRow[] Result = Idioma.Select("Objeto= 'Mens02Elem'");
                         foreach (DataRow row in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Sólo aplica a elementos configurados con fecha de vencimiento')", true);
+                        { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Sólo aplica a elementos configurados con fecha de vencimiento')", true);
                         return;
                     }
                 }
@@ -514,7 +514,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
                                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
                                 foreach (DataRow row in Result)
-                                { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//
+                                { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                                 Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmElemento", "UPDATE", ex.StackTrace.Substring(ex.StackTrace.Length - 300, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                             }
                         }

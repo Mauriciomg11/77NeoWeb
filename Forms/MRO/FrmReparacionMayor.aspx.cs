@@ -67,6 +67,7 @@ namespace _77NeoWeb.Forms.MRO
                 ViewState["TipoAccion"] = "";
                 ViewState["CodSvcAnt"] = "";
                 ViewState["TieneRegDet"] = "0";
+                RdbBusqDes.Checked = true;
 
                 MultVw.ActiveViewIndex = 0;
             }
@@ -375,20 +376,37 @@ namespace _77NeoWeb.Forms.MRO
         }
         protected void EstadoOT(int Id)
         {
+            DataRow[] Result, Result1;
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            Cnx.SelecBD();
-            using (SqlConnection Cnx2 = new SqlConnection(Cnx.GetConex()))
+            Result1 = Idioma.Select("Objeto= 'Mens04SM'");
+            foreach (DataRow DRI in Result1)
+            { TxtEstadoOT.Text = DRI["Texto"].ToString().Trim(); }
+            if (ViewState["TIPO"].ToString().Equals("S"))
             {
-                Cnx2.Open();
-                string LtxtSql = string.Format("EXEC SP_PANTALLA_Servicio_Manto 25,'','','','WEB',{0},0,0, @ICC,'01-1-2009','01-01-1900','01-01-1900'", Id);
-                SqlCommand SC = new SqlCommand(LtxtSql, Cnx2);
-                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                SqlDataReader SDR = SC.ExecuteReader();
-                if (SDR.Read())
+                DSPNSN = (DataSet)ViewState["DSPNSN"];
+                Result = DSPNSN.Tables[1].Select("CodIdContaSrvManto=" + Id);
+                foreach (DataRow DR in Result)
                 {
-                    DataRow[] Result = Idioma.Select("Objeto= '" + SDR["Mensj"].ToString().Trim() + "'");
-                    foreach (DataRow row in Result)
-                    { TxtEstadoOT.Text = row["Texto"].ToString().Trim() + " " + SDR["OT"].ToString().Trim(); }
+                    if (!DR["CodigoOT"].ToString().Trim().Equals(""))
+                    {
+                        Result1 = Idioma.Select("Objeto= 'Mens01SM'");
+                        foreach (DataRow DRI in Result1)
+                        { TxtEstadoOT.Text = DRI["Texto"].ToString().Trim() + " " + DR["CodigoOT"].ToString().Trim(); }
+                    }
+                }
+            }
+            if (ViewState["TIPO"].ToString().Equals("A"))
+            {
+                DTAK = (DataTable)ViewState["DTAK"];
+                Result = DTAK.Select("CodIdContaSrvManto=" + Id);
+                foreach (DataRow DR in Result)
+                {
+                    if (!DR["CodigoOT"].ToString().Trim().Equals(""))
+                    {
+                        Result1 = Idioma.Select("Objeto= 'Mens01SM'");
+                        foreach (DataRow DRI in Result1)
+                        { TxtEstadoOT.Text = DRI["Texto"].ToString().Trim() + " " + DR["CodigoOT"].ToString().Trim(); }
+                    }
                 }
             }
         }
@@ -877,9 +895,11 @@ namespace _77NeoWeb.Forms.MRO
             GrdSN.Visible = false;
             GrdBusq.DataSource = null; GrdBusq.DataBind();
             BtnIngresar.Enabled = true;
+            BtnGenerarOT.Enabled = true;
             LimpiarCampos();
             GrdAeron.DataSource = null; GrdAeron.DataBind();
             GrdAdj.DataSource = null; GrdAdj.DataBind();
+            RdbBusqDes.Checked = true;
             PerfilesGrid();
         }
         protected void BtnPN_Click(object sender, EventArgs e)
@@ -895,6 +915,8 @@ namespace _77NeoWeb.Forms.MRO
             GrdBusq.DataSource = null;
             GrdBusq.DataBind();
             BtnIngresar.Enabled = true;
+            BtnGenerarOT.Enabled = false;
+            RdbBusqDesPN.Checked = true;
             if (ViewState["TIPO"].ToString().Equals("A"))
             {
                 LimpiarCampos(); GrdPN.DataSource = null; GrdPN.DataBind();
@@ -917,6 +939,8 @@ namespace _77NeoWeb.Forms.MRO
             GrdBusq.DataSource = null;
             GrdBusq.DataBind();
             BtnIngresar.Enabled = false;
+            BtnGenerarOT.Enabled = true;
+            RdbBusqDesSN.Checked = true;
             if (ViewState["TIPO"].ToString().Equals("A"))
             { LimpiarCampos(); }
             if (TxtCod.Text.Trim().Equals(""))
@@ -1244,13 +1268,20 @@ namespace _77NeoWeb.Forms.MRO
             {
                 return;
             }
-            if (!ViewState["TIPO"].ToString().Equals("P"))
+            if (ViewState["TIPO"].ToString().Equals("A") || ViewState["TIPO"].ToString().Equals("S"))//ViewState["SN"]
             {
-                if (TxtMatric.Text.Trim().Equals(""))
+                if (TxtMatric.Text.Trim().Equals("") && ViewState["TIPO"].ToString().Equals("A"))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens19SM'");
                     foreach (DataRow row in Result)
                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe seleccionar un registro del detalle para obtener la matrícula 
+                    return;
+                }
+                if (ViewState["SN"].ToString().Trim().Equals("") && ViewState["TIPO"].ToString().Equals("S"))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= 'MstrMens12'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Seleccione un ítem.
                     return;
                 }
                 Cnx.SelecBD();
@@ -1270,6 +1301,8 @@ namespace _77NeoWeb.Forms.MRO
                                 SC.Parameters.AddWithValue("@Tp", ViewState["TIPO"]);
                                 SC.Parameters.AddWithValue("@CE", ViewState["IdCodElem"]);
                                 SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                                string borr = ViewState["IdCodElem"].ToString();
+                                string borr1 = ViewState["TIPO"].ToString();
 
                                 var Mensj = SC.ExecuteScalar();
                                 if (!Mensj.ToString().Trim().Equals(""))
@@ -1281,7 +1314,10 @@ namespace _77NeoWeb.Forms.MRO
                                     Transac.Rollback();
                                     return;
                                 }
+
                                 Transac.Commit();
+                                if (ViewState["TIPO"].ToString().Equals("S")) { BindDPN("UPDATE"); }
+                                else { BindDAK("UPDATE"); }
                             }
                             catch (Exception Ex)
                             {
@@ -2588,30 +2624,12 @@ namespace _77NeoWeb.Forms.MRO
             {
                 string VbTxtSql, VbOpcion = "";
                 VbTxtSql = "";
-                if (RdbBusqDes.Checked == true && TblBusqHK.Visible == true)
-                {
-                    VbOpcion = "D";
-                }
-                if (RdbBusqDesPN.Checked == true && TblBusqPN.Visible == true)
-                {
-                    VbOpcion = "D";
-                }
-                if (RdbBusqPnPN.Checked == true && TblBusqPN.Visible == true)
-                {
-                    VbOpcion = "P";
-                }
-                if (RdbBusqDesSN.Checked == true && TblBusqSN.Visible == true)
-                {
-                    VbOpcion = "D";
-                }
-                if (RdbBusqPnSN.Checked == true && TblBusqSN.Visible == true)
-                {
-                    VbOpcion = "P";
-                }
-                if (RdbBusqSnSN.Checked == true && TblBusqSN.Visible == true)
-                {
-                    VbOpcion = "S";
-                }
+                if (RdbBusqDes.Checked == true && TblBusqHK.Visible == true) { VbOpcion = "D"; }
+                if (RdbBusqDesPN.Checked == true && TblBusqPN.Visible == true) { VbOpcion = "D"; }
+                if (RdbBusqPnPN.Checked == true && TblBusqPN.Visible == true) { VbOpcion = "P"; }
+                if (RdbBusqDesSN.Checked == true && TblBusqSN.Visible == true) { VbOpcion = "D"; }
+                if (RdbBusqPnSN.Checked == true && TblBusqSN.Visible == true) { VbOpcion = "P"; }
+                if (RdbBusqSnSN.Checked == true && TblBusqSN.Visible == true) { VbOpcion = "S"; }
                 if (!VbOpcion.Equals(""))
                 {
                     VbTxtSql = "EXEC SP_PANTALLA__Servicio_Manto2 15,@Txt,@Tp,'REPARACION',@Opc,'',0,0,0,@CC,'01-01-01','01-01-01','01-01-01'";
@@ -2632,6 +2650,7 @@ namespace _77NeoWeb.Forms.MRO
                         }
                     }
                 }
+                TxtBusqueda.Focus();
             }
         }
         protected void BtnConsultar_Click(object sender, EventArgs e)
@@ -2655,7 +2674,7 @@ namespace _77NeoWeb.Forms.MRO
                 TblBusqPN.Visible = false;
                 TblBusqSN.Visible = true;
             }
-            Page.Title = ViewState["PageTit"].ToString();
+            Page.Title = ViewState["PageTit"].ToString(); TxtBusqueda.Focus();
             MultVw.ActiveViewIndex = 1;
         }
         protected void IbtCerrarBusq_Click(object sender, ImageClickEventArgs e)
@@ -2666,13 +2685,15 @@ namespace _77NeoWeb.Forms.MRO
         {
             if (e.CommandName.Equals("Ir"))
             {
+                Page.Title = ViewState["PageTit"].ToString().Trim();
                 GridViewRow Row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
                 string vbcod = ((Label)Row.FindControl("LblId")).Text.ToString().Trim();
                 GridViewRow GVR = (GridViewRow)((Control)e.CommandSource).NamingContainer;
                 BindDDdl("SELECT", "SELECT");
                 BindDTraerdatos(vbcod, "UPDATE", "ALL");
                 PerfilesGrid();
-                Page.Title = ViewState["PageTit"].ToString().Trim();
+                TxtEstadoOT.Text = "";
+                TxtMatric.Text = "";
                 MultVw.ActiveViewIndex = 0;
             }
         }

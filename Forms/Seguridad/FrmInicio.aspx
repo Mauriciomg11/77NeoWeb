@@ -106,7 +106,7 @@
     </div>
     <asp:ImageButton ID="IbnSalir" runat="server" CssClass="menuSalir" ImageUrl="~/images/ExitV1.png" ToolTip="Salir" OnClick="IbnSalir_Click" OnClientClick="return confirm('¿Desea cerrar la sesión?');" />
     <div class="Passw">
-        <%-- <asp:LinkButton ID="LkbMenu" runat="server" CssClass="Menu" CausesValidation="False" Text="Menú" OnClientClick="return changeColor(this);" OnClick="LkbMenu_Click" /> --%>
+       <%--<asp:LinkButton ID="LkbPrueba" runat="server" CssClass="Menu" CausesValidation="False" Text="prueba" OnClick="LkbPrueba_Click" />--%>
         <asp:LinkButton ID="LkbMenu" runat="server" CssClass="Menu" CausesValidation="False" Text="Menú" ForeColor ="#ccffff"  OnClick="LkbMenu_Click" />&nbsp&nbsp&nbsp&nbsp   
         <asp:LinkButton ID="LkbCambPass" runat="server" CssClass="Passw" CausesValidation="False" Text="Cambio contraseña..." ForeColor ="#ccffff" OnClick="LkbCambPass_Click" OnClientClick="return confirm('¿Desea ralizar el cambio de contraseña?');" />
 

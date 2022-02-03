@@ -215,7 +215,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 DataRowView dr = e.Row.DataItem as DataRowView;
                 string VbRemain = dr["Remanente"].ToString();
                 if (Convert.ToInt32(VbRemain) < 0)
-                { e.Row.BackColor = System.Drawing.Color.Red; }
+                { e.Row.BackColor = System.Drawing.Color.Red; e.Row.ForeColor = System.Drawing.Color.White; }
             }
         }
         protected void IbtCloseSinConfg_Click(object sender, ImageClickEventArgs e)

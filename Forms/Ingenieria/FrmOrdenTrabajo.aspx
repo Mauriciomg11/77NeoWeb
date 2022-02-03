@@ -422,7 +422,8 @@
                     <asp:TextBox ID="TxtRecurNumRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible ="false" />
                     <asp:TextBox ID="TxtRecurCodRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:Label ID="LblRecFSubOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:" />
-                    <asp:TextBox ID="TxtRecurSubOt" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
+                    <asp:TextBox ID="TxtRecurSubOt" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible="false"  />
+                    <asp:TextBox ID="TxtRecurSubCodigoOt" runat="server" CssClass="Form-control-sm heightCampo" Width="7%"  Enabled="false" />
                     <asp:Label ID="LblPrioridadOT" runat="server" CssClass="LblEtiquet" Text="Prioridad:" />
                     <asp:DropDownList ID="DdlPrioridadOT" runat="server" CssClass="Campos" Width="15%" />
                     <h6 class="TextoSuperior">
@@ -621,12 +622,14 @@
                     <asp:TextBox ID="TxtCargaMasiRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible ="false"/>
                     <asp:TextBox ID="TxtCargaMasiCodRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:Label ID="LblCargaMasOt" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:" />
-                    <asp:TextBox ID="TxtCargaMasiOT" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
+                    <asp:TextBox ID="TxtCargaMasiOT" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible ="false" />
+                    <asp:TextBox ID="TxtCargaMasiCodigoOT" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOTCargMasiv" runat="server" Text="Subir Evaluación" /></h6>
                     <asp:ImageButton ID="IbtOTCerrarCargMaxivo" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtOTCerrarCargMaxivo_Click" ImageAlign="Right" />
                     <asp:ImageButton ID="IbtOTSubirCargaMax" runat="server" ToolTip="Cargar archivo..." ImageUrl="~/images/SubirCarga.png" OnClick="IbtOTSubirCargaMax_Click" Width="30px" Height="30px" />
                     <asp:ImageButton ID="IbtOTGuardarCargaMax" runat="server" ToolTip="Guardar" ImageUrl="~/images/Descargar.png" OnClick="IbtOTGuardarCargaMax_Click" Width="30px" Height="30px" Enabled="false" OnClientClick="javascript:return confirm('¿Desea almacenar la información?', 'Mensaje de sistema')" />
+                   <br /><asp:FileUpload ID="FileUpRva" runat="server" Font-Size="9px" Visible="false" />
                     <asp:GridView ID="GrdOTCargaMax" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="False"
                         CssClass="DiseñoGrid table-sm" GridLines="Both">
                         <Columns>
@@ -674,6 +677,7 @@
                 </ContentTemplate>
                 <Triggers>
                     <asp:PostBackTrigger ControlID="IbtOTCerrarCargMaxivo" />
+                    <asp:PostBackTrigger ControlID="IbtOTSubirCargaMax" />
                     <asp:PostBackTrigger ControlID="IbtOTGuardarCargaMax" />
                 </Triggers>
             </asp:UpdatePanel>
@@ -834,7 +838,8 @@
                     <asp:Label ID="LblAeroRte" runat="server" CssClass="LblEtiquet" Text="Aeronave:"></asp:Label>
                     <asp:DropDownList ID="DdlAeroRte" runat="server" CssClass="Campos" Width="15%" Enabled="false"></asp:DropDownList>
                     <asp:Label ID="LblOtSec" runat="server" CssClass="LblEtiquet" Text="Sub OT / Reserva:"></asp:Label>
-                    <asp:TextBox ID="TxtOtSec" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
+                    <asp:TextBox ID="TxtOtSec" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible="false" />
+                    <asp:TextBox ID="TxtCodigoOtSec" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                     <asp:Label ID="LblRteNumPaso" runat="server" CssClass="LblEtiquet" Text="Paso:"></asp:Label>
                     <asp:TextBox ID="TxtNumPaso" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />&nbsp&nbsp&nbsp
                     <asp:Label ID="LblNotif" runat="server" CssClass="LblEtiquet" Text="Notif:" Visible="false" />
@@ -920,13 +925,13 @@
                                 <asp:Label ID="Generado" runat="server" CssClass="LblEtiquet" Text="Generado:"></asp:Label>
                             </asp:TableCell>
                             <asp:TableCell ColumnSpan="2">
-                                <asp:DropDownList ID="DdlGenerado" runat="server" CssClass="heightCampo" Enabled="false" Width="95%" />
+                                <asp:DropDownList ID="DdlGenerado" runat="server" CssClass="heightCampo" Enabled="false" Width="95%" OnTextChanged="DdlGenerado_TextChanged" AutoPostBack ="true"/>
                             </asp:TableCell>
                             <asp:TableCell>
-                                <asp:Label ID="LblLicGene" runat="server" CssClass="LblEtiquet" Text="Licencia:"></asp:Label>
+                                <asp:Label ID="LblLicGene" runat="server" CssClass="LblEtiquet" Text="Licencia:"/>
                             </asp:TableCell>
                             <asp:TableCell>
-                                <asp:DropDownList ID="DdlLicGene" runat="server" CssClass="heightCampo" Enabled="false" Width="95%"></asp:DropDownList>
+                                <asp:DropDownList ID="DdlLicGene" runat="server" CssClass="heightCampo" Enabled="false" Width="95%"/>
                             </asp:TableCell>
                             <asp:TableCell ColumnSpan="4">
                                 <table style="width: 100%;">
@@ -964,7 +969,7 @@
                                 <asp:Label ID="LblCumpl" runat="server" CssClass="LblEtiquet" Text="Cumplido:"></asp:Label>
                             </asp:TableCell>
                             <asp:TableCell ColumnSpan="2">
-                                <asp:DropDownList ID="DdlCumpl" runat="server" CssClass="heightCampo" Enabled="false" Width="95%"></asp:DropDownList>
+                                <asp:DropDownList ID="DdlCumpl" runat="server" CssClass="heightCampo" Enabled="false" Width="95%" OnTextChanged="DdlCumpl_TextChanged" AutoPostBack ="true"/>
                             </asp:TableCell>
                             <asp:TableCell>
                                 <asp:Label ID="LblLicCump" runat="server" CssClass="LblEtiquet" Text="Licencia:"></asp:Label>
@@ -1165,6 +1170,7 @@
                     <asp:PostBackTrigger ControlID="BtnSnOnOf" />
                     <asp:PostBackTrigger ControlID="BtnExporRte" />
                     <asp:PostBackTrigger ControlID="IbtCerrarRte" />
+                    <asp:AsyncPostBackTrigger ControlID ="DdlGenerado" EventName ="TextChanged" />
                 </Triggers>
             </asp:UpdatePanel>
         </asp:View>

@@ -162,7 +162,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
-                    <div class="CentrarContenedor DivMarco">
+                    <div class="CentrarContenedor">
                         <div id="Botones" class="row">
                             <div class="col-sm-1">
                                 <asp:Button ID="BtnConsultar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnConsultar_Click" OnClientClick="target ='';" Text="consultar" />
@@ -429,6 +429,7 @@
                         <asp:Label ID="LblTitOTCargMasiv" runat="server" Text="Subir Evaluación"></asp:Label></h6>
                     <asp:ImageButton ID="IbtSubirCargaMax" runat="server" ToolTip="Cargar archivo..." ImageUrl="~/images/SubirCarga.png" OnClick="IbtSubirCargaMax_Click" Width="30px" Height="30px" />
                     <asp:ImageButton ID="IbtGuardarCargaMax" runat="server" ToolTip="Guardar" ImageUrl="~/images/Descargar.png" OnClick="IbtGuardarCargaMax_Click" Width="30px" Height="30px" Enabled="false" OnClientClick="javascript:return confirm('¿Desea almacenar la información?', 'Mensaje de sistema')" />
+                    <br /><asp:FileUpload ID="FileUpRva" runat="server" Font-Size="9px" Visible="false" />
                     <asp:GridView ID="GrdCargaMax" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="False"
                         CssClass="DiseñoGrid table table-sm" GridLines="Both">
                         <Columns>
@@ -481,6 +482,7 @@
             <asp:PostBackTrigger ControlID="IbtCerrarBusq" />
             <asp:PostBackTrigger ControlID="IbtModalBusq" />
              <asp:PostBackTrigger ControlID="BtnAlert" />
+             <asp:PostBackTrigger ControlID="IbtSubirCargaMax" />
         </Triggers>
     </asp:UpdatePanel>
 </asp:Content>

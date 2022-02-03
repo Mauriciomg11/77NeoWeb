@@ -301,14 +301,14 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 SC.ExecuteNonQuery();
                                 Transac.Commit(); DataRow[] Result = Idioma.Select("Objeto= 'MstrMens02'");
                                 foreach (DataRow row in Result)
-                                { ScriptManager.RegisterClientScriptBlock(this.UplWS, UplWS.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//Proceso finalizado correctamente');", true);
+                                { ScriptManager.RegisterClientScriptBlock(this.UplWS, UplWS.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Proceso finalizado correctamente');", true);
                             }
                             catch (Exception Ex)
                             {
                                 Transac.Rollback();
                                 DataRow[] Result = Idioma.Select("Objeto= 'MensjWS01'");
                                 foreach (DataRow row in Result)
-                                { ScriptManager.RegisterClientScriptBlock(this.UplWS, UplWS.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }
+                                { ScriptManager.RegisterClientScriptBlock(this.UplWS, UplWS.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Error en el proceso de actualizar el status", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
                             }
@@ -504,7 +504,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 {
                                     DataRow[] Result = Idioma.Select("Objeto= 'MensjWS02'");
                                     foreach (DataRow row in Result)
-                                    { ScriptManager.RegisterClientScriptBlock(this.UplWS, UplWS.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Tiene trabajos cumplidos, no es posible eliminar el documento.
+                                    { ScriptManager.RegisterClientScriptBlock(this.UplWS, UplWS.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Tiene trabajos cumplidos, no es posible eliminar el documento.
                                 }
                                 GrdOTRteWS.EditIndex = -1;
                                 BIndDWSAOpen("UPD");
@@ -515,7 +515,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 Transac.Rollback();
                                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrEli'");
                                 foreach (DataRow row in Result)
-                                { ScriptManager.RegisterClientScriptBlock(this.UplWS, UplWS.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }
+                                { ScriptManager.RegisterClientScriptBlock(this.UplWS, UplWS.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Eliminar Work Sheet", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
                             }
@@ -527,7 +527,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }
+                { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Asignar OT en WS", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
@@ -714,7 +714,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                         DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                         foreach (DataRow row1 in Result)
                                         { Mensj = row1["Texto"].ToString(); }
-                                        ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj.ToString().Trim() + "');", true);
+                                        ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "alert", "alert('" + Mensj.ToString().Trim() + "');", true);
                                     }
                                     TxtAsingOTWS.Text = VbNumWS;
                                     BIndDWSAOpen("UPD"); BIndDSvcSinAsingar(); BIndDWSOTRTE();
@@ -725,7 +725,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                     Transac.Rollback();
                                     DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                                     foreach (DataRow row in Result)
-                                    { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }
+                                    { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                                     string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                                     Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Asingar OT a WS", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
                                 }
@@ -738,7 +738,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }
+                { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Asignar OT en WS", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
@@ -820,7 +820,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                         DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                         foreach (DataRow row1 in Result)
                                         { Mensj = row1["Texto"].ToString(); }
-                                        ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj.ToString().Trim() + "');", true);
+                                        ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "alert", "alert('" + Mensj.ToString().Trim() + "');", true);
                                     }
                                     TxtAsingOTWS.Text = VbNumWS;
                                     BIndDWSAOpen("UPD"); BIndDRtesSinAsingar(); BIndDWSOTRTE();
@@ -830,7 +830,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                     Transac.Rollback();
                                     DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                                     foreach (DataRow row in Result)
-                                    { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }
+                                    { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                                     string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                                     Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Asingar Rte a WS", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
                                 }
@@ -843,7 +843,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }
+                { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Asignar OT en WS", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
@@ -943,7 +943,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                     DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                     foreach (DataRow row1 in Result)
                                     { Mensj = row1["Texto"].ToString(); }
-                                    ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj.ToString().Trim() + "');", true);
+                                    ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "alert", "alert('" + Mensj.ToString().Trim() + "');", true);
 
                                 }
                                 GrdOTRteWS.EditIndex = -1;
@@ -955,7 +955,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 Transac.Rollback();
                                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
                                 foreach (DataRow row in Result)
-                                { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }
+                                { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE OT en WS", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
                             }
@@ -967,7 +967,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }
+                { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "UPDATE OT en WS", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
@@ -1017,7 +1017,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                     DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                     foreach (DataRow row1 in Result)
                                     { Mensj = row1["Texto"].ToString(); }
-                                    ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj.ToString().Trim() + "')", true);
+                                    ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "alert", "alert('" + Mensj.ToString().Trim() + "');", true);
                                 }
                                 BIndDWSAOpen("UPD"); BIndDWSOTRTE();
                                 if (VbFuente.Equals("OT")) { BIndDSvcSinAsingar(); }
@@ -1028,7 +1028,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                                 Transac.Rollback();
                                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrEli'");
                                 foreach (DataRow row in Result)
-                                { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }
+                                { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "ELIMINAR OT de WS", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
                             }
@@ -1040,7 +1040,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrEli'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }
+                { ScriptManager.RegisterClientScriptBlock(this.UplAsigOT, UplAsigOT.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "ELIMINAR OT de WS", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }

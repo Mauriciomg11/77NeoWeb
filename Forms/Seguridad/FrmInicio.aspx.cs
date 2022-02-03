@@ -156,5 +156,12 @@ namespace _77NeoWeb.Forms
         {
             Response.Redirect("~/Forms/Seguridad/FrmMenu.aspx");
         }
+
+        protected void LkbPrueba_Click(object sender, EventArgs e)
+        {
+
+            string SP = "window.open('/WebPrueba1.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), SP, true);
+        }
     }
 }

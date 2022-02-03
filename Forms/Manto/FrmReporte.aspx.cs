@@ -2,9 +2,11 @@
 using _77NeoWeb.Prg;
 using _77NeoWeb.Prg.PrgIngenieria;
 using ClosedXML.Excel;
+using ExcelDataReader;
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
@@ -328,6 +330,7 @@ namespace _77NeoWeb.Forms.Manto
                     GrdLicen.Columns[2].HeaderText = tbl["Objeto"].ToString().Trim().Equals("TiempoEstimado") ? tbl["Texto"].ToString().Trim() : GrdLicen.Columns[2].HeaderText;
                     //************************************** Carga Masiva *****************************************************
                     BtnCargaMaxiva.Text = bO.Equals("BtnCargaMasivaTT1") ? bT + ":" : BtnCargaMaxiva.Text;
+                    BtnCargaMaxiva.ToolTip = bO.Equals("BtnCargaMasivaTT1") ? bT + ":" : BtnCargaMaxiva.ToolTip;
                     LblTitOTCargMasiv.Text = tbl["Objeto"].ToString().Trim().Equals("LblTitCargMasiv") ? tbl["Texto"].ToString().Trim() : LblTitOTCargMasiv.Text;
                     LblCargaMasRte.Text = tbl["Objeto"].ToString().Trim().Equals("LblNroRte") ? tbl["Texto"].ToString().Trim() : LblCargaMasRte.Text;
                     LblCargaMasOt.Text = tbl["Objeto"].ToString().Trim().Equals("LblOtSec") ? tbl["Texto"].ToString().Trim() : LblCargaMasOt.Text;
@@ -873,7 +876,7 @@ namespace _77NeoWeb.Forms.Manto
             catch (Exception Ex)
             {
                 string VbMEns = Ex.ToString().Trim().Substring(1, 50);
-                ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('Inconveniente con la consulta')", true);
+                ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('Inconveniente con la consulta');", true);
             }
         }
         protected void ActivarBtnRpt(bool In, bool Md, bool El, bool Ip, bool Otr)
@@ -1039,7 +1042,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens01'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//Debe ingresar una aeronave o P/N'
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una aeronave o P/N'
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1047,7 +1050,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens02'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar una aeronave
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar una aeronave
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1055,7 +1058,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens03'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar un tipo reporte
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar un tipo reporte
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1063,7 +1066,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens04'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar una fuente
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar una fuente
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1071,7 +1074,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens05'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar una clasificación
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar una clasificación
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1079,7 +1082,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens06'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar una categoría
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar una categoría
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1087,7 +1090,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens07'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar un documento referencia
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar un documento referencia
                     ViewState["Validar"] = "N";
                     TxtDocRef.Focus();
                     return;
@@ -1096,7 +1099,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens08'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar una ATA
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar una ATA
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1104,7 +1107,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens09'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar el usuario que genera el reporte
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar el usuario que genera el reporte
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1112,7 +1115,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens10'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar la licencia  del usuario que genera el reporte
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar la licencia  del usuario que genera el reporte
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1120,7 +1123,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens11'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar una fecha
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar una fecha
                     ViewState["Validar"] = "N";
                     TxtFecDet.Focus();
                     return;
@@ -1129,7 +1132,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens12'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar una fecha de proyección
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar una fecha de proyección
                     ViewState["Validar"] = "N";
                     TxtFecPry.Focus();
                     return;
@@ -1138,7 +1141,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens13'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar una base')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar una base')", true);
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1146,7 +1149,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens14'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar el usuario que cierra el reporte
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar el usuario que cierra el reporte
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1154,7 +1157,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens15'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar la licencia del usuario que cierra el reporte
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar la licencia del usuario que cierra el reporte
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1162,7 +1165,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens16'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar una fecha de cumplimiento
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar una fecha de cumplimiento
                     ViewState["Validar"] = "N";
                     TxtFecCump.Focus();
                     return;
@@ -1171,7 +1174,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens17'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar un P/N si el campo S/N se encuentra con información
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar un P/N si el campo S/N se encuentra con información
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1179,7 +1182,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens18'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe cerrar el reporte
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe cerrar el reporte
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1187,7 +1190,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens19'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar la acción correctiva
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar la acción correctiva
                     ViewState["Validar"] = "N";
                     txtAccCrr.Focus();
                     return;
@@ -1196,7 +1199,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens20'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe cerrar el reporte
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe cerrar el reporte
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1204,7 +1207,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens21'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar la descripción del reporte
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar la descripción del reporte
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1212,7 +1215,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens22'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar una acción parcial si el reporte está clasificado como diferido
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar una acción parcial si el reporte está clasificado como diferido
                     ViewState["Validar"] = "N";
                     TxtAcciParc.Focus();
                     return;
@@ -1221,7 +1224,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens23'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar el técnico que difiere el reporte
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar el técnico que difiere el reporte
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1229,7 +1232,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens24'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //La fecha de detección y la fecha de proyección no pueden ser iguales cuando es un reporte C/F.
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //La fecha de detección y la fecha de proyección no pueden ser iguales cuando es un reporte C/F.
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1237,7 +1240,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens25'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); } //Debe ingresar la persona que verifica y licencia')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } //Debe ingresar la persona que verifica y licencia')", true);
                     ViewState["Validar"] = "N";
                     return;
                 }
@@ -1430,6 +1433,42 @@ namespace _77NeoWeb.Forms.Manto
             else { CalcularFechaPry(); }
             TxtFecCump.Text = "";
         }
+        protected void DdlGenerado_TextChanged(object sender, EventArgs e)
+        {
+            if (DdlTipRte.Enabled == true)
+            {
+                DSTOTGrl = (DataSet)ViewState["DSTOTGrl"];
+                if (DSTOTGrl.Tables["Lcia"].Rows.Count > 0) //"Licencia"
+                {
+                    DataTable DTG = new DataTable();
+                    DTG = DSTOTGrl.Tables["Lcia"].Clone();
+                    DataRow[] DR = DSTOTGrl.Tables["Lcia"].Select("Activo = 1 AND CodPersona = '" + DdlGenerado.Text.ToString().Trim() + "' OR  Codigo= ''");
+                    if (IsIENumerableLleno(DR)) { DTG = DR.CopyToDataTable(); }                   
+                    DdlLicGene.DataSource = DTG;
+                    DdlLicGene.DataTextField = "Licencia";
+                    DdlLicGene.DataValueField = "Codigo";
+                    DdlLicGene.DataBind();
+                }
+            }           
+        }
+        protected void DdlCumpl_TextChanged(object sender, EventArgs e)
+        {
+            if (DdlTipRte.Enabled == true)
+            {
+                DSTOTGrl = (DataSet)ViewState["DSTOTGrl"];
+                if (DSTOTGrl.Tables["Lcia"].Rows.Count > 0) //"Licencia"
+                {
+                    DataTable DTG = new DataTable();
+                    DTG = DSTOTGrl.Tables["Lcia"].Clone();
+                    DataRow[] DR = DSTOTGrl.Tables["Lcia"].Select("Activo = 1 AND CodPersona = '" + DdlCumpl.Text.ToString().Trim() + "' OR  Codigo= ''");
+                    if (IsIENumerableLleno(DR)) { DTG = DR.CopyToDataTable(); }
+                    DdlLicCump.DataSource = DTG;
+                    DdlLicCump.DataTextField = "Licencia";
+                    DdlLicCump.DataValueField = "Codigo";
+                    DdlLicCump.DataBind();
+                }
+            }
+        }
         protected void TxtTtlAKSN_TextChanged(object sender, EventArgs e)
         {
             CalcularNexDue(TxtTtlAKSN.Text, TxtHPrxCu.Text);
@@ -1557,7 +1596,7 @@ namespace _77NeoWeb.Forms.Manto
                         DataRow[] Result2 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                         foreach (DataRow row in Result2)
                         { Mensj = row["Texto"].ToString().Trim(); }
-                        ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                        ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + Mensj + "');", true);
                         return;
                     }
                     ActivarBtnRpt(true, true, true, true, true);
@@ -1710,7 +1749,7 @@ namespace _77NeoWeb.Forms.Manto
                         DataRow[] Result2 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                         foreach (DataRow row in Result2)
                         { Mensj = row["Texto"].ToString().Trim(); }
-                        ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                        ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + Mensj + "');", true);
                         return;
                     }
                     int CodIdRte = ClsLvDetManto.GetCodIdRte();
@@ -1762,7 +1801,7 @@ namespace _77NeoWeb.Forms.Manto
                                 foreach (DataRow row in Result)
                                 { VbMensj = row["Texto"].ToString().Trim(); }
 
-                                ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('" + VbMensj + "')", true);
+                                ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('" + VbMensj + "');", true);
                                 return;
                             }
                             Transac.Commit();
@@ -1826,7 +1865,7 @@ namespace _77NeoWeb.Forms.Manto
                         catch (Exception Ex)
                         {
                             Transac.Rollback();
-                            ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "IdntificadorBloqueScript", "alert('Error en el ingreso')", true);
+                            ScriptManager.RegisterClientScriptBlock(this.UpPnlRte, UpPnlRte.GetType(), "alert", "alert('Error en el ingreso');", true);
                             string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                             Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Notificar Rte", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                         }
@@ -1924,16 +1963,8 @@ namespace _77NeoWeb.Forms.Manto
                 DdlPrioridadOT.Text = ViewState["CodPrioridad"].ToString().Trim();
                 if (DdlEstad.Text.Equals("C") || (int)ViewState["BloquearDetalle"] == 1)
                 { DdlPrioridadOT.Enabled = false; BtnCargaMaxiva.Enabled = false; }
-                else
-                {
-                    BtnCargaMaxiva.Enabled = true;
-                    DataRow[] Result = Idioma.Select("Objeto= 'BtnCargaMasivaTT1'");
-                    foreach (DataRow row in Result)
-                    { BtnCargaMaxiva.ToolTip = row["Texto"].ToString() + " " + ViewState["CarpetaCargaMasiva"].ToString() + "CargaMasiva.xlsx"; }
-                }
-                BindDRecursoF();
-                BindDLicencia();
-                PerfilesGrid();
+                else { BtnCargaMaxiva.Enabled = true; }
+                BindDRecursoF(); BindDLicencia(); PerfilesGrid();
                 MltVRte.ActiveViewIndex = 2;
             }
             Page.Title = ViewState["PageTit"].ToString().Trim();
@@ -2086,7 +2117,7 @@ namespace _77NeoWeb.Forms.Manto
                                         DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                         foreach (DataRow row in Result)
                                         { Mensj = row["Texto"].ToString().Trim(); }
-                                        ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                                        ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "alert", "alert('" + Mensj + "');", true);
                                         return;
                                     }
 
@@ -2217,7 +2248,7 @@ namespace _77NeoWeb.Forms.Manto
                                     DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                     foreach (DataRow row in Result)
                                     { Mensj = row["Texto"].ToString().Trim(); }
-                                    ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                                    ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "alert", "alert('" + Mensj + "');", true);
                                     return;
                                 }
                                 TxtRecurSubOt.Text = VblSubOt.ToString();
@@ -2302,7 +2333,7 @@ namespace _77NeoWeb.Forms.Manto
                                     DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                     foreach (DataRow row in Result)
                                     { Mensj = row["Texto"].ToString(); }
-                                    ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj.ToString().Trim() + "')", true);
+                                    ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "alert", "alert('" + Mensj.ToString().Trim() + "');", true);
                                     return;
                                 }
                                 TxtConsulPnRecurRte.Text = "";
@@ -2325,7 +2356,7 @@ namespace _77NeoWeb.Forms.Manto
             }
             catch (Exception Ex)
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('Error en el proceso de eliminación')", true);
+                ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "alert", "alert('Error en el proceso de eliminación');", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "VALIDACIÓN ELIMINAR DET S/N SRV MANTO", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
@@ -2504,7 +2535,7 @@ namespace _77NeoWeb.Forms.Manto
                                         DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                         foreach (DataRow row in Result)
                                         { Mensj = row["Texto"].ToString().Trim(); }
-                                        ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                                        ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "alert", "alert('" + Mensj + "');", true);
                                         Transac.Rollback();
                                         return;
                                     }
@@ -2591,7 +2622,7 @@ namespace _77NeoWeb.Forms.Manto
             }
             catch (Exception Ex)
             {
-                ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('Error en el ingreso')", true);
+                ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "alert", "alert('Error en el ingreso');", true);
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "GrdLicen_RowUpdating Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
@@ -2638,7 +2669,7 @@ namespace _77NeoWeb.Forms.Manto
                             Transac.Rollback();
                             DataRow[] Result = Idioma.Select("Objeto= 'MensErrEli'");
                             foreach (DataRow row in Result)
-                            { ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "');", true); }//
+                            { ScriptManager.RegisterClientScriptBlock(this.UpPnlRecursoRte, UpPnlRecursoRte.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                             string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                             Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DELETE Licencia Reporte", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                         }
@@ -2740,6 +2771,7 @@ namespace _77NeoWeb.Forms.Manto
         protected void BtnCargaMaxiva_Click(object sender, EventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if ((int)ViewState["TtlRegDet"] > 0)
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens12'");
@@ -2749,109 +2781,87 @@ namespace _77NeoWeb.Forms.Manto
             }
             TxtCargaMasiRte.Text = TxtRecurNumRte.Text;
             TxtCargaMasiCodRte.Text = TxtRecurCodRte.Text;
-            TxtCargaMasiOT.Text = TxtRecurSubOt.Text;
+            TxtCargaMasiOT.Text = TxtRecurSubCodigoOt.Text;
             IbtGuardarCargaMax.Enabled = false;
-            MltVRte.ActiveViewIndex = 3;
-            Page.Title = ViewState["PageTit"].ToString().Trim();
+            MltVRte.ActiveViewIndex = 3;           
         }
         protected void IbtSubirCargaMax_Click(object sender, ImageClickEventArgs e)
         {
             try
             {
+                Page.Title = ViewState["PageTit"].ToString().Trim();
                 Idioma = (DataTable)ViewState["TablaIdioma"];
+                DataRow[] Result;
                 if (TxtCargaMasiOT.Text.Equals("0"))
                 {
-                    DataRow[] Result = Idioma.Select("Objeto= 'RteMens42'");
+                    Result = Idioma.Select("Objeto= 'RteMens42'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UpPnlCargaMasiva, UpPnlRecursoRte.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString().Trim() + "')", true); }//Debe estar generado el número de la reserva')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true);  }//Debe estar generado el número de la reserva')", true);
                     return;
                 }
-                DataTable DT = new DataTable();
-                string FileName = "";
-                string conexion = "";
-                FileName = "CargaMasiva.xlsx";
-                conexion = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ViewState["CarpetaCargaMasiva"].ToString().Trim() + FileName + ";Extended Properties='Excel 12.0 Xml;HDR=YES;'";
-                using (OleDbConnection cnn = new OleDbConnection(conexion))
+                if (FileUpRva.Visible == false) { FileUpRva.Visible = true; }
+                else
                 {
-                    cnn.Open();
-                    DataTable dtExcelSchema;
-                    dtExcelSchema = cnn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                    string SheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
-                    cnn.Close();
-
-                    cnn.Open();
-                    string sql = "SELECT * From [" + SheetName + "]";
-                    OleDbCommand command = new OleDbCommand(sql, cnn);
-                    OleDbDataAdapter DA = new OleDbDataAdapter(command);
-
-                    DA.Fill(DT);
-                    if (DT.Rows.Count > 0)
+                    if (FileUpRva.HasFile == true)
                     {
-                        GrdCargaMax.DataSource = DT;
-                        GrdCargaMax.DataBind();
-                        Session["TablaRsvaResul"] = DT;
-                    }
-                    cnn.Close();
+                        string FolderPath;
+                        string FileName = Path.GetFileName(FileUpRva.PostedFile.FileName);
+                        string VblExt = Path.GetExtension(FileUpRva.PostedFile.FileName);
+                        if (Cnx.GetProduccion().Trim().Equals("Y")) { FolderPath = ConfigurationManager.AppSettings["FolderPath"]; }//Azure
+                        else { FolderPath = ConfigurationManager.AppSettings["FoldPathLcl"]; }
 
-                    List<CsTypSubirReserva> ObjSubirRsva = new List<CsTypSubirReserva>();
-                    foreach (GridViewRow Row in GrdCargaMax.Rows)
-                    {
-                        TextBox TxtPNRF = Row.FindControl("TxtPNRF") as TextBox;
-                        TextBox TxtDesRF = Row.FindControl("TxtDesRF") as TextBox;
-                        TextBox TxtCantRF = Row.FindControl("TxtCantRF") as TextBox;
-                        TextBox TxtUMRF = Row.FindControl("TxtUMRF") as TextBox;
-                        TextBox TxtUMSysRF = Row.FindControl("TxtUMSysRF") as TextBox;
-                        TextBox TxtIPCRF = Row.FindControl("TxtIPCRF") as TextBox;
-                        string VbTxtCant = TxtCantRF.Text.Trim().Equals("") ? "0" : TxtCantRF.Text.Trim();
-                        double VblCant = TxtCantRF.Text.Trim().Length == 0 ? 1 : Convert.ToDouble(VbTxtCant);
-
-                        var TypSubirRsva = new CsTypSubirReserva()
+                        VblExt = VblExt.Substring(VblExt.LastIndexOf(".") + 1).ToLower();
+                        string[] formatos = new string[] { "xls", "xlsx" };
+                        if (Array.IndexOf(formatos, VblExt) < 0)
                         {
-                            IdRsva = Convert.ToInt32(TxtCargaMasiOT.Text),
-                            Posicion = 0,
-                            PN = TxtPNRF.Text.Trim(),
-                            Descripcion = TxtDesRF.Text.Trim(),
-                            Cantidad = VblCant,
-                            UndSolicitada = TxtUMRF.Text.Trim(),
-                            UndSistema = TxtUMSysRF.Text.Trim(),
-                            IPC = TxtIPCRF.Text.Trim(),
-                            Usu = Session["C77U"].ToString(),
-                            CodAeronave = Convert.ToInt32(DdlAeroRte.Text),
-                            ProcesoOrigen = "RESERVA",
-                            Accion = "TEMPORAL",
-                        };
-                        ObjSubirRsva.Add(TypSubirRsva);
+                            Result = Idioma.Select("Objeto= 'RteMens40'");//Archivo inválido
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                            return;
+                        }
+                        string FilePath = FolderPath + FileName;
+                        FileUpRva.SaveAs(FilePath);
+                        Import(FilePath, VblExt);
+                        FileUpRva.Visible = false;
                     }
-                    CsTypSubirReserva SubirRsva = new CsTypSubirReserva();
-
-                    SubirRsva.Alimentar(ObjSubirRsva);// 
-                    string Mensj = SubirRsva.GetMensj();
-                    if (!Mensj.Trim().Equals("OK"))
+                    else
                     {
-                        GrdCargaMax.DataSource = (DataTable)Session["TablaRsvaResul"];
-                        GrdCargaMax.DataBind();
-                        IbtGuardarCargaMax.Enabled = false;
-                        DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                        Result = Idioma.Select("Objeto= 'RteMens41'");//Debe seleccionar un archivo.
                         foreach (DataRow row in Result)
-                        { Mensj = row["Texto"].ToString(); }
-                        ScriptManager.RegisterClientScriptBlock(this.UpPnlCargaMasiva, UpPnlCargaMasiva.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                         return;
                     }
-                    GrdCargaMax.DataSource = (DataTable)Session["TablaRsvaResul"];
-                    GrdCargaMax.DataBind();
-                    IbtGuardarCargaMax.Enabled = true;
                 }
-                Page.Title = ViewState["PageTit"].ToString().Trim();
             }
             catch (Exception Ex)
             {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "VALIDACIÓN ELIMINAR DET S/N SRV MANTO", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Subir Rva Masiva Rte Manto", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
-        protected void IbtGuardarCargaMax_Click(object sender, ImageClickEventArgs e)
+        protected void Import(string FilePath, string Extension)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            try
+            { 
+            FileStream stream = File.Open(FilePath, FileMode.Open, FileAccess.Read);
+            IExcelDataReader ExcelReader;
+
+            ExcelReader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream);
+
+            //// para que tome la primera fila como titulo de campos
+            var conf = new ExcelDataSetConfiguration
+            {
+                ConfigureDataTable = _ => new ExcelDataTableConfiguration
+                { UseHeaderRow = true }
+            };
+            var dataSet = ExcelReader.AsDataSet(conf);
+            DataTable DT = dataSet.Tables[0];
+
+            if (DT.Rows.Count > 0)
+            { GrdCargaMax.DataSource = DT; GrdCargaMax.DataBind(); Session["TablaRsvaResul"] = DT; }
             List<CsTypSubirReserva> ObjSubirRsva = new List<CsTypSubirReserva>();
             foreach (GridViewRow Row in GrdCargaMax.Rows)
             {
@@ -2866,7 +2876,68 @@ namespace _77NeoWeb.Forms.Manto
 
                 var TypSubirRsva = new CsTypSubirReserva()
                 {
-                    IdRsva = Convert.ToInt32(TxtCargaMasiOT.Text),
+                    IdRsva = Convert.ToInt32(TxtRecurSubOt.Text),
+                    Posicion = 0,
+                    PN = TxtPNRF.Text.Trim(),
+                    Descripcion = TxtDesRF.Text.Trim(),
+                    Cantidad = VblCant,
+                    UndSolicitada = TxtUMRF.Text.Trim(),
+                    UndSistema = TxtUMSysRF.Text.Trim(),
+                    IPC = TxtIPCRF.Text.Trim(),
+                    Usu = Session["C77U"].ToString(),
+                    CodAeronave = Convert.ToInt32(DdlAeroRte.Text),
+                    ProcesoOrigen = "RESERVA",
+                    Accion = "TEMPORAL",
+                };
+                ObjSubirRsva.Add(TypSubirRsva);
+            }
+            CsTypSubirReserva SubirRsva = new CsTypSubirReserva();
+
+            SubirRsva.Alimentar(ObjSubirRsva);// 
+            string Mensj = SubirRsva.GetMensj();
+            if (!Mensj.Trim().Equals("OK"))
+            {
+                GrdCargaMax.DataSource = (DataTable)Session["TablaRsvaResul"];
+                GrdCargaMax.DataBind();
+                IbtGuardarCargaMax.Enabled = false;
+                DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                foreach (DataRow row in Result)
+                { Mensj = row["Texto"].ToString(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    return;
+            }
+            GrdCargaMax.DataSource = (DataTable)Session["TablaRsvaResul"];
+            GrdCargaMax.DataBind();
+            IbtGuardarCargaMax.Enabled = true;
+            }
+            catch (Exception Ex)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Import Rte Manto", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
+        }
+        protected void IbtGuardarCargaMax_Click(object sender, ImageClickEventArgs e)
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            List<CsTypSubirReserva> ObjSubirRsva = new List<CsTypSubirReserva>();
+            foreach (GridViewRow Row in GrdCargaMax.Rows)
+            {
+                TextBox TxtPNRF = Row.FindControl("TxtPNRF") as TextBox;
+                TextBox TxtDesRF = Row.FindControl("TxtDesRF") as TextBox;
+                TextBox TxtCantRF = Row.FindControl("TxtCantRF") as TextBox;
+                TextBox TxtUMRF = Row.FindControl("TxtUMRF") as TextBox;
+                TextBox TxtUMSysRF = Row.FindControl("TxtUMSysRF") as TextBox;
+                TextBox TxtIPCRF = Row.FindControl("TxtIPCRF") as TextBox;
+                string VbTxtCant = TxtCantRF.Text.Trim().Equals("") ? "0" : TxtCantRF.Text.Trim();
+                double VblCant = TxtCantRF.Text.Trim().Length == 0 ? 1 : Convert.ToDouble(VbTxtCant);
+
+                var TypSubirRsva = new CsTypSubirReserva()
+                {
+                    IdRsva = Convert.ToInt32(TxtRecurSubOt.Text),
                     Posicion = 0,
                     PN = TxtPNRF.Text.Trim(),
                     Descripcion = TxtDesRF.Text.Trim(),
@@ -2889,8 +2960,8 @@ namespace _77NeoWeb.Forms.Manto
             {
                 DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                 foreach (DataRow row in Result)
-                { Mensj = row["Texto"].ToString(); }
-                ScriptManager.RegisterClientScriptBlock(this.UpPnlCargaMasiva, UpPnlCargaMasiva.GetType(), "IdntificadorBloqueScript", "alert('" + Mensj + "')", true);
+                { Mensj = row["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
                 IbtGuardarCargaMax.Enabled = false;
                 return;
             }
@@ -2898,7 +2969,7 @@ namespace _77NeoWeb.Forms.Manto
             TraerDatosRtes(Convert.ToInt32(TxtNroRte.Text), "UPD");
             BindDRecursoF();
             MltVRte.ActiveViewIndex = 2;
-            Page.Title = ViewState["PageTit"].ToString().Trim();
+            GrdCargaMax.DataSource = null; GrdCargaMax.DataBind();           
         }
         protected void IbtCerrarSubMaxivo_Click(object sender, ImageClickEventArgs e)
         { MltVRte.ActiveViewIndex = 2; Page.Title = ViewState["PageTit"].ToString().Trim(); }
@@ -3648,7 +3719,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens31'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//Solo es posible ingresar 3 herramientas')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Solo es posible ingresar 3 herramientas')", true);
                     return;
                 }
                 int VbRte = Convert.ToInt32(TxtSnOnOffNumRte.Text);
@@ -3658,7 +3729,7 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens32'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//la fecha vencimiento se encuentra vacía')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//la fecha vencimiento se encuentra vacía')", true);
                     TxtFechVcePP.Focus(); return;
                 }
 
@@ -3694,14 +3765,14 @@ namespace _77NeoWeb.Forms.Manto
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens33'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//Debe ingresar un P/N')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar un P/N')", true);
                     return;
                 }
                 if (VbSn.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'RteMens34'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }//El campo S/N se encuentra vacío')", true);
+                    { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//El campo S/N se encuentra vacío')", true);
                     return;
                 }
 
@@ -3735,7 +3806,7 @@ namespace _77NeoWeb.Forms.Manto
                                 Transac.Rollback();
                                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                                 foreach (DataRow row in Result)
-                                { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "IdntificadorBloqueScript", "alert('" + row["Texto"].ToString() + "')", true); }
+                                { ScriptManager.RegisterClientScriptBlock(this.UplSnOnOff, UplSnOnOff.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "INSERT Herramientas en Reportes", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                             }
