@@ -205,25 +205,29 @@ namespace _77NeoWeb.Forms.InventariosCompras
             { isFull = true; break; }
             return isFull;
         }
-        protected void BindCiudad(string CodPais)
+        protected void BindPais()
         {
             DSTDdl = (DataSet)ViewState["DSTDdl"];
-            if (DSTDdl.Tables["Ciudad"].Rows.Count > 0)
+            if (DSTDdl.Tables["UbicaGeo"].Rows.Count > 0)
             {
                 DataTable DT = new DataTable();
-                DataRow[] DR = DSTDdl.Tables[9].Select("Activa = 1 AND CodUbicaGeoSup = '" + CodPais + "' OR CodUbicaGeogr = '' OR IdUbicaGeogr = " + ViewState["CiudadAnt"]);
+                DataRow[] DR = DSTDdl.Tables[8].Select("Activa = 1 AND CodTipoUbicaGeogr IN ('01') OR CodUbicaGeogr = '" + ViewState["CodPaisAnt"] + "' OR CodUbicaGeogr =''");
                 if (IsIENumerableLleno(DR))
                 { DT = DR.CopyToDataTable(); }
-                DdlCiudad.DataSource = DT;
-                DdlCiudad.DataTextField = "Nombre";
-                DdlCiudad.DataValueField = "IdUbicaGeogr";
-                DdlCiudad.DataBind();
-                DdlCiudad.Text = ViewState["CiudadAnt"].ToString().Trim();
+                DdlPais.DataSource = DT;
+                DdlPais.DataTextField = "Nombre";
+                DdlPais.DataValueField = "CodUbicaGeogr";
+                DdlPais.DataBind();
+                DdlPais.SelectedValue = ViewState["CodPaisAnt"].ToString().Trim();
             }
-            if (DSTDdl.Tables["Estado"].Rows.Count > 0)
+        }
+        protected void BindEstado(string CodPais)
+        {
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+            if (DSTDdl.Tables["UbicaGeo"].Rows.Count > 0)
             {
                 DataTable DT = new DataTable();
-                DataRow[] DR = DSTDdl.Tables[10].Select("Activa = 1 AND CodUbicaGeoSup = '" + CodPais + "' OR CodUbicaGeogr = '' OR IdUbicaGeogr = " + ViewState["EstadoAnt"]);
+                DataRow[] DR = DSTDdl.Tables[8].Select("Activa = 1 AND CodTipoUbicaGeogr IN ('02') AND CodUbicaGeoSup = '" + CodPais + "' OR CodUbicaGeogr = '' OR IdUbicaGeogr = " + ViewState["EstadoAnt"]);
                 if (IsIENumerableLleno(DR))
                 { DT = DR.CopyToDataTable(); }
                 DdlEstado.DataSource = DT;
@@ -231,6 +235,22 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 DdlEstado.DataValueField = "IdUbicaGeogr";
                 DdlEstado.DataBind();
                 DdlEstado.Text = ViewState["EstadoAnt"].ToString().Trim();
+            }
+        }
+        protected void BindCiudad(string CodEstado)
+        {
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+            if (DSTDdl.Tables["UbicaGeo"].Rows.Count > 0)
+            {
+                DataTable DT = new DataTable();
+                DataRow[] DR = DSTDdl.Tables[8].Select("Activa = 1 AND CodTipoUbicaGeogr IN ('03', '04') AND CodUbicaGeoSup = '" + CodEstado + "' OR CodUbicaGeogr = '' OR IdUbicaGeogr = " + ViewState["CiudadAnt"]);
+                if (IsIENumerableLleno(DR))
+                { DT = DR.CopyToDataTable(); }
+                DdlCiudad.DataSource = DT;
+                DdlCiudad.DataTextField = "Nombre";
+                DdlCiudad.DataValueField = "IdUbicaGeogr";
+                DdlCiudad.DataBind();
+                DdlCiudad.Text = ViewState["CiudadAnt"].ToString().Trim();
             }
         }
         protected void BindBDdl(string Accion)
@@ -260,9 +280,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
                                 DSTDdl.Tables[5].TableName = "TipoProve";
                                 DSTDdl.Tables[6].TableName = "Moneda";
                                 DSTDdl.Tables[7].TableName = "Banco";
-                                DSTDdl.Tables[8].TableName = "Pais";
-                                DSTDdl.Tables[9].TableName = "Ciudad";
-                                DSTDdl.Tables[10].TableName = "Estado";
+                                DSTDdl.Tables[8].TableName = "UbicaGeo";
+                                //DSTDdl.Tables[9].TableName = "Ciudad";
+                                // DSTDdl.Tables[10].TableName = "Estado";
 
                                 ViewState["DSTDdl"] = DSTDdl;
                             }
@@ -362,19 +382,15 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 DdlBanco.DataBind();
                 DdlBanco.SelectedValue = ViewState["CodBancoAnt"].ToString().Trim();
             }
-            if (DSTDdl.Tables["Pais"].Rows.Count > 0)
-            {
-                DataTable DT = new DataTable();
-                DR = DSTDdl.Tables[8].Select("Activa = 1 OR CodUbicaGeogr = '" + ViewState["CodPaisAnt"] + "'");
-                if (IsIENumerableLleno(DR))
-                { DT = DR.CopyToDataTable(); }
-                DdlPais.DataSource = DT;
-                DdlPais.DataTextField = "Nombre";
-                DdlPais.DataValueField = "CodUbicaGeogr";
-                DdlPais.DataBind();
-                DdlPais.SelectedValue = ViewState["CodPaisAnt"].ToString().Trim();
-            }
-            BindCiudad(ViewState["CodPaisAnt"].ToString().Trim());
+            BindPais();
+            BindEstado(ViewState["CodPaisAnt"].ToString().Trim());
+            DataTable DTE = new DataTable();
+            DR = DSTDdl.Tables[8].Select("IdUbicaGeogr = " + ViewState["EstadoAnt"]);
+            if (IsIENumerableLleno(DR))
+            { DTE = DR.CopyToDataTable(); }
+            string VbCodEstado = "";
+            if (DTE.Rows.Count > 0) { VbCodEstado = DTE.Rows[0]["CodUbicaGeogr"].ToString().Trim(); }
+            BindCiudad(VbCodEstado);
         }
         protected void Traerdatos(string CodTerc, string Accion)
         {
@@ -438,6 +454,11 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     RdbCtaAhorr.Checked = DSTPpl.Tables[0].Rows[0]["ClaseCta"].ToString().Trim().Equals("1") ? true : false;
                     RdbCtaCte.Checked = DSTPpl.Tables[0].Rows[0]["ClaseCta"].ToString().Trim().Equals("2") ? true : false;
                     RdbCtaNA.Checked = DSTPpl.Tables[0].Rows[0]["ClaseCta"].ToString().Trim().Equals("3") ? true : false;
+
+                    string borrP = DSTPpl.Tables[0].Rows[0]["Pais"].ToString().Trim();
+                    string borrE = DSTPpl.Tables[0].Rows[0]["Estado"].ToString().Trim();
+                    string borrC = DSTPpl.Tables[0].Rows[0]["Ciudad"].ToString().Trim();
+
                     ViewState["CodPaisAnt"] = DSTPpl.Tables[0].Rows[0]["Pais"].ToString().Trim();
                     ViewState["CiudadAnt"] = DSTPpl.Tables[0].Rows[0]["Ciudad"].ToString().Trim();
                     ViewState["EstadoAnt"] = DSTPpl.Tables[0].Rows[0]["Estado"].ToString().Trim();
@@ -586,7 +607,14 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar el país.
                 ViewState["Validar"] = "N"; return;
             }
-            if (DdlCiudad.Text.Trim().Equals(""))
+            if (DdlEstado.Text.Trim().Equals("0"))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens17Tercro'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar el país.
+                ViewState["Validar"] = "N"; return;
+            }
+            if (DdlCiudad.Text.Trim().Equals("0"))
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens13Tercro'");
                 foreach (DataRow row in Result)
@@ -952,7 +980,19 @@ namespace _77NeoWeb.Forms.InventariosCompras
             }
         }
         protected void DdlPais_TextChanged(object sender, EventArgs e)
-        { ViewState["CiudadAnt"] = "0"; ViewState["EstadoAnt"] = "0"; BindCiudad(DdlPais.Text.Trim()); }
+        { ViewState["CiudadAnt"] = "0"; ViewState["EstadoAnt"] = "0"; DdlCiudad.Text = "0"; BindEstado(DdlPais.Text.Trim()); }
+        protected void DdlEstado_TextChanged(object sender, EventArgs e)
+        {
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+            ViewState["CiudadAnt"] = "0";
+            DataTable DTE = new DataTable();
+            DataRow[] DR = DSTDdl.Tables[8].Select("IdUbicaGeogr = " + DdlEstado.Text.Trim());
+            if (IsIENumerableLleno(DR))
+            { DTE = DR.CopyToDataTable(); }
+            string VbCodEstado = "";
+            if (DTE.Rows.Count > 0) { VbCodEstado = DTE.Rows[0]["CodUbicaGeogr"].ToString().Trim(); }
+            BindCiudad(VbCodEstado);
+        }
         //****************************** MOdal Busq **************************************
         protected void BindModalBusqTercero()
         {

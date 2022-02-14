@@ -165,6 +165,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     RdbStsProy.Text = b1.Trim().Equals("RdbStsProy") ? b2.Trim() : RdbStsProy.Text;
                     RdbStsDescrip.Text = b1.Trim().Equals("RdbStsDescrip") ? b2.Trim() : RdbStsDescrip.Text;
                     BtnStsConsult.Text = b1.Trim().Equals("BtnStsConsult") ? b2.Trim() : BtnStsConsult.Text;
+                    BtnStsConsult.ToolTip = b1.Trim().Equals("BtnStsConsultTT") ? b2.Trim() : BtnStsConsult.ToolTip;
                     LblTitImpresion.Text = b1.Trim().Equals("LblTitImpresion") ? b2.Trim() : LblTitImpresion.Text;
                     IbtCerrarPrint.ToolTip = b1.Trim().Equals("CerrarVentana") ? b2.Trim() : IbtCerrarPrint.ToolTip;
                     ViewState["RTEMATRIC"] = b1.Trim().Equals("RTEMATRIC") ? b2.Trim() : ViewState["RTEMATRIC"];
@@ -432,6 +433,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnStsExport_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString();
             if (ViewState["CONSULTA"].ToString().Equals("N")) { return; }
             CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
             CursorIdioma.Alimentar("CurStatus", Session["77IDM"].ToString().Trim());
@@ -825,9 +827,9 @@ namespace _77NeoWeb.Forms.Ingenieria
             { GrdOrderGrup.DataSource = null; GrdOrderGrup.DataBind(); }
         }
         protected void BtnStsOrdenar_Click(object sender, EventArgs e)
-        { BindDOrdenar(); MlVwSt.ActiveViewIndex = 2; }
+        { Page.Title = ViewState["PageTit"].ToString(); BindDOrdenar(); MlVwSt.ActiveViewIndex = 2; }
         protected void IbtCerrarOrder_Click(object sender, ImageClickEventArgs e)
-        { MlVwSt.ActiveViewIndex = 0; }
+        { Page.Title = ViewState["PageTit"].ToString(); MlVwSt.ActiveViewIndex = 0; }
         protected void GrdOrderGrup_RowEditing(object sender, GridViewEditEventArgs e)
         { GrdOrderGrup.EditIndex = e.NewEditIndex; BindDOrdenar(); }
         protected void GrdOrderGrup_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -1239,7 +1241,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         //**************************** Status de fechas pasadas *******************************
         protected void BtnStatusAnt_Click(object sender, EventArgs e)
-        { if (DdlStsHK.Text.Equals("0")) { return; } MlVwSt.ActiveViewIndex = 5; }
+        { Page.Title = ViewState["PageTit"].ToString(); if (DdlStsHK.Text.Equals("0")) { return; } MlVwSt.ActiveViewIndex = 5; }
         protected void BindDStsAnt()
         {
             DataTable DtB = new DataTable();

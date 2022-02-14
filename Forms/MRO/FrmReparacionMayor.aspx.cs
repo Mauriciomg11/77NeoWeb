@@ -192,7 +192,13 @@ namespace _77NeoWeb.Forms.MRO
                     if (bO.Equals("placeholder")) { TxtBusqueda.Attributes.Add("placeholder", bT); }
                     IbtConsultar.ToolTip = bO.Equals("BtnConsultarGral") ? bT : IbtConsultar.ToolTip;
                     IbtCerrarBusq.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarBusq.ToolTip;
-                    GrdBusq.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdBusq.EmptyDataText;/**/
+                    GrdBusq.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdBusq.EmptyDataText;
+                    GrdBusq.Columns[0].HeaderText = bO.Equals("GrdSelect") ? bT : GrdBusq.Columns[0].HeaderText;
+                    GrdBusq.Columns[1].HeaderText = bO.Equals("GrdId") ? bT : GrdBusq.Columns[1].HeaderText;
+                    GrdBusq.Columns[2].HeaderText = bO.Equals("LblCod") ? bT : GrdBusq.Columns[2].HeaderText;
+                    GrdBusq.Columns[3].HeaderText = bO.Equals("LblDescrip") ? bT : GrdBusq.Columns[3].HeaderText;
+                    GrdBusq.Columns[4].HeaderText = bO.Equals("LblDoc") ? bT : GrdBusq.Columns[4].HeaderText;
+                    GrdBusq.Columns[7].HeaderText = bO.Equals("GrdDscPN") ? bT : GrdBusq.Columns[7].HeaderText;
                     // ************************************** Recurso  *******************************************************
                     LblTitRecPartes.Text = bO.Equals("LblTitRecPartes") ? bT : LblTitRecPartes.Text;
                     LblTitRecursoLice.Text = bO.Equals("LblTitRecursoLice") ? bT : LblTitRecursoLice.Text;

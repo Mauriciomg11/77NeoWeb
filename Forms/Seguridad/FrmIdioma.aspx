@@ -4,8 +4,8 @@
     <style type="text/css">
         .CentrarContenedor {
             /*vertical-align: top;*/
-            background: #e0e0e0;
-            margin: 0 0 1rem;
+            /*background: #e0e0e0;*/
+            /*margin: 0 0 1rem;*/
             position: absolute;
             /*nos posicionamos en el centro del navegador*/
             /*top: 50%;*/
@@ -18,7 +18,7 @@
             height: 90%;
             /*indicamos que el margen superior, es la mitad de la altura*/
             /*margin-top: -150px;*/
-            border: 1px solid #808080;
+            /*border: 1px solid #808080;*/
             padding: 5px;
         }
 
@@ -51,14 +51,13 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
         <ContentTemplate>
-            <div class="CentrarContenedor DivMarco">
+            <div class="CentrarContenedor">
                 <%--   <div class="CentrarTable">--%>
                 <table class="">
                     <tr>
                         <td>
-                            <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" />&nbsp&nbsp&nbsp&nbsp</td>
-                        <td>
-                            <asp:RadioButton ID="RdbMens" runat="server" CssClass="LblEtiquet" Text="&nbsp Mensaje" GroupName="BusqRp" Checked="true" />&nbsp&nbsp
+                            <asp:RadioButton ID="RdbMens" runat="server" CssClass="LblEtiquet" Text="&nbsp Español" GroupName="BusqRp" Checked="true" />&nbsp&nbsp
+                            <asp:RadioButton ID="RdbIngles" runat="server" CssClass="LblEtiquet" Text="&nbsp Ingles" GroupName="BusqRp" />&nbsp&nbsp
                             <asp:RadioButton ID="RdbObj" runat="server" CssClass="LblEtiquet" Text="&nbsp Objeto" GroupName="BusqRp" />&nbsp&nbsp                         
                             <asp:RadioButton ID="RdbDesc" runat="server" CssClass="LblEtiquet" Text="&nbsp Descripción" GroupName="BusqRp" />
                         </td>
@@ -69,19 +68,27 @@
 
                         <td>
                             <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
-                        <td>
-                            <asp:TextBox ID="TxtIdCia" runat="server" Width="80px" Height="28px" CssClass="form-control" TextMode="Number" Text="0" Visible="false"  /></td>
-                        <td>
-                            <asp:TextBox ID="TxtPassCia" runat="server" Width="200px" Height="28px" CssClass="form-control" TextMode="Password" Text=""  Visible="false"  /></td>
-                        <td>
-                            <asp:ImageButton ID="IbtCambioPassCia" runat="server" ToolTip="Guardar Clave" Width="30px" Height="30px" ImageUrl="~/images/Check.png" OnClick="IbtCambioPassCia_Click" Visible="false" /></td>
                     </tr>
                 </table>
                 <div class="row">
+                    <div class="col-sm-12">
+                        <table class="">
+                            <tr>
+                                <td>
+                                    <asp:TextBox ID="TxtIdCia" runat="server" Width="80px" Height="28px" CssClass="form-control" TextMode="Number" Text="0" Visible="false" /></td>
+                                <td>
+                                    <asp:TextBox ID="TxtPassCia" runat="server" Width="200px" Height="28px" CssClass="form-control" TextMode="Password" Text="" Visible="false" /></td>
+                                <td>
+                                    <asp:ImageButton ID="IbtCambioPassCia" runat="server" ToolTip="Guardar Clave" Width="30px" Height="30px" ImageUrl="~/images/Check.png" OnClick="IbtCambioPassCia_Click" Visible="false" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-12 CentrarBoton">
                         <asp:DropDownList ID="DdlForm" runat="server" CssClass="form-control" Width="100%" Height="30px" Font-Size="Smaller" OnTextChanged="DdlForm_TextChanged" AutoPostBack="true" />
-                        <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false" DataKeyNames="CodIdFomularioUsr, IdFormulario"
-                            CssClass="DiseñoGrid table table-sm" GridLines="Both"
+                        <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodIdFomularioUsr, IdFormulario"
+                            CssClass="DiseñoGrid table table-sm" GridLines="Both"  OnRowCommand="GrdDatos_RowCommand" 
                             OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit">
                             <Columns>
                                 <asp:TemplateField HeaderText="Cod">
@@ -100,21 +107,27 @@
                                         <asp:Label ID="LblNom" Text='<%# Eval("Nombre") %>' runat="server" Width="100" />
                                     </EditItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Objeto" HeaderStyle-Width="5%">
+                                <asp:TemplateField HeaderText="Objeto" HeaderStyle-Width="12%">
                                     <ItemTemplate>
                                         <asp:Label Text='<%# Eval("Objeto") %>' runat="server" Width="100%" />
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:Label ID="LblObj" Text='<%# Eval("Objeto") %>' runat="server" Width="100%" />
+                                        <asp:TextBox ID="TxtObj" Text='<%# Eval("Objeto") %>' runat="server" MaxLength="50" Width="100%" />
                                     </EditItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:TextBox ID="TxtObjPP" runat="server" MaxLength="50" Width="100%" />
+                                    </FooterTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Descripción">
                                     <ItemTemplate>
-                                        <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" />
+                                        <asp:Label ID="LblDesc" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" />
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:Label ID="LblDesc" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" />
+                                        <asp:TextBox ID="TxtDesc" Text='<%# Eval("Descripcion") %>' runat="server" MaxLength="50" Width="100%" />
                                     </EditItemTemplate>
+                                     <FooterTemplate>
+                                        <asp:TextBox ID="TxtDescPP" runat="server" MaxLength="50" Width="100%" />
+                                    </FooterTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Español" HeaderStyle-Width="35%">
                                     <ItemTemplate>
@@ -123,6 +136,9 @@
                                     <EditItemTemplate>
                                         <asp:TextBox ID="TxtEspa" Text='<%# Eval("Espanol") %>' runat="server" MaxLength="350" TextMode="MultiLine" Width="100%" />
                                     </EditItemTemplate>
+                                     <FooterTemplate>
+                                        <asp:TextBox ID="TxtEspaPP" runat="server" MaxLength="350" TextMode="MultiLine" Width="100%" />
+                                    </FooterTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Ingles" HeaderStyle-Width="35%">
                                     <ItemTemplate>
@@ -131,6 +147,9 @@
                                     <EditItemTemplate>
                                         <asp:TextBox ID="TxtIngl" Text='<%# Eval("Ingles") %>' runat="server" MaxLength="350" TextMode="MultiLine" Width="100%" />
                                     </EditItemTemplate>
+                                     <FooterTemplate>
+                                        <asp:TextBox ID="TxtInglPP" runat="server" MaxLength="350" TextMode="MultiLine" Width="100%" />
+                                    </FooterTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Corregido">
                                     <ItemTemplate>
@@ -148,6 +167,9 @@
                                         <asp:ImageButton ID="IbtUpdate" CssClass="BotonUpdateGrid" ImageUrl="~/images/Save.png" runat="server" CommandName="Update" ToolTip="Actualizar" />
                                         <asp:ImageButton ID="IbtCancel" CssClass="BotonCancelGrid" ImageUrl="~/images/Cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancelar" />
                                     </EditItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:ImageButton ID="IbtAddNew" CssClass="BotonNewGrid" ImageUrl="~/images/AddNew.png" runat="server" CommandName="AddNew" ToolTip="Nuevo" />
+                                    </FooterTemplate>
                                 </asp:TemplateField>
                             </Columns>
                             <FooterStyle CssClass="GridFooterStyle" />

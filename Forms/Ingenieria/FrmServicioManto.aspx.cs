@@ -256,6 +256,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                     IbtConsultar.ToolTip = bO.Equals("BtnConsultarGral") ? bT : IbtConsultar.ToolTip;
                     IbtCerrarBusq.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarBusq.ToolTip;
                     GrdBusq.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdBusq.EmptyDataText;
+                    GrdBusq.Columns[0].HeaderText = bO.Equals("GrdSelect") ? bT : GrdBusq.Columns[0].HeaderText;
+                    GrdBusq.Columns[1].HeaderText = bO.Equals("GrdId") ? bT : GrdBusq.Columns[1].HeaderText;
+                    GrdBusq.Columns[2].HeaderText = bO.Equals("LblCod") ? bT : GrdBusq.Columns[2].HeaderText;
+                    GrdBusq.Columns[3].HeaderText = bO.Equals("LblDescrip") ? bT : GrdBusq.Columns[3].HeaderText;
+                    GrdBusq.Columns[4].HeaderText = bO.Equals("LblDoc") ? bT : GrdBusq.Columns[4].HeaderText;
+                    GrdBusq.Columns[7].HeaderText = bO.Equals("GrdDscPN") ? bT : GrdBusq.Columns[7].HeaderText;
+                   
                     // ************************************** Recurso  *******************************************************       
                     LblTitRecursoLice.Text = bO.Equals("LblTitRecursoLice") ? bT : LblTitRecursoLice.Text;
                     IbtCerrarRec.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarRec.ToolTip;
@@ -267,7 +274,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     GrdRecursoF.Columns[6].HeaderText = bO.Equals("GrdUndMed") ? bT : GrdRecursoF.Columns[6].HeaderText;
                     LblTitLicen.Text = bO.Equals("LblTitLicen") ? bT : LblTitLicen.Text;
                     GrdLicen.Columns[0].HeaderText = bO.Equals("GrdLicen") ? bT : GrdLicen.Columns[0].HeaderText;
-                    GrdLicen.Columns[2].HeaderText = bO.Equals("GrdTiemEst") ? bT : GrdLicen.Columns[2].HeaderText;
+                    GrdLicen.Columns[1].HeaderText = bO.Equals("GrdId") ? bT : GrdLicen.Columns[1].HeaderText;
+                    GrdLicen.Columns[2].HeaderText = bO.Equals("GrdId") ? bT : GrdLicen.Columns[2].HeaderText;
                     // ************************************** Imprimir  *******************************************************  
                     IbtCerrarInf.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarInf.ToolTip;
                     BtnSvcAct.Text = bO.Equals("BtnSvcAct") ? bT : BtnSvcAct.Text;
@@ -299,7 +307,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DataRow[] Result = Idioma.Select("Objeto= 'IbtDeleteOnCl'");
                 foreach (DataRow row in Result)
                 { IbtDelete.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
-
+               
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
             }
@@ -860,7 +868,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             UpPnlCampos.Update();
             BindDataAll();
             UpPnlPN.Update();
-            PerfilesGrid();
+            UpPnlBusq.Update();
         }
         protected void DdlGrupo_TextChanged(object sender, EventArgs e)
         {
@@ -3558,13 +3566,12 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GrdBusq_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string vbcod = HttpUtility.HtmlDecode(GrdBusq.SelectedRow.Cells[1].Text.Trim());
+            string vbcod = GrdBusq.DataKeys[this.GrdBusq.SelectedIndex][0].ToString();
             string VbTpo = ViewState["TIPO"].ToString().Equals("A") ? "" : "P";
             BindDTraerdatos(vbcod, VbTpo, "SEL");
             UpPnlCampos.Update();
             BindDataAll();
             UpPnlPN.Update();
-            PerfilesGrid();
             PnlBusq.Visible = false;
             PnlCampos.Visible = true;            
         }

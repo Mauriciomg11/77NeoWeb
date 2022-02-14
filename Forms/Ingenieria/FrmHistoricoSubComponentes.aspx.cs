@@ -269,10 +269,12 @@ namespace _77NeoWeb.Forms.Ingenieria
                         }
                         catch (Exception Ex)
                         {
-                            string borr = Ex.ToString();
-                            DataRow[] Result = Idioma.Select("Objeto= 'Mens01HIR'");
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
                             foreach (DataRow row in Result)
-                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// 
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
+
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "UPDATE Detalle PPT", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+
                         }
                     }
                 }

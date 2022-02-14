@@ -182,8 +182,9 @@
                     </table>
                 </div>
                 <div class="DivGrid DivContendorGrid">
+
                     <asp:GridView ID="GrdDatos" runat="server" DataKeyNames="CodModelo" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
-                        CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8" OnSelectedIndexChanged="GrdDatos_SelectedIndexChanged">
+                        CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both"  OnSelectedIndexChanged="GrdDatos_SelectedIndexChanged">
                         <FooterStyle CssClass="GridFooterStyle" />
                         <HeaderStyle CssClass="GridCabecera" />
                         <RowStyle CssClass="GridRowStyle" />
@@ -236,8 +237,6 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
-                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
-
                     </asp:GridView>
                 </div>
             </asp:Panel>

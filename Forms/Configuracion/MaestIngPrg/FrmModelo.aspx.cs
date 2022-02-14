@@ -44,6 +44,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             if (!IsPostBack)
             {
                 ViewState["Accion"] = "";
+                ViewState["NomModAnt"] = "";
                 TitForm.Text = "Configuración de Modelos";
                 ModSeguridad();
                 ActivarCampos(false, false);
@@ -240,7 +241,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         }
         protected void ActivarCampos(bool Ing, bool Edi)
         {
-            TxtCod.Enabled = Ing;
+            // TxtCod.Enabled = Ing;
             TxtMod.Enabled = Edi;
             TxtDesc.Enabled = Edi;
             TxtNumMot.Enabled = Edi;
@@ -257,11 +258,11 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             //BtnImprimir.Enabled = Ip;
             BtIFormL.Enabled = Fml;
         }
-        protected void AsignarValores()
+        protected void AsignarValores(string Accion)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             Session["ValdrMdl"] = "S";
-            if (TxtCod.Text == String.Empty)
+            if (TxtCod.Text == String.Empty && !Accion.Equals("INS"))
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens01Mdl'");
                 foreach (DataRow row in Result)
@@ -305,12 +306,13 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     string VbQuery = "EXEC SP_Pantalla_Parametros 6,@Cod,@Formula,@UsuC,'','FORMULA',0,0,@ICC,0,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand sqlCmd = new SqlCommand(VbQuery, sqlCon, Transac))
                     {
+
+                        sqlCmd.Parameters.AddWithValue("@Cod", TxtCod.Text.Trim());
+                        sqlCmd.Parameters.AddWithValue("@Formula", TxtNewFml.Text.ToString());
+                        sqlCmd.Parameters.AddWithValue("@UsuC", Session["C77U"].ToString());
+                        sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
-                            sqlCmd.Parameters.AddWithValue("@Cod", TxtCod.Text.Trim());
-                            sqlCmd.Parameters.AddWithValue("@Formula", TxtNewFml.Text.ToString());
-                            sqlCmd.Parameters.AddWithValue("@UsuC", Session["C77U"].ToString());
-                            sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             sqlCmd.ExecuteNonQuery();
                             Transac.Commit();
                             BindData(TxtBusqueda.Text, "UPD");
@@ -353,7 +355,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             else
             {
                 string Mensj = "";
-                AsignarValores();
+                AsignarValores("INS");
                 VbTipo = RdbAlaF.Checked == true ? 1 : 2;
                 if (Session["ValdrMdl"].ToString() == "N") { return; }
 
@@ -363,7 +365,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VBQuery = "EXEC SP_TablasIngenieria 17,@Cod,@Mod,@Desc,@UsuC,'-CodAnt-','','','','INSERT',@NroM,@NroT,@NroP,@Tp,0,@ICC,'01-01-1','02-01-1','03-01-1'";
+                        string VBQuery = "EXEC SP_TablasIngenieria 17,@Cod,@Mod,@Desc,@UsuC,'-NomAnt-','','','','INSERT',@NroM,@NroT,@NroP,@Tp,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                         using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
@@ -420,13 +422,16 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         }
         protected void BtnModificar_Click(object sender, EventArgs e)
         {
+            DataRow[] Result;
+            Idioma = (DataTable)ViewState["TablaIdioma"];
             if (TxtCod.Text.Trim().Equals("")) { return; }
             if (ViewState["Accion"].ToString().Trim().Equals(""))
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
                 ViewState["Accion"] = "Aceptar";
+                ViewState["NomModAnt"] = TxtMod.Text.Trim();
                 ActivarBotones(false, true, false, false, false);
-                DataRow[] Result = Idioma.Select("Objeto= 'BotonIngOk'");
+                Result = Idioma.Select("Objeto= 'BotonIngOk'");
                 foreach (DataRow row in Result)
                 { BtnModificar.Text = row["Texto"].ToString().Trim(); }//
                 ActivarCampos(false, true);
@@ -436,7 +441,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             }
             else
             {
-                AsignarValores();
+                AsignarValores("UPD");
                 int VbTipo = RdbAlaF.Checked == true ? 1 : 2;
                 if (Session["ValdrMdl"].ToString() == "N") { return; }
                 Cnx.SelecBD();
@@ -445,24 +450,35 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        string VbQuery = "EXEC SP_TablasIngenieria 17,@Cod,@Mod,@Desc,@UsuC, @Cod,'','','','UPDATE',@NroM,@NroT,@NroP,@Tp,0,@ICC,'01-01-1','02-01-1','03-01-1'";
+                        string VbQuery = "EXEC SP_TablasIngenieria 17,@Cod,@Mod,@Desc,@UsuC, @ModAnt,'','','','UPDATE',@NroM,@NroT,@NroP,@Tp,0,@ICC,'01-01-1','02-01-1','03-01-1'";
 
                         using (SqlCommand sqlCmd = new SqlCommand(VbQuery, sqlCon, Transac))
                         {
+
+                            sqlCmd.Parameters.AddWithValue("@Cod", VbCod.ToString());
+                            sqlCmd.Parameters.AddWithValue("@Mod", VbNom.ToString());
+                            sqlCmd.Parameters.AddWithValue("@ModAnt", ViewState["NomModAnt"].ToString());
+                            sqlCmd.Parameters.AddWithValue("@Desc", VbDes.ToString());
+                            sqlCmd.Parameters.AddWithValue("@UsuC", Session["C77U"].ToString());
+                            sqlCmd.Parameters.AddWithValue("@NroM", VbNumMot);
+                            sqlCmd.Parameters.AddWithValue("@NroT", VbNumTr);
+                            sqlCmd.Parameters.AddWithValue("@NroP", VbPasj);
+                            sqlCmd.Parameters.AddWithValue("@Tp", VbTipo);
+                            sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             try
                             {
-                                sqlCmd.Parameters.AddWithValue("@Cod", VbCod.ToString());
-                                sqlCmd.Parameters.AddWithValue("@Mod", VbNom.ToString());
-                                sqlCmd.Parameters.AddWithValue("@Desc", VbDes.ToString());
-                                sqlCmd.Parameters.AddWithValue("@UsuC", Session["C77U"].ToString());
-                                sqlCmd.Parameters.AddWithValue("@NroM", VbNumMot);
-                                sqlCmd.Parameters.AddWithValue("@NroT", VbNumTr);
-                                sqlCmd.Parameters.AddWithValue("@NroP", VbPasj);
-                                sqlCmd.Parameters.AddWithValue("@Tp", VbTipo);
-                                sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                                sqlCmd.ExecuteNonQuery();
+                                var Mensj = sqlCmd.ExecuteScalar();
+                                if (!Mensj.ToString().Trim().Equals(""))
+                                {
+                                    Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                                    foreach (DataRow row in Result)
+                                    { Mensj = row["Texto"].ToString().Trim(); }
+                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                                    Transac.Rollback();
+                                    return;
+                                }
                                 Transac.Commit();
-                                DataRow[] Result = Idioma.Select("Objeto= 'BotonMod'");
+                                Result = Idioma.Select("Objeto= 'BotonMod'");
                                 foreach (DataRow row in Result)
                                 { BtnModificar.Text = row["Texto"].ToString().Trim(); }//
                                 ViewState["Accion"] = "";
@@ -475,10 +491,10 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                             catch (Exception ex)
                             {
                                 Transac.Rollback();
-                                DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                                Result = Idioma.Select("Objeto= 'MensErrMod'");
                                 foreach (DataRow row in Result)
                                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en la edición de los datos')", true);
-                                Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmModelo", "INSERT", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                                Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmModelo", "Editar", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                             }
                         }
                     }
@@ -489,7 +505,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (TxtCod.Text.Trim().Equals("")) { return; }
-            AsignarValores();
+            AsignarValores("DEL");
             if (Session["ValdrMdl"].ToString() == "N") { return; }
 
             Cnx.SelecBD();

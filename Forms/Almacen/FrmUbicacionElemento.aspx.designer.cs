@@ -24,6 +24,15 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.Label TitForm;
 
         /// <summary>
+        /// Control UplDatos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UplDatos;
+
+        /// <summary>
         /// Control MultVw.
         /// </summary>
         /// <remarks>
@@ -40,15 +49,6 @@ namespace _77NeoWeb.Forms.Almacen
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View Vw0Datos;
-
-        /// <summary>
-        /// Control UplDatos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UplDatos;
 
         /// <summary>
         /// Control LblAlmacen.
@@ -157,15 +157,6 @@ namespace _77NeoWeb.Forms.Almacen
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View Vw1CambioBod;
-
-        /// <summary>
-        /// Control UplCambBod.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UplCambBod;
 
         /// <summary>
         /// Control LblTitCambioBod.
@@ -364,15 +355,6 @@ namespace _77NeoWeb.Forms.Almacen
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View Vw2CamLote;
-
-        /// <summary>
-        /// Control UplCamLot.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UplCamLot;
 
         /// <summary>
         /// Control LblTitCambLote.

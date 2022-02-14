@@ -1421,7 +1421,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         //------------------------------------------------------                    
                         else
                         {
-                            Result = Idioma.Select("Objeto= 'RteMens41'");//Debe seleccionar un archivo.
+                            Result = Idioma.Select("Objeto= 'MstrMens34'");//Debe seleccionar un archivo.
                             foreach (DataRow row in Result)
                             { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                             return;
@@ -1437,65 +1437,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Carga Masiva Cotización", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 }
             }
-          
-            /*if (ViewState["TblDetalle"] != null)
-            {
-                TblDetalle = (DataTable)ViewState["TblDetalle"];
-                DSTDdl = (DataSet)ViewState["DSTDdl"];
-                DataTable DT = new DataTable();
-                string conexion = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ViewState["CarpetaCargaMasiva"].ToString().Trim() + ViewState["NomArchivoCM"].ToString().Trim() + ";Extended Properties='Excel 12.0 Xml;HDR=YES;'";
-                using (OleDbConnection cnn = new OleDbConnection(conexion))
-                {
-                    try
-                    {
-                        cnn.Open();
-                        DataTable dtExcelSchema;
-                        dtExcelSchema = cnn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                        string SheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
-                        cnn.Close();
-
-                        cnn.Open();
-                        string sql = "SELECT * From [" + SheetName + "]";
-                        OleDbCommand command = new OleDbCommand(sql, cnn);
-                        OleDbDataAdapter DA = new OleDbDataAdapter(command);
-
-                        DA.Fill(DT);
-                        if (DT.Rows.Count > 0)
-                        {
-                            foreach (DataRow DRExcel in DT.Rows)
-                            {
-                                foreach (DataRow DRDetCot in TblDetalle.Rows)
-                                {
-                                    if (DRDetCot["PN"].ToString().Trim().Equals(DRExcel["PN"].ToString().Trim()))
-                                    {
-                                        DataRow[] DR = DSTDdl.Tables[10].Select("CodCondicionElem='" + DRExcel["Status_Estado"].ToString().Trim() + "'");
-                                        if (IsIENumerableLleno(DR))
-                                        { DRDetCot["CodEstdo"] = DRExcel["Status_Estado"].ToString().Trim(); }
-
-                                        DRDetCot["ValorUnidad"] = DRExcel["Value_Valor"].ToString().Trim().Equals("") ? "0" : DRExcel["Value_Valor"].ToString().Trim();
-                                        DRDetCot["TiempoEntrega"] = DRExcel["DeliveryTimeDays_TiempoEntregaDias"].ToString().Trim().Equals("") ? "0" : DRExcel["DeliveryTimeDays_TiempoEntregaDias"].ToString().Trim();
-                                        DRDetCot["UndMinimaCompra"] = DRExcel["Min_Qty_CantMinima"].ToString().Trim().Equals("") ? "0" : DRExcel["Min_Qty_CantMinima"].ToString().Trim();
-                                        DRDetCot["Alterno"] = DRExcel["Alternate_PN_Alterno"].ToString().Trim();
-                                        DRDetCot["ObservacionesDC"] = DRExcel["Observations_Observaciones"].ToString().Trim();
-                                    }
-                                }
-                            }
-                        }
-                        cnn.Close();
-                        TblDetalle.AcceptChanges();
-                        GrdDet.DataSource = TblDetalle; GrdDet.DataBind();
-                        Valores();
-                    }
-                    catch (Exception Ex)
-                    {
-                        DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
-                        foreach (DataRow row in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
-                        string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                        Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Carga Masiva Cotización", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
-                    }
-                }
-            }*/
         }
         protected void BtnEliminar_Click(object sender, EventArgs e)
         {

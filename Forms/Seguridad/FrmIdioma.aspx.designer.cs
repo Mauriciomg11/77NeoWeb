@@ -33,15 +33,6 @@ namespace _77NeoWeb.Forms.Seguridad
         protected global::System.Web.UI.UpdatePanel UpPanel;
 
         /// <summary>
-        /// Control LblBusqueda.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblBusqueda;
-
-        /// <summary>
         /// Control RdbMens.
         /// </summary>
         /// <remarks>
@@ -49,6 +40,15 @@ namespace _77NeoWeb.Forms.Seguridad
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton RdbMens;
+
+        /// <summary>
+        /// Control RdbIngles.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RdbIngles;
 
         /// <summary>
         /// Control RdbObj.

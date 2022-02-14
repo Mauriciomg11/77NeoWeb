@@ -630,7 +630,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             ViewState["RepaExtLocal"] = Tipo;
             if (Tipo.Equals("E"))
             {
-                BtnRepaExterna.CssClass = "btn btn-primary"; BtnSolPedInter.Visible = false; CkbAprobad.Visible = true; CkbAsentada.Visible = true;
+                BtnRepaExterna.CssClass = "btn btn-primary"; BtnSolPedInter.Visible = false; CkbAprobad.Visible = true; CkbAsentada.Visible = true; BtnImprimir.Visible = true; 
                 LblFactura.Visible = true; TxtFactura.Visible = true;
                 if ((int)ViewState["VblCE2"] == 1)
                 { BtnAsentar.Visible = true; }
@@ -638,7 +638,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             else
             {
                 BtnRepaLocal.CssClass = "btn btn-primary"; BtnSolPedInter.Visible = true; BtnAsentar.Visible = false;
-                CkbAprobad.Visible = false; CkbAsentada.Visible = false; LblFactura.Visible = false; TxtFactura.Visible = false;
+                CkbAprobad.Visible = false; CkbAsentada.Visible = false; LblFactura.Visible = false; TxtFactura.Visible = false; BtnImprimir.Visible = false;
             }
             GrdModalBusqRepa.DataSource = null; GrdModalBusqRepa.DataBind();
             LimpiarCampos(""); MultVw.ActiveViewIndex = 0;

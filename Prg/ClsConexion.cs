@@ -175,7 +175,7 @@ namespace _77NeoWeb.prg
             else
             {
                 return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "77NEO01", "DbConfigWeb", "sa", "admindemp");
-                //return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
+               // return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
             }
         }
         public string GetConex() { return this.VblConexion; }
@@ -316,7 +316,7 @@ namespace _77NeoWeb.prg
         public string GetBD() { return "DbNeoDempV2"; }//|DbNeoDempV2 |DbNeoAda | DbNeoHCT ||| BDNeoW
         public string GetSvr() { return "77NEO01"; }//  "77NEO01"; ||| 23.102.100.143
         public string GetUsSvr() { return "sa"; }//  "sa"
-        public string GetPas() { return "admindemp"; }//"admindemp";|||Medellin2021**
-        public string GetIdm() { return "4"; }//  4 español | 5 ingles/**/
+        public string GetPas() { return "admindemp"; }//"admindemp";|| Medellin2021**
+        public string GetIdm() { return "5"; }//  4 español | 5 ingles/**/
     }
 }

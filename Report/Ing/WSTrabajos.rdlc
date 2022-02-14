@@ -836,7 +836,7 @@
               <MIMEType>image/jpeg</MIMEType>
               <Sizing>Fit</Sizing>
               <Height>0.65625in</Height>
-              <Width>0.94792in</Width>
+              <Width>1.51829in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -862,7 +862,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>PrmCia</rd:DefaultName>
-              <Left>2.79106cm</Left>
+              <Left>3.96581cm</Left>
               <Height>0.54708cm</Height>
               <Width>16.34874cm</Width>
               <ZIndex>1</ZIndex>
@@ -896,7 +896,7 @@
               </Paragraphs>
               <rd:DefaultName>PrmNit</rd:DefaultName>
               <Top>0.64439cm</Top>
-              <Left>2.79106cm</Left>
+              <Left>3.96581cm</Left>
               <Height>0.55562cm</Height>
               <Width>5.68729cm</Width>
               <ZIndex>2</ZIndex>
@@ -931,7 +931,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox16</rd:DefaultName>
-              <Top>0.403in</Top>
+              <Top>0.4405in</Top>
               <Left>3.42634in</Left>
               <Height>0.3265in</Height>
               <Width>2.91667in</Width>
@@ -1250,7 +1250,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox16</rd:DefaultName>
-              <Top>0.74339in</Top>
+              <Top>0.78089in</Top>
               <Left>2.59301in</Left>
               <Height>0.264in</Height>
               <Width>4.69792in</Width>

@@ -442,8 +442,10 @@
                     <tr>
                         <td width="10%">
                             <asp:RadioButton ID="RdbBusqR" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="Referencia" /></td>
-                        <td width="10%">
+                        <td width="6%">
                             <asp:RadioButton ID="RdbBusqP" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="&nbsp P/N" /></td>
+                         <td width="10%">
+                            <asp:RadioButton ID="RdbBusqMdlPN" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="&nbsp Modelo P/N" /></td>
                         <td width="10%">
                             <asp:RadioButton ID="RdbBusqD" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="Descripción" /></td>
                     </tr>

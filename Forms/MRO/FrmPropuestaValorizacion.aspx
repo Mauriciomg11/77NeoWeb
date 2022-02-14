@@ -239,6 +239,11 @@
                                                 <asp:Label ID="LblDescElem" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                           <asp:TemplateField HeaderText="CantStock">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblCntStk" Text='<%# Eval("CantStock") %>' runat="server" Width="100%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Cantidad Propuesta" HeaderStyle-Width="1%">
                                             <ItemTemplate>
                                                 <asp:Label ID="CantPpt" Text='<%# Eval("CantidadPropuesta") %>' runat="server" Width="100%" />
@@ -283,12 +288,7 @@
                                             <ItemTemplate>
                                                 <asp:Label ID="LblDocRef" Text='<%# Eval("DocReferencia") %>' runat="server" Width="100%" />
                                             </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="CantStock">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblCntStk" Text='<%# Eval("CantStock") %>' runat="server" Width="100%" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
+                                        </asp:TemplateField>                                     
                                         <asp:TemplateField HeaderText="MatriculaVal">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblMatric" Text='<%# Eval("MatriculaVal") %>' runat="server" Width="100%" />

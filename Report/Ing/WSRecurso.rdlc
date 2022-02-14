@@ -979,7 +979,7 @@
               <MIMEType>image/jpeg</MIMEType>
               <Sizing>Fit</Sizing>
               <Height>0.65625in</Height>
-              <Width>0.94792in</Width>
+              <Width>1.52084in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1005,9 +1005,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>PrmCia</rd:DefaultName>
-              <Left>3.15945cm</Left>
+              <Top>0.0125in</Top>
+              <Left>4.0167cm</Left>
               <Height>0.54708cm</Height>
-              <Width>15.65024cm</Width>
+              <Width>14.98643cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -1038,8 +1039,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>PrmNit</rd:DefaultName>
-              <Top>0.64439cm</Top>
-              <Left>3.15945cm</Left>
+              <Top>0.67614cm</Top>
+              <Left>4.0167cm</Left>
               <Height>0.55562cm</Height>
               <Width>5.68729cm</Width>
               <ZIndex>2</ZIndex>

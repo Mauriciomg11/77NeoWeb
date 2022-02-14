@@ -1423,9 +1423,9 @@
               <Value>=Parameters!PrmImg.Value</Value>
               <MIMEType>image/jpeg</MIMEType>
               <Sizing>Fit</Sizing>
-              <Left>0.14632in</Left>
+              <Left>0.02132in</Left>
               <Height>0.65625in</Height>
-              <Width>0.94792in</Width>
+              <Width>1.51042in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1451,9 +1451,9 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>PrmCia</rd:DefaultName>
-              <Left>3.52021cm</Left>
-              <Height>0.86458cm</Height>
-              <Width>10.52791cm</Width>
+              <Left>3.99646cm</Left>
+              <Height>0.70583cm</Height>
+              <Width>15.36978cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -1484,9 +1484,9 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>PrmNit</rd:DefaultName>
-              <Top>0.96189cm</Top>
-              <Left>3.52021cm</Left>
-              <Height>0.87312cm</Height>
+              <Top>0.80314cm</Top>
+              <Left>3.99646cm</Left>
+              <Height>0.60974cm</Height>
               <Width>5.68729cm</Width>
               <ZIndex>2</ZIndex>
               <Style>

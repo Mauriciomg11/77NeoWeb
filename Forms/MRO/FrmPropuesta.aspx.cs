@@ -4249,7 +4249,7 @@ namespace _77NeoWeb.Forms.MRO
                     }
                     else
                     {
-                        Result = Idioma.Select("Objeto= 'RteMens41'");//Debe seleccionar un archivo.
+                        Result = Idioma.Select("Objeto= 'MstrMens34'");//Debe seleccionar un archivo.
                         foreach (DataRow row in Result)
                         { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                         return;

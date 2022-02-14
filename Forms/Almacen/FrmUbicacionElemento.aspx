@@ -81,10 +81,10 @@
         <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
-    <asp:MultiView ID="MultVw" runat="server">
-        <asp:View ID="Vw0Datos" runat="server">
-            <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
-                <ContentTemplate>
+    <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
+            <asp:MultiView ID="MultVw" runat="server">
+                <asp:View ID="Vw0Datos" runat="server">
                     <div class="CentrarContenedor DivMarco">
                         <div class="row">
                             <div class="col-sm-3">
@@ -100,7 +100,7 @@
                         <div class="row">
                             <div class="col-sm-2">
                                 <asp:Button ID="BtnConsult" runat="server" CssClass="btn btn-primary" Width="100%" OnClick="BtnConsult_Click" Text="consultar" />
-                            </div>                            
+                            </div>
                         </div>
                         <table>
                             <tr>
@@ -126,14 +126,14 @@
                                         <Columns>
                                             <asp:TemplateField HeaderText="Asignar" HeaderStyle-Width="1%">
                                                 <ItemTemplate>
-                                                    <asp:UpdatePanel ID="UplAbrir" runat="server" UpdateMode="Conditional">
-                                                        <ContentTemplate>
-                                                            <asp:ImageButton ID="IbtAsig" Width="30px" Height="30px" ImageUrl="~/images/IrV2.png" runat="server" CommandName="TrasldBod" ToolTip="Traslado de ubicación" />
-                                                        </ContentTemplate>
+                                                    <%--  <asp:UpdatePanel ID="UplAbrir" runat="server" UpdateMode="Conditional">
+                                                        <ContentTemplate>--%>
+                                                    <asp:ImageButton ID="IbtAsig" Width="30px" Height="30px" ImageUrl="~/images/IrV2.png" runat="server" CommandName="TrasldBod" ToolTip="Traslado de ubicación" />
+                                                    <%-- </ContentTemplate>
                                                         <Triggers>
                                                             <asp:PostBackTrigger ControlID="IbtAsig" />
                                                         </Triggers>
-                                                    </asp:UpdatePanel>
+                                                    </asp:UpdatePanel>--%>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="SP" HeaderStyle-Width="1%">
@@ -188,14 +188,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="camb lot" HeaderStyle-Width="1%">
                                                 <ItemTemplate>
-                                                    <asp:UpdatePanel ID="UplCl" runat="server" UpdateMode="Conditional">
-                                                        <ContentTemplate>
-                                                            <asp:ImageButton ID="IbtCambLot" Width="30px" Height="30px" ImageUrl="~/images/IrV2.png" runat="server" CommandName="CambLot" ToolTip="cambio lote" Visible="false" />
-                                                        </ContentTemplate>
-                                                        <Triggers>
-                                                            <asp:PostBackTrigger ControlID="IbtCambLot" />
-                                                        </Triggers>
-                                                    </asp:UpdatePanel>
+                                                    <asp:ImageButton ID="IbtCambLot" Width="30px" Height="30px" ImageUrl="~/images/IrV2.png" runat="server" CommandName="CambLot" ToolTip="cambio lote" Visible="false" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
@@ -208,15 +201,8 @@
                             </div>
                         </div>
                     </div>
-                </ContentTemplate>
-                <Triggers>
-                    <%--<asp:PostBackTrigger ControlID="IbnExcel" />--%>
-                </Triggers>
-            </asp:UpdatePanel>
-        </asp:View>
-        <asp:View ID="Vw1CambioBod" runat="server">
-            <asp:UpdatePanel ID="UplCambBod" runat="server" UpdateMode="Conditional">
-                <ContentTemplate>
+                </asp:View>
+                <asp:View ID="Vw1CambioBod" runat="server">
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitCambioBod" runat="server" Text="Traslado de Bodega" />
                     </h6>
@@ -278,14 +264,7 @@
                                         <Columns>
                                             <asp:TemplateField HeaderText="Trasladar">
                                                 <ItemTemplate>
-                                                    <asp:UpdatePanel ID="UplAbrir" runat="server" UpdateMode="Conditional">
-                                                        <ContentTemplate>
-                                                            <asp:ImageButton ID="IbtAsigD" Width="30px" Height="30px" ImageUrl="~/images/FlechaIr.png" runat="server" CommandName="Asignar" ToolTip="Trasladar" />
-                                                        </ContentTemplate>
-                                                        <Triggers>
-                                                            <asp:PostBackTrigger ControlID="IbtAsigD" />
-                                                        </Triggers>
-                                                    </asp:UpdatePanel>
+                                                    <asp:ImageButton ID="IbtAsigD" Width="30px" Height="30px" ImageUrl="~/images/FlechaIr.png" runat="server" CommandName="Asignar" ToolTip="Trasladar" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Fila">
@@ -307,15 +286,8 @@
                             </div>
                         </div>
                     </div>
-                </ContentTemplate>
-                <Triggers>
-                    <asp:PostBackTrigger ControlID="IbtCerrarCambioBod" />
-                </Triggers>
-            </asp:UpdatePanel>
-        </asp:View>
-        <asp:View ID="Vw2CamLote" runat="server">
-            <asp:UpdatePanel ID="UplCamLot" runat="server" UpdateMode="Conditional">
-                <ContentTemplate>
+                </asp:View>
+                <asp:View ID="Vw2CamLote" runat="server">
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitCambLote" runat="server" Text="Cambio de lote" />
                     </h6>
@@ -337,7 +309,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-3"></div>
-                                
+
                             <div class="col-sm-3">
                                 <asp:Label ID="LblCLNewLot" runat="server" CssClass="LblEtiquet" Text=" nuevo lote" />
                                 <asp:TextBox ID="TxtCLNewLot" runat="server" CssClass="form-control-sm heightCampo" Width="100%" />
@@ -353,12 +325,14 @@
                             </div>
                         </div>
                     </div>
-                </ContentTemplate>
-                <Triggers>
-                    <asp:PostBackTrigger ControlID="IbtCerrarCambioLote" />
-                    <asp:PostBackTrigger ControlID="BtnTranLote" />
-                </Triggers>
-            </asp:UpdatePanel>
-        </asp:View>
-    </asp:MultiView>
+                </asp:View>
+            </asp:MultiView>
+        </ContentTemplate>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="IbtCerrarCambioBod" />
+            <%--<asp:PostBackTrigger ControlID="IbnExcel" />--%>
+            <asp:PostBackTrigger ControlID="IbtCerrarCambioLote" />
+            <%--<asp:PostBackTrigger ControlID="BtnTranLote" />--%>
+        </Triggers>
+    </asp:UpdatePanel>
 </asp:Content>

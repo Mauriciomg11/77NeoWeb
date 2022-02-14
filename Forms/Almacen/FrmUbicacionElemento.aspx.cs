@@ -246,7 +246,7 @@ namespace _77NeoWeb.Forms.Almacen
                     if (ViewState["CodEstadoBodega"].Equals("01") || ViewState["CodEstadoBodega"].Equals("06") || ViewState["CodEstadoBodega"].Equals("80")) { BindDDdlDestino("DISPON"); }
                 }
 
-                Page.Title = ViewState["PageTit"].ToString();
+                Page.Title = ViewState["PageTit"].ToString();               
             }
             if (e.CommandName.Equals("CambLot"))
             {
@@ -350,84 +350,91 @@ namespace _77NeoWeb.Forms.Almacen
         protected void GrdUbicaDes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            DataRow[] Result;
-            double VbCantAct = Convert.ToDouble(TxtCantAct.Text);
-            TxtCantNew.Text = TxtCantNew.Text.Equals("") ? "0" : TxtCantNew.Text.Trim();
-            double VbCantNew = Convert.ToDouble(TxtCantNew.Text);
-            if (VbCantNew > VbCantAct)
-            {
-                Result = Idioma.Select("Objeto= 'Mens01Icmg'");
-                foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//La cantidad a transferir supera la cantidad actual.
-                return;
-            }
-            if (VbCantNew <= 0)
-            {
-                Result = Idioma.Select("Objeto= 'Mens02Icmg'");
-                foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar un cantidad válida.
-                return;
-            }
-            string VbAplicaFV = "N";
-            if (TxtFechI.Visible == true)
-            {
-                VbAplicaFV = "S";
-                Cnx.ValidarFechas(TxtFechI.Text.Trim(), "", 1);
-                var Mensj = Cnx.GetMensj();
-                if (!Mensj.ToString().Trim().Equals(""))
-                {
-                    Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
-                    foreach (DataRow row in Result)
-                    { Mensj = row["Texto"].ToString().Trim(); }
-                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
-                    Page.Title = ViewState["PageTit"].ToString();
-                    return;
-                }
-            }
-            if (e.CommandName.Equals("Asignar"))
-            {
-                GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
-                DateTime? VbFechaV;
-                if (VbAplicaFV == "S") { VbFechaV = Convert.ToDateTime(TxtFechI.Text); }
-                else { VbFechaV = null; }
-                List<ClsTypAsignaciones> ObjAsignaciones = new List<ClsTypAsignaciones>();
-                var TypAsignaciones = new ClsTypAsignaciones()
-                {
-                    CodIdUbicacion = Convert.ToInt32(ViewState["CodIdUbicacion"]),
-                    CodUbicaBodegaOrg = ViewState["CodUbicaBodega"].ToString().Trim(),
-                    CodUbicaBodegaDst = GrdUbicaDes.DataKeys[gvr.RowIndex].Values["Cod"].ToString(),
-                    CodElemento = ViewState["CodElemento"].ToString().Trim(),
-                    CodTipoElemento = ViewState["CodTipoElemento"].ToString().Trim(),
-                    IdentificadorElem = ViewState["IdentificadorElem"].ToString().Trim(),
-                    CodAlmacen = Convert.ToInt32(DdlAlmacen.Text),
-                    CodBodegaOrg = TxtBodOrig.Text.Trim(),
-                    CodBodegaDst = DdlBodDest.Text.Trim(),
-                    Cantidad = VbCantNew,
-                    AplicaFV = VbAplicaFV,
-                    FechaVence = VbFechaV,
-                    Usu = Session["C77U"].ToString(),
-                    SP = ViewState["SPR"].ToString().Trim(),
-                    Accion = "Assignation",
-                };
-                ObjAsignaciones.Add(TypAsignaciones);
-                ClsTypAsignaciones Asignaciones = new ClsTypAsignaciones();
-                Asignaciones.Alimentar(ObjAsignaciones);//
-                string Mensj = Asignaciones.GetMensj();
-                if (!Mensj.Equals(""))
-                {
-                    DataRow[] Result2 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
-                    foreach (DataRow row in Result2)
-                    { Mensj = row["Texto"].ToString().Trim(); }
-                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
-                    return;
-                }
-                var VbNumSP = Asignaciones.GetNumSP();
-                if (!VbNumSP.Trim().Equals("")) { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbNumSP + "');", true); }
-                BIndDatos();
-                GrdUbicaDes.DataSource = null; GrdUbicaDes.DataBind();
-                MultVw.ActiveViewIndex = 0;
-            }
             Page.Title = ViewState["PageTit"].ToString();
+            DataRow[] Result;
+            if (Convert.ToInt32(ViewState["CodIdUbicacion"].ToString()) > 0)
+            {
+                double VbCantAct = Convert.ToDouble(TxtCantAct.Text);
+                TxtCantNew.Text = TxtCantNew.Text.Equals("") ? "0" : TxtCantNew.Text.Trim();
+                double VbCantNew = Convert.ToDouble(TxtCantNew.Text);
+                if (VbCantNew > VbCantAct)
+                {
+                    Result = Idioma.Select("Objeto= 'Mens01Icmg'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//La cantidad a transferir supera la cantidad actual.
+                    return;
+                }
+                if (VbCantNew <= 0)
+                {
+                    Result = Idioma.Select("Objeto= 'Mens02Icmg'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar un cantidad válida.
+                    return;
+                }
+                string VbAplicaFV = "N";
+                if (TxtFechI.Visible == true)
+                {
+                    VbAplicaFV = "S";
+                    Cnx.ValidarFechas(TxtFechI.Text.Trim(), "", 1);
+                    var Mensj = Cnx.GetMensj();
+                    if (!Mensj.ToString().Trim().Equals(""))
+                    {
+                        Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                        foreach (DataRow row in Result)
+                        { Mensj = row["Texto"].ToString().Trim(); }
+                        ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                        Page.Title = ViewState["PageTit"].ToString();
+                        return;
+                    }
+                }
+                if (e.CommandName.Equals("Asignar"))
+                {
+                    GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                    DateTime? VbFechaV;
+                    if (VbAplicaFV == "S") { VbFechaV = Convert.ToDateTime(TxtFechI.Text); }
+                    else { VbFechaV = null; }
+                    List<ClsTypAsignaciones> ObjAsignaciones = new List<ClsTypAsignaciones>();
+                    var TypAsignaciones = new ClsTypAsignaciones()
+                    {
+                        CodIdUbicacion = Convert.ToInt32(ViewState["CodIdUbicacion"]),
+                        CodUbicaBodegaOrg = ViewState["CodUbicaBodega"].ToString().Trim(),
+                        CodUbicaBodegaDst = GrdUbicaDes.DataKeys[gvr.RowIndex].Values["Cod"].ToString(),
+                        CodElemento = ViewState["CodElemento"].ToString().Trim(),
+                        CodTipoElemento = ViewState["CodTipoElemento"].ToString().Trim(),
+                        IdentificadorElem = ViewState["IdentificadorElem"].ToString().Trim(),
+                        CodAlmacen = Convert.ToInt32(DdlAlmacen.Text),
+                        CodBodegaOrg = TxtBodOrig.Text.Trim(),
+                        CodBodegaDst = DdlBodDest.Text.Trim(),
+                        Cantidad = VbCantNew,
+                        AplicaFV = VbAplicaFV,
+                        FechaVence = VbFechaV,
+                        Usu = Session["C77U"].ToString(),
+                        SP = ViewState["SPR"].ToString().Trim(),
+                        Accion = "Assignation",
+                    };
+                    ObjAsignaciones.Add(TypAsignaciones);
+                    ClsTypAsignaciones Asignaciones = new ClsTypAsignaciones();
+                    Asignaciones.Alimentar(ObjAsignaciones);//
+                    string Mensj = Asignaciones.GetMensj();
+                    if (!Mensj.Equals(""))
+                    {
+                        DataRow[] Result2 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                        foreach (DataRow row in Result2)
+                        { Mensj = row["Texto"].ToString().Trim(); }
+                        ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                        return;
+                    }
+                    var VbNumSP = Asignaciones.GetNumSP();
+                    if (!VbNumSP.Trim().Equals("")) { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbNumSP + "');", true); }
+                    BIndDatos();
+                    GrdUbicaDes.DataSource = null; GrdUbicaDes.DataBind();
+                    ViewState["CodIdUbicacion"] = "0";
+                    Result = Idioma.Select("Objeto= 'MstrMens33'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Acción exitosa.
+                    MultVw.ActiveViewIndex = 0;
+                }
+            }            
         }
         protected void GrdUbicaDes_RowDataBound(object sender, GridViewRowEventArgs e)
         {

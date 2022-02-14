@@ -123,15 +123,8 @@
                                         OnRowCommand="GrdDatos_RowCommand" OnRowDataBound="GrdDatos_RowDataBound">
                                         <Columns>
                                             <asp:TemplateField HeaderText="Asignar">
-                                                <ItemTemplate>
-                                                    <asp:UpdatePanel ID="UplAbrir" runat="server" UpdateMode="Conditional">
-                                                        <ContentTemplate>
-                                                            <asp:ImageButton ID="IbtAsig" Width="30px" Height="30px" ImageUrl="~/images/IrV2.png" runat="server" CommandName="Abrir" ToolTip="Traslado de ubicación" />
-                                                        </ContentTemplate>
-                                                        <Triggers>
-                                                            <asp:PostBackTrigger ControlID="IbtAsig" />
-                                                        </Triggers>
-                                                    </asp:UpdatePanel>
+                                                <ItemTemplate>                                               
+                                                    <asp:ImageButton ID="IbtAsig" Width="30px" Height="30px" ImageUrl="~/images/IrV2.png" runat="server" CommandName="Abrir" ToolTip="Traslado de ubicación" />                                                   
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="P/N" HeaderStyle-Width="10%">
@@ -252,14 +245,14 @@
                                         <Columns>
                                             <asp:TemplateField HeaderText="Trasladar">
                                                 <ItemTemplate>
-                                                    <asp:UpdatePanel ID="UplAbrir" runat="server" UpdateMode="Conditional">
-                                                        <ContentTemplate>
-                                                            <asp:ImageButton ID="IbtAsigD" Width="30px" Height="30px" ImageUrl="~/images/FlechaIr.png" runat="server" CommandName="Asignar" ToolTip="Trasladar" />
-                                                        </ContentTemplate>
-                                                        <Triggers>
+                                                    <%-- <asp:UpdatePanel ID="UplAsgnr" runat="server" UpdateMode="Conditional">
+                                                        <ContentTemplate>--%>
+                                                    <asp:ImageButton ID="IbtAsigD" Width="30px" Height="30px" ImageUrl="~/images/FlechaIr.png" runat="server" CommandName="Asignar" ToolTip="Trasladar" />
+                                                    <%--  </ContentTemplate>
+                                                        <triggers>
                                                             <asp:PostBackTrigger ControlID="IbtAsigD" />
-                                                        </Triggers>
-                                                    </asp:UpdatePanel>
+                                                        </triggers>
+                                                    </asp:UpdatePanel>--%>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Fila">

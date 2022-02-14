@@ -219,6 +219,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     LblTitOpcBusq.Text = bO.Equals("LblTitOTOpcBusqueda") ? bT : LblTitOpcBusq.Text;
                     RdbBusqR.Text = bO.Equals("RdbBusqR") ? "&nbsp " + bT : RdbBusqR.Text;
                     RdbBusqD.Text = bO.Equals("LblDescripc") ? "&nbsp " + bT : RdbBusqD.Text;
+                    RdbBusqMdlPN.Text = bO.Equals("GrdModelPN") ? "&nbsp " + bT : RdbBusqMdlPN.Text;
                     LblBusqueda.Text = bO.Equals("Busqueda") ? bT : LblBusqueda.Text;
                     if (bO.Equals("placeholderDC"))
                     {
@@ -1095,15 +1096,19 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     VbTxtSql = "";
                     if (RdbBusqR.Checked == true)
                     {
-                        VbTxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 5,'{0}','','','','CurBusqRef',0,0,0,{1},'01-01-01','02-01-01','03-01-01'", Prmtr, Session["!dC!@"]);
+                        VbTxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 5,'{0}','','','','CurBusqRef',0,0,{2},{1},'01-01-01','02-01-01','03-01-01'", Prmtr, Session["!dC!@"], Session["77IDM"]);
                     }
                     if (RdbBusqP.Checked == true)
                     {
-                        VbTxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 5,'','{0}','','','CurBusqRef',0,0,0,{1},'01-01-01','02-01-01','03-01-01'", Prmtr, Session["!dC!@"]);
+                        VbTxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 5,'','{0}','','','CurBusqRef',0,0,{2},{1},'01-01-01','02-01-01','03-01-01'", Prmtr, Session["!dC!@"], Session["77IDM"]);
                     }
                     if (RdbBusqD.Checked == true)
                     {
-                        VbTxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 5,'','','{0}','','CurBusqRef',0,0,0,{1},'01-01-01','02-01-01','03-01-01'", Prmtr, Session["!dC!@"]);
+                        VbTxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 5,'','','{0}','','CurBusqRef',0,0,{2},{1},'01-01-01','02-01-01','03-01-01'", Prmtr, Session["!dC!@"], Session["77IDM"]);
+                    }
+                    if (RdbBusqMdlPN.Checked == true)
+                    {
+                        VbTxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 5,'','','','{0}','CurBusqRef',0,0,{2},{1},'01-01-01','02-01-01','03-01-01'", Prmtr, Session["!dC!@"], Session["77IDM"]);
                     }
                     if (!VbTxtSql.Equals(""))
                     {

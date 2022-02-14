@@ -571,7 +571,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -1085,10 +1084,8 @@
               <Value>=Parameters!PrmImg.Value</Value>
               <MIMEType>image/jpeg</MIMEType>
               <Sizing>Fit</Sizing>
-              <Top>0.06372in</Top>
-              <Left>0.125in</Left>
               <Height>0.65625in</Height>
-              <Width>0.94792in</Width>
+              <Width>1.39752in</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -1116,7 +1113,7 @@
               </Paragraphs>
               <rd:DefaultName>PrmCia</rd:DefaultName>
               <Top>0.16186cm</Top>
-              <Left>3.37156cm</Left>
+              <Left>3.68906cm</Left>
               <Height>0.6cm</Height>
               <Width>13.14849cm</Width>
               <ZIndex>2</ZIndex>
@@ -1149,8 +1146,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>PrmNit</rd:DefaultName>
-              <Top>0.88534cm</Top>
-              <Left>3.37156cm</Left>
+              <Top>0.85359cm</Top>
+              <Left>3.68906cm</Left>
               <Height>0.62589cm</Height>
               <Width>5.68729cm</Width>
               <ZIndex>3</ZIndex>

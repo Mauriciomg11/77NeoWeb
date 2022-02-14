@@ -55,7 +55,7 @@ namespace _77NeoWeb.Forms.Seguridad
                         DdlForm.DataTextField = "Nombre";
                         DdlForm.DataValueField = "IdFormulario";
                         DdlForm.DataBind();
-                        DdlForm.Text = "-1";
+                        DdlForm.Text = "0";
                     }
                 }
                 BindData("UPD");
@@ -96,12 +96,13 @@ namespace _77NeoWeb.Forms.Seguridad
             string VbCorreg = "";
 
             if (CkbSinCorr.Checked == true)
-            { VbCorreg = " AND Aleman = ''"; }
+            { VbCorreg = " AND (Aleman = '' OR Aleman = '0')"; }
 
             DTDet = (DataTable)ViewState["DTDet"];
             DataTable DT = new DataTable();
             DT = DTDet.Clone();
             if (RdbMens.Checked == true) { StrCondic = " Espanol LIKE '%" + TxtBusqueda.Text.Trim() + "%'" + VbCorreg; }
+            if (RdbIngles.Checked == true) { StrCondic = "Ingles LIKE '%" + TxtBusqueda.Text.Trim() + "%'" + VbCorreg; }
             if (RdbObj.Checked == true) { StrCondic = "Objeto LIKE '%" + TxtBusqueda.Text.Trim() + "%'" + VbCorreg; }
             if (RdbDesc.Checked == true) { StrCondic = " Descripcion LIKE '%" + TxtBusqueda.Text.Trim() + "%'" + VbCorreg; }
             DataRow[] DR = DTDet.Select(StrCondic);
@@ -136,25 +137,23 @@ namespace _77NeoWeb.Forms.Seguridad
             using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
             {
                 sqlCon.Open();
-                using (SqlTransaction Transac = sqlCon.BeginTransaction())
+                string VBQuery = "EXEC SP_Configuracion 3, @Es,@En, @Obj,@Desc,'', @Id,@Rv,0,0,'01-01-1','02-01-1','03-01-1'";
+                using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon))
                 {
-                    string VBQuery = "EXEC SP_Configuracion 3, @Es,@En, @Rv,'','', @Id,0,0,0,'01-01-1','02-01-1','03-01-1'";
-                    using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
+                    SC.Parameters.AddWithValue("@Es", (GrdDatos.Rows[e.RowIndex].FindControl("TxtEspa") as TextBox).Text.Trim());
+                    SC.Parameters.AddWithValue("@En", (GrdDatos.Rows[e.RowIndex].FindControl("TxtIngl") as TextBox).Text.Trim());
+                    SC.Parameters.AddWithValue("@Obj", (GrdDatos.Rows[e.RowIndex].FindControl("TxtObj") as TextBox).Text.Trim());
+                    SC.Parameters.AddWithValue("@Desc", (GrdDatos.Rows[e.RowIndex].FindControl("TxtDesc") as TextBox).Text.Trim());
+                    SC.Parameters.AddWithValue("@Rv", (GrdDatos.Rows[e.RowIndex].FindControl("CkbRev") as CheckBox).Checked == false ? 0 : 1);
+                    SC.Parameters.AddWithValue("@Id", GrdDatos.DataKeys[e.RowIndex].Values["CodIdFomularioUsr"].ToString());
+                    try
                     {
-                        SC.Parameters.AddWithValue("@Es", (GrdDatos.Rows[e.RowIndex].FindControl("TxtEspa") as TextBox).Text.Trim());
-                        SC.Parameters.AddWithValue("@En", (GrdDatos.Rows[e.RowIndex].FindControl("TxtIngl") as TextBox).Text.Trim());
-                        SC.Parameters.AddWithValue("@Rv", (GrdDatos.Rows[e.RowIndex].FindControl("CkbRev") as CheckBox).Checked == false ? 0 : 1);
-                        SC.Parameters.AddWithValue("@Id", GrdDatos.DataKeys[e.RowIndex].Values["CodIdFomularioUsr"].ToString());
-                        try
-                        {
-                            SC.ExecuteNonQuery();
-                            Transac.Commit();
-                            GrdDatos.EditIndex = -1;
-                            BindData("UPD");
-                        }
-                        catch (Exception)
-                        { Transac.Rollback(); }
+                        SC.ExecuteNonQuery();
+                        GrdDatos.EditIndex = -1;
+                        BindData("UPD");
                     }
+                    catch (Exception)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Incovenientes con la edición');", true); }
                 }
             }
         }
@@ -162,7 +161,6 @@ namespace _77NeoWeb.Forms.Seguridad
         { GrdDatos.EditIndex = -1; BindData("SEL"); }
         protected void DdlForm_TextChanged(object sender, EventArgs e)
         { BindData("UPD"); }
-
         protected void IbtCambioPassCia_Click(object sender, ImageClickEventArgs e)
         {
             if (Convert.ToInt32(TxtIdCia.Text) > 0 && !TxtPassCia.Text.Trim().Equals(""))
@@ -186,6 +184,54 @@ namespace _77NeoWeb.Forms.Seguridad
                             catch (Exception)
                             { Transac.Rollback(); }
                         }
+                    }
+                }
+            }
+        }
+        protected void GrdDatos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName.Equals("AddNew"))
+            {
+                if (DdlForm.Text.Equals("-1"))
+                {
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Debe seleccionar un formulario');", true);
+                    DdlForm.Focus();
+                    return;
+                }
+
+                TextBox TxtObjPP = (GrdDatos.FooterRow.FindControl("TxtObjPP") as TextBox);
+                TextBox TxtDescPP = (GrdDatos.FooterRow.FindControl("TxtDescPP") as TextBox);
+                TextBox TxtEspaPP = (GrdDatos.FooterRow.FindControl("TxtEspaPP") as TextBox);
+                TextBox TxtInglPP = (GrdDatos.FooterRow.FindControl("TxtInglPP") as TextBox);
+                if (TxtObjPP.Text.Equals("")) { TxtObjPP.Focus(); return; }
+                if (TxtDescPP.Text.Equals("")) { TxtDescPP.Focus(); return; }
+                if (TxtEspaPP.Text.Equals("")) { TxtEspaPP.Focus(); return; }
+                if (TxtInglPP.Text.Equals("")) { TxtInglPP.Focus(); return; }
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
+                {
+                    sqlCon.Open();
+                    string VBQuery = "EXEC SP_Configuracion 4, @Es,@En, @Obj,@Desc, @Usu, @Id,0,0,0,'01-01-1','02-01-1','03-01-1'";
+                    using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon))
+                    {
+                        SC.Parameters.AddWithValue("@Es", TxtEspaPP.Text.Trim());
+                        SC.Parameters.AddWithValue("@En", TxtInglPP.Text.Trim());
+                        SC.Parameters.AddWithValue("@Obj", TxtObjPP.Text.Trim());
+                        SC.Parameters.AddWithValue("@Desc", TxtDescPP.Text.Trim());
+                        SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString().Trim());
+                        SC.Parameters.AddWithValue("@Id", DdlForm.Text.Trim());
+                        try
+                        {
+                            var Mensj = SC.ExecuteScalar();
+                            if (!Mensj.ToString().Trim().Equals(""))
+                            {
+                                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                                return;
+                            }
+                            SC.ExecuteNonQuery();
+                            BindData("UPD");
+                        }
+                        catch (Exception)
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Incovenientes con la creación');", true); }
                     }
                 }
             }

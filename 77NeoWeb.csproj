@@ -236,6 +236,7 @@
     <Content Include="images\AddNewV2.png" />
     <Content Include="images\AddNewV3.png" />
     <Content Include="images\AddOrder.png" />
+    <Content Include="images\ALCA.png" />
     <Content Include="images\calendar.png" />
     <Content Include="images\Calendario.png" />
     <Content Include="images\Cancel.png" />
@@ -1117,7 +1118,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Report\Ing\Status_Std - Copia.rdlc" />
     <EmbeddedResource Include="Report\Logistica\Inf_ImprsOrdenCompra.rdlc" />
     <EmbeddedResource Include="Report\Logistica\Inf_ReparacionStdr.rdlc" />
     <EmbeddedResource Include="Report\Manto\Inf_FrmReporteCO.rdlc" />

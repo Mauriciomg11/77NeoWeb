@@ -137,16 +137,16 @@ namespace _77NeoWeb.Forms.MRO
                     GrdDetValrzc.Columns[7].HeaderText = bO.Equals("GrdNomSrvc") ? bT : GrdDetValrzc.Columns[7].HeaderText;
                     GrdDetValrzc.Columns[8].HeaderText = bO.Equals("GrdPNPT") ? bT : GrdDetValrzc.Columns[8].HeaderText;
                     GrdDetValrzc.Columns[9].HeaderText = bO.Equals("Descripcion") ? bT : GrdDetValrzc.Columns[9].HeaderText;
-                    GrdDetValrzc.Columns[10].HeaderText = bO.Equals("GrdCantPt") ? bT : GrdDetValrzc.Columns[10].HeaderText;
-                    GrdDetValrzc.Columns[11].HeaderText = bO.Equals("GrdCantReal") ? bT : GrdDetValrzc.Columns[11].HeaderText;
-                    GrdDetValrzc.Columns[12].HeaderText = bO.Equals("GrdVlrComp") ? bT : GrdDetValrzc.Columns[12].HeaderText;
-                    GrdDetValrzc.Columns[13].HeaderText = bO.Equals("GrdMoned") ? bT : GrdDetValrzc.Columns[13].HeaderText;
-                    GrdDetValrzc.Columns[14].HeaderText = bO.Equals("GrdUndMed") ? bT : GrdDetValrzc.Columns[14].HeaderText;
-                    GrdDetValrzc.Columns[15].HeaderText = bO.Equals("GrdUndComp") ? bT : GrdDetValrzc.Columns[15].HeaderText;
-                    GrdDetValrzc.Columns[16].HeaderText = bO.Equals("GrdUltFecCot") ? bT : GrdDetValrzc.Columns[16].HeaderText;
-                    GrdDetValrzc.Columns[17].HeaderText = bO.Equals("GrdTimpEntrCot") ? bT : GrdDetValrzc.Columns[17].HeaderText;
-                    GrdDetValrzc.Columns[18].HeaderText = bO.Equals("GrdDocRef") ? bT : GrdDetValrzc.Columns[18].HeaderText;
-                    GrdDetValrzc.Columns[19].HeaderText = bO.Equals("GrdStock") ? bT : GrdDetValrzc.Columns[19].HeaderText;
+                    GrdDetValrzc.Columns[10].HeaderText = bO.Equals("GrdStock") ? bT : GrdDetValrzc.Columns[10].HeaderText;
+                    GrdDetValrzc.Columns[11].HeaderText = bO.Equals("GrdCantPt") ? bT : GrdDetValrzc.Columns[11].HeaderText;
+                    GrdDetValrzc.Columns[12].HeaderText = bO.Equals("GrdCantReal") ? bT : GrdDetValrzc.Columns[12].HeaderText;
+                    GrdDetValrzc.Columns[13].HeaderText = bO.Equals("GrdVlrComp") ? bT : GrdDetValrzc.Columns[13].HeaderText;
+                    GrdDetValrzc.Columns[14].HeaderText = bO.Equals("GrdMoned") ? bT : GrdDetValrzc.Columns[14].HeaderText;
+                    GrdDetValrzc.Columns[15].HeaderText = bO.Equals("GrdUndMed") ? bT : GrdDetValrzc.Columns[15].HeaderText;
+                    GrdDetValrzc.Columns[16].HeaderText = bO.Equals("GrdUndComp") ? bT : GrdDetValrzc.Columns[16].HeaderText;
+                    GrdDetValrzc.Columns[17].HeaderText = bO.Equals("GrdUltFecCot") ? bT : GrdDetValrzc.Columns[17].HeaderText;
+                    GrdDetValrzc.Columns[18].HeaderText = bO.Equals("GrdTimpEntrCot") ? bT : GrdDetValrzc.Columns[18].HeaderText;
+                    GrdDetValrzc.Columns[19].HeaderText = bO.Equals("GrdDocRef") ? bT : GrdDetValrzc.Columns[19].HeaderText;//
                     GrdDetValrzc.Columns[20].HeaderText = bO.Equals("GrdHK") ? bT : GrdDetValrzc.Columns[20].HeaderText;
                     //******************************************Exportar****************************************************************
                     LblTitOpcExportar.Text = bO.Equals("LblTitOpcExportar") ? bT : LblTitOpcExportar.Text;
@@ -496,7 +496,7 @@ namespace _77NeoWeb.Forms.MRO
                     }
                     else
                     {
-                        Result = Idioma.Select("Objeto= 'RteMens41'");//Debe seleccionar un archivo.
+                        Result = Idioma.Select("Objeto= 'MstrMens34'");//Debe seleccionar un archivo.
                         foreach (DataRow row in Result)
                         { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                         return;

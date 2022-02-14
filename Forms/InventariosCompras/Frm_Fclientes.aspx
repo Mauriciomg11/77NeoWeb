@@ -316,7 +316,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <asp:Label ID="LblEstado" runat="server" CssClass="LblEtiquet" Text="estad" />
-                                        <asp:DropDownList ID="DdlEstado" runat="server" CssClass="heightCampo" Width="100%" Enabled="false" />
+                                        <asp:DropDownList ID="DdlEstado" runat="server" CssClass="heightCampo" Width="100%" Enabled="false" OnTextChanged="DdlEstado_TextChanged" AutoPostBack="true"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -449,6 +449,7 @@
         </ContentTemplate>
         <Triggers>
             <asp:PostBackTrigger ControlID="BtnExport" />
+           <asp:AsyncPostBackTrigger ControlID ="DdlEstado" EventName ="TextChanged" />
         </Triggers>
     </asp:UpdatePanel>
 </asp:Content>

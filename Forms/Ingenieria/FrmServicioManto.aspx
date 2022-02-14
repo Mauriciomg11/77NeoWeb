@@ -221,42 +221,42 @@
                 <table class="CssTblPpal">
                     <tr id="Busqueda">
                         <td>
-                            <table class="TablaBotones">
-                                <tr>
-                                    <td width="50%">
-                                        <asp:UpdatePanel ID="UpPnlBusq" runat="server" UpdateMode="Conditional">
-                                            <ContentTemplate>
+                            <asp:UpdatePanel ID="UpPnlBusq" runat="server" UpdateMode="Conditional">
+                                <ContentTemplate>
+                                    <table class="TablaBotones">
+                                        <tr>
+                                            <td width="50%">
                                                 <asp:DropDownList ID="DdlBusq" runat="server" CssClass="Campos" OnTextChanged="DdlBusq_TextChanged" AutoPostBack="true" />
-                                            </ContentTemplate>
-                                            <Triggers>
-                                                <asp:AsyncPostBackTrigger ControlID="DdlBusq" EventName="TextChanged" />
-                                            </Triggers>
-                                        </asp:UpdatePanel>
-                                    </td>
-                                    <td width="5%">
-                                        <asp:ImageButton ID="IbtAdd" runat="server" CssClass="BtnImagenAdd" ImageUrl="~/images/AddNew.png" OnClick="IbtAdd_Click" ToolTip="Ingresar" /></td>
-                                    <td width="5%">
-                                        <asp:ImageButton ID="IbtUpdate" runat="server" CssClass="BtnImagenUpdate" ImageUrl="~/images/Edit.png" OnClick="IbtUpdate_Click" ToolTip="Modificar" AutoPostBack="false" /></td>
-                                    <td width="5%">
-                                        <asp:ImageButton ID="IbtFind" runat="server" CssClass="BtnImagenFind" ImageUrl="~/images/FindV1.png" OnClick="IbtFind_Click" ToolTip="Otras consultas" /></td>
-                                    <td width="5%">
-                                        <asp:ImageButton ID="IbtPrint" runat="server" CssClass="BtnImagenPrint" ImageUrl="~/images/PrintV1.png" OnClick="IbtPrint_Click" ToolTip="Imprimir" /></td>
-                                    <td width="5%">
-                                        <asp:ImageButton ID="IbtDelete" runat="server" CssClass="BtnImagenDelete" ImageUrl="~/images/deleteV1.png" OnClick="IbtDelete_Click" ToolTip="Eliminar" OnClientClick="return confirm('¿Desea eliminar el registro?');" /></td>
-                                    <td width="5%">
-                                        <asp:ImageButton ID="IbtRecurso" runat="server" CssClass="BtnImagenManoObra" ImageUrl="~/images/ManoObraV1.png" OnClick="IbtRecurso_Click" ToolTip="Programación de recurso y mano de obra" /></td>
-                                    <td width="5%">
-                                        <asp:ImageButton ID="IbtGenerOT" runat="server" CssClass="BtnImagenGenerarOT" ImageUrl="~/images/WorkOrder.png" OnClick="IbtGenerOT_Click" ToolTip="Generar orden de trabajo" /></td>
-                                    <td>
-                                        <asp:Button ID="BtnAK" runat="server" CssClass="btn btn-outline-primary" OnClick="BtnAK_Click" Font-Size="14px" Font-Bold="true" Text="Aeronave" /></td>
-                                    <td>
-                                        <asp:Button ID="BtnPN" runat="server" CssClass="btn btn-outline-primary" OnClick="BtnPN_Click" Font-Size="14px" Font-Bold="true" Text="P/N" /></td>
-                                    <td>
-                                        <asp:Button ID="BtnSN" runat="server" CssClass="btn btn-outline-primary" OnClick="BtnSN_Click" Font-Size="14px" Font-Bold="true" Text="S/N" /></td>
-                                    <td width="15%">
-                                        <asp:CheckBox ID="CkbVisuStat" runat="server" CssClass="LblEtiquet" Text="Visualizar en Status" Enabled="false" /></td>
-                                </tr>
-                            </table>
+                                            </td>
+                                            <td width="5%">
+                                                <asp:ImageButton ID="IbtAdd" runat="server" CssClass="BtnImagenAdd" ImageUrl="~/images/AddNew.png" OnClick="IbtAdd_Click" ToolTip="Ingresar" /></td>
+                                            <td width="5%">
+                                                <asp:ImageButton ID="IbtUpdate" runat="server" CssClass="BtnImagenUpdate" ImageUrl="~/images/Edit.png" OnClick="IbtUpdate_Click" ToolTip="Modificar" AutoPostBack="false" /></td>
+                                            <td width="5%">
+                                                <asp:ImageButton ID="IbtFind" runat="server" CssClass="BtnImagenFind" ImageUrl="~/images/FindV1.png" OnClick="IbtFind_Click" ToolTip="Otras consultas" /></td>
+                                            <td width="5%">
+                                                <asp:ImageButton ID="IbtPrint" runat="server" CssClass="BtnImagenPrint" ImageUrl="~/images/PrintV1.png" OnClick="IbtPrint_Click" ToolTip="Imprimir" /></td>
+                                            <td width="5%">
+                                                <asp:ImageButton ID="IbtDelete" runat="server" CssClass="BtnImagenDelete" ImageUrl="~/images/deleteV1.png" OnClick="IbtDelete_Click" ToolTip="Eliminar" OnClientClick="return confirm('¿Desea eliminar el registro?');" /></td>
+                                            <td width="5%">
+                                                <asp:ImageButton ID="IbtRecurso" runat="server" CssClass="BtnImagenManoObra" ImageUrl="~/images/ManoObraV1.png" OnClick="IbtRecurso_Click" ToolTip="Programación de recurso y mano de obra" /></td>
+                                            <td width="5%">
+                                                <asp:ImageButton ID="IbtGenerOT" runat="server" CssClass="BtnImagenGenerarOT" ImageUrl="~/images/WorkOrder.png" OnClick="IbtGenerOT_Click" ToolTip="Generar orden de trabajo" /></td>
+                                            <td>
+                                                <asp:Button ID="BtnAK" runat="server" CssClass="btn btn-outline-primary" OnClick="BtnAK_Click" Font-Size="14px" Font-Bold="true" Text="Aeronave" /></td>
+                                            <td>
+                                                <asp:Button ID="BtnPN" runat="server" CssClass="btn btn-outline-primary" OnClick="BtnPN_Click" Font-Size="14px" Font-Bold="true" Text="P/N" /></td>
+                                            <td>
+                                                <asp:Button ID="BtnSN" runat="server" CssClass="btn btn-outline-primary" OnClick="BtnSN_Click" Font-Size="14px" Font-Bold="true" Text="S/N" /></td>
+                                            <td width="15%">
+                                                <asp:CheckBox ID="CkbVisuStat" runat="server" CssClass="LblEtiquet" Text="Visualizar en Status" Enabled="false" /></td>
+                                        </tr>
+                                    </table>
+                                </ContentTemplate>
+                                <Triggers>
+                                    <asp:AsyncPostBackTrigger ControlID="DdlBusq" EventName="TextChanged" />
+                                </Triggers>
+                            </asp:UpdatePanel>
                         </td>
                     </tr>
                     <tr id="Campos">
@@ -409,7 +409,6 @@
                                     <asp:PostBackTrigger ControlID="BtnConfigContdrInic" />
                                 </Triggers>
                             </asp:UpdatePanel>
-
                         </td>
                     </tr>
                     <tr id="Detalle">
@@ -422,7 +421,8 @@
                                                 <asp:TextBox ID="TxtHistorico" runat="server" Width="35%" Height="20px" CssClass="form-control-sm" MaxLength="200" placeholder="Ingrese el reporte para el histórico" Enabled="false" />
                                                 <asp:TextBox ID="TxtEstadoOT" runat="server" Width="30%" Height="20px" CssClass="form-control-sm TextoOTGenrda" placeholder="Estado O.T." Enabled="false" />
                                                 <asp:TextBox ID="TxtMatric" runat="server" Width="10%" Height="20px" CssClass="form-control-sm TextoOTGenrda" placeholder="Matrícula" Enabled="false" />
-                                                <asp:CheckBox ID="CkbBloqRec" runat="server" CssClass="LblEtiquet" Text="Bloquear Recurso" Enabled="false" ToolTip="Bloquea el recurso físico para que no sea editado" /></td>
+                                                <asp:CheckBox ID="CkbBloqRec" runat="server" CssClass="LblEtiquet" Text="Bloquear Recurso" Enabled="false" ToolTip="Bloquea el recurso físico para que no sea editado" />
+                                            </td>
                                             <td width="28%"></td>
                                         </tr>
                                         <tr id="DetallePN-Adjunto">
@@ -906,7 +906,7 @@
                     </tr>
                 </table>
                 <div class="DivGrid DivContendorGrid">
-                    <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!"
+                    <asp:GridView ID="GrdBusq" runat="server" AutoGenerateColumns="False" EmptyDataText="No existen registros ..!" DataKeyNames="IdSrvManto"
                         CssClass="GridControl DiseñoGrid table" GridLines="Both" AllowPaging="true" PageSize="7"
                         OnSelectedIndexChanged="GrdBusq_SelectedIndexChanged" OnPageIndexChanging="GrdBusq_PageIndexChanging">
                         <FooterStyle CssClass="GridFooterStyle" />
@@ -914,7 +914,42 @@
                         <RowStyle CssClass="GridRowStyle" />
                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                         <Columns>
-                            <asp:CommandField HeaderText="Asignar" SelectText="Asignar" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                            <asp:CommandField HeaderText="Asignar" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                            <asp:TemplateField HeaderText="Id">
+                                <ItemTemplate>
+                                    <asp:Label Text='<%# Eval("IdSrvManto") %>' runat="server" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Codigo">
+                                <ItemTemplate>
+                                    <asp:Label Text='<%# Eval("CodServicioManto") %>' runat="server" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Descripcion">
+                                <ItemTemplate>
+                                    <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="NroDocumento">
+                                <ItemTemplate>
+                                    <asp:Label Text='<%# Eval("NroDocumento") %>' runat="server" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="PN">
+                                <ItemTemplate>
+                                    <asp:Label Text='<%# Eval("PN") %>' runat="server" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="SN">
+                                <ItemTemplate>
+                                    <asp:Label Text='<%# Eval("SN") %>' runat="server" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Descripcion_PN">
+                                <ItemTemplate>
+                                    <asp:Label Text='<%# Eval("Descripcion_PN") %>' runat="server" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                         <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
                     </asp:GridView>

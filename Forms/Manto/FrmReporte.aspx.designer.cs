@@ -24,6 +24,15 @@ namespace _77NeoWeb.Forms.Manto
         protected global::System.Web.UI.WebControls.Label TitForm;
 
         /// <summary>
+        /// Control UpPnlRte.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpPnlRte;
+
+        /// <summary>
         /// Control MltVRte.
         /// </summary>
         /// <remarks>
@@ -40,15 +49,6 @@ namespace _77NeoWeb.Forms.Manto
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View Vw0Manto;
-
-        /// <summary>
-        /// Control UpPnlRte.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpPnlRte;
 
         /// <summary>
         /// Control DdlBusqRte.
@@ -852,15 +852,6 @@ namespace _77NeoWeb.Forms.Manto
         protected global::System.Web.UI.WebControls.CheckBox CkbTearDown;
 
         /// <summary>
-        /// Control Botnes.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Table Botnes;
-
-        /// <summary>
         /// Control BtnIngresar.
         /// </summary>
         /// <remarks>
@@ -879,6 +870,15 @@ namespace _77NeoWeb.Forms.Manto
         protected global::System.Web.UI.WebControls.Button BtnModificar;
 
         /// <summary>
+        /// Control BtnEliminar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnEliminar;
+
+        /// <summary>
         /// Control BtnReserva.
         /// </summary>
         /// <remarks>
@@ -886,6 +886,15 @@ namespace _77NeoWeb.Forms.Manto
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnReserva;
+
+        /// <summary>
+        /// Control BtnSnOnOf.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnSnOnOf;
 
         /// <summary>
         /// Control BtnConsultar.
@@ -906,24 +915,6 @@ namespace _77NeoWeb.Forms.Manto
         protected global::System.Web.UI.WebControls.Button BtnImprimir;
 
         /// <summary>
-        /// Control BtnEliminar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnEliminar;
-
-        /// <summary>
-        /// Control BtnSnOnOf.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnSnOnOf;
-
-        /// <summary>
         /// Control BtnExporRte.
         /// </summary>
         /// <remarks>
@@ -940,6 +931,24 @@ namespace _77NeoWeb.Forms.Manto
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnNotificar;
+
+        /// <summary>
+        /// Control LblTitAdju.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblTitAdju;
+
+        /// <summary>
+        /// Control GrdAdj.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GrdAdj;
 
         /// <summary>
         /// Control Vw1Busq.
@@ -1084,15 +1093,6 @@ namespace _77NeoWeb.Forms.Manto
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View Vw2RecursoRte;
-
-        /// <summary>
-        /// Control UpPnlRecursoRte.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpPnlRecursoRte;
 
         /// <summary>
         /// Control LblRecsNumRte.
@@ -1284,15 +1284,6 @@ namespace _77NeoWeb.Forms.Manto
         protected global::System.Web.UI.WebControls.View Vw3CargaMasiva;
 
         /// <summary>
-        /// Control UpPnlCargaMasiva.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpPnlCargaMasiva;
-
-        /// <summary>
         /// Control LblCargaMasRte.
         /// </summary>
         /// <remarks>
@@ -1401,15 +1392,6 @@ namespace _77NeoWeb.Forms.Manto
         protected global::System.Web.UI.WebControls.View Vw4Informe;
 
         /// <summary>
-        /// Control UpPnlInforme.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpPnlInforme;
-
-        /// <summary>
         /// Control LblTitImpresion.
         /// </summary>
         /// <remarks>
@@ -1444,15 +1426,6 @@ namespace _77NeoWeb.Forms.Manto
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View Vw5SNOnOff;
-
-        /// <summary>
-        /// Control UplSnOnOff.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UplSnOnOff;
 
         /// <summary>
         /// Control LblSnONOfNumRte.
