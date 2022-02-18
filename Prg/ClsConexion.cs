@@ -146,11 +146,7 @@ namespace _77NeoWeb.prg
         public void BaseDatos(string VbNomBD, string VblNomSrv, string VbUsu, string VblPass)
         {
 
-            if (VbNomBD == string.Empty)
-            {
-                //this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpal"].ConnectionString);
-                BaseDatosPrmtr();
-            }
+            if (VbNomBD == string.Empty) { BaseDatosPrmtr(); }
             else
             {
                 switch (VbNomBD.Substring(0, 3))
@@ -170,12 +166,12 @@ namespace _77NeoWeb.prg
             {
                 //  return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "77NEO01", "DbConfigWeb", "sa", "admindemp");
                 string Vb1S = "23.102.100.143";//@"aircraft\SQLEXPRESS";
-                return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, Vb1S, "DbConfigWeb", "sa", "Medellin2021**");                 
+                return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, Vb1S, "DbConfigWeb", "sa", "Medellin2021**");
             }
             else
             {
-                return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "77NEO01", "DbConfigWeb", "sa", "admindemp");
-               // return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
+                 //return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "77NEO01", "DbConfigWeb", "sa", "admindemp");
+               return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
             }
         }
         public string GetConex() { return this.VblConexion; }
@@ -309,7 +305,7 @@ namespace _77NeoWeb.prg
         public string GetProduccion() { return Produccion; }
         //******************* cONEXION TEMPORAL ********
         public string GetUsr() { return "00000082"; }//00000082|00000133 | 00000129 |
-        public int GetIdCia() { return 1; }// 1 TwoGoWo |21 Demp |2 HCT PRUEBA| 12 ADA | 20 HCT
+        public int GetIdCia() { return 1; }// 1 TwoGoWo |21 Demp |2 HCT PRUEBA| 12 ADA | 20 HCT | 3 Alca
         public string GetMonedLcl() { return "COP"; }//  "COP|USD"
         public int GetFormatFecha() { return 101; }// 103 formato europeo dd/MM/yyyy | 101 formato EEUU M/dd/yyyyy
         public string GetNit() { return "901338233-1"; } // 901338233-1 TwoGoWo |811035879-1 Demp |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT |P93000086218 - ALCA

@@ -86,7 +86,7 @@ namespace _77NeoWeb.Forms.MRO
             ViewState["CE6"] = 1;
 
             ClsPermisos ClsP = new ClsPermisos();
-            ClsP.Acceder(Session["C77U"].ToString(), "FrmServicioManto.aspx");
+            ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
 
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
             if (ClsP.GetIngresar() == 0)

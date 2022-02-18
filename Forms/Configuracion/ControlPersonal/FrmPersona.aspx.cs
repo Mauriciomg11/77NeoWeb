@@ -717,11 +717,11 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 try
                 {
                     string VbLic = "", VbModel = "", VbEspec = "", VBQuery = "";
-                    double VbNNum = 0;
+                    string  VbNNum = "0";
                     TextBox TxtFecVenPP = (GrdLicencias.FooterRow.FindControl("TxtFecVenPP") as TextBox);
                     DateTime VbFechaVenc;
                     VbLic = (GrdLicencias.FooterRow.FindControl("DdlLicenRFPP") as DropDownList).Text.Trim();
-                    VbNNum = Convert.ToDouble((GrdLicencias.FooterRow.FindControl("TxtNumPP") as TextBox).Text.Trim());
+                    VbNNum = (GrdLicencias.FooterRow.FindControl("TxtNumPP") as TextBox).Text.Trim().Equals("")?"0": (GrdLicencias.FooterRow.FindControl("TxtNumPP") as TextBox).Text.Trim();
                     if (!TxtFecVenPP.Text.Trim().Equals("")) { VbFechaVenc = Convert.ToDateTime(TxtFecVenPP.Text.Trim()); }
                     else
                     {
@@ -751,7 +751,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                         { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una licencia.
                         return;
                     }
-                    if (VbNNum <= 0)
+                    if (Convert.ToDouble(VbNNum) <= 0)
                     {
                         DataRow[] Result = Idioma.Select("Objeto= 'Mens11Persn'");
                         foreach (DataRow row in Result)
@@ -822,8 +822,8 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             DateTime VbFechaVenc;
             int VblId = Convert.ToInt32(GrdLicencias.DataKeys[e.RowIndex].Value.ToString());
 
-            double VbNNum = Convert.ToDouble((GrdLicencias.Rows[e.RowIndex].FindControl("TxtNum") as TextBox).Text.Trim());
-            if (VbNNum <= 0)
+            string VbNNum =(GrdLicencias.Rows[e.RowIndex].FindControl("TxtNum") as TextBox).Text.Trim().Equals("")?"0": (GrdLicencias.Rows[e.RowIndex].FindControl("TxtNum") as TextBox).Text.Trim();
+            if (Convert.ToDouble(VbNNum) <= 0)
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens11Persn'");
                 foreach (DataRow row in Result)
@@ -857,7 +857,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    string VBQuery = "EXEC SP_TablasGeneral 1,@CP,'',@Md,@Ep,@US,'','','','UPDATE',@Ac,@Nm,@id,0,0,@ICC,@FV,'02-01-1','03-01-1'";
+                    string VBQuery = "EXEC SP_TablasGeneral 1,@CP,'',@Md,@Ep,@US,@Nm,'','','UPDATE',@Ac,0,@id,0,0,@ICC,@FV,'02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@CP", TxtCodUsu.Text.Trim());

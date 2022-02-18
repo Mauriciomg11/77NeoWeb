@@ -130,6 +130,7 @@
     <Content Include="Forms\Almacen\FrmAlertaSolicitudNueva.aspx" />
     <Content Include="Forms\Almacen\FrmAlertaSolicitudNuevaRepa.aspx" />
     <Content Include="Forms\Almacen\FrmAlertaVencSP.aspx" />
+    <Content Include="Forms\Almacen\FrmConsultaMovimientos.aspx" />
     <Content Include="Forms\Almacen\FrmReferenciaConReservas.aspx" />
     <Content Include="Forms\Almacen\FrmSolicitudPedido.aspx" />
     <Content Include="Forms\Almacen\FrmUbicacionElemento.aspx" />
@@ -329,6 +330,13 @@
     </Compile>
     <Compile Include="Forms\Almacen\FrmAlertaVencSP.aspx.designer.cs">
       <DependentUpon>FrmAlertaVencSP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmConsultaMovimientos.aspx.cs">
+      <DependentUpon>FrmConsultaMovimientos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmConsultaMovimientos.aspx.designer.cs">
+      <DependentUpon>FrmConsultaMovimientos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Almacen\FrmReferenciaConReservas.aspx.cs">
       <DependentUpon>FrmReferenciaConReservas.aspx</DependentUpon>

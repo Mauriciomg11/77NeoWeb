@@ -1131,36 +1131,37 @@ namespace _77NeoWeb.Forms.InventariosCompras
         }
         protected void GrdDatos_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
             try
             {
                 TxtCod.Text = HttpUtility.HtmlDecode(GrdDatos.SelectedRow.Cells[1].Text);
-                DdlGrupo.Text = GrdDatos.SelectedRow.Cells[4].Text;
-                DdlAta.Text = GrdDatos.SelectedRow.Cells[6].Text;
-                DdlMod.Text = HttpUtility.HtmlDecode(GrdDatos.SelectedRow.Cells[8].Text).Trim();
-                string VbCat = HttpUtility.HtmlDecode(GrdDatos.SelectedRow.Cells[26].Text).Trim(); ;
-                string VbCodUM = HttpUtility.HtmlDecode(GrdDatos.SelectedRow.Cells[10].Text);
+                DdlGrupo.Text = GrdDatos.SelectedRow.Cells[5].Text;
+                DdlAta.Text = GrdDatos.SelectedRow.Cells[7].Text;
+                DdlMod.Text = HttpUtility.HtmlDecode(GrdDatos.SelectedRow.Cells[9].Text).Trim();
+                string VbCat = HttpUtility.HtmlDecode(GrdDatos.SelectedRow.Cells[27].Text).Trim(); ;
+                string VbCodUM = HttpUtility.HtmlDecode(GrdDatos.SelectedRow.Cells[11].Text);
                 BindDataDdl(VbCodUM, VbCat);
-                DdlIdent.Text = GrdDatos.SelectedRow.Cells[12].Text;
-                TxtDesc.Text = HttpUtility.HtmlDecode(GrdDatos.SelectedRow.Cells[3].Text);
-                TxtDescEsp.Text = HttpUtility.HtmlDecode(GrdDatos.SelectedRow.Cells[3].Text);
-                DdlTipo.Text = GrdDatos.SelectedRow.Cells[13].Text;
-                TxtInfAd.Text = HttpUtility.HtmlDecode(GrdDatos.SelectedRow.Cells[15].Text);
-                string VblReparable = GrdDatos.SelectedRow.Cells[16].Text;
+                DdlIdent.Text = GrdDatos.SelectedRow.Cells[13].Text;
+                TxtDesc.Text = HttpUtility.HtmlDecode(GrdDatos.SelectedRow.Cells[4].Text);
+                TxtDescEsp.Text = HttpUtility.HtmlDecode(GrdDatos.SelectedRow.Cells[4].Text);
+                DdlTipo.Text = GrdDatos.SelectedRow.Cells[14].Text;
+                TxtInfAd.Text = HttpUtility.HtmlDecode(GrdDatos.SelectedRow.Cells[16].Text);
+                string VblReparable = GrdDatos.SelectedRow.Cells[17].Text;
                 if (VblReparable.Equals("N/A"))
                 { RdbSi.Checked = false; RdbNo.Checked = false; }
                 else if (VblReparable.Equals("S"))
                 { RdbSi.Checked = true; RdbNo.Checked = false; }
                 else
                 { RdbSi.Checked = false; RdbNo.Checked = true; }
-                CkbPos.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[17].Text) == 1 ? true : false;
-                CkbCons.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[18].Text) == 1 ? true : false;
-                CkbMot.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[19].Text) == 1 ? true : false;
-                CkbMay.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[20].Text) == 1 ? true : false;
-                CkbApu.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[21].Text) == 1 ? true : false;
-                CkbSub.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[22].Text) == 1 ? true : false;
-                CkbNiF.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[23].Text) == 1 ? true : false;
-                TxtStockM.Text = Convert.ToDouble(GrdDatos.SelectedRow.Cells[24].Text).ToString();
-                CkbVerif.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[25].Text) == 1 ? true : false;
+                CkbPos.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[18].Text) == 1 ? true : false;
+                CkbCons.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[19].Text) == 1 ? true : false;
+                CkbMot.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[20].Text) == 1 ? true : false;
+                CkbMay.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[21].Text) == 1 ? true : false;
+                CkbApu.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[22].Text) == 1 ? true : false;
+                CkbSub.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[23].Text) == 1 ? true : false;
+                CkbNiF.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[24].Text) == 1 ? true : false;
+                TxtStockM.Text = Convert.ToDouble(GrdDatos.SelectedRow.Cells[25].Text).ToString();
+                CkbVerif.Checked = Convert.ToInt32(GrdDatos.SelectedRow.Cells[26].Text) == 1 ? true : false;
 
                 BindDataAll(TxtCod.Text, "");
                 BindDataPN(TxtCod.Text, "UPD");
@@ -1172,10 +1173,14 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 PnlCampos.Visible = true;
                 ActivarBotones(true, true, true, true, true);
             }
-            catch (Exception ex)
+            catch (Exception Ex)
             {
-                string VbMEns = ex.ToString();
-                ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "alert", "alert('" + VbMEns + "');", true);
+                DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
+
+                Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "Consulta Referencia", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+
             }
         }
         protected void GrdDatos_RowDataBound(object sender, GridViewRowEventArgs e)

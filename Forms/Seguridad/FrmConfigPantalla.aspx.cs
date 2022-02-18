@@ -232,12 +232,11 @@ namespace _77NeoWeb.Forms.Seguridad
             {
                 int index = int.Parse(e.CommandArgument.ToString());
                 Session["IdForm"] = int.Parse(GrdDatos.DataKeys[index].Value.ToString());
-                int vblleee = (int)Session["IdForm"];
                 BtnModificar.Enabled = true;
                 Cnx.SelecBD();
                 using (SqlConnection sqlConx = new SqlConnection(Cnx.GetConex()))
                 {
-                    string LtxtSql = "SP_ConfiguracionV2_ 12,'','','','',''," + ((int)Session["IdForm"]).ToString() + ",0,0,0,'01-01-01','02-01-01','03-01-01'";
+                    string LtxtSql = "EXEC SP_ConfiguracionV2_ 12,'','','','',''," + ((int)Session["IdForm"]).ToString().Trim() + ",0,0,0,'01-01-01','02-01-01','03-01-01'";
                     SqlCommand Comando = new SqlCommand(LtxtSql, sqlConx);
                     sqlConx.Open();
                     SqlDataReader tbl = Comando.ExecuteReader();
@@ -245,6 +244,7 @@ namespace _77NeoWeb.Forms.Seguridad
                     {
 
                         TxtDescripcion.Text = "";
+                        string borr = tbl["NomFormWeb"].ToString().Trim();
                         if (tbl["NomFormWeb"].ToString() != string.Empty)
                         {
                             TxtDescripcion.Text = tbl["Descripcion"].ToString();
@@ -262,6 +262,7 @@ namespace _77NeoWeb.Forms.Seguridad
                             TxtCE5.Text = tbl["CasoEspeciaLF5"].ToString();
                             TxtCE6.Text = tbl["CasoEspeciaLF6"].ToString();
                         }
+                        else { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('La pantalla no se encuentra configurada en la Web NomFormularioWeb');", true); }
                         BtnModificar.Text = "Modificar";
                     }
                 }

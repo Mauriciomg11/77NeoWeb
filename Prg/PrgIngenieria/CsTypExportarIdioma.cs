@@ -72,6 +72,8 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                 SqlDataReader tbl = SC.ExecuteReader();
                 while (tbl.Read())
                 {
+                    string borr = tbl["Objeto"].ToString().Trim();
+                    string borr1 = tbl["Texto"].ToString().Trim();
                     C01 = tbl["Objeto"].ToString().Trim() == "C01" ? tbl["Texto"].ToString().Trim() : C01;
                     C02 = tbl["Objeto"].ToString().Trim() == "C02" ? tbl["Texto"].ToString().Trim() : C02;
                     C03 = tbl["Objeto"].ToString().Trim() == "C03" ? tbl["Texto"].ToString().Trim() : C03;

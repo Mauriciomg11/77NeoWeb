@@ -1264,69 +1264,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "MODIFICAR Cotizacion", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
-        /* private void Import_To_Grid(string FilePath, string Extension, string isHDR)
-
-         {
-             string conStr = "";
-             switch (Extension)
-             {
-                 case "xls": //Excel 97-03
-
-                     conStr = ConfigurationManager.ConnectionStrings["Excel03ConString"].ConnectionString;
-                     break;
-
-                 case "xlsx": //Excel 07
-
-                     conStr = ConfigurationManager.ConnectionStrings["Excel07ConString"].ConnectionString;
-                     break;
-             }
-             conStr = String.Format(conStr, FilePath, isHDR);
-
-             OleDbConnection connExcel = new OleDbConnection(conStr);
-             OleDbCommand cmdExcel = new OleDbCommand();
-             OleDbDataAdapter oda = new OleDbDataAdapter();
-             DataTable DT = new DataTable();
-             cmdExcel.Connection = connExcel;
-             connExcel.Open();
-
-             DataTable dtExcelSchema;
-
-             dtExcelSchema = connExcel.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-
-             string SheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
-             connExcel.Close();
-             connExcel.Open();
-
-             cmdExcel.CommandText = "SELECT * From [" + SheetName + "]";
-
-             oda.SelectCommand = cmdExcel;
-             oda.Fill(DT);
-             if (DT.Rows.Count > 0)
-             {
-                 foreach (DataRow DRExcel in DT.Rows)
-                 {
-                     foreach (DataRow DRDetCot in TblDetalle.Rows)
-                     {
-                         if (DRDetCot["PN"].ToString().Trim().Equals(DRExcel["PN"].ToString().Trim()))
-                         {
-                             DataRow[] DR = DSTDdl.Tables[10].Select("CodCondicionElem='" + DRExcel["Status_Estado"].ToString().Trim() + "'");
-                             if (IsIENumerableLleno(DR))
-                             { DRDetCot["CodEstdo"] = DRExcel["Status_Estado"].ToString().Trim(); }
-
-                             DRDetCot["ValorUnidad"] = DRExcel["Value_Valor"].ToString().Trim().Equals("") ? "0" : DRExcel["Value_Valor"].ToString().Trim();
-                             DRDetCot["TiempoEntrega"] = DRExcel["DeliveryTimeDays_TiempoEntregaDias"].ToString().Trim().Equals("") ? "0" : DRExcel["DeliveryTimeDays_TiempoEntregaDias"].ToString().Trim();
-                             DRDetCot["UndMinimaCompra"] = DRExcel["Min_Qty_CantMinima"].ToString().Trim().Equals("") ? "0" : DRExcel["Min_Qty_CantMinima"].ToString().Trim();
-                             DRDetCot["Alterno"] = DRExcel["Alternate_PN_Alterno"].ToString().Trim();
-                             DRDetCot["ObservacionesDC"] = DRExcel["Observations_Observaciones"].ToString().Trim();
-                         }
-                     }
-                 }
-             }
-             connExcel.Close();
-             TblDetalle.AcceptChanges();
-             GrdDet.DataSource = TblDetalle; GrdDet.DataBind();
-             Valores();
-         }*/
         protected void Import(string FilePath, string Extension)
         {
             FileStream stream = File.Open(FilePath, FileMode.Open, FileAccess.Read);

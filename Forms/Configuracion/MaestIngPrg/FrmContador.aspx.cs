@@ -160,7 +160,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 Cnx.SelecBD();
                 using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbTxtSql = " EXEC SP_PANTALLA_Tipo_contador 9,'','','','','',0,0,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'";
+                    string VbTxtSql = "EXEC SP_PANTALLA_Tipo_contador 9,'','','','','',0,0,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'";
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
@@ -271,6 +271,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         }
         protected void BusqNewReg(string VbNewCod)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
@@ -279,25 +280,35 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     VbNewCod = VbNewCod.Replace(" ", string.Empty);
 
                 }
-
-                string LtxtSql = "EXEC SP_PANTALLA_Tipo_contador 7,'" + VbNewCod + "','','','','',0,0,@Idm,0,'01-01-1','02-01-1','03-01-1'";
-                using (SqlCommand sqlCmd = new SqlCommand(LtxtSql, sqlCon))
+                try
                 {
-                    sqlCmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);
-                    sqlCon.Open();
-                    SqlDataReader tbl = sqlCmd.ExecuteReader();
-                    if (tbl.Read())
+                    string LtxtSql = "EXEC SP_PANTALLA_Tipo_contador 7,'" + VbNewCod + "','','','','',0,0,@Idm,0,'01-01-1','02-01-1','03-01-1'";
+                    using (SqlCommand sqlCmd = new SqlCommand(LtxtSql, sqlCon))
                     {
-                        TxtCod.Text = tbl["CodContador"].ToString();
-                        TxtDesc.Text = tbl["Nombre"].ToString();
-                        DdlUndMed.Text = tbl["CodUnidMedida"].ToString();
-                        DdlIdent.Text = tbl["identificador"].ToString();
-                        CkReset.Checked = false;
-                        if (Convert.ToInt32(tbl["Reseteable"].ToString()) == 1)
+                        sqlCmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                        sqlCon.Open();
+                        SqlDataReader tbl = sqlCmd.ExecuteReader();
+                        if (tbl.Read())
                         {
-                            CkReset.Checked = true;
+                            TxtCod.Text = tbl["CodContador"].ToString().Trim();
+                            TxtDesc.Text = tbl["Nombre"].ToString().Trim();
+                            DdlUndMed.Text = tbl["CodUnidMedida"].ToString().Trim();
+                            DdlIdent.Text = tbl["identificador"].ToString().Trim();
+                            CkReset.Checked = false;
+                            if (Convert.ToInt32(tbl["Reseteable"].ToString()) == 1)
+                            {
+                                CkReset.Checked = true;
+                            }
                         }
                     }
+                }
+                catch (Exception Ex)
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
+
+                    Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "Consultar Contador", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                 }
             }
         }
