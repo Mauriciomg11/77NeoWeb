@@ -53,7 +53,8 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             if (!Session["C77U"].ToString().Trim().Equals("00000082")) { GrdDatos.ShowFooter = false; }
 
             ClsPermisos ClsP = new ClsPermisos();
-            ClsP.Acceder(Session["C77U"].ToString(), "FrmEstadoAeronave.aspx");
+            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            ClsP.Acceder(Session["C77U"].ToString(), "FrmEstadoAeronave.aspx", VbPC);
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
             if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; GrdDatos.ShowFooter = false; }
             if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; }

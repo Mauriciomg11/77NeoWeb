@@ -127,6 +127,7 @@
     <Content Include="Css\DisenoFrm.css" />
     <Content Include="Css\GridViewDiseño.css" />
     <Content Include="Css\CssCampos.css" />
+    <Content Include="Forms\Almacen\FrmAjuste.aspx" />
     <Content Include="Forms\Almacen\FrmAlertaSolicitudNueva.aspx" />
     <Content Include="Forms\Almacen\FrmAlertaSolicitudNuevaRepa.aspx" />
     <Content Include="Forms\Almacen\FrmAlertaVencSP.aspx" />
@@ -309,6 +310,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmAjuste.aspx.cs">
+      <DependentUpon>FrmAjuste.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmAjuste.aspx.designer.cs">
+      <DependentUpon>FrmAjuste.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Almacen\FrmAlertaSolicitudNueva.aspx.cs">
       <DependentUpon>FrmAlertaSolicitudNueva.aspx</DependentUpon>

@@ -101,7 +101,8 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             ViewState["VblImpMS"] = 1;
 
             ClsPermisos ClsP = new ClsPermisos();
-            ClsP.Acceder(Session["C77U"].ToString(), "FrmPlantillaMaestra.aspx");
+            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            ClsP.Acceder(Session["C77U"].ToString(), "FrmPlantillaMaestra.aspx", VbPC);
 
             if (ClsP.GetAccesoFrm() == 0)
             {

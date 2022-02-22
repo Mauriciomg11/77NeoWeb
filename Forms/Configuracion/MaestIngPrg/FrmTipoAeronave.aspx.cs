@@ -51,7 +51,8 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             ViewState["VblEliMS"] = 1;
             ViewState["VblImpMS"] = 1;
             ClsPermisos ClsP = new ClsPermisos();
-            ClsP.Acceder(Session["C77U"].ToString(), "FrmTipoAeronave.aspx");
+            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            ClsP.Acceder(Session["C77U"].ToString(), "FrmTipoAeronave.aspx", VbPC);
             if (ClsP.GetAccesoFrm() == 0)
             {
                 Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx");

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Org.BouncyCastle.Asn1.Ocsp;
+using System;
 using System.Data.SqlClient;
 
 namespace _77NeoWeb.prg
@@ -32,18 +33,24 @@ namespace _77NeoWeb.prg
             this.CE6 = 0;
             this.AccesoFrm = 0;
         }
-        public void Acceder(string ClsUsu, string ClsNomF)
+        public void Acceder(string ClsUsu, string ClsNomF, string NomPc)
         {
             ClsConexion Cnx = new ClsConexion();
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
-                string VBQuery = "EXEC SP_ConfiguracionV2_ 1, @NomFrm, @Us,'','','',0,0, @Idm, @ICC,'01-01-1','02-01-1','03-01-1'";
+                string VbVersion, VbAct;
+                VbVersion = System.Web.HttpContext.Current.Session["77Version"].ToString();
+                VbAct = System.Web.HttpContext.Current.Session["77Act"].ToString();
+                string VBQuery = "EXEC SP_ConfiguracionV2_ 1, @NomFrm, @Us,@Vrs,@NPC,'',0,@Act, @Idm, @ICC,'01-01-1','02-01-1','03-01-1'";
                 sqlCon.Open();
                 using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon))
                 {
                     SC.Parameters.AddWithValue("@NomFrm", ClsNomF);
                     SC.Parameters.AddWithValue("@Us", ClsUsu);
+                    SC.Parameters.AddWithValue("@Vrs", VbVersion);
+                    SC.Parameters.AddWithValue("@NPC", NomPc);
+                    SC.Parameters.AddWithValue("@Act", VbAct);
                     SC.Parameters.AddWithValue("@Idm", System.Web.HttpContext.Current.Session["77IDM"].ToString());
                     SC.Parameters.AddWithValue("@ICC", System.Web.HttpContext.Current.Session["!dC!@"].ToString());
                     SqlDataReader registro = SC.ExecuteReader();
@@ -63,22 +70,7 @@ namespace _77NeoWeb.prg
                         this.CE6 = Convert.ToInt32(registro["CasoEspecial6"]);
                     }
                 }
-            }
-            using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
-            {
-                if (this.AccesoFrm == 1)
-                {
-                    sqlCon.Open();
-                    string VbVersion, VbAct, TxSql;
-                    VbVersion = System.Web.HttpContext.Current.Session["77Version"].ToString();
-
-                    VbAct = System.Web.HttpContext.Current.Session["77Act"].ToString();
-                    TxSql = "INSERT INTO tblUsrControlAccesoFrmHist(NomFormulario, CodUsuario, FechaIngreso, FechaSalida, VersionActualAH, NumActualizacionAH, TerminalCSFH)" +
-                        "VALUES('" + ClsNomF + "','" + ClsUsu + "', GETDATE(),NULL,'" + VbVersion + "'," + VbAct + ",'WEB')";
-                    SqlCommand sqlCmd = new SqlCommand(TxSql, sqlCon);
-                    sqlCmd.ExecuteNonQuery();
-                }
-            }
+            }            
         }
         public int GetAccesoFrm()
         {

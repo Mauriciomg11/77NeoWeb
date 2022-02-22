@@ -17,7 +17,7 @@ namespace _77NeoWeb.prg
         public ClsConexion()
         {
             this.VblConexion = "";
-            Produccion = "N";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion            
+            Produccion = "Y";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion            
         }
         public void SelecBD()
         {
@@ -29,8 +29,7 @@ namespace _77NeoWeb.prg
             BaseDatos(VbNBD, VbSv, VbU, VbCs);
         }
         public void Desconctar()
-        {
-            //BaseDatos(System.Web.HttpContext.Current.Session["D[BX"].ToString(), System.Web.HttpContext.Current.Session["$VR"].ToString(), System.Web.HttpContext.Current.Session["V$U@"].ToString(), System.Web.HttpContext.Current.Session["P@$"].ToString());
+        {           
             SelecBD();
             SqlConnection cnn = new SqlConnection(GetConex());
             cnn.Close();
@@ -53,29 +52,29 @@ namespace _77NeoWeb.prg
                 return ds;
             }
         }
-        public bool Cosultar(string Ltx1)
-        {
-            System.Web.HttpContext.Current.Session["ELiminar"] = 0;
-            try
-            {
-                SelecBD();
-                using (SqlConnection cnn = new SqlConnection(GetConex()))
-                {
-                    DataTable dtbl = new DataTable();
-                    SqlDataAdapter sqlDa = new SqlDataAdapter(Ltx1, cnn);
-                    sqlDa.Fill(dtbl);
-                    if (dtbl.Rows.Count > 0)
-                    {
-                        System.Web.HttpContext.Current.Session["ELiminar"] = dtbl.Rows.Count;
-                    }
-                    return (dtbl.Rows.Count > 0);
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+        //public bool Cosultar(string Ltx1)
+        //{
+        //    System.Web.HttpContext.Current.Session["ELiminar"] = 0;
+        //    try
+        //    {
+        //        SelecBD();
+        //        using (SqlConnection cnn = new SqlConnection(GetConex()))
+        //        {
+        //            DataTable dtbl = new DataTable();
+        //            SqlDataAdapter sqlDa = new SqlDataAdapter(Ltx1, cnn);
+        //            sqlDa.Fill(dtbl);
+        //            if (dtbl.Rows.Count > 0)
+        //            {
+        //                System.Web.HttpContext.Current.Session["ELiminar"] = dtbl.Rows.Count;
+        //            }
+        //            return (dtbl.Rows.Count > 0);
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return false;
+        //    }
+        //}
         public void UpdateError(string VbUsu, string VbPantalla, string VbAccion, string VbNumLinea, string VbMensErr, string VbVersion, string VbAct)
         {
             try

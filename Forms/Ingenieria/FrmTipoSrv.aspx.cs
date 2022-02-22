@@ -49,20 +49,15 @@ namespace _77NeoWeb.Forms.Ingenieria
             ViewState["VblEliMS"] = 1;
             // ViewState["VblImpMS"] = 1;
             ClsPermisos ClsP = new ClsPermisos();
-            ClsP.Acceder(Session["C77U"].ToString(), "FrmTipoSrv.aspx");
+            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            ClsP.Acceder(Session["C77U"].ToString(), "FrmTipoSrv.aspx", VbPC);
             if (ClsP.GetAccesoFrm() == 0)
             { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
             if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; GrdDatos.ShowFooter = false; }
             if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; }
             // if (ClsP.GetConsultar() == 0) { }
             // if (ClsP.GetImprimir() == 0) { }
-            if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; }
-            /*if (ClsP.GetCE1() == 0) { }
-            if (ClsP.GetCE2() == 0) { }
-            if (ClsP.GetCE3() == 0) { }
-            if (ClsP.GetCE4() == 0) { }
-            if (ClsP.GetCE5() == 0) { }
-            if (ClsP.GetCE6() == 0) { }*/
+            if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; }          
             IdiomaControles();
         }
         protected void IdiomaControles()

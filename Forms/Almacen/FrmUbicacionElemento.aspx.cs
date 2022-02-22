@@ -54,7 +54,8 @@ namespace _77NeoWeb.Forms.Almacen
             ViewState["VblCE3"] = 1;
             ViewState["AplicaCiaFechVenc"] = "N";
             ClsPermisos ClsP = new ClsPermisos();
-            ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
+            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx", VbPC);
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
             if (ClsP.GetCE1() == 0) { ViewState["VblCE1"] = 0; }//Trasferir entre bodegas 
             if (ClsP.GetCE2() == 0) { ViewState["VblCE2"] = 0; }// Bodega Repa

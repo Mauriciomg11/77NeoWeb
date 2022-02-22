@@ -95,7 +95,8 @@ namespace _77NeoWeb.Forms.Ingenieria
             ViewState["VblCE5"] = 1;
             ViewState["VblCE6"] = 1;
             ClsPermisos ClsP = new ClsPermisos();
-            ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx");
+            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx", VbPC);
 
             if (ClsP.GetAccesoFrm() == 0)
             {
@@ -3836,7 +3837,8 @@ namespace _77NeoWeb.Forms.Ingenieria
             ViewState["VblCE4Rte"] = 1;
             ViewState["VblCE6Rte"] = 1;
             ClsPermisos ClsP = new ClsPermisos();
-            ClsP.Acceder(Session["C77U"].ToString(), "FrmReporte.aspx");
+            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            ClsP.Acceder(Session["C77U"].ToString(), "FrmReporte.aspx", VbPC);
 
             if (ClsP.GetIngresar() == 0)
             {
