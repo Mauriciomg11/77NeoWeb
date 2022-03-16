@@ -19,6 +19,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         public DateTime FechaIngreso { get; set; }
         public string CodModelo { get; set; }
         public string CodPropietario { get; set; }
+        public string NombrePropietario { get; set; }
         public string CodTipoAeronave { get; set; }
         public string CodProveedor { get; set; }
         public string CodEstadoAeronave { get; set; }
@@ -43,6 +44,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
             TblAeronave.Columns.Add("FechaIngreso", typeof(DateTime));
             TblAeronave.Columns.Add("CodModelo", typeof(string));
             TblAeronave.Columns.Add("CodPropietario", typeof(string));
+            TblAeronave.Columns.Add("NombrePropietario", typeof(string));
             TblAeronave.Columns.Add("CodTipoAeronave", typeof(string));
             TblAeronave.Columns.Add("CodProveedor", typeof(string));
             TblAeronave.Columns.Add("CodEstadoAeronave", typeof(string));
@@ -69,6 +71,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                 Campos.FechaIngreso,
                 Campos.CodModelo,
                 Campos.CodPropietario,
+                Campos.NombrePropietario,
                 Campos.CodTipoAeronave,
                 Campos.CodProveedor,
                 Campos.CodEstadoAeronave,

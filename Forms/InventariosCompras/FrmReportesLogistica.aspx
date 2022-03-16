@@ -46,28 +46,7 @@
         }
     </style>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
-    <style type="text/css">
-        .CentrarContenedor {
-            position: absolute;
-            /*nos posicionamos en el centro del navegador*/
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 98%;
-            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
-            margin-left: -49%;
-            /*determinamos una altura*/
-            height: 90%;
-            /*indicamos que el margen superior, es la mitad de la altura*/
-            padding: 5px;
-        }
-
-        .heightCampo {
-            height: 35px;
-            width: 95%;
-            font-size: 12px;
-        }
-    </style>
+<asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">   
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
     <h1>

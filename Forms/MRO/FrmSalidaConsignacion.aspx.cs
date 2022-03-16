@@ -268,6 +268,8 @@ namespace _77NeoWeb.Forms.MRO
                         CodIdUbicacion = Convert.ToInt32(GrdDetalle.DataKeys[Row.RowIndex].Values["CodIdUbicacion"].ToString().Trim()),
                         FechaVence = null,
                         Observacion = TxtObserv.Text.Trim(),
+                        ValorOT = Convert.ToDouble(0),
+                        CodUsuarioReserva="",
                         Proceso = "0111", // Salida consignacion
                         IdDetPropHk = Convert.ToInt32(0),
                         IdPPt = Convert.ToInt32(0),

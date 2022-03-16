@@ -152,7 +152,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["HabilitaVuelos"] = "N";
                 ViewState["AplicaFrmlC1C2"] = "N";
                 string TxQry = string.Format("EXEC SP_HabilitarCampos '{0}','{1}',1,'{1}',4,'',0,'',0,'',0,'',0,'',0,'',0,'',0",
-                Session["Nit77Cia"].ToString(), VblFrm);
+                Session["!dC!@"].ToString(), VblFrm);
                 SqlCommand Comando = new SqlCommand(TxQry, sqlCon);
                 sqlCon.Open();
                 SqlDataReader Regs = Comando.ExecuteReader();
@@ -183,7 +183,7 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                 string VblFrm = "FrmReporte";//ViewState["PFileName"].ToString();
                 string TxQry = string.Format("EXEC SP_HabilitarCampos '{0}','{1}',14,'',0,'',0,'',0,'',0,'',0,'',0,'',0,'',0",
-                  Session["Nit77Cia"].ToString(), VblFrm);
+                  Session["!dC!@"].ToString(), VblFrm);
                 SqlCommand Comando = new SqlCommand(TxQry, sqlCon);
                 sqlCon.Open();
                 SqlDataReader Regs = Comando.ExecuteReader();
@@ -1791,11 +1791,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         {
                             DTMr.Rows.Add(DTMr.NewRow());
                             GrdTray.DataSource = DTMr;
-                            GrdTray.DataBind();
-                            /*GrdOTDetTec.Rows[0].Cells.Clear();
-                             GrdOTDetTec.Rows[0].Cells.Add(new TableCell());
-                             GrdOTDetTec.Rows[0].Cells[0].Text = "Sin técnicos asignados!";
-                             GrdOTDetTec.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;*/
+                            GrdTray.DataBind();          
                         }
                     }
                 }
@@ -2422,7 +2418,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ViewState["PermiteFechaIgualDetPry"] = "N";
                     string TxQry = string.Format("EXEC SP_HabilitarCampos @Nit,@F,2,@F,3,@F,4,@F,6,@F,7,@F,8,@F,12,@F,13,@F,14");
                     SqlCommand SC = new SqlCommand(TxQry, sqlCon);
-                    SC.Parameters.AddWithValue("@Nit", Session["Nit77Cia"].ToString());
+                    SC.Parameters.AddWithValue("@Nit", Session["!dC!@"].ToString());
                     SC.Parameters.AddWithValue("@F", "FrmReporte");
                     sqlCon.Open();
                     SqlDataReader Regs = SC.ExecuteReader();
@@ -3341,12 +3337,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         DdlLicCump.DataTextField = "Licencia";
                         DdlLicCump.DataValueField = "Codigo";
                         DdlLicCump.DataBind();
-                    }
-                    //LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','','','','LICTA',0,0,0,{1},'01-01-1','02-01-1','03-01-1'", DdlCumpl.SelectedValue, Session["!dC!@"]);
-                    //DdlLicCump.DataSource = Cnx.DSET(LtxtSql);
-                    //DdlLicCump.DataTextField = "Licencia";
-                    //DdlLicCump.DataValueField = "Codigo";
-                    //DdlLicCump.DataBind();
+                    }                    
                 }
                 else
                 {

@@ -145,6 +145,7 @@ namespace _77NeoWeb.Forms.MRO
                     BtnDetalle.ToolTip = bO.Equals("BtnDetalleTT") ? bT : BtnDetalle.ToolTip;
                     BtnConsultar.Text = bO.Equals("BtnConsultarGral") ? bT : BtnConsultar.Text;
                     BtnImprimir.Text = bO.Equals("BtnImprimirGrl") ? bT : BtnImprimir.Text;
+                    BtnImprimir.ToolTip = bO.Equals("BtnImprimirTT") ? bT : BtnImprimir.ToolTip;
                     BtnExportPPT.Text = bO.Equals("BtnExportPPT") ? bT : BtnExportPPT.Text;
                     BtnExportDet.Text = bO.Equals("BtnExportDet") ? bT : BtnExportDet.Text;
                     BtnAux.Text = bO.Equals("BtnAux") ? bT : BtnAux.Text;
@@ -258,7 +259,7 @@ namespace _77NeoWeb.Forms.MRO
                     GrdElementos.Columns[3].HeaderText = bO.Equals("GrdDescSn") ? bT : GrdElementos.Columns[3].HeaderText;
                     GrdAeronave.Columns[1].HeaderText = bO.Equals("GrdAerove") ? bT : GrdAeronave.Columns[1].HeaderText;
                     GrdAeronave.Columns[2].HeaderText = bO.Equals("GrdModel") ? bT : GrdAeronave.Columns[2].HeaderText;
-                    GrdAeronave.Columns[3].HeaderText = bO.Equals("GrdDescSn") ? bT : GrdAeronave.Columns[3].HeaderText;
+                    GrdAeronave.Columns[3].HeaderText = bO.Equals("GrdDesMod") ? bT : GrdAeronave.Columns[3].HeaderText;
                     //**************************************** Modal Asignar PN ****************************************
                     RdbMOdalBusqDesc.Text = bO.Equals("GrdDescSn") ? bT : RdbMOdalBusqDesc.Text;
                     LblModalBusq.Text = bO.Equals("MstrLblBusq") ? bT : LblModalBusq.Text;
@@ -1909,7 +1910,7 @@ namespace _77NeoWeb.Forms.MRO
             else
             {
                 CursorIdioma.Alimentar("CurExportDetPPT", Session["77IDM"].ToString().Trim());
-                VbTxtSql = "EXEC SP_PANTALLA_Propuesta 49,'WEB',@PT,DET,'CurExportDetPPT',0,0, @idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                VbTxtSql = "EXEC SP_PANTALLA_Propuesta 49,'WEB',@PT,'DET','CurExportDetPPT',0,0, @idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                 VbNomRpt = "DetailQuotation";
             }
             Cnx.SelecBD();
@@ -4656,7 +4657,7 @@ namespace _77NeoWeb.Forms.MRO
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
-                            SC.Parameters.AddWithValue("@ID", GrdAlrtDetSinAprb.DataKeys[e.RowIndex].Value.ToString());
+                            SC.Parameters.AddWithValue("@ID", GrdAlrtDetSinAprb.DataKeys[e.RowIndex].Values["IdPropuesta"].ToString());
                             SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             try
                             {

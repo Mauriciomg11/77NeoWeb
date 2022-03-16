@@ -146,7 +146,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["Hab8Pasos"] = "N";
                 string TxQry = string.Format("EXEC SP_HabilitarCampos @Nit,@F,1,'MRO',1,'',0,'',0,'',0,'',0,'',0,'',0,'',0");
                 SqlCommand SC = new SqlCommand(TxQry, sqlCon);
-                SC.Parameters.AddWithValue("@Nit", Session["Nit77Cia"].ToString());
+                SC.Parameters.AddWithValue("@Nit", Session["!dC!@"].ToString());
                 SC.Parameters.AddWithValue("@F", "FRMORDENTRABAJO");
                 sqlCon.Open();
                 SqlDataReader Regs = SC.ExecuteReader();
@@ -173,7 +173,7 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                 string VblFrm = "FrmReporte";//ViewState["PFileName"].ToString();
                 string TxQry = string.Format("EXEC SP_HabilitarCampos '{0}','{1}',14,'',0,'',0,'',0,'',0,'',0,'',0,'',0,'',0",
-                  Session["Nit77Cia"].ToString(), VblFrm);
+                  Session["!dC!@"].ToString(), VblFrm);
                 SqlCommand Comando = new SqlCommand(TxQry, sqlCon);
                 sqlCon.Open();
                 SqlDataReader Regs = Comando.ExecuteReader();
@@ -217,7 +217,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { Page.Title = tbl["Texto"].ToString().Trim(); ViewState["PageTit"] = tbl["Texto"].ToString().Trim(); }
                     TitForm.Text = tbl["Objeto"].ToString().Trim().Equals("CaptionOT") ? tbl["Texto"].ToString().Trim() : TitForm.Text;
                     LblTitoTGral.Text = tbl["Objeto"].ToString().Trim().Equals("LblTitoTGral") ? tbl["Texto"].ToString().Trim() : LblTitoTGral.Text;
-                    LblOt.Text = tbl["Objeto"].ToString().Trim().Equals("LblOt") ? tbl["Texto"].ToString().Trim() : LblOt.Text;
+                    LblOt.Text = tbl["Objeto"].ToString().Trim().Equals("LblOTMstr") ? tbl["Texto"].ToString().Trim() : LblOt.Text;
                     LblOtReporte.Text = tbl["Objeto"].ToString().Trim().Equals("LblOtReporte") ? tbl["Texto"].ToString().Trim() : LblOtReporte.Text;
                     LblOtPrioridad.Text = tbl["Objeto"].ToString().Trim().Equals("LblOtPrioridad") ? tbl["Texto"].ToString().Trim() : LblOtPrioridad.Text;
                     LblMroTaller.Text = tbl["Objeto"].ToString().Trim().Equals("LblMroTaller") ? tbl["Texto"].ToString().Trim() : LblMroTaller.Text;
@@ -251,6 +251,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     CkbOtBloqDet.Text = tbl["Objeto"].ToString().Trim().Equals("CkbOtBloqDet") ? tbl["Texto"].ToString().Trim() : CkbOtBloqDet.Text;
                     LblAplicab.Text = tbl["Objeto"].ToString().Trim().Equals("LblAplicab") ? tbl["Texto"].ToString().Trim() : LblAplicab.Text;
                     LblOTAccParc.Text = tbl["Objeto"].ToString().Trim().Equals("LblOTAccParc") ? tbl["Texto"].ToString().Trim() : LblOTAccParc.Text;
+                    LblOtCCosto.Text = tbl["Objeto"].ToString().Trim().Equals("LblOtCCosto") ? tbl["Texto"].ToString().Trim() : LblOtCCosto.Text;
                     LblOTAero.Text = tbl["Objeto"].ToString().Trim().Equals("LblOTAero") ? tbl["Texto"].ToString().Trim() : LblOTAero.Text;
                     LblOtEstado.Text = tbl["Objeto"].ToString().Trim().Equals("LblOtEstado") ? tbl["Texto"].ToString().Trim() : LblOtEstado.Text;
                     LblOtEstaSec.Text = tbl["Objeto"].ToString().Trim().Equals("LblOtEstaSec") ? tbl["Texto"].ToString().Trim() : LblOtEstaSec.Text;
@@ -767,20 +768,28 @@ namespace _77NeoWeb.Forms.Ingenieria
 
             if (Edi == true)
             {
-                if (DdlOtEstado.SelectedValue.Equals("0002"))
+                if (DdlOtEstado.SelectedValue.Equals("0002"))// Cerrada
                 {
 
                     if (Convert.ToInt32(ViewState["VblCE4"]) == 1)// BLQUEO RECURSO
                     {
                         if (CkbCancel.Checked == false)
                         {
-                            if (DdlOtEstaSec.SelectedValue.Equals("0001"))
+                            if (DdlOtEstaSec.SelectedValue.Equals("0001")) //Notificadas
                             { CkbOtBloqDet.Enabled = Edi; }
                         }
                     }
                 }
                 else
                 {
+                    if (Convert.ToInt32(ViewState["VblCE4"]) == 1)// BLQUEO RECURSO
+                    {
+                        if (CkbCancel.Checked == false)
+                        {
+                            if (DdlOtEstaSec.SelectedValue.Equals("0001"))//Notificadas
+                            { CkbOtBloqDet.Enabled = Edi; }
+                        }
+                    }
                     DdlMroTaller.Enabled = Edi;
                     DdlOtCCosto.Enabled = Edi;
                     if (Convert.ToInt32(ViewState["VblCE5"]) == 1)// Asignar Aeronave / Tiempos
@@ -801,7 +810,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             else { DdlOtEstado.ToolTip = ""; }
                         }
                     }
-                    //IbtOTFechVenc.Enabled = Edi;
+                    
                     DdlOtInsp.Enabled = Edi;
                     DdlOtLicInsp.Enabled = Edi;
                     DdlOtRespons.Enabled = Edi;
@@ -828,6 +837,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DdlOTBase.Enabled = Edi;
                 TxtOTTrabajo.Enabled = Edi;
                 TxtOTAccParc.Enabled = Edi;
+                CkbCancel.Enabled = Edi;
             }
         }
         protected void TraerDatosBusqOT(int NumOT, string Accion)
@@ -947,7 +957,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     TxtlOtPrioridad.Text = HttpUtility.HtmlDecode(DSTOTGrl.Tables[0].Rows[0]["CodPrioridad"].ToString().Trim());
                     TxtOtWS.Text = HttpUtility.HtmlDecode(DSTOTGrl.Tables[0].Rows[0]["WS"].ToString().Trim());
                     UplDatosPpal.Update();
-                    TxtMroPpt.Text = HttpUtility.HtmlDecode(DSTOTGrl.Tables[0].Rows[0]["PPT"].ToString().Trim());
+                    TxtMroPpt.Text = HttpUtility.HtmlDecode(DSTOTGrl.Tables[0].Rows[0]["CodigoPPT"].ToString().Trim());
                     TxtMroCliente.Text = HttpUtility.HtmlDecode(DSTOTGrl.Tables[0].Rows[0]["ClientePPT"].ToString().Trim());
                     CkbEjePasos.Checked = Convert.ToBoolean(HttpUtility.HtmlDecode(DSTOTGrl.Tables[0].Rows[0]["EjecPasos"].ToString().Trim()));
                     if (TxtOtPpal.Text.Equals("0") && TxtOtReporte.Text.Equals("0") && TxtOtRepacion.Text.Equals(""))
@@ -3900,7 +3910,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 ViewState["PermiteFechaIgualDetPry"] = "N";
                 string TxQry = string.Format("EXEC SP_HabilitarCampos @Nit,@F,2,@F,3,@F,4,@F,6,@F,7,@F,8,@F,12,@F,13,@F,14");
                 SqlCommand SC = new SqlCommand(TxQry, sqlCon);
-                SC.Parameters.AddWithValue("@Nit", Session["Nit77Cia"].ToString());
+                SC.Parameters.AddWithValue("@Nit", Session["!dC!@"].ToString());
                 SC.Parameters.AddWithValue("@F", "FrmReporte");
                 sqlCon.Open();
                 SqlDataReader Regs = SC.ExecuteReader();

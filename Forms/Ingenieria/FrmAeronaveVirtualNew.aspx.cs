@@ -134,7 +134,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 int VbCaso;
                 string TxQry = string.Format("EXEC SP_HabilitarCampos @Nit,@F,1,'',0,'',0,'',0,'',0,'',0,'',0,'',0,'',0");
                 SqlCommand SC = new SqlCommand(TxQry, sqlCon);
-                SC.Parameters.AddWithValue("@Nit", Session["Nit77Cia"].ToString());
+                SC.Parameters.AddWithValue("@Nit", Session["!dC!@"].ToString());
                 SC.Parameters.AddWithValue("@F", "MRO");
                 sqlCon.Open();
                 SqlDataReader Regs = SC.ExecuteReader();
@@ -182,6 +182,11 @@ namespace _77NeoWeb.Forms.Ingenieria
                     BtnInsSubC.Text = bO.Equals("BtnInsSubC") ? bT : BtnInsSubC.Text;
                     BtnRemSubC.Text = bO.Equals("BtnRemSubC") ? bT : BtnRemSubC.Text;
                     BtnCrearElem.Text = bO.Equals("BtnCrearElem") ? bT : BtnCrearElem.Text;
+                    GrdHisContInsElem.EmptyDataText = bO.Equals("SinHistorico") ? bT : GrdHisContInsElem.EmptyDataText;
+                    GrdBusq.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdBusq.EmptyDataText;
+                    GrdRemBusqElem.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdRemBusqElem.EmptyDataText;
+                    GrdBusqMayDisp.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdBusqMayDisp.EmptyDataText;
+                    GrdBusqInsSubC.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdBusqInsSubC.EmptyDataText;
                     // ************************************** Instalar Elemento  *******************************************************       
                     LblTitInsEle.Text = bO.Equals("LblTitInsEle") ? bT : LblTitInsEle.Text;
                     LblAeroInsElem.Text = bO.Equals("LblAeroInsElem") ? bT + ":" : LblAeroInsElem.Text;
@@ -248,6 +253,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     BtnRemCompensac.ToolTip = bO.Equals("BtnCompensacion") ? bT : BtnRemCompensac.ToolTip;
                     LblMotivRemElem.Text = bO.Equals("LblMotivo") ? bT + ":" : LblMotivRemElem.Text;
                     TxtTitRemContadores.Text = bO.Equals("TxtTitContadores") ? bT : TxtTitRemContadores.Text;
+                    GrdHisContRemElem.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdHisContRemElem.EmptyDataText;
                     GrdHisContRemElem.Columns[0].HeaderText = bO.Equals("GrdContador") ? bT : GrdHisContRemElem.Columns[0].HeaderText;
                     GrdHisContRemElem.Columns[1].HeaderText = bO.Equals("LblFecha") ? bT : GrdHisContRemElem.Columns[1].HeaderText;
                     GrdHisContRemElem.Columns[2].HeaderText = bO.Equals("GrdVlorAc") ? bT : GrdHisContRemElem.Columns[2].HeaderText;
@@ -268,6 +274,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     BtnCompensReinicio.ToolTip = bO.Equals("BtnCompensReinicioTT") ? bT : BtnCompensReinicio.ToolTip;
                     CkbCompensInicioDia.Text = bO.Equals("CkbCompensInicioDia") ? bT : CkbCompensInicioDia.Text;
                     LblMarcarTry.Text = bO.Equals("LblMarcarTry") ? bT : LblMarcarTry.Text;
+                    GrdCompensLv.EmptyDataText = bO.Equals("SinHistorico") ? bT : GrdCompensLv.EmptyDataText;
                     GrdCompensLv.Columns[2].HeaderText = bO.Equals("GrdLVComp") ? bT : GrdCompensLv.Columns[2].HeaderText;
                     GrdCompensLv.Columns[3].HeaderText = bO.Equals("GrdOrigComp") ? bT : GrdCompensLv.Columns[3].HeaderText;
                     GrdCompensLv.Columns[4].HeaderText = bO.Equals("GrdDestComp") ? bT : GrdCompensLv.Columns[4].HeaderText;
@@ -415,7 +422,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     LblCrearEContadores.Text = bO.Equals("LblCrearElemFechFabr") ? bT : LblCrearElemFechFabr.Text;
                     GrdCrearECont.Columns[0].HeaderText = bO.Equals("GrdContador") ? bT : GrdCrearECont.Columns[0].HeaderText;
                     GrdCrearECont.Columns[1].HeaderText = bO.Equals("GrdVlorAc") ? bT : GrdCrearECont.Columns[1].HeaderText;
-                    GrdCrearECont.EmptyDataText = bO.Equals("SinHistorico") ? bT : GrdCrearECont.EmptyDataText;
+                    GrdCrearECont.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdCrearECont.EmptyDataText;
                 }
                 DataRow[] Result = Idioma.Select("Objeto= 'BtnGuardarInsElemOnCl'");
                 foreach (DataRow row in Result)
@@ -544,7 +551,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DdlPNRemSubC.DataBind();
             }
         }
-
         protected void BtnInsMayor_Click(object sender, EventArgs e)
         {
             LimparCampoHK("InsMay");

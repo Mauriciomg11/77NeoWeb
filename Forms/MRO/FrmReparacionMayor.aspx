@@ -10,7 +10,6 @@
 
         .CentrarContenedor {
             position: absolute;
-           
             left: 50%;
             /*determinamos una anchura*/
             width: 98%;
@@ -59,6 +58,13 @@
             font-stretch: condensed;
             width: 14%;
             height: 27px;
+        }
+
+        .ScrollRecurso {
+            vertical-align: top;
+            overflow: auto;
+            width: 100%;
+            height: 250px;
         }
     </style>
 </asp:Content>
@@ -600,7 +606,7 @@
                             <div class="col-sm-12">
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="LblTitRecPartes" runat="server" Text="Partes " /></h6>
-                                <div class="CentrarGrid pre-scrollable">
+                                <div class="CentrarGrid ScrollRecurso">                            
                                     <asp:GridView ID="GrdRecursoF" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true"
                                         DataKeyNames="CodidDetElemPlanInstrumento"
                                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both"
@@ -707,7 +713,7 @@
                                         <HeaderStyle CssClass="GridCabecera" />
                                         <RowStyle CssClass="GridRowStyle" />
                                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                    </asp:GridView>
+                                    </asp:GridView>                                
                                 </div>
                             </div>
                         </div>
@@ -715,7 +721,7 @@
                             <div class="col-sm-6">
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="LblTitLicen" runat="server" Text="horas estimadas por licencia " /></h6>
-                                <div class="CentrarGrid pre-scrollable">
+                                <div class="CentrarGrid ScrollRecurso">
                                     <asp:GridView ID="GrdLicen" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdSrvLic,CodIdLicencia"
                                         CssClass="DiseñoGrid table table-sm SubTituloLicencia" GridLines="Both"
                                         OnRowCommand="GrdLicen_RowCommand" OnRowEditing="GrdLicen_RowEditing"

@@ -213,8 +213,9 @@ namespace _77NeoWeb.Forms.MRO
             DtDdlPpal = DS.Tables["PPTS"];
             DtDdlPpal.Rows.Add(" - ", "", "", "", "", "", "", "", "", "", "01/01/1900", "0", " - ");
             DataView DV = DtDdlPpal.DefaultView;
-            DV.Sort = "CodigoPPT";
+            DV.Sort = "OrdenPpta ASC";
             DtDdlPpal = DV.ToTable();
+
             ViewState["DtDdlPpal"] = DtDdlPpal;
 
             DdlNumPpt.DataSource = DtDdlPpal;
@@ -224,6 +225,7 @@ namespace _77NeoWeb.Forms.MRO
         }
         protected void BindDetalle(string Accion)
         {
+            try {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataRow[] Result;
             ViewState["Valorizada"] = "SIN";
@@ -231,6 +233,7 @@ namespace _77NeoWeb.Forms.MRO
             ViewState["CarpetaCargaMasiva"] = "SIN";
             BtnValorizar.Enabled = false; BtnReValorizar.Enabled = false; BtnValorizar.ToolTip = "";
             BtnPlantilla.Enabled = false; BtnPlantilla.ToolTip = "";
+            DtDet.Rows.Clear();
             if (Accion.Equals("UPDATE"))
             {
                 Cnx.SelecBD();
@@ -286,6 +289,15 @@ namespace _77NeoWeb.Forms.MRO
             if (StPpt.Equals("03") || StPpt.Equals("04") || StPpt.Equals("05") || StPpt.Equals("06") || StPpt.Equals("07") || StPpt.Equals("10") || StPpt.Equals("12") || StPpt.Equals("14"))
             { IbtGrarSP.Enabled = true; }
             else { IbtGrarSP.Enabled = false; }
+            }
+            catch (Exception Ex)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Valorizar Consulta", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
         }
         protected void DdlNumPpt_TextChanged(object sender, EventArgs e)
         {
@@ -334,84 +346,94 @@ namespace _77NeoWeb.Forms.MRO
         protected void BtnValorizar_Click(object sender, EventArgs e)
         {
             if (DdlNumPpt.Text.Equals("0")) { return; }
-
-            Page.Title = ViewState["PageTit"].ToString().Trim();
-            Idioma = (DataTable)ViewState["TablaIdioma"];
-            List<CsTypPropuestaValorizada> ObjPropuestaValorizada = new List<CsTypPropuestaValorizada>();
-            foreach (GridViewRow Row in GrdDetValrzc.Rows)
+            try
             {
-                string VbUndMedCompr = (Row.FindControl("LblUndMedCmpra") as Label).Text.Trim().Equals(null) ? "" : (Row.FindControl("LblUndMedCmpra") as Label).Text.Trim();
-                double VbEquvl = Convert.ToDouble(GrdDetValrzc.DataKeys[Row.RowIndex].Values["EquivalenciaPV"].ToString().Trim().Equals("") ? "0" : GrdDetValrzc.DataKeys[Row.RowIndex].Values["EquivalenciaPV"].ToString());
-                string VblUndMinCompra = GrdDetValrzc.DataKeys[Row.RowIndex].Values["UnidMinCompra"].ToString().Trim();
-                string VbOTVal = (Row.FindControl("LblOtVal") as Label).Text.Trim();
-                DateTime? VbFechUltComp;
-                if ((Row.FindControl("LblFechUlmCmp") as Label).Text.Trim().Equals("")) { VbFechUltComp = null; }
-                else { VbFechUltComp = Convert.ToDateTime(GrdDetValrzc.DataKeys[Row.RowIndex].Values["FecUltCotizDMY"]); }               
-  
-                var TypPropuestaValorizada = new CsTypPropuestaValorizada()
+                Page.Title = ViewState["PageTit"].ToString().Trim();
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                List<CsTypPropuestaValorizada> ObjPropuestaValorizada = new List<CsTypPropuestaValorizada>();
+                foreach (GridViewRow Row in GrdDetValrzc.Rows)
                 {
-                    IdValorizacion = Convert.ToInt32(0),
-                    IdPropuesta = Convert.ToInt32(DdlNumPpt.Text.Trim()),
-                    IdServicio = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values[0].ToString().Trim()),
-                    NomServicio = (Row.FindControl("LblNomSvc") as Label).Text.Trim(),
-                    PnPropuesta = (Row.FindControl("LblPnPpt") as Label).Text.Trim(),
-                    CodReferencia = GrdDetValrzc.DataKeys[Row.RowIndex].Values[1].ToString().Trim(),
-                    Descripcion = (Row.FindControl("LblDescElem") as Label).Text.Trim(),
-                    CantidadPropuesta = Convert.ToDouble((Row.FindControl("CantPpt") as Label).Text.Trim()),
-                    ValorCompra = Convert.ToDouble((Row.FindControl("TxtVlr") as TextBox).Text.Trim()),
-                    DocReferencia = (Row.FindControl("LblDocRef") as Label).Text.Trim(),
-                    FechaUltimaCompra = VbFechUltComp,
-                    TiempoEntregaDiasCoti = Convert.ToInt32((Row.FindControl("TxtTiemEntrDiaCot") as TextBox).Text.Trim()),
-                    PnStock = GrdDetValrzc.DataKeys[Row.RowIndex].Values[2].ToString().Trim(),
-                    CantStock = Convert.ToDouble((Row.FindControl("LblCntStk") as Label).Text.Trim()),
-                    CodIdUbicacion = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values[3].ToString().Trim()),
-                    Bodega = GrdDetValrzc.DataKeys[Row.RowIndex].Values[4].ToString().Trim(),
-                    StockMinimo = Convert.ToDouble(GrdDetValrzc.DataKeys[Row.RowIndex].Values[5].ToString().Trim()),
-                    CodTipoCotiza = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values[6].ToString().Trim()),
-                    SelectBodeg = 1, //Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values[7].ToString().Trim()),
-                    SelectSolicitud = Convert.ToInt32(0),
-                    CantidadSolicitud = Convert.ToDouble(GrdDetValrzc.DataKeys[Row.RowIndex].Values[8].ToString().Trim()),
-                    ObservacionValorizar = GrdDetValrzc.DataKeys[Row.RowIndex].Values[9].ToString().Trim(),
-                    Posicion = Convert.ToInt32((Row.FindControl("LblPos") as Label).Text.Trim()),
-                    NomBodega = GrdDetValrzc.DataKeys[Row.RowIndex].Values[10].ToString().Trim(),
-                    TiempoEntregaDias = Convert.ToInt32((Row.FindControl("TxtTiemEntrDiaCot") as TextBox).Text.Trim()) + 3,
-                    Usu = Session["C77U"].ToString(),
-                    Aprobado = (Row.FindControl("CkbAprobP") as CheckBox).Checked == true ? 1 : 0,
-                    IdReporte = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values[11].ToString().Trim()),
-                    NumPedido = (Row.FindControl("LblNumSP") as Label).Text.Trim(),
-                    MonedaProVa = (Row.FindControl("TxtMnda") as TextBox).Text.Trim(),
-                    UndMedProVa = (Row.FindControl("LblUndMPt") as Label).Text.Trim(),
-                    UnidMinCompra = Convert.ToDouble(VblUndMinCompra.Equals("")?"0": VblUndMinCompra),
-                    CodEstado = GrdDetValrzc.DataKeys[Row.RowIndex].Values["CodEstado"].ToString().Trim(),
-                    PnAlternoPV = GrdDetValrzc.DataKeys[Row.RowIndex].Values[14].ToString().Trim(),
-                    TipoCotizacion = (Row.FindControl("LblTipoCot") as Label).Text.Trim(),
-                    IdDetPropSrv = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values["IdDetPropSrv"].ToString().Trim()),
-                    RepaExterna = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values["RepaExterna"].ToString().Trim()),
-                    CantRealPV = Convert.ToDouble((Row.FindControl("LblCntReal") as Label).Text.Trim()),
-                    UndCompraPV = VbUndMedCompr,
-                    EquivalenciaPV = VbEquvl,
-                    OTVal = Convert.ToInt32(VbOTVal.Equals("")?"0": VbOTVal),
-                    CodAeronaveVal = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values["CodAeronaveVal"].ToString().Trim()),
-                    MatriculaVal = (Row.FindControl("LblMatric") as Label).Text.Trim(),
-                    SNElementoV = GrdDetValrzc.DataKeys[Row.RowIndex].Values["SNElementoV"].ToString().Trim(),
-                    IdConfigCia = (int)Session["!dC!@"],
-                    Accion = "INSERT",
-                };
-                ObjPropuestaValorizada.Add(TypPropuestaValorizada);
+                    string VbUndMedCompr = (Row.FindControl("LblUndMedCmpra") as Label).Text.Trim().Equals(null) ? "" : (Row.FindControl("LblUndMedCmpra") as Label).Text.Trim();
+                    double VbEquvl = Convert.ToDouble(GrdDetValrzc.DataKeys[Row.RowIndex].Values["EquivalenciaPV"].ToString().Trim().Equals("") ? "0" : GrdDetValrzc.DataKeys[Row.RowIndex].Values["EquivalenciaPV"].ToString());
+                    string VblUndMinCompra = GrdDetValrzc.DataKeys[Row.RowIndex].Values["UnidMinCompra"].ToString().Trim();
+                    string VbOTVal = (Row.FindControl("LblOtVal") as Label).Text.Trim();
+                    DateTime? VbFechUltComp;
+                    if ((Row.FindControl("LblFechUlmCmp") as Label).Text.Trim().Equals("")) { VbFechUltComp = null; }
+                    else { VbFechUltComp = Convert.ToDateTime(GrdDetValrzc.DataKeys[Row.RowIndex].Values["FecUltCotizDMY"]); }
+                    string borr = GrdDetValrzc.DataKeys[Row.RowIndex].Values["SNElementoV"].ToString().Trim();
+                    var TypPropuestaValorizada = new CsTypPropuestaValorizada()
+                    {
+                        IdValorizacion = Convert.ToInt32(0),
+                        IdPropuesta = Convert.ToInt32(DdlNumPpt.Text.Trim()),
+                        IdServicio = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values[0].ToString().Trim()),
+                        NomServicio = (Row.FindControl("LblNomSvc") as Label).Text.Trim(),
+                        PnPropuesta = (Row.FindControl("LblPnPpt") as Label).Text.Trim(),
+                        CodReferencia = GrdDetValrzc.DataKeys[Row.RowIndex].Values[1].ToString().Trim(),
+                        Descripcion = (Row.FindControl("LblDescElem") as Label).Text.Trim(),
+                        CantidadPropuesta = Convert.ToDouble((Row.FindControl("CantPpt") as Label).Text.Trim()),
+                        ValorCompra = Convert.ToDouble((Row.FindControl("TxtVlr") as TextBox).Text.Trim()),
+                        DocReferencia = (Row.FindControl("LblDocRef") as Label).Text.Trim(),
+                        FechaUltimaCompra = VbFechUltComp,
+                        TiempoEntregaDiasCoti = Convert.ToInt32((Row.FindControl("TxtTiemEntrDiaCot") as TextBox).Text.Trim()),
+                        PnStock = GrdDetValrzc.DataKeys[Row.RowIndex].Values[2].ToString().Trim(),
+                        CantStock = Convert.ToDouble((Row.FindControl("LblCntStk") as Label).Text.Trim()),
+                        CodIdUbicacion = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values[3].ToString().Trim()),
+                        Bodega = GrdDetValrzc.DataKeys[Row.RowIndex].Values[4].ToString().Trim(),
+                        StockMinimo = Convert.ToDouble(GrdDetValrzc.DataKeys[Row.RowIndex].Values[5].ToString().Trim()),
+                        CodTipoCotiza = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values[6].ToString().Trim()),
+                        SelectBodeg = 1, //Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values[7].ToString().Trim()),
+                        SelectSolicitud = Convert.ToInt32(0),
+                        CantidadSolicitud = Convert.ToDouble(GrdDetValrzc.DataKeys[Row.RowIndex].Values[8].ToString().Trim()),
+                        ObservacionValorizar = GrdDetValrzc.DataKeys[Row.RowIndex].Values[9].ToString().Trim(),
+                        Posicion = Convert.ToInt32((Row.FindControl("LblPos") as Label).Text.Trim()),
+                        NomBodega = GrdDetValrzc.DataKeys[Row.RowIndex].Values[10].ToString().Trim(),
+                        TiempoEntregaDias = Convert.ToInt32((Row.FindControl("TxtTiemEntrDiaCot") as TextBox).Text.Trim()) + 3,
+                        Usu = Session["C77U"].ToString(),
+                        Aprobado = (Row.FindControl("CkbAprobP") as CheckBox).Checked == true ? 1 : 0,
+                        IdReporte = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values[11].ToString().Trim()),
+                        NumPedido = (Row.FindControl("LblNumSP") as Label).Text.Trim(),
+                        MonedaProVa = (Row.FindControl("TxtMnda") as TextBox).Text.Trim(),
+                        UndMedProVa = (Row.FindControl("LblUndMPt") as Label).Text.Trim(),
+                        UnidMinCompra = Convert.ToDouble(VblUndMinCompra.Equals("") ? "0" : VblUndMinCompra),
+                        CodEstado = GrdDetValrzc.DataKeys[Row.RowIndex].Values["CodEstado"].ToString().Trim(),
+                        PnAlternoPV = GrdDetValrzc.DataKeys[Row.RowIndex].Values[14].ToString().Trim(),
+                        TipoCotizacion = (Row.FindControl("LblTipoCot") as Label).Text.Trim(),
+                        IdDetPropSrv = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values["IdDetPropSrv"].ToString().Trim()),
+                        RepaExterna = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values["RepaExterna"].ToString().Trim()),
+                        CantRealPV = Convert.ToDouble((Row.FindControl("LblCntReal") as Label).Text.Trim()),
+                        UndCompraPV = VbUndMedCompr,
+                        EquivalenciaPV = VbEquvl,
+                        OTVal = Convert.ToInt32(VbOTVal.Equals("") ? "0" : VbOTVal),
+                        CodAeronaveVal = Convert.ToInt32(GrdDetValrzc.DataKeys[Row.RowIndex].Values["CodAeronaveVal"].ToString().Trim()),
+                        MatriculaVal = (Row.FindControl("LblMatric") as Label).Text.Trim(),
+                        SNElementoV = GrdDetValrzc.DataKeys[Row.RowIndex].Values["SNElementoV"].ToString().Trim(),
+                        IdConfigCia = Convert.ToInt32(Session["!dC!@"]),
+                        Accion = "INSERT",
+                    };
+                    ObjPropuestaValorizada.Add(TypPropuestaValorizada);
+                }
+                CsTypPropuestaValorizada ClsTypPropuestaValorizada = new CsTypPropuestaValorizada();
+                ClsTypPropuestaValorizada.Alimentar(ObjPropuestaValorizada);
+                string Mensj = ClsTypPropuestaValorizada.GetMensj();
+                if (!Mensj.Equals(""))
+                {
+                    DataRow[] Result2 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result2)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                    return;
+                }
+                BindDetalle("UPDATE");
+                BIndDPnSinValorizar();
             }
-            CsTypPropuestaValorizada ClsTypPropuestaValorizada = new CsTypPropuestaValorizada();
-            ClsTypPropuestaValorizada.Alimentar(ObjPropuestaValorizada);
-            string Mensj = ClsTypPropuestaValorizada.GetMensj();
-            if (!Mensj.Equals(""))
+            catch (Exception Ex)
             {
-                DataRow[] Result2 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
-                foreach (DataRow row in Result2)
-                { Mensj = row["Texto"].ToString().Trim(); }
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
-                return;
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString().Trim(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Valorizar", Ex.StackTrace.ToString().Trim(), Ex.Message, VbcatVer, VbcatAct);//
             }
-            BindDetalle("UPDATE");
-            BIndDPnSinValorizar();
         }
         protected void BtnReValorizar_Click(object sender, EventArgs e)
         {
@@ -694,6 +716,7 @@ namespace _77NeoWeb.Forms.MRO
             Page.Title = ViewState["PageTit"].ToString().Trim();
             Exportar("Plantilla");// Exportar formato para plantilla
         }
+        //******************************************< Generar SP >*************************************************
         protected void IbtAprDet1All_Click(object sender, ImageClickEventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
@@ -758,7 +781,6 @@ namespace _77NeoWeb.Forms.MRO
             Result = Idioma.Select("Objeto= 'Mens10VPT'");
             foreach (DataRow row in Result)
             { VblObs = row["Texto"].ToString().Trim() + " [" + DdlNumPpt.Text.Trim() + "]"; }// Solicitud generada de la propuesta Nro
-
 
             List<ClsTypSolicitudPedidoPPT> ObjEncSP = new List<ClsTypSolicitudPedidoPPT>();
             var TypEncSP = new ClsTypSolicitudPedidoPPT()
@@ -829,7 +851,6 @@ namespace _77NeoWeb.Forms.MRO
             DataRow[] Result1 = Idioma.Select("Objeto= 'MstrMens03'");
             foreach (DataRow row in Result1)
             { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + " [" + VbCodPedido + "]" + "');", true); }// Se generó la solicitud Nro
-
         }
         //************************** P/N no  valorizados ***********************************************
         protected void BIndDPnSinValorizar()

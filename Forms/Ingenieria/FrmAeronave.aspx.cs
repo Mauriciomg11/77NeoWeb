@@ -126,7 +126,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 string TxQry = string.Format("EXEC SP_HabilitarCampos @Nit,@F,2,@F,3,@F,4,@F,6,@F,7,@F,8,@F,12,@F,13,@F,14");
                 /*  SqlCommand SC = new SqlCommand(TxQry, sqlCon);
-                  SC.Parameters.AddWithValue("@Nit", Session["Nit77Cia"].ToString());
+                  SC.Parameters.AddWithValue("@Nit", Session["!dC!@"].ToString());
                   SC.Parameters.AddWithValue("@F", "FrmReporte");
                   sqlCon.Open();
                   SqlDataReader Regs = SC.ExecuteReader();
@@ -178,6 +178,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     LblModelo.Text = bO.Equals("LblModelo") ? bT + ":" : LblModelo.Text;
                     LblTipo.Text = bO.Equals("LblTipo") ? bT + ":" : LblTipo.Text;
                     LblPropie.Text = bO.Equals("LblPropie") ? bT + ":" : LblPropie.Text;
+                    LblNomPropietario.Text = bO.Equals("LblNomPropietario") ? bT + ":" : LblNomPropietario.Text;
                     LblEstado.Text = bO.Equals("LblEstado") ? bT + ":" : LblEstado.Text;
                     CkbActiva.Text = bO.Equals("ActivaMstr") ? "&nbsp" + bT : CkbActiva.Text;
                     LblTitContadores.Text = bO.Equals("LblTitContadores") ? bT : LblTitContadores.Text;
@@ -418,6 +419,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DdlModelo.Text = HttpUtility.HtmlDecode(SDR["CodModelo"].ToString().Trim());
                 DdlTipo.Text = HttpUtility.HtmlDecode(SDR["CodTipoAeronave"].ToString().Trim());
                 DdlPropie.Text = HttpUtility.HtmlDecode(SDR["CodPropietario"].ToString().Trim());
+                TxtNomPropietario.Text = HttpUtility.HtmlDecode(SDR["NombrePropietario"].ToString().Trim());
                 TxtFecIngr.Text = Cnx.ReturnFecha(SDR["FechaIngreso"].ToString().Trim()); ;               
                 TxtTSN.Text = SDR["TSN"].ToString().Trim();
                 TxtCSN.Text = SDR["CSN"].ToString();
@@ -455,6 +457,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             { DdlModelo.Enabled = false; DdlModelo.ToolTip = "Tiene elementos instalados en la aeronave virtual"; }
             DdlTipo.Enabled = Edi;
             DdlPropie.Enabled = Edi;
+            TxtNomPropietario.Enabled = Edi;
             DdlEstado.Enabled = Edi;
             TxtFecIngr.Enabled = Edi;
             TxtDescri.Enabled = Edi;
@@ -472,6 +475,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlModelo.Text = "";
             DdlTipo.Text = "";
             DdlPropie.Text = "";
+            TxtNomPropietario.Text = "";
             DdlEstado.Text = "01";
             TxtFecIngr.Text = "";
             TxtTSN.Text = "0";
@@ -518,6 +522,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         FechaIngreso = Convert.ToDateTime(TxtFecIngr.Text),
                         CodModelo = DdlModelo.Text.Trim(),
                         CodPropietario = DdlPropie.Text.Trim(),
+                        NombrePropietario= TxtNomPropietario.Text.Trim(),
                         CodTipoAeronave = DdlTipo.Text.Trim(),
                         CodProveedor = "",
                         CodEstadoAeronave = DdlEstado.Text.Trim(),
@@ -608,6 +613,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         FechaIngreso = Convert.ToDateTime(TxtFecIngr.Text),
                         CodModelo = DdlModelo.Text.Trim(),
                         CodPropietario = DdlPropie.Text.Trim(),
+                        NombrePropietario = TxtNomPropietario.Text.Trim(),
                         CodTipoAeronave = DdlTipo.Text.Trim(),
                         CodProveedor = "",
                         CodEstadoAeronave = DdlEstado.Text.Trim(),

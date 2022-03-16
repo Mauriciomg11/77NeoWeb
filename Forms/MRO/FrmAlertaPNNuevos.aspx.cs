@@ -154,6 +154,7 @@ namespace _77NeoWeb.Forms.MRO
         }
         protected void BtnEditar_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             string VbTienReg = "N";
             List<CsTypPnNoExistente> ObjPnNoExistente = new List<CsTypPnNoExistente>();
@@ -172,19 +173,19 @@ namespace _77NeoWeb.Forms.MRO
                         Descripcion = (Row.FindControl("LblDesc") as Label).Text.Trim(),
                         CantSolicitada = Convert.ToDouble((Row.FindControl("LblCantS") as Label).Text.Trim()),
                         CodAeronave = Convert.ToInt32(0),
-                        Reporte = Convert.ToInt32((Row.FindControl("LblRte") as Label).Text.Trim()),
-                        CodOrdenTrabajo = Convert.ToInt32((Row.FindControl("LblOt") as Label).Text.Trim()),
+                        Reporte = Convert.ToInt32(GrdDet.DataKeys[Row.RowIndex].Values["Reporte"].ToString().Trim()),
+                        CodOrdenTrabajo = Convert.ToInt32(GrdDet.DataKeys[Row.RowIndex].Values["CodOrdenTrabajo"].ToString().Trim()),
                         CodIdDetalleRes = Convert.ToInt32(GrdDet.DataKeys[Row.RowIndex].Values["CodIdDetalleRes"].ToString().Trim()),
                         Matricula = (Row.FindControl("LblHk") as Label).Text.Trim(),
                         Usu = Session["C77U"].ToString(),
                         IdDetPedido = Convert.ToInt32(GrdDet.DataKeys[Row.RowIndex].Values["IdDetPedido"].ToString().Trim()),
-                        IdPropuesta = Convert.ToInt32((Row.FindControl("LblPpt") as Label).Text.Trim()),
+                        IdPropuesta = Convert.ToInt32(GrdDet.DataKeys[Row.RowIndex].Values["IdPropuesta"].ToString().Trim()),//Convert.ToInt32((Row.FindControl("LblPpt") as Label).Text.Trim()),
                         IdDetPropuesta = Convert.ToInt32(GrdDet.DataKeys[Row.RowIndex].Values["IdDetPropuesta"].ToString().Trim()),
                         IdDetPropHk = Convert.ToInt32(GrdDet.DataKeys[Row.RowIndex].Values["IdDetPropHk"].ToString().Trim()),
                         CodIdDetElemPlanInstrumento = Convert.ToInt32(GrdDet.DataKeys[Row.RowIndex].Values["CodIdDetElemPlanInstrumento"].ToString().Trim()),
                         IdSrvc = Convert.ToInt32(GrdDet.DataKeys[Row.RowIndex].Values["IdSrvManto"].ToString().Trim()),
                         CodPedido = GrdDet.DataKeys[Row.RowIndex].Values["CodPedido"].ToString().Trim(),
-                        IdConfigCia = (int)Session["!dC!@"],
+                        IdConfigCia = Convert.ToInt32(Session["!dC!@"]),
                     };
                     ObjPnNoExistente.Add(TypPnNoExistente);
                 }

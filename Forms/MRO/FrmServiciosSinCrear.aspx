@@ -62,15 +62,18 @@
                 <asp:View ID="Vw0Datos" runat="server">
                     <div class="CentrarContenedor DivMarco">
                         <div class="row">
-                            <div class="col-sm-12">
-                                <asp:Button ID="BtnAbrirSrvcs" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnAbrirSrvcs_Click" OnClientClick="target ='_blank';" Text="abrir servicios" />
+                            <div class="col-sm-2">
+                                <asp:Button ID="BtnAbrirSrvcs" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnAbrirSrvcs_Click" OnClientClick="target ='_blank';" Text="abrir servicios" Width="100%" />
+                            </div>
+                            <div class="col-sm-2">
+                                <asp:Button ID="BtnAbrirSrvcsMyrs" runat="server" CssClass="btn btn-primary Font_btnSelect" OnClick="BtnAbrirSrvcsMyrs_Click" OnClientClick="target ='_blank';" Text="servicios mayores"  Width="100%" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="ScrollDet">
                                     <asp:GridView ID="GrdDet" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false"
-                                        DataKeyNames="CodTipoPropuesta,CodModeloPr,IdDetPropSrv"
+                                        DataKeyNames="CodTipoPropuesta,CodModeloPr,IdDetPropSrv,IdPropuesta"
                                         CssClass="DiseñoGrid table table-sm" GridLines="Both" Width="100%" EmptyDataText="No existen registros ..!" OnRowCommand="GrdDet_RowCommand"
                                         OnRowDataBound="GrdDet_RowDataBound">
                                         <Columns>
@@ -93,7 +96,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="propuesta" HeaderStyle-Width="1%">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="LblPpt" Text='<%# Eval("IdPropuesta") %>' runat="server" Width="100%" />
+                                                    <asp:Label ID="LblPpt" Text='<%# Eval("CodigoPPT") %>' runat="server" Width="100%" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="contrato" HeaderStyle-Width="10%">
@@ -155,7 +158,7 @@
                         </table>
                         <br />
                         <div class="CentrarGrid pre-scrollable">
-                            <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="IdSrvManto, CodContador"
+                            <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="IdSrvManto, CodContador, CodModeloSM"
                                 CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowCommand="GrdBusq_RowCommand" OnRowDataBound="GrdBusq_RowDataBound">
                                 <Columns>
                                     <asp:TemplateField HeaderText="Select">
@@ -170,14 +173,14 @@
                                             </asp:UpdatePanel>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="servicio" HeaderStyle-Width="90%">
+                                    <asp:TemplateField HeaderText="servicio" HeaderStyle-Width="80%">
                                         <ItemTemplate>
                                             <asp:TextBox ID="TxtNomSvc" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" Enabled="false" TextMode="MultiLine" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="CodModelo">
                                         <ItemTemplate>
-                                            <asp:Label ID="LblCodMod" Text='<%# Eval("CodModeloSM") %>' runat="server" Width="100%" />
+                                            <asp:Label ID="LblCodMod" Text='<%# Eval("NomModelo") %>' runat="server" Width="100%" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
@@ -190,8 +193,7 @@
                 </asp:View>
             </asp:MultiView>
         </ContentTemplate>
-        <Triggers>
-            <asp:PostBackTrigger ControlID="BtnAbrirSrvcs" />
+        <Triggers>           
         </Triggers>
     </asp:UpdatePanel>
 </asp:Content>

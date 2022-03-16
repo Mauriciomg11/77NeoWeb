@@ -68,7 +68,8 @@ namespace _77NeoWeb.Forms.Almacen
             ViewState["VblCE6"] = 1;
             ClsPermisos ClsP = new ClsPermisos();
             string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
-            ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx", VbPC);
+
+            ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx", VbPC.Trim());
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
             if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; }
             if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; }
@@ -317,9 +318,9 @@ namespace _77NeoWeb.Forms.Almacen
         }
         protected void Import(string FilePath, string Extension)
         {
-
-            string ip = Request.ServerVariables["REMOTE_ADDR"];
-            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            string VbIP = Request.ServerVariables["REMOTE_ADDR"]; // IP
+            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName; //Nombre maquina en internet toma es el nombre del proveedor 
             DataRow[] Result;
 
             FileStream stream = File.Open(FilePath, FileMode.Open, FileAccess.Read);
@@ -353,7 +354,7 @@ namespace _77NeoWeb.Forms.Almacen
                             SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
                             SqlParameter Prmtrs3 = SC.Parameters.AddWithValue("@IdCia", Session["!dC!@"]);
                             SqlParameter Prmtrs4 = SC.Parameters.AddWithValue("@NIT", Session["Nit77Cia"]);
-                            SqlParameter Prmtrs5 = SC.Parameters.AddWithValue("@NomMaquina", VbPC.Trim());
+                            SqlParameter Prmtrs5 = SC.Parameters.AddWithValue("@NomMaquina", VbPC.Trim() + "-" + Session["C77U"].ToString().Trim());
                             SqlParameter Prmtrs6 = SC.Parameters.AddWithValue("@FecAjuste", Convert.ToDateTime(TxtFech.Text));
                             SqlParameter Prmtrs7 = SC.Parameters.AddWithValue("@CodMvto", DdlMvto.Text.Trim());
                             SqlParameter Prmtrs8 = SC.Parameters.AddWithValue("@CodAlma", DdlAlmac.SelectedItem.Text.Trim());
@@ -365,10 +366,10 @@ namespace _77NeoWeb.Forms.Almacen
                                 using (DataSet DST = new DataSet())
                                 {
                                     SDA.SelectCommand = SC; SDA.Fill(DST); ViewState["DST"] = DST;
-                                    PMensj = DST.Tables[1].Rows[0]["Mensj"].ToString().Trim();
+                                    PMensj = DST.Tables[1].Rows[0]["Estado"].ToString().Trim();
                                     if (!PMensj.Trim().Equals(""))
                                     {
-                                        Result = Idioma.Select("Objeto= '" + PMensj.ToString().Trim() + "'");
+                                        Result = Idioma.Select("Objeto= '" + DST.Tables[1].Rows[0]["Mensj"].ToString().Trim() + "'");
                                         foreach (DataRow row in Result)
                                         { PMensj = row["Texto"].ToString().Trim(); }//LblTitIncosistnc.Text = PMensj; 
 
@@ -378,12 +379,12 @@ namespace _77NeoWeb.Forms.Almacen
                                         BtnCargarInvIni.OnClientClick = "";
                                         return;
                                     }
-                                    PMensj = DST.Tables[0].Rows[0]["Mensj"].ToString().Trim();
+                                    PMensj = DST.Tables[1].Rows[0]["Mensj"].ToString().Trim();
                                     Result = Idioma.Select("Objeto= '" + PMensj.ToString().Trim() + "'");
                                     foreach (DataRow row in Result)
                                     { LblTitInconsist.Text = row["Texto"].ToString().Trim(); }//LblTitIncosistnc.Text = PMensj; 
-                                    GrdInconsist.DataSource = null; GrdInconsist.DataBind();
-                                    BtnCargarInvIni.Visible = false; BtnSubirInventario.Visible = true;
+                                    GrdInconsist.DataSource = DST.Tables[0]; GrdInconsist.DataBind();
+                                    BtnCargarInvIni.Visible = false; BtnSubirInventario.Visible = true; DdlAlmac.Enabled = false;
                                 }
                             }
                         }
@@ -419,7 +420,7 @@ namespace _77NeoWeb.Forms.Almacen
                     {
                         try
                         {
-                            SC.Parameters.AddWithValue("@NM", VbPC.Trim());
+                            SC.Parameters.AddWithValue("@NM", VbPC.Trim()+"-"+ Session["C77U"].ToString().Trim());
                             SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@Obsv", TxtMotvo.Text.Trim());
                             SC.Parameters.AddWithValue("@CC", DdlCcost.Text.Trim());
@@ -433,6 +434,7 @@ namespace _77NeoWeb.Forms.Almacen
                             Result = Idioma.Select("Objeto= 'MensAjt20'");
                             foreach (DataRow row in Result)
                             { LblTitInconsist.Text = row["Texto"].ToString().Trim(); }//Se realiza la carga del inventario correctamente.
+                            DdlAlmac.Enabled = true;
                         }
                         catch (Exception ex)
                         {

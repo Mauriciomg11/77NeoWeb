@@ -17,7 +17,7 @@ namespace _77NeoWeb.prg
         public ClsConexion()
         {
             this.VblConexion = "";
-            Produccion = "Y";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion            
+            Produccion = "N";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion            
         }
         public void SelecBD()
         {
@@ -29,7 +29,7 @@ namespace _77NeoWeb.prg
             BaseDatos(VbNBD, VbSv, VbU, VbCs);
         }
         public void Desconctar()
-        {           
+        {
             SelecBD();
             SqlConnection cnn = new SqlConnection(GetConex());
             cnn.Close();
@@ -77,69 +77,59 @@ namespace _77NeoWeb.prg
         //}
         public void UpdateError(string VbUsu, string VbPantalla, string VbAccion, string VbNumLinea, string VbMensErr, string VbVersion, string VbAct)
         {
-            try
+            string VbNitErr, VbCiaErr, VblNomBDErr;
+            using (SqlConnection sqlCon = new SqlConnection(BaseDatosPrmtr()))
             {
-                string VbNitErr, VbCiaErr, VblNomBDErr;
-                using (SqlConnection sqlCon = new SqlConnection(BaseDatosPrmtr()))
-                {
-                    VbNitErr = System.Web.HttpContext.Current.Session["Nit77Cia"].ToString();
-                    VbCiaErr = System.Web.HttpContext.Current.Session["NomCiaPpal"].ToString();
-                    VblNomBDErr = System.Web.HttpContext.Current.Session["D[BX"].ToString();
+                VbNitErr = System.Web.HttpContext.Current.Session["Nit77Cia"].ToString();
+                VbCiaErr = System.Web.HttpContext.Current.Session["NomCiaPpal"].ToString();
+                VblNomBDErr = System.Web.HttpContext.Current.Session["D[BX"].ToString();
 
-                    sqlCon.Open();
-                    string query = "INSERT INTO TblErrores (Usuario, Programa, Codigo, NumeroLinea, Fecha, revisado, Version, Mensaje, ActualizacionErr, NIT, NomCia, NomBD) " +
-                       "VALUES(@Usuario, @Programa, @Codigo, @NumeroLinea,GetDate(),0, @Version, @Mensaje, @ActualizacionErr, @NIT, @NomCia, @NomBD)";
-                    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                    sqlCmd.Parameters.AddWithValue("@Usuario", VbUsu);
-                    sqlCmd.Parameters.AddWithValue("@Programa", VbPantalla);
-                    sqlCmd.Parameters.AddWithValue("@Codigo", VbAccion);
-                    sqlCmd.Parameters.AddWithValue("@NumeroLinea", VbNumLinea);
-                    sqlCmd.Parameters.AddWithValue("@Version", VbVersion);
-                    sqlCmd.Parameters.AddWithValue("@Mensaje", VbMensErr);
-                    sqlCmd.Parameters.AddWithValue("@ActualizacionErr", VbAct);
-                    sqlCmd.Parameters.AddWithValue("@NIT", VbNitErr);
-                    sqlCmd.Parameters.AddWithValue("@NomCia", VbCiaErr);
-                    sqlCmd.Parameters.AddWithValue("@NomBD", VblNomBDErr);
+                sqlCon.Open();
+                string query = "INSERT INTO TblErrores (Usuario, Programa, Codigo, NumeroLinea, Fecha, revisado, Version, Mensaje, ActualizacionErr, NIT, NomCia, NomBD) " +
+                   "VALUES(@Usuario, @Programa, @Codigo, @NumeroLinea,GetDate(),0, @Version, @Mensaje, @ActualizacionErr, @NIT, @NomCia, @NomBD)";
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@Usuario", VbUsu);
+                sqlCmd.Parameters.AddWithValue("@Programa", VbPantalla);
+                sqlCmd.Parameters.AddWithValue("@Codigo", VbAccion);
+                sqlCmd.Parameters.AddWithValue("@NumeroLinea", VbNumLinea);
+                sqlCmd.Parameters.AddWithValue("@Version", VbVersion);
+                sqlCmd.Parameters.AddWithValue("@Mensaje", VbMensErr);
+                sqlCmd.Parameters.AddWithValue("@ActualizacionErr", VbAct);
+                sqlCmd.Parameters.AddWithValue("@NIT", VbNitErr);
+                sqlCmd.Parameters.AddWithValue("@NomCia", VbCiaErr);
+                sqlCmd.Parameters.AddWithValue("@NomBD", VblNomBDErr);
 
-                    sqlCmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception)
-            {
-
+                sqlCmd.ExecuteNonQuery();
             }
         }
         public void UpdateErrorV2(string VbUsu, string VbPantalla, string VbAccion, string VbFrmLinea, string VbMensErr, string VbVersion, string VbAct)
         {
-            try
+            string VbNitErr, VbCiaErr, VblNomBDErr;
+            using (SqlConnection sqlCon = new SqlConnection(BaseDatosPrmtr()))
             {
-                string VbNitErr, VbCiaErr, VblNomBDErr;
-                using (SqlConnection sqlCon = new SqlConnection(BaseDatosPrmtr()))
-                {
-                    VbNitErr = System.Web.HttpContext.Current.Session["Nit77Cia"].ToString();
-                    VbCiaErr = System.Web.HttpContext.Current.Session["NomCiaPpal"].ToString();
-                    VblNomBDErr = System.Web.HttpContext.Current.Session["D[BX"].ToString();
+                //VbFrmLinea = VbFrmLinea.Substring(0,300);
+                int VblI = 0, VbLargo = 250;
+                string VbLinea = VbFrmLinea.ToString().Trim().Substring(VblI, VbLargo);
+                VbNitErr = System.Web.HttpContext.Current.Session["Nit77Cia"].ToString();
+                VbCiaErr = System.Web.HttpContext.Current.Session["NomCiaPpal"].ToString();
+                VblNomBDErr = System.Web.HttpContext.Current.Session["D[BX"].ToString();
 
-                    sqlCon.Open();
-                    string query = "INSERT INTO TblErrores (Usuario, Programa, Codigo, FrmLInea, Fecha, revisado, Version, Mensaje, ActualizacionErr, NIT, NomCia, NomBD) " +
-                       "VALUES(@Usuario, @Programa, @Codigo, @FrmLInea,GetDate(),0, @Version, @Mensaje, @ActualizacionErr, @NIT, @NomCia, @NomBD)";
-                    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                    sqlCmd.Parameters.AddWithValue("@Usuario", VbUsu);
-                    sqlCmd.Parameters.AddWithValue("@Programa", VbPantalla);
-                    sqlCmd.Parameters.AddWithValue("@Codigo", VbAccion);
-                    sqlCmd.Parameters.AddWithValue("@FrmLInea", VbFrmLinea);
-                    sqlCmd.Parameters.AddWithValue("@Version", VbVersion);
-                    sqlCmd.Parameters.AddWithValue("@Mensaje", VbMensErr);
-                    sqlCmd.Parameters.AddWithValue("@ActualizacionErr", VbAct);
-                    sqlCmd.Parameters.AddWithValue("@NIT", VbNitErr);
-                    sqlCmd.Parameters.AddWithValue("@NomCia", VbCiaErr);
-                    sqlCmd.Parameters.AddWithValue("@NomBD", VblNomBDErr);
+                sqlCon.Open();
+                string query = "INSERT INTO TblErrores (Usuario, Programa, Codigo, FrmLInea, Fecha, revisado, Version, Mensaje, ActualizacionErr, NIT, NomCia, NomBD) " +
+                   "VALUES(@Usuario, @Programa, @Codigo, @FrmLInea,GetDate(),0, @Version, @Mensaje, @ActualizacionErr, @NIT, @NomCia, @NomBD)";
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@Usuario", VbUsu);
+                sqlCmd.Parameters.AddWithValue("@Programa", VbPantalla);
+                sqlCmd.Parameters.AddWithValue("@Codigo", VbAccion);
+                sqlCmd.Parameters.AddWithValue("@FrmLInea", VbLinea);
+                sqlCmd.Parameters.AddWithValue("@Version", VbVersion);
+                sqlCmd.Parameters.AddWithValue("@Mensaje", VbMensErr);
+                sqlCmd.Parameters.AddWithValue("@ActualizacionErr", VbAct);
+                sqlCmd.Parameters.AddWithValue("@NIT", VbNitErr);
+                sqlCmd.Parameters.AddWithValue("@NomCia", VbCiaErr);
+                sqlCmd.Parameters.AddWithValue("@NomBD", VblNomBDErr);
 
-                    sqlCmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception)
-            {
+                sqlCmd.ExecuteNonQuery();
             }
         }
         public void BaseDatos(string VbNomBD, string VblNomSrv, string VbUsu, string VblPass)
@@ -169,9 +159,13 @@ namespace _77NeoWeb.prg
             }
             else
             {
-                 //return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "77NEO01", "DbConfigWeb", "sa", "admindemp");
-               return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
+                return ConexDllo();
             }
+        }
+        public string ConexDllo()
+        {
+            //return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "77NEO01", "DbConfigWeb", "sa", "admindemp");
+            return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**"); 
         }
         public string GetConex() { return this.VblConexion; }
         public void RetirarPuntos(string VbCampo)
@@ -306,12 +300,12 @@ namespace _77NeoWeb.prg
         public string GetUsr() { return "00000082"; }//00000082|00000133 | 00000129 |
         public int GetIdCia() { return 1; }// 1 TwoGoWo |21 Demp |2 HCT PRUEBA| 12 ADA | 20 HCT | 3 Alca
         public string GetMonedLcl() { return "COP"; }//  "COP|USD"
-        public int GetFormatFecha() { return 101; }// 103 formato europeo dd/MM/yyyy | 101 formato EEUU M/dd/yyyyy
+        public int GetFormatFecha() { return 101; }// 103 formato europeo dd/MM/yyyy | 101 formato EEUU MM/dd/yyyyy
         public string GetNit() { return "901338233-1"; } // 901338233-1 TwoGoWo |811035879-1 Demp |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT |P93000086218 - ALCA
         public string GetBD() { return "DbNeoDempV2"; }//|DbNeoDempV2 |DbNeoAda | DbNeoHCT ||| BDNeoW
         public string GetSvr() { return "77NEO01"; }//  "77NEO01"; ||| 23.102.100.143
         public string GetUsSvr() { return "sa"; }//  "sa"
-        public string GetPas() { return "admindemp"; }//"admindemp";|| Medellin2021**
+        public string GetPas() { return "admindemp"; }// admindemp|| Medellin2021**
         public string GetIdm() { return "5"; }//  4 español | 5 ingles/**/
     }
 }

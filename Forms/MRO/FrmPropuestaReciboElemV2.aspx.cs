@@ -221,6 +221,8 @@ namespace _77NeoWeb.Forms.MRO
                     CodIdUbicacion = Convert.ToInt32(0),
                     FechaVence = null,
                     Observacion = TxtObserv.Text.Trim(),
+                    ValorOT = Convert.ToDouble(0),
+                    CodUsuarioReserva = "",
                     Proceso = "RecElemPpt",
                     IdDetPropHk = Convert.ToInt32(0),
                     IdPPt = Convert.ToInt32(0),

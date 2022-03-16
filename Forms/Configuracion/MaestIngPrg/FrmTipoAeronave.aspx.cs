@@ -223,14 +223,14 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        VBQuery = "EXEC SP_Pantalla_Parametros 0,@Desc,@US,'','TblTipoAeronave','CodTipoAeronave',4,0,@ICC,1,'01-01-1','02-01-1','03-01-1'";
+                        VBQuery = "EXEC SP_Pantalla_Parametros 0,@Desc,@US,'','TblTipoAeronave','CodTipoAeronave',4,@Idm,@ICC,1,'01-01-1','02-01-1','03-01-1'";
                         using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
                             try
-                            {
-                                string borr = Session["!dC!@"].ToString();
+                            { 
                                 sqlCmd.Parameters.AddWithValue("@Desc", VbDesc);
                                 sqlCmd.Parameters.AddWithValue("@US", Session["C77U"].ToString());
+                                sqlCmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                                 sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 sqlCmd.ExecuteNonQuery();
                                 Transac.Commit();
@@ -269,7 +269,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VbQuery = "EXEC SP_TablasPlantillaM 10, '', @Desc, @Us,'','','','','','UPDATE',@ID,0,0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
+                    VbQuery = "EXEC SP_TablasPlantillaM 10, '', @Desc, @Us,'','','','','','UPDATE',@ID,0,0,0,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand sqlCmd = new SqlCommand(VbQuery, sqlCon, Transac))
                     {
                         try
@@ -277,6 +277,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                             sqlCmd.Parameters.AddWithValue("@Desc", (GrdDatos.Rows[e.RowIndex].FindControl("TxtDesc") as TextBox).Text.Trim());
                             sqlCmd.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                             sqlCmd.Parameters.AddWithValue("@ID", GrdDatos.DataKeys[e.RowIndex].Value.ToString());
+                            sqlCmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                             sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             sqlCmd.ExecuteNonQuery();
                             Transac.Commit();

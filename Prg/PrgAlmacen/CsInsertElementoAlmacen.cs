@@ -44,6 +44,8 @@ namespace _77NeoWeb.Prg.PrgAlmacen
         public int CodIdUbicacion { get; set; }
         public DateTime? FechaVence { get; set; }
         public string Observacion { get; set; }
+        public double ValorOT { get; set; }
+        public string CodUsuarioReserva { get; set; }
         public string Proceso { get; set; }
         public int IdDetPropHk { get; set; }
         public int IdPPt { get; set; }
@@ -81,6 +83,8 @@ namespace _77NeoWeb.Prg.PrgAlmacen
             TblDetalle.Columns.Add("CodIdUbicacion", typeof(int));
             TblDetalle.Columns.Add("FechaVence", typeof(DateTime));
             TblDetalle.Columns.Add("Observacion", typeof(string));
+            TblDetalle.Columns.Add("ValorOT", typeof(double));
+            TblDetalle.Columns.Add("CodUsuarioReserva", typeof(string));
             TblDetalle.Columns.Add("Proceso", typeof(string));
             TblDetalle.Columns.Add("IdDetPropHk", typeof(int));
             TblDetalle.Columns.Add("IdPPt", typeof(int));
@@ -116,6 +120,8 @@ namespace _77NeoWeb.Prg.PrgAlmacen
                     Campo.CodIdUbicacion,
                     Campo.FechaVence,
                     Campo.Observacion,
+                    Campo.ValorOT,
+                    Campo.CodUsuarioReserva,
                     Campo.Proceso,
                     Campo.IdDetPropHk,
                     Campo.IdPPt,

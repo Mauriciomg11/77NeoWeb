@@ -106,7 +106,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     GrdDatos.Columns[3].HeaderText = bO.Equals("GrdTRMAct") ? bT : GrdDatos.Columns[3].HeaderText;
                     GrdDatos.Columns[4].HeaderText = bO.Equals("GrdUltFecR") ? bT : GrdDatos.Columns[4].HeaderText;
                     GrdDatos.Columns[5].HeaderText = bO.Equals("GrdTrmNw") ? bT : GrdDatos.Columns[5].HeaderText;
-                    GrdDatos.Columns[5].HeaderText = bO.Equals("FechaMstr") ? bT : GrdDatos.Columns[5].HeaderText;
+                    GrdDatos.Columns[6].HeaderText = bO.Equals("FechaMstr") ? bT : GrdDatos.Columns[6].HeaderText;
                     LblTitHisto.Text = bO.Equals("LblTitHisto") ? bT : LblTitHisto.Text;
                     IbtCloseHist.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCloseHist.ToolTip;
                     if (bO.Equals("Titulo"))
@@ -440,12 +440,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     string VBQuery = " EXEC SP_Pantalla_Moneda 4, @Cd, @US,'','','', @Id, @Vlr,0, @ICC, @FNW,'01-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
+                        string Borr = GrdDatosH.DataKeys[e.RowIndex].Values["UltFecModSis"].ToString();
                         SC.Parameters.AddWithValue("@Cd", TxtBusqMon.Text.Trim());
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@Id", GrdDatosH.DataKeys[e.RowIndex].Values["CodIdTasa"].ToString());
                         SC.Parameters.AddWithValue("@Vlr", VbVlrTrm);
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                        SC.Parameters.AddWithValue("@FNW", Convert.ToDateTime(GrdDatosH.DataKeys[e.RowIndex].Values["UltFecMod"].ToString()));
+                        SC.Parameters.AddWithValue("@FNW", Convert.ToDateTime(GrdDatosH.DataKeys[e.RowIndex].Values["UltFecModSis"].ToString()));
                         try
                         {
                             var Mensj = SC.ExecuteScalar();
@@ -474,7 +475,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 }
             }
         }
-
         protected void GrdDatosH_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         { GrdDatosH.EditIndex = -1; BIndDataBusq(); }
         protected void GrdDatosH_RowDataBound(object sender, GridViewRowEventArgs e)
