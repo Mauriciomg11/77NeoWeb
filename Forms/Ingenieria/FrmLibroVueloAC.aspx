@@ -220,7 +220,7 @@
                                 <asp:Label ID="LblFecha" runat="server" CssClass="LblEtiquet" Text="Fecha:" />
                             </asp:TableCell><asp:TableCell Width="1%">
                             </asp:TableCell><asp:TableCell Width="5%">
-                                <asp:TextBox ID="TxtFecha" runat="server" CssClass="form-control heightCampo" Enabled="false" onKeyDown="return false" TextMode="Date" Width="75%" OnTextChanged="TxtFecha_TextChanged" AutoPostBack="true" />
+                                <asp:TextBox ID="TxtFecha" runat="server" CssClass="form-control heightCampo" Enabled="false" Font-Size="X-Small" onKeyDown="return false" TextMode="Date" Width="100%" OnTextChanged="TxtFecha_TextChanged" AutoPostBack="true" />
                             </asp:TableCell><asp:TableCell Width="1%">
                                 <asp:Label ID="LblNumLV" runat="server" CssClass="LblEtiquet" Text="Número:"></asp:Label>
                             </asp:TableCell><asp:TableCell Width="5%">
@@ -953,41 +953,7 @@
                                 <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
                             </asp:GridView>
                         </div>
-                    </div>
-                    <%--  <asp:TableRow>
-                            <asp:TableCell ColumnSpan="8">
-                                <asp:Table ID="Botnes" runat="server">
-                                    <asp:TableRow>
-                                        <asp:TableCell>
-                                            <asp:Button ID="BtnIngresar" runat="server" CssClass="btn btn-success botones BtnEdicion" OnClick="BtnIngresar_Click" Text="Ingresar" />
-                                        </asp:TableCell>
-                                        <asp:TableCell>
-                                            <asp:Button ID="BtnModificar" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnModificar_Click" Text="Modificar" />
-                                        </asp:TableCell>
-                                        <asp:TableCell>
-                                            <asp:Button ID="BtnReserva" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnReserva_Click" Text="Reserva" />
-                                        </asp:TableCell>
-                                        <asp:TableCell>
-                                            <asp:Button ID="BtnConsultar" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnConsultar_Click" Text="Consultar" />
-                                        </asp:TableCell>
-                                        <asp:TableCell>
-                                            <asp:Button ID="BtnImprimir" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnImprimir_Click" Text="Imprimir" />
-                                        </asp:TableCell>
-                                        <asp:TableCell>
-                                            <asp:Button ID="BtnEliminar" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnEliminar_Click" Text="Eliminar" OnClientClick="return confirm('¿Desea eliminar el registro?');" />
-                                        </asp:TableCell>
-                                        <asp:TableCell>
-                                            <asp:Button ID="BtnSnOnOf" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnSnOnOf_Click" Text="S/N On/Off" ToolTip="Series removidas - instaladas / Herramientas" />
-                                        </asp:TableCell>
-                                        <asp:TableCell>                                          
-                                        </asp:TableCell>
-                                        <asp:TableCell>
-                                            <asp:Button ID="BtnNotificar" runat="server" CssClass=" btn btn-success botones BtnEdicion" OnClick="BtnNotificar_Click" Text="Notificar" ToolTip="Notificar el reporte" OnClientClick="return confirm('¿Desea notificar el reporte?');" />
-                                        </asp:TableCell>
-                                    </asp:TableRow>
-                                </asp:Table>
-                            </asp:TableCell>
-                        </asp:TableRow>--%>
+                    </div>                  
                 </asp:View>
                 <asp:View ID="Vw3Busq" runat="server">
                     <h6 class="TextoSuperior">

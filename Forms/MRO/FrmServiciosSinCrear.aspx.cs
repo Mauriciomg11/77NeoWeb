@@ -95,6 +95,8 @@ namespace _77NeoWeb.Forms.MRO
                     TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
                     BtnAbrirSrvcs.Text = bO.Equals("BtnAbrirSrvcs") ? bT : BtnAbrirSrvcs.Text;
                     BtnAbrirSrvcs.ToolTip = bO.Equals("BtnAbrirSrvcsTT") ? bT : BtnAbrirSrvcs.ToolTip;
+                    BtnAbrirSrvcsMyrs.Text = bO.Equals("BtnAbrirSrvcsMyrs") ? bT : BtnAbrirSrvcsMyrs.Text;
+                    BtnAbrirSrvcsMyrs.ToolTip = bO.Equals("BtnAbrirSrvcsMyrsTT") ? bT : BtnAbrirSrvcsMyrs.ToolTip;
                     GrdDet.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDet.EmptyDataText;
                     GrdDet.Columns[0].HeaderText = bO.Equals("GrdBusq") ? bT : GrdDet.Columns[0].HeaderText;
                     GrdDet.Columns[1].HeaderText = bO.Equals("GrdRazonS") ? bT : GrdDet.Columns[1].HeaderText;
@@ -151,7 +153,17 @@ namespace _77NeoWeb.Forms.MRO
             GrdDet.DataSource = DS.Tables[0]; GrdDet.DataBind();
         }
         protected void BtnAbrirSrvcs_Click(object sender, EventArgs e)
-        { Response.Redirect("~/Forms/Ingenieria/FrmServicioManto.aspx"); }
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string SP = "window.open('/Forms/Ingenieria/FrmServicioManto.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), SP, true);
+        }
+        protected void BtnAbrirSrvcsMyrs_Click(object sender, EventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string SP = "window.open('/Forms/MRO/FrmReparacionMayor.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), SP, true);
+        }
         protected void GrdDet_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -161,9 +173,9 @@ namespace _77NeoWeb.Forms.MRO
             {
                 Page.Title = ViewState["PageTit"].ToString().Trim();
                 GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
-                int rowIndex = row.RowIndex;
-                ViewState["PPT"] = ((Label)row.FindControl("LblPpt")).Text.ToString().Trim();
+                int rowIndex = row.RowIndex;              
                 GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                ViewState["PPT"] = GrdDet.DataKeys[gvr.RowIndex].Values["IdPropuesta"].ToString();
                 ViewState["CodTipoPropuesta"] = GrdDet.DataKeys[gvr.RowIndex].Values["CodTipoPropuesta"].ToString();
                 ViewState["CodModelo"] = GrdDet.DataKeys[gvr.RowIndex].Values["CodModeloPr"].ToString();
                 ViewState["IdDetPropSrv"] = GrdDet.DataKeys[gvr.RowIndex].Values["IdDetPropSrv"].ToString();

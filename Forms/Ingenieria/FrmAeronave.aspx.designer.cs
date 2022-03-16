@@ -96,15 +96,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Label LblTitCampos;
 
         /// <summary>
-        /// Control TblCampos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Table TblCampos;
-
-        /// <summary>
         /// Control LblMatr.
         /// </summary>
         /// <remarks>
@@ -195,6 +186,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.CheckBox CkbPropiedad;
 
         /// <summary>
+        /// Control CkbActiva.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CkbActiva;
+
+        /// <summary>
         /// Control LblModelo.
         /// </summary>
         /// <remarks>
@@ -231,24 +231,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.DropDownList DdlTipo;
 
         /// <summary>
-        /// Control LblPropie.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblPropie;
-
-        /// <summary>
-        /// Control DdlPropie.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DdlPropie;
-
-        /// <summary>
         /// Control LblEstado.
         /// </summary>
         /// <remarks>
@@ -267,13 +249,40 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.DropDownList DdlEstado;
 
         /// <summary>
-        /// Control CkbActiva.
+        /// Control LblPropie.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CkbActiva;
+        protected global::System.Web.UI.WebControls.Label LblPropie;
+
+        /// <summary>
+        /// Control DdlPropie.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DdlPropie;
+
+        /// <summary>
+        /// Control LblNomPropietario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblNomPropietario;
+
+        /// <summary>
+        /// Control TxtNomPropietario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtNomPropietario;
 
         /// <summary>
         /// Control LblTitContadores.

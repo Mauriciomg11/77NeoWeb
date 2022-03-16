@@ -212,7 +212,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                     LblGrupo.Text = bO.Equals("LblGrupo") ? bT + ":" : LblGrupo.Text;
                     //   LblActual.Text = bO.Equals("LblActual") ? bT + ":" : LblActual.Text;
                     LblDoc.Text = bO.Equals("LblDoc") ? bT + ":" : LblDoc.Text;
+                    LblEtapa.Text = bO.Equals("LblEtapa") ? bT + ":" : LblEtapa.Text;
                     LblRefOT.Text = bO.Equals("LblRefOT") ? bT + ":" : LblRefOT.Text;
+                    LblRefOT.ToolTip = bO.Equals("LblRefOTTT") ? bT : LblRefOT.ToolTip;
                     LblModel.Text = bO.Equals("GrdMod") ? bT + ":" : LblModel.Text;
                     LblTaller.Text = bO.Equals("LblTaller") ? bT + ":" : LblTaller.Text;
                     CkbAplSub.Text = bO.Equals("CkbAplSub") ? bT : CkbAplSub.Text;
@@ -1026,7 +1028,8 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void IbtUpdate_Click(object sender, ImageClickEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            if (ViewState["TipoAccion"].ToString().Equals(""))
+            string VblTpAcc = ViewState["TipoAccion"].ToString().Trim();
+            if (VblTpAcc.Equals(""))
             {
                 if (!TxtCod.Text.Trim().Equals(""))
                 {

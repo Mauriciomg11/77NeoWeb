@@ -121,7 +121,7 @@ namespace _77NeoWeb.Forms.Manto
             if (ClsP.GetCE3() == 0)
             {
                 //El reporte sólo lo puede modificar el técnico que lo creó
-                //se debe retirar esta condiiion porque lo puede editar cualquier usuario
+                //se debe retirar esta condicion porque lo puede editar cualquier usuario
             }
             if (ClsP.GetCE4() == 0)
             {
@@ -151,7 +151,7 @@ namespace _77NeoWeb.Forms.Manto
                 ViewState["PermiteFechaIgualDetPry"] = "N";
                 string TxQry = string.Format("EXEC SP_HabilitarCampos @Nit,@F,2,@F,3,@F,4,@F,6,@F,7,@F,8,@F,12,@F,13,@F,14");
                 SqlCommand SC = new SqlCommand(TxQry, sqlCon);
-                SC.Parameters.AddWithValue("@Nit", Session["Nit77Cia"].ToString());
+                SC.Parameters.AddWithValue("@Nit", Session["!dC!@"].ToString());
                 SC.Parameters.AddWithValue("@F", "FrmReporte");
                 sqlCon.Open();
                 SqlDataReader Regs = SC.ExecuteReader();
@@ -900,6 +900,93 @@ namespace _77NeoWeb.Forms.Manto
         }
         protected void ActivarCampRte(bool Ing, bool Edi, string accion)
         {
+            /*Idioma = (DataTable)ViewState["TablaIdioma"];
+             if (DdlEstad.SelectedValue.Equals("C") && DdlTipRte.Enabled == false)
+             {
+                 if (Convert.ToInt32(ViewState["VblCE6Rte"]) == 1)
+                 {
+                     DdlEstad.Enabled = Edi;
+                     if (DdlVerif.Text.Equals(""))
+                     {
+
+                     }
+                     DdlLicVer.Enabled = Edi;
+                     CkbTearDown.Enabled = Edi;
+                 }
+             }
+             else
+             {
+                 DdlOtRte.Enabled = false;
+                 DdlEstad.Enabled = Edi;
+                 DdlTipRte.Enabled = Edi;
+                 DdlFuente.Enabled = Edi;
+                 DdlTall.Enabled = Edi;
+                 DdlClasf.Enabled = Edi;
+                 DdlCatgr.Enabled = Edi;
+                 TxtDocRef.Enabled = Edi;
+                 DdlPosRte.Enabled = Edi;
+                 DdlAtaRte.Enabled = Edi;
+                 DdlGenerado.Enabled = ViewState["UsuDefecto"].Equals("S") ? false : Edi;
+                 DdlLicGene.Enabled = Edi;
+                 TxtFecDet.Enabled = Edi;
+                 TxtFecPry.Enabled = Edi;
+                 if (DdlOtRte.Text.Equals("0") || DdlOtRte.Text.Equals(""))
+                 { DdlOtRte.Enabled = Edi; }
+                 DdlBasRte.Enabled = Edi;
+                 DdlCumpl.Enabled = ViewState["UsuDefecto"].Equals("S") ? false : Edi;
+                 DdlLicCump.Enabled = Edi;
+                 TxtFecCump.Enabled = Edi;
+                 RdbPgSi.Enabled = Edi;
+                 RdbPgNo.Enabled = Edi;
+                 RdbFlCSi.Enabled = Edi;
+                 RdbFlCNo.Enabled = Edi;
+                 CkbRII.Enabled = Edi;
+                 if (accion.Equals("UPDATE"))
+                 {
+                     DdlPnRte.Enabled = ViewState["ESTAPPT"].ToString().Equals("S") ? false : Edi;
+                     TxtSnRte.Enabled = ViewState["ESTAPPT"].ToString().Equals("S") ? false : Edi;
+                 }
+                 else
+                 { DdlPnRte.Enabled = Edi; TxtSnRte.Enabled = Edi; }
+                 DdlPnRte.ToolTip = "";
+                 TxtSnRte.ToolTip = "";
+                 if (accion.Equals("UPDATE"))
+                 {
+                     if (DdlPnRte.Enabled == false)
+                     {
+                         string VbMnsjIdm = "";
+                         DataRow[] Result = Idioma.Select("Objeto= 'MstrMens23'");
+                         foreach (DataRow row in Result)
+                         { VbMnsjIdm = row["Texto"].ToString().Trim(); }
+                         DdlPnRte.ToolTip = VbMnsjIdm; TxtSnRte.ToolTip = VbMnsjIdm;
+                     }
+                     if (DdlPnRte.Text.Trim().Equals("") && !DdlOtRte.Text.Trim().Equals("0") && TxtNumLv.Text.Trim().Equals("") && ViewState["ESTAPPT"].ToString().Equals("N"))
+                     { DdlAeroRte.Enabled = DdlAeroRte.Text.Equals("0") ? Edi : false; }
+                 }
+                 else
+                 { DdlAeroRte.Enabled = DdlAeroRte.Text.Equals("0") ? Edi : false; }
+                 TxtTtlAKSN.Enabled = Edi;
+                 TxtHPrxCu.Enabled = Edi;
+                 txtAccCrr.Enabled = Edi;
+                 TxtAcciParc.Enabled = Edi;
+                 DdlTecDif.Enabled = Edi;
+                 if (accion.Equals("UPDATE"))
+                 {
+                     if (ViewState["EditCampoRte"].Equals("S") && Convert.ToInt32(ViewState["VblCE6Rte"].ToString()) == 1)
+                     { TxtDescRte.Enabled = Edi; }
+                     if (ViewState["EditCampoRte"].Equals("S"))
+                     {
+                         TxtDescRte.Enabled = Edi;
+                     }
+                     else
+                     {
+                         if (Convert.ToInt32(ViewState["VblCE6Rte"]) == 1)
+                         { TxtDescRte.Enabled = Edi; }
+                     }
+                 }
+                 else { TxtDescRte.Enabled = Edi; TxtDescRte.Enabled = Edi; }
+             }
+ */
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (DdlEstad.SelectedValue.Equals("C") && DdlTipRte.Enabled == false)
             {
@@ -908,14 +995,20 @@ namespace _77NeoWeb.Forms.Manto
                     DdlEstad.Enabled = Edi;
                     if (DdlVerif.Text.Equals(""))
                     {
-                        // DdlVerif.Enabled = Edi;
-                        /* DdlVerif.Text = Session["C77U"].ToString().Trim();
-                         string LtxtSql = string.Format("EXEC SP_PANTALLA_Reporte_Manto2 1,'{0}','{1}','','','LICTA',0,0,0,{2},'01-01-1','02-01-1','03-01-1'", DdlVerif.Text, "", Session["!dC!@"]);
-                         DdlLicVer.DataSource = Cnx.DSET(LtxtSql);
-                         DdlLicVer.DataMember = "Datos";
-                         DdlLicVer.DataTextField = "Licencia";
-                         DdlLicVer.DataValueField = "Codigo";
-                         DdlLicVer.DataBind();*/
+                        DdlVerif.Text = Session["C77U"].ToString().Trim();
+
+                        DSTOTGrl = (DataSet)ViewState["DSTOTGrl"];
+                        DataTable DTV = new DataTable();
+                        DTV = DSTOTGrl.Tables[10].Clone();
+                        DataRow[] DR = DSTOTGrl.Tables[10].Select("Activo = 1 AND CodPersona = '" + DdlVerif.Text.Trim() + "'");
+                        if (IsIENumerableLleno(DR)) { DTV = DR.CopyToDataTable(); }
+                        DTV.Rows.Add("10. licencias", "-", "", "1", "");
+                        DataRow[] Result = DSTOTGrl.Tables[10].Select("Licencia= '' AND CodPersona = '" + DdlVerif.Text.Trim() + "'");
+                        foreach (DataRow Row in Result) { DTV.ImportRow(Row); }
+                        DdlLicVer.DataSource = DTV;
+                        DdlLicVer.DataTextField = "Licencia";
+                        DdlLicVer.DataValueField = "Codigo";
+                        DdlLicVer.DataBind();
                     }
                     DdlLicVer.Enabled = Edi;
                     CkbTearDown.Enabled = Edi;
@@ -923,7 +1016,6 @@ namespace _77NeoWeb.Forms.Manto
             }
             else
             {
-                DdlOtRte.Enabled = false;
                 DdlEstad.Enabled = Edi;
                 DdlTipRte.Enabled = Edi;
                 DdlFuente.Enabled = Edi;
@@ -937,8 +1029,6 @@ namespace _77NeoWeb.Forms.Manto
                 DdlLicGene.Enabled = Edi;
                 TxtFecDet.Enabled = Edi;
                 TxtFecPry.Enabled = Edi;
-                if (DdlOtRte.Text.Equals("0") || DdlOtRte.Text.Equals(""))
-                { DdlOtRte.Enabled = Edi; }
                 DdlBasRte.Enabled = Edi;
                 DdlCumpl.Enabled = ViewState["UsuDefecto"].Equals("S") ? false : Edi;
                 DdlLicCump.Enabled = Edi;
@@ -967,7 +1057,7 @@ namespace _77NeoWeb.Forms.Manto
                         { VbMnsjIdm = row["Texto"].ToString().Trim(); }
                         DdlPnRte.ToolTip = VbMnsjIdm; TxtSnRte.ToolTip = VbMnsjIdm;
                     }
-                    if (DdlPnRte.Text.Trim().Equals("") && !DdlOtRte.Text.Trim().Equals("0") && TxtNumLv.Text.Trim().Equals("") && ViewState["ESTAPPT"].ToString().Equals("N"))
+                    if (DdlPnRte.Text.Trim().Equals("") && !DdlOtRte.Text.Trim().Equals("0")  && ViewState["ESTAPPT"].ToString().Equals("N"))
                     { DdlAeroRte.Enabled = DdlAeroRte.Text.Equals("0") ? Edi : false; }
                 }
                 else

@@ -136,8 +136,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
             {
                 string VbAplica;
                 int VbCaso;
-                string TxQry = "EXEC SP_ConfiguracionV2_ 19,'FrmReferencianew','FrmReferencianew','','','" + Session["Nit77Cia"].ToString() + "',2,3,0,0,'01-01-1','02-01-1','03-01-1'";
+                string TxQry = "EXEC SP_ConfiguracionV2_ 19,'FrmReferencianew','FrmReferencianew','','','" + Session["Nit77Cia"].ToString() + "',2,3,0, @ICC,'01-01-1','02-01-1','03-01-1'";
                 SqlCommand Comando = new SqlCommand(TxQry, sqlCon);
+                Comando.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                 sqlCon.Open();
                 SqlDataReader Regs = Comando.ExecuteReader();
                 while (Regs.Read())
@@ -874,7 +875,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 ActivarBotones(false, true, false, false, false);
                 DataRow[] Result = Idioma.Select("Objeto= 'BotonIngOk'");
                 foreach (DataRow row in Result)
-                    ViewState["CRUD"] = "Modif";
+                { BtnModificar.Text = row["Texto"].ToString().Trim(); }
+                ViewState["CRUD"] = "Modif";
                 ActivarCampos(false, true, "Modificar");
                 Result = Idioma.Select("Objeto= 'IbtUpdateOnC'");
                 foreach (DataRow row in Result)
@@ -951,7 +953,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                             }
                         }
                     }
-                    DataRow[] Result = Idioma.Select("Objeto= 'IbtEdit'");
+                    DataRow[] Result = Idioma.Select("Objeto= 'BotonMod'");
                     foreach (DataRow row in Result)
                     { BtnModificar.Text = row["Texto"].ToString().Trim(); }
                     ActivarBotones(true, true, true, true, true);
@@ -972,7 +974,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
         }
         protected void BtnConsultar_Click(object sender, EventArgs e)
         {
-            RdbBusqR.Checked = true;
+            RdbBusqP.Checked = true;
             TxtBusqueda.Text = "";
             BIndDataBusq("77NEO");
             PnlCampos.Visible = false;
@@ -2509,13 +2511,19 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = string.Format("EXEC SP_TablasIngenieria 2,@PNAct,'{0}','{1}','','','','','','',0,0,0,0,0,'{2}','01-01-1','02-01-1','03-01-1'",
-                        ViewState["NewRef"].ToString(), Session["C77U"].ToString(), Session["!dC!@"]);
+                    VBQuery = string.Format("EXEC SP_TablasIngenieria 2,@PNAct,@NwRef, @Usu,'','','','','','',0,0,0,0,0,@IdCia,'01-01-1','02-01-1','03-01-1'");
                     using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         try
                         {
-                            sqlCmd.Parameters.AddWithValue("@PNAct", ViewState["VbPNSI"].ToString());
+                            string VbPnActl = ViewState["VbPNSI"].ToString().Trim();
+                            string VbNRef = ViewState["NewRef"].ToString().Trim();
+
+
+                            sqlCmd.Parameters.AddWithValue("@PNAct", VbPnActl);
+                            sqlCmd.Parameters.AddWithValue("@NwRef", VbNRef);
+                            sqlCmd.Parameters.AddWithValue("@Usu", Session["C77U"].ToString().Trim());
+                            sqlCmd.Parameters.AddWithValue("@IdCia", Session["!dC!@"].ToString().Trim());
                             sqlCmd.ExecuteNonQuery();
                             Transac.Commit();
                             ViewState["VbPNSI"] = "";
@@ -2560,13 +2568,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
             if (RdbRefCRef.Checked == true)
             {
-                LblRefCambRef.Text = VbText + ": " + HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[1].Text);
-                ViewState["NewRef"] = HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[1].Text);
+                LblRefCambRef.Text = VbText + ": " + HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[2].Text);
+                ViewState["NewRef"] = HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[2].Text);
             }
             if (RdbPnCRef.Checked == true)
             {
                 LblRefCambRef.Text = VbText + ": " + HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[2].Text);
-                ViewState["NewRef"] = HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[1].Text);
+                ViewState["NewRef"] = HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[2].Text);
             }
         }
         protected void GrdCambioRef_PageIndexChanging(object sender, GridViewPageEventArgs e)

@@ -408,8 +408,8 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     {
                         try
                         {
-                            string borr = GrdDatos.DataKeys[e.RowIndex].Value.ToString();
-                            sqlCmd.Parameters.AddWithValue("@id", GrdDatos.DataKeys[e.RowIndex].Value.ToString());
+                            string VbId = GrdDatos.DataKeys[e.RowIndex].Value.ToString().Trim();
+                            sqlCmd.Parameters.AddWithValue("@id", VbId);
                             sqlCmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                             sqlCmd.ExecuteNonQuery();
                             Transac.Commit();

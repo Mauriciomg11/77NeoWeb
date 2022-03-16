@@ -85,7 +85,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 int VbCaso;
                 string TxQry = string.Format("EXEC SP_HabilitarCampos @Nit,@F,1,'',0,'',0,'',0,'',0,'',0,'',0,'',0,'',0");
                 SqlCommand SC = new SqlCommand(TxQry, sqlCon);
-                SC.Parameters.AddWithValue("@Nit", Session["Nit77Cia"].ToString());
+                SC.Parameters.AddWithValue("@Nit", Session["!dC!@"].ToString());
                 SC.Parameters.AddWithValue("@F", "MRO");
                 sqlCon.Open();
                 SqlDataReader Regs = SC.ExecuteReader();

@@ -166,10 +166,10 @@
                 <br />
                 <div id="Botones" class="row">
                     <div class="col-sm-1">
-                        <asp:Button ID="BtnConsultar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnConsultar_Click" OnClientClick="target ='';" Text="consultar" />
+                        <asp:Button ID="BtnEjecutar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnEjecutar_Click" OnClientClick="target ='';" Text="ejecutar" />
                     </div>
                     <div class="col-sm-1">
-                        <asp:Button ID="BtnEjecutar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnEjecutar_Click" OnClientClick="target ='';" Text="ejecutar" />
+                        <asp:Button ID="BtnConsultar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnConsultar_Click" OnClientClick="target ='';" Text="consultar" />
                     </div>
                     <div class="col-sm-1">
                         <asp:CheckBox ID="CkbAlterno" runat="server" CssClass="LblEtiquet" Text="alternos" />

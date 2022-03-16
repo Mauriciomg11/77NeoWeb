@@ -264,17 +264,17 @@
                                     <div class="CentrarGrid pre-scrollable">
                                         <h6 class="TextoSuperior">
                                             <asp:Label ID="LblTitAlertaOTDuplicadas" runat="server" Text="OT duplicadas" /></h6>
-                                        <asp:GridView ID="GrdAlrtOtDuplicada" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
+                                        <asp:GridView ID="GrdAlrtOtDuplicada" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames ="Propuesta,OT"
                                             CssClass="GridControl DiseñoGrid table-sm" GridLines="Both">
                                             <Columns>
                                                 <asp:TemplateField HeaderText="Propuesta">
                                                     <ItemTemplate>
-                                                        <asp:Label Text='<%# Eval("Propuesta") %>' runat="server" />
+                                                        <asp:Label Text='<%# Eval("CodigoPPT") %>' runat="server" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Ot">
                                                     <ItemTemplate>
-                                                        <asp:Label Text='<%# Eval("OT") %>' runat="server" />
+                                                        <asp:Label Text='<%# Eval("CodigoOT") %>' runat="server" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -302,7 +302,7 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Propuesta">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="LblIdPpt" Text='<%# Eval("IdPropuesta") %>' runat="server" />
+                                                        <asp:Label ID="LblIdPpt" Text='<%# Eval("CodigoPPT") %>' runat="server" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField FooterStyle-Width="3%">

@@ -81,8 +81,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
             {
                 string VbAplica;
                 int VbCaso;
-                string TxQry = "EXEC SP_ConfiguracionV2_ 19,'PONDERADO','PONDERADO','','','" + Session["Nit77Cia"].ToString() + "',1,2,0,0,'01-01-1','02-01-1','03-01-1'";
+                string TxQry = "EXEC SP_ConfiguracionV2_ 19,'PONDERADO','PONDERADO','','','" + Session["Nit77Cia"].ToString() + "',1,2,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                 SqlCommand Comando = new SqlCommand(TxQry, sqlCon);
+                Comando.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                 sqlCon.Open();
                 SqlDataReader Regs = Comando.ExecuteReader();
                 while (Regs.Read())
@@ -412,6 +413,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
         }
         protected void BtnModificar_Click(object sender, EventArgs e)
         {
+            DateTime? VbFecSL;
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (RdbInactivo.Checked == true)
             {
@@ -464,17 +466,24 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 AsignarValores();
                 if (Session["VldrElem"].ToString() == "N") { return; }
 
-                string VbMnsj = Cnx.ValidarFechas2(TxtFecRec.Text.Trim(), TxtFecShelfLife.Text.Trim(), 2);
-                if (!VbMnsj.ToString().Trim().Equals(""))
+                if (TxtFecShelfLife.Enabled == true)
                 {
-                    DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
-                    foreach (DataRow row in Result)
-                    { VbMnsj = row["Texto"].ToString().Trim(); }
-                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
-                    Page.Title = ViewState["PageTit"].ToString(); TxtFecShelfLife.Focus();
-                    return;
+                    string VbMnsj = Cnx.ValidarFechas2(TxtFecRec.Text.Trim(), TxtFecShelfLife.Text.Trim(), 2);
+                    if (!VbMnsj.ToString().Trim().Equals(""))
+                    {
+                        DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                        foreach (DataRow row in Result)
+                        { VbMnsj = row["Texto"].ToString().Trim(); }
+                        ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                        Page.Title = ViewState["PageTit"].ToString(); TxtFecShelfLife.Focus();
+                        return;
+                    }
+                    VbFecSL = Convert.ToDateTime(TxtFecShelfLife.Text);
                 }
-
+                else
+                {
+                    VbFecSL = null;
+                }
                 Cnx.SelecBD();
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
@@ -487,10 +496,12 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         {
                             try
                             {
-                                SC.Parameters.AddWithValue("@PN", DdlPN.SelectedValue);
+                                SC.Parameters.AddWithValue("@PN", DdlPN.Text.Trim());
                                 SC.Parameters.AddWithValue("@SN", TxtSN.Text.Trim());
                                 SC.Parameters.AddWithValue("@Act", RdbActivo.Checked == true ? 1 : 0);
-                                SC.Parameters.AddWithValue("@FecSL", Convert.ToDateTime(TxtFecShelfLife.Text));
+                                if (VbFecSL== null)
+                                { SC.Parameters.AddWithValue("@FecSL", VbFecSL.ToString()); }
+                                else { SC.Parameters.AddWithValue("@FecSL", VbFecSL); }                               
                                 SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                                 SC.ExecuteNonQuery();
                                 Transac.Commit();

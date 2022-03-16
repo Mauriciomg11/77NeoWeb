@@ -254,7 +254,11 @@
                                     </table>
                                 </ContentTemplate>
                                 <Triggers>
-                                    <asp:AsyncPostBackTrigger ControlID="DdlBusq" EventName="TextChanged" />
+                                    <asp:AsyncPostBackTrigger ControlID="DdlBusq" EventName="TextChanged" />     
+                                    <asp:PostBackTrigger ControlID="IbtFind" />
+                                    <asp:PostBackTrigger ControlID="IbtPrint" />
+                                    <asp:PostBackTrigger ControlID="IbtRecurso" />
+                                    <asp:PostBackTrigger ControlID="IbtGenerOT" />
                                 </Triggers>
                             </asp:UpdatePanel>
                         </td>
@@ -407,6 +411,8 @@
                                 <Triggers>
                                     <asp:AsyncPostBackTrigger ControlID="DdlGrupo" EventName="TextChanged" />
                                     <asp:PostBackTrigger ControlID="BtnConfigContdrInic" />
+                                    <asp:PostBackTrigger ControlID="IbtUpdate" />
+                                    <asp:PostBackTrigger ControlID="IbtAdd" />
                                 </Triggers>
                             </asp:UpdatePanel>
                         </td>

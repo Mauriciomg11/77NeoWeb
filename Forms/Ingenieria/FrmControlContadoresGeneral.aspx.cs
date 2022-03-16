@@ -81,6 +81,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     BtnAjusConve.Text = bO.Equals("BtnAjusConve") ? bT : BtnAjusConve.Text;
                     BtnAjusConve.ToolTip = bO.Equals("BtnAjusConveTT") ? bT : BtnAjusConve.ToolTip;
                     LblSubTitCorreContLVSinProc.Text = bO.Equals("LblSubTitCorreContLVSinProc") ? bT : LblSubTitCorreContLVSinProc.Text;
+                    LblSubTitCorrContHK.Text = bO.Equals("LblHLVSinPrc") ? bT : LblSubTitCorrContHK.Text;
                     LblSubTitCorrContLV.Text = bO.Equals("LblSubTitCorrContLV") ? bT : LblSubTitCorrContLV.Text;
                     LblSubTitCorrContProcesar.Text = bO.Equals("LblSubTitCorrContProcesar") ? bT : LblSubTitCorrContProcesar.Text;
                     LblSubTitCorreContDatosLV.Text = bO.Equals("LblSubTitCorreContDatosLV") ? bT : LblSubTitCorreContDatosLV.Text;

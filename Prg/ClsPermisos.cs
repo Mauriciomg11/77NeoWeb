@@ -53,21 +53,21 @@ namespace _77NeoWeb.prg
                     SC.Parameters.AddWithValue("@Act", VbAct);
                     SC.Parameters.AddWithValue("@Idm", System.Web.HttpContext.Current.Session["77IDM"].ToString());
                     SC.Parameters.AddWithValue("@ICC", System.Web.HttpContext.Current.Session["!dC!@"].ToString());
-                    SqlDataReader registro = SC.ExecuteReader();
-                    if (registro.Read())
+                    SqlDataReader SDR = SC.ExecuteReader();
+                    if (SDR.Read())
                     {
                         this.AccesoFrm = 1;
-                        this.Ingresar = Convert.ToInt32(registro["Ingresar"]);
-                        this.Modificar = Convert.ToInt32(registro["Modificar"]);
-                        this.Consultar = Convert.ToInt32(registro["Consultar"]);
-                        this.Eliminar = Convert.ToInt32(registro["Eliminar"]);
-                        this.Imprimir = Convert.ToInt32(registro["imprimir"]);
-                        this.CE1 = Convert.ToInt32(registro["CasoEspecial1"]);
-                        this.CE2 = Convert.ToInt32(registro["CasoEspecial2"]);
-                        this.CE3 = Convert.ToInt32(registro["CasoEspecial3"]);
-                        this.CE4 = Convert.ToInt32(registro["CasoEspecial4"]);
-                        this.CE5 = Convert.ToInt32(registro["CasoEspecial5"]);
-                        this.CE6 = Convert.ToInt32(registro["CasoEspecial6"]);
+                        this.Ingresar = Convert.ToInt32(SDR["Ingresar"]);
+                        this.Modificar = Convert.ToInt32(SDR["Modificar"]);
+                        this.Consultar = Convert.ToInt32(SDR["Consultar"]);
+                        this.Eliminar = Convert.ToInt32(SDR["Eliminar"]);
+                        this.Imprimir = Convert.ToInt32(SDR["imprimir"]);
+                        this.CE1 = Convert.ToInt32(SDR["CasoEspecial1"]);
+                        this.CE2 = Convert.ToInt32(SDR["CasoEspecial2"]);
+                        this.CE3 = Convert.ToInt32(SDR["CasoEspecial3"]);
+                        this.CE4 = Convert.ToInt32(SDR["CasoEspecial4"]);
+                        this.CE5 = Convert.ToInt32(SDR["CasoEspecial5"]);
+                        this.CE6 = Convert.ToInt32(SDR["CasoEspecial6"]);
                     }
                 }
             }            

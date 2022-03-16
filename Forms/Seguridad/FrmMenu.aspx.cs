@@ -42,7 +42,7 @@ namespace _77NeoWeb.Forms.Seguridad
                 if (Session["C77U"].ToString().Trim().Equals("00000082") || (Session["C77U"].ToString().Trim().Equals("00000083") && Session["!dC!@"].ToString().Trim().Equals("1"))) { IbtAbrirIdioma.Visible = true; }
             }
         }
-        void ModSeguridad()
+        protected void ModSeguridad()
         {
             ViewState["VblIngMS"] = 1;
             ViewState["VblModMS"] = 1;

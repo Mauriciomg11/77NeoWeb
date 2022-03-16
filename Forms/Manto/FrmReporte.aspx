@@ -416,7 +416,7 @@
                         <%--   --%>
                     </asp:Table>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-7">
                             <asp:Button ID="BtnIngresar" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnIngresar_Click" Text="Ingresar" />
                             <asp:Button ID="BtnModificar" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnModificar_Click" Text="Modificar" />
                             <asp:Button ID="BtnEliminar" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnEliminar_Click" Text="Eliminar" OnClientClick="return confirm('¿Desea eliminar el registro?');" />
@@ -428,7 +428,7 @@
                             <asp:Button ID="BtnNotificar" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnNotificar_Click" Text="Notificar" ToolTip="Notificar el reporte" OnClientClick="return confirm('¿Desea notificar el reporte?');" />
 
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                             <h6 class="TextoSuperior">
                                 <asp:Label ID="LblTitAdju" runat="server" Text="Adjuntos" /></h6>
                             <asp:GridView ID="GrdAdj" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdAdjuntos,Ruta"

@@ -132,7 +132,9 @@
     <Content Include="Forms\Almacen\FrmAlertaSolicitudNuevaRepa.aspx" />
     <Content Include="Forms\Almacen\FrmAlertaVencSP.aspx" />
     <Content Include="Forms\Almacen\FrmConsultaMovimientos.aspx" />
+    <Content Include="Forms\Almacen\FrmMovimientoActivo.aspx" />
     <Content Include="Forms\Almacen\FrmReferenciaConReservas.aspx" />
+    <Content Include="Forms\Almacen\FrmSalConsumoMatCoMH.aspx" />
     <Content Include="Forms\Almacen\FrmSolicitudPedido.aspx" />
     <Content Include="Forms\Almacen\FrmUbicacionElemento.aspx" />
     <Content Include="Forms\Configuracion\ConfigManto\FrmCategoriaMel.aspx" />
@@ -346,12 +348,26 @@
     <Compile Include="Forms\Almacen\FrmConsultaMovimientos.aspx.designer.cs">
       <DependentUpon>FrmConsultaMovimientos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Almacen\FrmMovimientoActivo.aspx.cs">
+      <DependentUpon>FrmMovimientoActivo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmMovimientoActivo.aspx.designer.cs">
+      <DependentUpon>FrmMovimientoActivo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Almacen\FrmReferenciaConReservas.aspx.cs">
       <DependentUpon>FrmReferenciaConReservas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Forms\Almacen\FrmReferenciaConReservas.aspx.designer.cs">
       <DependentUpon>FrmReferenciaConReservas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmSalConsumoMatCoMH.aspx.cs">
+      <DependentUpon>FrmSalConsumoMatCoMH.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmSalConsumoMatCoMH.aspx.designer.cs">
+      <DependentUpon>FrmSalConsumoMatCoMH.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Almacen\FrmSolicitudPedido.aspx.cs">
       <DependentUpon>FrmSolicitudPedido.aspx</DependentUpon>

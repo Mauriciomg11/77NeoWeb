@@ -213,15 +213,6 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.TextBox TxtDescrPn;
 
         /// <summary>
-        /// Control BtnConsultar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnConsultar;
-
-        /// <summary>
         /// Control BtnEjecutar.
         /// </summary>
         /// <remarks>
@@ -229,6 +220,15 @@ namespace _77NeoWeb.Forms.Almacen
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnEjecutar;
+
+        /// <summary>
+        /// Control BtnConsultar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnConsultar;
 
         /// <summary>
         /// Control CkbAlterno.

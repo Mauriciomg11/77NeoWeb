@@ -99,7 +99,7 @@ namespace _77NeoWeb.Forms.Almacen
                 ViewState["CCostoDefault"] = "S";//Ccosto Stock ALmacen por defecto
                 string TxQry = string.Format("EXEC SP_HabilitarCampos @Nit,@F,2,'',0,'',0,'',0,'',0,'',0,'',0,'',0,'',0");
                 SqlCommand SC = new SqlCommand(TxQry, sqlCon);
-                SC.Parameters.AddWithValue("@Nit", Session["Nit77Cia"].ToString());
+                SC.Parameters.AddWithValue("@Nit", Session["!dC!@"].ToString());
                 SC.Parameters.AddWithValue("@F", "CENTROCOSTO");
                 sqlCon.Open();
                 SqlDataReader Regs = SC.ExecuteReader();
@@ -162,7 +162,7 @@ namespace _77NeoWeb.Forms.Almacen
                     LblCodPedd.Text = bO.Equals("RdbBusqNumSlPd") ? bT : LblCodPedd.Text;
                     LblFech.Text = bO.Equals("LblFechMstr") ? bT : LblFech.Text;
                     LblPriord.Text = bO.Equals("LblPriord") ? bT : LblPriord.Text;
-                    LblTipo.Text = bO.Equals("LblTipo") ? bT : LblTipo.Text;
+                    LblTipo.Text = bO.Equals("TipoMstr") ? bT : LblTipo.Text;
                     LblPpt.Text = bO.Equals("LblPpt") ? bT : LblPpt.Text;
                     LblEstd.Text = bO.Equals("LblEstadoMst") ? bT : LblEstd.Text;
                     LblCcosto.Text = bO.Equals("LblCcosto") ? bT : LblCcosto.Text;
@@ -375,7 +375,7 @@ namespace _77NeoWeb.Forms.Almacen
 
             VbCodAnt = DdlPpt.Text.Trim();
             DdlPpt.DataSource = DSTDdl.Tables[2];
-            DdlPpt.DataTextField = "Propuesta";
+            DdlPpt.DataTextField = "CodigoPPT";
             DdlPpt.DataValueField = "IdPropuesta";
             DdlPpt.DataBind();
             DdlPpt.Text = VbCodAnt;

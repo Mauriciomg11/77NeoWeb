@@ -102,6 +102,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     if (bO.Equals("Caption"))
                     { Page.Title = bT; ViewState["PageTit"] = bT; }
                     TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
+                    LblEmsa.Text = bO.Equals("LblEmsa") ? bT : LblEmsa.Text;
                     LblCodUsu.Text = bO.Equals("LblCodUsu") ? bT : LblCodUsu.Text;
                     LblCedul.Text = bO.Equals("LblCedul") ? bT : LblCedul.Text;
                     LblNombr.Text = bO.Equals("LblNombr") ? bT : LblNombr.Text;

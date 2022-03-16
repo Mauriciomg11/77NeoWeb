@@ -94,6 +94,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     BtnUbicaTec.Text = bO.Equals("BtnUbicaTec") ? bT : BtnUbicaTec.Text;
                     BtnUbicaTec.ToolTip = bO.Equals("BtnUbicaTecTT") ? bT : BtnUbicaTec.ToolTip;
                     LblTitServicios.Text = bO.Equals("LblTitServicios") ? bT : LblTitServicios.Text;
+                    GrdDatos.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDatos.EmptyDataText;
                     GrdDatos.Columns[0].HeaderText = bO.Equals("LblAeronave") ? bT : GrdDatos.Columns[0].HeaderText;
                     GrdDatos.Columns[1].HeaderText = bO.Equals("GrdDesc") ? bT : GrdDatos.Columns[1].HeaderText;
                     GrdDatos.Columns[2].HeaderText = bO.Equals("GrdDoc") ? bT : GrdDatos.Columns[2].HeaderText;
@@ -111,6 +112,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     //**********************************Servicios Reseteable  ******************************************
                     IbtCerrarSvcReset.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarSvcReset.ToolTip;
                     LblTitSvcReset.Text = bO.Equals("LblTitServicios") ? bT : LblTitSvcReset.Text;
+                    GrdSvcReset.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdSvcReset.EmptyDataText;
                     GrdSvcReset.Columns[0].HeaderText = bO.Equals("GrdSvc") ? bT : GrdSvcReset.Columns[0].HeaderText;
                     GrdSvcReset.Columns[1].HeaderText = bO.Equals("GrdFrec") ? bT : GrdSvcReset.Columns[1].HeaderText;
                     GrdSvcReset.Columns[2].HeaderText = bO.Equals("GrdContdr") ? bT : GrdSvcReset.Columns[2].HeaderText;
@@ -120,6 +122,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     //**********************************Ubicación Técnica ******************************************
                     IbtCerrarUbicTec.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarUbicTec.ToolTip;
                     LblTitUbicTec.Text = bO.Equals("LblTitUbicTec") ? bT : LblTitUbicTec.Text;
+                    GrdUbicTec.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdUbicTec.EmptyDataText;
                     GrdUbicTec.Columns[0].HeaderText = bO.Equals("LblAeronave") ? bT : GrdUbicTec.Columns[0].HeaderText;
                     GrdUbicTec.Columns[1].HeaderText = bO.Equals("GrdUltNvl") ? bT : GrdUbicTec.Columns[1].HeaderText;
                     GrdUbicTec.Columns[2].HeaderText = bO.Equals("GrdDesc") ? bT : GrdUbicTec.Columns[2].HeaderText;

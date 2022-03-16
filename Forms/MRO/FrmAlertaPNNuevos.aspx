@@ -57,7 +57,7 @@
                     <div class="col-sm-12">
                         <div class="ScrollDet">
                             <asp:GridView ID="GrdDet" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false" 
-                                DataKeyNames="IdPnNoExistente, CodIdDetalleRes,IdDetPedido,IdDetPropuesta,IdDetPropHk,CodIdDetElemPlanInstrumento,IdSrvManto,CodPedido"
+                                DataKeyNames="IdPnNoExistente, CodIdDetalleRes,IdDetPedido,IdDetPropuesta,IdDetPropHk,CodIdDetElemPlanInstrumento,IdSrvManto,CodPedido,IdPropuesta, CodOrdenTrabajo,Reporte"
                                 CssClass="DiseñoGrid table table-sm" GridLines="Both" Width="100%" EmptyDataText="No existen registros ..!"
                                 OnRowDataBound="GrdDet_RowDataBound">
                                 <Columns>
@@ -98,17 +98,17 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="ot" HeaderStyle-Width="3%">
                                         <ItemTemplate>
-                                            <asp:Label ID="LblOt" Text='<%# Eval("CodOrdenTrabajo") %>' runat="server" Width="100%" />
+                                            <asp:Label ID="LblOt" Text='<%# Eval("CodigoOT") %>' runat="server" Width="100%" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="reprte" HeaderStyle-Width="3%">
                                         <ItemTemplate>
-                                            <asp:Label ID="LblRte" Text='<%# Eval("Reporte") %>' runat="server" Width="100%" />
+                                            <asp:Label ID="LblRte" Text='<%# Eval("CodigoRTE") %>' runat="server" Width="100%" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="propuesta" HeaderStyle-Width="3%">
                                         <ItemTemplate>
-                                            <asp:Label ID="LblPpt" Text='<%# Eval("IdPropuesta") %>' runat="server" Width="100%" />
+                                            <asp:Label ID="LblPpt" Text='<%# Eval("CodigoPPT") %>' runat="server" Width="100%" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="matricula">
@@ -148,6 +148,7 @@
             </div>
         </ContentTemplate>
         <Triggers>
+            <asp:PostBackTrigger ControlID="BtnEditar" />
             <asp:PostBackTrigger ControlID="BtnReferencia" />
         </Triggers>
     </asp:UpdatePanel>

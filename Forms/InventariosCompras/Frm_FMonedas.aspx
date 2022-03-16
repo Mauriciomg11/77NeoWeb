@@ -223,7 +223,7 @@
                             </table>
                             <div class="row ">
                                 <div class="col-sm-4 CentrarGrdHistrc ">
-                                    <asp:GridView ID="GrdDatosH" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" DataKeyNames="CodIdTasa, UltFecMod"
+                                    <asp:GridView ID="GrdDatosH" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" DataKeyNames="CodIdTasa, UltFecModSis"
                                         CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true"
                                         OnRowEditing="GrdDatosH_RowEditing" OnRowUpdating="GrdDatosH_RowUpdating" OnRowCancelingEdit="GrdDatosH_RowCancelingEdit"
                                         OnRowDataBound="GrdDatosH_RowDataBound">
