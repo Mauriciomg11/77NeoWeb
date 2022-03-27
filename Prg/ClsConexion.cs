@@ -159,13 +159,9 @@ namespace _77NeoWeb.prg
             }
             else
             {
-                return ConexDllo();
+                 //return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "77NEO01", "DbConfigWeb", "sa", "admindemp");
+               return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
             }
-        }
-        public string ConexDllo()
-        {
-            return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "77NEO01", "DbConfigWeb", "sa", "admindemp");
-           // return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**"); 
         }
         public string GetConex() { return this.VblConexion; }
         public void RetirarPuntos(string VbCampo)
