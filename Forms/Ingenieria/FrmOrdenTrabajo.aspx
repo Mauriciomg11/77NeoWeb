@@ -137,9 +137,11 @@
                 <asp:TextBox ID="TxtOt" runat="server" CssClass="Form-control-sm heightCampo" Width="10%" step="0.01" Enabled="false" Visible="false" />
                 <asp:TextBox ID="TxtCodOt" runat="server" CssClass="Form-control-sm heightCampo" Width="10%" step="0.01" Enabled="false" />
                 <asp:Label ID="LblOtPpal" runat="server" CssClass="LblEtiquet" Text="O.T. Master:" />
-                <asp:TextBox ID="TxtOtPpal" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
+                <asp:TextBox ID="TxtOtPpal" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible="false"/>
+                <asp:TextBox ID="TxtOtCodOTPpal" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                 <asp:Label ID="LblOtReporte" runat="server" CssClass="LblEtiquet" Text="Reporte:" />
-                <asp:TextBox ID="TxtOtReporte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
+                <asp:TextBox ID="TxtOtReporte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible="false" />
+                <asp:TextBox ID="TxtOtCodRTE" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
                 <asp:Label ID="LblOtRepacion" runat="server" CssClass="LblEtiquet" Text="Reparación:" />
                 <asp:TextBox ID="TxtOtRepacion" runat="server" CssClass="Form-control-sm heightCampo" Width="10%" Enabled="false" />
                 <asp:Label ID="LblOtPrioridad" runat="server" CssClass="LblEtiquet" Text="Prioridad:" />

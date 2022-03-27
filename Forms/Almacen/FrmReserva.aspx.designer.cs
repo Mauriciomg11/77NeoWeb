@@ -78,6 +78,42 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.TextBox TxtNumRva;
 
         /// <summary>
+        /// Control LblNumOT.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblNumOT;
+
+        /// <summary>
+        /// Control TxtNumOT.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtNumOT;
+
+        /// <summary>
+        /// Control LblNumRTE.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblNumRTE;
+
+        /// <summary>
+        /// Control TxtNumRTE.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtNumRTE;
+
+        /// <summary>
         /// Control LblEstado.
         /// </summary>
         /// <remarks>
@@ -112,6 +148,33 @@ namespace _77NeoWeb.Forms.Almacen
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtFechaRv;
+
+        /// <summary>
+        /// Control BtnConsultar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnConsultar;
+
+        /// <summary>
+        /// Control BtnExprt.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnExprt;
+
+        /// <summary>
+        /// Control BtnAlerta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnAlerta;
 
         /// <summary>
         /// Control LblMatr.
@@ -166,33 +229,6 @@ namespace _77NeoWeb.Forms.Almacen
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtSnElem;
-
-        /// <summary>
-        /// Control BtnConsultar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnConsultar;
-
-        /// <summary>
-        /// Control BtnExprt.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnExprt;
-
-        /// <summary>
-        /// Control BtnAlerta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnAlerta;
 
         /// <summary>
         /// Control LblTitDetRv.
@@ -303,6 +339,15 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.ImageButton IbtCerrarBusq;
 
         /// <summary>
+        /// Control RdbBusqNumRsva.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RdbBusqNumRsva;
+
+        /// <summary>
         /// Control RdbBusqNumOT.
         /// </summary>
         /// <remarks>
@@ -310,6 +355,15 @@ namespace _77NeoWeb.Forms.Almacen
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton RdbBusqNumOT;
+
+        /// <summary>
+        /// Control RdbBusqNumRte.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RdbBusqNumRte;
 
         /// <summary>
         /// Control RdbBusqSN.

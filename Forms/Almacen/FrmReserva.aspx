@@ -96,6 +96,14 @@
                                 <asp:TextBox ID="TxtIdRva" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" Visible="false" />
                                 <asp:TextBox ID="TxtNumRva" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" />
                             </div>
+                               <div class="col-sm-2">
+                                <asp:Label ID="LblNumOT" runat="server" CssClass="LblEtiquet" Text="orden trabajo" />
+                                <asp:TextBox ID="TxtNumOT" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" />
+                            </div> 
+                            <div class="col-sm-2">
+                                <asp:Label ID="LblNumRTE" runat="server" CssClass="LblEtiquet" Text="reporte no." />
+                                <asp:TextBox ID="TxtNumRTE" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" />
+                            </div>
                             <div class="col-sm-2">
                                 <asp:Label ID="LblEstado" runat="server" CssClass="LblEtiquet" Text="estad" />
                                 <asp:TextBox ID="TxtEstado" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" />
@@ -103,8 +111,23 @@
                             <div class="col-sm-2">
                                 <asp:Label ID="LblFechaRv" runat="server" CssClass="LblEtiquet" Text="Fec" />
                                 <asp:TextBox ID="TxtFechaRv" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" />
+                            </div>                           
+                        </div>
+                        <br />
+                        <div id="botones" class="row">
+                            <div class="col-sm-1">
+                                <br />
+                                <asp:Button ID="BtnConsultar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnConsultar_Click" OnClientClick="target ='';" Text="consultar" />
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-1">
+                                 <br />
+                                <asp:Button ID="BtnExprt" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnExprt_Click" OnClientClick="target ='';" Text="exportar" />
+                            </div>
+                            <div class="col-sm-1">
+                                 <br />
+                                <asp:Button ID="BtnAlerta" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnAlerta_Click" OnClientClick="target ='_blank';" Text="alerta" />
+                            </div>
+                             <div class="col-sm-2">
                                 <asp:Label ID="LblMatr" runat="server" CssClass="LblEtiquet" Text="Hk" />
                                 <asp:TextBox ID="TxtMatr" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" />
                             </div>
@@ -115,18 +138,6 @@
                             <div class="col-sm-2">
                                 <asp:Label ID="LblSnElem" runat="server" CssClass="LblEtiquet" Text="S/N" />
                                 <asp:TextBox ID="TxtSnElem" runat="server" CssClass=" heightCampo" Enabled="false" Width="100%" />
-                            </div>
-                        </div>
-                        <br />
-                        <div id="botones" class="row">
-                            <div class="col-sm-1">
-                                <asp:Button ID="BtnConsultar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnConsultar_Click" OnClientClick="target ='';" Text="consultar" />
-                            </div>
-                            <div class="col-sm-1">
-                                <asp:Button ID="BtnExprt" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnExprt_Click" OnClientClick="target ='';" Text="exportar" />
-                            </div>
-                            <div class="col-sm-1">
-                                <asp:Button ID="BtnAlerta" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnAlerta_Click" OnClientClick="target ='_blank';" Text="alerta" />
                             </div>
                         </div>
                         <div id="Grids" class="row">
@@ -289,7 +300,9 @@
                         <table class="TablaBusqueda">
                             <tr>
                                 <td colspan="3">
+                                    <asp:RadioButton ID="RdbBusqNumRsva" runat="server" CssClass="LblEtiquet" Text="&nbsp reserva" Checked ="true"  GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqNumOT" runat="server" CssClass="LblEtiquet" Text="&nbsp ot" GroupName="Busq" />&nbsp&nbsp&nbsp
+                                    <asp:RadioButton ID="RdbBusqNumRte" runat="server" CssClass="LblEtiquet" Text="&nbsp reporte" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqSN" runat="server" CssClass="LblEtiquet" Text="&nbsp S/N:" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqPN" runat="server" CssClass="LblEtiquet" Text="&nbsp P/N:" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqHK" runat="server" CssClass="LblEtiquet" Text="&nbsp hk" GroupName="Busq" />
@@ -321,9 +334,19 @@
                                             </asp:UpdatePanel>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="reserva">
+                                      <asp:TemplateField HeaderText="reserva">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblRsva" Text='<%# Eval("CodNumOrdenTrab") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="o.t">
                                         <ItemTemplate>
                                             <asp:Label ID="LblOT" Text='<%# Eval("OT") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="reporte no">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblNumRte" Text='<%# Eval("CodigoRTE") %>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Aplica">
@@ -358,7 +381,7 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="estado">
                                         <ItemTemplate>
-                                            <asp:Label ID="LblEstado" Text='<%# Eval("Estado") %>' runat="server" />
+                                            <asp:Label ID="LblEstad" Text='<%# Eval("Estado") %>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>

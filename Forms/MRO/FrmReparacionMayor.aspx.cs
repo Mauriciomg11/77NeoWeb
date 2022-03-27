@@ -2850,6 +2850,7 @@ namespace _77NeoWeb.Forms.MRO
                 double VblCant;
                 int VblId = Convert.ToInt32(GrdRecursoF.DataKeys[e.RowIndex].Value.ToString());
                 VblPN = (GrdRecursoF.Rows[e.RowIndex].FindControl("TxtPNRF") as TextBox).Text.Trim();
+                string VbSDesc = (GrdRecursoF.Rows[e.RowIndex].FindControl("TxtDesRF") as TextBox).Text.Trim();
                 VblFase = (GrdRecursoF.Rows[e.RowIndex].FindControl("TxtFaseRF") as TextBox).Text.Trim().Equals("") ? 0 : Convert.ToInt32((GrdRecursoF.Rows[e.RowIndex].FindControl("TxtFaseRF") as TextBox).Text.Trim());
                 VblTxtCant = (GrdRecursoF.Rows[e.RowIndex].FindControl("TxtCantRF") as TextBox).Text.Trim().Equals("") ? "0" : (GrdRecursoF.Rows[e.RowIndex].FindControl("TxtCantRF") as TextBox).Text.Trim();
                 CultureInfo Culture = new CultureInfo("en-US");
@@ -2861,7 +2862,7 @@ namespace _77NeoWeb.Forms.MRO
                     sqlCon.Open();
                     using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        VBQuery = "EXEC SP_TablasIngenieria 5,@PN,@Us,'','','','','','','UPDATE',@IdPlIns,@IdSvc,@Cant,@Condc,@Fs,@ICC,'01-01-1','02-01-1','03-01-1'";
+                        VBQuery = "EXEC SP_TablasIngenieria 5,@PN,@Us, @Desc,'','','','','','UPDATE',@IdPlIns,@IdSvc,@Cant,@Condc,@Fs,@ICC,'01-01-1','02-01-1','03-01-1'";
 
                         using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
@@ -2869,6 +2870,7 @@ namespace _77NeoWeb.Forms.MRO
                             {
                                 SC.Parameters.AddWithValue("@PN", VblPN);
                                 SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
+                                SC.Parameters.AddWithValue("@Desc", VbSDesc);
                                 SC.Parameters.AddWithValue("@IdPlIns", VblId);
                                 SC.Parameters.AddWithValue("@IdSvc", TxtId.Text);
                                 SC.Parameters.AddWithValue("@Cant", VblCant);

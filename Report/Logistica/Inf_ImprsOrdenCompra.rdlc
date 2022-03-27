@@ -1016,6 +1016,7 @@
                         <Value>=First(Fields!Monto.Value, "DataSet3")</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
+                          <Format>'$' #,0.00;('$' #,0.00)</Format>
                         </Style>
                       </TextRun>
                     </TextRuns>
@@ -1037,6 +1038,7 @@
                   <PaddingRight>2pt</PaddingRight>
                   <PaddingTop>2pt</PaddingTop>
                   <PaddingBottom>2pt</PaddingBottom>
+                  <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
                 </Style>
               </Textbox>
               <Textbox Name="Textbox19">
@@ -1196,6 +1198,9 @@
                 <Height>0.2825cm</Height>
                 <Width>2.91302cm</Width>
                 <ZIndex>6</ZIndex>
+                <Visibility>
+                  <Hidden>=iif(First(Fields!ValorICA.Value, "DataSet3") = "0.00", true, false)</Hidden>
+                </Visibility>
                 <Style>
                   <Border>
                     <Style>None</Style>
@@ -1230,6 +1235,9 @@
                 <Height>0.2825cm</Height>
                 <Width>3.88939cm</Width>
                 <ZIndex>7</ZIndex>
+                <Visibility>
+                  <Hidden>=iif(First(Fields!ValorICA.Value, "DataSet3") = "0.00", true, false)</Hidden>
+                </Visibility>
                 <Style>
                   <Border>
                     <Style>None</Style>
@@ -1322,6 +1330,7 @@
                         <Style>
                           <FontSize>9pt</FontSize>
                           <FontWeight>Bold</FontWeight>
+                          <Format>'$'0,.00;('$'0,.00)</Format>
                           <TextDecoration>None</TextDecoration>
                         </Style>
                       </TextRun>
@@ -1350,6 +1359,7 @@
                   <PaddingRight>2pt</PaddingRight>
                   <PaddingTop>2pt</PaddingTop>
                   <PaddingBottom>2pt</PaddingBottom>
+                  <rd:FormatSymbolCulture>es-CO</rd:FormatSymbolCulture>
                 </Style>
               </Textbox>
               <Textbox Name="Textbox91">
@@ -1558,10 +1568,10 @@
           </RightBorder>
         </Style>
       </Body>
-      <Width>7.4409in</Width>
+      <Width>7.483in</Width>
       <Page>
         <PageHeader>
-          <Height>13.44694cm</Height>
+          <Height>13.89673cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <ReportItems>
             <Line Name="Line1">
@@ -2838,7 +2848,7 @@
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>Textbox67</rd:DefaultName>
-                  <Top>0.55577cm</Top>
+                  <Top>0.54085cm</Top>
                   <Height>0.94396cm</Height>
                   <Width>8.84876cm</Width>
                   <ZIndex>2</ZIndex>
@@ -2907,7 +2917,7 @@
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value>=First(Fields!MltlC15.Value, "DataSet2")</Value>
+                          <Value>=First(Fields!MltlC16.Value, "DataSet2")</Value>
                           <Style>
                             <FontSize>11pt</FontSize>
                             <FontWeight>Bold</FontWeight>
@@ -2920,38 +2930,6 @@
                   <rd:DefaultName>RazonSocial</rd:DefaultName>
                   <Height>0.54208cm</Height>
                   <Width>8.84876cm</Width>
-                  <Style>
-                    <Border>
-                      <Style>None</Style>
-                    </Border>
-                    <PaddingLeft>2pt</PaddingLeft>
-                    <PaddingRight>2pt</PaddingRight>
-                    <PaddingTop>2pt</PaddingTop>
-                    <PaddingBottom>2pt</PaddingBottom>
-                  </Style>
-                </Textbox>
-                <Textbox Name="RazonSocial12">
-                  <CanGrow>true</CanGrow>
-                  <KeepTogether>true</KeepTogether>
-                  <Paragraphs>
-                    <Paragraph>
-                      <TextRuns>
-                        <TextRun>
-                          <Value>=First(Fields!MltlC21.Value, "DataSet2")</Value>
-                          <Style>
-                            <FontSize>11pt</FontSize>
-                            <FontWeight>Bold</FontWeight>
-                          </Style>
-                        </TextRun>
-                      </TextRuns>
-                      <Style />
-                    </Paragraph>
-                  </Paragraphs>
-                  <rd:DefaultName>RazonSocial</rd:DefaultName>
-                  <Left>8.86745cm</Left>
-                  <Height>0.54208cm</Height>
-                  <Width>9.79918cm</Width>
-                  <ZIndex>1</ZIndex>
                   <Style>
                     <Border>
                       <Style>None</Style>
@@ -2979,10 +2957,11 @@
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>Textbox67</rd:DefaultName>
-                  <Top>0.55577cm</Top>
+                  <Top>0.58491cm</Top>
+                  <Left>0.01869cm</Left>
                   <Height>0.94396cm</Height>
                   <Width>8.84876cm</Width>
-                  <ZIndex>2</ZIndex>
+                  <ZIndex>1</ZIndex>
                   <Style>
                     <Border>
                       <Style>None</Style>
@@ -3010,10 +2989,43 @@
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>Textbox69</rd:DefaultName>
-                  <Top>0.55577cm</Top>
+                  <Top>0.58491cm</Top>
                   <Left>8.86745cm</Left>
                   <Height>0.94396cm</Height>
                   <Width>9.79918cm</Width>
+                  <ZIndex>2</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox7">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=First(Fields!MltlC21.Value, "DataSet2")</Value>
+                          <Style>
+                            <FontSize>11pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox7</rd:DefaultName>
+                  <Top>0.00878cm</Top>
+                  <Left>8.86745cm</Left>
+                  <Height>0.5333cm</Height>
+                  <Width>9.82606cm</Width>
                   <ZIndex>3</ZIndex>
                   <Style>
                     <Border>
@@ -3027,10 +3039,10 @@
                 </Textbox>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
-              <Top>11.94721cm</Top>
+              <Top>11.91807cm</Top>
               <Left>0.01588cm</Left>
-              <Height>1.49973cm</Height>
-              <Width>18.82538cm</Width>
+              <Height>1.52887cm</Height>
+              <Width>18.85226cm</Width>
               <ZIndex>15</ZIndex>
               <Style>
                 <Border>
@@ -3048,7 +3060,7 @@
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>1.53458cm</Height>
+          <Height>2.14312cm</Height>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
             <Textbox Name="Textbox66">

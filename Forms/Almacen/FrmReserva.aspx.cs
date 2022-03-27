@@ -45,7 +45,6 @@ namespace _77NeoWeb.Forms.Almacen
             {
                 TitForm.Text = "";
                 ModSeguridad();
-                RdbBusqNumOT.Checked = true;
                 MlVw.ActiveViewIndex = 0;
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
@@ -95,6 +94,8 @@ namespace _77NeoWeb.Forms.Almacen
                     TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
                     BtnConsultar.Text = bO.Equals("IbtConsultar") ? bT : BtnConsultar.Text;
                     LblNumRva.Text = bO.Equals("LblNumRv") ? bT : LblNumRva.Text;
+                    LblNumOT.Text = bO.Equals("LblOTMstr") ? bT : LblNumOT.Text;
+                    LblNumRTE.Text = bO.Equals("RdbBusqNumRte") ? bT : LblNumRTE.Text;
                     LblEstado.Text = bO.Equals("LblEstadoMst") ? bT : LblEstado.Text;
                     LblFechaRv.Text = bO.Equals("GrdFecRva") ? bT : LblFechaRv.Text;
                     LblMatr.Text = bO.Equals("LblAeronaveMstr") ? bT : LblMatr.Text;
@@ -132,15 +133,19 @@ namespace _77NeoWeb.Forms.Almacen
                     IbtCerrarBusq.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarBusq.ToolTip;
                     LblBusqueda.Text = bO.Equals("MstrLblBusq") ? bT + ":" : LblBusqueda.Text;
                     LblTitOpcBusq.Text = bO.Equals("LblTitOTOpcBusqueda") ? bT : LblTitOpcBusq.Text;
-                    RdbBusqNumOT.Text = bO.Equals("LblOTMstr") ? bT + ":" : RdbBusqNumOT.Text;
-                    RdbBusqHK.Text = bO.Equals("LblAeronaveMstr") ? bT + ":" : RdbBusqHK.Text;
+                    RdbBusqNumRsva.Text = bO.Equals("LblNumRv") ? "&nbsp" + bT + ":" : RdbBusqNumRsva.Text;
+                    RdbBusqNumOT.Text = bO.Equals("LblOTMstr") ? "&nbsp" + bT + ":" : RdbBusqNumOT.Text;
+                    RdbBusqNumRte.Text = bO.Equals("RdbBusqNumRte") ? "&nbsp" + bT + ":" : RdbBusqNumRte.Text;
+                    RdbBusqHK.Text = bO.Equals("LblAeronaveMstr") ? "&nbsp" + bT + ":" : RdbBusqHK.Text;
                     GrdBusq.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdBusq.EmptyDataText;
-                    GrdBusq.Columns[1].HeaderText = bO.Equals("LblOTMstr") ? bT : GrdBusq.Columns[1].HeaderText;
-                    GrdBusq.Columns[2].HeaderText = bO.Equals("GrdAplicab") ? bT : GrdBusq.Columns[2].HeaderText;
-                    GrdBusq.Columns[5].HeaderText = bO.Equals("GrdCodHk") ? bT : GrdBusq.Columns[5].HeaderText;
-                    GrdBusq.Columns[6].HeaderText = bO.Equals("LblAeronaveMstr") ? bT : GrdBusq.Columns[6].HeaderText;
-                    GrdBusq.Columns[7].HeaderText = bO.Equals("GrdFecRv") ? bT : GrdBusq.Columns[7].HeaderText;
-                    GrdBusq.Columns[8].HeaderText = bO.Equals("LblEstadoMst") ? bT : GrdBusq.Columns[8].HeaderText;
+                    GrdBusq.Columns[1].HeaderText = bO.Equals("LblNumRv") ? bT : GrdBusq.Columns[1].HeaderText;
+                    GrdBusq.Columns[2].HeaderText = bO.Equals("LblOTMstr") ? bT : GrdBusq.Columns[2].HeaderText;
+                    GrdBusq.Columns[3].HeaderText = bO.Equals("RdbBusqNumRte") ? bT : GrdBusq.Columns[3].HeaderText;
+                    GrdBusq.Columns[4].HeaderText = bO.Equals("GrdAplicab") ? bT : GrdBusq.Columns[4].HeaderText;
+                    GrdBusq.Columns[7].HeaderText = bO.Equals("GrdCodHk") ? bT : GrdBusq.Columns[7].HeaderText;
+                    GrdBusq.Columns[8].HeaderText = bO.Equals("LblAeronaveMstr") ? bT : GrdBusq.Columns[8].HeaderText;
+                    GrdBusq.Columns[9].HeaderText = bO.Equals("GrdFecRv") ? bT : GrdBusq.Columns[9].HeaderText;
+                    GrdBusq.Columns[10].HeaderText = bO.Equals("LblEstadoMst") ? bT : GrdBusq.Columns[10].HeaderText;
                 }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
@@ -250,10 +255,14 @@ namespace _77NeoWeb.Forms.Almacen
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = "", VbOpcion = "OT";
+                string VbTxtSql = "", VbOpcion = "RSVA";
 
+                if (RdbBusqNumRsva.Checked == true)
+                { VbOpcion = "RSVA"; }
                 if (RdbBusqNumOT.Checked == true)
                 { VbOpcion = "OT"; }
+                if (RdbBusqNumRte.Checked == true)
+                { VbOpcion = "RTE"; }
                 if (RdbBusqSN.Checked == true)
                 { VbOpcion = "SN"; }
                 if (RdbBusqPN.Checked == true)
@@ -295,9 +304,11 @@ namespace _77NeoWeb.Forms.Almacen
                 GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
                 string vbcod = GrdBusq.DataKeys[gvr.RowIndex].Values["CodNumOrdenTrab"].ToString().Trim();
                 TxtIdRva.Text = vbcod;
-                TxtNumRva.Text = ((Label)row.FindControl("LblOT")).Text.ToString().Trim();
+                TxtNumRva.Text = vbcod;
+                TxtNumOT.Text = ((Label)row.FindControl("LblOT")).Text.ToString().Trim();
+                TxtNumRTE.Text = ((Label)row.FindControl("LblNumRte")).Text.ToString().Trim();
                 ViewState["CodHK"] = ((Label)row.FindControl("LblCodHk")).Text.ToString().Trim();
-                TxtEstado.Text = ((Label)row.FindControl("LblEstado")).Text.ToString().Trim();
+                TxtEstado.Text = ((Label)row.FindControl("LblEstad")).Text.ToString().Trim();
                 TxtFechaRv.Text = ((Label)row.FindControl("LblFechOt")).Text.ToString().Trim();
                 TxtMatr.Text = ((Label)row.FindControl("LblHk")).Text.ToString().Trim();
                 TxtPnElem.Text = ((Label)row.FindControl("LblPnElem")).Text.ToString().Trim();

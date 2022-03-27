@@ -184,13 +184,14 @@ namespace _77NeoWeb.Forms.Configuracion.ConfigManto
                 sqlCon.Open();
                 using (SqlTransaction Transac = sqlCon.BeginTransaction())
                 {
-                    VBQuery = "EXEC SP_TablasGeneral 7,'',@Desc,@US,'','','','','CatgrMel','UPDATE',@ID,@CrD,0,0,0,@CC,'01-01-1','02-01-1','03-01-1'";
+                    VBQuery = "EXEC SP_TablasGeneral 7,'',@Desc,@US,'','','','','CatgrMel','UPDATE',@ID,@CrD,0,0,@Idm,@CC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
                         SC.Parameters.AddWithValue("@Desc", VbDesc);
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@ID", Convert.ToInt32(GrdDatos.DataKeys[e.RowIndex].Value.ToString()));
                         SC.Parameters.AddWithValue("@CrD", VbDia);
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                         SC.Parameters.AddWithValue("@CC", Session["!dC!@"]);
                         try
                         {

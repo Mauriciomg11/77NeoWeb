@@ -77,7 +77,7 @@
                                 <asp:RadioButton ID="RdbBusqPN" runat="server" CssClass="LblEtiquet" Text="&nbsp P/N" GroupName="Busq" /></td>
                         <td>
                             <asp:TextBox ID="TxtBusqPN" runat="server" Width="200px" Height="28px" CssClass=" heightCampo" placeholder="P/N" />
-                            <asp:TextBox ID="TxtBusqueda" runat="server" Width="170px" Height="28px" CssClass=" heightCampo" placeholder="Ingrese el dato a consultar" TextMode="Number" onkeypress="return solonumeros(event);" />
+                            <asp:TextBox ID="TxtBusqueda" runat="server" Width="170px" Height="28px" CssClass=" heightCampo" placeholder="Ingrese el dato a consultar"  /> <%-- TextMode="Number" onkeypress="return solonumeros(event);"--%>
                         </td>
                         <td>
                             <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>

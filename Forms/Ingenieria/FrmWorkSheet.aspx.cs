@@ -864,6 +864,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 }
             }
         }
+        //********************* Detalle de las OT y RTES asignados *********************
         protected void BIndDWSOTRTE()
         {
             GrdOTRteWS.Visible = true;
@@ -996,7 +997,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             try
                             {
                                 string VbFuente = GrdOTRteWS.DataKeys[e.RowIndex].Values["FuenteWS"].ToString();
-                                VbNumDoc = (GrdOTRteWS.Rows[e.RowIndex].FindControl("LblOTRtP") as Label).Text.Trim();
+                                VbNumDoc = GrdOTRteWS.DataKeys[e.RowIndex].Values["Orden"].ToString(); //(GrdOTRteWS.Rows[e.RowIndex].FindControl("LblOTRtP") as Label).Text.Trim();
 
                                 SC.Parameters.AddWithValue("@WS", TxtAsingOTWS.Text.Trim());
                                 SC.Parameters.AddWithValue("@Doc", VbNumDoc);

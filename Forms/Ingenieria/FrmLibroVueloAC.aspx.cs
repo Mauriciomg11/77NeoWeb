@@ -685,6 +685,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void cargarLV_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataRow[] Result;
             if (FileUpCLV != null && !TxtNumLv.Text.Equals(""))
@@ -1653,6 +1654,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     string StSql = "EXEC SP_PANTALLA_LibroVuelo 1,@HK,'','','',2,0,0,@ICC,@FI,@FF,'01-01-1900' ";//SET DATEFORMAT DMY;
                     using (SqlCommand SC = new SqlCommand(StSql, SCnx1))
                     {
+                        DateTime borr = Convert.ToDateTime(TxtFFInfLV.Text);
                         SC.Parameters.AddWithValue("@HK", DdlHkInfLV.Text.Equals("0") ? "" : DdlHkInfLV.SelectedItem.Text);
                         SC.Parameters.AddWithValue("@FI", Convert.ToDateTime(TxtFIInfLV.Text));
                         SC.Parameters.AddWithValue("@FF", Convert.ToDateTime(TxtFFInfLV.Text));

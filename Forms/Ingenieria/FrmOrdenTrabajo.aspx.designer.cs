@@ -78,6 +78,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.TextBox TxtOtPpal;
 
         /// <summary>
+        /// Control TxtOtCodOTPpal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtOtCodOTPpal;
+
+        /// <summary>
         /// Control LblOtReporte.
         /// </summary>
         /// <remarks>
@@ -94,6 +103,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtOtReporte;
+
+        /// <summary>
+        /// Control TxtOtCodRTE.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtOtCodRTE;
 
         /// <summary>
         /// Control LblOtRepacion.

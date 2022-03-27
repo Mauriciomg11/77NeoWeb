@@ -105,6 +105,27 @@ namespace _77NeoWeb.Forms.InventariosCompras
             if (ClsP.GetCE3() == 0) { ViewState["VblCE3"] = 0; }//
             if (ClsP.GetCE4() == 0) { ViewState["VblCE4"] = 0; }//          
 
+            Cnx.SelecBD();
+            using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+            {
+                string VbAplica;
+                int VbCaso;
+               
+                string TxQry = string.Format("EXEC SP_HabilitarCampos @Nit,@F,3,'',0,'',0,'',0,'',0,'',0,'',0,'',0,'',0");
+                SqlCommand SC = new SqlCommand(TxQry, sqlCon);
+                SC.Parameters.AddWithValue("@Nit", Session["!dC!@"].ToString());
+                SC.Parameters.AddWithValue("@F", ViewState["PFileName"].ToString().Trim());
+                sqlCon.Open();
+                SqlDataReader Regs = SC.ExecuteReader();
+                while (Regs.Read())
+                {
+                    VbCaso = Convert.ToInt32(Regs["CASO"]);
+                    VbAplica = Regs["EjecutarCodigo"].ToString();
+                    if (VbCaso == 3 && VbAplica.Equals("N")) // Aplica ICXA
+                    { LblIca.Visible = false; TblIca.Visible = false; }
+                }
+            }
+
             IdiomaControles();
         }
         protected void IdiomaControles()

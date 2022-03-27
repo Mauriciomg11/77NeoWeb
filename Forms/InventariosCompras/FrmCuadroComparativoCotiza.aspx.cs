@@ -156,7 +156,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 if (RdbBusqCot.Checked == true) { VbTipoDoc = "CT"; VbCotiza = TxtBusqueda.Text.Trim(); }
                 if (RdbBusqSP.Checked == true) { VbTipoDoc = "SP"; VbCotiza = TxtBusqueda.Text.Trim(); }
                 if (RdbBusqPet.Checked == true) { VbTipoDoc = "PE"; VbPEPR = VbSDoc.Trim(); }
-                if (RdbBusqPPT.Checked == true) { VbTipoDoc = "PR"; VbPEPR = VbSDoc.Trim(); }
+                if (RdbBusqPPT.Checked == true) { VbTipoDoc = "PR"; VbCotiza = TxtBusqueda.Text.Trim(); }
                 if (RdbBusqPN.Checked == true) { VbTipoDoc = "PN"; VbPN = TxtBusqPN.Text.Trim(); }
 
                 if (Accion.Equals("UPD"))
