@@ -99,18 +99,28 @@ namespace _77NeoWeb.Forms.Almacen
                     LblTitSalidas.Text = bO.Equals("LblTitSalidas") ? bT : LblTitSalidas.Text;
                     BtnSldConsumo.Text = bO.Equals("BtnSldConsumo") ? bT : BtnSldConsumo.Text;
                     BtnSldConsumo.ToolTip = bO.Equals("BtnSldConsumoTT") ? bT : BtnSldConsumo.ToolTip;
-                   
+                    BtnEntReintegro.Text = bO.Equals("BtnEntReintegro") ? bT : BtnEntReintegro.Text;
+                    BtnEntReintegro.ToolTip = bO.Equals("BtnEntReintegroTT") ? bT : BtnEntReintegro.ToolTip;
+
                 }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
             }
         }
 
+        protected void BtnEntReintegro_Click(object sender, EventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string CT = "window.open('/Forms/Almacen/FrmReintegroMatComp.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
+        }
         protected void BtnSldConsumo_Click(object sender, EventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
             string CT = "window.open('/Forms/Almacen/FrmSalConsumoMatCoMH.aspx', '_blank');";
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
         }
+
+        
     }
 }

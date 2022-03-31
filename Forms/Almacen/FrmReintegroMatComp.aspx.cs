@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 
 namespace _77NeoWeb.Forms.Almacen
 {
-    public partial class FrmSalConsumoMatCoMH : System.Web.UI.Page
+    public partial class FrmReintegroMatComp : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
@@ -53,11 +53,29 @@ namespace _77NeoWeb.Forms.Almacen
         }
         protected void ModSeguridad()
         {
-
+            ViewState["VblIngMS"] = 1;
+            ViewState["VblModMS"] = 1;
+            ViewState["VblEliMS"] = 1;
+            ViewState["VblImpMS"] = 1;
+            ViewState["VblCE1"] = 1;
+            ViewState["VblCE2"] = 1;
+            ViewState["VblCE3"] = 1;
+            ViewState["VblCE4"] = 1;
+            ViewState["VblCE5"] = 1;
+            ViewState["VblCE6"] = 1;
             ClsPermisos ClsP = new ClsPermisos();
             string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
-            ClsP.Acceder(Session["C77U"].ToString(), "FrmMovimientoActivo.aspx", VbPC);
+            ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx", VbPC);
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
+            if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; } // grd.ShowFooter = false;
+            if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; }
+            if (ClsP.GetConsultar() == 0) { }
+            if (ClsP.GetImprimir() == 0) { ViewState["VblImpMS"] = 0; }//
+            if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; }
+            if (ClsP.GetCE1() == 0) { ViewState["VblCE1"] = 0; } // Imprimir INcoming
+            if (ClsP.GetCE2() == 0) { ViewState["VblCE2"] = 0; }//  Puede editar el porcentaje de la recuperacion
+            if (ClsP.GetCE3() == 0) { ViewState["VblCE3"] = 0; }//  Solicitud de pedido     
+
             IdiomaControles();
         }
         protected void IdiomaControles()
@@ -83,7 +101,6 @@ namespace _77NeoWeb.Forms.Almacen
                     if (bO.Equals("Caption"))
                     { Page.Title = bT; ViewState["PageTit"] = bT; }
                     TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
-                    LblAlmacen.Text = bO.Equals("AlmacenMstr") ? bT : LblAlmacen.Text;
                     LblAeronave.Text = bO.Equals("LblAeronaveMstr") ? bT : LblAeronave.Text;
                     LblObserv.Text = bO.Equals("LblObsMst") ? bT : LblObserv.Text;
                     RdbNumRsva.Text = bO.Equals("RdbNumRsva") ? "&nbsp" + bT : RdbNumRsva.Text;
@@ -92,24 +109,25 @@ namespace _77NeoWeb.Forms.Almacen
                     LblNumReserva.ToolTip = bO.Equals("RdbNumRsva") ? bT : LblNumReserva.ToolTip;
                     LblNumOrdeTrabajo.ToolTip = bO.Equals("LblOTMstr") ? bT : LblNumOrdeTrabajo.ToolTip;
                     LblNumReporte.ToolTip = bO.Equals("RdbRvaRte") ? bT : LblNumReporte.ToolTip;
-                    LblUsuRecibe.Text = bO.Equals("LblUsuRecibe") ? bT + ":" + "&nbsp" : LblUsuRecibe.Text;
-                    // *********************************************** Detalle Reserva ***********************************************
-                    GrdDtllRsva.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtllRsva.EmptyDataText;
-                    GrdDtllRsva.Columns[0].HeaderText = bO.Equals("GrdAsig") ? bT : GrdDtllRsva.Columns[0].HeaderText;
-                    GrdDtllRsva.Columns[1].HeaderText = bO.Equals("PosMstr") ? bT : GrdDtllRsva.Columns[1].HeaderText;
-                    GrdDtllRsva.Columns[2].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdDtllRsva.Columns[2].HeaderText;
-                    GrdDtllRsva.Columns[3].HeaderText = bO.Equals("Descripcion") ? bT : GrdDtllRsva.Columns[3].HeaderText;
-                    GrdDtllRsva.Columns[4].HeaderText = bO.Equals("TipoMstr") ? bT : GrdDtllRsva.Columns[4].HeaderText;
-                    GrdDtllRsva.Columns[5].HeaderText = bO.Equals("GrdIdent") ? bT : GrdDtllRsva.Columns[5].HeaderText;
-                    GrdDtllRsva.Columns[7].HeaderText = bO.Equals("GrdCantSol") ? bT : GrdDtllRsva.Columns[7].HeaderText;
-                    GrdDtllRsva.Columns[8].HeaderText = bO.Equals("GrdCantEntr") ? bT : GrdDtllRsva.Columns[8].HeaderText;
-                    GrdDtllRsva.Columns[9].HeaderText = bO.Equals("GrdCantDespc") ? bT : GrdDtllRsva.Columns[9].HeaderText;
-                    GrdDtllRsva.Columns[10].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdDtllRsva.Columns[10].HeaderText;
-                    // *********************************************** Condic Manipulac ***********************************************
+
+                    // *********************************************** Detalle Reintegro ***********************************************
+                    GrdDtllRitgr.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtllRitgr.EmptyDataText;
+                    GrdDtllRitgr.Columns[1].HeaderText = bO.Equals("PosMstr") ? bT : GrdDtllRitgr.Columns[1].HeaderText;
+                    GrdDtllRitgr.Columns[2].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdDtllRitgr.Columns[2].HeaderText;
+                    GrdDtllRitgr.Columns[3].HeaderText = bO.Equals("Descripcion") ? bT : GrdDtllRitgr.Columns[3].HeaderText;
+                    GrdDtllRitgr.Columns[4].HeaderText = bO.Equals("TipoMstr") ? bT : GrdDtllRitgr.Columns[4].HeaderText;
+                    GrdDtllRitgr.Columns[5].HeaderText = bO.Equals("GrdIdent") ? bT : GrdDtllRitgr.Columns[5].HeaderText;
+                    GrdDtllRitgr.Columns[7].HeaderText = bO.Equals("GrdCantSol") ? bT : GrdDtllRitgr.Columns[7].HeaderText;
+                    GrdDtllRitgr.Columns[8].HeaderText = bO.Equals("GrdCantEntr") ? bT : GrdDtllRitgr.Columns[8].HeaderText;
+                    GrdDtllRitgr.Columns[9].HeaderText = bO.Equals("GrdCantRtgr") ? bT : GrdDtllRitgr.Columns[9].HeaderText;
+                    GrdDtllRitgr.Columns[10].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdDtllRitgr.Columns[10].HeaderText;
+
+                    // *********************************************** Condiciones Almacenamiento / Manipulacion ***********************************************
                     LblTitCondManiplc.Text = bO.Equals("LblTitCondManiplc") ? bT : LblTitCondManiplc.Text;
                     BtnCloseMdl.Text = bO.Equals("BtnCerrarMst") ? bT : BtnCloseMdl.Text;
                     GrdMdlCondManplc.Columns[0].HeaderText = bO.Equals("Descripcion") ? bT : GrdMdlCondManplc.Columns[0].HeaderText;
-                    // *********************************************** Ubicaciones Fisicas ***********************************************
+
+                    // *********************************************** Visualizar y entrega ***********************************************
                     IbtCerrarAsing.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarAsing.ToolTip;
                     LblTitAsigFis.Text = bO.Equals("LblTitAsigFis") ? bT : LblTitAsigFis.Text;
                     LblAsigCantSol.Text = bO.Equals("GrdCantSol") ? " | " + bT + ": " : LblAsigCantSol.Text;
@@ -119,14 +137,14 @@ namespace _77NeoWeb.Forms.Almacen
                     GrdUbicaFisc.Columns[0].HeaderText = bO.Equals("GrdEstdPn") ? bT : GrdUbicaFisc.Columns[0].HeaderText;
                     GrdUbicaFisc.Columns[3].HeaderText = bO.Equals("LoteMst") ? bT : GrdUbicaFisc.Columns[3].HeaderText;
                     GrdUbicaFisc.Columns[4].HeaderText = bO.Equals("GrdModPN") ? bT : GrdUbicaFisc.Columns[4].HeaderText;
-                    GrdUbicaFisc.Columns[5].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdUbicaFisc.Columns[5].HeaderText;
-                    GrdUbicaFisc.Columns[6].HeaderText = bO.Equals("GrdFil") ? bT : GrdUbicaFisc.Columns[6].HeaderText;
-                    GrdUbicaFisc.Columns[7].HeaderText = bO.Equals("GrdColumn") ? bT : GrdUbicaFisc.Columns[7].HeaderText;
-                    GrdUbicaFisc.Columns[8].HeaderText = bO.Equals("GrdStck") ? bT : GrdUbicaFisc.Columns[8].HeaderText;
-                    GrdUbicaFisc.Columns[9].HeaderText = bO.Equals("GrdCantDespc") ? bT : GrdUbicaFisc.Columns[9].HeaderText;
-                    GrdUbicaFisc.Columns[10].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdUbicaFisc.Columns[10].HeaderText;
-                    GrdUbicaFisc.Columns[11].HeaderText = bO.Equals("GrdFecVenc") ? bT : GrdUbicaFisc.Columns[11].HeaderText;
-
+                    GrdUbicaFisc.Columns[5].HeaderText = bO.Equals("AlmacenMstr") ? bT : GrdUbicaFisc.Columns[5].HeaderText;
+                    GrdUbicaFisc.Columns[6].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdUbicaFisc.Columns[6].HeaderText;
+                    GrdUbicaFisc.Columns[7].HeaderText = bO.Equals("GrdFil") ? bT : GrdUbicaFisc.Columns[7].HeaderText;
+                    GrdUbicaFisc.Columns[8].HeaderText = bO.Equals("GrdColumn") ? bT : GrdUbicaFisc.Columns[8].HeaderText;
+                    GrdUbicaFisc.Columns[9].HeaderText = bO.Equals("GrdCantDesp") ? bT : GrdUbicaFisc.Columns[9].HeaderText;
+                    GrdUbicaFisc.Columns[10].HeaderText = bO.Equals("GrdCantRtgr") ? bT : GrdUbicaFisc.Columns[10].HeaderText;
+                    GrdUbicaFisc.Columns[11].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdUbicaFisc.Columns[11].HeaderText;
+                    GrdUbicaFisc.Columns[12].HeaderText = bO.Equals("GrdNroDoc") ? bT : GrdUbicaFisc.Columns[12].HeaderText;
                     // *********************************************** Visualizar y entrega ***********************************************
                     LblTitVisualizaGuarda.Text = bO.Equals("LblTitVisualizaGuarda") ? bT : LblTitVisualizaGuarda.Text;
                     BtnVisualizar.Text = bO.Equals("BtnVisualizar") ? bT : BtnVisualizar.Text;
@@ -140,16 +158,18 @@ namespace _77NeoWeb.Forms.Almacen
                     GrdVisualizar.Columns[1].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdVisualizar.Columns[1].HeaderText;
                     GrdVisualizar.Columns[4].HeaderText = bO.Equals("LoteMst") ? bT : GrdVisualizar.Columns[4].HeaderText;
                     GrdVisualizar.Columns[5].HeaderText = bO.Equals("GrdModPN") ? bT : GrdVisualizar.Columns[5].HeaderText;
-                    GrdVisualizar.Columns[6].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdVisualizar.Columns[6].HeaderText;
-                    GrdVisualizar.Columns[7].HeaderText = bO.Equals("GrdFil") ? bT : GrdVisualizar.Columns[7].HeaderText;
-                    GrdVisualizar.Columns[8].HeaderText = bO.Equals("GrdColumn") ? bT : GrdVisualizar.Columns[8].HeaderText;
-                    GrdVisualizar.Columns[9].HeaderText = bO.Equals("GrdStck") ? bT : GrdVisualizar.Columns[9].HeaderText;
-                    GrdVisualizar.Columns[10].HeaderText = bO.Equals("GrdCantDespc") ? bT : GrdVisualizar.Columns[10].HeaderText;
-                    GrdVisualizar.Columns[11].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdVisualizar.Columns[11].HeaderText;
+                    GrdVisualizar.Columns[6].HeaderText = bO.Equals("AlmacenMstr") ? bT : GrdVisualizar.Columns[6].HeaderText;
+                    GrdVisualizar.Columns[7].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdVisualizar.Columns[7].HeaderText;
+                    GrdVisualizar.Columns[8].HeaderText = bO.Equals("GrdFil") ? bT : GrdVisualizar.Columns[8].HeaderText;
+                    GrdVisualizar.Columns[9].HeaderText = bO.Equals("GrdColumn") ? bT : GrdVisualizar.Columns[9].HeaderText;
+                    GrdVisualizar.Columns[10].HeaderText = bO.Equals("GrdCantDesp") ? bT : GrdVisualizar.Columns[10].HeaderText;
+                    GrdVisualizar.Columns[11].HeaderText = bO.Equals("GrdCantRtgr") ? bT : GrdVisualizar.Columns[11].HeaderText;
+                    GrdVisualizar.Columns[12].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdVisualizar.Columns[12].HeaderText;
+                    GrdVisualizar.Columns[13].HeaderText = bO.Equals("GrdNroDoc") ? bT : GrdVisualizar.Columns[13].HeaderText;
                 }
                 DataRow[] Result = Idioma.Select("Objeto= 'BtnIngresarOnCl1'");
                 foreach (DataRow row in Result)
-                { BtnGuardar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                { BtnGuardar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');");/**/ }
 
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
@@ -178,35 +198,19 @@ namespace _77NeoWeb.Forms.Almacen
                                 DSTDdl.Tables[0].TableName = "Almac";
                                 DSTDdl.Tables[1].TableName = "Aeronave";
                                 DSTDdl.Tables[2].TableName = "Rsva";
-                                DSTDdl.Tables[3].TableName = "UsuRecb";
                                 ViewState["DSTDdl"] = DSTDdl;
                             }
                         }
                     }
                 }
             }
-            DSTDdl = (DataSet)ViewState["DSTDdl"];
-           
-            if (DSTDdl.Tables["Almac"].Rows.Count > 0)
-            {
-                DdlAlmacen.DataSource = DSTDdl.Tables[0];
-                DdlAlmacen.DataTextField = "NomAlmacen";
-                DdlAlmacen.DataValueField = "CodIdAlmacen";
-                DdlAlmacen.DataBind();
-            }
+            DSTDdl = (DataSet)ViewState["DSTDdl"];           
             if (DSTDdl.Tables["Aeronave"].Rows.Count > 0)
             {
                 DdlAeronave.DataSource = DSTDdl.Tables[1];
                 DdlAeronave.DataTextField = "Matricula";
                 DdlAeronave.DataValueField = "CodAeronave";
                 DdlAeronave.DataBind();
-            }
-            if (DSTDdl.Tables["UsuRecb"].Rows.Count > 0)
-            {
-                DdlUsuRecibe.DataSource = DSTDdl.Tables[3];
-                DdlUsuRecibe.DataTextField = "Usuario";
-                DdlUsuRecibe.DataValueField = "CodUsuario";
-                DdlUsuRecibe.DataBind();
             }
             BindRva();
         }
@@ -236,7 +240,7 @@ namespace _77NeoWeb.Forms.Almacen
                 Cnx.SelecBD();
                 using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbTxtSql = "EXEC SP_PANTALLA_Sal_Consumo 7,'','','','',@IdRva,0,@Idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                    string VbTxtSql = "EXEC SP_PANTALLA_Sal_Consumo 10,'','','','',@IdRva,0,@Idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
@@ -254,7 +258,6 @@ namespace _77NeoWeb.Forms.Almacen
                                 DSDetRva.Tables[1].TableName = "CodHk";
                                 DSDetRva.Tables[2].TableName = "Asignados";
                                 DSDetRva.Tables[3].TableName = "CondManip";
-                                DSDetRva.Tables[4].TableName = "AplicCC";
                                 ViewState["DSDetRva"] = DSDetRva;
                             }
                         }
@@ -263,8 +266,8 @@ namespace _77NeoWeb.Forms.Almacen
             }
             DSDetRva = (DataSet)ViewState["DSDetRva"];
             if (DSDetRva.Tables["DetRva"].Rows.Count > 0)
-            { GrdDtllRsva.DataSource = DSDetRva.Tables[0]; }
-            GrdDtllRsva.DataBind();
+            { GrdDtllRitgr.DataSource = DSDetRva.Tables[0]; }
+            GrdDtllRitgr.DataBind();
 
             if (DSDetRva.Tables[1].Rows[0][0].ToString().Trim().Equals("0"))
             { DdlAeronave.Enabled = true; }
@@ -298,75 +301,6 @@ namespace _77NeoWeb.Forms.Almacen
 
             }
         }
-        protected void GrdDtllRsva_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
-            Page.Title = ViewState["PageTit"].ToString().Trim();
-
-            if (DdlAlmacen.Text.Trim().Equals("0"))
-            {
-                DataRow[] Result = Idioma.Select("Objeto= 'MstrMens19'");
-                foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// Debe ingresar el almacén.
-                return;
-            }
-            if (e.CommandName.Equals("Abrir"))
-            {
-                GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
-                GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
-                string VblCodRef = ((Label)row.FindControl("LblRef")).Text.ToString().Trim();
-                string VblPn = ((Label)row.FindControl("LblPn")).Text.ToString().Trim();
-                string VblDescPN = ((Label)row.FindControl("LblDesc")).Text.ToString().Trim();
-                string VbCantSol = ((Label)row.FindControl("LblCantSol")).Text.ToString().Trim();
-                string VbCantEntr = ((Label)row.FindControl("LblCantEntr")).Text.ToString().Trim();
-                LblPNDescripcAsig.Text = VblPn + " | " + VblDescPN;
-                LblAsigCantSolV.Text = VbCantSol; LblAsigCantEntrgV.Text = VbCantEntr;
-                ViewState["CodIdDetalleRes"] = GrdDtllRsva.DataKeys[gvr.RowIndex].Values["CodIdDetalleRes"].ToString();
-                ViewState["PosRva"] = ((Label)row.FindControl("LblPos")).Text.ToString().Trim(); ;
-
-                BindUbicaciones(VblCodRef, VblPn, "UPD");
-                MultVw.ActiveViewIndex = 1;
-                BindCondicManipulac(VblCodRef);
-            }
-        }
-        protected void GrdDtllRsva_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
-            if ((e.Row.RowState & DataControlRowState.Edit) > 0)
-            {
-
-            }
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                ImageButton IbtAbrir = e.Row.FindControl("IbtAbrir") as ImageButton;
-                if (IbtAbrir != null)
-                {
-                    DataRow[] Result = Idioma.Select("Objeto='GrdAsigTT'");
-                    foreach (DataRow RowIdioma in Result)
-                    { IbtAbrir.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
-                }
-
-                DataRowView DRW = e.Row.DataItem as DataRowView;
-                double VbDCanSol = Convert.ToDouble(DRW["CantidadSolicitada"].ToString().Trim());
-                double VbDCanEnt = Convert.ToDouble(DRW["CantidadEntregada"].ToString().Trim());
-                double VbDCanDspch = Convert.ToDouble(DRW["CantDespachar"].ToString().Trim());
-                if (VbDCanSol <= VbDCanEnt)
-                {
-                    IbtAbrir.Visible = false; e.Row.BackColor = System.Drawing.Color.PaleGreen;
-                }
-                if (VbDCanDspch > 0)
-                {
-                    if ((VbDCanDspch + VbDCanEnt) < VbDCanSol) { e.Row.BackColor = System.Drawing.Color.Wheat; }
-                    else { e.Row.BackColor = System.Drawing.Color.GreenYellow; }
-                    IbtAbrir.Enabled = false;
-                    DataRow[] Result = Idioma.Select("Objeto='GrdAsigdoTT'");
-                    foreach (DataRow RowIdioma in Result)
-                    { IbtAbrir.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
-
-                }
-
-            }
-        }
         protected void BindUbicaciones(string Codref, string PN, string Accion)
         {
             if (Accion.Equals("UPD"))
@@ -374,13 +308,13 @@ namespace _77NeoWeb.Forms.Almacen
                 Cnx.SelecBD();
                 using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbTxtSql = "EXEC SP_PANTALLA_Sal_Consumo 8, @Ref,'','','', @Alm,@IdRva, @Idm, @ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                    string VbTxtSql = "EXEC SP_PANTALLA_Sal_Consumo 11, @IdRva,'','','', @PosR,0, @Idm, @ICC,'01-1-2009','01-01-1900','01-01-1900'";
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
-                        SC.Parameters.AddWithValue("@Ref", Codref.Trim());
-                        SC.Parameters.AddWithValue("@Alm", DdlAlmacen.Text.Trim());
+                        string borr = ViewState["PosRva"].ToString().Trim();
                         SC.Parameters.AddWithValue("@IdRva", DdlNumRsva.Text.Trim());
+                        SC.Parameters.AddWithValue("@PosR", ViewState["PosRva"].ToString().Trim());
                         SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         using (SqlDataAdapter SDA = new SqlDataAdapter())
@@ -401,10 +335,68 @@ namespace _77NeoWeb.Forms.Almacen
             DSUbica = (DataSet)ViewState["DSUbica"];
             if (DSUbica.Tables["Ubica"].Rows.Count > 0)
             { GrdUbicaFisc.DataSource = DSUbica.Tables[0]; }
-            GrdUbicaFisc.DataBind();
+            GrdUbicaFisc.DataBind();/**/
         }
-        protected void IbtCerrarAsing_Click(object sender, ImageClickEventArgs e)
-        { Page.Title = ViewState["PageTit"].ToString().Trim(); MultVw.ActiveViewIndex = 0; }
+        protected void GrdDtllRitgr_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+
+            if (e.CommandName.Equals("Abrir"))
+            {
+                GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
+                GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                string VblCodRef = ((Label)row.FindControl("LblRef")).Text.ToString().Trim();
+                string VblPn = ((Label)row.FindControl("LblPn")).Text.ToString().Trim();
+                string VblDescPN = ((Label)row.FindControl("LblDesc")).Text.ToString().Trim();
+                string VbCantSol = ((Label)row.FindControl("LblCantSol")).Text.ToString().Trim();
+                string VbCantEntr = ((Label)row.FindControl("LblCantEntr")).Text.ToString().Trim();
+                LblPNDescripcAsig.Text = VblPn + " | " + VblDescPN;
+                LblAsigCantSolV.Text = VbCantSol; LblAsigCantEntrgV.Text = VbCantEntr;
+                ViewState["CodIdDetalleRes"] = GrdDtllRitgr.DataKeys[gvr.RowIndex].Values["CodIdDetalleRes"].ToString();
+                ViewState["PosRva"] = ((Label)row.FindControl("LblPos")).Text.ToString().Trim(); ;
+
+                BindUbicaciones(VblCodRef, VblPn, "UPD");
+                MultVw.ActiveViewIndex = 1;
+                BindCondicManipulac(VblCodRef);/**/
+            }
+        }
+        protected void GrdDtllRitgr_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            if ((e.Row.RowState & DataControlRowState.Edit) > 0)
+            {
+
+            }
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                ImageButton IbtAbrir = e.Row.FindControl("IbtAbrir") as ImageButton;
+                if (IbtAbrir != null)
+                {
+                    DataRow[] Result = Idioma.Select("Objeto='GrdReitgrTT'");
+                    foreach (DataRow RowIdioma in Result)
+                    { IbtAbrir.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                }
+
+                DataRowView DRW = e.Row.DataItem as DataRowView;
+                double VbDCanSol = Convert.ToDouble(DRW["CantidadSolicitada"].ToString().Trim());
+                double VbDCanEnt = Convert.ToDouble(DRW["CantidadEntregada"].ToString().Trim());
+                double VbDCanDspch = Convert.ToDouble(DRW["CantDespachar"].ToString().Trim());
+                if (VbDCanEnt <= 0)
+                {
+                    IbtAbrir.Visible = false; e.Row.BackColor = System.Drawing.Color.Wheat;
+                }
+                if (VbDCanDspch > 0)
+                {
+                    if ((VbDCanDspch + VbDCanEnt) < VbDCanSol) { e.Row.BackColor = System.Drawing.Color.PaleGreen; }
+                    else { e.Row.BackColor = System.Drawing.Color.GreenYellow; }
+                    IbtAbrir.Enabled = false;
+                    DataRow[] Result = Idioma.Select("Objeto='GrdReitgrTT'");
+                    foreach (DataRow RowIdioma in Result)
+                    { IbtAbrir.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                }
+            }
+        }
         protected void GrdUbicaFisc_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -429,20 +421,16 @@ namespace _77NeoWeb.Forms.Almacen
                     { TxtCantDespa.ToolTip = row["Texto"].ToString(); }// Ubicación física inactiva.
                 }
 
-                string VbAplicaFV = dr["FechaVencimientoR"].ToString().Trim();
-                string VbFechaSL = dr["FechaShelfLife"].ToString().Trim();
-                if (VbAplicaFV.Equals("1"))
+                string VbSIsntld = dr["Instalado"].ToString().Trim();
+                if (VbSIsntld.Equals("S"))
                 {
-                    DateTime VbFecVence = Convert.ToDateTime(VbFechaSL);
-                    int Comparar = DateTime.Compare(VbFecVence, DateTime.Now);
-                    if (Comparar < 0) //-1 menor; 0 igual; 1 mayor
-                    {
-                        TxtCantDespa.Enabled = false;// Se encuentra vencido
-                        DataRow[] Result = Idioma.Select("Objeto= 'GrdCantDspcFVTT'");
-                        foreach (DataRow row in Result)
-                        { TxtCantDespa.ToolTip = row["Texto"].ToString(); }//El elemento se encuentra vencido.
-                    }
+                    TxtCantDespa.Enabled = false;
+
+                    DataRow[] Result = Idioma.Select("Objeto= 'Mens03Reintgr'");
+                    foreach (DataRow row in Result)
+                    { TxtCantDespa.ToolTip = row["Texto"].ToString(); }// No es posible realizar el reintegro porque el elemento se encuentra instalado.
                 }
+
             }
         }
         protected void BtnAsignr_Click(object sender, EventArgs e)
@@ -454,18 +442,6 @@ namespace _77NeoWeb.Forms.Almacen
             DSUbica = (DataSet)ViewState["DSUbica"];
             DSDetRva = (DataSet)ViewState["DSDetRva"];
 
-            string AplicCC = DSDetRva.Tables[4].Rows[0][0].ToString().Trim();
-            string VbSCC = DSDetRva.Tables[4].Rows[0][1].ToString().Trim();
-            if (AplicCC.Equals("S") && VbSCC.Equals(""))
-            {
-                Result = Idioma.Select("Objeto= 'Mens04SalCon'");
-                foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// La reserva debe tener asignado un centro de costo.
-                return;
-            }
-            ViewState["CCosto"] = DSDetRva.Tables[4].Rows[0][1].ToString().Trim();
-
-
             foreach (GridViewRow GrdRow in GrdUbicaFisc.Rows)
             {
                 TextBox TxtCantDespa = (GrdRow.FindControl("TxtCantDespa") as TextBox);
@@ -473,25 +449,25 @@ namespace _77NeoWeb.Forms.Almacen
 
                 if (VbDCantDesp > 0)
                 {
-                    double VbDCantStokc = Convert.ToDouble((GrdRow.FindControl("LblStock") as Label).Text.Trim());
-                    if (VbDCantDesp > VbDCantStokc)
+                    double VbDCantEntrgda = Convert.ToDouble((GrdRow.FindControl("LblCantEntregada") as Label).Text.Trim());
+                    if (VbDCantDesp > VbDCantEntrgda)
                     {
-                        Result = Idioma.Select("Objeto= 'Mens01SalCon'");
+                        Result = Idioma.Select("Objeto= 'Mens01Reintgr'");
                         foreach (DataRow row in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// La cantidad a despachar supera la cantidad en stock.
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// La cantidad a despachar supera la cantidad entregada.
                         TxtCantDespa.Focus();
                         return;
                     }
                 }
                 VbDAsignadas += VbDCantDesp;
             }
-            // Valida que las cantidades a despachar no supere las pendientes por entregar
-            double VbDPendiente = Convert.ToDouble(LblAsigCantSolV.Text.Trim()) - Convert.ToDouble(LblAsigCantEntrgV.Text.Trim());
+            // Valida que las cantidades a reintegrar no supere las pendientes por entregar
+            double VbDPendiente = Convert.ToDouble(LblAsigCantEntrgV.Text.Trim());
             if (VbDAsignadas > VbDPendiente)
             {
-                Result = Idioma.Select("Objeto= 'Mens02SalCon'");
+                Result = Idioma.Select("Objeto= 'Mens02Reintgr'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// La cantidad a despachar supera la cantidad pendiente por entrega.
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// La cantidad a reintegrar supera la cantidad entregada en su totalidad.
 
                 return;
             }
@@ -501,7 +477,6 @@ namespace _77NeoWeb.Forms.Almacen
             {
                 TextBox TxtCantDespa = (GrdRow.FindControl("TxtCantDespa") as TextBox);
                 double VbDCantDesp = Convert.ToDouble(TxtCantDespa.Text.Trim().Equals("") ? "0" : TxtCantDespa.Text.Trim());
-                DateTime VbDFech;
                 if (VbDCantDesp > 0)
                 {
                     int VbIPos = Convert.ToInt32(ViewState["PosRva"].ToString().Trim());
@@ -513,21 +488,24 @@ namespace _77NeoWeb.Forms.Almacen
                     string VbSBdg = (GrdRow.FindControl("LblBodg") as Label).Text.Trim();
                     string VbSF = (GrdRow.FindControl("LblFila") as Label).Text.Trim();
                     string VbSC = (GrdRow.FindControl("LblColumn") as Label).Text.Trim();
-                    double VbSstck = Convert.ToDouble((GrdRow.FindControl("LblStock") as Label).Text.Trim());
+                    double VbDCantEntrgd = Convert.ToDouble((GrdRow.FindControl("LblCantEntregada") as Label).Text.Trim());
                     string VbSUndMed = (GrdRow.FindControl("LblUndMed") as Label).Text.Trim();
-                    if (GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["FechaShelfLife"].ToString().Trim().Equals("")) { VbDFech = Convert.ToDateTime("01/01/1900"); }
-                    else { VbDFech = Convert.ToDateTime(GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["FechaShelfLife"].ToString().Trim()); }
-                    int VbIIdUbica = Convert.ToInt32(GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["CodIdUbicacion"].ToString().Trim());
                     string VbSCodEle = GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["CodElemento"].ToString().Trim();
                     string VbSCodUbBod = GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["CodUbicaBodega"].ToString().Trim();
                     string VbSIdent = GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["IdentificadorElemR"].ToString().Trim();
                     int VbIActivo = Convert.ToInt32(GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["Activo"].ToString().Trim());
                     string VbSCodTerc = GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["CodTercero"].ToString().Trim();
-                    int VbIFecVenc = Convert.ToInt32(GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["FechaVencimientoR"].ToString().Trim());
                     string VbSCodEstd = GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["CodEstadoPn"].ToString().Trim();
-
-                    DSDetRva.Tables[2].Rows.Add(VbIPos, VbSRef, VbSPN, VbSSN, VbSLt, VbSModPN, VbSBdg, VbSF, VbSC, VbSstck, VbDFech, VbIIdUbica, VbSCodEle, VbSCodUbBod,
-                    VbSIdent, VbIActivo, VbSCodTerc, VbIFecVenc, VbDCantDesp, VbSUndMed, VbSCodEstd, Convert.ToInt32(ViewState["CodIdDetalleRes"]));
+                    int VbICodALma = Convert.ToInt32(GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["CodIdAlmacen"].ToString().Trim());
+                    string VbSNomAlma = (GrdRow.FindControl("LblNomAlma") as Label).Text.Trim();
+                    string VbSCosto = GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["Ccosto"].ToString().Trim();
+                    int VbIIdPT = Convert.ToInt32(GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["IdPropuesta"].ToString().Trim());
+                    int VbIIdDoc = Convert.ToInt32(GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["CodIdDocumento"].ToString().Trim());
+                    string VbSCodUsuD = GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["CodUsuarioReserva"].ToString().Trim();
+                    int VbIIdDetSld = Convert.ToInt32(GrdUbicaFisc.DataKeys[GrdRow.RowIndex].Values["CodIdDetalleSalida"].ToString().Trim());
+                    DSDetRva.Tables[2].Rows.Add(VbIPos, VbSRef, VbSPN, VbSSN, VbSLt, VbSModPN, VbSBdg, VbSF, VbSC, VbDCantEntrgd, 0, VbSCodEle, VbSCodUbBod,
+                    VbSIdent, VbIActivo, VbSCodTerc, VbDCantDesp, VbSUndMed, VbSCodEstd, VbICodALma, VbSNomAlma, VbSCosto, Convert.ToInt32(ViewState["CodIdDetalleRes"]), VbIIdPT, VbIIdDoc,
+                    VbSCodUsuD, VbIIdDetSld);
                     DSDetRva.Tables[2].AcceptChanges();
                 }
             }
@@ -545,6 +523,8 @@ namespace _77NeoWeb.Forms.Almacen
             BindDetRsva("");
             MultVw.ActiveViewIndex = 0;
         }
+        protected void IbtCerrarAsing_Click(object sender, ImageClickEventArgs e)
+        { Page.Title = ViewState["PageTit"].ToString().Trim(); MultVw.ActiveViewIndex = 0; }
         protected void BtnVisualizar_Click(object sender, EventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -559,13 +539,6 @@ namespace _77NeoWeb.Forms.Almacen
                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//debe ingresar la observacion
                     return;
                 }
-                if (DdlUsuRecibe.Text.Trim().Equals(""))
-                {
-                    DataRow[] Result = Idioma.Select("Objeto= 'Mens03SalCon'");
-                    foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar la persona que recibe los elementos.
-                    return;
-                }
                 DataTable DT = DSDetRva.Tables[2];
 
                 DataView DV = DT.DefaultView;
@@ -576,7 +549,6 @@ namespace _77NeoWeb.Forms.Almacen
                 MultVw.ActiveViewIndex = 2;
             }
         }
-        // ************************ Visualizar y Guardar ******************************          
         protected void IbtCloseGuardar_Click(object sender, ImageClickEventArgs e)
         { Page.Title = ViewState["PageTit"].ToString().Trim(); MultVw.ActiveViewIndex = 0; }
         protected void BtnGuardar_Click(object sender, EventArgs e)
@@ -584,7 +556,6 @@ namespace _77NeoWeb.Forms.Almacen
             Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             int VbAfectaInv = 0;
-
             DSDetRva = (DataSet)ViewState["DSDetRva"];
 
             try
@@ -597,7 +568,7 @@ namespace _77NeoWeb.Forms.Almacen
                     if (VbSCodTerc.Equals("")) { VbAfectaInv = 1; }
                     var TypDetalle = new CsInsertElementoAlmacen()
                     {
-                        IdIE = Convert.ToInt32(0),
+                        IdIE = Convert.ToInt32(Row["CodIdDetSld"].ToString().Trim()),
                         CodElemento = Row["CodElemento"].ToString().Trim(),
                         CodReferencia = Row["CodReferencia"].ToString().Trim(),
                         PN = Row["PN"].ToString(),
@@ -608,28 +579,28 @@ namespace _77NeoWeb.Forms.Almacen
                         Descripcion = "",
                         Cantidad = Convert.ToDouble(Row["CantDespchr"].ToString().Trim()),
                         CantidadAnt = Convert.ToDouble(0),
-                        Valor = Convert.ToDouble(0),
-                        CodUndMed = Row["CodUndMedR"].ToString(),
-                        IdAlmacen = Convert.ToInt32(DdlAlmacen.Text.Trim()),
+                        Valor = Convert.ToDouble(0),// validar el valor  **********************************
+                        CodUndMed = Row["CodUndMedR"].ToString().Trim(),
+                        IdAlmacen = Convert.ToInt32(Row["IdAlmacen"].ToString().Trim()),
                         CodBodega = Row["CodUbicaBodega"].ToString().Trim(),
                         CodShippingOrder = DdlNumRsva.Text.Trim(),
                         Posicion = Row["Pos"].ToString().Trim(),
                         CodAeronave = Convert.ToInt32(DdlAeronave.Text.Trim()),
                         Matricula = DdlAeronave.SelectedItem.Text.Trim(),
-                        CCosto = ViewState["CCosto"].ToString().Trim(),
+                        CCosto = Row["CCosto"].ToString().Trim(),
                         AfectaInventario = VbAfectaInv,
                         CostoImportacion = Convert.ToInt32(0),
                         CodTercero = "",
                         Consignacion = Convert.ToInt32(0),
                         CodIdUbicacion = Convert.ToInt32(Row["CodIdUbicacion"].ToString().Trim()),
-                        FechaVence = Convert.ToDateTime(Row["FechaShelfLife"].ToString().Trim()),
+                        FechaVence = null,
                         Observacion = TxtObserv.Text.Trim(),
                         ValorOT = Convert.ToDouble(0),
-                        CodUsuarioReserva = DdlUsuRecibe.Text.Trim(),
-                        Proceso = "0100",
+                        CodUsuarioReserva = Row["CodUsuario"].ToString().Trim(),
+                        Proceso = "0109",
                         IdDetPropHk = Convert.ToInt32(0),
-                        IdPPt = 0,
-                        Accion = "SALIDA",
+                        IdPPt = Convert.ToInt32(Row["IdPPT"].ToString().Trim()),
+                        Accion = "ENTRADA",
                     };
                     ObjDetalle.Add(TypDetalle);
                 }
@@ -650,9 +621,6 @@ namespace _77NeoWeb.Forms.Almacen
                     return;
                 }
                 TxtObserv.Text = "";
-
-
-
                 TraerDatos("UPD");
                 BindRva();
                 BindDetRsva("UPD");
@@ -664,7 +632,7 @@ namespace _77NeoWeb.Forms.Almacen
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Generar Salida Consumo", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Reintegro", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
     }

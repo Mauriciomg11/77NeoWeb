@@ -204,9 +204,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
             {
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, con))
-                {
-                    try
-                    { 
+                {                   
                     SC.CommandTimeout = 90000000;
                     SC.Parameters.AddWithValue("@TL", TxtBusqueda.Text.Trim());
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
@@ -239,9 +237,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                                 }
                             }
                         }
-                    }
-                    }
-                    catch (Exception Ex) { }
+                    }                   
                 }
             }
         }

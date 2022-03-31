@@ -44,9 +44,10 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
+                              <asp:Button ID="BtnEntReintegro" runat="server" CssClass="btn btn-success" OnClick="BtnEntReintegro_Click" Width="100%" Text="reintegro" ToolTip="devolución al almacen items no usado de una reserva" />
                         </div>
                         <div class="col-sm-6">
-                            <asp:Button ID="BtnSldConsumo" runat="server" CssClass="btn btn-primary" OnClick="BtnSldConsumo_Click" Width="100%" Text="consumo" ToolTip="entrega de los elementos a partir de una reserva" />
+                            <asp:Button ID="BtnSldConsumo" runat="server" CssClass="btn btn-success" OnClick="BtnSldConsumo_Click" Width="100%" Text="consumo" ToolTip="entrega de los elementos a partir de una reserva" />
                         </div>
                     </div>
                 </div>

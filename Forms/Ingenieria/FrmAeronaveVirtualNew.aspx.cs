@@ -1002,7 +1002,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,@UBR,'','','',@CodA,0,0,@ICC,@FE,'01-01-1900','01-01-1900'";
                     SqlCommand SC = new SqlCommand(VBQuery, sqlCon);
                     SC.Parameters.AddWithValue("@CodA", DdlAeroInsElem.Text);
-                    SC.Parameters.AddWithValue("@FE", TxtFechaInsElem.Text);
+                    SC.Parameters.AddWithValue("@FE", Convert.ToDateTime (TxtFechaInsElem.Text));
                     SC.Parameters.AddWithValue("@UBR", TxtUbiTecInsElem.Text);
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataReader SDR = SC.ExecuteReader();
@@ -1843,7 +1843,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,'','','','',@CodA,0,0,@ICC,@FE,'01-01-1900','01-01-1900'";
                     SqlCommand SC = new SqlCommand(VBQuery, sqlCon);
                     SC.Parameters.AddWithValue("@CodA", DdlAeroRemElem.Text);
-                    SC.Parameters.AddWithValue("@FE", TxtFechaRemElem.Text);
+                    SC.Parameters.AddWithValue("@FE", Convert.ToDateTime(TxtFechaRemElem.Text));
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataReader SDR = SC.ExecuteReader();
                     if (SDR.Read())
@@ -2402,7 +2402,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,@UBR,'','','',@CodA,0,0,@ICC,@FE,'01-01-1900','01-01-1900'";
                     SqlCommand SC = new SqlCommand(VBQuery, sqlCon);
                     SC.Parameters.AddWithValue("@CodA", DdlAeroInsMay.Text);
-                    SC.Parameters.AddWithValue("@FE", TxtFechaInsMay.Text);
+                    SC.Parameters.AddWithValue("@FE", Convert.ToDateTime(TxtFechaInsMay.Text));
                     SC.Parameters.AddWithValue("@UBR", TxtUbiTecInsMay.Text);
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataReader SDR = SC.ExecuteReader();
@@ -3052,7 +3052,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,'','','','',@CodA,0,0,@ICC,@FE,'01-01-1900','01-01-1900'";
                     SqlCommand SC = new SqlCommand(VBQuery, sqlCon);
                     SC.Parameters.AddWithValue("@CodA", DdlAeroRemMay.Text);
-                    SC.Parameters.AddWithValue("@FE", TxtFechaRemMay.Text);
+                    SC.Parameters.AddWithValue("@FE", Convert.ToDateTime(TxtFechaRemMay.Text));
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataReader SDR = SC.ExecuteReader();
                     if (SDR.Read())

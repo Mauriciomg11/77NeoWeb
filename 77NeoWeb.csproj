@@ -134,6 +134,7 @@
     <Content Include="Forms\Almacen\FrmConsultaMovimientos.aspx" />
     <Content Include="Forms\Almacen\FrmMovimientoActivo.aspx" />
     <Content Include="Forms\Almacen\FrmReferenciaConReservas.aspx" />
+    <Content Include="Forms\Almacen\FrmReintegroMatComp.aspx" />
     <Content Include="Forms\Almacen\FrmSalConsumoMatCoMH.aspx" />
     <Content Include="Forms\Almacen\FrmSolicitudPedido.aspx" />
     <Content Include="Forms\Almacen\FrmUbicacionElemento.aspx" />
@@ -361,6 +362,13 @@
     </Compile>
     <Compile Include="Forms\Almacen\FrmReferenciaConReservas.aspx.designer.cs">
       <DependentUpon>FrmReferenciaConReservas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmReintegroMatComp.aspx.cs">
+      <DependentUpon>FrmReintegroMatComp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmReintegroMatComp.aspx.designer.cs">
+      <DependentUpon>FrmReintegroMatComp.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Almacen\FrmSalConsumoMatCoMH.aspx.cs">
       <DependentUpon>FrmSalConsumoMatCoMH.aspx</DependentUpon>

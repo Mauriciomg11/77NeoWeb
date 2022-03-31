@@ -512,6 +512,7 @@
                     <asp:PostBackTrigger ControlID="BtnAKVirtualRemElem" />
                     <asp:PostBackTrigger ControlID="BtnRemCompensac" />
                     <asp:PostBackTrigger ControlID="BtnAbrirOTCerrar" />
+                    <asp:PostBackTrigger ControlID="BtnGuardarRemElem" />
                     <asp:AsyncPostBackTrigger ControlID="TxtFechaRemElem" EventName="TextChanged" />
                 </Triggers>
             </asp:UpdatePanel>
