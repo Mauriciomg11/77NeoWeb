@@ -17,7 +17,7 @@ namespace _77NeoWeb.prg
         public ClsConexion()
         {
             this.VblConexion = "";
-            Produccion = "N";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion            
+            Produccion = "Y";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion            
         }
         public void SelecBD()
         {
@@ -135,7 +135,7 @@ namespace _77NeoWeb.prg
             }
             else
             {
-                 //return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "77NEO01", "DbConfigWeb", "sa", "admindemp");
+                // return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "77NEO01", "DbConfigWeb", "sa", "admindemp");
                return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
             }
         }

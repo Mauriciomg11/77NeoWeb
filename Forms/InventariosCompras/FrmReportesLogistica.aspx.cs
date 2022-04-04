@@ -263,19 +263,29 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 return;
             }
 
-            string VbNomArchivo = BtnInventario.Text.Trim() + "_" + DdlGrupoInv.SelectedItem.Text.Trim();
-            string Query;
+            string VbNomArchivo = BtnInventario.Text.Trim() + "_" + DdlAlmacenInv.SelectedItem.Text.Trim() + "_" + DdlGrupoInv.SelectedItem.Text.Trim();
+            string Query, VbNomDT;
 
             switch (DdlGrupoInv.Text.Trim())
             {
                 case "01": //Mat
-                    if (RdbNoSrlzdInv.Checked == true) { VbNomArchivo = VbNomArchivo + "_" + ViewState["NS"]; }
-                    else { VbNomArchivo = VbNomArchivo + "_" + ViewState["SNm"]; }
+                    if (RdbNoSrlzdInv.Checked == true)
+                    {
+                        VbNomArchivo = VbNomArchivo + "_" + ViewState["NS"];
+                        VbNomDT = DdlAlmacenInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + ViewState["NS"].ToString().Trim().Substring(0, 6);
+                    }
+                    else
+                    {
+                        VbNomArchivo = VbNomArchivo + "_" + ViewState["SNm"];
+                        VbNomDT = DdlAlmacenInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + ViewState["SNm"].ToString().Trim().Substring(0, 6);
+                    }
 
                     break;
                 case "02"://Comp
+                    VbNomDT = DdlAlmacenInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3);
                     break;
-                default:// Hta                  
+                default:// Hta
+                    VbNomDT = DdlAlmacenInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3);
                     break;
             }
             CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
@@ -304,7 +314,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         using (DataSet ds = new DataSet())
                         {
                             sda.Fill(ds);
-                            ds.Tables[0].TableName = "Invntr";
+                            ds.Tables[0].TableName = VbNomDT;
                             using (XLWorkbook wb = new XLWorkbook())
                             {
                                 foreach (DataTable DT in ds.Tables) { wb.Worksheets.Add(DT); }
@@ -326,11 +336,10 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 }
             }
         }
-
         protected void DdlGrupoInv_TextChanged(object sender, EventArgs e)
         {
             if (DdlGrupoInv.Text.Trim().Equals("01")) { RdbNoSrlzdInv.Enabled = true; RdbSrlzdInv.Checked = true; RdbSrlzdInv.Enabled = true; }
-            else { RdbNoSrlzdInv.Enabled = false; RdbSrlzdInv.Enabled = false; RdbSrlzdInv.Checked = false; RdbSrlzdInv.Checked = false; }
+            else { RdbNoSrlzdInv.Enabled = false; RdbSrlzdInv.Enabled = false; RdbSrlzdInv.Checked = false; RdbNoSrlzdInv.Checked = false; }
         }
         // ************************************************************ xxx ************************************************************
     }

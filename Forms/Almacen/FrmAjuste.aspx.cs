@@ -338,6 +338,18 @@ namespace _77NeoWeb.Forms.Almacen
             DataTable DT = dataSet.Tables[0];
             if (DT.Rows.Count > 0)
             {
+                DataRow[] DR = DT.Select("ID_UB = 0");
+                if (Cnx.ValidaDataRowVacio(DR))
+                {
+                    DataTable DTV = DR.CopyToDataTable();
+                    if (DTV.Rows.Count != DT.Rows.Count)
+                    {
+                        Result = Idioma.Select("Objeto= 'MensAjt24'");
+                        foreach (DataRow row in Result)
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// Todos los registros deben contener valor "0" en el campo "ID_UB"
+                    }
+                }
+
                 Cnx.SelecBD();
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
@@ -349,6 +361,7 @@ namespace _77NeoWeb.Forms.Almacen
                         try
                         {
                             string PMensj = "";
+                            string borr = VbPC.Trim() + "-" + Session["C77U"].ToString().Trim();
                             SC.CommandType = CommandType.StoredProcedure;
                             SqlParameter Prmtrs1 = SC.Parameters.AddWithValue("@Ajuste", DT);
                             SqlParameter Prmtrs2 = SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
@@ -420,7 +433,7 @@ namespace _77NeoWeb.Forms.Almacen
                     {
                         try
                         {
-                            SC.Parameters.AddWithValue("@NM", VbPC.Trim()+"-"+ Session["C77U"].ToString().Trim());
+                            SC.Parameters.AddWithValue("@NM", VbPC.Trim() + "-" + Session["C77U"].ToString().Trim());
                             SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@Obsv", TxtMotvo.Text.Trim());
                             SC.Parameters.AddWithValue("@CC", DdlCcost.Text.Trim());
