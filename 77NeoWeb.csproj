@@ -132,6 +132,7 @@
     <Content Include="Forms\Almacen\FrmAlertaSolicitudNuevaRepa.aspx" />
     <Content Include="Forms\Almacen\FrmAlertaVencSP.aspx" />
     <Content Include="Forms\Almacen\FrmConsultaMovimientos.aspx" />
+    <Content Include="Forms\Almacen\FrmEntradaCompraMat.aspx" />
     <Content Include="Forms\Almacen\FrmMovimientoActivo.aspx" />
     <Content Include="Forms\Almacen\FrmReferenciaConReservas.aspx" />
     <Content Include="Forms\Almacen\FrmReintegroMatComp.aspx" />
@@ -249,6 +250,7 @@
     <Content Include="images\CerrarV1.png" />
     <Content Include="images\Check.png" />
     <Content Include="images\Check1.png" />
+    <Content Include="images\CirrusV1.png" />
     <Content Include="images\Delete.png" />
     <Content Include="images\deleteV1.png" />
     <Content Include="images\DeleteV2.png" />
@@ -348,6 +350,13 @@
     </Compile>
     <Compile Include="Forms\Almacen\FrmConsultaMovimientos.aspx.designer.cs">
       <DependentUpon>FrmConsultaMovimientos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmEntradaCompraMat.aspx.cs">
+      <DependentUpon>FrmEntradaCompraMat.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmEntradaCompraMat.aspx.designer.cs">
+      <DependentUpon>FrmEntradaCompraMat.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Almacen\FrmMovimientoActivo.aspx.cs">
       <DependentUpon>FrmMovimientoActivo.aspx</DependentUpon>

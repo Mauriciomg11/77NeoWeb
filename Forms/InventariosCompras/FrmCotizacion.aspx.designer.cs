@@ -688,7 +688,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton IbtAprPNAll;
-
         /// <summary>
         /// Control TxtBusqPn.
         /// </summary>
@@ -697,7 +696,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TxtBusqPn;
-
         /// <summary>
         /// Control IbtBusqPn.
         /// </summary>

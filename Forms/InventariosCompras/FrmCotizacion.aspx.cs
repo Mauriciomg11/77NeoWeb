@@ -25,7 +25,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
         DataTable DTSolPed = new DataTable();
         DataSet DSTDdl = new DataSet();
         DataSet DSTPpl = new DataSet();
-        protected System.Web.UI.HtmlControls.HtmlInputFile oFile;
+       // protected System.Web.UI.HtmlControls.HtmlInputFile oFile;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
@@ -168,6 +168,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     LblTtl.Text = bO.Equals("LblTtl") ? bT : LblTtl.Text;
                     LblTRM.Text = bO.Equals("LblTRM") ? bT : LblTRM.Text;
                     // *************************************************Grid detalle *************************************************
+                    
                     IbtAprPNAll.ToolTip = bO.Equals("IbtAprPNAll") ? bT : IbtAprPNAll.ToolTip;
                     if (bO.Equals("placeholderBusPN"))
                     { TxtBusqPn.Attributes.Add("placeholder", bT); }

@@ -128,15 +128,16 @@ namespace _77NeoWeb.prg
         }
         public string BaseDatosPrmtr()
         {
-            if (Produccion.Equals("Y"))
+            if (Produccion.Equals("N"))
             {
-                string Vb1S = "23.102.100.143";//@"aircraft\SQLEXPRESS";
-                return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, Vb1S, "DbConfigWeb", "sa", "Medellin2021**");
+                return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, @"77NEO01", "DbConfigWeb", "sa", "admindemp");
+                /*string Vb1S = "23.102.100.143";//@"aircraft\SQLEXPRESS";
+                return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, Vb1S, "DbConfigWeb", "sa", "Medellin2021**");*/
             }
             else
             {
-                // return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "77NEO01", "DbConfigWeb", "sa", "admindemp");
-               return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
+                return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, @"77NEO01", "DbConfigWeb", "sa", "admindemp");
+               // return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
             }
         }
         public string GetConex() { return this.VblConexion; }
@@ -272,10 +273,10 @@ namespace _77NeoWeb.prg
         public string GetUsr() { return "00000082"; }//00000082|00000133 | 00000129 |
         public int GetIdCia() { return 1; }// 1 TwoGoWo |21 Demp |2 HCT PRUEBA| 12 ADA | 20 HCT | 3 Alca
         public string GetMonedLcl() { return "COP"; }//  "COP|USD"
-        public int GetFormatFecha() { return 101; }// 103 formato europeo dd/MM/yyyy | 101 formato EEUU MM/dd/yyyyy
+        public int GetFormatFecha() { return 103; }// 103 formato europeo dd/MM/yyyy | 101 formato EEUU MM/dd/yyyyy
         public string GetNit() { return "901338233-1"; } // 901338233-1 TwoGoWo |811035879-1 Demp |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT |P93000086218 - ALCA
-        public string GetBD() { return "DbNeoDempV2"; }//|DbNeoDempV2 |DbNeoAda | DbNeoHCT ||| BDNeoW
-        public string GetSvr() { return "77NEO01"; }//  "77NEO01"; ||| 23.102.100.143
+        public string GetBD() { return "DbNeoDemp2016"; }//|DbNeoDempV2 |DbNeoAda | DbNeoHCT ||| BDNeoW  || DbNeoDemp2016
+        public string GetSvr() { return @"77NEO01"; }//  "77NEO01\MSSQLSERVER2016"; ||| 23.102.100.143 || 
         public string GetUsSvr() { return "sa"; }//  "sa"
         public string GetPas() { return "admindemp"; }// admindemp|| Medellin2021**
         public string GetIdm() { return "4"; }//  4 español | 5 ingles/**/

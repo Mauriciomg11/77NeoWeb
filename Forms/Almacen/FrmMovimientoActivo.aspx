@@ -50,6 +50,16 @@
                             <asp:Button ID="BtnSldConsumo" runat="server" CssClass="btn btn-success" OnClick="BtnSldConsumo_Click" Width="100%" Text="consumo" ToolTip="entrega de los elementos a partir de una reserva" />
                         </div>
                     </div>
+                     <div class="row">
+                        <div class="col-sm-6">
+                            <br />
+                              <asp:Button ID="BtnEntCompra" runat="server" CssClass="btn btn-success" OnClick="BtnEntCompra_Click" Width="100%" Text="compra" ToolTip="entrada por compra" />
+                        </div>
+                        <div class="col-sm-6">
+                               <br />
+                            <asp:Button ID="BtnSldDevCompra" runat="server" CssClass="btn btn-success" OnClick="BtnSldDevCompra_Click" Width="100%" Text="devolucion compra" ToolTip="devolución de la compra" />
+                        </div>
+                    </div>
                 </div>
 
             </div>

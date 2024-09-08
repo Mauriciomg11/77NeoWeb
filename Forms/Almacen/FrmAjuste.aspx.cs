@@ -347,6 +347,7 @@ namespace _77NeoWeb.Forms.Almacen
                         Result = Idioma.Select("Objeto= 'MensAjt24'");
                         foreach (DataRow row in Result)
                         { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// Todos los registros deben contener valor "0" en el campo "ID_UB"
+                        return;
                     }
                 }
 

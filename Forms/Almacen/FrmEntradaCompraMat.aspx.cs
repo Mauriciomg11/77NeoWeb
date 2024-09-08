@@ -10,10 +10,13 @@ using System.Web.UI.WebControls;
 
 namespace _77NeoWeb.Forms.Almacen
 {
-    public partial class FrmMovimientoActivo : System.Web.UI.Page
+    public partial class frmEntradaCompraMat : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
+        DataSet DSTDdl = new DataSet();
+        DataSet DSDetRva = new DataSet();
+        DataSet DSUbica = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
@@ -41,9 +44,11 @@ namespace _77NeoWeb.Forms.Almacen
             }
             if (!IsPostBack)
             {
-
                 ModSeguridad();
+                TraerDatos("UPD");
+                MultVw.ActiveViewIndex = 0;
             }
+            ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
         protected void ModSeguridad()
         {
@@ -61,14 +66,6 @@ namespace _77NeoWeb.Forms.Almacen
             string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
             ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx", VbPC);
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
-            if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; } // grd.ShowFooter = false;
-            if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; }
-            if (ClsP.GetConsultar() == 0) { }
-            if (ClsP.GetImprimir() == 0) { ViewState["VblImpMS"] = 0; }//
-            if (ClsP.GetEliminar() == 0) { ViewState["VblEliMS"] = 0; }
-            if (ClsP.GetCE1() == 0) { ViewState["VblCE1"] = 0; } // Imprimir INcoming
-            if (ClsP.GetCE2() == 0) { ViewState["VblCE2"] = 0; }//  Puede editar el porcentaje de la recuperacion
-            if (ClsP.GetCE3() == 0) { ViewState["VblCE3"] = 0; }//  Solicitud de pedido     
 
             IdiomaControles();
         }
@@ -95,42 +92,85 @@ namespace _77NeoWeb.Forms.Almacen
                     if (bO.Equals("Caption"))
                     { Page.Title = bT; ViewState["PageTit"] = bT; }
                     TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
-                    LblTitEntradas.Text = bO.Equals("LblTitEntradas") ? bT : LblTitEntradas.Text;
-                    LblTitSalidas.Text = bO.Equals("LblTitSalidas") ? bT : LblTitSalidas.Text;
-                    BtnSldConsumo.Text = bO.Equals("BtnSldConsumo") ? bT : BtnSldConsumo.Text;
-                    BtnSldConsumo.ToolTip = bO.Equals("BtnSldConsumoTT") ? bT : BtnSldConsumo.ToolTip;
-                    BtnEntReintegro.Text = bO.Equals("BtnEntReintegro") ? bT : BtnEntReintegro.Text;
-                    BtnEntReintegro.ToolTip = bO.Equals("BtnEntReintegroTT") ? bT : BtnEntReintegro.ToolTip;
+                    LblObserv.Text = bO.Equals("LblObsMst") ? bT : LblObserv.Text;
+
+                    // *********************************************** Detalle Reintegro ***********************************************
 
                 }
+                // DataRow[] Result = Idioma.Select("Objeto= 'BtnIngresarOnCl1'");
+                // foreach (DataRow row in Result)
+                //  { BtnGuardar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');");/**/ }
+
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
             }
         }
 
-        protected void BtnEntReintegro_Click(object sender, EventArgs e)
+        protected void TraerDatos(string Accion)
         {
-            Page.Title = ViewState["PageTit"].ToString().Trim();
-            string CT = "window.open('/Forms/Almacen/FrmReintegroMatComp.aspx', '_blank');";
-            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
-        }
-        protected void BtnSldConsumo_Click(object sender, EventArgs e)
-        {
-            Page.Title = ViewState["PageTit"].ToString().Trim();
-            string CT = "window.open('/Forms/Almacen/FrmSalConsumoMatCoMH.aspx', '_blank');";
-            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
-        }
+            if (Accion.Equals("UPD"))
+            {
+                Cnx.SelecBD();
+                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+                {
+                    string VbTxtSql = "EXEC SP_PANTALLA_Entrada_Compra 2, @U,'','','','',0,0,@Idm, @ICC,'01-01-1','02-01-01','03-01-01'";
 
-        protected void BtnEntCompra_Click(object sender, EventArgs e)
-        {
-            Page.Title = ViewState["PageTit"].ToString().Trim();
-            string CT = "window.open('/Forms/Almacen/frmEntradaCompraMat.aspx', '_blank');";
-            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
+                    sqlConB.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                    {
+                        SC.Parameters.AddWithValue("@U", Session["C77U"]);
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            using (DataSet DSTDdl = new DataSet())
+                            {
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DSTDdl);
+                                DSTDdl.Tables[0].TableName = "Almac";
+                                DSTDdl.Tables[1].TableName = "NumDocDisp";
+                                ViewState["DSTDdl"] = DSTDdl;
+                            }
+                        }
+                    }
+                }
+            }
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+            if (DSTDdl.Tables["Almac"].Rows.Count > 0)
+            {
+                DdlAlmacen.DataSource = DSTDdl.Tables[0];
+                DdlAlmacen.DataTextField = "NomAlmacen";
+                DdlAlmacen.DataValueField = "CodIdAlmacen";
+                DdlAlmacen.DataBind();
+            }
+            if (DSTDdl.Tables["NumDocDisp"].Rows.Count > 0)
+            {
+                DdlNumCompra.DataSource = DSTDdl.Tables[1];
+                DdlNumCompra.DataTextField = "CodOrdenCompra";
+                DdlNumCompra.DataValueField = "Codigo";
+                DdlNumCompra.DataBind();
+            }
         }
-
-        protected void BtnSldDevCompra_Click(object sender, EventArgs e)
+        protected void BindDetCompra()
         {
-
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+            if (DSTDdl.Tables["NumDocDisp"].Rows.Count > 0)
+            {
+                DataTable DT = new DataTable();
+                DT = DSTDdl.Tables[1].Clone();
+                DataRow[] DR = DSTDdl.Tables[1].Select("Codigo='" + DdlNumCompra.Text.Trim() + "'");
+                if (Cnx.ValidaDataRowVacio(DR))
+                {
+                    DT = DR.CopyToDataTable();
+                    TxtNumFactr.Text = DT.Rows[0]["NumFacturaOC"].ToString().Trim();
+                    TxMoneda.Text = DT.Rows[0]["CodMoneda"].ToString().Trim();                    
+                    TxtTRM.Text = DT.Rows[0]["TrmAcordado"].ToString().Trim();                    
+                }
+            }
+        }
+        protected void DdlNumCompra_TextChanged(object sender, EventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim(); BindDetCompra();
         }
     }
 }

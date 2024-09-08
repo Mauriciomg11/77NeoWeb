@@ -161,6 +161,8 @@ namespace _77NeoWeb
                     SqlDataReader tbl = SC.ExecuteReader();
                     if (tbl.Read())
                     {
+                        string Lmoned= tbl["CodMoneda"].ToString();
+                        string S_CiaPpl = tbl["SiglaCiaPpal"].ToString();
                         Session["SigCiaPpal"] = tbl["SiglaCiaPpal"].ToString();
                         Session["77IDM"] = tbl["Idioma"].ToString(); //Idiioma
                         Session["MonLcl"] = tbl["CodMoneda"].ToString(); //Moneda Local

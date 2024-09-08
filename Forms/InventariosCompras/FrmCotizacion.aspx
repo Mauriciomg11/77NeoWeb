@@ -370,7 +370,6 @@
                                 OnRowCommand="GrdDet_RowCommand"
                                 OnRowDeleting="GrdDet_RowDeleting" OnRowDataBound="GrdDet_RowDataBound" OnSorting="GrdDet_Sorting">
                                 <Columns>
-
                                     <asp:TemplateField HeaderText="Sel." HeaderStyle-Width="1%" SortExpression="Aprobacion">
                                         <ItemTemplate>
                                             <asp:CheckBox ID="CkbAprob" Checked='<%# Eval("Aprobacion").ToString()=="1" ? true : false %>' runat="server" />
@@ -571,11 +570,7 @@
             <asp:PostBackTrigger ControlID="IbtAprDetAll" />
             <asp:PostBackTrigger ControlID="BtnExportDetCotiza" />
             <asp:PostBackTrigger ControlID="BtnExportDetUnidMed" />
-            <asp:PostBackTrigger ControlID="BtnCargaMaxiva" />
-            <%--  <asp:PostBackTrigger ControlID="IbtBusqueda" />
-          
-            
-             <asp:PostBackTrigger ControlID="BtnAlert" />--%>
+            <asp:PostBackTrigger ControlID="BtnCargaMaxiva" />         
         </Triggers>
     </asp:UpdatePanel>
 </asp:Content>

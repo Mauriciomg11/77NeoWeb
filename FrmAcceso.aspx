@@ -12,7 +12,7 @@
             left: 50%;
             width: 400px;
             margin-left: -200px;
-            height: 200px;
+            height: 300px;
             margin-top: -150px;
             border: 1px solid #808080;
             padding: 5px;
