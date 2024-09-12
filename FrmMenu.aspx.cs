@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace _77NeoWeb.Forms.Seguridad
+namespace _77NeoWeb
 {
     public partial class FrmMenu : System.Web.UI.Page
     {

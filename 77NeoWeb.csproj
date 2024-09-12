@@ -230,7 +230,7 @@
     <Content Include="Forms\Seguridad\FrmIdioma.aspx" />
     <Content Include="FrmAcceso.aspx" />
     <Content Include="Forms\Seguridad\FrmInicio.aspx" />
-    <Content Include="Forms\Seguridad\FrmMenu.aspx" />
+    <Content Include="FrmMenu.aspx" />
     <Content Include="Forms\Seguridad\FrmPerfil.aspx" />
     <Content Include="Forms\Seguridad\FrmSeguPefiles.aspx" />
     <Content Include="Forms\Seguridad\FrmUsuario.aspx" />
@@ -1037,11 +1037,11 @@
     <Compile Include="Forms\Seguridad\FrmInicio.aspx.designer.cs">
       <DependentUpon>FrmInicio.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Seguridad\FrmMenu.aspx.cs">
+    <Compile Include="FrmMenu.aspx.cs">
       <DependentUpon>FrmMenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Forms\Seguridad\FrmMenu.aspx.designer.cs">
+    <Compile Include="FrmMenu.aspx.designer.cs">
       <DependentUpon>FrmMenu.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Seguridad\FrmPerfil.aspx.cs">

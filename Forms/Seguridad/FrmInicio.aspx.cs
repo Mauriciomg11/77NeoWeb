@@ -154,7 +154,8 @@ namespace _77NeoWeb.Forms
         }
         protected void LkbMenu_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Forms/Seguridad/FrmMenu.aspx");
+           // Response.Redirect("~/Forms/Seguridad/FrmMenu.aspx");
+            Response.Redirect("~/FrmMenu.aspx");
         }
 
         protected void LkbPrueba_Click(object sender, EventArgs e)

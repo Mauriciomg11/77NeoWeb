@@ -313,6 +313,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
+                    string sborr1 = Session["!dC!@"].ToString();
                     string VbOrden = "";
                     if (RdbStsAta.Checked == true) { VbOrden = "ATA"; }
                     if (RdbStsProy.Checked == true) { VbOrden = "PROYECCION"; }
