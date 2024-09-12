@@ -28,6 +28,9 @@
             text-align: left;
             color: antiquewhite;
         }
+
+       
+        
     </style>
     <script type="text/javascript">
         function myFuncionddlP() {
@@ -37,19 +40,22 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <div class="TextoSuperior">
         <h1>
-            <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" Text="77NeoWeb Access" /></h1>
+            <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" Text="AFTEC360 Access" /></h1>
     </div>
-    <div class="centrarCuadroSCV">
-        <div class="text">
-            <h2>77NeoWeb system</h2>
-            <h5>
-                <asp:Label ID="LblText1" runat="server" Text="Aeronautical management system" /></h5>
-            <h5>
-                <asp:Label ID="LblText2" runat="server" CssClass="CsTitulo" Text="We take care of your data" /></h5>
-            <h5>
-                <asp:Label ID="LblText3" runat="server" CssClass="CsTitulo" Text="We fly with them..." /></h5>
+    <div class="text">
+        <div class="centrarCuadroSCV">
+            <div style="color:black">
+                <h2>AFTEC360 System</h2>
+                <h5>
+                    <asp:Label ID="LblText1" runat="server" Text="Aeronautical management system" /></h5>
+                <h5>
+                    <asp:Label ID="LblText2" runat="server" CssClass="CsTitulo" Text="We take care of your data" /></h5>
+                <h5>
+                    <asp:Label ID="LblText3" runat="server" CssClass="CsTitulo" Text="We fly with them..." /></h5>
+            </div>
         </div>
     </div>
     <div class="ContenedorLogin">

@@ -102,7 +102,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      
     <div class="TextoSuperior">
-        <h1>77NeoWeb</h1>
+        <h1>AFTEC360</h1>
     </div>
     <asp:ImageButton ID="IbnSalir" runat="server" CssClass="menuSalir" ImageUrl="~/images/ExitV1.png" ToolTip="Salir" OnClick="IbnSalir_Click" OnClientClick="return confirm('¿Desea cerrar la sesión?');" />
     <div class="Passw">

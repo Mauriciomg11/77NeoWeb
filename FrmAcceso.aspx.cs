@@ -55,7 +55,7 @@ namespace _77NeoWeb
                     string b1 = tbl["Objeto"].ToString();
                     string b2 = tbl["Texto"].ToString();
                     Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());
-                    TitForm.Text = b1.Trim().Equals("TitForm") ? b2.Trim() : TitForm.Text;
+                    //TitForm.Text = b1.Trim().Equals("TitForm") ? b2.Trim() : TitForm.Text;
                     LblText1.Text = b1.Trim().Equals("LblText1") ? b2.Trim() : LblText1.Text;
                     LblText2.Text = b1.Trim().Equals("LblText2") ? b2.Trim() : LblText2.Text;
                     LblText3.Text = b1.Trim().Equals("LblText3") ? b2.Trim() : LblText3.Text;
