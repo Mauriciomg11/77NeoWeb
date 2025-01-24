@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Security;
 using System.Web.UI;
+
 namespace _77NeoWeb
 {
     public class Global : System.Web.HttpApplication
@@ -9,6 +10,8 @@ namespace _77NeoWeb
         protected void Application_Start(object sender, EventArgs e)
         {
             string JQueryVer = "1.11.3";
+
+           // BundleConfig.RegisterBundles(BundleTable.Bundles);
             ScriptManager.ScriptResourceMapping.AddDefinition("jquery", new ScriptResourceDefinition
             {
                 Path = "~/js/jquery-" + JQueryVer + ".min.js",

@@ -28,6 +28,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplMvmtsAlmcn" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+               <br /><br /><br />
             <div class="CentrarCntndr">
                 <div class="col-sm-6 Interna">
                     <div class="row">

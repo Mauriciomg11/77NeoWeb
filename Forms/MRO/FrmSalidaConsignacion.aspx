@@ -89,6 +89,8 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+            <br />
+            <br />
             <div class="CentrarContenedor DivMarco">
                 <div class="row">
                     <div class="col-sm-12">
@@ -109,6 +111,7 @@
                     </div>
                     <div class="col-sm-0"></div>
                     <div class="col-sm-4">
+                        <br />
                         <asp:Button ID="BtnEntregar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="30%" OnClick="BtnEntregar_Click" OnClientClick="target ='';" Text="nuevo" Enabled="false" />
                     </div>
                 </div>

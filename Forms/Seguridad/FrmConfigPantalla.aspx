@@ -3,22 +3,13 @@
 <asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
     <title>Pantalla</title>
     <style type="text/css">
-        .DivGrid {
-            position: absolute;
-            width: 98%;
-            height: 50%;
-            top: 45%;
-            left: 1%;
-            margin-top: 0px;
-        }
-
         .GridControl {
             Width: 100%;
             border-width: 3px;
         }
 
         .centrarTexto {
-            position: absolute;
+            position: relative;
             /*nos posicionamos en el centro del navegador*/
             top: 37%;
             left: 38%;
@@ -33,6 +24,7 @@
             border: 1px solid #808080;
             padding: 5px;
             background-color: cadetblue;
+            top: 215px
         }
 
         .DimensionTexto {
@@ -53,7 +45,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
-        <ContentTemplate>
+        <ContentTemplate>             
             <table class="TablaBusqueda">
                 <tr>
                     <td>
@@ -64,7 +56,7 @@
                         <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                 </tr>
             </table>
-            <div class=" centrarTexto">
+            <div class="centrarTexto">
                 <asp:Label ID="LblDescripcion" runat="server" CssClass=" btn-info" Text="Descripción"></asp:Label><br />
                 <asp:TextBox ID="TxtDescripcion" runat="server" CssClass=" form-control DimensionTexto" Height="30px" Enabled="false"></asp:TextBox>
                 <table>
@@ -122,6 +114,7 @@
                     </tr>
                 </table>
             </div>
+            <br /><br /><br /><br /><br />
             <div class="DivGrid DivContendorGrid">
                 <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false" DataKeyNames="CodIdFormulario"
                     CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="5" OnPageIndexChanging="GrdDatos_PageIndexChanging"

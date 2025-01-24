@@ -57,6 +57,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+                <br /><br />
             <div class="Scroll">
                 <div class="row">
                     <div class="col-sm-6">

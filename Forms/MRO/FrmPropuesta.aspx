@@ -183,7 +183,6 @@
 
         </div>
     </div>
-
     <div id="ModalBusqPN" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -248,7 +247,6 @@
 
         </div>
     </div>
-
     <div id="ModalAlerta" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -264,7 +262,7 @@
                                     <div class="CentrarGrid pre-scrollable">
                                         <h6 class="TextoSuperior">
                                             <asp:Label ID="LblTitAlertaOTDuplicadas" runat="server" Text="OT duplicadas" /></h6>
-                                        <asp:GridView ID="GrdAlrtOtDuplicada" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames ="Propuesta,OT"
+                                        <asp:GridView ID="GrdAlrtOtDuplicada" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="Propuesta,OT"
                                             CssClass="GridControl DiseñoGrid table-sm" GridLines="Both">
                                             <Columns>
                                                 <asp:TemplateField HeaderText="Propuesta">
@@ -333,11 +331,12 @@
 
         </div>
     </div>
-
     <asp:MultiView ID="MultVw" runat="server">
         <asp:View ID="Vw0Datos" runat="server">
             <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                    <br />
+                    <br />
                     <div class="CentrarContenedor DivMarco">
                         <div class="row">
                             <div class="col-sm-1">
@@ -364,7 +363,7 @@
                             &nbsp;&nbsp
                             <div class="col-sm-3">
                                 <asp:Label ID="LblNumPpt" runat="server" CssClass="LblEtiquet" Text="Propuesta Nro.:" />
-                                <asp:TextBox ID="TxtNumPpt" runat="server" CssClass=" heightCampo" Enabled="false" Width="30%" Visible ="false" />
+                                <asp:TextBox ID="TxtNumPpt" runat="server" CssClass=" heightCampo" Enabled="false" Width="30%" Visible="false" />
                                 <asp:TextBox ID="TxtCodigoPpt" runat="server" CssClass=" heightCampo" Enabled="false" Width="30%" />
                                 <asp:Label ID="LblMaster" runat="server" Text="MASTER" ForeColor="DarkRed" Font-Bold="true" />
                             </div>
@@ -856,31 +855,36 @@
         <asp:View ID="Vw1Busq" runat="server">
             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOpcBusqueda" runat="server" Text="Opciones de búsqueda " />
                     </h6>
                     <asp:ImageButton ID="IbtCerrarBusq" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarBusq_Click" />
-                    <div class="CentrarBusq DivMarco">
-                        <table class="TablaBusqueda">
-                            <tr>
-                                <td colspan="3">
-                                    <asp:RadioButton ID="RdbBusqGnrlPpt" runat="server" CssClass="LblEtiquet" Text="&nbsp propuesta" GroupName="Busq" />&nbsp&nbsp&nbsp
+                    <table class="TabOpcBusq">
+                        <tr>
+                            <td colspan="3">
+                                <asp:RadioButton ID="RdbBusqGnrlPpt" runat="server" CssClass="LblEtiquet" Text="&nbsp propuesta" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqGnrlHk" runat="server" CssClass="LblEtiquet" Text="&nbsp aeronave" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqGnrlSN" runat="server" CssClass="LblEtiquet" Text="&nbsp S/N" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqGnrlPN" runat="server" CssClass="LblEtiquet" Text="&nbsp P/N" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqGnrlOT" runat="server" CssClass="LblEtiquet" Text="&nbsp O.t." GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqGnrlRte" runat="server" CssClass="LblEtiquet" Text="&nbsp reporte" GroupName="Busq" /></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
-                                <td>
-                                    <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
-                                <td>
-                                    <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
-                            </tr>
-                        </table>
-                        <br />
+                        </tr>
+                    </table>
+                    <table class="TabOpcBusq">
+                        <tr>
+                            <td>
+                                <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
+                            <td>
+                                <asp:TextBox ID="TxtBusqueda" runat="server" Width="450px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
+                            <td>
+                                <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <br />
+                    <div class="CentrarBusq DivMarco">
+
                         <div class="CentrarGrid pre-scrollable">
                             <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="Codigo,CodCliente,CodTipoPropuesta,IdTercero"
                                 CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowCommand="GrdBusq_RowCommand" OnRowDataBound="GrdBusq_RowDataBound">
@@ -927,12 +931,12 @@
                                             <asp:Label Text='<%# Eval("DescripcionEstado") %>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                     <asp:TemplateField HeaderText="W.O.">
+                                    <asp:TemplateField HeaderText="W.O.">
                                         <ItemTemplate>
                                             <asp:Label ID="LblOT" Text='<%# Eval("CodigoOT") %>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                     <asp:TemplateField HeaderText="NR">
+                                    <asp:TemplateField HeaderText="NR">
                                         <ItemTemplate>
                                             <asp:Label ID="LblRTE" Text='<%# Eval("CodigoRTE") %>' runat="server" />
                                         </ItemTemplate>
@@ -953,6 +957,7 @@
         <asp:View ID="Vw2Condiciones" runat="server">
             <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitCondiciones" runat="server" Text="parametrizacion condiciones de la propuesta " />
                     </h6>
@@ -1043,6 +1048,7 @@
         <asp:View ID="Vw3ElementosNoValorizados" runat="server">
             <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitEleNoValorizado" runat="server" Text="parte no encontradas en la valorización" />
                     </h6>
@@ -1108,6 +1114,7 @@
         <asp:View ID="Vw4Det2Elem_HK" runat="server">
             <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitTrabajos" runat="server" Text="propuesta Nro:" /></h6>
                     <div class="CentrarContndSn DivMarco">
@@ -1309,7 +1316,7 @@
                                                     <asp:Label ID="LblOT" Text='<%# Eval("CodigoOT") %>' runat="server" Width="100%" />
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Rpt"  HeaderStyle-Width="10%">
+                                            <asp:TemplateField HeaderText="Rpt" HeaderStyle-Width="10%">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblRteP" Text='<%# Eval("CodigoRTE") %>' runat="server" Width="100%" />
                                                 </ItemTemplate>
@@ -1431,6 +1438,7 @@
         <asp:View ID="Vw5AsigSvcsLote_Elem_HK" runat="server">
             <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsigSvcMasivo" runat="server" Text="asignar servicios " />
                     </h6>
@@ -1498,13 +1506,15 @@
         <asp:View ID="Vw6CargaMasiva" runat="server">
             <asp:UpdatePanel ID="UpPnlCargaMasiva" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitPlntllMasiv" runat="server" Text="Subir plantilla" /></h6>
                     <div class="CentrarContndSn DivMarco">
                         <asp:ImageButton ID="IbtCerrarSubMaxivo" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarSubMaxivo_Click" ImageAlign="Right" />
                         <asp:ImageButton ID="IbtSubirCargaMax" runat="server" ToolTip="Cargar archivo..." ImageUrl="~/images/SubirCarga.png" OnClick="IbtSubirCargaMax_Click" Width="30px" Height="30px" />
                         <asp:ImageButton ID="IbtGuardarCargaMax" runat="server" ToolTip="Guardar" ImageUrl="~/images/Descargar.png" OnClick="IbtGuardarCargaMax_Click" Width="30px" Height="30px" Visible="false" OnClientClick="javascript:return confirm('¿Desea almacenar la información?', 'Mensaje de sistema')" />
-                          <br /><asp:FileUpload ID="FileUpPPT" runat="server" Font-Size="9px" Visible="false" />
+                        <br />
+                        <asp:FileUpload ID="FileUpPPT" runat="server" Font-Size="9px" Visible="false" />
                         <div class="row">
                             <div id="DatosCargar" class="col-sm-12  heightPltll">
                                 <div class="ScrollDet2">
@@ -1662,6 +1672,7 @@
             </asp:UpdatePanel>
         </asp:View>
         <asp:View ID="Vw7Imprimir" runat="server">
+            <br />
             <h6 class="TextoSuperior">
                 <asp:Label ID="LblTitImpresion" runat="server" Text="Impresión" />
             </h6>

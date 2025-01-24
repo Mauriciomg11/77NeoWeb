@@ -107,6 +107,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
+                    <br /><br />
                     <div class="CentrarContenedor DivMarco">
                         <div class="row">
                             <div class="col-sm-1">

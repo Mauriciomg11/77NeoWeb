@@ -136,7 +136,7 @@
                             </asp:TableCell>
                         </asp:TableRow>
                     </asp:Table>
-                    <table class="TablaBusqueda">
+                    <table>
                         <tr>
                             <td>
                                 <asp:Label ID="LblModalBusq" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
@@ -195,6 +195,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
+                    <br /><br />
                     <div class="CentrarContenedor">
                         <div id="Botones" class="row">
                             <div class="col-sm-1">

@@ -49,6 +49,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
+                     <br /> <br />
                     <asp:Label ID="LblAk" runat="server" CssClass="LblEtiquet" Text="Aeronave:" />
                     <asp:DropDownList ID="DdlAk" runat="server" CssClass="heightCampo" Width="15%" OnTextChanged="DdlAk_TextChanged" AutoPostBack="true" />
                     <asp:Label ID="LblPN" runat="server" CssClass="LblEtiquet" Text="P/N:" />
@@ -189,6 +190,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Procesar" runat="server">
+                     <br /><br />
                     <asp:ImageButton ID="IbtCerrarProces" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarProces_Click" ImageAlign="Right" />
                     <div class="col-sm-7">
                         <h6 class="TextoSuperior">

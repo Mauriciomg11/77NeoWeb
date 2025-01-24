@@ -29,6 +29,7 @@
             height: 90%;
             /*indicamos que el margen superior, es la mitad de la altura*/
             padding: 5px;
+            top: 150px
         }
 
         .CentrarBusq {
@@ -185,23 +186,25 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOpcBusqueda" runat="server" Text="Opciones de búsqueda " />
                     </h6>
                     <asp:ImageButton ID="IbtCerrarBusq" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarBusq_Click" />
-                    <div class="CentrarBusq DivMarco">
-                        <table class="TablaBusqueda">
+                     
+                    <div class="CentrarBusq DivMarco">                         
+                        <div class="CentrarGrid pre-scrollable">
+                            <table>
                             <tr>
                                 <td>
                                     <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
                                 <td>
-                                    <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
+                                    <asp:TextBox ID="TxtBusqueda" runat="server" Width="300px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
                                 <td>
                                     <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                             </tr>
                         </table>
                         <br />
-                        <div class="CentrarGrid pre-scrollable">
                             <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="CodNumOrdenTrab"
                                 CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both"
                                 OnSelectedIndexChanged="GrdBusq_SelectedIndexChanged">

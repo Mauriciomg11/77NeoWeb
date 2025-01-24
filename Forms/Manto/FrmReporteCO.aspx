@@ -14,6 +14,7 @@
             height: 90%;
             /*indicamos que el margen superior, es la mitad de la altura*/
             padding: 5px;
+            top:150px
         }
 
         .ScrollDivGrid {
@@ -225,6 +226,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Imprimir" runat="server">
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitImpresion" runat="server" Text="Impresión" />
                     </h6>

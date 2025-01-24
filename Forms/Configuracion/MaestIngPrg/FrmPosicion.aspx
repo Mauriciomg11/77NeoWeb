@@ -1,23 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmPosicion.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.MaestIngPrg.FrmPosicion" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <title>Pantalla</title>
-    <style type="text/css">
-        .DivGrid {
-            position: absolute;
-            width: 45%;
-            height: 600px;
-            top: 15%;
-            left: 30%;
-            margin-top: 0px;
-        }
-    </style>
+    <title>Pantalla</title> 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1>
-        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
+    
+        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="CuerpoPagina" runat="server">
+<asp:Content ID="Content3" ContentPlaceHolderID="CuerpoPagina"  runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
         <ContentTemplate>
             <table class="TablaBusqueda">
@@ -25,7 +15,7 @@
                     <td>
                         <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"/></td>
                     <td>
-                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"/></td>
+                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="450px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"/></td>
                     <td>
                         <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                 </tr>

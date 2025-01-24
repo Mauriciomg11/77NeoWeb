@@ -11,38 +11,82 @@
     <link href="Css/CssPagTrans.css" rel="stylesheet" />
     <link href="Css/CssConsultar.css" rel="stylesheet" />
     <link href="Css/DisenoFrm.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <link href="Css/bootstrap.min.css" rel="stylesheet" />
+    <link href="Css/CssSystem/MenuInicio.css" rel="stylesheet" />
+    <%--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" /> --%>
+   
     <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet" />
-     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <%-- <script type="text/javascript" src="/Scripts/jquery-3.7.0.js"></script>--%>
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <%--  <script type="text/javascript" src="/Scripts/jquery-3.7.0.min.js"></script>--%>
+   
+     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>   <%----%>
+<%--  --%>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+    <%--    <script src="/Scripts/WebForms/MSAjax/MicrosoftAjax.js"></script>
+    <script src="/Scripts/WebForms/MSAjax/MicrosoftAjaxApplicationServices.js"></script>
+    <script src="/Scripts/WebForms/MSAjax/MicrosoftAjaxTimer.js"></script>
+    <script src="/Scripts/WebForms/MSAjax/MicrosoftAjaxWebForms.js"></script>--%>
+   
+    <script src="/Scripts/WebForms/WebForms.js"></script>
+    <script src="/Scripts/WebForms/MenuStandards.js"></script>
+    <script src="/Scripts/WebForms/GridView.js"></script>
+    <script src="/Scripts/WebForms/Focus.js"></script>
+    <script src="/Scripts/WebForms/Menu.js"></script>
+    <script src="/Scripts/WebForms/DetailsView.js"></script>
+    <script src="/Scripts/WebForms/WebParts.js"></script>
+    <script src="/Scripts/APP/MenuInicio.js"></script>
+ 
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    <asp:PlaceHolder runat="server"></asp:PlaceHolder>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <style type="text/css">
-        .TextoSuperior {
-            background-color: cadetblue; /*bg-info text-center*/
-            text-align: center;
-            color: aliceblue;
-            font-size: 1em;
-        }
-    </style>
+        
 
+    </style>
+     
     <asp:ContentPlaceHolder ID="EncScriptDdl" runat="server">
     </asp:ContentPlaceHolder>
 
 </head>
 <body onload="myFuncionddl()">
     <form id="form1" runat="server">
+       
         <div class="TextoSuperior">
-            <asp:ContentPlaceHolder ID="TituloPagina" runat="server">
-            </asp:ContentPlaceHolder>
+           <div class="Passw">  
+                <h1 class="classh2">XOM SYSTEM</h1>
+                <asp:Label ID="LblCia" runat="server" Text="" CssClass="LblCiaTrans"></asp:Label>
+               <asp:LinkButton ID="LkbMenu" runat="server" CssClass="Menu" CausesValidation="False" Text="Menú" ForeColor="#ffffff" OnClick="LkbMenu_Click" />&nbsp&nbsp&nbsp&nbsp   
+             <asp:LinkButton ID="LkbCambPass" runat="server" CssClass="Passw" CausesValidation="False" Text="Cambio contraseña..." ForeColor="#ffffff" OnClick="LkbCambPass_Click" OnClientClick="return confirm('¿Desea ralizar el cambio de contraseña?');" />
+                
+                <div style="text-align: center; font-size: 1em">
+                    <asp:ContentPlaceHolder ID="TituloPagina" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </div>
+   </div>
+        <div>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <button id="menu-toggle" type="button"><span class="navbar-toggler-icon"></span></button> 
+               
+                <asp:ImageButton ID="IbnSalir" runat="server" CssClass="menuSalir" ImageUrl="~/images/ExitV1.png" ToolTip="Salir" OnClick="IbnSalir_Click" OnClientClick="return confirm('¿Desea cerrar la sesión?');" />
+            </nav>
         </div>
+        <div id="menu">
+            <div class="sidebar" id="sidebar">
+                <asp:Literal ID="menuLiteral" runat="server"></asp:Literal>
+            </div>
+        </div>
+
         <asp:ScriptManager ID="ScriptManager1" runat="server" EnableScriptGlobalization="true" EnableScriptLocalization="true"></asp:ScriptManager>
-        <asp:Label ID="LblCia" runat="server" Text="" CssClass="LblCiaTrans"></asp:Label>
-        <asp:ImageButton ID="IbnRegresar" runat="server" CssClass="BotonRegresar" ImageUrl="~/images/RegresarV1.png" ToolTip="Regresar al menú principal" OnClick="IbnRegresar_Click" OnClientClick="return confirm('¿Desea regresar al menú principal?');"></asp:ImageButton>
-        <asp:ContentPlaceHolder ID="CuerpoPagina" runat="server">
+        
+      <div class="body">
+        <asp:ContentPlaceHolder ID="CuerpoPagina" runat="server" >
         </asp:ContentPlaceHolder>
+          </div>
     </form>
 </body>
 </html>

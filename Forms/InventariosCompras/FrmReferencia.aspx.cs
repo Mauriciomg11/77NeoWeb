@@ -471,7 +471,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             }
             else if (VblGrupo.Equals("03"))
             {
-                VblGrupo = "H";
+                VblGrupo = "T";
             }
 
             if (Model.Equals(""))
@@ -761,8 +761,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
             BindDataAll("", "");
         }
         protected void DdlMod_TextChanged(object sender, EventArgs e)
-        {
-            GenerarCodigo(DdlGrupo.SelectedValue, DdlMod.SelectedValue, DdlAta.SelectedValue);
+        {           
+            GenerarCodigo(DdlGrupo.SelectedValue, DdlMod.SelectedItem.Text.Trim(), DdlAta.SelectedValue);
             BindDataAll("", "");
         }
         protected void BtnIngresar_Click(object sender, EventArgs e)
@@ -2366,14 +2366,14 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected void GrdCamUC_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
-            DataRow[] Result;
+            DataRow[] Result;   
             PerfilesGrid();
             if (e.Row.RowType == DataControlRowType.Footer)
             {
                 DSTUndCompra = (DataSet)ViewState["DSTUndCompra"];
                 DropDownList DdlCUMCPP = (e.Row.FindControl("DdlCUMCPP") as DropDownList);
                 DataTable DT = new DataTable();
-                DT = DSTUndCompra.Tables[1].Clone();
+                DT = DSTUndCompra.Tables["UndCompra"].Clone();
                 Result = DSTUndCompra.Tables[1].Select("Disponible = 1");
                 foreach (DataRow DR in Result)
                 { DT.ImportRow(DR); }

@@ -8,6 +8,7 @@
         .CssTblPpal {
             position: absolute;
             width: 103%;
+            top:150px
         }
 
         .TablaCampos {
@@ -867,6 +868,7 @@
                 </table>
             </asp:Panel>
             <asp:Panel ID="PnlBusq" runat="server" Visible="false">
+                 <br /> <br />
                 <h6 class="TextoSuperior">
                     <asp:Label ID="LbltitBusq" runat="server" CssClass="LblEtiquet" Text="Opciones de búsqueda" /></h6>
                 <asp:Table ID="TblBusqHK" runat="server" class="TablaBusqueda" Visible="false" Width="10%">
@@ -964,6 +966,7 @@
             <asp:Panel ID="PnlRecursos" runat="server" Visible="false">
                 <asp:UpdatePanel ID="UpPnlRF" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
+                         <br /> <br />
                         <h6 class="TextoSuperior">
                             <asp:Label ID="LblTitRecursoLice" runat="server" CssClass="LblEtiquet" Text="Recurso Físico y Licencias" /></h6>
                         <asp:ImageButton ID="IbtCerrarRec" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarRec_Click" ImageAlign="Right" />
@@ -1158,6 +1161,7 @@
             <asp:Panel ID="PnlInforme" runat="server" Visible="false">
                 <asp:UpdatePanel ID="UpPnlInforme" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
+                         <br /> <br />
                         <h6 class="TextoSuperior">
                             <asp:Label ID="TitInfSvc" runat="server" Text="Label" />
                         </h6>
@@ -1184,6 +1188,7 @@
             </asp:Panel>
         </asp:View>
         <asp:View ID="Vw1ConfigIniCntdrHk" runat="server">
+             <br /> <br />
             <h6 class="TextoSuperior">
                 <asp:Label ID="LblTitConfgIniCntd" runat="server" Text="configuracion inicial contador / frecuencia." />
             </h6>

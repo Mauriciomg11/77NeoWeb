@@ -40,7 +40,7 @@
     </script>
 
     <style type="text/css">
-        .DivGrid {
+       /* .DivGrid {
             margin: 0 auto;
             text-align: left;
             width: 85%;
@@ -48,7 +48,7 @@
             top: 15%;
             margin-top: 0px;
         }
-
+*/
         .DivGridAR {
             margin: 0 auto;
             text-align: left;
@@ -85,6 +85,7 @@
     <asp:UpdatePanel ID="UpPnlAF" runat="server">
         <ContentTemplate>
             <div class="CentrarTable">
+                <br /><br />
                 <table class="TableAla">
                     <tr>
                         <td class="CeldaTabla">
@@ -96,7 +97,7 @@
             </div>
             <div class="CentrarTable">
                 <asp:Panel ID="PnlAF" runat="server">
-                    <div class="DivGrid DivContendorGrid">
+                    <div class="DivGridAR DivContendorGrid">
                         <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="ID"
                             CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                             OnRowCommand="GrdDatos_RowCommand" OnSelectedIndexChanged="GrdDatos_SelectedIndexChanged"

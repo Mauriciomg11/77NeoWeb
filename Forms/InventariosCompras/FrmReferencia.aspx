@@ -15,7 +15,7 @@
             /*indicamos que el margen superior, es la mitad de la altura*/
             padding: 5px;
         }
-        .DivGrid {
+        /*.DivGrid {
             position: absolute;
             OVERFLOW: auto;
             width: 98%;
@@ -23,13 +23,13 @@
             top: 24%;
             left: 1%;
             margin-top: 0px;
-        }
+        }*/
 
         .TablaCampos {
             position: absolute;
             text-align: left;
             width: 95%;
-        }
+        }        
 
         .Campos {
             Height: 30px;
@@ -87,7 +87,8 @@
         .DdlFont {
             font-size: 10px;
         }
-         .Font_btnCrud {
+
+        .Font_btnCrud {
             font-size: 12px;
             font-stretch: condensed;
         }
@@ -131,6 +132,8 @@
             <ContentTemplate>
                 <asp:Panel ID="PnlCampos" runat="server">
                     <div class=" CentrarTable ">
+                        <br />
+                        <br />
                         <table class="TablaCampos table table-sm">
                             <tr>
                                 <td>
@@ -287,18 +290,18 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <asp:Button ID="BtnConsultar" runat="server" CssClass="btn btn-primary Font_btnCrud" OnClick="BtnConsultar_Click"  OnClientClick="target ='';" Text="Consultar" /></td>
+                                                <asp:Button ID="BtnConsultar" runat="server" CssClass="btn btn-primary Font_btnCrud" OnClick="BtnConsultar_Click" OnClientClick="target ='';" Text="Consultar" /></td>
                                             <td>
                                                 <asp:Button ID="BtnIngresar" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnIngresar_Click" Text="Ingresar" /></td>
                                             <td>
-                                                <asp:Button ID="BtnModificar" runat="server" CssClass=" btn btn-success Font_btnCrud" OnClick="BtnModificar_Click" Text="Modificar" /></td>                                           
+                                                <asp:Button ID="BtnModificar" runat="server" CssClass=" btn btn-success Font_btnCrud" OnClick="BtnModificar_Click" Text="Modificar" /></td>
                                             <td>
                                                 <asp:Button ID="BtnEliminar" runat="server" CssClass=" btn btn-success Font_btnCrud" OnClick="BtnEliminar_Click" Text="Eliminar" OnClientClick="return confirm('¿Desea eliminar el registro?');" /></td>
                                             <td>
                                                 <asp:Button ID="BtnUndCompra" runat="server" CssClass=" btn btn-success Font_btnCrud" OnClick="BtnUndCompra_Click" Text="Unidad Compra" /></td>
                                             <td>
                                                 <asp:Button ID="BtnCambioRef" runat="server" CssClass=" btn btn-success Font_btnCrud" OnClick="BtnCambioRef_Click" Text="Cambio Referencia" /></td>
-                                             <td>
+                                            <td>
                                                 <asp:Button ID="BtnInformes" runat="server" CssClass=" btn btn-primary Font_btnCrud" OnClick="BtnInformes_Click" Text="Informes" /></td>
                                         </tr>
                                     </table>
@@ -332,7 +335,7 @@
                                                     <asp:DropDownList ID="DdlEstPN" runat="server" Width="100%" Height="28px" CssClass="DdlFont" />
                                                 </EditItemTemplate>
                                                 <FooterTemplate>
-                                                    <asp:DropDownList ID="DdlEstPNPP" runat="server" Width="100%" Height="28px" CssClass="DdlFont"  />
+                                                    <asp:DropDownList ID="DdlEstPNPP" runat="server" Width="100%" Height="28px" CssClass="DdlFont" />
                                                 </FooterTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Bloq.">
@@ -457,21 +460,23 @@
                     </div>
                 </asp:Panel>
                 <asp:Panel ID="PnlBusq" runat="server" Visible="false">
+                    <br />
+
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOpcBusq" runat="server" Text="Opciones de búsqueda" /></h6>
-                    <table class="TablaBusqueda">
+                    <table class="TabOpcBusq">
                         <tr>
                             <td width="6%">
                                 <asp:RadioButton ID="RdbBusqP" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="&nbsp P/N" /></td>
                             <td width="10%">
-                                <asp:RadioButton ID="RdbBusqR" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="Referencia" /></td>                            
+                                <asp:RadioButton ID="RdbBusqR" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="Referencia" /></td>
                             <td width="10%">
                                 <asp:RadioButton ID="RdbBusqMdlPN" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="&nbsp Modelo P/N" /></td>
                             <td width="10%">
                                 <asp:RadioButton ID="RdbBusqD" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="Descripción" /></td>
                         </tr>
                     </table>
-                    <table class="TablaBusqueda">
+                    <table class="TabOpcBusq">
                         <tr>
                             <td>
                                 <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
@@ -507,6 +512,8 @@
         <asp:UpdatePanel ID="UpPnlUndCompra" runat="server">
             <ContentTemplate>
                 <asp:Panel ID="PnlUnidadCompra" runat="server" Visible="false">
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsigUndMed" runat="server" Text="Asignar unidad de compra" /></h6>
                     <asp:ImageButton ID="IbtCerrarUMC" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarUMC_Click" ImageAlign="Right" />
@@ -574,6 +581,8 @@
                     </div>
                 </asp:Panel>
                 <asp:Panel ID="PnlCambioRef" runat="server" Visible="false">
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitCambRef" runat="server" Text="Cambio de referencia" /></h6>
                     <table class="TablaBusqueda">

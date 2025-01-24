@@ -38,13 +38,13 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1>
-        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-            <div class="CentrarContenedor DivMarco">
+            <div class="CentrarContenedor DivMarco">     
+                 <br /><br /><br /><br />
                 <div class="row">
                     <div class="col-sm-2">
                         <asp:Label ID="LblMvto" runat="server" CssClass="LblEtiquet" Text="movimiento" />

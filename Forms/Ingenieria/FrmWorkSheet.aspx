@@ -57,6 +57,7 @@
         <asp:View ID="Vw0WorkSheet" runat="server">
             <asp:UpdatePanel ID="UplWS" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                     <br /> <br />
                     <div class="row">
                         <div class="col-sm-2">
                             <asp:Label ID="LblStsHK" runat="server" CssClass="LblEtiquet" Text="Aeronave" />
@@ -200,6 +201,7 @@
         <asp:View ID="Vw1AsigOTaWS" runat="server">
             <asp:UpdatePanel ID="UplAsigOT" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsigOTaWS" runat="server" Text="Asignar orden de trabajo / Reporte a la Work Sheet" /></h6>
                     <div class="CentrarContenedor DivMarco">
@@ -437,6 +439,7 @@
         <asp:View ID="Vw2Informe" runat="server">
             <asp:UpdatePanel ID="UplInforme" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitImpresion" runat="server" Text="Impresión del reporte" /></h6>
                     <asp:ImageButton ID="IbtCerrarImpresion" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarImpresion_Click" ImageAlign="Right" />

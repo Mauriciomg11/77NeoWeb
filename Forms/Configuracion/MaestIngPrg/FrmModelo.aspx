@@ -21,32 +21,33 @@
         }
     </script>
     <style type="text/css">
-        .DivGrid {
+      /*  .DivGrid {
             position: absolute;
             width: 75%;
             height: 380px;
             top: 45%;
             left: 10%;
             margin-top: 0px;
-        }
+        }*/
 
         .TablaCampos {
+            position: relative;
             margin: 0 auto;
             text-align: left;
-            top: 50px;
+            top: 90px;
         }
 
         .TabFormL {
-            margin: 0 auto;
+            margin: 0 ;
             text-align: left;
             top: 160px;
         }
 
-        .TabBusq {
+    /*    .TabBusq {
             top: 32%;
             left: 2%;
         }
-
+*/
         .Campos {
             Height: 28px;
             Width: 250px;
@@ -71,8 +72,8 @@
         }
 
         .TabBtnEdicion {
-            position: absolute;
-            top: 39%;
+            position: relative;
+            top: 100px;
             left: 10%;
             width: 20%;
         }
@@ -107,7 +108,7 @@
         <ContentTemplate>
             <asp:Panel ID="PnlDatos" runat="server">
                 <div class="CentrarTable">
-                    <table class="TablaBusqueda TabBusq">
+                    <table class="TablaBusqueda ">
                         <tr>
                             <td>
                                 <asp:Label ID="LblBusq" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
@@ -126,7 +127,7 @@
                             <td>
                                 <asp:Label ID="LblMod" runat="server" Text="Modelo: " CssClass="LblTextoBusq" /></td>
                             <td>
-                                <asp:TextBox ID="TxtMod" runat="server" CssClass="form-control Campos" MaxLength="30" Enabled="false" /></td>
+                                <asp:TextBox ID="TxtMod" runat="server" CssClass="form-control Campos" MaxLength="4" Enabled="false" /></td>
                             <td>
                                 <asp:Label ID="LblDesc" runat="server" Text="Descripción: " CssClass="LblTextoBusq" /></td>
                             <td>

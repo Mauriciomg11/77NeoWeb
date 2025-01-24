@@ -369,7 +369,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 }
             }
             catch (Exception Ex)
-            {               
+            {
                 DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
@@ -400,30 +400,28 @@ namespace _77NeoWeb.Forms.Ingenieria
             else
             {
                 if (Convert.ToInt32(TxtStsDiaProy.Text) < 0 || Convert.ToInt32(TxtStsDiaProy.Text) > 30)
+                { TxtStsDiaProy.Text = "30"; }
+                Cnx.SelecBD();
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
-                    TxtStsDiaProy.Text = "30";
-                    Cnx.SelecBD();
-                    using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+                    sqlCon.Open();
+                    using (SqlTransaction Transac = sqlCon.BeginTransaction())
                     {
-                        sqlCon.Open();
-                        using (SqlTransaction Transac = sqlCon.BeginTransaction())
+                        string VBQuery = "UPDATE TblFConfiguracion SET NroDiasProyeccionStatus =@Vnew WHERE IdConfigCia = @ICC";
+
+                        using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                         {
-                            string VBQuery = "UPDATE TblFConfiguracion SET NroDiasProyeccionStatus =@Vnew WHERE IdConfigCia = @ICC";
 
-                            using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
-                            {
-
-                                SC.Parameters.AddWithValue("@Vnew", TxtStsDiaProy.Text);
-                                SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                                SC.ExecuteNonQuery();
-                                Transac.Commit();
-                            }
+                            SC.Parameters.AddWithValue("@Vnew", TxtStsDiaProy.Text);
+                            SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                            SC.ExecuteNonQuery();
+                            Transac.Commit();
                         }
                     }
-                    BtnModifDiaProy.Text = "";
-                    BtnModifDiaProy.Enabled = false;
-                    ViewState["ActualizarDiaProy"] = "ACTIVAR";
                 }
+                BtnModifDiaProy.Text = "";
+                TxtStsDiaProy.Enabled = false;
+                ViewState["ActualizarDiaProy"] = "ACTIVAR";
             }
 
         }
@@ -964,7 +962,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             try
                             {
                                 SC.Parameters.AddWithValue("@PPT", VbIdPPT.Equals("") ? "0" : VbIdPPT);
-                                SC.Parameters.AddWithValue("@OT", VbIdOT.Equals("")?"0": VbIdOT);
+                                SC.Parameters.AddWithValue("@OT", VbIdOT.Equals("") ? "0" : VbIdOT);
                                 SC.Parameters.AddWithValue("@IdSvc", VblIdSvcM);
                                 SC.Parameters.AddWithValue("@Usu", Session["C77U"].ToString());
                                 SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
@@ -1251,15 +1249,15 @@ namespace _77NeoWeb.Forms.Ingenieria
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
-
+                string borr = Session["!dC!@"].ToString();
                 CursorIdioma.Alimentar("CurStatus", Session["77IDM"].ToString().Trim());
-                string VbTxtSql = " EXEC SP_PANTALLA_Proceso_Ingenieria 12,'','','CurStatus','',@CodHk,@Order,1,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                string VbTxtSql = " EXEC SP_PANTALLA_Proceso_Ingenieria 12,'','','CurStatus','',@CodHk,@Order,1,@ICC,@Fech,'01-01-1900','01-01-1900'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
                     string VbOrden = "2"; //1 ATA|2 PROYECCION|3 DESCRIPCION
                     SC.Parameters.AddWithValue("@CodHk", DdlStsHK.Text);
-                    SC.Parameters.AddWithValue("@Fech", TxtFechaStsAnt.Text.Trim());
+                    SC.Parameters.AddWithValue("@Fech", Convert.ToDateTime(TxtFechaStsAnt.Text.Trim()));
                     SC.Parameters.AddWithValue("@Order", VbOrden);
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
@@ -1308,7 +1306,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     SC.CommandTimeout = 90000000;
                     string VbOrden = "2"; //1 ATA|2 PROYECCION|3 DESCRIPCION
                     SC.Parameters.AddWithValue("@CodHk", DdlStsHK.Text);
-                    SC.Parameters.AddWithValue("@Fech", TxtFechaStsAnt.Text.Trim());
+                    SC.Parameters.AddWithValue("@Fech", Convert.ToDateTime(TxtFechaStsAnt.Text.Trim()));
                     SC.Parameters.AddWithValue("@Order", VbOrden);
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter sda = new SqlDataAdapter())
@@ -1419,7 +1417,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     }
                 }
             }
-            GrdOTPPTRepa.EditIndex = -1;           
+            GrdOTPPTRepa.EditIndex = -1;
             BindDAsignarOTPPT();
             BindDdlOTAsig();
             TxtAsigOTPPTHK.Text = "";

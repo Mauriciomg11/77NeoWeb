@@ -15,6 +15,7 @@
             height: 90%;
             /*indicamos que el margen superior, es la mitad de la altura*/
             padding: 5px;
+            top:150px
         }
 
         .heightCampo {

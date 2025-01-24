@@ -132,6 +132,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPnlBtnPpl" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+             <br /> <br />
             <asp:Table ID="TblBtnPpal" runat="server">
                 <asp:TableRow>
                     <asp:TableCell Width="2%">

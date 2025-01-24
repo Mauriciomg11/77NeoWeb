@@ -45,6 +45,8 @@
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
                     <div class="Scroll">
+                        <br />
+                        <br />
                         <div class="row">
                             <div class="col-sm-9">
                                 <asp:Label ID="LblBusq" runat="server" CssClass="LblEtiquet" Text=" Consultar Persona" />
@@ -94,7 +96,6 @@
                                 <asp:Button ID="BtnAsigPers" runat="server" CssClass="btn btn-primary botones" Width="100%" OnClick="BtnAsigPers_Click" Text="Elimina" />
                             </div>
                         </div>
-                        <br />
                         <div class="DivGrid DivContendorGrid">
                             <h6 class="TextoSuperior">
                                 <asp:Label ID="LblTitUbicaAsig" runat="server" Text="Ubica" /></h6>
@@ -142,6 +143,8 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1AgregarUbicaciones" runat="server">
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsigarUbica" runat="server" Text="Asigar ubicaciones físicas" /></h6>
                     <asp:ImageButton ID="IbtCerrarAsigUbica" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarAsigUbica_Click" ImageAlign="Right" />
@@ -151,7 +154,6 @@
                             <asp:DropDownList ID="ddlUbicaFis" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="ddlUbicaFis_TextChanged" AutoPostBack="true" />
                         </div>
                     </div>
-                    <br />
                     <div class="row">
                         <div class="col-sm-5">
                             <h6 class="TextoSuperior">
@@ -202,6 +204,8 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2AsigUsu" runat="server">
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsigUsu" runat="server" Text="Asigar Usuario" /></h6>
                     <asp:ImageButton ID="IbtCerrarAsigUsu" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarAsigUsu_Click" ImageAlign="Right" />

@@ -41,7 +41,7 @@ namespace _77NeoWeb.Forms.Almacen
             }
             if (!IsPostBack)
             {
-
+                ViewState["PageTit"] = "";
                 ModSeguridad();
             }
         }

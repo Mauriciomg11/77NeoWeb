@@ -60,6 +60,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
+                    <br /><br />
                     <div class="CentrarContenedor DivMarco">
                         <div class="row">
                             <div class="col-sm-2">
@@ -140,13 +141,12 @@
                         </div>
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
-
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsiganar" runat="server" Text="servicios para asignar" />
                     </h6>
                     <asp:ImageButton ID="IbtCerrarBusq" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarBusq_Click" />
-                    <div class="CentrarBusq DivMarco">
-                        <table class="TablaBusqueda">
+                    <table class="TabOpcBusq">
                             <tr>
                                 <td>
                                     <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
@@ -156,6 +156,7 @@
                                     <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
                             </tr>
                         </table>
+                    <div class="CentrarBusq DivMarco">                        
                         <br />
                         <div class="CentrarGrid pre-scrollable">
                             <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="IdSrvManto, CodContador, CodModeloSM"

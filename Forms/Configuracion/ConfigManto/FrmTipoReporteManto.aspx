@@ -16,6 +16,7 @@
             height: 85%;
             /*indicamos que el margen superior, es la mitad de la altura*/
             padding: 5px;
+            top: 200px
         }
 
         .CentrarGrid {
@@ -48,7 +49,7 @@
                     <td>
                         <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
                     <td>
-                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
+                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="350px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
                     <td>
                         <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                 </tr>

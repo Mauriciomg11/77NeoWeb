@@ -18,14 +18,14 @@
             font-weight: bold;
         }
 
-        .DivGrid {
+        /*.DivGrid {*/
             /*margin: 0 auto;*/
-            text-align: left;
-            width: 100%;
+            /*text-align: left;
+            width: 100%;*/
             /*height: 600px;*/
             /*top: 15%;*/
-            margin-top: 0px;
-        }
+            /*margin-top: 0px;
+        }*/
 
         .DivGridAVirtual {
             height: 450px;
@@ -104,6 +104,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPnlBtnPpl" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+            <br /><br />
             <asp:Table ID="TblBtnPpal" runat="server">
                 <asp:TableRow>
                     <asp:TableCell Width="2%">

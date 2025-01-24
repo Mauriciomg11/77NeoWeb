@@ -89,6 +89,7 @@
         <asp:View ID="Vw0LibroVuelo" runat="server">
             <asp:UpdatePanel ID="UpPlHk" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                    <br /><br />
                     <div class="CentrarContenedor DivMarco">
                         <asp:Label ID="LblBusqHK" runat="server" CssClass="LblEtiquet" Text="Seleccionar una Aeronave:" />
                         <asp:DropDownList ID="DdlBusqHK" runat="server" CssClass="Campos" OnTextChanged="DdlBusqHK_TextChanged" AutoPostBack="true" Width="20%" />

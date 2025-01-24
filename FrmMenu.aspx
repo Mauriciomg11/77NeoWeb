@@ -22,14 +22,14 @@
             color: #000;
         }
 
-        .DivGrid {
+        /*.DivGrid {
             position: absolute;
             width: 98%;
             height: 84%;
             top: 14%;
             left: 1%;
             margin-top: 0px;
-        }
+        }*/
 
         .GridDis {
             Width: 100%;
@@ -48,14 +48,13 @@
         }
     </style>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1>
-        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
+<asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">    
+        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
-        <ContentTemplate>
-            <table >
+        <ContentTemplate>           
+           <table class="TablaBusqueda">
                 <tr>
                     <td>
                         <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
@@ -67,6 +66,7 @@
                         <asp:ImageButton ID="IbtAbrirIdioma" runat="server" Visible="false" ToolTip="Abrir Idioma" ImageUrl="~/images/IrV2.png" Width="30px" Height="30px" OnClick="IbtAbrirIdioma_Click" /></td>
                 </tr>
             </table>
+             <br /><br /><br />
             <div class="ScrollDet">
                 <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodIdFormulario,RutaFormulario"
                     CellPadding="3" CssClass="DiseñoGrid table-sm" GridLines="Both"

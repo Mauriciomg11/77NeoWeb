@@ -4,11 +4,13 @@
 }
 
 .TablaBusqueda {
-    margin: 0 auto;
-    text-align: left;
-    /*left: 30%;*/
-    width: 30%;
-    height: 3%;
+    position: relative;
+    text-align: center;
+    left: 30%;
+    width: 15%;
+    height: 5%;
+    top:60px;
+ 
 }
 
 .BtnImagenBusqueda {
@@ -31,4 +33,12 @@
 
 .CentrarTable {
     text-align: center;
+}
+.TabOpcBusq {
+    position: relative;
+    text-align: center;
+    left: 30%;
+    width: 50%;
+    height: 5%;
+    top: 10px;
 }

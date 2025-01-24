@@ -46,6 +46,7 @@ namespace _77NeoWeb.Forms.Almacen
             }
             if (!IsPostBack)
             {
+                ViewState["PageTit"] = "";
                 ViewState["CodReferencia"] = "";
                 ViewState["TitExprtMvts"] = "Movimientos Almacen";
                 ViewState["IdimaPnALter"] = "Partes alternos de la referencia";

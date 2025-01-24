@@ -42,20 +42,20 @@ background-size: cover;
     position: absolute;
     background-image: url("../Images/FlechaIrV1.png");
     background-size: cover;
-    top: 18%;
+    top: 25%;
     left: 92%;
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
 }
 
 .BotonVolver {
     position: absolute;
     background-image: url("../Images/FlechaRegresarV1.png");
     background-size: cover;
-    top: 18%;
-    left: 2%;
-    width: 100px;
-    height: 100px;
+    top: 25%;
+    left: 92%;
+    width: 70px;
+    height: 70px;
 }
 
 .BtnAsingarPerfil {

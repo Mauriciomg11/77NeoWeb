@@ -9,6 +9,7 @@
             margin-left: -49%;
             height: 85%;
             padding: 5px;
+            top: 150px
         }
 
         .Interna {
@@ -272,6 +273,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsigFis" runat="server" Text="Asignar elemento a la reserva" />
                     </h6>
@@ -366,6 +368,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2Entrega" runat="server">
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitVisualizaGuarda" runat="server" Text="Visualizar los elementos de entrega" />
                     </h6>

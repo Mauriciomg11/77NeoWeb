@@ -3,15 +3,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Contador</title>
     <style type="text/css">
-        .DivGrid {
-            position: absolute;
-            width: 75%;
-            height: 380px;
-            top: 45%;
-            left: 10%;
-            margin-top: 0px;
-        }
-
         .TablaCampos {
             margin: 0 auto;
             text-align: left;
@@ -34,12 +25,13 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="EncScriptDdl" runat="server">
     <script type="text/javascript">
         function myFuncionddl() {
-            $('#<%=DdlBuscar.ClientID%>, #<%=DdlUndMed.ClientID%>, #<%=DdlIdent.ClientID%>').chosen();
-        }
+                $('#<%=DdlBuscar.ClientID%>, #<%=DdlUndMed.ClientID%>, #<%=DdlIdent.ClientID%>').chosen();
+            }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1><asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
+    <h1>
+        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
@@ -56,21 +48,26 @@
                     </tr>
                 </table>
             </div>
-            <div class=" CentrarTable ">
+            <br /><br /><br />
+            <div class="CentrarTable">
                 <table class="TablaCampos table table-sm">
                     <tr>
-                        <td ><asp:Label ID="LblCodigo" runat="server" CssClass="LblTextoBusq" Text="Código:" /></td>
+                        <td>
+                            <asp:Label ID="LblCodigo" runat="server" CssClass="LblTextoBusq" Text="Código:" /></td>
                         <td>
                             <asp:TextBox ID="TxtCod" runat="server" CssClass="form-control Campos" MaxLength="3" Enabled="false"></asp:TextBox></td>
-                        <td><asp:Label ID="LblDescrip" runat="server" CssClass="LblTextoBusq" Text="Descripción:" /></td>
+                        <td>
+                            <asp:Label ID="LblDescrip" runat="server" CssClass="LblTextoBusq" Text="Descripción:" /></td>
                         <td>
                             <asp:TextBox ID="TxtDesc" runat="server" CssClass="form-control Campos" MaxLength="60" TextMode="MultiLine" Enabled="false"></asp:TextBox></td>
                     </tr>
                     <tr>
-                        <td><asp:Label ID="LblUndMed" runat="server" CssClass="LblTextoBusq" Text="Unidad medida:" /></td>
+                        <td>
+                            <asp:Label ID="LblUndMed" runat="server" CssClass="LblTextoBusq" Text="Unidad medida:" /></td>
                         <td>
                             <asp:DropDownList ID="DdlUndMed" runat="server" CssClass="form-control Campos" Height="30px" Font-Size="10px" Enabled="false"></asp:DropDownList></td>
-                        <td><asp:Label ID="LblIdentif" runat="server" CssClass="LblTextoBusq" Text="Identificador:" /></td>
+                        <td>
+                            <asp:Label ID="LblIdentif" runat="server" CssClass="LblTextoBusq" Text="Identificador:" /></td>
                         <td>
                             <asp:DropDownList ID="DdlIdent" runat="server" CssClass="form-control Campos" Height="30px" Font-Size="10px" Enabled="false"></asp:DropDownList></td>
                         <td width="5%"></td>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-
+using System.Net;
 
 namespace _77NeoWeb.prg
 {
@@ -51,7 +51,7 @@ namespace _77NeoWeb.prg
                 }
                 return ds;
             }
-        }        
+        }
         public void UpdateError(string VbUsu, string VbPantalla, string VbAccion, string VbNumLinea, string VbMensErr, string VbVersion, string VbAct)
         {
             string VbNitErr, VbCiaErr, VblNomBDErr;
@@ -136,8 +136,8 @@ namespace _77NeoWeb.prg
             }
             else
             {
-               // return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, @"77NEO01", "DbConfigWeb", "sa", "admindemp");
-               return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
+                // return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, @"77NEO01", "DbConfigWeb", "sa", "admindemp");
+                return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
             }
         }
         public string GetConex() { return this.VblConexion; }
@@ -227,6 +227,19 @@ namespace _77NeoWeb.prg
             VbFecDT = Convert.ToDateTime(VbFecSt);
             return VbFecSt.Equals("01/01/1900") ? "" : string.Format("{0:yyyy-MM-dd}", VbFecDT);
         }
+        public string GetIpPubl()
+        {
+            string S_HN = "77NEO";
+            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());// objeto para guardar la ip
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ip.AddressFamily.ToString() == "InterNetwork")
+                {
+                    S_HN =ip.ToString();// esta es nuestra ip
+                }                
+            }
+            return S_HN;
+        }      
         public string ValidarFechas2(string VbF1, string VbF2, int NumPrmts)
         {
             DateTime FI, FF;

@@ -15,6 +15,7 @@
             height: 90%;
             /*indicamos que el margen superior, es la mitad de la altura*/
             padding: 5px;
+
         }
 
         .CentrarContenedor2 {
@@ -78,6 +79,7 @@
     <div class="CentrarContenedor DivMarco">
         <asp:UpdatePanel ID="UplBtnes" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
+                 <br />
                 <div class="row">
                     <div class="col-sm-2">
                         <br />

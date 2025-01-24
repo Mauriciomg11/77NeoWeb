@@ -16,6 +16,7 @@
             height: 90%;
             /*indicamos que el margen superior, es la mitad de la altura*/
             padding: 5px;
+            top: 150px
         }
 
         .CentrarGrid {
@@ -37,7 +38,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
     <script type="text/javascript">       
         function myFuncionddl() {
-            $('[id *=DdlTipoUMPP],[id *=DdlTipoUM]').chosen();           
+            $('[id *=DdlTipoUMPP],[id *=DdlTipoUM]').chosen();
         }
     </script>
 </asp:Content>
@@ -47,19 +48,21 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
-        <ContentTemplate>   
-            <table class="TablaBusqueda">
-                <tr>
-                    <td>
-                        <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
-                    <td>
-                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
-                    <td>
-                        <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
-                </tr>
-            </table>
+        <ContentTemplate>
+
             <div class="CentrarContenedor DivMarco">
                 <div class="CentrarGrid">
+                    <table>
+                        <tr>
+                            <td>
+                                <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
+                            <td>
+                                <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
+                            <td>
+                                <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
+                        </tr>
+                    </table>
+                    <br />
                     <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodUnidMedida,CodAnt,CodTipUnMedAnt"
                         CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                         OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating"

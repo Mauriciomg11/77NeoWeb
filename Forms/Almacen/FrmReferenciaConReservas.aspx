@@ -15,6 +15,7 @@
             margin-left: -49%;
             height: 85%;
             padding: 5px;
+             top: 220px
         }
 
         .Font_btnCrud {
@@ -47,27 +48,27 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-            <div class="CentrarBusq DivMarco">
-                <table class="TablaBusqueda">
-                    <tr>
-                        <td colspan="3">
-                            <asp:RadioButton ID="RdbSolPed" runat="server" CssClass="LblEtiquet" Text="&nbsp solicitud:" GroupName="Busq" />&nbsp&nbsp&nbsp
+            <table class="TablaBusqueda">
+                <tr>
+                    <td colspan="3">
+                        <asp:RadioButton ID="RdbSolPed" runat="server" CssClass="LblEtiquet" Text="&nbsp solicitud:" GroupName="Busq" />&nbsp&nbsp&nbsp
                             <asp:RadioButton ID="RdbPpt" runat="server" CssClass="LblEtiquet" Text="&nbsp propuesta:" GroupName="Busq" />
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
-                        <td>
-                            <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
-                        <td>
-                            <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
-                    </tr>                   
-                </table>
-                <br />
+                </tr>
+                <tr>
+                    <td>
+                        <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
+                    <td>
+                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
+                    <td>
+                        <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
+                </tr>
+            </table>
+            <div class="CentrarBusq DivMarco">
+                
                 <div class="CentrarGrid pre-scrollable">
-                     <asp:Button ID="BtnAprobar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnAprobar_Click" OnClientClick="target ='';" Text="aprobar" />
-                     <asp:ImageButton ID="IbtAprDetAll" runat="server" ImageUrl="~/images/Check1.png" ImageAlign="AbsBottom" Height="30px" Width="30px" OnClick="IbtAprDetAll_Click" />                   
-                    <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" 
+                    <asp:Button ID="BtnAprobar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnAprobar_Click" OnClientClick="target ='';" Text="aprobar" />
+                    <asp:ImageButton ID="IbtAprDetAll" runat="server" ImageUrl="~/images/Check1.png" ImageAlign="AbsBottom" Height="30px" Width="30px" OnClick="IbtAprDetAll_Click" />
+                    <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
                         DataKeyNames="IdDetPedido, CodPrioridad, CodEstadoPn,Bloquear,CodtipoSolPedido,FechaDMY"
                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowDataBound="GrdBusq_RowDataBound">
                         <Columns>
@@ -81,7 +82,7 @@
                                     <asp:Label ID="LblCodPed" Text='<%# Eval("CodPedido") %>' runat="server" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="posicion">
+                            <asp:TemplateField HeaderText="posicion">
                                 <ItemTemplate>
                                     <asp:Label ID="LblPosc" Text='<%# Eval("Posicion") %>' runat="server" />
                                 </ItemTemplate>

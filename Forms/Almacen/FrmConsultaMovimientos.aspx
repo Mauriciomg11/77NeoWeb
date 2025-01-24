@@ -65,9 +65,9 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <div id="ModalBusqSP" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">                
+                <div class="modal-header">                    
                     <h4 class="modal-title">
                         <asp:Label ID="LblTitModalBusqPN" runat="server" Text="opciones de busqueda" /></h4>
                 </div>
@@ -90,6 +90,7 @@
                                 <asp:ImageButton ID="IbtModalBusq" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtModalBusq_Click" /></td>
                         </tr>
                     </table>
+                    <br /><br /><br />
                     <div class="CentrarGrid pre-scrollable">
                         <asp:GridView ID="GrdMdlBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
                             DataKeyNames="PN, SN, LOTE, CodReferencia"
@@ -140,6 +141,7 @@
     </div>
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+             <br /><br /><br /><br />
             <div class="CentrarContenedor DivMarco">
                 <div class="row">
                     <div class="col-sm-3">

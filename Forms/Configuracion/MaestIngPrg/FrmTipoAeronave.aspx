@@ -2,16 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Tipo_Aeronave</title>
-    <style type="text/css">
-        .DivGrid {
-            position: absolute;
-            width: 45%;
-            height: 600px;
-            top: 15%;
-            left: 30%;
-            margin-top: 0px;
-        }
-    </style>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="TituloPagina" runat="server">
     <h1>
@@ -25,12 +16,13 @@
                     <td>
                         <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"></asp:Label></td>
                     <td>
-                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
+                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="450px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
                     <td>
                         <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                 </tr>
             </table>
             <div class="DivGrid DivContendorGrid">
+
                 <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdTipoAeronave,CodTipoAeronave"
                     CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                     OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit"
@@ -70,7 +62,7 @@
                     <HeaderStyle CssClass="GridCabecera" />
                     <RowStyle CssClass="GridRowStyle" />
                     <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
+                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                 </asp:GridView>
             </div>
         </ContentTemplate>

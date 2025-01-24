@@ -2,14 +2,14 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
-        .DivGrid {
+        /*.DivGrid {
             position: absolute;
             width: 80%;
             height: 600px;
             top: 15%;
             left: 15%;
             margin-top: 0px;
-        }
+        }*/
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
@@ -47,7 +47,7 @@
                         <td>
                             <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
                         <td>
-                            <asp:DropDownList ID="DdlBusq" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="DdlBusq_TextChanged" AutoPostBack="true" /></td>
+                            <asp:DropDownList ID="DdlBusq" runat="server" CssClass="heightCampo" Width="200%" OnTextChanged="DdlBusq_TextChanged" AutoPostBack="true" /></td>
                     </tr>
                 </table>
                 <div class="DivGrid DivContendorGrid">

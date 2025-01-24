@@ -123,7 +123,7 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <div id="ModalBusqCompraCotiza" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">
@@ -148,7 +148,7 @@
                             </asp:TableCell>
                         </asp:TableRow>
                     </asp:Table>
-                    <table class="TablaBusqueda">
+                    <table>
                         <tr>
                             <td>
                                 <asp:Label ID="LblModalBusq" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
@@ -283,6 +283,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
+                    <br /><br />
                     <div class="CentrarContNumCotiza DivMarco">
                         <div class="row">
                             <div class="col-sm-2">
@@ -536,6 +537,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Imprimir" runat="server">
+                    <br /><br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitImpresion" runat="server" Text="Impresión" />
                     </h6>
@@ -544,6 +546,7 @@
                     <RpVw:ReportViewer ID="RpVwAll" runat="server" Width="98%" />
                 </asp:View>
                 <asp:View ID="Vw2Exportar" runat="server">
+                    <br /><br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitExport" runat="server" Text="Exportar" />
                     </h6>
@@ -557,6 +560,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw3Asentar" runat="server">
+                    <br /><br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsentar" runat="server" Text="Aprobar / Asentar Compra" />
                     </h6>

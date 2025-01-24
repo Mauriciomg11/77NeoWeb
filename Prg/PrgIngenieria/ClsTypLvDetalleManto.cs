@@ -207,6 +207,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())
                             {
+                                string borr1= HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 PCodIdRte = Convert.ToInt32(SDR["CodIdRte"].ToString().Trim());
                             }

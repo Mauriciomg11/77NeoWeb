@@ -93,7 +93,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
-        void ModSeguridad()
+        protected void ModSeguridad()
         {
             ViewState["VblIngMS"] = 1;
             ViewState["VblModMS"] = 1;
@@ -101,7 +101,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             ViewState["VblImpMS"] = 1;
 
             ClsPermisos ClsP = new ClsPermisos();
-            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            string VbPC = Cnx.GetIpPubl();
             ClsP.Acceder(Session["C77U"].ToString(), "FrmPlantillaMaestra.aspx", VbPC);
 
             if (ClsP.GetAccesoFrm() == 0)

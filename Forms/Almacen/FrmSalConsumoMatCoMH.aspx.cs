@@ -45,6 +45,7 @@ namespace _77NeoWeb.Forms.Almacen
             }
             if (!IsPostBack)
             {
+                ViewState["PageTit"] = "";
                 ModSeguridad();
                 TraerDatos("UPD");
                 MultVw.ActiveViewIndex = 0;

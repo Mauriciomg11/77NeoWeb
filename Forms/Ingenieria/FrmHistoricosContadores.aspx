@@ -14,6 +14,7 @@
             height: 90%;
             /*indicamos que el margen superior, es la mitad de la altura*/
             padding: 5px;
+            top:150px
         }
         .AnchoGrid {
             width: 95%;
@@ -279,6 +280,7 @@
             <asp:UpdatePanel ID="UplContNull" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
                     <h6 class="TextoSuperior">
+                         <br /> <br />
                         <asp:Label ID="LblTitContNull" runat="server" Text="S/N con valor NULL en el histórico" /></h6>
                     <asp:ImageButton ID="IbtClosContNull" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtClosContNull_Click" ImageAlign="Right" />
                     <div class="col-sm-12 CentarGridAsig table-responsive AnchoGrid">

@@ -2,14 +2,14 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
-        .DivGrid {
+       /* .DivGrid {
             position: absolute;
             width: 80%;
             height: 600px;
             top: 15%;
             left: 10%;
             margin-top: 0px;
-        }
+        }*/
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">

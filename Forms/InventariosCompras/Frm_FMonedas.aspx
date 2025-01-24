@@ -98,9 +98,13 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
+                    <br />
+                    <br />
                     <div class="CentrarContenedor DivMarco">
-                        <div class="CentrarTable">
-                            <table class="TablaBusqueda">
+                        <div class="CentrarTable">                          
+                            <div class="row">
+                                <div class="col-sm-12 CentrarBoton ">
+                                      <table>
                                 <tr>
                                     <td>
                                         <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
@@ -113,8 +117,6 @@
                                     </td>
                                 </tr>
                             </table>
-                            <div class="row ">
-                                <div class="col-sm-12 CentrarBoton ">
                                     <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodTipoMoneda"
                                         CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                                         OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating"
@@ -201,13 +203,16 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Historico" runat="server">
+                     <br /> <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitHisto" runat="server" Text="Editar Historico" />
                     </h6>
                     <asp:ImageButton ID="IbtCloseHist" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCloseHist_Click" />
                     <div class="CentrarContenedor DivMarco">
-                        <div class="CentrarTable">
-                            <table class="TablaBusqueda">
+                        <div class="CentrarTable">                            
+                            <div class="row ">
+                                <div class="col-sm-4 CentrarGrdHistrc ">
+                                    <table>
                                 <tr>
                                     <td>
                                         <asp:Label ID="LblBusquedaH" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
@@ -221,8 +226,6 @@
                                         <asp:ImageButton ID="IbtConsultarH" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultarH_Click" /></td>
                                 </tr>
                             </table>
-                            <div class="row ">
-                                <div class="col-sm-4 CentrarGrdHistrc ">
                                     <asp:GridView ID="GrdDatosH" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" DataKeyNames="CodIdTasa, UltFecModSis"
                                         CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true"
                                         OnRowEditing="GrdDatosH_RowEditing" OnRowUpdating="GrdDatosH_RowUpdating" OnRowCancelingEdit="GrdDatosH_RowCancelingEdit"

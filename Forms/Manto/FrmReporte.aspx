@@ -126,7 +126,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MltVRte" runat="server">
                 <asp:View ID="Vw0Manto" runat="server">
-
+                     <br /> <br />
                     <asp:DropDownList ID="DdlBusqRte" runat="server" CssClass="Campos" OnTextChanged="DdlBusqRte_TextChanged" AutoPostBack="true" Width="20%" />
                     <asp:Label ID="LblAeroRte" runat="server" CssClass="LblEtiquet" Text="Aeronave:"></asp:Label>
                     <asp:DropDownList ID="DdlAeroRte" runat="server" CssClass="Campos" OnTextChanged="DdlAeroRte_TextChanged" AutoPostBack="true" Width="15%" Enabled="false" />
@@ -506,6 +506,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblOpbusRTE" runat="server" Text="Opciones de búsqueda "></asp:Label>
                     </h6>
@@ -561,6 +562,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2RecursoRte" runat="server">
+                     <br /> <br />
                     <asp:Label ID="LblRecsNumRte" runat="server" CssClass="LblEtiquet" Text="Reporte:" />
                     <asp:TextBox ID="TxtRecurNumRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible="false" />
                     <asp:TextBox ID="TxtRecurCodRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
@@ -764,6 +766,7 @@
                     </asp:Table>
                 </asp:View>
                 <asp:View ID="Vw3CargaMasiva" runat="server">
+                     <br /> <br />
                     <asp:Label ID="LblCargaMasRte" runat="server" CssClass="LblEtiquet" Text="Reporte:" />
                     <asp:TextBox ID="TxtCargaMasiRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible="false" />
                     <asp:TextBox ID="TxtCargaMasiCodRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />
@@ -822,12 +825,14 @@
                     </asp:GridView>
                 </asp:View>
                 <asp:View ID="Vw4Informe" runat="server">
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitImpresion" runat="server" Text="Impresión del reporte"></asp:Label></h6>
                     <asp:ImageButton ID="IbtCerrarImpresion" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarImpresion_Click" ImageAlign="Right" />
                     <rsweb:ReportViewer ID="RvwReporte" runat="server" Width="98%"></rsweb:ReportViewer>
                 </asp:View>
                 <asp:View ID="Vw5SNOnOff" runat="server">
+                     <br /> <br />
                     <asp:Label ID="LblSnONOfNumRte" runat="server" CssClass="LblEtiquet" Text="Reporte:" />
                     <asp:TextBox ID="TxtSnOnOffNumRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" Visible="false" />
                     <asp:TextBox ID="TxtSnOnOffCodRte" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" step="0.01" Enabled="false" />

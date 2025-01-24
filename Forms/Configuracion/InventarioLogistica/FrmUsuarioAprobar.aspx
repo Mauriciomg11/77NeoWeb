@@ -54,7 +54,8 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplPpl" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-            <div class="row">
+            <br /><br />
+            <div class="row">                    
                 <div class="col-sm-8">
                     <div class="col-sm-9">
                         <h6 class="TextoSuperior">

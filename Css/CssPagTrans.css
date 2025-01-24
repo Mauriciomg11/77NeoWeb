@@ -1,6 +1,10 @@
-﻿body {
-    background: url("../images/77Fondo.jpg") no-repeat fixed center;
-}
+﻿
+
+/*.body-content {
+    margin-top: 160px;
+    padding-left: 15px;
+    padding-right: 15px;
+}*/
 
 .LblCiaTrans {
     position: absolute;

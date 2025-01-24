@@ -47,8 +47,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-            <div class="CentrarBusq DivMarco">
-                <table class="TablaBusqueda">
+             <table class="TablaBusqueda">
                     <tr>
                         <td>
                             <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
@@ -58,9 +57,12 @@
                             <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
                     </tr>
                 </table>
-                <br />
+            <br /><br /><br />
+            <div class="CentrarBusq DivMarco">
+               
+                
                 <div class="CentrarGrid pre-scrollable">
-                    <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" 
+                    <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowEditing="GrdBusq_RowEditing" OnRowUpdating="GrdBusq_RowUpdating"
                         OnRowCancelingEdit="GrdBusq_RowCancelingEdit" OnRowDataBound="GrdBusq_RowDataBound">
                         <Columns>
@@ -68,23 +70,23 @@
                                 <ItemTemplate>
                                     <asp:Label ID="LblCodRef" Text='<%# Eval("CodReferencia") %>' runat="server" />
                                 </ItemTemplate>
-                                 <EditItemTemplate>
-                                    <asp:TextBox ID="TxtCodRefE" Text='<%# Eval("CodReferencia") %>' runat="server" MaxLength="80" Width="100%"  Enabled="false"/>
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="TxtCodRefE" Text='<%# Eval("CodReferencia") %>' runat="server" MaxLength="80" Width="100%" Enabled="false" />
                                 </EditItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="P/N">
                                 <ItemTemplate>
                                     <asp:Label ID="LblPnAnt" Text='<%# Eval("PNAnt") %>' runat="server" />
                                 </ItemTemplate>
-                                 <EditItemTemplate>
-                                    <asp:TextBox ID="TxtPnE" Text='<%# Eval("PNAnt") %>' runat="server" MaxLength="80" Width="100%"  Enabled="false"/>
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="TxtPnE" Text='<%# Eval("PNAnt") %>' runat="server" MaxLength="80" Width="100%" Enabled="false" />
                                 </EditItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText=" Nuevo PN">
                                 <ItemTemplate>
                                     <asp:Label ID="LblNewPn" Text='<%# Eval("PNNew") %>' runat="server" />
                                 </ItemTemplate>
-                                 <EditItemTemplate>
+                                <EditItemTemplate>
                                     <asp:TextBox ID="LblNewPnE" Text='<%# Eval("PNNew") %>' runat="server" MaxLength="80" Width="100%" />
                                 </EditItemTemplate>
                             </asp:TemplateField>
@@ -96,8 +98,8 @@
                             <asp:TemplateField HeaderText="Acti" HeaderStyle-Width="5%">
                                 <ItemTemplate>
                                     <asp:CheckBox ID="CkbBloq" Checked='<%# Eval("Bloquear").ToString()=="1" ? true : false %>' runat="server" Enabled="false" />
-                                </ItemTemplate>                       
-                            </asp:TemplateField>                            
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField FooterStyle-Width="10%">
                                 <ItemTemplate>
                                     <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />

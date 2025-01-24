@@ -1472,12 +1472,10 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
 
         }
-
         protected void IbtPrint_Click(object sender, ImageClickEventArgs e)
         {
 
         }
-
         protected void IbtAuxiliar_Click(object sender, ImageClickEventArgs e)
         {
             string LtxtSql = string.Format("EXEC SP_PANTALLA_LibroVuelo 20,'','','','MTR',{0},{1},{2},{3},'01-1-2009','01-01-1900','01-01-1900'",
@@ -3798,7 +3796,6 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
 
         }
-
         protected void BtnExporRte_Click(object sender, EventArgs e)
         {
             Exportar("ReporteGeneral");

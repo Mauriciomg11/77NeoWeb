@@ -34,6 +34,7 @@
             /*margin-top: -150px;*/
             border: 1px solid #808080;
             padding: 5px;
+            top: 150px
         }
 
         .heightCampo {

@@ -12,10 +12,17 @@
             left: 50%;
             width: 400px;
             margin-left: -200px;
-            height: 300px;
+            height: 325px;
             margin-top: -150px;
             border: 1px solid #808080;
             padding: 5px;
+        }
+
+        .form-control {
+            justify-content: center;
+            width: 100%; /* Asegura que los controles ocupen el 100% del ancho disponible */
+            max-width: 400px; /* Limita el tamaño máximo de los controles */
+            margin-bottom: 10px;
         }
 
         .centrarCuadroSCV {
@@ -28,9 +35,6 @@
             text-align: left;
             color: antiquewhite;
         }
-
-       
-        
     </style>
     <script type="text/javascript">
         function myFuncionddlP() {
@@ -43,12 +47,12 @@
 
     <div class="TextoSuperior">
         <h1>
-            <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" Text="AFTEC360 Access" /></h1>
+            <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" Text="XOM Access" /></h1>
     </div>
     <div class="text">
         <div class="centrarCuadroSCV">
-            <div style="color:black">
-                <h2>AFTEC360 System</h2>
+            <div style="color: black">
+                <h2>XOM System</h2>
                 <h5>
                     <asp:Label ID="LblText1" runat="server" Text="Aeronautical management system" /></h5>
                 <h5>

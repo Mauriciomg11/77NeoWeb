@@ -41,6 +41,7 @@
     <asp:UpdatePanel ID="UplPpl" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
             <div class="Scroll">
+                <br /><br />
                 <div class="row">
                     <div class="col-sm-9">
                         <asp:Label ID="LblBusq" runat="server" CssClass="LblEtiquet" Text=" Consultar Persona" />
@@ -75,7 +76,6 @@
                         <asp:Button ID="BtnEliminar" runat="server" CssClass="btn btn-success botones" Width="100%" OnClick="BtnEliminar_Click" Text="Elimina" />
                     </div>
                 </div>
-                <br />
                 <div class="DivGrid DivContendorGrid">
                     <asp:GridView ID="GrdDetalle" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodUbicaBodega, CodBodega"
                         CssClass="DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="7"

@@ -9,6 +9,7 @@
             margin-left: -49%;
             height: 85%;
             padding: 5px;
+            top: 150px
         }
 
         .Interna {
@@ -255,6 +256,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Reintegro" runat="server">
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsigFis" runat="server" Text="Asignar elemento a la reserva" />
                     </h6>
@@ -340,7 +342,7 @@
                                                 <asp:Label ID="LblUndMed" Text='<%# Eval("CodUndMedR") %>' runat="server" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                         <asp:TemplateField HeaderText="nro doc">
+                                        <asp:TemplateField HeaderText="nro doc">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblNumDoc" Text='<%# Eval("CodIdDocumento") %>' runat="server" />
                                             </ItemTemplate>
@@ -440,7 +442,7 @@
                                                 <asp:Label ID="LblUndMed" Text='<%# Eval("CodUndMedR") %>' runat="server" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                         <asp:TemplateField HeaderText="und medida">
+                                        <asp:TemplateField HeaderText="und medida">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblIdDoc" Text='<%# Eval("IdDoc") %>' runat="server" />
                                             </ItemTemplate>

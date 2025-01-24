@@ -14,6 +14,7 @@
             height: 90%;
             /*indicamos que el margen superior, es la mitad de la altura*/
             padding: 5px;
+            top:150px
         }
 
         .heightCampo {
@@ -204,6 +205,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1SvcReset" runat="server">
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitSvcReset" runat="server" Text="servicios reseteable sin cero en el histórico" />
                     </h6>
@@ -263,6 +265,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2UbicTec" runat="server">
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitUbicTec" runat="server" Text="Ubicaciones Técnicas Sin Series Instaladas" />
                     </h6>

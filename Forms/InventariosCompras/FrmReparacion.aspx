@@ -109,7 +109,7 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <div id="ModalBusqRepa" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">
@@ -137,7 +137,7 @@
                             </asp:TableCell>
                         </asp:TableRow>
                     </asp:Table>
-                    <table class="TablaBusqueda">
+                    <table>
                         <tr>
                             <td>
                                 <asp:Label ID="LblModalBusq" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
@@ -285,6 +285,7 @@
 
     <asp:UpdatePanel ID="UpPnlBtnPpl" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+            <br /><br />
             <div class="CentrarBotonesRepa DivMarco">
                 <div id="BotonTipoRepa" class="row">
                     <div class="col-sm-2">

@@ -52,7 +52,8 @@
     <asp:UpdatePanel ID="UpPanel" runat="server">
         <ContentTemplate>
             <div class="CentrarContenedor">
-                <%--   <div class="CentrarTable">--%>
+                <br />
+                <br />
                 <table class="">
                     <tr>
                         <td>
@@ -88,7 +89,7 @@
                     <div class="col-sm-12 CentrarBoton">
                         <asp:DropDownList ID="DdlForm" runat="server" CssClass="form-control" Width="100%" Height="30px" Font-Size="Smaller" OnTextChanged="DdlForm_TextChanged" AutoPostBack="true" />
                         <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodIdFomularioUsr, IdFormulario"
-                            CssClass="DiseñoGrid table table-sm" GridLines="Both"  OnRowCommand="GrdDatos_RowCommand" 
+                            CssClass="DiseñoGrid table table-sm" GridLines="Both" OnRowCommand="GrdDatos_RowCommand"
                             OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit">
                             <Columns>
                                 <asp:TemplateField HeaderText="Cod">
@@ -125,7 +126,7 @@
                                     <EditItemTemplate>
                                         <asp:TextBox ID="TxtDesc" Text='<%# Eval("Descripcion") %>' runat="server" MaxLength="50" Width="100%" />
                                     </EditItemTemplate>
-                                     <FooterTemplate>
+                                    <FooterTemplate>
                                         <asp:TextBox ID="TxtDescPP" runat="server" MaxLength="50" Width="100%" />
                                     </FooterTemplate>
                                 </asp:TemplateField>
@@ -136,7 +137,7 @@
                                     <EditItemTemplate>
                                         <asp:TextBox ID="TxtEspa" Text='<%# Eval("Espanol") %>' runat="server" MaxLength="350" TextMode="MultiLine" Width="100%" />
                                     </EditItemTemplate>
-                                     <FooterTemplate>
+                                    <FooterTemplate>
                                         <asp:TextBox ID="TxtEspaPP" runat="server" MaxLength="350" TextMode="MultiLine" Width="100%" />
                                     </FooterTemplate>
                                 </asp:TemplateField>
@@ -147,7 +148,7 @@
                                     <EditItemTemplate>
                                         <asp:TextBox ID="TxtIngl" Text='<%# Eval("Ingles") %>' runat="server" MaxLength="350" TextMode="MultiLine" Width="100%" />
                                     </EditItemTemplate>
-                                     <FooterTemplate>
+                                    <FooterTemplate>
                                         <asp:TextBox ID="TxtInglPP" runat="server" MaxLength="350" TextMode="MultiLine" Width="100%" />
                                     </FooterTemplate>
                                 </asp:TemplateField>
@@ -179,7 +180,6 @@
                         </asp:GridView>
                     </div>
                 </div>
-                <%-- </div>--%>
             </div>
         </ContentTemplate>
         <Triggers>

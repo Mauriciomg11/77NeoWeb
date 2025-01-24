@@ -25,8 +25,8 @@
         }
 
         .CentrarContenedor {
-            position: absolute;           
-            left: 50%;           
+            position: absolute;
+            left: 50%;
             width: 98%;
             /*indicamos que el margen izquierdo, es la mitad de la anchura*/
             margin-left: -49%;
@@ -46,6 +46,8 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+            <br />
+            <br />
             <div class="CentrarContenedor DivMarco">
                 <div class="row">
                     <div class="col-sm-12">
@@ -56,7 +58,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="ScrollDet">
-                            <asp:GridView ID="GrdDet" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false" 
+                            <asp:GridView ID="GrdDet" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false"
                                 DataKeyNames="IdPnNoExistente, CodIdDetalleRes,IdDetPedido,IdDetPropuesta,IdDetPropHk,CodIdDetElemPlanInstrumento,IdSrvManto,CodPedido,IdPropuesta, CodOrdenTrabajo,Reporte"
                                 CssClass="DiseñoGrid table table-sm" GridLines="Both" Width="100%" EmptyDataText="No existen registros ..!"
                                 OnRowDataBound="GrdDet_RowDataBound">

@@ -61,6 +61,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPnlBtnPpl" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+            <br /><br />
             <div class="CentrarEncabezado DivMarco">
                 <div class="row">
                     <div class="col-sm-2">

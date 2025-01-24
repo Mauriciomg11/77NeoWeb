@@ -3,14 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Usuarios</title>
     <style type="text/css">
-        .DivGrid {
-            position: absolute;
-            width: 98%;
-            height: 600px;
-            top: 15%;
-            left: 1%;
-            margin-top: 0px;
-        }
+       
 
         .GridControl {
             Width: 100%;
@@ -21,10 +14,12 @@
         }
 
         .Scroll-table2 {
+             position: relative;
             vertical-align: top;
             overflow: auto;
             width: 100%;
-            height: 400px
+            height: 400px;
+             top: 60px;
         }
     </style>
 </asp:Content>
@@ -42,6 +37,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
         <ContentTemplate>
+
             <table class="TablaBusqueda">
                 <tr>
                     <td>

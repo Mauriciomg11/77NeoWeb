@@ -3,14 +3,14 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Taller</title>
     <style type="text/css">
-        .DivGrid {
+        /*.DivGrid {
             margin: 0 auto;
             text-align: left;
             width: 85%;
             height: 600px;
             top: 15%;
             margin-top: 0px;
-        }
+        }*/
     </style>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="EncScriptDdl" runat="server">
@@ -31,9 +31,9 @@
                 <table class="TablaBusqueda">
                     <tr>
                         <td>
-                            <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq"/></td>
+                            <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
                         <td>
-                            <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"/></td>
+                            <asp:TextBox ID="TxtBusqueda" runat="server" Width="450px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
                         <td>
                             <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                         <td>
@@ -51,7 +51,7 @@
                                     <asp:Label Text='<%# Eval("CodTaller") %>' runat="server" Width="40px" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Nombre" >
+                            <asp:TemplateField HeaderText="Nombre">
                                 <ItemTemplate>
                                     <asp:Label Text='<%# Eval("NomTaller") %>' runat="server" Width="100%" />
                                 </ItemTemplate>
@@ -64,7 +64,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Centro de costo">
                                 <ItemTemplate>
-                                    <asp:Label Text='<%# Eval("CentroCosto") %>' runat="server"  Width="100%" />
+                                    <asp:Label Text='<%# Eval("CentroCosto") %>' runat="server" Width="100%" />
                                 </ItemTemplate>
                                 <EditItemTemplate>
                                     <asp:DropDownList ID="DdlCC" runat="server" Width="100%" Height="28px" />
@@ -113,7 +113,7 @@
                         <HeaderStyle CssClass="GridCabecera" />
                         <RowStyle CssClass="GridRowStyle" />
                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8"/>
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                     </asp:GridView>
                 </div>
             </div>

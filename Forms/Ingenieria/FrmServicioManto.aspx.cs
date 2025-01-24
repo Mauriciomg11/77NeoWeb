@@ -473,8 +473,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     }
                 }
             }
-            TxtHistorico.Enabled = false;
-            TxtHistorico.Text = "";
+            //TxtHistorico.Enabled = false;
+            //TxtHistorico.Text = "";
         }
         private decimal LRemanente, LRemanente1, LremanenteDia, LremanenteDia1, LCorridoDias, LCorridoDias1, LCorrido, LCorrido1;
         protected void Cumplimiento(int Id, decimal Ext, decimal ExtDia)
@@ -744,7 +744,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
             catch (Exception ex)
             {
-                string VbMEns = ex.ToString().Trim().Substring(1, 50);
+                string VbMEns = ex.ToString().Trim().Substring(1, 250);
                 ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "alert", "alert('" + VbMEns + "');", true);
             }
         }
@@ -2929,17 +2929,22 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                     ImageButton imgE = e.Row.FindControl("IbtEdit") as ImageButton;
                     ImageButton imgD = e.Row.FindControl("IbtDelete") as ImageButton;
-                   // imgE.Enabled = true;
-                   // Result = Idioma.Select("Objeto='IbtEdit'");
-                   // foreach (DataRow RowIdioma in Result)
-                   // { imgE.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
-
-                    Result = Idioma.Select("Objeto='IbtDelete'");
-                    //foreach (DataRow RowIdioma in Result)
-                    //{ imgD.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
-                    Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
-                    //foreach (DataRow row in Result)
-                    //{ imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                    if (imgE != null)
+                    {
+                        imgE.Enabled = true;
+                        Result = Idioma.Select("Objeto='IbtEdit'");
+                        foreach (DataRow RowIdioma in Result)
+                        { imgE.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                    }
+                    if (imgD != null)
+                    {
+                        Result = Idioma.Select("Objeto='IbtDelete'");
+                        foreach (DataRow RowIdioma in Result)
+                        { imgD.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                        Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
+                        foreach (DataRow row in Result)
+                        { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                    }
                 }
             }
         }

@@ -34,6 +34,7 @@
             /*margin-top: -150px;*/
             border: 1px solid #808080;
             padding: 5px;
+            top: 150px
         }
 
         .heightCampo {
@@ -53,19 +54,19 @@
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
             <div class="CentrarContenedor">
-                <table class="TablaBusqueda">
-                    <tr>
-                        <td>
-                            <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
-                        <td>
-                            <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
-                        <td>
-                            <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
-                    </tr>
-                </table>
-                <br />
                 <div class="row ">
-                    <div class="col-sm-6 CentrarBoton ">
+                    <div class="col-sm-6 CentrarBoton">
+                        <table>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
+                                <td>
+                                    <asp:TextBox ID="TxtBusqueda" runat="server" Width="300px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
+                                <td>
+                                    <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
+                            </tr>
+                        </table>
+                        <br />
                         <h6 class="TextoSuperior">
                             <asp:Label ID="LblTitDatos" runat="server" Text="activar / desactivar periodo" /></h6>
                         <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdTipoSrv"
@@ -89,7 +90,7 @@
                                         <asp:TextBox ID="TxtNomPP" runat="server" Width="100%" />
                                     </FooterTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField FooterStyle-Width="15%" >
+                                <asp:TemplateField FooterStyle-Width="15%">
                                     <ItemTemplate>
                                         <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />
                                         <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />

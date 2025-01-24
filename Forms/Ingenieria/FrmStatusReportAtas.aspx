@@ -92,6 +92,7 @@
         <asp:View ID="Vw0St" runat="server">
             <asp:UpdatePanel ID="UplPpal" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                     <br /> <br />
                     <div class="row">
                         <div class="col-sm-2">
                             <asp:Label ID="LblStsHK" runat="server" CssClass="LblEtiquet" Text="Aeronave" />
@@ -220,6 +221,7 @@
         <asp:View ID="Vw1Imprimir" runat="server">
             <asp:UpdatePanel ID="UplPrint" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitImpresion" runat="server" Text="Opciones de Informes" /></h6>
                     <asp:ImageButton ID="IbtCerrarPrint" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarPrint_Click" ImageAlign="Right" />
@@ -247,6 +249,7 @@
         <asp:View ID="Vw2Order" runat="server">
             <asp:UpdatePanel ID="UplOrder" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOrdenarGrupImpr" runat="server" Text="Orden de impresión de grupos" /></h6>
                     <asp:ImageButton ID="IbtCerrarOrder" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarOrder_Click" ImageAlign="Right" />
@@ -304,6 +307,7 @@
         <asp:View ID="Vw3AsignarOTPPT" runat="server">
             <asp:UpdatePanel ID="UplAsigOTPPT" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsigOTPPT" runat="server" Text="Órdenes sin asignación de propuesta" /></h6>
                     <asp:ImageButton ID="IbtCerrarAsigOtPPT" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarAsigOtPPT_Click" ImageAlign="Right" />
@@ -483,6 +487,7 @@
         <asp:View ID="Vw4LiberarOTPPT" runat="server">
             <asp:UpdatePanel ID="UplLiberarOT" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitLiberarOT" runat="server" Text="Liberar orden de trabajo de una propuesta a todo costo" /></h6>
                     <asp:ImageButton ID="IbtCerrarLiberarOT" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarLiberarOT_Click" ImageAlign="Right" />
@@ -511,6 +516,7 @@
         <asp:View ID="Vw5StatusAnterior" runat="server">
             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="TitStsAnterior" runat="server" Text="Consultar estatus en fecha anteriores" /></h6>
                     <asp:ImageButton ID="IbtCerrarLStsAnterior" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarLStsAnterior_Click" ImageAlign="Right" />

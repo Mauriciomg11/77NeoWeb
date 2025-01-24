@@ -44,12 +44,14 @@
             margin-left: -30%;
             height: 85%;
             padding: 5px;
+             top: 270px
         }
 
         .TextR {
             text-align: right;
         }
-         .CentrarExportar {
+
+        .CentrarExportar {
             position: absolute;
             left: 50%;
             width: 40%;
@@ -210,6 +212,8 @@
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
                     <div class="CentrarContNumCotiza DivMarco">
+                        <br />
+                        <br />
                         <div class="row">
                             <div class="col-sm-2">
                                 <asp:Label ID="LblNumCotiza" runat="server" CssClass="LblEtiquet" Text="cotización Nro.:" />
@@ -251,7 +255,7 @@
                             </div>
                             <div class="col-sm-1">
                                 <asp:Button ID="BtnCargaMaxiva" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnCargaMaxiva_Click" Text="Cargar" Width="100%" Enabled="false" />
-                                <asp:FileUpload ID="FileUpCot" runat="server" Font-Size="9px"  Visible="false" />
+                                <asp:FileUpload ID="FileUpCot" runat="server" Font-Size="9px" Visible="false" />
                             </div>
                             <div class="col-sm-1">
                                 <asp:Button ID="BtnEliminar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnEliminar_Click" OnClientClick="target ='';" Text="eliminar" />
@@ -311,7 +315,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <asp:Label ID="LblFechPlazRes" runat="server" CssClass="LblEtiquet" Text="fecha plazo respuesta" />
-                                <asp:TextBox ID="TxtFechPlazRes" runat="server" CssClass="form-control-sm heightCampo"  Enabled="false" Width="100%" TextMode="Date" MaxLength="10" />                               
+                                <asp:TextBox ID="TxtFechPlazRes" runat="server" CssClass="form-control-sm heightCampo" Enabled="false" Width="100%" TextMode="Date" MaxLength="10" />
                             </div>
                             <div class="col-sm-2">
                                 <asp:Label ID="LblFechRespt" runat="server" CssClass="LblEtiquet" Text="fecha respuesta" />
@@ -463,29 +467,29 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOpcBusq" runat="server" Text="opciones de búsq." />
                     </h6>
                     <asp:ImageButton ID="IbtCerrarBusq" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarBusq_Click" />
-                    <div class="CentrarBusq DivMarco">
-                        <table class="TablaBusqueda">
-                            <tr>
-                                <td colspan="3">
-                                    <asp:RadioButton ID="RdbBusqNumCot" runat="server" CssClass="LblEtiquet" Text="&nbsp cotizacion" GroupName="Busq" />&nbsp&nbsp&nbsp
+                    <table class="TablaBusqueda">
+                        <tr>
+                            <td colspan="3">
+                                <asp:RadioButton ID="RdbBusqNumCot" runat="server" CssClass="LblEtiquet" Text="&nbsp cotizacion" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqProvee" runat="server" CssClass="LblEtiquet" Text="&nbsp proveedor" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqPN" runat="server" CssClass="LblEtiquet" Text="&nbsp P/N:" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqSN" runat="server" CssClass="LblEtiquet" Text="&nbsp S/N:" GroupName="Busq" />
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
-                                <td>
-                                    <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
-                                <td>
-                                    <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
-                            </tr>
-                        </table>
-                        <br />
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
+                            <td>
+                                <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
+                            <td>
+                                <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
+                        </tr>
+                    </table>
+                    <div class="CentrarBusq DivMarco">
                         <div class="CentrarGrid pre-scrollable">
                             <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="IdCotizacion"
                                 CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowCommand="GrdBusq_RowCommand" OnRowDataBound="GrdBusq_RowDataBound">
@@ -546,6 +550,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2Exportar" runat="server">
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitExport" runat="server" Text="opciones de búsq." />
                     </h6>
@@ -570,7 +575,7 @@
             <asp:PostBackTrigger ControlID="IbtAprDetAll" />
             <asp:PostBackTrigger ControlID="BtnExportDetCotiza" />
             <asp:PostBackTrigger ControlID="BtnExportDetUnidMed" />
-            <asp:PostBackTrigger ControlID="BtnCargaMaxiva" />         
+            <asp:PostBackTrigger ControlID="BtnCargaMaxiva" />
         </Triggers>
     </asp:UpdatePanel>
 </asp:Content>

@@ -47,6 +47,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
+                     <br /> <br />
                     <asp:Button ID="BtnSubComp" CssClass="btn btn-outline-primary" runat="server" Text="SubComponente" OnClick="BtnSubComp_Click" Font-Size="10px" />&nbsp
                     <asp:Button ID="BtnMayor" CssClass="btn btn-outline-primary" runat="server" Text="Mayor" OnClick="BtnMayor_Click" Font-Size="10px" /><br />
                     <asp:Label ID="LblPN" runat="server" CssClass="LblEtiquet" Text="P/N:" />
@@ -167,6 +168,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Procesar" runat="server">
+                    <br /> <br />
                     <asp:ImageButton ID="IbtCerrarProces" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarProces_Click" ImageAlign="Right" />
                     <div class="col-sm-7">
                         <h6 class="TextoSuperior">

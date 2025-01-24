@@ -157,6 +157,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
+                    <br /><br />
                     <div class="CentrarContenedor DivMarco">
                         <div class="row">
                             <div class="col-sm-7">
@@ -492,19 +493,19 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LbltitBusq" runat="server" Text="Opciones de búsqueda " />
                     </h6>
                     <asp:ImageButton ID="IbtCerrarBusq" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarBusq_Click" />
-                    <div class="CentrarBusq DivMarco">
-                        <asp:Table ID="TblBusqHK" runat="server" class="TablaBusqueda" Visible="false" Width="10%">
+                      <asp:Table ID="TblBusqHK" runat="server" class="TabOpcBusq" Visible="false" Width="10%">
                             <asp:TableRow>
                                 <asp:TableCell>
                                     <asp:RadioButton ID="RdbBusqDes" runat="server" GroupName="BusqA" CssClass="LblTextoBusq" Text="Descripción" />
                                 </asp:TableCell>
                             </asp:TableRow>
                         </asp:Table>
-                        <asp:Table ID="TblBusqPN" runat="server" class="TablaBusqueda" Visible="false" Width="20%">
+                        <asp:Table ID="TblBusqPN" runat="server" class="TabOpcBusq" Visible="false" Width="20%">
                             <asp:TableRow>
                                 <asp:TableCell Width="10%">
                                     <asp:RadioButton ID="RdbBusqDesPN" runat="server" GroupName="BusqP" CssClass="LblTextoBusq" Text="Descripción" />
@@ -514,7 +515,7 @@
                                 </asp:TableCell>
                             </asp:TableRow>
                         </asp:Table>
-                        <asp:Table ID="TblBusqSN" runat="server" class="TablaBusqueda" Visible="false" Width="30%">
+                     <asp:Table ID="TblBusqSN" runat="server" class="TabOpcBusq" Visible="false" Width="30%">
                             <asp:TableRow>
                                 <asp:TableCell Width="10%">
                                     <asp:RadioButton ID="RdbBusqDesSN" runat="server" GroupName="BusqS" CssClass="LblTextoBusq" Text="Descripción" />
@@ -527,16 +528,17 @@
                                 </asp:TableCell>
                             </asp:TableRow>
                         </asp:Table>
-                        <table class="TablaBusqueda">
+                     <table class="TabOpcBusq">
                             <tr>
                                 <td>
                                     <asp:Label ID="LblBusq" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
                                 <td>
-                                    <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
+                                    <asp:TextBox ID="TxtBusqueda" runat="server" Width="450px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
                                 <td>
                                     <asp:ImageButton ID="IbtConsultar" runat="server" ImageUrl="~/images/FindV2.png" ToolTip="Consultar" CssClass="BtnImagenBusqueda" OnClick="IbtConsultar_Click" /></td>
                             </tr>
                         </table>
+                    <div class="CentrarBusq DivMarco">     
                         <br />
                         <div class="CentrarGrid pre-scrollable">
                             <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
@@ -598,6 +600,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2Recurso" runat="server">
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitRecursoLice" runat="server" Text="Recurso Físico y Licencias" /></h6>
                     <asp:ImageButton ID="IbtCloseRecurso" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCloseRecurso_Click" />
@@ -606,7 +609,7 @@
                             <div class="col-sm-12">
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="LblTitRecPartes" runat="server" Text="Partes " /></h6>
-                                <div class="CentrarGrid ScrollRecurso">                            
+                                <div class="CentrarGrid ScrollRecurso">
                                     <asp:GridView ID="GrdRecursoF" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true"
                                         DataKeyNames="CodidDetElemPlanInstrumento"
                                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both"
@@ -639,7 +642,7 @@
                                                     <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" Enabled="false" />
                                                 </ItemTemplate>
                                                 <EditItemTemplate>
-                                                    <asp:TextBox ID="TxtDesRF" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%"  MaxLength="240"/>
+                                                    <asp:TextBox ID="TxtDesRF" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" MaxLength="240" />
                                                 </EditItemTemplate>
                                                 <FooterTemplate>
                                                     <asp:TextBox ID="TxtDesRFPP" runat="server" MaxLength="240" Width="100%" Enabled="false" />
@@ -713,7 +716,7 @@
                                         <HeaderStyle CssClass="GridCabecera" />
                                         <RowStyle CssClass="GridRowStyle" />
                                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                    </asp:GridView>                                
+                                    </asp:GridView>
                                 </div>
                             </div>
                         </div>

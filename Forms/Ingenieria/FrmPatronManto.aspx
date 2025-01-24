@@ -2,6 +2,20 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
+        .CentrarBoton {
+            position: relative;
+            /*nos posicionamos en el centro del navegador*/
+            /*top: 50%;*/
+            left: 50%;
+            /*determinamos una anchura*/
+            width: 60%;
+            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
+            margin-left: -30%;
+            /*determinamos una altura*/
+            /*indicamos que el margen superior, es la mitad de la altura*/
+            padding: 5px;
+        }
+
         .CentrarGrid {
             position: absolute;
             left: 50%;
@@ -18,7 +32,7 @@
             /*vertical-align: top;*/
             background: #e0e0e0;
             margin: 0 0 1rem;
-            position: absolute;
+            position: relative;
             /*nos posicionamos en el centro del navegador*/
             /*top: 50%;*/
             left: 50%;
@@ -45,7 +59,7 @@
     <script type="text/javascript">
         function myFuncionddl() {
             $('[id *=DdlContdrPP]').chosen();
-         }
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
@@ -55,25 +69,29 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-            <div class="CentrarContenedor">
-                <table class="TablaBusqueda">
+            <br /><br />
+            <div class="CentrarBoton">
+                <table>
                     <tr>
                         <td>
                             <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
                         <td>
-                            <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
+                            <asp:TextBox ID="TxtBusqueda" runat="server" Width="450px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
                         <td>
                             <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                     </tr>
                 </table>
-                <br />
+            </div>
+
+            <div class="CentrarContenedor">
                 <div class="row ">
+
                     <div class="col-sm-6">
                         <h6 class="TextoSuperior">
                             <asp:Label ID="LblTitDatos" runat="server" Text="detalle" /></h6>
                         <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodPatronManto"
                             CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="10"
-                             OnRowCommand="GrdDatos_RowCommand" OnSelectedIndexChanged="GrdDatos_SelectedIndexChanged" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating"
+                            OnRowCommand="GrdDatos_RowCommand" OnSelectedIndexChanged="GrdDatos_SelectedIndexChanged" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating"
                             OnRowCancelingEdit="GrdDatos_RowCancelingEdit" OnRowDeleting="GrdDatos_RowDeleting" OnRowDataBound="GrdDatos_RowDataBound"
                             OnPageIndexChanging="GrdDatos_PageIndexChanging">
                             <Columns>
@@ -90,9 +108,9 @@
                                         <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" />
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="TxtDesc" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" MaxLength="80"/>
+                                        <asp:TextBox ID="TxtDesc" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" MaxLength="80" />
                                     </EditItemTemplate>
-                                     <FooterTemplate>
+                                    <FooterTemplate>
                                         <asp:TextBox ID="TxtDescPP" runat="server" Width="100%" MaxLength="80" />
                                     </FooterTemplate>
                                 </asp:TemplateField>
@@ -127,7 +145,7 @@
                                 <asp:TemplateField HeaderText="contador">
                                     <ItemTemplate>
                                         <asp:Label Text='<%# Eval("CodContador") %>' runat="server" />
-                                    </ItemTemplate>                                    
+                                    </ItemTemplate>
                                     <FooterTemplate>
                                         <asp:DropDownList ID="DdlContdrPP" runat="server" Width="100%" Height="28px" />
                                     </FooterTemplate>
@@ -135,7 +153,7 @@
                                 <asp:TemplateField FooterStyle-Width="15%">
                                     <ItemTemplate>
                                         <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
-                                    </ItemTemplate>                                   
+                                    </ItemTemplate>
                                     <FooterTemplate>
                                         <asp:ImageButton ID="IbtAddNew" CssClass="BotonNewGrid" ImageUrl="~/images/AddNew.png" runat="server" CommandName="AddNew" ToolTip="Nuevo" />
                                     </FooterTemplate>
@@ -148,6 +166,7 @@
                             <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                         </asp:GridView>
                     </div>
+
                 </div>
             </div>
         </ContentTemplate>

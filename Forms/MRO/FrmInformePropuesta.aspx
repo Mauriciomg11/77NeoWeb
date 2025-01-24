@@ -50,6 +50,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Botones" runat="server">
+                     <br />
                     <div class="CentrarBusq  DivMarco">
                         <div class="row">
                             <div class="col-sm-4">
@@ -68,12 +69,13 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitSegumient" runat="server" Text="seguimiento" />
                     </h6>
                     <asp:ImageButton ID="IbtCerrarBusq" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarBusq_Click" />
                     <div class="CentrarBusq DivMarco">
-                        <table class="TablaBusqueda width ">
+                        <table class="TabOpcBusq">
                             <tr>
                                 <td>
                                     <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>

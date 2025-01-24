@@ -69,6 +69,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MlVw" runat="server">
                 <asp:View ID="Vw0Principal" runat="server">
+                    <br />
                     <div class="CentrarContndr DivMarco">
                         <div class="row">
                             <div class="col-sm-3">
@@ -83,6 +84,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Reparaciones" runat="server">
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitReparaciones" runat="server" Text="reparaciones" />
                     </h6>
@@ -106,6 +108,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2Inventario" runat="server">
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitInventario" runat="server" Text="Inventario por grupo a partir de un corte de fecha" />
                     </h6>

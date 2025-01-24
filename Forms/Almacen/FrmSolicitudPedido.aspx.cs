@@ -995,7 +995,9 @@ namespace _77NeoWeb.Forms.Almacen
             (GrdDetSP.FooterRow.FindControl("TxtPNPP") as TextBox).Enabled = false;
             (GrdDetSP.FooterRow.FindControl("TxtDescPP") as TextBox).Enabled = false;
             if (e.CommandName.Equals("BusqPN"))// buscar el PN que se va a agregar
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "ModalBusqPN", "$('#ModalBusqPN').modal();", true); }
+            { /*ScriptManager.RegisterStartupScript(Page, Page.GetType(), "ModalBusqPN", "$('#ModalBusqPN').modal();", true);*/
+               ScriptManager.RegisterStartupScript((sender as Control), this.GetType(), "Popup", "ShowPopup();", true);
+            }
             if (TxtCodPedd.Text.Equals("")) // Es desde la DataTable Temporal
             {
                 if (e.CommandName.Equals("AddNew"))

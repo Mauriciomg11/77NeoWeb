@@ -9,6 +9,7 @@
             margin-left: -49%;
             height: 85%;
             padding: 5px;
+             top:150px
         }
 
         .Interna {

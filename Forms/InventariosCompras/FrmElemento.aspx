@@ -3,7 +3,7 @@
 <asp:Content ID="Titulo" ContentPlaceHolderID="head" runat="server">
     <title>Elemento</title>
     <style type="text/css">
-        .DivGrid {
+/*        .DivGrid {
             position: absolute;
             OVERFLOW: auto;
             width: 98%;
@@ -11,8 +11,15 @@
             top: 24%;
             left: 1%;
             margin-top: 0px;
+        }*/
+.TabOpcBusq {
+            position: relative;
+            text-align: center;
+            left: 30%;
+            width: 50%;
+            height: 5%;
+            top: 60px;
         }
-
         .TablaCampos {
             position: absolute;
             text-align: left;
@@ -77,6 +84,7 @@
     <asp:UpdatePanel ID="UpPnlCampos" runat="server">
         <ContentTemplate>
             <asp:Panel ID="PnlCampos" runat="server">
+                   <br /><br />
                 <div class="CentrarCntndr">
                     <div class="row">
                         <div class="col-sm-2">
@@ -203,11 +211,11 @@
                 </div>           
             </asp:Panel>
             <asp:Panel ID="PnlBusq" runat="server" Visible="false">
+                   <br /><br />
                 <h6 class="TextoSuperior">
                     <asp:Label ID="LblTitOpcBusq" runat="server" Text="Opciones de búsqueda" /></h6>
-                <table class="TablaBusqueda">
+                <table class="TabOpcBusq">
                     <tr>
-
                         <td width="10%">
                             <asp:RadioButton ID="RdbBusqPN" runat="server" GroupName="Busq" CssClass="LblEtiquet" Text="&nbsp P/N" /></td>
                         <td width="10%">

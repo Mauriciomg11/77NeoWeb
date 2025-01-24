@@ -85,6 +85,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
+                    <br /><br />
                     <div class="CentrarContenedor DivMarco">
                         <div class="row">
                             <div class="col-sm-3">
@@ -184,6 +185,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1CambioBod" runat="server">
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitCambioBod" runat="server" Text="Traslado de Bodega" />
                     </h6>

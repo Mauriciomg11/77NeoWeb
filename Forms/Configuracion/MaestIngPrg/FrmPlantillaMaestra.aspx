@@ -21,20 +21,21 @@
         }
     </script>
     <style type="text/css">
-        .DivGrid {
+       .DivGrid1 {
             position: absolute;
             width: 32%;
             height: 300px;
-            top: 16%;
             left: 23%;
             margin-top: 0px;
+            top:210px;
         }
 
+        
         .DivGridUltN {
             position: absolute;
             width: 40%;
             height: 300px;
-            top: 16%;
+            top: 210px;
             left: 56%;
             margin-top: 0px;
         }
@@ -43,7 +44,7 @@
             position: absolute;
             width: 30%;
             height: 200px;
-            top: 66%;
+            top: 84%;
             left: 56%;
             margin-top: 0px;
         }
@@ -52,29 +53,31 @@
             position: absolute;
             width: 54%;
             height: 200px;
-            top: 66%;
+            top: 84%;
             left: 1%;
             margin-top: 0px;
         }
 
         .LblATA {
-            position: absolute;
+             position: absolute;
             left: 1%;
-            top: 13%;
+            top:30%;
+         
         }
 
         .ListCap {
             position: absolute;
-            top: 16%;
+            top: 210px;
             left: 1%;
-            Width: 22%;
+            Width: 21%;
             Height: 300px;
         }
 
         .TablaFlota {
-            position: absolute;
+            position: relative;
             left: 40%;
-            width:40%
+            width:40%;
+            top: 60px;
         }
     </style>
 </asp:Content>
@@ -88,8 +91,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1>
-        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server" UpdateMode="Conditional">
@@ -106,7 +108,7 @@
             </table>
             <asp:Label ID="LblNumMot" runat="server" Text="ATAS" CssClass="LblATA LblTextoBusq"/>
             <asp:ListBox ID="LstCapitulo" runat="server" CssClass="ListCap" Font-Size="10px" OnSelectedIndexChanged="LstCapitulo_SelectedIndexChanged" AutoPostBack="True"/>
-            <div class="DivGrid DivContendorGrid">
+            <div class="DivGrid1 DivContendorGrid">
                 <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdSubCapituloN3,SubCapitulo"
                     CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="3"
                     OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit"

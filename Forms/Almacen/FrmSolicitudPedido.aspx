@@ -9,7 +9,7 @@
         }
 
         .CentrarContenedor {
-            position: absolute;
+            position: relative;
             left: 50%;
             /*determinamos una anchura*/
             width: 98%;
@@ -40,11 +40,13 @@
             margin-left: -30%;
             height: 85%;
             padding: 5px;
+            top: 290px;
         }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
     <script type="text/javascript">  
+
         function solonumeros(e) {
             var key;
             if (window.event) // IE
@@ -81,6 +83,18 @@
             $('#<%=DdlCcosto.ClientID%>').chosen();
             $('#<%=DdlRespsbl.ClientID%>').chosen();
         }
+        $(':text').on("focus", function () {
+            //here set in localStorage id of the textbox
+            localStorage.setItem("focusItem", this.id);
+            //console.log(localStorage.getItem("focusItem"));test the focus element id
+        });
+        function ShowPopup() {
+            $('#ModalBusqPN').modal('show');
+            $('#ModalBusqPN').on('shown.bs.modal', function () {
+                   document.getElementById('<%= TxtModalBusq.ClientID %>').focus();
+                    document.getElementById('<%= TxtModalBusq.ClientID %>').select();<%-- --%>
+            });
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
@@ -88,7 +102,6 @@
         <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
-
     <div id="ModalBusqPN" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -97,7 +110,7 @@
                         <asp:Label ID="LblTitModalBusqPN" runat="server" Text="P/N" /></h4>
                 </div>
                 <div class="modal-body">
-                    <table class="TablaBusqueda">
+                    <table>
                         <tr>
                             <td colspan="3">
                                 <asp:RadioButton ID="RdbMOdalBusqPN" runat="server" CssClass="LblEtiquet" Text="&nbsp P/N" GroupName="BusqPn" />&nbsp&nbsp&nbsp                               
@@ -162,6 +175,8 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
+                    <br />
+                    <br />
                     <div class="CentrarContenedor">
                         <div id="Botones" class="row">
                             <div class="col-sm-1">
@@ -175,17 +190,17 @@
                             </div>
                             <div class="col-sm-1">
                                 <asp:Button ID="BtnCargaMaxiva" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnCargaMaxiva_Click" Text="Carga masiva" Width="100%" />
-                            </div>                            
+                            </div>
                             <div class="col-sm-1">
                                 <asp:Button ID="BtnEliminar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnEliminar_Click" OnClientClick="target ='';" Text="eliminar" />
-                            </div>                           
+                            </div>
                             <div class="col-sm-1">
-                                 <asp:Button ID="BtnAlert" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnAlert_Click" OnClientClick="target ='';" Text="alertas" />                             
+                                <asp:Button ID="BtnAlert" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnAlert_Click" OnClientClick="target ='';" Text="alertas" />
                             </div>
-                             <div class="col-sm-1">
-                                 <asp:Button ID="BtnOpenCotiza" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnOpenCotiza_Click" OnClientClick="target ='';" Text="alertas" />                             
+                            <div class="col-sm-1">
+                                <asp:Button ID="BtnOpenCotiza" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnOpenCotiza_Click" OnClientClick="target ='';" Text="alertas" />
                             </div>
-                             <%--<div class="col-sm-1">
+                            <%--<div class="col-sm-1">
                                 <asp:Button ID="BtnExportar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnExportar_Click" OnClientClick="target ='';" Text="exportar" />
                             </div>--%>
                         </div>
@@ -351,27 +366,29 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOpcBusq" runat="server" Text="Opciones de búsq." />
                     </h6>
                     <asp:ImageButton ID="IbtCerrarBusq" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarBusq_Click" />
-                    <div class="CentrarBusq DivMarco">
-                        <table class="TablaBusqueda">
-                            <tr>
-                                <td colspan="3">
-                                    <asp:RadioButton ID="RdbBusqNumSlPd" runat="server" CssClass="LblEtiquet" Text="&nbsp solicitud" GroupName="Busq" />&nbsp&nbsp&nbsp
+                    <table class="TablaBusqueda">
+                        <tr>
+                            <td colspan="3">
+                                <asp:RadioButton ID="RdbBusqNumSlPd" runat="server" CssClass="LblEtiquet" Text="&nbsp solicitud" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqPN" runat="server" CssClass="LblEtiquet" Text="&nbsp P/N:" GroupName="Busq" />
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
-                                <td>
-                                    <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
-                                <td>
-                                    <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
-                            </tr>
-                        </table>
-                        <br />
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
+                            <td>
+                                <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
+                            <td>
+                                <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
+                        </tr>
+                    </table>
+                    <br />
+                    <div class="CentrarBusq DivMarco">
+
                         <div class="CentrarGrid pre-scrollable">
                             <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="IdPedido"
                                 CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowCommand="GrdBusq_RowCommand" OnRowDataBound="GrdBusq_RowDataBound">
@@ -422,6 +439,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2CargaMasiva" runat="server">
+                    <br />
                     <asp:Label ID="LblCargaMasvNumPed" runat="server" CssClass="LblEtiquet" Text="pedido:"></asp:Label>
                     <asp:TextBox ID="TxtCargaMasvNumPed" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" Enabled="false" />
                     <asp:ImageButton ID="IbtCerrarSubMaxivo" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarSubMaxivo_Click" ImageAlign="Right" />
@@ -429,7 +447,8 @@
                         <asp:Label ID="LblTitOTCargMasiv" runat="server" Text="Subir Evaluación"></asp:Label></h6>
                     <asp:ImageButton ID="IbtSubirCargaMax" runat="server" ToolTip="Cargar archivo..." ImageUrl="~/images/SubirCarga.png" OnClick="IbtSubirCargaMax_Click" Width="30px" Height="30px" />
                     <asp:ImageButton ID="IbtGuardarCargaMax" runat="server" ToolTip="Guardar" ImageUrl="~/images/Descargar.png" OnClick="IbtGuardarCargaMax_Click" Width="30px" Height="30px" Enabled="false" OnClientClick="javascript:return confirm('¿Desea almacenar la información?', 'Mensaje de sistema')" />
-                    <br /><asp:FileUpload ID="FileUpRva" runat="server" Font-Size="9px" Visible="false" />
+                    <br />
+                    <asp:FileUpload ID="FileUpRva" runat="server" Font-Size="9px" Visible="false" />
                     <asp:GridView ID="GrdCargaMax" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="False"
                         CssClass="DiseñoGrid table table-sm" GridLines="Both">
                         <Columns>
@@ -481,8 +500,8 @@
             <asp:PostBackTrigger ControlID="IbtBusqueda" />
             <asp:PostBackTrigger ControlID="IbtCerrarBusq" />
             <asp:PostBackTrigger ControlID="IbtModalBusq" />
-             <asp:PostBackTrigger ControlID="BtnAlert" />
-             <asp:PostBackTrigger ControlID="IbtSubirCargaMax" />
+            <asp:PostBackTrigger ControlID="BtnAlert" />
+            <asp:PostBackTrigger ControlID="IbtSubirCargaMax" />
         </Triggers>
     </asp:UpdatePanel>
 </asp:Content>

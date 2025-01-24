@@ -83,6 +83,8 @@
         <ContentTemplate>
             <asp:MultiView ID="MlVw" runat="server">
                 <asp:View ID="Vw0General" runat="server">
+                    <br />
+                    <br />
                     <div class="CentrarContenedor DivMarco">
                         <div class="row">
                             <div class="col-sm-1">
@@ -147,36 +149,38 @@
                         <br />
                         <div class="row">
                             <div class="col-sm-1">
-                                  <asp:Button ID="Button1" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnConsultar_Click1" OnClientClick="target ='';" Text="consultar" />
+                                <asp:Button ID="Button1" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnConsultar_Click1" OnClientClick="target ='';" Text="consultar" />
                             </div>
                         </div>
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOpcBusq" runat="server" Text="Opciones de búsqueda" />
                     </h6>
                     <asp:ImageButton ID="IbtCerrarBusq" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarBusq_Click" />
-                    <div class="CentrarBusq DivMarco">
-                        <table class="TablaBusqueda">
-                            <tr>
-                                <td colspan="3">
-                                    <asp:RadioButton ID="RdbBusqNumOT" runat="server" CssClass="LblEtiquet" Text="&nbsp ot" GroupName="Busq" />&nbsp&nbsp&nbsp
+                    <table class="TabOpcBusq">
+                        <tr>
+                            <td colspan="3">
+                                <asp:RadioButton ID="RdbBusqNumOT" runat="server" CssClass="LblEtiquet" Text="&nbsp ot" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqSN" runat="server" CssClass="LblEtiquet" Text="&nbsp S/N:" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqPN" runat="server" CssClass="LblEtiquet" Text="&nbsp P/N:" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqHK" runat="server" CssClass="LblEtiquet" Text="&nbsp hk" GroupName="Busq" />
-                                &nbsp&nbsp&nbsp                                   
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
-                                <td>
-                                    <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
-                                <td>
-                                    <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
-                            </tr>
-                        </table>
-                        <br />
+                            &nbsp&nbsp&nbsp                                   
+                        </tr>
+                    </table>
+                    <table class="TabOpcBusq">
+                        <tr>
+                            <td>
+                                <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
+                            <td>
+                                <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
+                            <td>
+                                <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
+                        </tr>
+                    </table>
+                    <div class="CentrarBusq DivMarco">
                         <div class="CentrarGrid pre-scrollable">
                             <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="SNHK, NomModelo, DescrElem"
                                 CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowCommand="GrdBusq_RowCommand" OnRowDataBound="GrdBusq_RowDataBound">

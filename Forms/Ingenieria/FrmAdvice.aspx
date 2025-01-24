@@ -36,6 +36,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVieLV" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
+                     <br /> <br />
                     <asp:Label ID="LblPN" runat="server" CssClass="LblEtiquet" Text="P/N:" />
                     <asp:DropDownList ID="DdlPN" runat="server" CssClass="heightCampo" Width="20%" OnTextChanged="DdlPN_TextChanged" AutoPostBack="true" />
                     <asp:Label ID="LblSN" runat="server" CssClass="LblEtiquet" Text="S/N:" />
@@ -156,6 +157,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Informe" runat="server">
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitImpresion" runat="server" Text="Impresión" /></h6>
                     <asp:ImageButton ID="IbtCerrarImpresion" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarImpresion_Click" ImageAlign="Right" />
