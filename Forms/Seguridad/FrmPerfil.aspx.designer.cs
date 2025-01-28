@@ -15,6 +15,15 @@ namespace _77NeoWeb.Forms.Seguridad
     {
 
         /// <summary>
+        /// Control TitForm.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TitForm;
+
+        /// <summary>
         /// Control UpPanel.
         /// </summary>
         /// <remarks>
@@ -78,6 +87,15 @@ namespace _77NeoWeb.Forms.Seguridad
         protected global::System.Web.UI.WebControls.ImageButton IbnBusUsu;
 
         /// <summary>
+        /// Control IbtIr.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton IbtIr;
+
+        /// <summary>
         /// Control GrdDatos.
         /// </summary>
         /// <remarks>
@@ -94,15 +112,6 @@ namespace _77NeoWeb.Forms.Seguridad
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GrdDatosUsin;
-
-        /// <summary>
-        /// Control IbtIr.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtIr;
 
         /// <summary>
         /// Control PnlPerfil.
@@ -141,6 +150,15 @@ namespace _77NeoWeb.Forms.Seguridad
         protected global::System.Web.UI.WebControls.ImageButton IbtConsultar;
 
         /// <summary>
+        /// Control IbtRegresar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton IbtRegresar;
+
+        /// <summary>
         /// Control PnlEditarPerfil.
         /// </summary>
         /// <remarks>
@@ -148,15 +166,6 @@ namespace _77NeoWeb.Forms.Seguridad
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel PnlEditarPerfil;
-
-        /// <summary>
-        /// Control IbtAsignarPerfil.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtAsignarPerfil;
 
         /// <summary>
         /// Control LblNombrePantalla.
@@ -267,6 +276,15 @@ namespace _77NeoWeb.Forms.Seguridad
         protected global::System.Web.UI.WebControls.CheckBox CkbCE6;
 
         /// <summary>
+        /// Control IbtAsignarPerfil.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton IbtAsignarPerfil;
+
+        /// <summary>
         /// Control GrdPerfilAsig.
         /// </summary>
         /// <remarks>
@@ -283,14 +301,5 @@ namespace _77NeoWeb.Forms.Seguridad
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GrdSinAsig;
-
-        /// <summary>
-        /// Control IbtRegresar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtRegresar;
     }
 }

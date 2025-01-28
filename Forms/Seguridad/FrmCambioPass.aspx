@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         .ContenedorLogin {
-            position: absolute;
+            position: relative;
             text-align: center;
             top: 60%;
             left: 50%;
@@ -19,12 +19,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1>
-        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
+   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPnlCampos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+            <br /> <br /> <br /><br /><br /><br /><br /><br /><br /><br />
             <div class="ContenedorLogin">
                 <div>
                     <div class="btn-info">

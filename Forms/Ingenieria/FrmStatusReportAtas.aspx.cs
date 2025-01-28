@@ -66,7 +66,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             ViewState["VblCE3"] = 1;
             ViewState["VblCE4"] = 1;
             ClsPermisos ClsP = new ClsPermisos();
-            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            string VbPC = Cnx.GetIpPubl();
             ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx", VbPC);
 
             if (ClsP.GetAccesoFrm() == 0)

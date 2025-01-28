@@ -39,30 +39,32 @@ background-size: cover;
 }
 
 .BotonIr {
-    position: absolute;
-    background-image: url("../Images/FlechaIrV1.png");
-    background-size: cover;
-    top: 25%;
+    /*position: absolute;*/
+   /* background-image: url("../Images/FlechaIrV1.png");
+    background-size: cover;*/
+   /* top: 25%;*/
     left: 92%;
     width: 70px;
     height: 70px;
 }
 
 .BotonVolver {
-    position: absolute;
+   /* position: absolute;
     background-image: url("../Images/FlechaRegresarV1.png");
     background-size: cover;
-    top: 25%;
+    top: 25%;*/
     left: 92%;
     width: 70px;
     height: 70px;
 }
 
 .BtnAsingarPerfil {
-    position: absolute;
-    left: 93%;
+    /* position: absolute;
+    
     background-image: url("../Images/Save.png");
-    background-size: cover;
+    background-size: cover;*/
+    position: absolute;
+    left: 37%;
     width: 40px;
     height: 40px;
 }

@@ -15,8 +15,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
-    <h1>
-        <asp:Label ID="LblTitulo" runat="server" Text="Label"></asp:Label></h1>
+ <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ImageButton ID="IbnCerrar" runat="server" CssClass="BotonCerrarPagExportar" ImageUrl="~/images/ExitV2.png"  ToolTip="Cerrar" OnClick="IbnCerrar_Click"></asp:ImageButton>

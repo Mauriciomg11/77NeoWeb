@@ -38,20 +38,20 @@ namespace _77NeoWeb.Forms
             if (!IsPostBack)
             {
                 //string bnllrr = Request.QueryString["ToolT"].ToString();
-                TxtBusqueda.ToolTip = Request.QueryString["ToolT"].ToString();
-                LblTitulo.Text = Request.QueryString["TT"].ToString();
+               // TxtBusqueda.ToolTip = Request.QueryString["ToolT"].ToString();
+               // LblTitulo.Text = Request.QueryString["TT"].ToString();
                 ViewState["PFileName"] = "FrmExportar";
-                if (Request.QueryString["TT"].ToString().Equals("Exportar Referencias"))
-                {
-                    Lbl1.Text = "Verificación";
-                    Lbl1.Visible = true;
-                    Rdb1.Checked = true;
-                    Rdb1.Visible = true;
-                    Lbl2.Text = "P/N con unidad de compra";
-                    Lbl2.Visible = true;
-                    Rdb2.Visible = true;
-                }
-                BindData();
+                //if (Request.QueryString["TT"].ToString().Equals("Exportar Referencias"))
+                //{
+                //    Lbl1.Text = "Verificación";
+                //    Lbl1.Visible = true;
+                //    Rdb1.Checked = true;
+                //    Rdb1.Visible = true;
+                //    Lbl2.Text = "P/N con unidad de compra";
+                //    Lbl2.Visible = true;
+                //    Rdb2.Visible = true;
+                //}
+                //BindData();
             }
         }
         void BindData()

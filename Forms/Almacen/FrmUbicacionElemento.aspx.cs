@@ -54,7 +54,7 @@ namespace _77NeoWeb.Forms.Almacen
             ViewState["VblCE3"] = 1;
             ViewState["AplicaCiaFechVenc"] = "N";
             ClsPermisos ClsP = new ClsPermisos();
-            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            string VbPC = Cnx.GetIpPubl();
             ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx", VbPC);
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
             if (ClsP.GetCE1() == 0) { ViewState["VblCE1"] = 0; }//Trasferir entre bodegas 

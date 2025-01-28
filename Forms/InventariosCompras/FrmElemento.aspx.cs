@@ -66,7 +66,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             ViewState["VblConsMS"] = 1;
 
             ClsPermisos ClsP = new ClsPermisos();
-            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            string VbPC = Cnx.GetIpPubl();
             ClsP.Acceder(Session["C77U"].ToString(), "FrmElemento.aspx", VbPC);
 
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }

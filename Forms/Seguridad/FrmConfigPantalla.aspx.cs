@@ -41,7 +41,7 @@ namespace _77NeoWeb.Forms.Seguridad
                 BindData(TxtBusqueda.Text);
             }
         }
-        void ModSeguridad()
+        protected void ModSeguridad()
         {
             ViewState["VblIngMS"] = 1;
             ViewState["VblModMS"] = 1;
@@ -49,7 +49,7 @@ namespace _77NeoWeb.Forms.Seguridad
             ViewState["VblImpMS"] = 1;
 
             ClsPermisos ClsP = new ClsPermisos();
-            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            string VbPC = Cnx.GetIpPubl();
             ClsP.Acceder(Session["C77U"].ToString(), "FrmConfigPantalla.aspx", VbPC);
 
             if (ClsP.GetAccesoFrm() == 0)
@@ -94,7 +94,7 @@ namespace _77NeoWeb.Forms.Seguridad
             {
             }
         }
-        void BindData(string VbConsultar)
+        protected void BindData(string VbConsultar)
         {
             DataTable dtbl = new DataTable();
             Cnx.BaseDatos(Session["D[BX"].ToString(), Session["$VR"].ToString(), Session["V$U@"].ToString(), Session["P@$"].ToString());
@@ -123,7 +123,7 @@ namespace _77NeoWeb.Forms.Seguridad
                 GrdDatos.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
             }
         }
-        void ActivarCampos(bool B)
+        protected void ActivarCampos(bool B)
         {
             CkbPpl.Enabled = B;
             CkbIng.Enabled = B;
@@ -138,7 +138,7 @@ namespace _77NeoWeb.Forms.Seguridad
             TxtCE5.Enabled = B;
             TxtCE6.Enabled = B;
         }
-        void LimparCampos()
+        protected void LimparCampos()
         {
             CkbPpl.Checked = false;
             CkbIng.Checked = false;

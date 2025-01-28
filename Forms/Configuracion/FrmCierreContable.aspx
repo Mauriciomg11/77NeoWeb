@@ -18,7 +18,7 @@
 
         .CentrarContenedor {
             /*vertical-align: top;*/
-            background: #e0e0e0;
+            /*background: #e0e0e0;*/
             margin: 0 0 1rem;
             position: absolute;
             /*nos posicionamos en el centro del navegador*/
@@ -32,7 +32,7 @@
             height: 90%;
             /*indicamos que el margen superior, es la mitad de la altura*/
             /*margin-top: -150px;*/
-            border: 1px solid #808080;
+            /*border: 1px solid #808080;*/
             padding: 5px;
             top: 150px
         }
@@ -69,8 +69,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1>
-        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
+  <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">

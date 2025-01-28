@@ -4,7 +4,7 @@
     <style type="text/css">
         .CentrarContenedor {
             /*vertical-align: top;*/
-            background: #e0e0e0;
+            /*background: #e0e0e0;*/
             margin: 0 0 1rem;
             position: absolute;
             /*nos posicionamos en el centro del navegador*/
@@ -18,7 +18,7 @@
             height: 90%;
             /*indicamos que el margen superior, es la mitad de la altura*/
             /*margin-top: -150px;*/
-            border: 1px solid #808080;
+            /*border: 1px solid #808080;*/
             padding: 5px;
         }
 
@@ -90,8 +90,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1>
-        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
@@ -101,22 +100,22 @@
                     <br />
                     <br />
                     <div class="CentrarContenedor DivMarco">
-                        <div class="CentrarTable">                          
+                        <div class="CentrarTable">
                             <div class="row">
                                 <div class="col-sm-12 CentrarBoton ">
-                                      <table>
-                                <tr>
-                                    <td>
-                                        <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
-                                    <td>
-                                        <asp:TextBox ID="TxtBusqueda" runat="server" Width="500px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
-                                    <td>
-                                        <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
-                                    <td>
-                                        <asp:Button ID="BtnEditarHistrc" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnEditarHistrc_Click" OnClientClick="target ='';" Text="Històrico" />
-                                    </td>
-                                </tr>
-                            </table>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
+                                            <td>
+                                                <asp:TextBox ID="TxtBusqueda" runat="server" Width="500px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
+                                            <td>
+                                                <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
+                                            <td>
+                                                <asp:Button ID="BtnEditarHistrc" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnEditarHistrc_Click" OnClientClick="target ='';" Text="Històrico" />
+                                            </td>
+                                        </tr>
+                                    </table>
                                     <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodTipoMoneda"
                                         CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                                         OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating"
@@ -203,29 +202,30 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Historico" runat="server">
-                     <br /> <br />
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitHisto" runat="server" Text="Editar Historico" />
                     </h6>
                     <asp:ImageButton ID="IbtCloseHist" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCloseHist_Click" />
                     <div class="CentrarContenedor DivMarco">
-                        <div class="CentrarTable">                            
+                        <div class="CentrarTable">
                             <div class="row ">
-                                <div class="col-sm-4 CentrarGrdHistrc ">
+                                <div class="col-sm-4 CentrarGrdHistrc">
                                     <table>
-                                <tr>
-                                    <td>
-                                        <asp:Label ID="LblBusquedaH" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
-                                    <td>
-                                        <asp:TextBox ID="TxtBusqMon" runat="server" Width="90px" Height="28px" CssClass="form-control" placeholder="moneda" /></td>
-                                    <td>
-                                        <asp:TextBox ID="TxtBusqAno" runat="server" Width="80px" Height="28px" CssClass="form-control" placeholder="ano" TextMode="Number" onkeypress="return solonumeros(event);" /></td>
-                                    <td>
-                                        <asp:TextBox ID="TxtBusqMes" runat="server" Width="90px" Height="28px" CssClass="form-control" placeholder="mes" TextMode="Number" onkeypress="return solonumeros(event);" /></td>
-                                    <td>
-                                        <asp:ImageButton ID="IbtConsultarH" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultarH_Click" /></td>
-                                </tr>
-                            </table>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="LblBusquedaH" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
+                                            <td>
+                                                <asp:TextBox ID="TxtBusqMon" runat="server" Width="90px" Height="28px" CssClass="form-control" placeholder="moneda" /></td>
+                                            <td>
+                                                <asp:TextBox ID="TxtBusqAno" runat="server" Width="80px" Height="28px" CssClass="form-control" placeholder="ano" TextMode="Number" onkeypress="return solonumeros(event);" /></td>
+                                            <td>
+                                                <asp:TextBox ID="TxtBusqMes" runat="server" Width="90px" Height="28px" CssClass="form-control" placeholder="mes" TextMode="Number" onkeypress="return solonumeros(event);" /></td>
+                                            <td>
+                                                <asp:ImageButton ID="IbtConsultarH" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultarH_Click" /></td>
+                                        </tr>
+                                    </table>
                                     <asp:GridView ID="GrdDatosH" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" DataKeyNames="CodIdTasa, UltFecModSis"
                                         CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true"
                                         OnRowEditing="GrdDatosH_RowEditing" OnRowUpdating="GrdDatosH_RowUpdating" OnRowCancelingEdit="GrdDatosH_RowCancelingEdit"

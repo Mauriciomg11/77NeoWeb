@@ -126,12 +126,12 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-    <h1>
-        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" /></h1>
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatosPpal" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+            <br />
             <div runat="server" class="table-responsive">
                 <asp:Label ID="LblOt" runat="server" CssClass="LblEtiquet" Text="O.T.:" />
                 <asp:TextBox ID="TxtOt" runat="server" CssClass="Form-control-sm heightCampo" Width="10%" step="0.01" Enabled="false" Visible="false" />

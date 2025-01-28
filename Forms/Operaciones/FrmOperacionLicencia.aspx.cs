@@ -50,7 +50,7 @@ namespace _77NeoWeb.Forms.Operaciones
             ViewState["VblEliMS"] = 1;
             ViewState["VblImpMS"] = 1;
             ClsPermisos ClsP = new ClsPermisos();
-            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            string VbPC = Cnx.GetIpPubl();
             ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx", VbPC);
             if (ClsP.GetAccesoFrm() == 0)
             { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }

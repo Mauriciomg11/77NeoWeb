@@ -3,8 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Pantalla</title> 
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="TituloPagina" runat="server">
-    
+<asp:Content ID="Content2" ContentPlaceHolderID="TituloPagina" runat="server">    
         <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="CuerpoPagina"  runat="server">

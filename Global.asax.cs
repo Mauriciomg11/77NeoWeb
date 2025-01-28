@@ -25,8 +25,11 @@ namespace _77NeoWeb
 
         protected void Session_Start(object sender, EventArgs e)
         {
+            /*
+             10.2.05.21-4| 28/01/2025| implementacion Menu
+            */
             Session["77Version"] = "10.2.05.21";
-            Session["77Act"] = "4";
+            Session["77Act"] = "5";
             Session["$VR"] = "";
             Session["Nit77Cia"] = ""; // Nita cia 811035879-1
             Session["VblCE1MS"] = 1;

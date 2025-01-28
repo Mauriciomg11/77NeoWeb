@@ -44,14 +44,14 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 BindData(TxtBusqueda.Text, "UPD");
             }
         }
-        void ModSeguridad()
+        protected void ModSeguridad()
         {
             ViewState["VblIngMS"] = 1;
             ViewState["VblModMS"] = 1;
             ViewState["VblEliMS"] = 1;
             ViewState["VblImpMS"] = 1;
             ClsPermisos ClsP = new ClsPermisos();
-            string VbPC = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName;
+            string VbPC = Cnx.GetIpPubl();
             ClsP.Acceder(Session["C77U"].ToString(), "FrmTipoAeronave.aspx", VbPC);
             if (ClsP.GetAccesoFrm() == 0)
             {
