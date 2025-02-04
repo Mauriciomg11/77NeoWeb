@@ -26,7 +26,8 @@ namespace _77NeoWeb
         protected void Session_Start(object sender, EventArgs e)
         {
             /*
-             10.2.05.21-4| 28/01/2025| implementacion Menu
+            10.2.05.21-4| 28/01/2025| implementacion Menu
+            10.2.05.21-5| 04/02/2025| corrección formularios Incoming y Movimientos Almacen, no se visualizaba el detalle
             */
             Session["77Version"] = "10.2.05.21";
             Session["77Act"] = "5";

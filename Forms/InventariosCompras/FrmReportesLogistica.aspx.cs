@@ -41,6 +41,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             {
                 MlVw.ActiveViewIndex = 0;
                 TitForm.Text = "XXX";
+                ViewState["NS"] = "77NEO-77NEO";
                 string VbM = Convert.ToString(DateTime.UtcNow.Month);
                 string VbY = Convert.ToString(DateTime.UtcNow.Year);
                 string fecha = string.Format("{0}-{1}-{2}", VbY, VbM, "01");
@@ -272,6 +273,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     if (RdbNoSrlzdInv.Checked == true)
                     {
                         VbNomArchivo = VbNomArchivo + "_" + ViewState["NS"];
+                        string borr = ViewState["NS"].ToString().Trim().Substring(0, 6);
                         VbNomDT = DdlAlmacenInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + ViewState["NS"].ToString().Trim().Substring(0, 6);
                     }
                     else

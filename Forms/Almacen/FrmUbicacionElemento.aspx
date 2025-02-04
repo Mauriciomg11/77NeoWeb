@@ -39,8 +39,9 @@
         }
 
         .ScrollDivGrid {
-            vertical-align: top;
-            overflow: auto;
+            /*vertical-align: top;
+            overflow: auto;*/
+            position: relative;
             width: 100%;
             height: 70%;
         }
@@ -201,9 +202,10 @@
                             </div>
                         </div>
                     </div>
+
                 </asp:View>
                 <asp:View ID="Vw1CambioBod" runat="server">
-                     <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitCambioBod" runat="server" Text="Traslado de Bodega" />
                     </h6>
@@ -289,7 +291,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2CamLote" runat="server">
-                     <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitCambLote" runat="server" Text="Cambio de lote" />
                     </h6>

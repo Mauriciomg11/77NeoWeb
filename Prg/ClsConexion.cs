@@ -132,7 +132,7 @@ namespace _77NeoWeb.prg
             {
                 return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, @"77NEO01", "DbConfigWeb", "sa", "admindemp");
                 /*string Vb1S = "23.102.100.143";//@"aircraft\SQLEXPRESS";
-                return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, Vb1S, "DbConfigWeb", "sa", "Medellin2021**");*/
+                return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");*/
             }
             else
             {

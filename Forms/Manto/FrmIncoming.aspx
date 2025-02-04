@@ -38,8 +38,9 @@
         }
 
         .ScrollDivGrid {
+             position: relative;
             vertical-align: top;
-            overflow: auto;
+            /*overflow: auto;*/
             width: 100%;
             height: 70%;
         }
