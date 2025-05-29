@@ -25,7 +25,15 @@ namespace _77NeoWeb
             LblCia.Text = Session["SigCia"].ToString() + " - " + Session["N77U"].ToString();
             IdiomaControles();
             LoadMenu();
-
+            if (Session["77IDM"].ToString() == "4")
+            {
+                LkbMenu.Text = "Menú";
+                LkbCambPass.Text = "Cambio Contraseña...";
+            }
+            else {
+                LkbMenu.Text = "Menu";
+                LkbCambPass.Text = "Change Password";
+            }
         }
         protected void IdiomaControles()
         {
@@ -50,7 +58,7 @@ namespace _77NeoWeb
                     if (b1.Trim().Equals("IbnRegresarToolTip") || b1.Trim().Equals("IbnRegresarOnClick"))
                     {
                         Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());
-                       // IbnRegresar.ToolTip = b2.Trim();
+                        // IbnRegresar.ToolTip = b2.Trim();
                     }
                 }
                 DataRow[] Result = Idioma.Select("Objeto= 'IbnRegresarOnClick'");
@@ -80,9 +88,11 @@ namespace _77NeoWeb
             using (SqlConnection conn = new SqlConnection(Cnx.GetConex()))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("EXEC SP_Menu @Us,@ICC", conn);
+                SqlCommand cmd = new SqlCommand("EXEC SP_Menu @Us,@ICC,@Id", conn);
                 cmd.Parameters.AddWithValue("@Us", Session["C77U"]);
                 cmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                cmd.Parameters.AddWithValue("@Id", Session["77IDM"]);
+               
                 SqlDataReader reader = cmd.ExecuteReader();
                 DataTable menuTable = new DataTable();
                 menuTable.Load(reader);

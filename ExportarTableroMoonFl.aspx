@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmIngCostoOT.aspx.cs" Inherits="_77NeoWeb.Forms.Ingenieria.FrmIngCostoOT" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="ExportarTableroMoonFl.aspx.cs" Inherits="_77NeoWeb.ExportarTableroMoonFl" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
@@ -35,15 +35,19 @@
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
             <div class="CentrarContenedor DivMarco">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <asp:RadioButton ID="RdbHK" runat="server" CssClass="LblEtiquet" Text="1 Aeronaves" GroupName="BusqSP" />&nbsp&nbsp&nbsp
+                <asp:RadioButton ID="RdbCompContr" runat="server" CssClass="LblEtiquet" Text="2 Componentes_Controlados" GroupName="BusqSP" />&nbsp&nbsp&nbsp
+                 <asp:RadioButton ID="RdbOTHH" runat="server" CssClass="LblEtiquet" Text="3 OT_HH" GroupName="BusqSP" />&nbsp&nbsp&nbsp
+                 <asp:RadioButton ID="RdbOTRecur" runat="server" CssClass="LblEtiquet" Text="4 OT_Recurso" GroupName="BusqSP" />&nbsp&nbsp&nbsp
+                 <asp:RadioButton ID="RdbRpte" runat="server" CssClass="LblEtiquet" Text="5 Reportes" GroupName="BusqSP" />&nbsp&nbsp&nbsp
+                 <asp:RadioButton ID="RdbStatus" runat="server" CssClass="LblEtiquet" Text="6 Status_Report" GroupName="BusqSP" />&nbsp&nbsp&nbsp
+                 <asp:RadioButton ID="RdbInventario" runat="server" CssClass="LblEtiquet" Text="7 Inventario" GroupName="BusqSP" />&nbsp&nbsp&nbsp
                 <div class="row">
-                    <div class="col-sm-5">
-                        <asp:Label ID="LblFechI" runat="server" CssClass="LblEtiquet" Text="fecha Inicial" />
-                        <asp:TextBox ID="TxtFechI" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
-                    </div>
-                    <div class="col-sm-5">
-                        <asp:Label ID="LblFechF" runat="server" CssClass="LblEtiquet" Text="fecha Final" />
-                        <asp:TextBox ID="TxtFechF" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
-                    </div>
                     <div class="col-sm-0">
                         <asp:ImageButton ID="IbnExcel" runat="server" ToolTip="exportar consolidado" CssClass=" BtnExpExcel" Height="50px" Width="50px" ImageUrl="~/images/ExcelV1.png" OnClick="IbnExcel_Click" />
                     </div>

@@ -2,26 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
-        .CentrarContenedor {
-            /*vertical-align: top;*/
-            /*background: #e0e0e0;*/
-            /*margin: 0 0 1rem;*/
-            position: absolute;
-            /*nos posicionamos en el centro del navegador*/
-            /*top: 50%;*/
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 34%;
-            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
-            margin-left: -17%;
-            /*determinamos una altura*/
-            height: 50%;
-            /*indicamos que el margen superior, es la mitad de la altura*/
-            /*border: 1px solid #808080;*/
-            padding: 5px;
-            top:150px
-        }
-
         .heightCampo {
             height: 25px;
             width: 95%;

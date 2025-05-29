@@ -8,19 +8,6 @@
             font-size: 12px;
         }
 
-        .CentrarContenedor {
-            position: absolute;
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 98%;
-            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
-            margin-left: -49%;
-            /*determinamos una altura*/
-            height: 90%;
-            /*indicamos que el margen superior, es la mitad de la altura*/
-            padding: 5px;
-        }
-
         .CentrarBusq {
             position: absolute;
             left: 50%;

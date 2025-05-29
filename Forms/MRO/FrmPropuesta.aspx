@@ -9,19 +9,6 @@
             font-size: 12px;
         }
 
-        .CentrarContenedor {
-            position: absolute;
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 98%;
-            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
-            margin-left: -49%;
-            /*determinamos una altura*/
-            height: 90%;
-            /*indicamos que el margen superior, es la mitad de la altura*/
-            padding: 5px;
-        }
-
         .CentrarContndSn {
             position: absolute;
             /*nos posicionamos en el centro del navegador*/
@@ -66,14 +53,7 @@
             width: 100%;
             height: 190px;
         }
-
-        .ScrollDet2 {
-            vertical-align: top;
-            overflow: auto;
-            width: 100%;
-            height: 90%;
-        }
-
+       
         .Font_btnAlert {
             font-size: 11px;
             font-stretch: semi-condensed;
@@ -147,6 +127,13 @@
             $('[id *=DdlAeronavePP]').chosen();
             $('[id *=DdlPNRFPP]').chosen();
         }
+        function ShowPopup() {
+            $('#ModalBusqPN').modal('show');
+            $('#ModalBusqPN').on('shown.bs.modal', function () {
+                document.getElementById('<%= TxtModalBusq.ClientID %>').focus();
+                document.getElementById('<%= TxtModalBusq.ClientID %>').select();
+            });
+         }
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
@@ -190,7 +177,7 @@
                         <asp:Label ID="LblTitModalBusqPN" runat="server" Text="P/N" /></h4>
                 </div>
                 <div class="modal-body">
-                    <table class="TablaBusqueda">
+                    <table >
                         <tr>
                             <td colspan="3">
                                 <asp:RadioButton ID="RdbMOdalBusqPN" runat="server" CssClass="LblEtiquet" Text="&nbsp P/N" GroupName="BusqPn" />&nbsp&nbsp&nbsp
@@ -1113,7 +1100,7 @@
         <asp:View ID="Vw4Det2Elem_HK" runat="server">
             <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <br />
+                    <br /><br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitTrabajos" runat="server" Text="propuesta Nro:" /></h6>
                     <div class="CentrarContndSn DivMarco">

@@ -4,20 +4,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Work Sheet</title>
     <style type="text/css">
-        .CentrarContenedor {
-            position: absolute;
-            /*nos posicionamos en el centro del navegador*/
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 98%;
-            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
-            margin-left: -49%;
-            /*determinamos una altura*/
-            height: 90%;
-            /*indicamos que el margen superior, es la mitad de la altura*/
-            padding: 5px;
-        }
-
         .heightCampo {
             height: 25px;
             width: 95%;

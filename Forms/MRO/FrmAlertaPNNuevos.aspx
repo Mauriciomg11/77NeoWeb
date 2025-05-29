@@ -23,18 +23,6 @@
             width: 14%;
             height: 27px;
         }
-
-        .CentrarContenedor {
-            position: absolute;
-            left: 50%;
-            width: 98%;
-            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
-            margin-left: -49%;
-            /*determinamos una altura*/
-            height: 90%;
-            /*indicamos que el margen superior, es la mitad de la altura*/
-            padding: 5px;
-        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">

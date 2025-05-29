@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
+namespace _77NeoWeb
 {
 
 
-    public partial class FrmPlantillaMaestra
+    public partial class ExportarTableroMoonFl
     {
 
         /// <summary>
@@ -24,93 +24,102 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         protected global::System.Web.UI.WebControls.Label TitForm;
 
         /// <summary>
-        /// Control UpPn2.
+        /// Control UplDatos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpPn2;
+        protected global::System.Web.UI.UpdatePanel UplDatos;
 
         /// <summary>
-        /// Control LblFlota.
+        /// Control RdbHK.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblFlota;
+        protected global::System.Web.UI.WebControls.RadioButton RdbHK;
 
         /// <summary>
-        /// Control DdlFlota.
+        /// Control RdbCompContr.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DdlFlota;
+        protected global::System.Web.UI.WebControls.RadioButton RdbCompContr;
 
         /// <summary>
-        /// Control IbtExpExcel.
+        /// Control RdbOTHH.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton IbtExpExcel;
+        protected global::System.Web.UI.WebControls.RadioButton RdbOTHH;
 
         /// <summary>
-        /// Control LblNumMot.
+        /// Control RdbOTRecur.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblNumMot;
+        protected global::System.Web.UI.WebControls.RadioButton RdbOTRecur;
 
         /// <summary>
-        /// Control LstCapitulo.
+        /// Control RdbRpte.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox LstCapitulo;
+        protected global::System.Web.UI.WebControls.RadioButton RdbRpte;
 
         /// <summary>
-        /// Control GrdDatos.
+        /// Control RdbStatus.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GrdDatos;
+        protected global::System.Web.UI.WebControls.RadioButton RdbStatus;
 
         /// <summary>
-        /// Control GrdUltNvl.
+        /// Control RdbInventario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GrdUltNvl;
+        protected global::System.Web.UI.WebControls.RadioButton RdbInventario;
 
         /// <summary>
-        /// Control GrdPn.
+        /// Control IbnExcel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GrdPn;
+        protected global::System.Web.UI.WebControls.ImageButton IbnExcel;
 
         /// <summary>
-        /// Control GrdPosicion.
+        /// Control LblOT.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GrdPosicion;
+        protected global::System.Web.UI.WebControls.Label LblOT;
+
+        /// <summary>
+        /// Control TxtOT.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtOT;
     }
 }

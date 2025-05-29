@@ -138,13 +138,12 @@
             </div>
         </div>
     </div>
-
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
                     <div class="CentrarCntndr">
-                        <div class="row">
+                        <div id="Almacen" class="row">
                             <div class="col-sm-3">
                                 <asp:Label ID="LblAlmacen" runat="server" CssClass="LblEtiquet" Text="almacen" />
                                 <asp:DropDownList ID="DdlAlmacen" runat="server" CssClass="heightCampo" Width="100%" />
@@ -272,7 +271,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
-                    <br />
+                    <br /><br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsigFis" runat="server" Text="Asignar elemento a la reserva" />
                     </h6>
@@ -284,6 +283,7 @@
                     <div class="CentrarCntndr">
                         <div class="col-sm-8 Interna">
                             <div class="ScrollRsva pre-scrollable">
+                                 <br /> <br /> <br /> <br /> <br />
                                 <div class="col-sm-3">
                                     <asp:Button ID="BtnAsignr" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnAsignr_Click" OnClientClick="target ='';" Text="asignar" />
                                 </div>
@@ -367,7 +367,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2Entrega" runat="server">
-                    <br />
+                    <br /> <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitVisualizaGuarda" runat="server" Text="Visualizar los elementos de entrega" />
                     </h6>
@@ -379,6 +379,7 @@
                     <div class="CentrarCntndr">
                         <div class="col-sm-8 Interna">
                             <div class="ScrollRsva pre-scrollable">
+                                 <br /> <br /> <br /> <br />
                                 <div class="col-sm-3">
                                     <asp:Button ID="BtnGuardar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnGuardar_Click" OnClientClick="target ='';" Text="guardar" />
                                 </div>

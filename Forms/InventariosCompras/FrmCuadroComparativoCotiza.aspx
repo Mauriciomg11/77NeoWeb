@@ -8,23 +8,6 @@
             font-size: 12px;
         }
 
-        .CentrarContNumCotiza {
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 98%;
-            margin-left: 1%;
-            height: 8%;
-        }
-
-        .CentrarContenedor {
-            position: absolute;
-            left: 50%;
-            width: 98%;
-            margin-left: -49%;
-            height: 90%;
-            padding: 5px;
-        }
-
         .Font_btnCrud {
             font-size: 12px;
             font-stretch: condensed;
@@ -58,23 +41,24 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-            <br /><br />
-            <div class="CentrarContNumCotiza DivMarco">
+            <br />
+            <br />
+            <div class="CentrarContenedor DivMarco">
                 <div id="Botones" class="row">
                     <div class="col-sm-8">
                         <table class="">
                             <tr>
                                 <td>
                                     <asp:RadioButton ID="RdbBusqSP" runat="server" CssClass="LblEtiquet" Text="&nbsp pedido" GroupName="Busq" />&nbsp&nbsp&nbsp
-                                <asp:RadioButton ID="RdbBusqCot" runat="server" CssClass="LblEtiquet" Text="&nbsp cotización" GroupName="Busq" />&nbsp&nbsp&nbsp                               
-                                <asp:RadioButton ID="RdbBusqPet" runat="server" CssClass="LblEtiquet" Text="&nbsp peticion" GroupName="Busq" />&nbsp&nbsp&nbsp
-                                <asp:RadioButton ID="RdbBusqPPT" runat="server" CssClass="LblEtiquet" Text="&nbsp propusta" GroupName="Busq" />&nbsp&nbsp&nbsp
-                                <asp:RadioButton ID="RdbBusqPN" runat="server" CssClass="LblEtiquet" Text="&nbsp P/N" GroupName="Busq" /></td>
+                                    <asp:RadioButton ID="RdbBusqCot" runat="server" CssClass="LblEtiquet" Text="&nbsp cotización" GroupName="Busq" />&nbsp&nbsp&nbsp                               
+                                    <asp:RadioButton ID="RdbBusqPet" runat="server" CssClass="LblEtiquet" Text="&nbsp peticion" GroupName="Busq" />&nbsp&nbsp&nbsp
+                                    <asp:RadioButton ID="RdbBusqPPT" runat="server" CssClass="LblEtiquet" Text="&nbsp propusta" GroupName="Busq" />&nbsp&nbsp&nbsp
+                                    <asp:RadioButton ID="RdbBusqPN" runat="server" CssClass="LblEtiquet" Text="&nbsp P/N" GroupName="Busq" /></td>
                                 <td>
                                     <asp:TextBox ID="TxtBusqPN" runat="server" Width="200px" Height="28px" CssClass=" heightCampo" placeholder="P/N" />
                                     <asp:TextBox ID="TxtBusqueda" runat="server" Width="170px" Height="28px" CssClass=" heightCampo" placeholder="Ingrese el dato a consultar" />
@@ -93,7 +77,8 @@
                     </div>
                 </div>
             </div>
-            <div class="ScrollDet2">
+
+            <div class="CentrarContenedor ScrollDet2">
                 <table>
                     <tr>
                         <td>

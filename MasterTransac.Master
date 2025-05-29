@@ -9,10 +9,10 @@
     <link href="Css/CssBotones.css" rel="stylesheet" type="text/css" />
     <link href="Css/GridViewDiseño.css" rel="stylesheet" type="text/css" />
     <link href="Css/CssPagTrans.css" rel="stylesheet" />
-    <link href="Css/CssConsultar.css" rel="stylesheet" />
-    <link href="Css/DisenoFrm.css" rel="stylesheet" />
+    <link href="Css/CssConsultar.css" rel="stylesheet" />   
     <link href="Css/bootstrap.min.css" rel="stylesheet" />
     <link href="Css/CssSystem/MenuInicio.css" rel="stylesheet" />
+    <link href="Css/CssDisenoFrm.css" rel="stylesheet" />
     <%--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" /> --%>
    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet" />

@@ -3,19 +3,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>HC</title>
     <style type="text/css">
-           .CentrarContenedor {
-            position: absolute;
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 98%;
-            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
-            margin-left: -49%;
-            /*determinamos una altura*/
-            height: 90%;
-            /*indicamos que el margen superior, es la mitad de la altura*/
-            padding: 5px;
-            top:150px
-        }
         .AnchoGrid {
             width: 95%;
         }

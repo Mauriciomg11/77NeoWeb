@@ -14,15 +14,6 @@
             font-stretch: condensed;
         }
 
-        .CentrarContenedor {
-            position: absolute;
-            left: 50%;
-            width: 97%;
-            margin-left: -49%;
-            height: 78%;
-            padding: 5px;
-        }
-
         .CentrarBotonesRepa {
             left: 50%;
             /*determinamos una anchura*/

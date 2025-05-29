@@ -3,22 +3,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>TA</title>
     <style type="text/css">
-        .CentrarContenedor {
-            position: absolute;
-            /*nos posicionamos en el centro del navegador*/
-            /*top: 50%;*/
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 90%;
-            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
-            margin-left: -45%;
-            /*determinamos una altura*/
-            height: 85%;
-            /*indicamos que el margen superior, es la mitad de la altura*/
-            padding: 5px;
-            top: 200px
-        }
-
         .CentrarGrid {
             position: absolute;
             /*nos posicionamos en el centro del navegador*/

@@ -73,11 +73,11 @@
 }
 
 .DivGridCamRef {
-    position: absolute;
-    OVERFLOW: auto;
+    /*position: relative;*/
+    /*OVERFLOW: auto;*/
     width: 98%;
     height: 73%;
-    top: 27%;
+    top: 30%;
     left: 1%;
-    margin-top: 0px;
+    /*margin-top: 0px;*/
 }

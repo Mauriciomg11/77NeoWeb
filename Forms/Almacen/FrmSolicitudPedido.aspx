@@ -8,29 +8,9 @@
             font-size: 12px;
         }
 
-        .CentrarContenedor {
-            position: relative;
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 98%;
-            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
-            margin-left: -49%;
-            /*determinamos una altura*/
-            height: 90%;
-            /*indicamos que el margen superior, es la mitad de la altura*/
-            padding: 5px;
-        }
-
         .Font_btnCrud {
             font-size: 12px;
             font-stretch: condensed;
-        }
-
-        .ScrollDet2 {
-            vertical-align: top;
-            overflow: auto;
-            width: 100%;
-            height: 90%;
         }
 
         .CentrarBusq {
@@ -91,14 +71,14 @@
         function ShowPopup() {
             $('#ModalBusqPN').modal('show');
             $('#ModalBusqPN').on('shown.bs.modal', function () {
-                   document.getElementById('<%= TxtModalBusq.ClientID %>').focus();
-                    document.getElementById('<%= TxtModalBusq.ClientID %>').select();<%-- --%>
+                document.getElementById('<%= TxtModalBusq.ClientID %>').focus();
+                document.getElementById('<%= TxtModalBusq.ClientID %>').select();<%-- --%>
             });
         }
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-  <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <div id="ModalBusqPN" class="modal fade" tabindex="-1" role="dialog">

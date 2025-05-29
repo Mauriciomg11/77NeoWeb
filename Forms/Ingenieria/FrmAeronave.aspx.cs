@@ -402,7 +402,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlPropie.DataValueField = "CodTercero";
             DdlPropie.DataBind();
 
-            DataRow[] Result = DSTDet.Tables[1].Select("CodAeronave = " + DdlBusqHK.Text.Trim());
+            DataRow[] Result = DSTDet.Tables["Consult"].Select("CodAeronave = " + DdlBusqHK.Text.Trim());
             foreach (DataRow SDR in Result)
             {               
                 TxtCodHk.Text = SDR["CodAeronave"].ToString();

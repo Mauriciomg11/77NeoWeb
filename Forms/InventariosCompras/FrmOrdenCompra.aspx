@@ -9,33 +9,9 @@
             font-size: 12px;
         }
 
-        .CentrarContNumCotiza {
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 98%;
-            margin-left: 1%;
-            height: 8%;
-        }
-
-        .CentrarContenedor {
-            position: absolute;
-            left: 50%;
-            width: 98%;
-            margin-left: -49%;
-            height: 90%;
-            padding: 5px;
-        }
-
         .Font_btnCrud {
             font-size: 12px;
             font-stretch: condensed;
-        }
-
-        .ScrollDet2 {
-            vertical-align: top;
-            overflow: auto;
-            width: 100%;
-            height: 90%;
         }
 
         .CentrarBusq {
@@ -118,7 +94,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <div id="ModalBusqCompraCotiza" class="modal fade" tabindex="-1" role="dialog">
@@ -282,8 +258,9 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
-                    <br /><br />
-                    <div class="CentrarContNumCotiza DivMarco">
+                    <br />
+                    <br />
+                    <div class="CentrarContenedor DivMarco">
                         <div class="row">
                             <div class="col-sm-2">
                                 <asp:Label ID="LblNumCompra" runat="server" CssClass="LblEtiquet" Text="compra Nro.:" />
@@ -303,6 +280,8 @@
                             </div>
                         </div>
                     </div>
+                    <br />
+                    <br />
                     <div class="CentrarContenedor DivMarco">
                         <div id="Botones" class="row">
                             <div class="col-sm-4">
@@ -536,7 +515,8 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Imprimir" runat="server">
-                    <br /><br />
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitImpresion" runat="server" Text="Impresión" />
                     </h6>
@@ -545,7 +525,8 @@
                     <RpVw:ReportViewer ID="RpVwAll" runat="server" Width="98%" />
                 </asp:View>
                 <asp:View ID="Vw2Exportar" runat="server">
-                    <br /><br />
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitExport" runat="server" Text="Exportar" />
                     </h6>
@@ -559,7 +540,8 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw3Asentar" runat="server">
-                    <br /><br />
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsentar" runat="server" Text="Aprobar / Asentar Compra" />
                     </h6>
@@ -576,8 +558,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-1">
-                                        <asp:ImageButton ID="IbtAprobar" runat="server" ToolTip="aprobación" Width="60px" Height ="60px" ImageUrl="~/images/UnCheck.png" OnClick="IbtAprobar_Click" />
-                                        <asp:ImageButton ID="IbtDesAprobar" runat="server" ToolTip="desaprobación"  Width="60px" Height ="60px" ImageUrl="~/images/Check1.png" OnClick="IbtDesAprobar_Click" />
+                                        <asp:ImageButton ID="IbtAprobar" runat="server" ToolTip="aprobación" Width="60px" Height="60px" ImageUrl="~/images/UnCheck.png" OnClick="IbtAprobar_Click" />
+                                        <asp:ImageButton ID="IbtDesAprobar" runat="server" ToolTip="desaprobación" Width="60px" Height="60px" ImageUrl="~/images/Check1.png" OnClick="IbtDesAprobar_Click" />
                                     </div>
                                 </div>
                             </div>
@@ -591,8 +573,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-1">
-                                        <asp:ImageButton ID="IbtAsentar" runat="server" ToolTip="asentar" Width="60px" Height ="60px" ImageUrl="~/images/UnCheck.png" OnClick="IbtAsentar_Click" />
-                                        <asp:ImageButton ID="IbtDesasentar" runat="server" ToolTip="desasentar" Width="60px" Height ="60px" ImageUrl="~/images/Check1.png" OnClick="IbtDesasentar_Click" />
+                                        <asp:ImageButton ID="IbtAsentar" runat="server" ToolTip="asentar" Width="60px" Height="60px" ImageUrl="~/images/UnCheck.png" OnClick="IbtAsentar_Click" />
+                                        <asp:ImageButton ID="IbtDesasentar" runat="server" ToolTip="desasentar" Width="60px" Height="60px" ImageUrl="~/images/Check1.png" OnClick="IbtDesasentar_Click" />
                                     </div>
                                 </div>
                             </div>

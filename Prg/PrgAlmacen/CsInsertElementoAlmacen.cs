@@ -36,9 +36,21 @@ namespace _77NeoWeb.Prg.PrgAlmacen
         public string Posicion { get; set; }
         public int CodAeronave { get; set; }
         public string Matricula { get; set; }
+        public string DiaTasa { get; set; }
+        public string MesTasa { get; set; }
+        public string AnoTasa { get; set; }
+        public double VlorTasaDM { get; set; }
+        public string CodTipoMoneda { get; set; }
+        public string DocumentoNro { get; set; }
+        public int PosicionDocumento { get; set; }
+        public double Cant_Compra { get; set; }
+        public double Valor_Compra { get; set; }
+        public string UndMed_Compra { get; set; }
+        public string FacturaNro { get; set; }
+        public string NumSolPed { get; set; }
         public string CCosto { get; set; }
         public int AfectaInventario { get; set; }
-        public int CostoImportacion { get; set; }
+        public double CostoImportacion { get; set; }
         public string CodTercero { get; set; }
         public int Consignacion { get; set; }
         public int CodIdUbicacion { get; set; }
@@ -75,9 +87,21 @@ namespace _77NeoWeb.Prg.PrgAlmacen
             TblDetalle.Columns.Add("Posicion", typeof(string));
             TblDetalle.Columns.Add("CodAeronave", typeof(int));
             TblDetalle.Columns.Add("Matricula", typeof(string));
+            TblDetalle.Columns.Add("DiaTasa", typeof(string));
+            TblDetalle.Columns.Add("MesTasa", typeof(string));
+            TblDetalle.Columns.Add("AnoTasa", typeof(string));
+            TblDetalle.Columns.Add("VlorTasaDM", typeof(double));
+            TblDetalle.Columns.Add("CodTipoMoneda", typeof(string));
+            TblDetalle.Columns.Add("DocumentoNro", typeof(string));
+            TblDetalle.Columns.Add("PosicionDocumento", typeof(int));
+            TblDetalle.Columns.Add("Cant_Compra", typeof(double));
+            TblDetalle.Columns.Add("Valor_Compra", typeof(double));
+            TblDetalle.Columns.Add("UndMed_Compra", typeof(string));
+            TblDetalle.Columns.Add("FacturaNro", typeof(string));
+            TblDetalle.Columns.Add("NumSolPed", typeof(string));
             TblDetalle.Columns.Add("CCosto", typeof(string));
             TblDetalle.Columns.Add("AfectaInventario", typeof(int));
-            TblDetalle.Columns.Add("CostoImportacion", typeof(int));
+            TblDetalle.Columns.Add("CostoImportacion", typeof(double));
             TblDetalle.Columns.Add("CodTercero", typeof(string));
             TblDetalle.Columns.Add("Consignacion", typeof(int));
             TblDetalle.Columns.Add("CodIdUbicacion", typeof(int));
@@ -112,6 +136,18 @@ namespace _77NeoWeb.Prg.PrgAlmacen
                     Campo.Posicion,
                     Campo.CodAeronave,
                     Campo.Matricula,
+                    Campo.DiaTasa,
+                    Campo.MesTasa,
+                    Campo.AnoTasa,
+                    Campo.VlorTasaDM,
+                    Campo.CodTipoMoneda,
+                    Campo.DocumentoNro,
+                    Campo.PosicionDocumento,
+                    Campo.Cant_Compra,
+                    Campo.Valor_Compra,
+                    Campo.UndMed_Compra,
+                    Campo.FacturaNro,
+                    Campo.NumSolPed,
                     Campo.CCosto,
                     Campo.AfectaInventario,
                     Campo.CostoImportacion,
@@ -162,6 +198,8 @@ namespace _77NeoWeb.Prg.PrgAlmacen
                         catch (Exception Ex)
                         {
                             string VbUsu, VbPantalla, VbcatVer, VbcatAct;
+                            PMensj= Ex.Message;
+                            transaction.Rollback();
                             VbUsu = System.Web.HttpContext.Current.Session["C77U"].ToString();
                             VbPantalla = PFormOrign;
                             VbcatVer = System.Web.HttpContext.Current.Session["77Version"].ToString();

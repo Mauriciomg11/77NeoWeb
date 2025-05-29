@@ -16,27 +16,6 @@
             padding: 5px;
         }
 
-        .CentrarContenedor {
-            /*vertical-align: top;*/
-            /*background: #e0e0e0;*/
-            margin: 0 0 1rem;
-            position: absolute;
-            /*nos posicionamos en el centro del navegador*/
-            /*top: 50%;*/
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 60%;
-            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
-            margin-left: -30%;
-            /*determinamos una altura*/
-            height: 90%;
-            /*indicamos que el margen superior, es la mitad de la altura*/
-            /*margin-top: -150px;*/
-            /*border: 1px solid #808080;*/
-            padding: 5px;
-            top: 150px
-        }
-
         .heightCampo {
             height: 25px;
             width: 95%;

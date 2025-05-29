@@ -2,23 +2,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
-        .CentrarContenedor {
-            position: absolute;
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 98%;
-            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
-            margin-left: -49%;
-            /*determinamos una altura*/
-            height: 90%;
-            /*indicamos que el margen superior, es la mitad de la altura*/
-            padding: 5px;
-            top:150px
-        }
-
         .GridDivScroll {
-            vertical-align: top;
-            overflow: auto;
+             position: relative;
+            /*vertical-align: top;
+            overflow: auto;*/
             width: 100%;
             height: 95%;
         }
@@ -39,7 +26,7 @@
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
             <div class="CentrarContenedor DivMarco">
-                <table class="TablaBusqueda">
+                <table class="">
                     <tr>
                         <td>
                             <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>

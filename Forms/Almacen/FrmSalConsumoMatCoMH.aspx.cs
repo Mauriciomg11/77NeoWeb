@@ -323,8 +323,7 @@ namespace _77NeoWeb.Forms.Almacen
                 LblPNDescripcAsig.Text = VblPn + " | " + VblDescPN;
                 LblAsigCantSolV.Text = VbCantSol; LblAsigCantEntrgV.Text = VbCantEntr;
                 ViewState["CodIdDetalleRes"] = GrdDtllRsva.DataKeys[gvr.RowIndex].Values["CodIdDetalleRes"].ToString();
-                ViewState["PosRva"] = ((Label)row.FindControl("LblPos")).Text.ToString().Trim(); ;
-
+                ViewState["PosRva"] = ((Label)row.FindControl("LblPos")).Text.ToString().Trim(); 
                 BindUbicaciones(VblCodRef, VblPn, "UPD");
                 MultVw.ActiveViewIndex = 1;
                 BindCondicManipulac(VblCodRef);
@@ -532,7 +531,6 @@ namespace _77NeoWeb.Forms.Almacen
                     DSDetRva.Tables[2].AcceptChanges();
                 }
             }
-
             //Actualizar la cantidad a despachar en la vista de Detalle Reserva          
             int VblIdDetRes = Convert.ToInt32(ViewState["CodIdDetalleRes"]);
             foreach (DataRow row in DSDetRva.Tables[0].Rows)

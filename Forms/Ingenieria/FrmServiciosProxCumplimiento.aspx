@@ -2,21 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
-        .CentrarContenedor {
-            position: absolute;
-            /*nos posicionamos en el centro del navegador*/
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 98%;
-            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
-            margin-left: -49%;
-            /*determinamos una altura*/
-            height: 90%;
-            /*indicamos que el margen superior, es la mitad de la altura*/
-            padding: 5px;
-            top:150px
-        }
-
         .heightCampo {
             height: 25px;
             width: 95%;
@@ -60,6 +45,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
+                    <br /><br />
                     <div class="CentrarContenedor DivMarco">
                         <div class="row">
                             <div class="col-sm-2">

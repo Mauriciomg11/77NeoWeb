@@ -46,7 +46,7 @@
             vertical-align: top;
             overflow: auto;
             width: 80%;
-            height: 100px;
+            height: 80px;
         }
     </style>
 </asp:Content>
@@ -96,7 +96,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <div id="ModalCondManplc" class="modal fade" tabindex="-1" role="dialog">
@@ -255,203 +255,196 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Reintegro" runat="server">
-                     <br />
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsigFis" runat="server" Text="Asignar elemento a la reserva" />
                     </h6>
                     <asp:ImageButton ID="IbtCerrarAsing" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarAsing_Click" />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                     <div class="CentrarCntndr">
-                        <div class="col-sm-8 Interna">
-                            <div class="ScrollRsva pre-scrollable">
-                                <div class="col-sm-3">
-                                    <asp:Button ID="BtnAsignr" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnAsignr_Click" OnClientClick="target ='';" Text="asignar" />
-                                </div>
-                                <br />
-                                <asp:Label ID="LblPNDescripcAsig" runat="server" CssClass="LblEtiquet" Text="" />
-                                <asp:Label ID="LblAsigCantSol" runat="server" CssClass="LblEtiquet" Text="cantidad solic: " />
-                                <asp:Label ID="LblAsigCantSolV" runat="server" CssClass="LblEtiquet" Text="" />
-                                <asp:Label ID="LblAsigCantEntrg" runat="server" CssClass="LblEtiquet" Text=" | cantidad entre: " />
-                                <asp:Label ID="LblAsigCantEntrgV" runat="server" CssClass="LblEtiquet" Text="" />
-                                <asp:GridView ID="GrdUbicaFisc" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
-                                    DataKeyNames="CodElemento,CodUbicaBodega, CodTercero, CodReferencia, IdentificadorElemR, Activo, CodEstadoPn, CodIdAlmacen, Ccosto, IdPropuesta,
+                        <div class="ScrollRsva pre-scrollable">
+                            <br />
+                            <asp:Button ID="BtnAsignr" runat="server" CssClass="btn btn-success Font_btnCrud" Width="120px" OnClick="BtnAsignr_Click" OnClientClick="target ='';" Text="asignar" />
+                            <br />
+                            <asp:Label ID="LblPNDescripcAsig" runat="server" CssClass="LblEtiquet" Text="" />
+                            <asp:Label ID="LblAsigCantSol" runat="server" CssClass="LblEtiquet" Text="cantidad solic: " />
+                            <asp:Label ID="LblAsigCantSolV" runat="server" CssClass="LblEtiquet" Text="" />
+                            <asp:Label ID="LblAsigCantEntrg" runat="server" CssClass="LblEtiquet" Text=" | cantidad entre: " />
+                            <asp:Label ID="LblAsigCantEntrgV" runat="server" CssClass="LblEtiquet" Text="" />
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <asp:GridView ID="GrdUbicaFisc" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
+                                        DataKeyNames="CodElemento,CodUbicaBodega, CodTercero, CodReferencia, IdentificadorElemR, Activo, CodEstadoPn, CodIdAlmacen, Ccosto, IdPropuesta,
                                                     CodIdDocumento, CodUsuarioReserva,CodIdDetalleSalida"
-                                    CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" OnRowDataBound="GrdUbicaFisc_RowDataBound">
-                                    <Columns>
-                                        <asp:TemplateField HeaderText="estado P/N">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblEstado" Text='<%# Eval("EstadoPN") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="P/N">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblPn" Text='<%# Eval("PN") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="S/N">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblSn" Text='<%# Eval("SN") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="lote">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblLot" Text='<%# Eval("NumLote") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="modelo P/N">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblModelPN" Text='<%# Eval("NSN") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="almacen">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblNomAlma" Text='<%# Eval("NomAlmacen") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="bodega">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblBodg" Text='<%# Eval("CodBodega") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="fila" HeaderStyle-Width="8%">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblFila" Text='<%# Eval("Fila") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Columna" HeaderStyle-Width="8%">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblColumn" Text='<%# Eval("Columna") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="cant despachada">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblCantEntregada" Text='<%# Eval("Cantidad") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="cant reitegro">
-                                            <ItemTemplate>
-                                                <asp:TextBox ID="TxtCantDespa" Text='<%# Eval("CantDespchr") %>' runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="und medida">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblUndMed" Text='<%# Eval("CodUndMedR") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="nro doc">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblNumDoc" Text='<%# Eval("CodIdDocumento") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                    </Columns>
-                                    <HeaderStyle CssClass="GridCabecera" />
-                                    <RowStyle CssClass="GridRowStyle" />
-                                    <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                </asp:GridView>
+                                        CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" OnRowDataBound="GrdUbicaFisc_RowDataBound">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="estado P/N">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblEstado" Text='<%# Eval("EstadoPN") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="P/N">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblPn" Text='<%# Eval("PN") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="S/N">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblSn" Text='<%# Eval("SN") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="lote">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblLot" Text='<%# Eval("NumLote") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="modelo P/N">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblModelPN" Text='<%# Eval("NSN") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="almacen">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblNomAlma" Text='<%# Eval("NomAlmacen") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="bodega">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblBodg" Text='<%# Eval("CodBodega") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="fila" HeaderStyle-Width="8%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblFila" Text='<%# Eval("Fila") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Columna" HeaderStyle-Width="8%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblColumn" Text='<%# Eval("Columna") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="cant despachada">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblCantEntregada" Text='<%# Eval("Cantidad") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="cant reitegro">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="TxtCantDespa" Text='<%# Eval("CantDespchr") %>' runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="und medida">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblUndMed" Text='<%# Eval("CodUndMedR") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="nro doc">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblNumDoc" Text='<%# Eval("CodIdDocumento") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                        <HeaderStyle CssClass="GridCabecera" />
+                                        <RowStyle CssClass="GridRowStyle" />
+                                        <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                                    </asp:GridView>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2Entrega" runat="server">
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitVisualizaGuarda" runat="server" Text="Visualizar los elementos de entrega" />
                     </h6>
                     <asp:ImageButton ID="IbtCloseGuardar" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCloseGuardar_Click" />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                     <div class="CentrarCntndr">
-                        <div class="col-sm-8 Interna">
-                            <div class="ScrollRsva pre-scrollable">
-                                <div class="col-sm-3">
-                                    <asp:Button ID="BtnGuardar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnGuardar_Click" OnClientClick="target ='';" Text="guardar" />
-                                </div>
-                                <br />
-                                <asp:Label ID="LblNumRvaGuardar" runat="server" CssClass="LblEtiquet" Text="reserva: " />
-                                <asp:Label ID="LblNumRvaVlorGuardar" runat="server" CssClass="LblEtiquet" Text="" />
-                                <asp:GridView ID="GrdVisualizar" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="CodIdDetalleRes"
-                                    CssClass="GridControl DiseñoGrid table-sm" GridLines="Both">
-                                    <Columns>
-                                        <asp:TemplateField HeaderText="pos">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblPos" Text='<%# Eval("Pos") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="referencia">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblCodRef" Text='<%# Eval("CodReferencia") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="P/N">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblPn" Text='<%# Eval("PN") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="S/N">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblSn" Text='<%# Eval("SN") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="lote">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblLot" Text='<%# Eval("NumLote") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="modelo P/N">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblModelPN" Text='<%# Eval("NSN") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="almacen">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LLblNomAlma" Text='<%# Eval("NomAlma") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="bodega">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblBodg" Text='<%# Eval("CodBodega") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="fila" HeaderStyle-Width="8%">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblFila" Text='<%# Eval("Fila") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Columna" HeaderStyle-Width="8%">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblColumn" Text='<%# Eval("Columna") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="stock">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblStock" Text='<%# Eval("Cantidad") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="cant despacho">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblCantDespc" Text='<%# Eval("CantDespchr") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="und medida">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblUndMed" Text='<%# Eval("CodUndMedR") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="und medida">
-                                            <ItemTemplate>
-                                                <asp:Label ID="LblIdDoc" Text='<%# Eval("IdDoc") %>' runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                    </Columns>
-                                    <HeaderStyle CssClass="GridCabecera" />
-                                    <RowStyle CssClass="GridRowStyle" />
-                                    <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                </asp:GridView>
-                            </div>
+                        <div class="ScrollRsva pre-scrollable">
+                            <br />
+                            <asp:Button ID="BtnGuardar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="120px" OnClick="BtnGuardar_Click" OnClientClick="target ='';" Text="guardar" />
+                            <br />
+                            <asp:Label ID="LblNumRvaGuardar" runat="server" CssClass="LblEtiquet" Text="reserva: " />
+                            <asp:Label ID="LblNumRvaVlorGuardar" runat="server" CssClass="LblEtiquet" Text="" />
+                            <asp:GridView ID="GrdVisualizar" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="CodIdDetalleRes"
+                                CssClass="GridControl DiseñoGrid table-sm" GridLines="Both">
+                                <Columns>
+                                    <asp:TemplateField HeaderText="pos">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblPos" Text='<%# Eval("Pos") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="referencia">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblCodRef" Text='<%# Eval("CodReferencia") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="P/N">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblPn" Text='<%# Eval("PN") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="S/N">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblSn" Text='<%# Eval("SN") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="lote">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblLot" Text='<%# Eval("NumLote") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="modelo P/N">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblModelPN" Text='<%# Eval("NSN") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="almacen">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LLblNomAlma" Text='<%# Eval("NomAlma") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="bodega">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblBodg" Text='<%# Eval("CodBodega") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="fila" HeaderStyle-Width="8%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblFila" Text='<%# Eval("Fila") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Columna" HeaderStyle-Width="8%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblColumn" Text='<%# Eval("Columna") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="stock">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblStock" Text='<%# Eval("Cantidad") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="cant despacho">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblCantDespc" Text='<%# Eval("CantDespchr") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="und medida">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblUndMed" Text='<%# Eval("CodUndMedR") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="und medida">
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblIdDoc" Text='<%# Eval("IdDoc") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                                <HeaderStyle CssClass="GridCabecera" />
+                                <RowStyle CssClass="GridRowStyle" />
+                                <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                            </asp:GridView>
                         </div>
                     </div>
                 </asp:View>

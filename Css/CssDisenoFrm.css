@@ -1,0 +1,22 @@
+﻿
+.CentrarContenedor {
+    position: relative;
+    left: 50%;
+    width: 99%;
+    margin-left: -50%;
+    height: 90%;
+    padding: 5px;
+}
+.ScrollDet2 {
+    vertical-align: top;
+    overflow: auto;
+    width: 100%;
+    height: 90%;
+}
+.DivMarco {
+    /*background: #e0e0e0;*/
+    /*margin: 0 0 1rem;*/
+    /*border: 1px solid #808080;*/
+}
+
+

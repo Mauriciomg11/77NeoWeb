@@ -57,7 +57,7 @@ namespace _77NeoWeb
             Session["LogoPpal"] = "Logo77Neo.png";
             Session["77IDM"] = "ES";
             Session["!dC!@"] = 1; //id Cia
-            Session["MonLcl"] = ""; // Moneda
+            Session["MonLcl"] = "COP"; // Moneda
             Session["PCodOT"] = "0"; // Para llamar el numero desde la reparación
             Session["FormatFecha"] = "103"; // 103 formato europeo dd/MM/yyyy | 101 formato EEUU M/dd/yyyyy
 

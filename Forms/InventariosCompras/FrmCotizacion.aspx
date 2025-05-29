@@ -6,35 +6,11 @@
             height: 25px;
             width: 95%;
             font-size: 12px;
-        }
-
-        .CentrarContNumCotiza {
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 98%;
-            margin-left: 1%;
-            height: 8%;
-        }
-
-        .CentrarContenedor {
-            position: absolute;
-            left: 50%;
-            width: 98%;
-            margin-left: -49%;
-            height: 90%;
-            padding: 5px;
-        }
+        }         
 
         .Font_btnCrud {
             font-size: 12px;
             font-stretch: condensed;
-        }
-
-        .ScrollDet2 {
-            vertical-align: top;
-            overflow: auto;
-            width: 100%;
-            height: 90%;
         }
 
         .CentrarBusq {
@@ -128,7 +104,7 @@
                         <asp:Label ID="LblTitModalBusqPN" runat="server" Text="pedidos" /></h4>
                 </div>
                 <div class="modal-body">
-                    <table class="TablaBusqueda">
+                    <table>
                         <tr>
                             <td colspan="3">
                                 <asp:RadioButton ID="RdbMOdalBusqSP" runat="server" CssClass="LblEtiquet" Text="&nbsp pedido" GroupName="BusqSP" />&nbsp&nbsp&nbsp                               
@@ -210,7 +186,7 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
-                    <div class="CentrarContNumCotiza DivMarco">
+                    <div class="CentrarContenedor DivMarco">
                         <br />
                         <br />
                         <div class="row">
@@ -466,7 +442,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
-                    <br />
+                    <br /><br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOpcBusq" runat="server" Text="opciones de búsq." />
                     </h6>
@@ -490,6 +466,7 @@
                     </table>
                     <div class="CentrarBusq DivMarco">
                         <div class="CentrarGrid pre-scrollable">
+                            <br />
                             <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="IdCotizacion"
                                 CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowCommand="GrdBusq_RowCommand" OnRowDataBound="GrdBusq_RowDataBound">
                                 <Columns>

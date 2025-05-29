@@ -16,22 +16,6 @@
             padding: 5px;
         }
 
-        .CentrarContenedor {
-            position: absolute;
-            /*nos posicionamos en el centro del navegador*/
-            /*top: 50%;*/
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 90%;
-            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
-            margin-left: -45%;
-            /*determinamos una altura*/
-            height: 90%;
-            /*indicamos que el margen superior, es la mitad de la altura*/
-            padding: 5px;
-            top: 150px
-        }
-
         .CentrarBusq {
             position: absolute;
             left: 50%;

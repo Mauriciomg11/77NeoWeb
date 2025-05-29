@@ -3,28 +3,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Referencia</title>
     <style type="text/css">
-        .CentrarContenedor {
-            position: absolute;
-            left: 50%;
-            /*determinamos una anchura*/
-            width: 98%;
-            /*indicamos que el margen izquierdo, es la mitad de la anchura*/
-            margin-left: -49%;
-            /*determinamos una altura*/
-            height: 90%;
-            /*indicamos que el margen superior, es la mitad de la altura*/
-            padding: 5px;
-        }
-        /*.DivGrid {
-            position: absolute;
-            OVERFLOW: auto;
-            width: 98%;
-            height: 73%;
-            top: 24%;
-            left: 1%;
-            margin-top: 0px;
-        }*/
-
         .TablaCampos {
             position: absolute;
             text-align: left;
@@ -77,10 +55,10 @@
         }
 
         .DivUndCom {
-            position: absolute;
+            position: relative;
             width: 50%;
             height: 60%;
-            top: 20%;
+            top: 30%;
             left: 25%
         }
 
@@ -459,7 +437,7 @@
                     </div>
                 </asp:Panel>
                 <asp:Panel ID="PnlBusq" runat="server" Visible="false">
-                    <br />
+                    <br /><br />
 
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOpcBusq" runat="server" Text="Opciones de búsqueda" /></h6>
@@ -516,6 +494,7 @@
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsigUndMed" runat="server" Text="Asignar unidad de compra" /></h6>
                     <asp:ImageButton ID="IbtCerrarUMC" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarUMC_Click" ImageAlign="Right" />
+                     <br />  <br />
                     <div class=" DivUndCom DivContendorGrid">
                         <asp:Label ID="LblCambioPN" runat="server" CssClass="LblEtiquet" Font-Bold="true" Font-Size="16px"></asp:Label>
                         <asp:GridView ID="GrdCamUC" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdundPN"
@@ -610,7 +589,8 @@
                                 <asp:ImageButton ID="IbtCerrarCambRef" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarCambRef_Click" /></td>
                         </tr>
                     </table>
-                    <div class="DivGridCamRef DivContendorGrid">
+                     <br /><br />
+                    <div class="DivContendorGrid"><%--DivGridCamRef DivContendorGrid--%>
                         <asp:Label ID="LblRefCambRef" runat="server" CssClass="LblEtiquet" Font-Bold="true" Font-Size="24px"></asp:Label><br />
                         <asp:GridView ID="GrdCambioRef" runat="server" EmptyDataText="No existen registros ..!"
                             CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="6"

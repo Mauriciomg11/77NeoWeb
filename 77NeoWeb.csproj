@@ -149,11 +149,12 @@
     <Content Include="Css\CssConsultar.css" />
     <Content Include="Css\CssPagePpal.css" />
     <Content Include="Css\CssPagTrans.css" />
-    <Content Include="Css\DisenoFrm.css" />
+    <Content Include="Css\CssDisenoFrm.css" />
     <Content Include="Css\GridViewDiseño.css" />
     <Content Include="Css\CssCampos.css" />
     <Content Include="Css\CssSystem\MenuInicio.css" />
     <Content Include="Css\Site.css" />
+    <Content Include="ExportarTableroMoonFl.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Forms\Almacen\FrmAjuste.aspx" />
     <Content Include="Forms\Almacen\FrmAlertaSolicitudNueva.aspx" />
@@ -167,6 +168,7 @@
     <Content Include="Forms\Almacen\FrmSalConsumoMatCoMH.aspx" />
     <Content Include="Forms\Almacen\FrmSolicitudPedido.aspx" />
     <Content Include="Forms\Almacen\FrmUbicacionElemento.aspx" />
+    <Content Include="Forms\Comex\FrmComercioExterior.aspx" />
     <Content Include="Forms\Configuracion\ConfigManto\FrmCategoriaMel.aspx" />
     <Content Include="Forms\Configuracion\ConfigManto\FrmPrioridadManto.aspx" />
     <Content Include="Forms\Configuracion\ConfigManto\FrmTipoReporteManto.aspx" />
@@ -395,6 +397,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ExportarTableroMoonFl.aspx.cs">
+      <DependentUpon>ExportarTableroMoonFl.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExportarTableroMoonFl.aspx.designer.cs">
+      <DependentUpon>ExportarTableroMoonFl.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Almacen\FrmAjuste.aspx.cs">
       <DependentUpon>FrmAjuste.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -478,6 +487,13 @@
     </Compile>
     <Compile Include="Forms\Almacen\FrmUbicacionElemento.aspx.designer.cs">
       <DependentUpon>FrmUbicacionElemento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Comex\FrmComercioExterior.aspx.cs">
+      <DependentUpon>FrmComercioExterior.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Comex\FrmComercioExterior.aspx.designer.cs">
+      <DependentUpon>FrmComercioExterior.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Configuracion\ConfigManto\FrmCategoriaMel.aspx.cs">
       <DependentUpon>FrmCategoriaMel.aspx</DependentUpon>
