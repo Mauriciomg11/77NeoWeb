@@ -190,7 +190,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1SvcReset" runat="server">
-                     <br />
+                     <br /><br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitSvcReset" runat="server" Text="servicios reseteable sin cero en el histórico" />
                     </h6>
@@ -250,14 +250,14 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2UbicTec" runat="server">
-                     <br />
+                     <br /><br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitUbicTec" runat="server" Text="Ubicaciones Técnicas Sin Series Instaladas" />
                     </h6>
                     <asp:ImageButton ID="IbtCerrarUbicTec" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarUbicTec_Click" />
                     <div class="CentrarSvcReset DivMarco">
                         <br />
-                        <div class="CentrarGrid GridDivUbicTec">
+                        <div class="CentrarGrid pre-scrollable">
                             <asp:GridView ID="GrdUbicTec" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
                                 CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both">
                                 <Columns>
