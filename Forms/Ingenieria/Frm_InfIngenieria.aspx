@@ -46,9 +46,10 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:MultiView ID="MlVw" runat="server">
         <asp:View ID="Vw0Principal" runat="server">
+            <br /><br />
             <div class="CentrarContenedor DivMarco">
             <asp:UpdatePanel ID="UplRteIngPpl" runat="server" UpdateMode="Conditional">
-                <ContentTemplate>
+                <ContentTemplate>                    
                     <div class="wrp">
                         <div class="frm">
                             <div class="row">

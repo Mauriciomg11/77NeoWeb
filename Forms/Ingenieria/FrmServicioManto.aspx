@@ -8,7 +8,7 @@
         .CssTblPpal {
             position: absolute;
             width: 103%;
-            top:150px
+            top: 150px
         }
 
         .TablaCampos {
@@ -192,7 +192,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="TituloPagina" ContentPlaceHolderID="TituloPagina" runat="server">
-   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:MultiView ID="MultVw" runat="server">
@@ -234,7 +234,7 @@
                                     </table>
                                 </ContentTemplate>
                                 <Triggers>
-                                    <asp:AsyncPostBackTrigger ControlID="DdlBusq" EventName="TextChanged" />     
+                                    <asp:AsyncPostBackTrigger ControlID="DdlBusq" EventName="TextChanged" />
                                     <asp:PostBackTrigger ControlID="IbtFind" />
                                     <asp:PostBackTrigger ControlID="IbtPrint" />
                                     <asp:PostBackTrigger ControlID="IbtRecurso" />
@@ -328,14 +328,14 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td colspan="4">
+                                                <asp:Label ID="LblDoc" runat="server" CssClass="LblEtiquet" Text="Documento:" />
+                                                <asp:TextBox ID="TxtDoc" runat="server" CssClass=" form-control Campos" MaxLength="300" Enabled="false" /></td>
                                             <td>
-                                                <asp:Label ID="LblDoc" runat="server" CssClass="LblEtiquet" Text="Documento:" /></td>
-                                            <td>
-                                                <asp:TextBox ID="TxtDoc" runat="server" CssClass=" form-control Campos" MaxLength="60" Enabled="false" /></td>
-                                            <td>
-                                                <asp:Label ID="LblRefOT" runat="server" CssClass="LblEtiquet" Text="Refer. OT:" ToolTip="Referencia Orden de Trabajo" /></td>
-                                            <td colspan="3">
-                                                <asp:TextBox ID="TxtRefOT" runat="server" CssClass=" form-control Campos" MaxLength="200" Enabled="false" /></td>
+                                                <asp:Label ID="LblRefOT" runat="server" CssClass="LblEtiquet" Text="Refer. OT:" ToolTip="Referencia Orden de Trabajo" />
+                                                <asp:TextBox ID="TxtRefOT" runat="server" CssClass=" form-control Campos" MaxLength="60" Enabled="false" />
+                                            </td>
+                                            <td></td>
                                         </tr>
                                         <tr>
                                             <td width="7%">
@@ -847,7 +847,8 @@
                 </table>
             </asp:Panel>
             <asp:Panel ID="PnlBusq" runat="server" Visible="false">
-                 <br /> <br />
+                <br />
+                <br />
                 <h6 class="TextoSuperior">
                     <asp:Label ID="LbltitBusq" runat="server" CssClass="LblEtiquet" Text="Opciones de búsqueda" /></h6>
                 <asp:Table ID="TblBusqHK" runat="server" class="TablaBusqueda" Visible="false" Width="10%">
@@ -945,7 +946,8 @@
             <asp:Panel ID="PnlRecursos" runat="server" Visible="false">
                 <asp:UpdatePanel ID="UpPnlRF" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                         <br /> <br />
+                        <br />
+                        <br />
                         <h6 class="TextoSuperior">
                             <asp:Label ID="LblTitRecursoLice" runat="server" CssClass="LblEtiquet" Text="Recurso Físico y Licencias" /></h6>
                         <asp:ImageButton ID="IbtCerrarRec" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarRec_Click" ImageAlign="Right" />
@@ -1140,7 +1142,8 @@
             <asp:Panel ID="PnlInforme" runat="server" Visible="false">
                 <asp:UpdatePanel ID="UpPnlInforme" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                         <br /> <br />
+                        <br />
+                        <br />
                         <h6 class="TextoSuperior">
                             <asp:Label ID="TitInfSvc" runat="server" Text="Label" />
                         </h6>
@@ -1167,7 +1170,8 @@
             </asp:Panel>
         </asp:View>
         <asp:View ID="Vw1ConfigIniCntdrHk" runat="server">
-             <br /> <br />
+            <br />
+            <br />
             <h6 class="TextoSuperior">
                 <asp:Label ID="LblTitConfgIniCntd" runat="server" Text="configuracion inicial contador / frecuencia." />
             </h6>

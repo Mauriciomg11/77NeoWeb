@@ -41,6 +41,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
         <ContentTemplate>
+            <br /><br />
             <div class="CentrarContenedor DivMarco">
                 <div class="CentrarTable">
                     

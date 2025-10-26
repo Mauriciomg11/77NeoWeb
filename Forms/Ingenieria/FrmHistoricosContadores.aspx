@@ -56,6 +56,7 @@
         <asp:View ID="Vw0Principal" runat="server">
             <asp:UpdatePanel ID="UplPpl" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                    <br /><br />
                     <div class="CentrarContenedor DivMarco">
                         <div class="row">
                             <div class="col-sm-2 "></div>

@@ -99,14 +99,15 @@ namespace _77NeoWeb.Forms.Almacen
                 SC.Parameters.AddWithValue("@F4", "");
                 sqlCon.Open();
                 SqlDataReader tbl = SC.ExecuteReader();
+                Page.Title = "Consulta movimientos almacén";
+                TitForm.Text = "Consulta Movimientos Almacén";
                 while (tbl.Read())  //Todos los objetos
                 {
                     string bO = tbl["Objeto"].ToString().Trim();
                     string bT = tbl["Texto"].ToString().Trim();
                     Idioma.Rows.Add(bO, bT);
-                    if (bO.Equals("Caption"))
-                    { Page.Title = bT; ViewState["PageTit"] = bT; }
-                    TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
+                    //if (bO.Equals("Caption")) { Page.Title = bT; ViewState["PageTit"] = bT; }
+                    //TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
                     LblLote.Text = bO.Equals("LoteMst") ? bT : LblLote.Text;
                     LblTipo.Text = bO.Equals("TipoMstr") ? bT : LblTipo.Text;
                     LblDescrPn.Text = bO.Equals("Descripcion") ? bT : LblDescrPn.Text;
@@ -502,7 +503,7 @@ namespace _77NeoWeb.Forms.Almacen
             {
                 DataRowView dr = e.Row.DataItem as DataRowView;
                 string VbTercero = dr["CodTercero"].ToString().Trim();
-                if (VbTercero.Equals("Tercero"))                
+                if (VbTercero.Equals("Tercero"))
                 {
                     e.Row.BackColor = System.Drawing.Color.LightSalmon;
                     e.Row.ForeColor = System.Drawing.Color.White;
@@ -565,7 +566,7 @@ namespace _77NeoWeb.Forms.Almacen
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if ((e.Row.RowState & DataControlRowState.Edit) > 0)
-            {   
+            {
                 ImageButton IbtUpdate = (e.Row.FindControl("IbtUpdate") as ImageButton);
                 DataRow[] Result = Idioma.Select("Objeto= 'IbtUpdate'");
                 foreach (DataRow row in Result)
@@ -599,7 +600,7 @@ namespace _77NeoWeb.Forms.Almacen
                 if (DdlPN.Text.Trim().Equals("")) { GrdStokAlma.DataSource = null; GrdStokAlma.DataBind(); return; }
                 DSSM = (DataSet)ViewState["DSSM"];
                 using (XLWorkbook wb = new XLWorkbook())
-                {                   
+                {
                     wb.Worksheets.Add(DSSM.Tables[3]);
                     Response.Clear();
                     Response.Buffer = true;

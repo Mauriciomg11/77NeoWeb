@@ -1984,20 +1984,24 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                 if ((int)ViewState["VentanaRva"] == 0) //OT
                 {
-                    DT = DSTOTGrl.Tables[11].Clone();
-                    DR = DSTOTGrl.Tables[11].Select("PN LIKE '%" + TxtOTRecurConsulPn.Text.Trim() + "%'");
+                    DT = DSTOTGrl.Tables["RecursoOT"].Clone();
+                    DR = DSTOTGrl.Tables["RecursoOT"].Select("PN LIKE '%" + TxtOTRecurConsulPn.Text.Trim() + "%'");
                     if (IsIENumerableLleno(DR))
                     { DT = DR.CopyToDataTable(); }
                 }
                 else//Rte
                 {
-                    DT = DSTRTE.Tables[2].Clone();
-                    DR = DSTRTE.Tables[2].Select("PN LIKE '%" + TxtOTRecurConsulPn.Text.Trim() + "%'");
+                    DT = DSTRTE.Tables["RFisco"].Clone();
+                    DR = DSTRTE.Tables["RFisco"].Select("PN LIKE '%" + TxtOTRecurConsulPn.Text.Trim() + "%'");
                     if (IsIENumerableLleno(DR))
                     { DT = DR.CopyToDataTable(); }
                 }
                 if (DT.Rows.Count > 0)
                 {
+                    DataView DV = DT.DefaultView;
+                    DV.Sort = "NumeroPosicion";
+                    DT = DV.ToTable();
+
                     GrdOTRecursoF.DataSource = DT;
                     GrdOTRecursoF.DataBind();
                     ViewState["TtlOTRegDet"] = DT.Rows.Count;
@@ -4270,7 +4274,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DdlBusqRte.DataBind();
                 DdlBusqRte.Text = VbCodAnt;
 
-                if (DSTRTE.Tables[0].Rows.Count > 0)
+                if (DSTRTE.Tables["DatosRte"].Rows.Count > 0)
                 {
                     ViewState["TipRteAnt"] = DSTRTE.Tables[0].Rows[0]["TipoReporte"].ToString();
                     string VbCodCat = DSTRTE.Tables[0].Rows[0]["CodCategoriaMel"].ToString().Trim();

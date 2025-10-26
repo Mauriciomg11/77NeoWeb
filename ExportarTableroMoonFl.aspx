@@ -47,17 +47,31 @@
                  <asp:RadioButton ID="RdbRpte" runat="server" CssClass="LblEtiquet" Text="5 Reportes" GroupName="BusqSP" />&nbsp&nbsp&nbsp
                  <asp:RadioButton ID="RdbStatus" runat="server" CssClass="LblEtiquet" Text="6 Status_Report" GroupName="BusqSP" />&nbsp&nbsp&nbsp
                  <asp:RadioButton ID="RdbInventario" runat="server" CssClass="LblEtiquet" Text="7 Inventario" GroupName="BusqSP" />&nbsp&nbsp&nbsp
+                
+                <div class="row">
+                    <h6 class="TextoSuperior">
+                        <asp:Label ID="LblTitKPI" runat="server" Text="KPI - Aftermarket Services" />
+                    </h6>
+                    <div class="col-sm-12">
+                        <asp:RadioButton ID="RdbCumpMtoPrev" runat="server" CssClass="LblEtiquet" Text="1. Cumplimiento mantenimiento preventivo" GroupName="BusqSP" />&nbsp&nbsp&nbsp
+                        <asp:RadioButton ID="RdbTimCiclMto" runat="server" CssClass="LblEtiquet" Text="2. Tiempo de ciclo de mantenimiento" GroupName="BusqSP" />&nbsp&nbsp&nbsp
+                        <asp:RadioButton ID="RdbConfiabilidad" runat="server" CssClass="LblEtiquet" Text="4. Confiabilidad" GroupName="BusqSP" />&nbsp&nbsp&nbsp
+                        <asp:RadioButton ID="RdbTimePromdRepa" runat="server" CssClass="LblEtiquet" Text="5. Tiempo medio de reparación" GroupName="BusqSP" />&nbsp&nbsp&nbsp
+                        <asp:RadioButton ID="RdbCostoManto" runat="server" CssClass="LblEtiquet" Text="6. Costo de mantenimiento por hora de vuelo" GroupName="BusqSP" />&nbsp&nbsp&nbsp
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-sm-0">
                         <asp:ImageButton ID="IbnExcel" runat="server" ToolTip="exportar consolidado" CssClass=" BtnExpExcel" Height="50px" Width="50px" ImageUrl="~/images/ExcelV1.png" OnClick="IbnExcel_Click" />
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <asp:Label ID="LblOT" runat="server" CssClass="LblEtiquet" Text="Oden de trabajo" Visible="false" />
-                        <asp:TextBox ID="TxtOT" runat="server" CssClass="form-control-sm heightCampo" Width="80%" TextMode="Number" step="0.01" onkeypress="return solonumeros(event);" Text="0" Visible="false" />
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <asp:Label ID="LblOT" runat="server" CssClass="LblEtiquet" Text="Oden de trabajo" Visible="false" />
+                    <asp:TextBox ID="TxtOT" runat="server" CssClass="form-control-sm heightCampo" Width="80%" TextMode="Number" step="0.01" onkeypress="return solonumeros(event);" Text="0" Visible="false" />
                 </div>
+            </div>
         </ContentTemplate>
         <Triggers>
             <asp:PostBackTrigger ControlID="IbnExcel" />

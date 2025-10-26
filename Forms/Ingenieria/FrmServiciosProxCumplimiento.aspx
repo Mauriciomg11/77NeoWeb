@@ -125,7 +125,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Orden">
                                                 <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("Orden") %>' runat="server" Width="100%" />
+                                                    <asp:Label Text='<%# Eval("NumOT") %>' runat="server" Width="100%" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Work Sheet">

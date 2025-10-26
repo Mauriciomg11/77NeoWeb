@@ -131,7 +131,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatosPpal" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-            <br />
+            <br /> <br />
             <div runat="server" class="table-responsive">
                 <asp:Label ID="LblOt" runat="server" CssClass="LblEtiquet" Text="O.T.:" />
                 <asp:TextBox ID="TxtOt" runat="server" CssClass="Form-control-sm heightCampo" Width="10%" step="0.01" Enabled="false" Visible="false" />

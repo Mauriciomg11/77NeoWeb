@@ -132,5 +132,17 @@ namespace _77NeoWeb.Forms.Almacen
         {
 
         }
+
+        protected void BtnEntReparacion_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void BtnSalReparacion_Click(object sender, EventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string CT = "window.open('/Forms/Almacen/FrmSalidaRepaMat.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
+        }
     }
 }

@@ -66,9 +66,13 @@ namespace _77NeoWeb
                 if (RdbOTRecur.Checked == true) { VbNomArchivo = RdbOTRecur.Text.Trim(); VConsec = "5"; }              
                 if (RdbRpte.Checked == true) { VbNomArchivo = RdbRpte.Text.Trim(); VConsec = "6"; }              
                 if (RdbStatus.Checked == true) { VbNomArchivo = RdbStatus.Text.Trim(); VConsec = "7"; }              
-                if (RdbInventario.Checked == true) { VbNomArchivo = RdbInventario.Text.Trim(); VConsec = "8"; }              
+                if (RdbInventario.Checked == true) { VbNomArchivo = RdbInventario.Text.Trim(); VConsec = "8"; }
+                if (RdbCumpMtoPrev.Checked == true) { VbNomArchivo = RdbCumpMtoPrev.Text.Trim(); VConsec = "9"; }
+                if (RdbTimCiclMto.Checked == true) { VbNomArchivo = RdbTimCiclMto.Text.Trim(); VConsec = "10"; }
+                if (RdbConfiabilidad.Checked == true) { VbNomArchivo = RdbConfiabilidad.Text.Trim(); VConsec = "12"; }
+                if (RdbTimePromdRepa.Checked == true) { VbNomArchivo = RdbTimePromdRepa.Text.Trim(); VConsec = "13"; }
+                if (RdbCostoManto.Checked == true) { VbNomArchivo = RdbCostoManto.Text.Trim(); VConsec = "14"; }
 
-               
                 query = "EXEC SP_TableroControlMoon @Consc,@CC,4";
 
                 Cnx.SelecBD();
