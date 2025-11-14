@@ -129,11 +129,11 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <asp:Label ID="LblStsUtilDiaHr" runat="server" CssClass="LblEtiquet" Text="Utilizacion Diaria H" />
-                            <asp:TextBox ID="TxtStsUtilDiaHr" runat="server" CssClass="form-control heightCampo" Width="70%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" />
+                            <asp:TextBox ID="TxtStsUtilDiaHr" runat="server" CssClass="form-control heightCampo" Width="70%" TextMode="Number" step="0,01" onkeypress="return Decimal(event);" />
                         </div>
                         <div class="col-sm-2">
                             <asp:Label ID="LblStsUtilDiaCc" runat="server" CssClass="LblEtiquet" Text="Utilizacion Diaria C" />
-                            <asp:TextBox ID="TxtStsUtilDiaCc" runat="server" CssClass="form-control heightCampo" Width="70%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" />
+                            <asp:TextBox ID="TxtStsUtilDiaCc" runat="server" CssClass="form-control heightCampo" Width="70%" TextMode="Number" step="0,01" onkeypress="return Decimal(event);" />
                         </div>
                         <div class="col-sm-2">
                             <asp:Label ID="LblStsUtilDiaAPU" runat="server" CssClass="LblEtiquet" Text="Utilizacion Diaria APU" />

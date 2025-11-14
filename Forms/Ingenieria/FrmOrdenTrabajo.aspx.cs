@@ -535,6 +535,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         //******************************************  MRO *********************************************************        
         protected void BtnMroInsPre_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if (!TxtOt.Text.Equals(""))
             {
                 ViewState["PasoActual"] = 1;
@@ -546,6 +547,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnMroPrDes_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if (!TxtOt.Text.Equals(""))
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -565,6 +567,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnMroRteDes_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if (!TxtOt.Text.Equals(""))
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -584,6 +587,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnMroDanOc_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if (!TxtOt.Text.Equals(""))
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -603,6 +607,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnMroAccCorr_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if (!TxtOt.Text.Equals(""))
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -622,6 +627,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnMroPrueF_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if (!TxtOt.Text.Equals(""))
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -641,6 +647,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnMroCumpl_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if (!TxtOt.Text.Equals(""))
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -660,6 +667,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnMroTrabEje_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if (!TxtOt.Text.Equals(""))
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -1233,6 +1241,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
+                Page.Title = ViewState["PageTit"].ToString().Trim();
                 Idioma = (DataTable)ViewState["TablaIdioma"];
                 if (TxtOt.Text.Equals(""))
                 { return; }
@@ -1379,6 +1388,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnOTReserva_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (!TxtOt.Text.Equals(""))
             {
@@ -1417,6 +1427,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnOTConsultar_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataRow[] Result = Idioma.Select("Objeto= 'LblTitOTOpcBusqueda'");
             foreach (DataRow row in Result)
@@ -1431,6 +1442,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnOTImprimir_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (TxtOt.Text.Equals(""))
             { return; }
@@ -1489,6 +1501,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnOTEliminar_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if (TxtOt.Text.Equals(""))
             { return; }
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -1539,11 +1552,18 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
         }
         protected void BtnOtAbiertas8PasCump_Click(object sender, EventArgs e)
-        { BIndDPasoCOTA(); MlVwOT.ActiveViewIndex = 10; }
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            BIndDPasoCOTA(); MlVwOT.ActiveViewIndex = 10;
+        }
         protected void BtNOTExportar_Click(object sender, EventArgs e)
-        { Exportar("OTGeneral"); }
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            Exportar("OTGeneral");
+        }
         protected void BtnOTDetTec_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if (!TxtOt.Text.Equals(""))
             {
                 BindDOTDetTec();
@@ -1631,7 +1651,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                         { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una fecha
                         return;
                     }
-                    if (!TxtOTFechini.Text.Equals("")) {
+                    if (!TxtOTFechini.Text.Equals(""))
+                    {
                         Cnx.ValidarFechas(TxtOTFechini.Text, (GrdOTDetTec.FooterRow.FindControl("TxtOTFecTrabPP") as TextBox).Text.Trim(), 2);
                         string Mensj1 = Cnx.GetMensj();
                         if (!Mensj1.ToString().Trim().Equals(""))
@@ -1643,7 +1664,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             Page.Title = ViewState["PageTit"].ToString();
                             ViewState["Validar"] = "N"; return;
                         }
-                    }                    
+                    }
 
                     if ((GrdOTDetTec.FooterRow.FindControl("DdlOTTecPP") as DropDownList).Text.Trim().Equals(""))
                     {
@@ -2077,6 +2098,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnOTRecurNotif_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             string VbOTRva = "", VbNumRte = "";
             if ((int)ViewState["VentanaRva"] == 0)
@@ -3657,6 +3679,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnPasoAceptar_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -3806,6 +3829,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnPasoRepte_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             ViewState["OrigRte"] = "PA";
             ViewState["Ventana"] = MlVwOT.ActiveViewIndex;
             AbrirPantallaRte();
@@ -3816,6 +3840,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         //******************************************  Reporte Manto *********************************************************
         protected void BtnOtReporte_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if (!TxtOt.Text.Equals(""))
             {
                 ViewState["OrigRte"] = "OT";
@@ -3860,7 +3885,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             ViewState["VblCE6Rte"] = 1;
             ClsPermisos ClsP = new ClsPermisos();
             string VbPC = Cnx.GetIpPubl();
-            ClsP.Acceder(Session["C77U"].ToString(), "FrmReporte.aspx", VbPC);         
+            ClsP.Acceder(Session["C77U"].ToString(), "FrmReporte.aspx", VbPC);
 
             if (ClsP.GetIngresar() == 0)
             {
@@ -4960,6 +4985,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         { CalcularNexDue(TxtTtlAKSN.Text, TxtHPrxCu.Text); }
         protected void BtnIngresar_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -5105,6 +5131,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnModificar_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -5256,6 +5283,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnEliminar_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (TxtNroRte.Text.Equals("0"))
             { return; }
@@ -5300,6 +5328,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnNotificar_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -5356,9 +5385,10 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
         }
         protected void BtnExporRte_Click(object sender, EventArgs e)
-        { Exportar("ReporteGeneral"); }
+        { Page.Title = ViewState["PageTit"].ToString().Trim();  Exportar("ReporteGeneral"); }
         protected void BtnReserva_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if (!TxtNroRte.Text.Equals("0"))
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -5405,6 +5435,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnConsultar_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DataRow[] Result = Idioma.Select("Objeto= 'LblTitOTOpcBusqueda'");
             foreach (DataRow row in Result)
@@ -5417,6 +5448,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnImprimir_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if (TxtNroRte.Text.Equals("0"))
             { return; }
             MlVwOT.ActiveViewIndex = 9;
@@ -5438,6 +5470,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnSnOnOf_Click(object sender, EventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if (TxtNroRte.Text.Equals("0"))
             { return; }
             TxtSnOnOffNumRte.Text = TxtNroRte.Text;

@@ -73,12 +73,12 @@ namespace _77NeoWeb.Forms.Almacen
                     LblTitAlrt.Text = bO.Equals("Titulo") ? bT : LblTitAlrt.Text;
                     LblTitAlerta.Text = bO.Equals("LblTitAlerta") ? bT : LblTitAlerta.Text;
                     GrdAlrta.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdAlrta.EmptyDataText;
-                    GrdAlrta.Columns[0].HeaderText = bO.Equals("PedidoMstr") ? bT : GrdAlrta.Columns[0].HeaderText;
-                    GrdAlrta.Columns[1].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdAlrta.Columns[1].HeaderText;
-                    GrdAlrta.Columns[3].HeaderText = bO.Equals("Descripcion") ? bT : GrdAlrta.Columns[3].HeaderText;
-                    GrdAlrta.Columns[4].HeaderText = bO.Equals("CantMst") ? bT : GrdAlrta.Columns[4].HeaderText;
-                    GrdAlrta.Columns[5].HeaderText = bO.Equals("FechaMstr") ? bT : GrdAlrta.Columns[5].HeaderText;
-                    GrdAlrta.Columns[6].HeaderText = bO.Equals("LblUsrMstr") ? bT : GrdAlrta.Columns[6].HeaderText;
+                    GrdAlrta.Columns[1].HeaderText = bO.Equals("PedidoMstr") ? bT : GrdAlrta.Columns[1].HeaderText;
+                    GrdAlrta.Columns[2].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdAlrta.Columns[2].HeaderText;
+                    GrdAlrta.Columns[4].HeaderText = bO.Equals("Descripcion") ? bT : GrdAlrta.Columns[4].HeaderText;
+                    GrdAlrta.Columns[5].HeaderText = bO.Equals("CantMst") ? bT : GrdAlrta.Columns[5].HeaderText;
+                    GrdAlrta.Columns[6].HeaderText = bO.Equals("FechaMstr") ? bT : GrdAlrta.Columns[6].HeaderText;
+                    GrdAlrta.Columns[7].HeaderText = bO.Equals("LblUsrMstr") ? bT : GrdAlrta.Columns[7].HeaderText;
                     BtnExportarModl.Text = bO.Equals("BtnExportMstr") ? bT : BtnExportarModl.Text;
                     BtnCerrarAlerta.Text = bO.Equals("BtnCerrarMst") ? bT : BtnCerrarAlerta.Text;
                 }
@@ -176,7 +176,25 @@ namespace _77NeoWeb.Forms.Almacen
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 DataRowView dr = e.Row.DataItem as DataRowView;
-                if (dr["AprobacionDetalle"].ToString().Equals("1")) { e.Row.BackColor = System.Drawing.Color.Yellow; }
+                Literal litSemaforo = (Literal)e.Row.FindControl("litSemaforo");
+                if (dr["AprobacionDetalle"].ToString().Equals("1"))
+                { litSemaforo.Text = "<i class='bi bi-circle-fill semaforo-alerta' style='color:orange; font-size:20px;'></i>"; }
+                else { litSemaforo.Text = "<i class='bi bi-circle-fill' style='color:limegreen; font-size:20px;'></i>"; }
+                //{ e.Row.BackColor = System.Drawing.Color.Yellow; }
+               /* switch (estado)
+                {
+                    case "Crítico":
+                        litSemaforo.Text = "<i class='bi bi-circle-fill' style='color:red; font-size:20px;'></i>";
+                        break;
+
+                    case "Advertencia":
+                        litSemaforo.Text = "<i class='bi bi-circle-fill' style='color:gold; font-size:20px;'></i>";
+                        break;
+
+                    case "Normal":
+                        litSemaforo.Text = "<i class='bi bi-circle-fill' style='color:limegreen; font-size:20px;'></i>";
+                        break;
+                }*/
             }
         }
     }

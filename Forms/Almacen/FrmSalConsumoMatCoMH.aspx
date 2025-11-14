@@ -379,7 +379,7 @@
                     <div class="CentrarCntndr">
                         <div class="col-sm-8 Interna">
                             <div class="ScrollRsva pre-scrollable">
-                                 <br /> <br /> <br /> <br />
+                                 <br /> <br /> <br /> <br /> <br />
                                 <div class="col-sm-3">
                                     <asp:Button ID="BtnGuardar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="100%" OnClick="BtnGuardar_Click" OnClientClick="target ='';" Text="guardar" />
                                 </div>

@@ -168,13 +168,13 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.TextBox TxtMoneda;
 
         /// <summary>
-        /// Control BtnVisualizar.
+        /// Control BtnGuardar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnVisualizar;
+        protected global::System.Web.UI.WebControls.Button BtnGuardar;
 
         /// <summary>
         /// Control GrdDtlleRepa.
@@ -186,13 +186,13 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.GridView GrdDtlleRepa;
 
         /// <summary>
-        /// Control Vw1SnLote.
+        /// Control Vw1Asignar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.View Vw1SnLote;
+        protected global::System.Web.UI.WebControls.View Vw1Asignar;
 
         /// <summary>
         /// Control LblTitAsigFis.
@@ -202,6 +202,42 @@ namespace _77NeoWeb.Forms.Almacen
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblTitAsigFis;
+
+        /// <summary>
+        /// Control LblPNDescripcAsig.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblPNDescripcAsig;
+
+        /// <summary>
+        /// Control LblAsigCantSol.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblAsigCantSol;
+
+        /// <summary>
+        /// Control LblAsigCantSolV.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblAsigCantSolV;
+
+        /// <summary>
+        /// Control GrdAsignar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GrdAsignar;
 
         /// <summary>
         /// Control IbtCerrarAsing.

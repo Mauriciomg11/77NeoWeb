@@ -2,7 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
-       
         .GridDivScroll {
             vertical-align: top;
             overflow: auto;
@@ -19,13 +18,22 @@
         .TamanAlert {
             height: 400px;
             width: 95%;
+        }  
+        @keyframes blink {
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        .semaforo-alerta {
+            animation: blink 1s infinite;
         }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <div id="ModalAlerta" class="modal fade " tabindex="-1" role="dialog">
@@ -46,6 +54,11 @@
                                         <asp:GridView ID="GrdAlrta" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="Prioridad,IdDetPedido, AprobacionDetalle"
                                             CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" OnRowDataBound="GrdAlrta_RowDataBound">
                                             <Columns>
+                                                <asp:TemplateField HeaderText="">
+                                                    <ItemTemplate>
+                                                        <asp:Literal ID="litSemaforo" runat="server"></asp:Literal>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="pedido">
                                                     <ItemTemplate>
                                                         <asp:Label Text='<%# Eval("CodPedido") %>' runat="server" />

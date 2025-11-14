@@ -280,6 +280,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     string VBQuery = "EXEC SP_TablasLogistica 3,@Desc,@US, @Cd, @SCC, @CdAnt,'','','','UPDATE',@Id,@Act,@StAlm, @StRp, @StHrt,@ICC,'01-01-1','02-01-1','03-01-1'";
                     using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                     {
+                        string borr1 = GrdDatos.DataKeys[e.RowIndex].Values["IdCCostos"].ToString();
                         SC.Parameters.AddWithValue("@Desc", VbDesc);
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@Cd", VbCod);

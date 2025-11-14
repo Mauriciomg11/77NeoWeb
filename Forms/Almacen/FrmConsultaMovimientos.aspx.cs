@@ -106,8 +106,8 @@ namespace _77NeoWeb.Forms.Almacen
                     string bO = tbl["Objeto"].ToString().Trim();
                     string bT = tbl["Texto"].ToString().Trim();
                     Idioma.Rows.Add(bO, bT);
-                    //if (bO.Equals("Caption")) { Page.Title = bT; ViewState["PageTit"] = bT; }
-                    //TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
+                    if (bO.Equals("Caption")) { Page.Title = bT; ViewState["PageTit"] = bT; }
+                    TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
                     LblLote.Text = bO.Equals("LoteMst") ? bT : LblLote.Text;
                     LblTipo.Text = bO.Equals("TipoMstr") ? bT : LblTipo.Text;
                     LblDescrPn.Text = bO.Equals("Descripcion") ? bT : LblDescrPn.Text;

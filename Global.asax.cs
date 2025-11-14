@@ -26,11 +26,12 @@ namespace _77NeoWeb
         protected void Session_Start(object sender, EventArgs e)
         {
             /*
-            10.2.05.21-6| 23/10/2025| bajar campos de los informes de ingenieria
-            10.2.05.21-5| 04/02/2025| corrección formularios Incoming y Movimientos Almacen, no se visualizaba el detalle
-            10.2.05.21-4| 28/01/2025| implementacion Menu
+            10.02.05.22| 14/11/2025| Semaforo en las alertas almacen e ingenieria.
+            10.02.05.21| 23/10/2025| bajar campos de los informes de ingenieria
+            10.02.05.21| 04/02/2025| corrección formularios Incoming y Movimientos Almacen, no se visualizaba el detalle
+            10.02.05.21| 28/01/2025| implementacion Menu
              */
-            Session["77Version"] = "10.2.05.21";
+            Session["77Version"] = "10.02.05.22";
             Session["77Act"] = "6";
             Session["$VR"] = "";
             Session["Nit77Cia"] = ""; // Nita cia 811035879-1

@@ -17,7 +17,7 @@ namespace _77NeoWeb.prg
         public ClsConexion()
         {
             this.VblConexion = "";
-            Produccion = "N";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion            
+            Produccion = "Y";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion            
         }
         public void SelecBD()
         {
@@ -130,8 +130,8 @@ namespace _77NeoWeb.prg
         {
             if (Produccion.Equals("N"))
             {
-               /* return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, @"77NEO01", "DbConfigWeb", "sa", "admindemp");
-                string Vb1S = "23.102.100.143";//@"aircraft\SQLEXPRESS";*/
+                /*return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, @"77NEO01", "DbConfigWeb", "sa", "admindemp");*/
+               // string Vb1S = "23.102.100.143";//@"aircraft\SQLEXPRESS";
                 return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
             }
             else
@@ -288,10 +288,10 @@ namespace _77NeoWeb.prg
         public string GetMonedLcl() { return "COP"; }//  "COP|USD"
         public int GetFormatFecha() { return 103; }// 103 formato europeo dd/MM/yyyy | 101 formato EEUU MM/dd/yyyyy
         public string GetNit() { return "901338233-1"; } // 901338233-1 TwoGoWo |811035879-1 Demp |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT |P93000086218 - ALCA
-        public string GetBD() { return "DbNeoDempV2"; }//|DbNeoDempV2 |DbNeoAda | DbNeoHCT ||| BDNeoW  || DbNeoDemp2016
-        public string GetSvr() { return @"23.102.100.143"; }//  "77NEO01\MSSQLSERVER2016"; ||| 23.102.100.143 || 77NEO01
+        public string GetBD() { return "DbNeoDemp2016"; }//|DbNeoDempV2 |DbNeoAda | DbNeoHCT ||| BDNeoW  || DbNeoDemp2016
+        public string GetSvr() { return @"77NEO01"; }//  "77NEO01\MSSQLSERVER2016"; ||| 23.102.100.143 || 77NEO01
         public string GetUsSvr() { return "sa"; }//  "sa"
-        public string GetPas() { return "Medellin2021**"; }// admindemp|| Medellin2021**
+        public string GetPas() { return "admindemp"; }// admindemp|| Medellin2021**
         public string GetIdm() { return "4"; }//  4 español | 5 ingles/**/
     }
 }

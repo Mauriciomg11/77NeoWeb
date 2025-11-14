@@ -60,6 +60,7 @@
   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
+     <br /> <br />
     <div class="CentrarContenedor DivMarco">
         <asp:UpdatePanel ID="UplBtnes" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
