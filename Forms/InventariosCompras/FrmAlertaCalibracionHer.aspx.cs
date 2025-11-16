@@ -97,31 +97,30 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     LblTitSinConf.Text = bO.Equals("LblTitSinConf") ? bT : LblTitSinConf.Text;
                     GrdProxVenc.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdProxVenc.EmptyDataText;
                     GrdSinConfg.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdSinConfg.EmptyDataText;
-                    GrdProxVenc.Columns[0].HeaderText = bO.Equals("TipoMstr") ? bT : GrdProxVenc.Columns[0].HeaderText;
-                    GrdSinConfg.Columns[0].HeaderText = bO.Equals("TipoMstr") ? bT : GrdSinConfg.Columns[0].HeaderText;
-                   
-                    GrdProxVenc.Columns[2].HeaderText = bO.Equals("GrdSnLote") ? bT : GrdProxVenc.Columns[2].HeaderText;
+                    GrdProxVenc.Columns[1].HeaderText = bO.Equals("TipoMstr") ? bT : GrdProxVenc.Columns[1].HeaderText;
+                    GrdSinConfg.Columns[0].HeaderText = bO.Equals("TipoMstr") ? bT : GrdSinConfg.Columns[0].HeaderText;                   
+                    GrdProxVenc.Columns[3].HeaderText = bO.Equals("GrdSnLote") ? bT : GrdProxVenc.Columns[3].HeaderText;
                     GrdSinConfg.Columns[2].HeaderText = bO.Equals("GrdSnLote") ? bT : GrdSinConfg.Columns[2].HeaderText;
                    
                     GrdSinConfg.Columns[3].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdSinConfg.Columns[3].HeaderText;
-                    GrdProxVenc.Columns[3].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdProxVenc.Columns[3].HeaderText;
+                    GrdProxVenc.Columns[4].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdProxVenc.Columns[4].HeaderText;
                    
-                    GrdProxVenc.Columns[4].HeaderText = bO.Equals("Descripcion") ? bT : GrdProxVenc.Columns[4].HeaderText;
+                    GrdProxVenc.Columns[5].HeaderText = bO.Equals("Descripcion") ? bT : GrdProxVenc.Columns[5].HeaderText;
                     GrdSinConfg.Columns[4].HeaderText = bO.Equals("Descripcion") ? bT : GrdSinConfg.Columns[4].HeaderText;
                     
                     GrdSinConfg.Columns[5].HeaderText = bO.Equals("GrdFecVen") ? bT : GrdSinConfg.Columns[5].HeaderText;
-                    GrdProxVenc.Columns[5].HeaderText = bO.Equals("GrdFecVen") ? bT : GrdProxVenc.Columns[5].HeaderText;
+                    GrdProxVenc.Columns[6].HeaderText = bO.Equals("GrdFecVen") ? bT : GrdProxVenc.Columns[6].HeaderText;
                    
-                    GrdProxVenc.Columns[6].HeaderText = bO.Equals("AlmacenMstr") ? bT : GrdProxVenc.Columns[6].HeaderText;
+                    GrdProxVenc.Columns[7].HeaderText = bO.Equals("AlmacenMstr") ? bT : GrdProxVenc.Columns[7].HeaderText;
                     GrdSinConfg.Columns[6].HeaderText = bO.Equals("AlmacenMstr") ? bT : GrdSinConfg.Columns[6].HeaderText;
                    
                     GrdSinConfg.Columns[7].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdSinConfg.Columns[7].HeaderText;
-                    GrdProxVenc.Columns[7].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdProxVenc.Columns[7].HeaderText;
+                    GrdProxVenc.Columns[8].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdProxVenc.Columns[8].HeaderText;
                    
-                    GrdProxVenc.Columns[8].HeaderText = bO.Equals("CantMst") ? bT : GrdProxVenc.Columns[8].HeaderText;
+                    GrdProxVenc.Columns[9].HeaderText = bO.Equals("CantMst") ? bT : GrdProxVenc.Columns[9].HeaderText;
                     GrdSinConfg.Columns[8].HeaderText = bO.Equals("CantMst") ? bT : GrdSinConfg.Columns[8].HeaderText;
                   
-                    GrdProxVenc.Columns[9].HeaderText = bO.Equals("GrdRemnt") ? bT : GrdProxVenc.Columns[9].HeaderText;
+                    GrdProxVenc.Columns[10].HeaderText = bO.Equals("GrdRemnt") ? bT : GrdProxVenc.Columns[10].HeaderText;
                     IbtCloseSinConfg.ToolTip = bO.Equals("BtnCerrarMst") ? bT : IbtCloseSinConfg.ToolTip;
                 }
                 sqlCon.Close();
@@ -215,8 +214,11 @@ namespace _77NeoWeb.Forms.InventariosCompras
             {
                 DataRowView dr = e.Row.DataItem as DataRowView;
                 string VbRemain = dr["Remanente"].ToString();
+                Literal litSmfro = (Literal)e.Row.FindControl("litSmfro");
                 if (Convert.ToInt32(VbRemain) < 0)
-                { e.Row.BackColor = System.Drawing.Color.Red; e.Row.ForeColor = System.Drawing.Color.White; }
+                { litSmfro.Text = "<i class='bi bi-circle-fill semaforo-alerta' style='color:red; font-size:20px;'></i>"; }
+                else { litSmfro.Text = "<i class='bi bi-circle-fill' style='color:Green; font-size:20px;'></i>"; }
+
             }
         }
         protected void IbtCloseSinConfg_Click(object sender, ImageClickEventArgs e)

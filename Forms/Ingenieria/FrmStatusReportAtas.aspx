@@ -220,7 +220,7 @@
         <asp:View ID="Vw1Imprimir" runat="server">
             <asp:UpdatePanel ID="UplPrint" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                     <br />
+                     <br /><br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitImpresion" runat="server" Text="Opciones de Informes" /></h6>
                     <asp:ImageButton ID="IbtCerrarPrint" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarPrint_Click" ImageAlign="Right" />

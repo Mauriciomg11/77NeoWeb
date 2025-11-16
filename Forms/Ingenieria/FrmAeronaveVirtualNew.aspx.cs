@@ -231,10 +231,10 @@ namespace _77NeoWeb.Forms.Ingenieria
                     LblTitAeroVirtual.Text = bO.Equals("LblTitAeroVirtual") ? bT : LblTitAeroVirtual.Text;
                     IbtCerrarAeroVirtual.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarAeroVirtual.ToolTip;
                     LblAeroVirtualHK.Text = bO.Equals("LblAeroInsElem") ? bT + ":" : LblAeroVirtualHK.Text;
-                    GrdListaAeroVirtual.Columns[0].HeaderText = bO.Equals("GrdUltNivelAV") ? bT : GrdListaAeroVirtual.Columns[0].HeaderText;
-                    GrdListaAeroVirtual.Columns[1].HeaderText = bO.Equals("GrdDescrAV") ? bT : GrdListaAeroVirtual.Columns[1].HeaderText;
-                    GrdListaAeroVirtual.Columns[4].HeaderText = bO.Equals("GrdDescrElemAV") ? bT : GrdListaAeroVirtual.Columns[4].HeaderText;
-                    GrdListaAeroVirtual.Columns[5].HeaderText = bO.Equals("LblPosicion") ? bT : GrdListaAeroVirtual.Columns[5].HeaderText;
+                    GrdListaAeroVirtual.Columns[1].HeaderText = bO.Equals("GrdUltNivelAV") ? bT : GrdListaAeroVirtual.Columns[1].HeaderText;
+                    GrdListaAeroVirtual.Columns[2].HeaderText = bO.Equals("GrdDescrAV") ? bT : GrdListaAeroVirtual.Columns[2].HeaderText;
+                    GrdListaAeroVirtual.Columns[5].HeaderText = bO.Equals("GrdDescrElemAV") ? bT : GrdListaAeroVirtual.Columns[5].HeaderText;
+                    GrdListaAeroVirtual.Columns[6].HeaderText = bO.Equals("LblPosicion") ? bT : GrdListaAeroVirtual.Columns[6].HeaderText;
                     GrdListaAeroVirtual.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdListaAeroVirtual.EmptyDataText;
                     // ************************************** Remoción Elemento   *******************************************************       
                     LblTitRemEle.Text = bO.Equals("LblTitRemEle") ? bT : LblTitRemEle.Text;
@@ -1338,22 +1338,27 @@ namespace _77NeoWeb.Forms.Ingenieria
             if (e.Row.RowType == DataControlRowType.DataRow)  // registros
             {
                 DataRowView dr = e.Row.DataItem as DataRowView;
+                Literal litSmfro = (Literal)e.Row.FindControl("litSmfro");
                 string VbMayor = dr["Mayor"].ToString();
                 switch (VbMayor)
                 {
                     case "1":
-                        e.Row.BackColor = System.Drawing.Color.White;
+                        // e.Row.BackColor = System.Drawing.Color.White;
+                        litSmfro.Text = "<i class='bi bi-circle-fill' style='color:Green; font-size:20px;'></i>";
                         break;
                     case "2":
-                        e.Row.BackColor = System.Drawing.Color.Wheat;
+                        // e.Row.BackColor = System.Drawing.Color.Wheat;
+                        litSmfro.Text = "<i class='bi bi-circle-fill' style='color:Orange; font-size:20px;'></i>";
                         break;
                     case "3":
-                        e.Row.BackColor = System.Drawing.Color.LightGray;
+                        //e.Row.BackColor = System.Drawing.Color.LightGray;
+                        litSmfro.Text = "<i class='bi bi-circle-fill' style='color:Gray; font-size:20px;'></i>";
                         break;
                     default:
-                      //  e.Row.BackColor = System.Drawing.Color.Red;
-                        e.Row.BackColor = System.Drawing.Color.LightSalmon;
-                        e.Row.ForeColor = System.Drawing.Color.White;
+
+                        // e.Row.BackColor = System.Drawing.Color.LightSalmon;
+                        // e.Row.ForeColor = System.Drawing.Color.White;
+                        litSmfro.Text = "<i class='bi bi-circle-fill semaforo-alerta' style='color:red; font-size:20px;'></i>";
                         break;
                 }
             }/**/

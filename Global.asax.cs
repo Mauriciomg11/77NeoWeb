@@ -32,7 +32,7 @@ namespace _77NeoWeb
             10.02.05.21| 28/01/2025| implementacion Menu
              */
             Session["77Version"] = "10.02.05.22";
-            Session["77Act"] = "6";
+            Session["77Act"] = "7";
             Session["$VR"] = "";
             Session["Nit77Cia"] = ""; // Nita cia 811035879-1
             Session["VblCE1MS"] = 1;

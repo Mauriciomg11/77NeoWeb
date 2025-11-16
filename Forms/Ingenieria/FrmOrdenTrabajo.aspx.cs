@@ -856,6 +856,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void TraerDatosBusqOT(int NumOT, string Accion)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             ViewState["Accion"] = "";
             try
             {
@@ -2050,6 +2051,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void IbtOTCerrarRecur_Click(object sender, ImageClickEventArgs e)
         {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
             if ((int)ViewState["VentanaRva"] == 7)
             {
                 TxtOtSec.Text = TxtRecurSubOt.Text;

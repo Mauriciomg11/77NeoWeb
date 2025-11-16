@@ -36,6 +36,16 @@
             width: 100%;
             height: 80%;
         }
+
+        @keyframes blink {
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        .semaforo-alerta {
+            animation: blink 1s infinite;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
@@ -84,6 +94,11 @@
                                     <asp:GridView ID="GrdProxVenc" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false"
                                         CssClass="DiseñoGrid table table-sm" GridLines="Both" OnRowDataBound="GrdProxVenc_RowDataBound">
                                         <Columns>
+                                            <asp:TemplateField HeaderText="" HeaderStyle-Width="1%">
+                                                <ItemTemplate>
+                                                    <asp:Literal ID="litSmfro" runat="server"></asp:Literal>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="tipo" HeaderStyle-Width="10%">
                                                 <ItemTemplate>
                                                     <asp:Label Text='<%# Eval("Tipo") %>' runat="server" Width="100%" />
@@ -211,7 +226,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </asp:View>
             </asp:MultiView>

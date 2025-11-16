@@ -14,12 +14,14 @@
             width: 100%;
             height: 73%;
         }
-         .GridDivUbicTec {
+
+        .GridDivUbicTec {
             vertical-align: top;
             overflow: auto;
             width: 100%;
             height: 95%;
         }
+
         .CentrarSvcReset {
             position: absolute;
             left: 50%;
@@ -27,6 +29,16 @@
             margin-left: -40%;
             height: 85%;
             padding: 5px;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        .semaforo-alerta {
+            animation: blink 1s infinite;
         }
     </style>
 </asp:Content>
@@ -38,14 +50,15 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
-                    <br /><br />
+                    <br />
+                    <br />
                     <div class="CentrarContenedor DivMarco">
                         <div class="row">
                             <div class="col-sm-2">
@@ -93,6 +106,11 @@
                                         CssClass="DiseñoGrid table table-sm" GridLines="Both"
                                         OnRowDataBound="GrdDatos_RowDataBound">
                                         <Columns>
+                                            <asp:TemplateField HeaderText="" HeaderStyle-Width="1%">
+                                                <ItemTemplate>
+                                                    <asp:Literal ID="litSmfro" runat="server"></asp:Literal>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="aeronave" HeaderStyle-Width="5%">
                                                 <ItemTemplate>
                                                     <asp:Label Text='<%# Eval("Matricula") %>' runat="server" Width="100%" />
@@ -190,7 +208,8 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1SvcReset" runat="server">
-                     <br /><br />
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitSvcReset" runat="server" Text="servicios reseteable sin cero en el histórico" />
                     </h6>
@@ -250,7 +269,8 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2UbicTec" runat="server">
-                     <br /><br />
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitUbicTec" runat="server" Text="Ubicaciones Técnicas Sin Series Instaladas" />
                     </h6>
@@ -275,7 +295,7 @@
                                         <ItemTemplate>
                                             <asp:Label Text='<%# Eval("DescripcionNivel") %>' runat="server" />
                                         </ItemTemplate>
-                                    </asp:TemplateField>                                   
+                                    </asp:TemplateField>
                                 </Columns>
                                 <HeaderStyle CssClass="GridCabecera" />
                                 <RowStyle CssClass="GridRowStyle" />

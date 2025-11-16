@@ -44,6 +44,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             }
             if (!IsPostBack)
             {
+                CkbVisualTodo.Checked = true;
                 TxtDiaVisual.Text = "365";
                 ModSeguridad();
                 BindData("UPD");
@@ -95,20 +96,20 @@ namespace _77NeoWeb.Forms.Ingenieria
                     BtnUbicaTec.ToolTip = bO.Equals("BtnUbicaTecTT") ? bT : BtnUbicaTec.ToolTip;
                     LblTitServicios.Text = bO.Equals("LblTitServicios") ? bT : LblTitServicios.Text;
                     GrdDatos.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDatos.EmptyDataText;
-                    GrdDatos.Columns[0].HeaderText = bO.Equals("LblAeronave") ? bT : GrdDatos.Columns[0].HeaderText;
-                    GrdDatos.Columns[1].HeaderText = bO.Equals("GrdDesc") ? bT : GrdDatos.Columns[1].HeaderText;
-                    GrdDatos.Columns[2].HeaderText = bO.Equals("GrdDoc") ? bT : GrdDatos.Columns[2].HeaderText;
-                    GrdDatos.Columns[5].HeaderText = bO.Equals("GrdFecUC") ? bT : GrdDatos.Columns[5].HeaderText;
-                    GrdDatos.Columns[6].HeaderText = bO.Equals("GrdOT") ? bT : GrdDatos.Columns[6].HeaderText;
-                    GrdDatos.Columns[8].HeaderText = bO.Equals("GrdProy") ? bT : GrdDatos.Columns[8].HeaderText;
-                    GrdDatos.Columns[9].HeaderText = bO.Equals("GrdFrec") ? bT : GrdDatos.Columns[9].HeaderText;
-                    GrdDatos.Columns[10].HeaderText = bO.Equals("GrdUnMed") ? bT : GrdDatos.Columns[10].HeaderText;
-                    GrdDatos.Columns[11].HeaderText = bO.Equals("GrdExt") ? bT : GrdDatos.Columns[11].HeaderText;
-                    GrdDatos.Columns[12].HeaderText = bO.Equals("GrdRemn") ? bT : GrdDatos.Columns[12].HeaderText;
-                    GrdDatos.Columns[13].HeaderText = bO.Equals("GrdFrecD") ? bT : GrdDatos.Columns[13].HeaderText;
-                    GrdDatos.Columns[14].HeaderText = bO.Equals("GrdExtD") ? bT : GrdDatos.Columns[14].HeaderText;
-                    GrdDatos.Columns[15].HeaderText = bO.Equals("GrdRmnD") ? bT : GrdDatos.Columns[15].HeaderText;
-                    GrdDatos.Columns[16].HeaderText = bO.Equals("GrdUltDP") ? bT : GrdDatos.Columns[16].HeaderText;
+                    GrdDatos.Columns[1].HeaderText = bO.Equals("LblAeronave") ? bT : GrdDatos.Columns[1].HeaderText;
+                    GrdDatos.Columns[2].HeaderText = bO.Equals("GrdDesc") ? bT : GrdDatos.Columns[2].HeaderText;
+                    GrdDatos.Columns[3].HeaderText = bO.Equals("GrdDoc") ? bT : GrdDatos.Columns[3].HeaderText;
+                    GrdDatos.Columns[6].HeaderText = bO.Equals("GrdFecUC") ? bT : GrdDatos.Columns[6].HeaderText;
+                    GrdDatos.Columns[7].HeaderText = bO.Equals("GrdOT") ? bT : GrdDatos.Columns[7].HeaderText;
+                    GrdDatos.Columns[9].HeaderText = bO.Equals("GrdProy") ? bT : GrdDatos.Columns[9].HeaderText;
+                    GrdDatos.Columns[10].HeaderText = bO.Equals("GrdFrec") ? bT : GrdDatos.Columns[10].HeaderText;
+                    GrdDatos.Columns[11].HeaderText = bO.Equals("GrdUnMed") ? bT : GrdDatos.Columns[11].HeaderText;
+                    GrdDatos.Columns[12].HeaderText = bO.Equals("GrdExt") ? bT : GrdDatos.Columns[12].HeaderText;
+                    GrdDatos.Columns[13].HeaderText = bO.Equals("GrdRemn") ? bT : GrdDatos.Columns[13].HeaderText;
+                    GrdDatos.Columns[14].HeaderText = bO.Equals("GrdFrecD") ? bT : GrdDatos.Columns[14].HeaderText;
+                    GrdDatos.Columns[15].HeaderText = bO.Equals("GrdExtD") ? bT : GrdDatos.Columns[15].HeaderText;
+                    GrdDatos.Columns[16].HeaderText = bO.Equals("GrdRmnD") ? bT : GrdDatos.Columns[16].HeaderText;
+                    GrdDatos.Columns[17].HeaderText = bO.Equals("GrdUltDP") ? bT : GrdDatos.Columns[17].HeaderText;
                     //**********************************Servicios Reseteable  ******************************************
                     IbtCerrarSvcReset.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarSvcReset.ToolTip;
                     LblTitSvcReset.Text = bO.Equals("LblTitServicios") ? bT : LblTitSvcReset.Text;
@@ -214,20 +215,32 @@ namespace _77NeoWeb.Forms.Ingenieria
             if (e.Row.RowType == DataControlRowType.DataRow)  // registros
             {
                 DataRowView dr = e.Row.DataItem as DataRowView;
+                Literal litSmfro = (Literal)e.Row.FindControl("litSmfro");
                 string VbCap = dr["Bandera"].ToString();
+                string S_W_S = dr["W_S"].ToString();
                 switch (VbCap)
                 {
                     case "3":// Vencidos
-                        e.Row.BackColor = System.Drawing.Color.Tomato;
-                        e.Row.ForeColor = System.Drawing.Color.White;
+                             // e.Row.BackColor = System.Drawing.Color.Tomato;
+                             //e.Row.ForeColor = System.Drawing.Color.White;
+                        litSmfro.Text = "<i class='bi bi-circle-fill semaforo-alerta' style='color:red; font-size:20px;'></i>";
+                        if (!S_W_S.Trim().Equals("")) { litSmfro.Text = "<i class='bi bi-circle-fill' style='color:Darkred; font-size:20px;'></i>"; }// si tiene WS no parpadea
                         break;
                     case "2":// Proximos a vencerse
-                        e.Row.BackColor = System.Drawing.Color.GreenYellow;
+                             //e.Row.BackColor = System.Drawing.Color.GreenYellow;
+                        litSmfro.Text = "<i class='bi bi-circle-fill semaforo-alerta' style='color:Orange; font-size:20px;'></i>";
+                        break;
+                    default:  // OK                      
+                        litSmfro.Text = "<i class='bi bi-circle-fill' style='color:Green; font-size:20px;'></i>";
                         break;
                 }/**/
                 VbCap = dr["Proyeccion"].ToString();
                 if (VbCap.Equals("")) // No tiene configurada la fecha del ult cumplimiento en servicios
-                { e.Row.Cells[5].BackColor = System.Drawing.Color.LightSalmon; }
+                {
+                    litSmfro.Text = "<i class='bi bi-circle-fill semaforo-alerta' style='color:Yellow; font-size:20px;'></i>";
+                    e.Row.Cells[6].BackColor = System.Drawing.Color.LightSalmon;
+                    //e.Row.Cells[6].Text = "<i class='semaforo-alerta' style='color:red; font-size:20px;'></i>";
+                }
             }
         }
         protected void IbnExcel_Click(object sender, ImageClickEventArgs e)

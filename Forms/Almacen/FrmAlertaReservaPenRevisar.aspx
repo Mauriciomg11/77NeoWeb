@@ -1,8 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmAlertaReservaPenRevisar.aspx.cs" Inherits="_77NeoWeb.Forms.Almacen.FrmAlertaReservaPenRevisar" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style type="text/css">       
-
+    <style type="text/css">
         .GridDivScroll {
             vertical-align: top;
             overflow: auto;
@@ -20,12 +19,22 @@
             height: 400px;
             width: 95%;
         }
+
+        @keyframes blink {
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        .semaforo-alerta {
+            animation: blink 1s infinite;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <div id="ModalAlerta" class="modal fade " tabindex="-1" role="dialog">
@@ -46,6 +55,11 @@
                                         <asp:GridView ID="GrdAlrta" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
                                             CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" OnRowDataBound="GrdAlrta_RowDataBound">
                                             <Columns>
+                                                <asp:TemplateField HeaderText="" HeaderStyle-Width="1%">
+                                                    <ItemTemplate>
+                                                        <asp:Literal ID="litSmfro" runat="server"></asp:Literal>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="ot">
                                                     <ItemTemplate>
                                                         <asp:Label Text='<%# Eval("Orden") %>' runat="server" />
@@ -112,12 +126,12 @@
                         </ContentTemplate>
                         <Triggers>
                             <%--<asp:AsyncPostBackTrigger ControlID ="BtnExportarModl" EventName ="Click" />--%>
-                             <asp:PostBackTrigger ControlID="BtnExportarModl" />
+                            <asp:PostBackTrigger ControlID="BtnExportarModl" />
                         </Triggers>
                     </asp:UpdatePanel>
                 </div>
                 <div class="modal-footer">
-                     <asp:Button ID="BtnExportarModl" runat="server" class="btn btn-default" Text="exportar" OnClick="BtnExportarModl_Click"/>
+                    <asp:Button ID="BtnExportarModl" runat="server" class="btn btn-default" Text="exportar" OnClick="BtnExportarModl_Click" />
                     <asp:Button ID="BtnCerrarAlerta" runat="server" CssClass="btn btn-default" Text="cerrar" data-dismiss="modal" />
                 </div>
             </div>

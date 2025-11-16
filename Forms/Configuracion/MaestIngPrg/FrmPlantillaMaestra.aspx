@@ -96,7 +96,7 @@
     <asp:UpdatePanel ID="UpPn2" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
 
-            <div class="CentrarContenedor DivMarco">
+            <div class="">
                 <table class="TablaFlota">
                     <tr>
                         <td>
@@ -109,6 +109,7 @@
                 </table>
                 <div class="row">
                     <div class="col-sm-3">
+                        <br />
                         <asp:Label ID="LblNumMot" runat="server" Text="ATAS" CssClass="LblTextoBusq" /><%--LblATA --%>
                         <asp:ListBox ID="LstCapitulo" runat="server" CssClass="CsListBox" Font-Size="10px" OnSelectedIndexChanged="LstCapitulo_SelectedIndexChanged" AutoPostBack="True" />
                     </div>

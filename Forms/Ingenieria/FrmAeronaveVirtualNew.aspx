@@ -19,12 +19,12 @@
         }
 
         /*.DivGrid {*/
-            /*margin: 0 auto;*/
-            /*text-align: left;
+        /*margin: 0 auto;*/
+        /*text-align: left;
             width: 100%;*/
-            /*height: 600px;*/
-            /*top: 15%;*/
-            /*margin-top: 0px;
+        /*height: 600px;*/
+        /*top: 15%;*/
+        /*margin-top: 0px;
         }*/
 
         .DivGridAVirtual {
@@ -39,6 +39,16 @@
 
         .TitElemContad {
             width: 20%;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        .semaforo-alerta {
+            animation: blink 1s infinite;
         }
     </style>
 </asp:Content>
@@ -98,12 +108,13 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPnlBtnPpl" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-            <br /><br />
+            <br />
+            <br />
             <asp:Table ID="TblBtnPpal" runat="server">
                 <asp:TableRow>
                     <asp:TableCell Width="2%">
@@ -304,6 +315,11 @@
                         <asp:GridView ID="GrdListaAeroVirtual" runat="server" EmptyDataText="Sin configurar..!" AutoGenerateColumns="False" DataKeyNames="Mayor"
                             CssClass="DiseñoGrid table table-sm" GridLines="Both" OnRowDataBound="GrdListaAeroVirtual_RowDataBound">
                             <Columns>
+                                <asp:TemplateField HeaderText="" HeaderStyle-Width="1%">
+                                    <ItemTemplate>
+                                        <asp:Literal ID="litSmfro" runat="server"></asp:Literal>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="UltimoNivel" HeaderStyle-Width="3%">
                                     <ItemTemplate>
                                         <asp:Label ID="LblUlNiv" Text='<%# Eval("UltimoNivel") %>' runat="server" />
@@ -448,7 +464,7 @@
                     <asp:TextBox ID="TxtUbiTecRemElem" runat="server" Width="5%" CssClass="form-control-sm heightCampo" Enabled="false" />
                     <asp:Label ID="LblPosicRemElem" runat="server" CssClass="LblEtiquet" Text="Posicion:" />
                     <asp:DropDownList ID="DdlPosicRemElem" runat="server" CssClass="heightCampo" Width="10%" Enabled="false" />
-                    <asp:Label ID="LblFechaRemElem" runat="server" CssClass="LblEtiquet" Text="Fecha:" />                   
+                    <asp:Label ID="LblFechaRemElem" runat="server" CssClass="LblEtiquet" Text="Fecha:" />
                     <asp:TextBox ID="TxtFechaRemElem" runat="server" CssClass="form-control-sm heightCampo" onKeyDown="return false" TextMode="Date" Width="12%" OnTextChanged="TxtFechaRemElem_TextChanged" AutoPostBack="true" />
                     <asp:Button ID="BtnRemCompensac" CssClass="btn btn-danger" runat="server" Height="25px" Width="18px" Text="C" Font-Size="9px" ToolTip="Libros de vuelo para la compensación" OnClick="BtnRemCompensac_Click" OnClientClick="return confirm('¿Desea realizar la compensación?');" Visible="false" />
                     <asp:Label ID="LblMotivRemElem" runat="server" CssClass="LblEtiquet" Text="Motivo:" />
@@ -605,7 +621,7 @@
                     <asp:Label ID="LblPosicInsMay" runat="server" CssClass="LblEtiquet" Text="Posicion:" />
                     <asp:DropDownList ID="DdlPosicInsMay" runat="server" CssClass="heightCampo" Width="10%" OnTextChanged="DdlPosicInsMay_TextChanged" AutoPostBack="true" />
                     <asp:Label ID="LblFechaInsMay" runat="server" CssClass="LblEtiquet" Text="Fecha:" />
-                   <asp:TextBox ID="TxtFechaInsMay" runat="server" CssClass="form-control-sm heightCampo"  onKeyDown="return false" TextMode="Date" Width="11%" OnTextChanged="TxtFechaInsMay_TextChanged" AutoPostBack="true" />                  
+                    <asp:TextBox ID="TxtFechaInsMay" runat="server" CssClass="form-control-sm heightCampo" onKeyDown="return false" TextMode="Date" Width="11%" OnTextChanged="TxtFechaInsMay_TextChanged" AutoPostBack="true" />
                     <asp:Button ID="BtnCompensacInsMay" CssClass="btn btn-danger" runat="server" Height="25px" Width="18px" Text="C" Font-Size="9px" ToolTip="Libros de vuelo para la compensación" OnClick="BtnCompensacInsMay_Click" OnClientClick="return confirm('¿Desea realizar la compensación?');" Visible="false" />
                     <asp:Label ID="LblMotivInsMay" runat="server" CssClass="LblEtiquet" Text="Motivo:" />
                     <asp:TextBox ID="TxtMotivInsMay" runat="server" CssClass="form-control-sm" TextMode="MultiLine" MaxLength="240" Width="15%" Height="1%" />
@@ -926,7 +942,7 @@
                     <asp:Label ID="LblPosicInsSubC" runat="server" CssClass="LblEtiquet" Text="Posicion:" />
                     <asp:DropDownList ID="DdlPosicInsSubC" runat="server" CssClass="heightCampo" Width="10%" />
                     <asp:Label ID="LblFechaInsSubC" runat="server" CssClass="LblEtiquet" Text="Fecha:" />
-                    <asp:TextBox ID="TxtFechaInsSubC" runat="server" CssClass="form-control-sm heightCampo" onKeyDown="return false" TextMode="Date" Width="11%" />                
+                    <asp:TextBox ID="TxtFechaInsSubC" runat="server" CssClass="form-control-sm heightCampo" onKeyDown="return false" TextMode="Date" Width="11%" />
                     <asp:Label ID="LblMotivInsSubC" runat="server" CssClass="LblEtiquet" Text="Motivo:" />
                     <asp:TextBox ID="TxtMotivInsSubC" runat="server" CssClass="form-control-sm" TextMode="MultiLine" MaxLength="240" Width="15%" Height="1%" />
                     <br />
@@ -997,7 +1013,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Ultimo Cumplim" HeaderStyle-Width="10%">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="TxtFecUltCumplInsSubC" Text='<%# Eval("FechaVencWeb") %>' runat="server" Width="100%" onKeyDown="return false" TextMode="Date" OnTextChanged="TxtFecUltCumplInsSubC_TextChanged" />                                               
+                                                    <asp:TextBox ID="TxtFecUltCumplInsSubC" Text='<%# Eval("FechaVencWeb") %>' runat="server" Width="100%" onKeyDown="return false" TextMode="Date" OnTextChanged="TxtFecUltCumplInsSubC_TextChanged" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Reset" HeaderStyle-Width="6%">
@@ -1183,8 +1199,8 @@
                     <asp:DropDownList ID="DdlCrearElemPn" runat="server" CssClass="heightCampo" Width="15%" OnTextChanged="DdlCrearElemPn_TextChanged" AutoPostBack="true" />
                     <asp:Label ID="LblCrearElemSn" runat="server" Text="S/N: " CssClass="LblTextoBusq" />
                     <asp:TextBox ID="TxtCrearElemSn" runat="server" Width="12%" CssClass="form-control-sm heightCampo" />
-                    <asp:Label ID="LblCrearElemFechRec" runat="server" CssClass="LblEtiquet" Text="Fecha Recibo:" />                  
-                    <asp:TextBox ID="TxtCrearElemFechRec" runat="server" CssClass="form-control-sm heightCampo" TextMode="Date" Width="11%" />                  
+                    <asp:Label ID="LblCrearElemFechRec" runat="server" CssClass="LblEtiquet" Text="Fecha Recibo:" />
+                    <asp:TextBox ID="TxtCrearElemFechRec" runat="server" CssClass="form-control-sm heightCampo" TextMode="Date" Width="11%" />
                     <asp:Label ID="LblCrearElemFechFabr" runat="server" CssClass="LblEtiquet" Text="Fecha Fabricación:" />
                     <asp:TextBox ID="TxtCrearElemFechFabr" runat="server" CssClass="form-control-sm heightCampo" TextMode="Date" Width="11%" />
                     <br />
