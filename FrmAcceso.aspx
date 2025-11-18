@@ -35,6 +35,25 @@
             text-align: left;
             color: antiquewhite;
         }
+
+        .contenedor-imagen {
+            background-image: url("../images/XOM_Blanco.jpg");
+            background-size: cover; /* Cubre todo el div sin distorsionar, cortando partes si es necesario */
+            background-repeat: no-repeat;/**/ /* Evita que la imagen se repita */
+            background-position: center;/**/ /* Centra la imagen */
+            width: 400px;/**/ /* Ejemplo: ajusta el tamaño del div */
+           height: auto; /*/**/
+        }
+
+        .ddl-fondo {
+            background-color: black; /* Un color azul de ejemplo */
+            color: black; /* Color del texto */
+        }
+
+        .placeholder-color::placeholder {
+            color:black; /* O el color que prefieras */
+            opacity: 1; /* Para asegurar que el color se vea completo */
+        }
     </style>
     <script type="text/javascript">
         function myFuncionddlP() {
@@ -62,7 +81,7 @@
             </div>
         </div>
     </div>
-    <div class="ContenedorLogin">
+    <div class="ContenedorLogin contenedor-imagen">
         <div>
             <div class="btn-info">
                 <h2>
@@ -72,17 +91,16 @@
         <asp:UpdatePanel ID="UpPnlCampos" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <div class="form-group">
-                    <asp:DropDownList ID="DdlNit" runat="server" CssClass="form-control" Height="30px" Font-Size="Smaller" OnTextChanged="DdlNit_TextChanged" />
-                    <asp:TextBox ID="TxtPassEmsa" runat="server" TextMode="Password" CssClass="form-control" placeholder="Company password" Height="30px" /><br />
-                    <asp:DropDownList ID="DdlBD" runat="server" CssClass="form-control" Height="30px" Font-Size="Smaller" Visible="false" />
-                    <asp:TextBox ID="TxtUsuario" runat="server" CssClass="form-control" placeholder="Usuario" Height="30px" Visible="false" />
-                    <asp:TextBox ID="TxtClave" runat="server" TextMode="Password" CssClass="form-control" placeholder="Password" Height="30px" Visible="false" />
+                    <asp:DropDownList ID="DdlNit" runat="server" CssClass="form-control ddl-fondo" Height="30px" BackColor="Transparent" Font-Size="Smaller" OnTextChanged="DdlNit_TextChanged" />
+                    <asp:TextBox ID="TxtPassEmsa" runat="server" TextMode="Password" CssClass="form-control ddl-fondo placeholder-color" BackColor="Transparent" placeholder="Company password" Height="30px" /><br />
+                    <asp:DropDownList ID="DdlBD" runat="server" CssClass="form-control ddl-fondo" Height="30px" BackColor="Transparent" Font-Size="Smaller" Visible="false" />
+                    <asp:TextBox ID="TxtUsuario" runat="server" CssClass="form-control ddl-fondo placeholder-color" placeholder="Usuario" BackColor="Transparent" ForeColor="Black" Height="30px" Visible="false" />
+                    <asp:TextBox ID="TxtClave" runat="server" TextMode="Password" CssClass="form-control ddl-fondo placeholder-color" BackColor="Transparent" ForeColor="Black" placeholder="Password" Height="30px" Visible="false" />
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
         <div class="form-group">
             <asp:Button ID="TbnIngresar" runat="server" Text="Confirm Company" CssClass="form-control btn btn-primary active" OnClick="TbnIngresar_Click" />
         </div>
-
     </div>
 </asp:Content>

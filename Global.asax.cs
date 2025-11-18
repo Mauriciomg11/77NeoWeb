@@ -26,13 +26,14 @@ namespace _77NeoWeb
         protected void Session_Start(object sender, EventArgs e)
         {
             /*
+            10.02.05.23| 18/11/2025| Cambio de imagen en el frm de acceso.
             10.02.05.22| 14/11/2025| Semaforo en las alertas almacen e ingenieria.
             10.02.05.21| 23/10/2025| bajar campos de los informes de ingenieria
             10.02.05.21| 04/02/2025| corrección formularios Incoming y Movimientos Almacen, no se visualizaba el detalle
             10.02.05.21| 28/01/2025| implementacion Menu
              */
-            Session["77Version"] = "10.02.05.22";
-            Session["77Act"] = "7";
+            Session["77Version"] = "10.02.05.23";
+            Session["77Act"] = "1";
             Session["$VR"] = "";
             Session["Nit77Cia"] = ""; // Nita cia 811035879-1
             Session["VblCE1MS"] = 1;

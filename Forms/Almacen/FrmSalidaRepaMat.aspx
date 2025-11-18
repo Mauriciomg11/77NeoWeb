@@ -295,7 +295,7 @@
                                     <asp:Label ID="LblAsigCantSol" runat="server" CssClass="LblEtiquet" Text="cantidad solic: " />
                                     <asp:Label ID="LblAsigCantSolV" runat="server" CssClass="LblEtiquet" Text="" />
                                     <asp:GridView ID="GrdAsignar" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
-                                        DataKeyNames="CodIdUbicacion,CodElemento,CodUbicaBodega, CodTercero, FechaVencimientoR, FechaShelfLife, CantRepa, CodReferencia, IdentificadorElemR, Activo, CodEstadoPn"
+                                        DataKeyNames="CodIdUbicacion,CodElemento,CodUbicaBodega, CodTercero, FechaVencimientoR, FechaShelfLife, CantRepa, CodReferencia, IdentificadorElemR, Activo, CodEstadoPn,CodBogIntaNals"
                                         CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" OnRowCommand="GrdAsignar_RowCommand" OnRowDataBound="GrdAsignar_RowDataBound">
                                         <Columns>
                                             <asp:TemplateField>
