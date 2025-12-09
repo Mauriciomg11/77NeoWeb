@@ -139,7 +139,8 @@
                     </table>
                     <div class="CentrarGrid pre-scrollable">
                         <asp:GridView ID="GrdModalBusqRepa" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="CodReparacion"
-                            CssClass="GridControl DiseñoGrid" GridLines="Both" AllowPaging="true" OnRowCommand="GrdBusq_RowCommand" OnRowDataBound="GrdBusq_RowDataBound">
+                            CssClass="GridControl DiseñoGrid" GridLines="Both" AllowPaging="true" OnRowCommand="GrdBusq_RowCommand" OnRowDataBound="GrdBusq_RowDataBound"
+                            OnPageIndexChanging="GrdModalBusqRepa_PageIndexChanging">
                             <Columns>
                                 <asp:TemplateField HeaderText="Select">
                                     <ItemTemplate>

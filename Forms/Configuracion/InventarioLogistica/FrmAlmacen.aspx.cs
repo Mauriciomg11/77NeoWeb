@@ -128,7 +128,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     IbtCerrarAsigUbica.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarAsigUbica.ToolTip;
                     LblTitUbicaDispo.Text = bO.Equals("LblTitUbicaDispo") ? bT : LblTitUbicaDispo.Text;
                     CkbTodasUbica.Text = bO.Equals("CkbTodasUbica") ? "&nbsp" + bT : CkbTodasUbica.Text;
-                    GrdUbicaDispo.Columns[0].HeaderText = bO.Equals("GrdAsig") ? bT : GrdUbicaDispo.Columns[0].HeaderText;
+                    GrdUbicaDispo.Columns[0].HeaderText = bO.Equals("LblAsigMstr") ? bT : GrdUbicaDispo.Columns[0].HeaderText;
                     GrdUbicaDispo.Columns[1].HeaderText = bO.Equals("GrdBod") ? bT : GrdUbicaDispo.Columns[1].HeaderText;
                     GrdUbicaDispo.Columns[2].HeaderText = bO.Equals("GrdFil") ? bT : GrdUbicaDispo.Columns[2].HeaderText;
                     GrdUbicaDispo.Columns[3].HeaderText = bO.Equals("GrdColmn") ? bT : GrdUbicaDispo.Columns[3].HeaderText;

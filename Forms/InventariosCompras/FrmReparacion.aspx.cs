@@ -1259,6 +1259,14 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 }
             }
         }
+        protected void GrdModalBusqRepa_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GrdModalBusqRepa.PageIndex = e.NewPageIndex;
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            if (LblTitModalBusqRepa.Visible == true) { BindModalBusqRepa(); }
+            if (LblTitModalBusqProv.Visible == true) { BindModalBusqCot(); }
+            ScriptManager.RegisterStartupScript((sender as Control), this.GetType(), "Popup", "ShowPopup();", true);
+        }
         //****************************** Pedido Repa Local **************************************       
         protected void BtnSolPedInter_Click(object sender, EventArgs e)
         {
@@ -1739,8 +1747,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
             Result = Idioma.Select("Objeto= 'InfMonto'");
             foreach (DataRow row in Result) { DR["MltlC24"] = row["Texto"].ToString().Trim() + ":"; }// Monto
 
-            Result = Idioma.Select("Objeto= 'InfFecTRM'");
-            foreach (DataRow row in Result) { DR["MltlC25"] = row["Texto"].ToString().Trim() + ":"; }// Valor TRM
+            Result = Idioma.Select("Objeto= 'LblFechTRMMstr'");
+            foreach (DataRow row in Result) { DR["MltlC25"] = row["Texto"].ToString().Trim() + ":"; }// fecha TRM
 
             DR["MltlC26"] = "";
             if (CkbRepair.Checked == true) { DR["MltlC26"] = DR["MltlC26"] + CkbRepair.Text; }
@@ -2104,6 +2112,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     }
                 }
             }
-        }
+        }       
     }
 }

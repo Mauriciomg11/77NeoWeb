@@ -136,14 +136,15 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
-                    <br /><br />
+                    <br />
+                    <br />
                     <div class="CentrarContenedor DivMarco">
                         <div class="row">
                             <div class="col-sm-7">
@@ -480,51 +481,52 @@
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
                     <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LbltitBusq" runat="server" Text="Opciones de búsqueda " />
                     </h6>
                     <asp:ImageButton ID="IbtCerrarBusq" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarBusq_Click" />
-                      <asp:Table ID="TblBusqHK" runat="server" class="TabOpcBusq" Visible="false" Width="10%">
-                            <asp:TableRow>
-                                <asp:TableCell>
-                                    <asp:RadioButton ID="RdbBusqDes" runat="server" GroupName="BusqA" CssClass="LblTextoBusq" Text="Descripción" />
-                                </asp:TableCell>
-                            </asp:TableRow>
-                        </asp:Table>
-                        <asp:Table ID="TblBusqPN" runat="server" class="TabOpcBusq" Visible="false" Width="20%">
-                            <asp:TableRow>
-                                <asp:TableCell Width="10%">
-                                    <asp:RadioButton ID="RdbBusqDesPN" runat="server" GroupName="BusqP" CssClass="LblTextoBusq" Text="Descripción" />
-                                </asp:TableCell>
-                                <asp:TableCell Width="10%">
-                                    <asp:RadioButton ID="RdbBusqPnPN" runat="server" GroupName="BusqP" CssClass="LblTextoBusq" Text="&nbsp P/N" />
-                                </asp:TableCell>
-                            </asp:TableRow>
-                        </asp:Table>
-                     <asp:Table ID="TblBusqSN" runat="server" class="TabOpcBusq" Visible="false" Width="30%">
-                            <asp:TableRow>
-                                <asp:TableCell Width="10%">
-                                    <asp:RadioButton ID="RdbBusqDesSN" runat="server" GroupName="BusqS" CssClass="LblTextoBusq" Text="Descripción" />
-                                </asp:TableCell>
-                                <asp:TableCell Width="10%">
-                                    <asp:RadioButton ID="RdbBusqPnSN" runat="server" GroupName="BusqS" CssClass="LblTextoBusq" Text="&nbsp P/N" />
-                                </asp:TableCell>
-                                <asp:TableCell Width="10%">
-                                    <asp:RadioButton ID="RdbBusqSnSN" runat="server" GroupName="BusqS" CssClass="LblTextoBusq" Text="&nbsp S/N" />
-                                </asp:TableCell>
-                            </asp:TableRow>
-                        </asp:Table>
-                     <table class="TabOpcBusq">
-                            <tr>
-                                <td>
-                                    <asp:Label ID="LblBusq" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
-                                <td>
-                                    <asp:TextBox ID="TxtBusqueda" runat="server" Width="450px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
-                                <td>
-                                    <asp:ImageButton ID="IbtConsultar" runat="server" ImageUrl="~/images/FindV2.png" ToolTip="Consultar" CssClass="BtnImagenBusqueda" OnClick="IbtConsultar_Click" /></td>
-                            </tr>
-                        </table>
-                    <div class="CentrarBusq DivMarco">     
+                    <asp:Table ID="TblBusqHK" runat="server" class="TabOpcBusq" Visible="false" Width="10%">
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:RadioButton ID="RdbBusqDes" runat="server" GroupName="BusqA" CssClass="LblTextoBusq" Text="Descripción" />
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
+                    <asp:Table ID="TblBusqPN" runat="server" class="TabOpcBusq" Visible="false" Width="20%">
+                        <asp:TableRow>
+                            <asp:TableCell Width="10%">
+                                <asp:RadioButton ID="RdbBusqDesPN" runat="server" GroupName="BusqP" CssClass="LblTextoBusq" Text="Descripción" />
+                            </asp:TableCell>
+                            <asp:TableCell Width="10%">
+                                <asp:RadioButton ID="RdbBusqPnPN" runat="server" GroupName="BusqP" CssClass="LblTextoBusq" Text="&nbsp P/N" />
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
+                    <asp:Table ID="TblBusqSN" runat="server" class="TabOpcBusq" Visible="false" Width="30%">
+                        <asp:TableRow>
+                            <asp:TableCell Width="10%">
+                                <asp:RadioButton ID="RdbBusqDesSN" runat="server" GroupName="BusqS" CssClass="LblTextoBusq" Text="Descripción" />
+                            </asp:TableCell>
+                            <asp:TableCell Width="10%">
+                                <asp:RadioButton ID="RdbBusqPnSN" runat="server" GroupName="BusqS" CssClass="LblTextoBusq" Text="&nbsp P/N" />
+                            </asp:TableCell>
+                            <asp:TableCell Width="10%">
+                                <asp:RadioButton ID="RdbBusqSnSN" runat="server" GroupName="BusqS" CssClass="LblTextoBusq" Text="&nbsp S/N" />
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
+                    <table class="TabOpcBusq">
+                        <tr>
+                            <td>
+                                <asp:Label ID="LblBusq" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
+                            <td>
+                                <asp:TextBox ID="TxtBusqueda" runat="server" Width="450px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar"></asp:TextBox></td>
+                            <td>
+                                <asp:ImageButton ID="IbtConsultar" runat="server" ImageUrl="~/images/FindV2.png" ToolTip="Consultar" CssClass="BtnImagenBusqueda" OnClick="IbtConsultar_Click" /></td>
+                        </tr>
+                    </table>
+                    <div class="CentrarBusq DivMarco">
                         <br />
                         <div class="CentrarGrid pre-scrollable">
                             <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
@@ -575,6 +577,11 @@
                                     <asp:TemplateField HeaderText="Desc elemento">
                                         <ItemTemplate>
                                             <asp:Label Text='<%# Eval("Descripcion_PN") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                      <asp:TemplateField HeaderText="modelo">
+                                        <ItemTemplate>
+                                            <asp:Label Text='<%# Eval("NomModelo") %>' runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>

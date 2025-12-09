@@ -6,7 +6,7 @@
             height: 25px;
             width: 95%;
             font-size: 12px;
-        }         
+        }
 
         .Font_btnCrud {
             font-size: 12px;
@@ -20,7 +20,7 @@
             margin-left: -30%;
             height: 85%;
             padding: 5px;
-             top: 270px
+            top: 290px
         }
 
         .TextR {
@@ -93,7 +93,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <div id="ModalBusqSP" class="modal fade" tabindex="-1" role="dialog">
@@ -186,9 +186,9 @@
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
-                    <div class="CentrarContenedor DivMarco">
-                        <br />
-                        <br />
+                    <br />
+                    <br />
+                    <div class="CentrarContenedor">
                         <div class="row">
                             <div class="col-sm-2">
                                 <asp:Label ID="LblNumCotiza" runat="server" CssClass="LblEtiquet" Text="cotización Nro.:" />
@@ -212,7 +212,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="CentrarContenedor DivMarco">
+                    <div class="CentrarContenedor">
                         <div id="Botones" class="row">
                             <div class="col-sm-4">
                                 <asp:Button ID="BtnCompra" runat="server" CssClass="btn btn-outline-primary Font_btnCrud" OnClick="BtnCompra_Click" Width="32%" Font-Size="13px" Font-Bold="true" Text="compra" />
@@ -442,7 +442,8 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
-                    <br /><br />
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOpcBusq" runat="server" Text="opciones de búsq." />
                     </h6>
@@ -464,9 +465,9 @@
                                 <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
                         </tr>
                     </table>
+                    <br />
                     <div class="CentrarBusq DivMarco">
                         <div class="CentrarGrid pre-scrollable">
-                            <br />
                             <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="IdCotizacion"
                                 CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowCommand="GrdBusq_RowCommand" OnRowDataBound="GrdBusq_RowDataBound">
                                 <Columns>
@@ -526,6 +527,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2Exportar" runat="server">
+                    <br />
                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitExport" runat="server" Text="opciones de búsq." />

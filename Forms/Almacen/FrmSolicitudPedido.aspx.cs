@@ -1,6 +1,8 @@
 ﻿using _77NeoWeb.prg;
 using _77NeoWeb.Prg;
+using _77NeoWeb.Prg.PrgIngenieria;
 using _77NeoWeb.Prg.PrgLogistica;
+using ClosedXML.Excel;
 using ExcelDataReader;
 using System;
 using System.Collections.Generic;
@@ -1605,7 +1607,66 @@ namespace _77NeoWeb.Forms.Almacen
             BindDDetTmp();
             MultVw.ActiveViewIndex = 0;
             GrdCargaMax.DataSource = null; GrdCargaMax.DataBind();
+        }
+        protected void BtnExportar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (TxtCodPedd.Text.Equals(""))
+                { return; }
+                Idioma = (DataTable)ViewState["TablaIdioma"]; Page.Title = ViewState["PageTit"].ToString().Trim();
+                string StSql, VbNomRpt = "";
 
+                CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
+
+                Cnx.SelecBD();
+                using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
+                {
+                    CursorIdioma.Alimentar("CurExportCotizaPetic", Session["77IDM"].ToString().Trim());
+                    StSql = "EXEC SP_PANTALLA_SolicitudPedido 21,@NumP,'','','CurExportCotizaPetic',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                    using (SqlCommand SC = new SqlCommand(StSql, con))
+                    {
+                        DataRow[] Result = Idioma.Select("Objeto= 'CurExportCotizaPetic'");
+                        foreach (DataRow row in Result)
+                        { VbNomRpt = row["Texto"].ToString().Trim(); }// Detalle Cotización
+
+                        SC.Parameters.AddWithValue("@NumP", TxtCodPedd.Text.Trim());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        SC.CommandTimeout = 90000000;
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            sda.SelectCommand = SC;
+                            using (DataSet ds = new DataSet())
+                            {
+                                sda.Fill(ds);
+
+                                ds.Tables[0].TableName = "77NeoWeb";
+                                using (XLWorkbook wb = new XLWorkbook())
+                                {
+                                    foreach (DataTable dt in ds.Tables) { wb.Worksheets.Add(dt); }
+                                    Response.Clear();
+                                    Response.Buffer = true;
+                                    Response.ContentType = "application/ms-excel";
+                                    Response.AddHeader("content-disposition", string.Format("attachment;filename={0}.xlsx", VbNomRpt));
+                                    Response.Charset = "";
+                                    using (MemoryStream MyMemoryStream = new MemoryStream())
+                                    {
+                                        wb.SaveAs(MyMemoryStream);
+                                        MyMemoryStream.WriteTo(Response.OutputStream);
+                                        Response.Flush();
+                                        Response.End();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Exportar Detalle Cotización", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
         }
     }
 }

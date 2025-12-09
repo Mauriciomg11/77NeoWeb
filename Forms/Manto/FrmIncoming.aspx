@@ -171,6 +171,7 @@
                 </asp:View>
                 <asp:View ID="Vw1CambioBod" runat="server">
                     <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitCambioBod" runat="server" Text="Traslado de Bodega" />
                     </h6>

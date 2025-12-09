@@ -123,7 +123,7 @@ namespace _77NeoWeb.Forms.Almacen
                     GrdDtllRitgr.Columns[10].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdDtllRitgr.Columns[10].HeaderText;
 
                     // *********************************************** Condiciones Almacenamiento / Manipulacion ***********************************************
-                    LblTitCondManiplc.Text = bO.Equals("LblTitCondManiplc") ? bT : LblTitCondManiplc.Text;
+                    LblTitCondManiplc.Text = bO.Equals("LblCondAlmaMstr") ? bT : LblTitCondManiplc.Text;
                     BtnCloseMdl.Text = bO.Equals("BtnCerrarMst") ? bT : BtnCloseMdl.Text;
                     GrdMdlCondManplc.Columns[0].HeaderText = bO.Equals("Descripcion") ? bT : GrdMdlCondManplc.Columns[0].HeaderText;
 
@@ -132,7 +132,7 @@ namespace _77NeoWeb.Forms.Almacen
                     LblTitAsigFis.Text = bO.Equals("LblTitAsigFis") ? bT : LblTitAsigFis.Text;
                     LblAsigCantSol.Text = bO.Equals("GrdCantSol") ? " | " + bT + ": " : LblAsigCantSol.Text;
                     LblAsigCantEntrg.Text = bO.Equals("GrdCantEntr") ? " | " + bT + ": " : LblAsigCantEntrg.Text;
-                    BtnAsignr.Text = bO.Equals("GrdAsig") ? bT : BtnAsignr.Text;
+                    BtnAsignr.Text = bO.Equals("LblAsigMstr") ? bT : BtnAsignr.Text;
                     GrdUbicaFisc.EmptyDataText = bO.Equals("GrdEmpty") ? bT : GrdUbicaFisc.EmptyDataText;
                     GrdUbicaFisc.Columns[0].HeaderText = bO.Equals("GrdEstdPn") ? bT : GrdUbicaFisc.Columns[0].HeaderText;
                     GrdUbicaFisc.Columns[3].HeaderText = bO.Equals("LoteMst") ? bT : GrdUbicaFisc.Columns[3].HeaderText;

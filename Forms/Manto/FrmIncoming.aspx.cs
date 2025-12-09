@@ -110,7 +110,7 @@ namespace _77NeoWeb.Forms.Manto
                     { TxtBusqueda.Attributes.Add("placeholder", bT); }
                     LblTitUbicaFis.Text = bO.Equals("LblTitUbicaFis") ? bT : LblTitUbicaFis.Text;
                     GrdDatos.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDatos.EmptyDataText;
-                    GrdDatos.Columns[0].HeaderText = bO.Equals("GrdAsig") ? bT : GrdDatos.Columns[0].HeaderText;
+                    GrdDatos.Columns[0].HeaderText = bO.Equals("LblAsigMstr") ? bT : GrdDatos.Columns[0].HeaderText;
                     GrdDatos.Columns[3].HeaderText = bO.Equals("GrdLot") ? bT : GrdDatos.Columns[3].HeaderText;
                     GrdDatos.Columns[4].HeaderText = bO.Equals("GrdRef") ? bT : GrdDatos.Columns[4].HeaderText;
                     GrdDatos.Columns[5].HeaderText = bO.Equals("GrdCant") ? bT : GrdDatos.Columns[5].HeaderText;

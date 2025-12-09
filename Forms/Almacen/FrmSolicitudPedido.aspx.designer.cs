@@ -186,6 +186,15 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.Button BtnAlert;
 
         /// <summary>
+        /// Control BtnExportar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnExportar;
+
+        /// <summary>
         /// Control BtnOpenCotiza.
         /// </summary>
         /// <remarks>

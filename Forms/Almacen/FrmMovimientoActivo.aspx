@@ -62,13 +62,13 @@
                         </div>
                         <div class="col-sm-6">
                             <br />
-                            <asp:Button ID="BtnSldDevCompra" runat="server" CssClass="btn btn-success" OnClick="BtnSldDevCompra_Click" Width="100%" Text="Devolucion Compra" ToolTip="Devolución de la Compra" Visible="false" />
+                            <asp:Button ID="BtnDevCompra" runat="server" CssClass="btn btn-success" OnClick="BtnDevCompra_Click" Width="100%" Text="devolucion compra" ToolTip="devolución de la compra" Visible="true" />
                         </div>
                     </div>
                        <div id ="Reparaciones"  class="row" >
                         <div class="col-sm-6">
                             <br />
-                            <asp:Button ID="BtnEntReparacion" runat="server" CssClass="btn btn-success" OnClick="BtnEntReparacion_Click" Width="100%" Text="Entrada Reparación" ToolTip="Entrada por Reparación" Visible="false"/>
+                            <asp:Button ID="BtnEntReparacion" runat="server" CssClass="btn btn-success" OnClick="BtnEntReparacion_Click" Width="100%" Text="entrada reparación" ToolTip="Entrada por Reparación"/>
                         </div>
                         <div class="col-sm-6">
                             <br />

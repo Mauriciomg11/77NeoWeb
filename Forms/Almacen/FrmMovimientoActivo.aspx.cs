@@ -101,13 +101,20 @@ namespace _77NeoWeb.Forms.Almacen
                     BtnSldConsumo.ToolTip = bO.Equals("BtnSldConsumoTT") ? bT : BtnSldConsumo.ToolTip;
                     BtnEntReintegro.Text = bO.Equals("BtnEntReintegro") ? bT : BtnEntReintegro.Text;
                     BtnEntReintegro.ToolTip = bO.Equals("BtnEntReintegroTT") ? bT : BtnEntReintegro.ToolTip;
+                    BtnEntCompra.Text = bO.Equals("BtnEntCompra") ? bT : BtnEntCompra.Text;
+                    BtnEntCompra.ToolTip = bO.Equals("BtnEntCompraTT") ? bT : BtnEntCompra.ToolTip;
+                    BtnSalReparacion.Text = bO.Equals("BtnSalReparacion") ? bT : BtnSalReparacion.Text;
+                    BtnSalReparacion.ToolTip = bO.Equals("BtnSalReparacionTT") ? bT : BtnSalReparacion.ToolTip;   
+                    BtnEntReparacion.Text = bO.Equals("BtnEntReparacion") ? bT : BtnEntReparacion.Text;
+                    BtnEntReparacion.ToolTip = bO.Equals("BtnEntReparacionTT") ? bT : BtnEntReparacion.ToolTip;
+                    BtnDevCompra.Text = bO.Equals("BtnDevCompra") ? bT : BtnDevCompra.Text;
+                    BtnDevCompra.ToolTip = bO.Equals("BtnDevCompraTT") ? bT : BtnDevCompra.ToolTip;
 
                 }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
             }
         }
-
         protected void BtnEntReintegro_Click(object sender, EventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
@@ -120,29 +127,27 @@ namespace _77NeoWeb.Forms.Almacen
             string CT = "window.open('/Forms/Almacen/FrmSalConsumoMatCoMH.aspx', '_blank');";
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
         }
-
         protected void BtnEntCompra_Click(object sender, EventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
             string CT = "window.open('/Forms/Almacen/frmEntradaCompraMat.aspx', '_blank');";
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
-        }
-
-        protected void BtnSldDevCompra_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        }        
         protected void BtnEntReparacion_Click(object sender, EventArgs e)
         {
-
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string CT = "window.open('/Forms/Almacen/FrmEntradaReparacionMat.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
         }
-
         protected void BtnSalReparacion_Click(object sender, EventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
             string CT = "window.open('/Forms/Almacen/FrmSalidaRepaMat.aspx', '_blank');";
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
+        }
+        protected void BtnDevCompra_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

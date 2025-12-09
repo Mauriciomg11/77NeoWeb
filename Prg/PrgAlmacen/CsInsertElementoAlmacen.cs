@@ -48,9 +48,11 @@ namespace _77NeoWeb.Prg.PrgAlmacen
         public string UndMed_Compra { get; set; }
         public string FacturaNro { get; set; }
         public string NumSolPed { get; set; }
+        public string CodUbicaDest { get; set; }
         public string CCosto { get; set; }
         public int AfectaInventario { get; set; }
         public double CostoImportacion { get; set; }
+        public double Costo_Export { get; set; } // Nuevo campo
         public string CodTercero { get; set; }
         public int Consignacion { get; set; }
         public int CodIdUbicacion { get; set; }
@@ -99,9 +101,11 @@ namespace _77NeoWeb.Prg.PrgAlmacen
             TblDetalle.Columns.Add("UndMed_Compra", typeof(string));
             TblDetalle.Columns.Add("FacturaNro", typeof(string));
             TblDetalle.Columns.Add("NumSolPed", typeof(string));
+            TblDetalle.Columns.Add("CodUbicaDest", typeof(string));
             TblDetalle.Columns.Add("CCosto", typeof(string));
             TblDetalle.Columns.Add("AfectaInventario", typeof(int));
             TblDetalle.Columns.Add("CostoImportacion", typeof(double));
+            TblDetalle.Columns.Add("Costo_Export", typeof(double));// Nuevo campo
             TblDetalle.Columns.Add("CodTercero", typeof(string));
             TblDetalle.Columns.Add("Consignacion", typeof(int));
             TblDetalle.Columns.Add("CodIdUbicacion", typeof(int));
@@ -148,9 +152,11 @@ namespace _77NeoWeb.Prg.PrgAlmacen
                     Campo.UndMed_Compra,
                     Campo.FacturaNro,
                     Campo.NumSolPed,
+                    Campo.CodUbicaDest,
                     Campo.CCosto,
                     Campo.AfectaInventario,
                     Campo.CostoImportacion,
+                    Campo.Costo_Export,
                     Campo.CodTercero,
                     Campo.Consignacion,
                     Campo.CodIdUbicacion,

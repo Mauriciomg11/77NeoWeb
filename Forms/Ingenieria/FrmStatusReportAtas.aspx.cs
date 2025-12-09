@@ -212,7 +212,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     if (b1.Trim().Equals("placeholderDC"))
                     { TxtOTBusq.Attributes.Add("placeholder", b2.Trim()); }
                     IbtOTConsulAsigOTPPT.ToolTip = b1.Equals("BtnConsultar") ? b2.Trim() : IbtOTConsulAsigOTPPT.ToolTip;
-                    GrdAsigOTPPT.Columns[0].HeaderText = b1.Trim().Equals("GrdAsigOTPPT0") ? b2.Trim() : GrdAsigOTPPT.Columns[0].HeaderText;
+                    GrdAsigOTPPT.Columns[0].HeaderText = b1.Trim().Equals("LblAsigMstr") ? b2.Trim() : GrdAsigOTPPT.Columns[0].HeaderText;
                     GrdAsigOTPPT.Columns[1].HeaderText = b1.Trim().Equals("GrdAsigOTPPT1") ? b2.Trim() : GrdAsigOTPPT.Columns[1].HeaderText;
                     GrdAsigOTPPT.Columns[2].HeaderText = b1.Trim().Equals("GrdAsigOTPPT2") ? b2.Trim() : GrdAsigOTPPT.Columns[2].HeaderText;
                     GrdAsigOTPPT.Columns[3].HeaderText = b1.Trim().Equals("LblStsHK") ? b2.Trim() : GrdAsigOTPPT.Columns[3].HeaderText;
@@ -222,9 +222,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                     LblAsigOTPPTRepa.Text = b1.Trim().Equals("GrdAsigOTPPT1") ? b2.Trim() : LblAsigOTPPTRepa.Text;
                     LblAsigOTPPTHK.Text = b1.Trim().Equals("LblStsHK") ? b2.Trim() : LblAsigOTPPTHK.Text;
                     lblAsigOTPPTCliente.Text = b1.Trim().Equals("lblAsigOTPPTCliente") ? b2.Trim() : lblAsigOTPPTCliente.Text;
-                    GrdOTPPTRepa.Columns[0].HeaderText = b1.Trim().Equals("GrdAsigOTPPT0") ? b2.Trim() : GrdOTPPTRepa.Columns[0].HeaderText;
+                    GrdOTPPTRepa.Columns[0].HeaderText = b1.Trim().Equals("LblAsigMstr") ? b2.Trim() : GrdOTPPTRepa.Columns[0].HeaderText;
                     GrdOTPPTRepa.Columns[1].HeaderText = b1.Trim().Equals("GrdAsigOTPPT2") ? b2.Trim() : GrdOTPPTRepa.Columns[1].HeaderText;
-                    GrdOTPPTRepa.Columns[2].HeaderText = b1.Trim().Equals("GrdAsigOTPPT0") ? b2.Trim() : GrdOTPPTRepa.Columns[2].HeaderText;
+                    GrdOTPPTRepa.Columns[2].HeaderText = b1.Trim().Equals("LblAsigMstr") ? b2.Trim() : GrdOTPPTRepa.Columns[2].HeaderText;
                     BtnStatusAnt.Text = b1.Trim().Equals("BtnStatusAnt") ? b2.Trim() : BtnStatusAnt.Text;
                     BtnStatusAnt.ToolTip = b1.Trim().Equals("BtnStatusAntTT") ? b2.Trim() : BtnStatusAnt.ToolTip;
                     //********************* Liberar OT PPT A todo Costo *************************

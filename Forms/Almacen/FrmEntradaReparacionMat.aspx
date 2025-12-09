@@ -1,20 +1,20 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmEntradaCompraMat.aspx.cs" Inherits="_77NeoWeb.Forms.Almacen.frmEntradaCompraMat" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmEntradaReparacionMat.aspx.cs" Inherits="_77NeoWeb.Forms.Almacen.FrmEntradaReparacionMat" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         .CentrarCntndr {
-            position: absolute;
+            position: relative;
             left: 50%;
-            width: 98%;
+            width: 99%;
             margin-left: -49%;
             height: 85%;
-            padding: 5px;
-            top: 150px
+            padding: 40px;
+            top: 5px
         }
 
         .Interna {
-            position: absolute;
-            top: 15%;
+            position: relative;
+            top: 10%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
@@ -83,7 +83,8 @@
         }
         function myFuncionddl() {
             $('#<%=DdlAlmacen.ClientID%>').chosen();
-            $('#<%=DdlNumCompra.ClientID%>').chosen();
+            $('#<%=DdlNumRepa.ClientID%>').chosen();
+            $('[id *=DdlBogDest]').chosen();
         }
         function ShowPopup() {
             $('#ModalCondManplc').modal('show');
@@ -143,7 +144,7 @@
                                 <asp:TextBox ID="TxtObserv" runat="server" CssClass="form-control-sm" Width="100%" MaxLength="350" TextMode="MultiLine" Text="" />
                             </div>
                         </div>
-                        <div id="TipoCompra" class="row">
+                        <div id="TipoRepa" class="row">
                             <div id="Tipo" class="col-sm-2">
                                 <table width="100%">
                                     <tr>
@@ -155,9 +156,9 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div id="Num_Compra" class="col-sm-2">
-                                <asp:Label ID="LblNumCompra" runat="server" CssClass="LblEtiquet" Text="documento" />
-                                <asp:DropDownList ID="DdlNumCompra" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="DdlNumCompra_TextChanged" AutoPostBack="true" />
+                            <div id="Num_Repa" class="col-sm-2">
+                                <asp:Label ID="LblNumRepa" runat="server" CssClass="LblEtiquet" Text="documento" />
+                                <asp:DropDownList ID="DdlNumRepa" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="DdlNumRepa_TextChanged" AutoPostBack="true" />
                             </div>
                             <div id="Moneda" class="col-sm-1">
                                 <asp:Label ID="LblMoneda" runat="server" CssClass="LblEtiquet" Text="moneda" />
@@ -165,22 +166,24 @@
                             </div>
                             <div id="Disponible" class="col-sm-5">
                             </div>
-                            <div id="BotVisualizar" class="col-sm-2">
-                                <asp:Button ID="BtnVisualizar" runat="server" CssClass="btn btn-primary" Width="100%" OnClick="BtnVisualizar_Click" Text="visualizar" />
+                            <div id="BotGuardar" class="col-sm-2">
+                                <asp:Button ID="BtnGuardar" runat="server" CssClass="btn btn-primary" Width="100%" OnClick="BtnGuardar_Click" Text="guardar" />
                             </div>
                         </div>
                         <div class="row">
-                            <div id="GridDetCompra" class="col-sm-12">
+                            <div id="GridDetRepa" class="col-sm-12">
                                 <br />
                                 <div class="ScrollGrid pre-scrollable">
-                                    <asp:GridView ID="GrdDtlleComp" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="IdDetOrdenCompra,Posicion,FechaVencPN,Bloquear,DiaTasa, MesTasa, AñoTasa,PosSO, CodProveedor, ValorUnidad,Valor_Compra, CCostos, ValorUnidadP,PPT, CodPedido, Equivalencia"
-                                        CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" OnRowCommand="GrdDtlleComp_RowCommand" OnRowDataBound="GrdDtlleComp_RowDataBound">
+                                    <asp:GridView ID="GrdDtlleRepa" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
+                                        DataKeyNames="CodReparacion,Posicion,FechaVencPN,Bloquear,DiaTasa, MesTasa, AñoTasa,PosSO, CodProveedor, ValorUnidad,Valor_Compra, 
+                                                        CCostos, ValorUnidadP,PPT, CodPedido, Equivalencia, ValorUnidadPExp"
+                                        CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" OnRowCommand="GrdDtlleRepa_RowCommand" OnRowDataBound="GrdDtlleRepa_RowDataBound">
                                         <Columns>
                                             <asp:TemplateField HeaderText="Select">
                                                 <ItemTemplate>
                                                     <asp:UpdatePanel ID="UplAbrir" runat="server" UpdateMode="Conditional">
                                                         <ContentTemplate>
-                                                            <asp:ImageButton ID="IbtAbrir" Width="30px" Height="30px" ImageUrl="~/images/ReportV1.png" runat="server" CommandName="Abrir" ToolTip="asignar compra" />
+                                                            <asp:ImageButton ID="IbtAbrir" Width="30px" Height="30px" ImageUrl="~/images/ReportV1.png" runat="server" CommandName="Abrir" ToolTip="asignar reparacion" />
                                                         </ContentTemplate>
                                                         <Triggers>
                                                             <asp:PostBackTrigger ControlID="IbtAbrir" />
@@ -188,14 +191,19 @@
                                                     </asp:UpdatePanel>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="compra">
+                                            <asp:TemplateField HeaderText="documento">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="LblNumOC" Text='<%# Eval("CodOrdenCompra") %>' runat="server" />
+                                                    <asp:Label ID="LblNumDoc" Text='<%# Eval("Codigo") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Pos">
+                                            <asp:TemplateField HeaderText="pos">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblPos" Text='<%# Eval("Posicion") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="reparación">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblNumRepa" Text='<%# Eval("CodReparacion") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="referencia">
@@ -223,19 +231,19 @@
                                                     <asp:Label ID="LblPn" Text='<%# Eval("PN") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="cant compra">
+                                            <asp:TemplateField HeaderText="S/N">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="LblCantCompra" Text='<%# Eval("Cant_Compra") %>' runat="server" />
+                                                    <asp:Label ID="LblSn" Text='<%# Eval("SN") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="und compra">
+                                            <asp:TemplateField HeaderText="cant repa">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="LblUndMedCompra" Text='<%# Eval("UND_Compra") %>' runat="server" />
+                                                    <asp:Label ID="LblCantRepa" Text='<%# Eval("Cant_Repa") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="cant recibida">
+                                            <asp:TemplateField HeaderText="und repa">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="LblCantRecb" Text='<%# Eval("CantRecibida") %>' runat="server" />
+                                                    <asp:Label ID="LblUndMedRepa" Text='<%# Eval("UND_Repa") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="cant ingresar">
@@ -250,7 +258,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="factura">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="LblFact" Text='<%# Eval("NumFacturaOC") %>' runat="server" />
+                                                    <asp:Label ID="LblFact" Text='<%# Eval("NumFactura") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="fecha trm">
@@ -263,6 +271,11 @@
                                                     <asp:Label ID="Lbltrm" Text='<%# Eval("TrmAcordado") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="garantia">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblGrnt" Text='<%# Eval("Garantia") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                         </Columns>
                                         <HeaderStyle CssClass="GridCabecera" />
                                         <RowStyle CssClass="GridRowStyle" />
@@ -273,138 +286,106 @@
                         </div>
                     </div>
                 </asp:View>
-                <asp:View ID="Vw1SnLote" runat="server">
+                <asp:View ID="Vw1Asignar" runat="server">
                     <br />
                     <br />
                     <h6 class="TextoSuperior">
-                        <asp:Label ID="LblTitAsigFis" runat="server" Text="asignar elementos" />
+                        <asp:Label ID="LblTitAsigFis" runat="server" Text="asignar elemento" />
                     </h6>
-                    <asp:ImageButton ID="IbtCerrarAsing" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarAsing_Click" />
                     <div class="CentrarCntndr">
-                        <div class="ScrollGrid pre-scrollable">
-                            <br />
-                            <asp:Button ID="BtnAsignr" runat="server" CssClass="btn btn-success Font_btnCrud" Width="120px" OnClick="BtnAsignr_Click" OnClientClick="target ='';" Text="asignar" />
-                            <br />
-                            <asp:Label ID="LblPNDescripcAsig" runat="server" CssClass="LblEtiquet" Text="" />
-                            <asp:Label ID="LblAsigCantSol" runat="server" CssClass="LblEtiquet" Text="cantidad solic: " />
-                            <asp:Label ID="LblAsigCantCompV" runat="server" CssClass="LblEtiquet" Text="" />
-                            <asp:Label ID="LblAsigCantEntrg" runat="server" CssClass="LblEtiquet" Text=" | cantidad entre: " />
-                            <asp:Label ID="LblAsigCantRecV" runat="server" CssClass="LblEtiquet" Text="" />
-                            <asp:Label ID="LblFactAsign" runat="server" CssClass="LblEtiquet" Text=" | factura:" />
-                            <asp:TextBox ID="TxtFact" runat="server" CssClass="form-control-sm heightCampo" Width="120px" />
-                            <br />
-                            <br />
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <asp:GridView ID="GrdTemp" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true"
-                                        CssClass="DiseñoGrid table-sm" GridLines="Both" DataKeyNames="ID,PN" EmptyDataText="No existen registros ..!"
-                                        OnRowCommand="GrdTemp_RowCommand" OnRowDeleting="GrdTemp_RowDeleting" OnRowDataBound="GrdTemp_RowDataBound">
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-8 Interna">
+                                <div class="ScrollRsva pre-scrollable">
+                                    <asp:Label ID="LblPNDescripcAsig" runat="server" CssClass="LblEtiquet" Text="" />
+                                    <asp:Label ID="LblAsigCantSol" runat="server" CssClass="LblEtiquet" Text="cantidad solic: " />
+                                    <asp:Label ID="LblAsigCantSolV" runat="server" CssClass="LblEtiquet" Text="" />
+                                    <asp:Label ID="LblFactAsign" runat="server" CssClass="LblEtiquet" Text=" | factura:" />
+                                    <asp:TextBox ID="TxtFact" runat="server" CssClass="form-control-sm heightCampo" Width="120px" />
+                                    <asp:GridView ID="GrdAsignar" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
+                                        DataKeyNames="CodIdUbicacion,CodElemento,CodUbicaBodega, CodTercero, FechaVencimientoR, FechaShelfLife, CantRepa, CodReferencia, IdentificadorElemR, Activo, CodEstadoPn"
+                                        CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" OnRowCommand="GrdAsignar_RowCommand" OnRowDataBound="GrdAsignar_RowDataBound">
                                         <Columns>
-                                            <asp:TemplateField HeaderText="sn-lote" HeaderStyle-Width="8%">
+                                            <asp:TemplateField>
                                                 <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("SnLote") %>' runat="server" Width="50%" />
+                                                    <asp:ImageButton ID="IbtAsignr" Width="30px" Height="30px" ImageUrl="~/images/FlechaIr.png" runat="server" CommandName="Asignar" ToolTip="Asignar" />
                                                 </ItemTemplate>
-                                                <FooterTemplate>
-                                                    <asp:TextBox ID="TxtSnLotPP" runat="server" MaxLength="80" Width="100%" />
-                                                </FooterTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="cantidad" HeaderStyle-Width="3%">
+                                            <asp:TemplateField HeaderText="estado P/N">
                                                 <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("CantIngr") %>' runat="server" Width="100%" />
+                                                    <asp:Label ID="LblEstado" Text='<%# Eval("EstadoPN") %>' runat="server" />
                                                 </ItemTemplate>
-                                                <FooterTemplate>
-                                                    <asp:TextBox ID="TxtCant" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Number" step="1" onkeypress="return Decimal(event);" Text="0" />
-                                                </FooterTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Fecha Exp" HeaderStyle-Width="1%">
+                                            <asp:TemplateField HeaderText="P/N">
                                                 <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("FechaExp") %>' runat="server" Width="100%" />
+                                                    <asp:Label ID="LblPn" Text='<%# Eval("PN") %>' runat="server" />
                                                 </ItemTemplate>
-                                                <FooterTemplate>
-                                                    <asp:TextBox ID="TxtFechExp" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" Text="1900-01-01" />
-                                                </FooterTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField FooterStyle-Width="1%">
+                                            <asp:TemplateField HeaderText="S/N">
                                                 <ItemTemplate>
-                                                    <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
+                                                    <asp:Label ID="LblSn" Text='<%# Eval("SN") %>' runat="server" />
                                                 </ItemTemplate>
-                                                <FooterTemplate>
-                                                    <asp:ImageButton ID="IbtAddNew" CssClass="BotonNewGrid" ImageUrl="~/images/AddNew.png" runat="server" CommandName="AddNew" ToolTip="Nuevo" />
-                                                </FooterTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="lote">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblLot" Text='<%# Eval("NumLote") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <%-- <asp:TemplateField HeaderText="modelo P/N">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblModelPN" Text='<%# Eval("NSN") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>--%>
+                                            <asp:TemplateField HeaderText="bodega">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblBodg" Text='<%# Eval("CodBodega") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="fila" HeaderStyle-Width="8%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblFila" Text='<%# Eval("Fila") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Columna" HeaderStyle-Width="8%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblColumn" Text='<%# Eval("Columna") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="stock">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblStock" Text='<%# Eval("Cantidad") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="cant despacho">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="TxtCantRepa" Text='<%# Eval("CantRepa") %>' runat="server" Width="100%" Enabled="false" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="und medida">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblUndMed" Text='<%# Eval("CodUndMedR") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="bodega destino" HeaderStyle-Width="20%">
+                                                <ItemTemplate>
+                                                    <asp:DropDownList ID="DdlBogDest" runat="server" Width="100%" Height="28px" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="fecha vencimiento">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="TxtFecVen" Text='<%# Eval("FechaShelfLife") %>' runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />
+                                                </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
-                                        <FooterStyle CssClass="GridFooterStyle" />
                                         <HeaderStyle CssClass="GridCabecera" />
                                         <RowStyle CssClass="GridRowStyle" />
                                         <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                                     </asp:GridView>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </asp:View>
-                <asp:View ID="Vw2Entrega" runat="server">
-                    <br />
-                    <br />
-                    <h6 class="TextoSuperior">
-                        <asp:Label ID="LblTitVisualizaGuarda" runat="server" Text="Visualizar los elementos de recibo" />
-                    </h6>
-                    <asp:ImageButton ID="IbtCloseGuardar" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCloseGuardar_Click" />
-                    <div class="CentrarCntndr">
-                        <div class="ScrollGrid pre-scrollable">
-                            <br />
-                            <asp:Button ID="BtnGuardar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="120px" OnClick="BtnGuardar_Click" OnClientClick="target ='';" Text="guardar" />
-                            <br />
-                            <asp:Label ID="LblNumDocGuardar" runat="server" CssClass="LblEtiquet" Text="documento: " />
-                            <asp:Label ID="LblNumDocVlorGuardar" runat="server" CssClass="LblEtiquet" Text="" />
-                            <asp:GridView ID="GrdVisualizar" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames=""
-                                CssClass="GridControl DiseñoGrid table-sm" GridLines="Both">
-                                <Columns>
-                                    <asp:TemplateField HeaderText="pos">
-                                        <ItemTemplate>
-                                            <asp:Label ID="LblPos" Text='<%# Eval("Pos") %>' runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="referencia">
-                                        <ItemTemplate>
-                                            <asp:Label ID="LblCodRef" Text='<%# Eval("CodReferencia") %>' runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="P/N">
-                                        <ItemTemplate>
-                                            <asp:Label ID="LblPn" Text='<%# Eval("PN") %>' runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="S/N">
-                                        <ItemTemplate>
-                                            <asp:Label ID="LblSn" Text='<%# Eval("SN") %>' runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="lote">
-                                        <ItemTemplate>
-                                            <asp:Label ID="LblLot" Text='<%# Eval("NumLote") %>' runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                   <%-- <asp:TemplateField HeaderText="modelo P/N">
-                                        <ItemTemplate>
-                                            <asp:Label ID="LblModelPN" Text='<%# Eval("NSN") %>' runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>--%>
-                                    <asp:TemplateField HeaderText="cant compra">
-                                        <ItemTemplate>
-                                            <asp:Label ID="LblCantDespc" Text='<%# Eval("CantDespchr") %>' runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="und medida">
-                                        <ItemTemplate>
-                                            <asp:Label ID="LblUndMed" Text='<%# Eval("CodUndMedR") %>' runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                                <HeaderStyle CssClass="GridCabecera" />
-                                <RowStyle CssClass="GridRowStyle" />
-                                <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                            </asp:GridView>
+                            <div class="col-sm-4">
+                                <asp:ImageButton ID="IbtCerrarAsing" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarAsing_Click" />
+                            </div>
                         </div>
                     </div>
                 </asp:View>

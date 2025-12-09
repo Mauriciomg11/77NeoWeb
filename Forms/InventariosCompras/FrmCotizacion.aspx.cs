@@ -161,7 +161,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     LblFechPlazRes.Text = bO.Equals("LblFechPlazRes") ? bT : LblFechPlazRes.Text;
                     LblFechRespt.Text = bO.Equals("LblFechRespt") ? bT : LblFechRespt.Text;
                     LblFechVigc.Text = bO.Equals("LblFechVigc") ? bT : LblFechVigc.Text;
-                    LblFechTRM.Text = bO.Equals("LblFechTRM") ? bT : LblFechTRM.Text;
+                    LblFechTRM.Text = bO.Equals("LblFechTRMMstr") ? bT : LblFechTRM.Text;
                     LblSubTtal.Text = bO.Equals("LblSubTtal") ? bT : LblSubTtal.Text;
                     LblIVA.Text = bO.Equals("LblIVA") ? bT : LblIVA.Text;
                     LblOtrImpt.Text = bO.Equals("LblOtrImpt") ? bT : LblOtrImpt.Text;
@@ -216,7 +216,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     GrdModalBusqCot.Columns[6].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdModalBusqCot.Columns[6].HeaderText;
                     GrdModalBusqCot.Columns[7].HeaderText = bO.Equals("GrdMdlSeg") ? bT : GrdModalBusqCot.Columns[7].HeaderText;
                     BtnCloseModalBusqPN.Text = bO.Equals("BtnCerrarMst") ? bT : BtnCloseModalBusqPN.Text;
-                    BtnAsignarModal.Text = bO.Equals("BtnAsignarModal") ? bT : BtnAsignarModal.Text;
+                    BtnAsignarModal.Text = bO.Equals("LblAsigMstr") ? bT : BtnAsignarModal.Text;
 
                     //************************************** Exportar Excel *****************************************************
                     LblTitExport.Text = bO.Equals("LblTitExport") ? bT : LblTitExport.Text;
@@ -484,9 +484,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     VbFecSt = DSTPpl.Tables[0].Rows[0]["FechaPlazo"].ToString().Trim().Equals("") ? "01/01/1900" : DSTPpl.Tables[0].Rows[0]["FechaPlazo"].ToString().Trim();
                     VbFecDT = Convert.ToDateTime(VbFecSt);
                     TxtFechPlazRes.Text = string.Format("{0:yyyy-MM-dd}", VbFecDT);
-                    VbFecSt = DSTPpl.Tables[0].Rows[0]["FechaRespt"].ToString().Trim().Equals("") ? "01/01/1900" : DSTPpl.Tables[0].Rows[0]["FechaRespt"].ToString().Trim();
-                    VbFecDT = Convert.ToDateTime(VbFecSt);
-                    TxtFechRespt.Text = string.Format("{0:yyyy-MM-dd}", VbFecDT);
+                    TxtFechRespt.Text = Cnx.ReturnFecha(DSTPpl.Tables[0].Rows[0]["FechaRespt"].ToString().Trim());
                     VbFecSt = DSTPpl.Tables[0].Rows[0]["FechaVigenc"].ToString().Trim().Equals("") ? "01/01/1900" : DSTPpl.Tables[0].Rows[0]["FechaVigenc"].ToString().Trim();
                     ViewState["FechTrmAnt"] = VbFecSt;
                     VbFecDT = Convert.ToDateTime(VbFecSt);

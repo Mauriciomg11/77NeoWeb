@@ -750,7 +750,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                DataRow[] Result = Idioma.Select("Objeto='IbtEditGrdWS'");
+                DataRow[] Result = Idioma.Select("Objeto='LblAsigMstr'");
                 ImageButton IbtEdit = (e.Row.FindControl("IbtEdit") as ImageButton);
                 if (IbtEdit != null)
                 {
@@ -855,7 +855,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                DataRow[] Result = Idioma.Select("Objeto='IbtEditGrdWS'");
+                DataRow[] Result = Idioma.Select("Objeto='LblAsigMstr'");
                 ImageButton IbtEdit = (e.Row.FindControl("IbtEdit") as ImageButton);
                 if (IbtEdit != null)
                 {

@@ -176,6 +176,9 @@
                             <div class="col-sm-1">
                                 <asp:Button ID="BtnAlert" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnAlert_Click" OnClientClick="target ='';" Text="alertas" />
                             </div>
+                             <div class="col-sm-1">
+                                <asp:Button ID="BtnExportar" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnExportar_Click" OnClientClick="target ='';" Text="exportar" />
+                            </div>
                             <div class="col-sm-1">
                                 <asp:Button ID="BtnOpenCotiza" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnOpenCotiza_Click" OnClientClick="target ='';" Text="alertas" />
                             </div>
@@ -346,6 +349,7 @@
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
                     <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOpcBusq" runat="server" Text="Opciones de búsq." />
                     </h6>
@@ -367,7 +371,6 @@
                     </table>
                     <br />
                     <div class="CentrarBusq DivMarco">
-
                         <div class="CentrarGrid pre-scrollable">
                             <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="IdPedido"
                                 CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowCommand="GrdBusq_RowCommand" OnRowDataBound="GrdBusq_RowDataBound">
@@ -481,6 +484,7 @@
             <asp:PostBackTrigger ControlID="IbtModalBusq" />
             <asp:PostBackTrigger ControlID="BtnAlert" />
             <asp:PostBackTrigger ControlID="IbtSubirCargaMax" />
+            <asp:PostBackTrigger ControlID="BtnExportar" />
         </Triggers>
     </asp:UpdatePanel>
 </asp:Content>

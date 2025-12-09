@@ -96,7 +96,7 @@ namespace _77NeoWeb.Forms.Almacen
                     LblUsuRecibe.Text = bO.Equals("LblUsuRecibe") ? bT + ":" + "&nbsp" : LblUsuRecibe.Text;
                     // *********************************************** Detalle Reserva ***********************************************
                     GrdDtllRsva.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtllRsva.EmptyDataText;
-                    GrdDtllRsva.Columns[0].HeaderText = bO.Equals("GrdAsig") ? bT : GrdDtllRsva.Columns[0].HeaderText;
+                    GrdDtllRsva.Columns[0].HeaderText = bO.Equals("LblAsigMstr") ? bT : GrdDtllRsva.Columns[0].HeaderText;
                     GrdDtllRsva.Columns[1].HeaderText = bO.Equals("PosMstr") ? bT : GrdDtllRsva.Columns[1].HeaderText;
                     GrdDtllRsva.Columns[2].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdDtllRsva.Columns[2].HeaderText;
                     GrdDtllRsva.Columns[3].HeaderText = bO.Equals("Descripcion") ? bT : GrdDtllRsva.Columns[3].HeaderText;
@@ -107,7 +107,7 @@ namespace _77NeoWeb.Forms.Almacen
                     GrdDtllRsva.Columns[9].HeaderText = bO.Equals("GrdCantDespc") ? bT : GrdDtllRsva.Columns[9].HeaderText;
                     GrdDtllRsva.Columns[10].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdDtllRsva.Columns[10].HeaderText;
                     // *********************************************** Condic Manipulac ***********************************************
-                    LblTitCondManiplc.Text = bO.Equals("LblTitCondManiplc") ? bT : LblTitCondManiplc.Text;
+                    LblTitCondManiplc.Text = bO.Equals("LblCondAlmaMstr") ? bT : LblTitCondManiplc.Text;
                     BtnCloseMdl.Text = bO.Equals("BtnCerrarMst") ? bT : BtnCloseMdl.Text;
                     GrdMdlCondManplc.Columns[0].HeaderText = bO.Equals("Descripcion") ? bT : GrdMdlCondManplc.Columns[0].HeaderText;
                     // *********************************************** Ubicaciones Fisicas ***********************************************

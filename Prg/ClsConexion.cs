@@ -17,7 +17,7 @@ namespace _77NeoWeb.prg
         public ClsConexion()
         {
             this.VblConexion = "";
-            Produccion = "Y";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion            
+            Produccion = "N";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion            
         }
         public void SelecBD()
         {
@@ -128,7 +128,7 @@ namespace _77NeoWeb.prg
         }
         public string BaseDatosPrmtr()
         {
-            if (Produccion.Equals("N"))
+            if (Produccion.Equals("Y"))
             {
                 /*return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, @"77NEO01", "DbConfigWeb", "sa", "admindemp");*/
                // string Vb1S = "23.102.100.143";//@"aircraft\SQLEXPRESS";
@@ -225,7 +225,8 @@ namespace _77NeoWeb.prg
             DateTime? VbFecDT;
             VbFecSt = StrCampo.Equals("") ? "01/01/1900" : StrCampo;
             VbFecDT = Convert.ToDateTime(VbFecSt);
-            return VbFecSt.Equals("01/01/1900") ? "" : string.Format("{0:yyyy-MM-dd}", VbFecDT);
+            //return VbFecSt.Equals("01/01/1900") ? "01/01/1900" : string.Format("{0:yyyy-MM-dd}", VbFecDT);
+            return string.Format("{0:yyyy-MM-dd}", VbFecDT);
         }
         public string GetIpPubl()
         {

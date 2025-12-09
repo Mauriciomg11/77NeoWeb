@@ -156,7 +156,7 @@ namespace _77NeoWeb.Forms.MRO
                     LbPptComerc.Text = bO.Equals("LbPptComerc") ? bT : LbPptComerc.Text;
                     LblNumContrat.Text = bO.Equals("LblNumContrat") ? bT : LblNumContrat.Text;
                     LblMoned.Text = bO.Equals("LblMoned") ? bT : LblMoned.Text;
-                    LblFechTRM.Text = bO.Equals("LblFechTRM") ? bT : LblFechTRM.Text;
+                    LblFechTRM.Text = bO.Equals("LblFechTRMMstr") ? bT : LblFechTRM.Text;
                     LblValorTrm.Text = bO.Equals("LblValorTrm") ? bT : LblValorTrm.Text;
                     LblEstado.Text = bO.Equals("LblEstado") ? bT : LblEstado.Text;
                     IbtReturnEstado.ToolTip = bO.Equals("IbtReturnEstado") ? bT : IbtReturnEstado.ToolTip;
@@ -287,7 +287,7 @@ namespace _77NeoWeb.Forms.MRO
                     GrdMO.Columns[3].HeaderText = bO.Equals("GrdVlor") ? bT : GrdMO.Columns[3].HeaderText;
                     //**************************************** Panel Asignar trabajos masivamente  ****************************************
                     LblTitAsigSvcMasivo.Text = bO.Equals("LblTitAsigSvcMasivo") ? bT : LblTitAsigSvcMasivo.Text;
-                    BtnAsigSvcMasivo.Text = bO.Equals("BtnAsigSvcMasivo") ? bT : BtnAsigSvcMasivo.Text;
+                    BtnAsigSvcMasivo.Text = bO.Equals("LblAsigMstr") ? bT : BtnAsigSvcMasivo.Text;
                     IbtClosAsigSvcMasivo.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtClosAsigSvcMasivo.ToolTip;
                     GrdSvcsMasivo.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdSvcsMasivo.EmptyDataText;
                     GrdSvcsMasivo.Columns[1].HeaderText = bO.Equals("RdbDet1BuqRte") ? bT : GrdSvcsMasivo.Columns[1].HeaderText;

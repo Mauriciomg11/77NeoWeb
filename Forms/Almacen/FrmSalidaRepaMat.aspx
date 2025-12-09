@@ -264,7 +264,7 @@
                                                     <asp:Label ID="Lblfectrm" Text='<%# Eval("FechaTRM") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="trm">
+                                            <asp:TemplateField HeaderText="TRM">
                                                 <ItemTemplate>
                                                     <asp:Label ID="Lbltrm" Text='<%# Eval("TrmAcordado") %>' runat="server" />
                                                 </ItemTemplate>
@@ -323,11 +323,11 @@
                                                     <asp:Label ID="LblLot" Text='<%# Eval("NumLote") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="modelo P/N">
+                                           <%-- <asp:TemplateField HeaderText="modelo P/N">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblModelPN" Text='<%# Eval("NSN") %>' runat="server" />
                                                 </ItemTemplate>
-                                            </asp:TemplateField>
+                                            </asp:TemplateField>--%>
                                             <asp:TemplateField HeaderText="bodega">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblBodg" Text='<%# Eval("CodBodega") %>' runat="server" />

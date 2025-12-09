@@ -271,7 +271,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 ViewState["SNAntEle"] = TxtSN.Text.Trim();
                 TxtLote.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["NumLote"].ToString().Trim());
                 TxtDescr.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["Descripcion"].ToString().Trim());
-                TxtFecRec.Text = Cnx.ReturnFecha(DST.Tables[0].Rows[0]["FechaRecibo"].ToString().Trim()); ;
+                TxtFecRec.Text = Cnx.ReturnFecha(DST.Tables[0].Rows[0]["FechaRecibo"].ToString().Trim()); 
                 TxtUndMed.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["CodUnidadMedida"].ToString().Trim());
                 DdlGrupo.Text = HttpUtility.HtmlDecode(DST.Tables[0].Rows[0]["CodGrupo"].ToString().Trim());
                 ViewState["GrupoEle"] = DdlGrupo.Text.Trim();

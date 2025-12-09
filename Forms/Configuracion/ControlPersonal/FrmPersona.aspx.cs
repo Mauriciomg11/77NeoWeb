@@ -137,7 +137,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     LblTitCrearusu.Text = bO.Equals("LblTitCrearusu") ? bT : LblTitCrearusu.Text;
                     LblNomUsu.Text = bO.Equals("LblUsuario") ? bT + ":" : LblNomUsu.Text;
                     IbtCerrarCrearUsu.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarCrearUsu.ToolTip;
-                    BtnAsignarUsu.Text = bO.Equals("BtnAsignarUsu") ? bT : BtnAsignarUsu.Text;
+                    BtnAsignarUsu.Text = bO.Equals("LblAsigMstr") ? bT : BtnAsignarUsu.Text;
                 }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;

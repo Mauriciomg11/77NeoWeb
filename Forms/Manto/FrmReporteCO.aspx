@@ -127,7 +127,7 @@
                                     <asp:Label ID="LblTitReportes" runat="server" Text="reportes de mantenimiento" /></h6>
                             </div>
                         </div>
-                        <div class="ScrollDivGrid">
+                        <div class=""><%--ScrollDivGrid--%>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false"

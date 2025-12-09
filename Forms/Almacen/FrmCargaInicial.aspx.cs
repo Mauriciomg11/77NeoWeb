@@ -203,83 +203,107 @@ namespace _77NeoWeb.Forms.Almacen
         }
         protected void BtnIngresar_Click(object sender, EventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
-            DSTPpal = (DataSet)ViewState["DSTPpal"];
-            TblDetalle = (DataTable)ViewState["TblDetalle"];
-
-            DataRow[] Result;
-            string VblPn, VblSn;
-            int VbAfectaInv, VbConsignacion;
-
-            if (TxtObserv.Text.Trim().Equals(""))
+            try
             {
-                Result = Idioma.Select("Objeto= 'MstrMens22'");
-                foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
-                return;
-            }
-            if (CkbConsign.Checked == true) { VbAfectaInv = 0; VbConsignacion = 1; }// Consignacion
-            else { VbAfectaInv = 1; VbConsignacion = 0; }// no es consignacion
-            List<CsInsertElementoAlmacen> ObjDetalle = new List<CsInsertElementoAlmacen>();
-            foreach (DataRow Row in TblDetalle.Rows)
-            {
-                var TypDetalle = new CsInsertElementoAlmacen()
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                DSTPpal = (DataSet)ViewState["DSTPpal"];
+                TblDetalle = (DataTable)ViewState["TblDetalle"];
+
+                DataRow[] Result;
+                string VblPn, VblSn;
+                int VbAfectaInv, VbConsignacion;
+
+                if (TxtObserv.Text.Trim().Equals(""))
                 {
-                    IdIE = Convert.ToInt32(0),
-                    CodElemento = "",
-                    CodReferencia = Row["CodReferencia"].ToString().Trim(),
-                    PN = Row["PN"].ToString(),
-                    SN = Row["SN"].ToString(),
-                    Lote = Row["Lote"].ToString(),
-                    CodTipoElem = Row["CodTipoElem"].ToString().Trim(),
-                    Identificador = Row["Identificador"].ToString().Trim(),
-                    Descripcion = Row["Descripcion"].ToString().Trim(),
-                    Cantidad = Convert.ToDouble(Row["Cantidad"].ToString().Trim()),
-                    CantidadAnt = Convert.ToDouble(0),
-                    Valor = Convert.ToDouble(Row["Valor"].ToString().Trim()),
-                    CodUndMed = "",
-                    IdAlmacen = Convert.ToInt32(Row["IdAlmacen"].ToString().Trim()),
-                    CodBodega = Row["CodBodega"].ToString().Trim(),
-                    CodShippingOrder = "0",
-                    Posicion = "0",
-                    CodAeronave = 0,
-                    Matricula = "",
-                    CCosto = "",
-                    AfectaInventario = VbAfectaInv,
-                    CostoImportacion = Convert.ToInt32(0),
-                    CodTercero = "",
-                    Consignacion = Convert.ToInt32(VbConsignacion),
-                    CodIdUbicacion = Convert.ToInt32(0),
-                    FechaVence = Convert.ToDateTime(Row["FechaExp"].ToString().Trim()),
-                    Observacion = TxtObserv.Text.Trim(),
-                    ValorOT = Convert.ToDouble(0),
-                    CodUsuarioReserva = "",
-                    Proceso = "FrmCargaInicial",
-                    IdDetPropHk = Convert.ToInt32(0),
-                    IdPPt = CkbConsign.Checked == true ? 1 : 0,
-                    Accion = "ENTRADA",
-                };
-                ObjDetalle.Add(TypDetalle);
-            }
-            CsInsertElementoAlmacen ClaseIEA = new CsInsertElementoAlmacen();
-            ClaseIEA.FormOrigen(ViewState["PFileName"].ToString());
-            ClaseIEA.Alimentar(ObjDetalle);
+                    Result = Idioma.Select("Objeto= 'MstrMens22'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
+                    return;
+                }
+                if (CkbConsign.Checked == true) { VbAfectaInv = 0; VbConsignacion = 1; }// Consignacion
+                else { VbAfectaInv = 1; VbConsignacion = 0; }// no es consignacion
+                List<CsInsertElementoAlmacen> ObjDetalle = new List<CsInsertElementoAlmacen>();
+                foreach (DataRow Row in TblDetalle.Rows)
+                {
+                    var TypDetalle = new CsInsertElementoAlmacen()
+                    {
+                        IdIE = Convert.ToInt32(0),
+                        CodElemento = "",
+                        CodReferencia = Row["CodReferencia"].ToString().Trim(),
+                        PN = Row["PN"].ToString(),
+                        SN = Row["SN"].ToString(),
+                        Lote = Row["Lote"].ToString(),
+                        CodTipoElem = Row["CodTipoElem"].ToString().Trim(),
+                        Identificador = Row["Identificador"].ToString().Trim(),
+                        Descripcion = Row["Descripcion"].ToString().Trim(),
+                        Cantidad = Convert.ToDouble(Row["Cantidad"].ToString().Trim()),
+                        CantidadAnt = Convert.ToDouble(0),
+                        Valor = Convert.ToDouble(Row["Valor"].ToString().Trim()),
+                        CodUndMed = "",
+                        IdAlmacen = Convert.ToInt32(Row["IdAlmacen"].ToString().Trim()),
+                        CodBodega = Row["CodBodega"].ToString().Trim(),
+                        CodShippingOrder = "0",
+                        Posicion = "0",
+                        CodAeronave = 0,
+                        Matricula = "",
+                        DiaTasa="",
+                        MesTasa = "",
+                        AnoTasa = "",
+                        CCosto = "",
+                        VlorTasaDM =0,
+                        CodTipoMoneda="",
+                        DocumentoNro = "",
+                        PosicionDocumento = 0,
+                        Cant_Compra = 0,
+                        Valor_Compra = 0,
+                        UndMed_Compra = "",
+                        FacturaNro = "",
+                        NumSolPed = "",
+                        CodUbicaDest = "",
+                        AfectaInventario = VbAfectaInv,
+                        CostoImportacion = Convert.ToInt32(0),
+                        CodTercero = "",
+                        Consignacion = Convert.ToInt32(VbConsignacion),
+                        CodIdUbicacion = Convert.ToInt32(0),
+                        FechaVence = Convert.ToDateTime(Row["FechaExp"].ToString().Trim()),
+                        Observacion = TxtObserv.Text.Trim(),
+                        ValorOT = Convert.ToDouble(0),
+                        CodUsuarioReserva = "",
+                        Proceso = "FrmCargaInicial",
+                        IdDetPropHk = Convert.ToInt32(0),
+                        IdPPt = CkbConsign.Checked == true ? 1 : 0,
+                        Accion = "ENTRADA",
+                    };
+                    ObjDetalle.Add(TypDetalle);
+                }
+                CsInsertElementoAlmacen ClaseIEA = new CsInsertElementoAlmacen();
+                ClaseIEA.FormOrigen(ViewState["PFileName"].ToString());
+                ClaseIEA.Alimentar(ObjDetalle);
 
-            string Mensj = ClaseIEA.GetMensj();
-            if (!Mensj.Equals(""))
-            {
-                VblPn = ClaseIEA.GetPn().Trim().Equals("") ? "" : "  [P/N: " + ClaseIEA.GetPn().Trim() + "]  ";
-                VblSn = ClaseIEA.GetSn().Trim().Equals("") ? "" : " [S/N: " + ClaseIEA.GetSn().Trim() + "] ";
-                string VbLote = ClaseIEA.GetLote().Trim().Equals("") ? "" : " [LT/N: " + ClaseIEA.GetLote().Trim() + "]";
-                Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
-                foreach (DataRow row in Result)
-                { Mensj = row["Texto"].ToString().Trim(); }
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + VblPn + VblSn + "');", true);
-                return;
+                string Mensj = ClaseIEA.GetMensj();
+                if (!Mensj.Equals(""))
+                {
+                    VblPn = ClaseIEA.GetPn().Trim().Equals("") ? "" : "  [P/N: " + ClaseIEA.GetPn().Trim() + "]  ";
+                    VblSn = ClaseIEA.GetSn().Trim().Equals("") ? "" : " [S/N: " + ClaseIEA.GetSn().Trim() + "] ";
+                    string VbLote = ClaseIEA.GetLote().Trim().Equals("") ? "" : " [LT/N: " + ClaseIEA.GetLote().Trim() + "]";
+                    Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + VblPn + VblSn + "');", true);
+                    return;
+                }
+                TxtObserv.Text = "";
+                TblDetalle.Clear();
+                BindDDetTmp();
             }
-            TxtObserv.Text = "";
-            TblDetalle.Clear();
-            BindDDetTmp();
+            catch (Exception Ex)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, VbcatNArc, Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
         }
         protected void BtnOpenElem_Click(object sender, EventArgs e)
         { Page.Title = ViewState["PageTit"].ToString().Trim(); Response.Redirect("~/Forms/InventariosCompras/FrmElemento.aspx"); }

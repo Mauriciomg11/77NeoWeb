@@ -111,7 +111,7 @@ namespace _77NeoWeb.Forms.MRO
                     LblBusqueda.Text = bO.Equals("MstrLblBusq") ? bT + ":" : LblBusqueda.Text;
                     IbtBusqueda.ToolTip = bO.Equals("IbtConsultarTTMst") ? bT : IbtBusqueda.ToolTip;
                     GrdBusq.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdBusq.EmptyDataText;
-                    GrdBusq.Columns[0].HeaderText = bO.Equals("GrdAsignar") ? bT : GrdBusq.Columns[0].HeaderText;
+                    GrdBusq.Columns[0].HeaderText = bO.Equals("LblAsigMstr") ? bT : GrdBusq.Columns[0].HeaderText;
                     GrdBusq.Columns[1].HeaderText = bO.Equals("GrdSrvc") ? bT : GrdBusq.Columns[1].HeaderText;
                     GrdBusq.Columns[2].HeaderText = bO.Equals("GrdCodModl") ? bT : GrdBusq.Columns[2].HeaderText;
                 }

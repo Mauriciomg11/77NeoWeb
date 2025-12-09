@@ -101,13 +101,53 @@ namespace _77NeoWeb.Forms.Almacen
                     { Page.Title = bT; ViewState["PageTit"] = bT; }
                     TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
                     LblObserv.Text = bO.Equals("LblObsMst") ? bT : LblObserv.Text;
+                    LblAlmacen.Text = bO.Equals("AlmacenMstr") ? bT : LblAlmacen.Text;
+                    RdbNacional.Text = bO.Equals("RdbNal") ? "&nbsp" + bT : RdbNacional.Text;
+                    RdbInter.Text = bO.Equals("RdbInter") ? "&nbsp" + bT : RdbInter.Text;
+                    LblNumCompra.Text = bO.Equals("LblDoc") ? bT : LblNumCompra.Text;
+                    LblMoneda.Text = bO.Equals("LblMonedaMstr") ? bT : LblMoneda.Text;
+                    BtnVisualizar.Text = bO.Equals("BtnVisualizar") ? bT : BtnVisualizar.Text;
 
-                    // *********************************************** Detalle Reintegro ***********************************************
+                    // *********************************************** Detalle Compras ***********************************************
+                    GrdDtlleComp.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtlleComp.EmptyDataText;
+                    GrdDtlleComp.Columns[1].HeaderText = bO.Equals("LblDoc") ? bT : GrdDtlleComp.Columns[1].HeaderText;
+                    GrdDtlleComp.Columns[3].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdDtlleComp.Columns[3].HeaderText;
+                    GrdDtlleComp.Columns[4].HeaderText = bO.Equals("Descripcion") ? bT : GrdDtlleComp.Columns[4].HeaderText;
+                    GrdDtlleComp.Columns[5].HeaderText = bO.Equals("TipoMstr") ? bT : GrdDtlleComp.Columns[5].HeaderText;
+                    GrdDtlleComp.Columns[6].HeaderText = bO.Equals("LblIdentifMstr") ? bT : GrdDtlleComp.Columns[6].HeaderText;
+                    GrdDtlleComp.Columns[8].HeaderText = bO.Equals("GrdCantComp") ? bT : GrdDtlleComp.Columns[8].HeaderText;
+                    GrdDtlleComp.Columns[9].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdDtlleComp.Columns[9].HeaderText;
+                    GrdDtlleComp.Columns[10].HeaderText = bO.Equals("GrdCantRec") ? bT : GrdDtlleComp.Columns[10].HeaderText;
+                    GrdDtlleComp.Columns[11].HeaderText = bO.Equals("GrdCantIngres") ? bT : GrdDtlleComp.Columns[11].HeaderText;
+                    GrdDtlleComp.Columns[12].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdDtlleComp.Columns[12].HeaderText;
+                    GrdDtlleComp.Columns[13].HeaderText = bO.Equals("LblFactMstr") ? bT : GrdDtlleComp.Columns[13].HeaderText;
+                    GrdDtlleComp.Columns[14].HeaderText = bO.Equals("LblFechTRMMstr") ? bT : GrdDtlleComp.Columns[14].HeaderText;
+                    // *********************************************** Asignar ***********************************************
+                    LblTitAsigFis.Text = bO.Equals("LblTitAsigFis") ? bT : LblTitAsigFis.Text;
+                    BtnAsignr.Text = bO.Equals("LblAsigMstr") ? bT : BtnAsignr.Text;
+                    LblAsigCantSol.Text = GrdDtlleComp.Columns[8].HeaderText + ":";
+                    LblAsigCantEntrg.Text = " | " + GrdDtlleComp.Columns[11].HeaderText + ":";
+                    LblFactAsign.Text = " | " + GrdDtlleComp.Columns[13].HeaderText + ":";
 
+                    GrdTemp.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdTemp.EmptyDataText;
+                    GrdTemp.Columns[0].HeaderText = bO.Equals("GrdSnLote") ? bT : GrdTemp.Columns[0].HeaderText;
+                    GrdTemp.Columns[1].HeaderText = bO.Equals("GrdCant") ? bT : GrdTemp.Columns[1].HeaderText;
+                    GrdTemp.Columns[2].HeaderText = bO.Equals("GrdFechVence") ? bT : GrdTemp.Columns[2].HeaderText;
+                    // *********************************************** Visualizar ***********************************************
+                    LblTitVisualizaGuarda.Text = bO.Equals("LblTitVisualizaGuarda") ? bT : LblTitVisualizaGuarda.Text;
+                    BtnGuardar.Text = bO.Equals("BotonIngOk") ? bT : BtnGuardar.Text;
+                    LblNumDocGuardar.Text = GrdDtlleComp.Columns[1].HeaderText + ":";                   
+
+                    GrdVisualizar.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdVisualizar.EmptyDataText;
+                    GrdVisualizar.Columns[0].HeaderText = bO.Equals("PosMstr") ? bT : GrdVisualizar.Columns[0].HeaderText;
+                    GrdVisualizar.Columns[1].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdVisualizar.Columns[1].HeaderText;
+                    GrdVisualizar.Columns[4].HeaderText = bO.Equals("LoteMst") ? bT : GrdVisualizar.Columns[4].HeaderText;
+                    GrdVisualizar.Columns[5].HeaderText = bO.Equals("GrdCantComp") ? bT : GrdVisualizar.Columns[5].HeaderText;
+                    GrdVisualizar.Columns[6].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdVisualizar.Columns[6].HeaderText; /**/
                 }
-                // DataRow[] Result = Idioma.Select("Objeto= 'BtnIngresarOnCl1'");
-                // foreach (DataRow row in Result)
-                //  { BtnGuardar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');");/**/ }
+                DataRow[] Result = Idioma.Select("Objeto= 'BtnIngresarOnClMstr'");
+                foreach (DataRow row in Result)
+                { BtnGuardar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');");/**/ }
 
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
@@ -222,7 +262,7 @@ namespace _77NeoWeb.Forms.Almacen
                                     return;
                                 }
                             }
-                            DREC = DSTDdl.Tables["EjecCodComex"].Select("Caso = 5 AND EjecutarCodigo = 'N'"); /*Aplica COMEX*/
+                            DREC = DSTDdl.Tables["EjecCodComex"].Select("Caso = 1 AND EjecutarCodigo = 'N'"); /*Aplica COMEX*/
                             if (Cnx.ValidaDataRowVacio(DREC)) { S_AplicaComex = "N"; }
                         }
                         DR = DSTDdl.Tables[S_ComNAL_INTA].Select("Codigo ='" + DdlNumCompra.Text.Trim() + "' AND Aprobado = 0");

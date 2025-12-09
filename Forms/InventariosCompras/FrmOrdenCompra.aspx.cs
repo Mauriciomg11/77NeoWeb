@@ -215,7 +215,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     GrdModalBusqCot.Columns[7].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdModalBusqCot.Columns[7].HeaderText;
                     GrdModalBusqCot.Columns[8].HeaderText = bO.Equals("GrdVlrUnd") ? bT : GrdModalBusqCot.Columns[8].HeaderText;
                     GrdModalBusqCot.Columns[9].HeaderText = bO.Equals("GrdVlrTotal") ? bT : GrdModalBusqCot.Columns[9].HeaderText;
-                    BtnAsignarModal.Text = bO.Equals("BtnAsignarModal") ? bT : BtnAsignarModal.Text;
+                    BtnAsignarModal.Text = bO.Equals("LblAsigMstr") ? bT : BtnAsignarModal.Text;
                     // *************************************************Grid detalle *************************************************
                     GrdDet.Columns[1].HeaderText = bO.Equals("BtnOpenCotiza") ? bT : GrdDet.Columns[1].HeaderText;
                     GrdDet.Columns[3].HeaderText = bO.Equals("Descripcion") ? bT : GrdDet.Columns[3].HeaderText;

@@ -112,7 +112,7 @@ namespace _77NeoWeb.Forms.Seguridad
             if (DT.Rows.Count > 0)
             {
                 DataView DV = DT.DefaultView;
-                DV.Sort = "IdFormulario,Descripcion";
+                DV.Sort = "IdFormulario,Descripcion,Objeto";
                 DT = DV.ToTable();
                 GrdDatos.DataSource = DT;
                 GrdDatos.DataBind();

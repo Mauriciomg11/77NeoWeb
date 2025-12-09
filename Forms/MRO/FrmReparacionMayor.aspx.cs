@@ -200,6 +200,7 @@ namespace _77NeoWeb.Forms.MRO
                     GrdBusq.Columns[3].HeaderText = bO.Equals("LblDescrip") ? bT : GrdBusq.Columns[3].HeaderText;
                     GrdBusq.Columns[4].HeaderText = bO.Equals("LblDoc") ? bT : GrdBusq.Columns[4].HeaderText;
                     GrdBusq.Columns[7].HeaderText = bO.Equals("GrdDscPN") ? bT : GrdBusq.Columns[7].HeaderText;
+                    GrdBusq.Columns[8].HeaderText = bO.Equals("LblModelo") ? bT : GrdBusq.Columns[8].HeaderText;
                     // ************************************** Recurso  *******************************************************
                     LblTitRecPartes.Text = bO.Equals("LblTitRecPartes") ? bT : LblTitRecPartes.Text;
                     LblTitRecursoLice.Text = bO.Equals("LblTitRecursoLice") ? bT : LblTitRecursoLice.Text;

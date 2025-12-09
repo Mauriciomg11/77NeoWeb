@@ -78,13 +78,13 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.Button BtnEntCompra;
 
         /// <summary>
-        /// Control BtnSldDevCompra.
+        /// Control BtnDevCompra.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnSldDevCompra;
+        protected global::System.Web.UI.WebControls.Button BtnDevCompra;
 
         /// <summary>
         /// Control BtnEntReparacion.
