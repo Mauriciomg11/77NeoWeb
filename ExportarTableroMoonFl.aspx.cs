@@ -58,7 +58,7 @@ namespace _77NeoWeb
             Idioma = (DataTable)ViewState["TablaIdioma"];
             try
             {// 1 Aeronaves | 2 Componentes_Controlados |
-                string query = "", VbNomArchivo = "", VConsec ="0";
+                string query = "", VbNomArchivo = "", VConsec ="0", S_Grupo ="LUISFER";
 
                 if (RdbHK.Checked == true) { VbNomArchivo = RdbHK.Text.Trim(); VConsec = "1"; }
                 if (RdbCompContr.Checked == true) { VbNomArchivo = RdbCompContr.Text.Trim(); VConsec = "2"; }
@@ -73,7 +73,10 @@ namespace _77NeoWeb
                 if (RdbTimePromdRepa.Checked == true) { VbNomArchivo = RdbTimePromdRepa.Text.Trim(); VConsec = "13"; }
                 if (RdbCostoManto.Checked == true) { VbNomArchivo = RdbCostoManto.Text.Trim(); VConsec = "14"; }
 
-                query = "EXEC SP_TableroControlMoon @Consc,@CC,4";
+                if (RdbRepa.Checked == true) { VbNomArchivo = RdbRepa.Text.Trim(); VConsec = "10"; S_Grupo = "OTROS2"; }
+                if (RdbCompras.Checked == true) { VbNomArchivo = RdbCompras.Text.Trim(); VConsec = "11"; S_Grupo = "OTROS2"; }
+                if (S_Grupo.Equals("LUISFER")) { query = "EXEC SP_TableroControlMoon @Consc,@CC,4"; }
+                if (S_Grupo.Equals("OTROS2")) { query = "EXEC PNTLL_Reparacion @Consc,'','','','','','',0,0,0,4,1,'01/01/1900','30/12/2026','03-01-01'"; }
 
                 Cnx.SelecBD();
                 using (SqlConnection con = new SqlConnection(Cnx.GetConex()))

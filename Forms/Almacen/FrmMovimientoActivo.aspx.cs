@@ -147,7 +147,9 @@ namespace _77NeoWeb.Forms.Almacen
         }
         protected void BtnDevCompra_Click(object sender, EventArgs e)
         {
-
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string CT = "window.open('/Forms/Almacen/FrmDevolucionCompra.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
         }
     }
 }

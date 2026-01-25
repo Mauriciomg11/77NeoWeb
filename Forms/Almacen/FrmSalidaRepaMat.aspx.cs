@@ -110,16 +110,16 @@ namespace _77NeoWeb.Forms.Almacen
                     if (bO.Equals("Caption")) { Page.Title = bT; ViewState["PageTit"] = bT; TitForm.Text = bT; }
                     LblAlmacen.Text = bO.Equals("AlmacenMstr") ? bT : LblAlmacen.Text;
                     LblObserv.Text = bO.Equals("LblObsMst") ? bT : LblObserv.Text;
-                    RdbNacional.Text =  bO.Equals("RdbNal") ? "&nbsp" + bT : RdbNacional.Text;
+                    RdbNacional.Text = bO.Equals("RdbNal") ? "&nbsp" + bT : RdbNacional.Text;
                     RdbInter.Text = bO.Equals("RdbInter") ? "&nbsp" + bT : RdbInter.Text;
-                    LblNumRepa.Text = bO.Equals("LblDoc") ? bT : LblNumRepa.Text;
+                    LblNumRepa.Text = bO.Equals("DocMstr") ? bT : LblNumRepa.Text;
                     LblMoneda.Text = bO.Equals("LblMonedaMstr") ? bT : LblMoneda.Text;
                     LblTitCondManiplc.Text = bO.Equals("LblCondAlmaMstr") ? bT : LblTitCondManiplc.Text;
                     BtnCloseMdl.Text = bO.Equals("BtnCerrarMst") ? bT : BtnCloseMdl.Text;
                     BtnGuardar.Text = bO.Equals("BotonIngOk") ? bT : BtnGuardar.Text;
                     // *********************************************** Detalle Repa ***********************************************
                     GrdDtlleRepa.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtlleRepa.EmptyDataText;
-                    GrdDtlleRepa.Columns[1].HeaderText = bO.Equals("LblDoc") ? bT : GrdDtlleRepa.Columns[1].HeaderText;
+                    GrdDtlleRepa.Columns[1].HeaderText = bO.Equals("DocMstr") ? bT : GrdDtlleRepa.Columns[1].HeaderText;
                     GrdDtlleRepa.Columns[2].HeaderText = bO.Equals("PosMstr") ? bT : GrdDtlleRepa.Columns[2].HeaderText;
                     GrdDtlleRepa.Columns[3].HeaderText = bO.Equals("GrdRepa") ? bT : GrdDtlleRepa.Columns[3].HeaderText;
                     GrdDtlleRepa.Columns[4].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdDtlleRepa.Columns[4].HeaderText;
@@ -431,12 +431,12 @@ namespace _77NeoWeb.Forms.Almacen
 
                 if (DdlAlmacen.Text.Trim().Equals("0"))
                 {
-                     Result = Idioma.Select("Objeto= 'MstrMens19'");
+                    Result = Idioma.Select("Objeto= 'MstrMens19'");
                     foreach (DataRow row in Result)
                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// Debe ingresar el almacén.
                     return;
                 }
-                LblAsigCantSol.Text = GrdDtlleRepa.Columns[10].HeaderText +":" ;//Cant Repa
+                LblAsigCantSol.Text = GrdDtlleRepa.Columns[10].HeaderText + ":";//Cant Repa
                 if (e.CommandName.Equals("Abrir"))
                 {
                     GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
@@ -605,6 +605,7 @@ namespace _77NeoWeb.Forms.Almacen
             Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DSDetalle = (DataSet)ViewState["DSDetalle"];
+            if (DSDetalle == null) { return; }
             try
             {
                 if (TxtObserv.Text.Trim().Equals(""))

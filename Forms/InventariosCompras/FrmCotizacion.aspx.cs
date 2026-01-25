@@ -25,7 +25,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
         DataTable DTSolPed = new DataTable();
         DataSet DSTDdl = new DataSet();
         DataSet DSTPpl = new DataSet();
-       // protected System.Web.UI.HtmlControls.HtmlInputFile oFile;
+        // protected System.Web.UI.HtmlControls.HtmlInputFile oFile;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
@@ -138,7 +138,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     BtnExportar.Text = bO.Equals("BtnExportMstr") ? bT : BtnExportar.Text;
                     LblNumCotiza.Text = bO.Equals("LblNumCotiza") ? bT : LblNumCotiza.Text;
                     LblNumPetcn.Text = bO.Equals("LblNumPetcn") ? bT : LblNumPetcn.Text;
-                    LblNumDocum.Text = bO.Equals("LblNumDocum") ? bT : LblNumDocum.Text;
+                    LblNumDocum.Text = bO.Equals("DocMstr") ? bT : LblNumDocum.Text;
                     LblDatosPpt.Text = bO.Equals("LblDatosPpt") ? bT : LblDatosPpt.Text;
                     BtnCompra.Text = bO.Equals("BtnCompra") ? bT : BtnCompra.Text;
                     BtnRepa.Text = bO.Equals("BtnRepa") ? bT : BtnRepa.Text;
@@ -168,7 +168,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     LblTtl.Text = bO.Equals("LblTtl") ? bT : LblTtl.Text;
                     LblTRM.Text = bO.Equals("LblTRM") ? bT : LblTRM.Text;
                     // *************************************************Grid detalle *************************************************
-                    
+
                     IbtAprPNAll.ToolTip = bO.Equals("IbtAprPNAll") ? bT : IbtAprPNAll.ToolTip;
                     if (bO.Equals("placeholderBusPN"))
                     { TxtBusqPn.Attributes.Add("placeholder", bT); }
@@ -1267,43 +1267,43 @@ namespace _77NeoWeb.Forms.InventariosCompras
         protected void Import(string FilePath, string Extension)
         {
             FileStream stream = File.Open(FilePath, FileMode.Open, FileAccess.Read);
-                IExcelDataReader ExcelReader;               
+            IExcelDataReader ExcelReader;
 
-                ExcelReader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream);
+            ExcelReader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream);
 
-                //// para que tome la primera fila como titulo de campos
-                var conf = new ExcelDataSetConfiguration
+            //// para que tome la primera fila como titulo de campos
+            var conf = new ExcelDataSetConfiguration
+            {
+                ConfigureDataTable = _ => new ExcelDataTableConfiguration
+                { UseHeaderRow = true }
+            };
+            var dataSet = ExcelReader.AsDataSet(conf);
+            DataTable DT = dataSet.Tables[0];
+
+            if (DT.Rows.Count > 0)
+            {
+                foreach (DataRow DRExcel in DT.Rows)
                 {
-                    ConfigureDataTable = _ => new ExcelDataTableConfiguration
-                    { UseHeaderRow = true }
-                };               
-                var dataSet = ExcelReader.AsDataSet(conf);
-                DataTable DT = dataSet.Tables[0];
-
-                if (DT.Rows.Count > 0)
-                {
-                    foreach (DataRow DRExcel in DT.Rows)
+                    foreach (DataRow DRDetCot in TblDetalle.Rows)
                     {
-                        foreach (DataRow DRDetCot in TblDetalle.Rows)
+                        if (DRDetCot["PN"].ToString().Trim().Equals(DRExcel["PN"].ToString().Trim()))
                         {
-                            if (DRDetCot["PN"].ToString().Trim().Equals(DRExcel["PN"].ToString().Trim()))
-                            {
-                                DataRow[] DR = DSTDdl.Tables[10].Select("CodCondicionElem='" + DRExcel["Status_Estado"].ToString().Trim() + "'");
-                                if (IsIENumerableLleno(DR))
-                                { DRDetCot["CodEstdo"] = DRExcel["Status_Estado"].ToString().Trim(); }
+                            DataRow[] DR = DSTDdl.Tables[10].Select("CodCondicionElem='" + DRExcel["Status_Estado"].ToString().Trim() + "'");
+                            if (IsIENumerableLleno(DR))
+                            { DRDetCot["CodEstdo"] = DRExcel["Status_Estado"].ToString().Trim(); }
 
-                                DRDetCot["ValorUnidad"] = DRExcel["Value_Valor"].ToString().Trim().Equals("") ? "0" : DRExcel["Value_Valor"].ToString().Trim();
-                                DRDetCot["TiempoEntrega"] = DRExcel["DeliveryTimeDays_TiempoEntregaDias"].ToString().Trim().Equals("") ? "0" : DRExcel["DeliveryTimeDays_TiempoEntregaDias"].ToString().Trim();
-                                DRDetCot["UndMinimaCompra"] = DRExcel["Min_Qty_CantMinima"].ToString().Trim().Equals("") ? "0" : DRExcel["Min_Qty_CantMinima"].ToString().Trim();
-                                DRDetCot["Alterno"] = DRExcel["Alternate_PN_Alterno"].ToString().Trim();
-                                DRDetCot["ObservacionesDC"] = DRExcel["Observations_Observaciones"].ToString().Trim();
-                            }
+                            DRDetCot["ValorUnidad"] = DRExcel["Value_Valor"].ToString().Trim().Equals("") ? "0" : DRExcel["Value_Valor"].ToString().Trim();
+                            DRDetCot["TiempoEntrega"] = DRExcel["DeliveryTimeDays_TiempoEntregaDias"].ToString().Trim().Equals("") ? "0" : DRExcel["DeliveryTimeDays_TiempoEntregaDias"].ToString().Trim();
+                            DRDetCot["UndMinimaCompra"] = DRExcel["Min_Qty_CantMinima"].ToString().Trim().Equals("") ? "0" : DRExcel["Min_Qty_CantMinima"].ToString().Trim();
+                            DRDetCot["Alterno"] = DRExcel["Alternate_PN_Alterno"].ToString().Trim();
+                            DRDetCot["ObservacionesDC"] = DRExcel["Observations_Observaciones"].ToString().Trim();
                         }
                     }
                 }
-                TblDetalle.AcceptChanges();
-                GrdDet.DataSource = TblDetalle; GrdDet.DataBind();
-                Valores();          
+            }
+            TblDetalle.AcceptChanges();
+            GrdDet.DataSource = TblDetalle; GrdDet.DataBind();
+            Valores();
         }
         protected void BtnCargaMaxiva_Click(object sender, EventArgs e)
         {
@@ -1352,7 +1352,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
                             FileUpCot.SaveAs(FilePath);
                             Import(FilePath, VblExt);
-                           // Import_To_Grid(FilePath, VblExt, "Yes");
+                            // Import_To_Grid(FilePath, VblExt, "Yes");
                             FileUpCot.Visible = false;
                         }
                         //------------------------------------------------------                    
@@ -1367,7 +1367,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 }
                 catch (Exception Ex)
                 {
-                   Result = Idioma.Select("Objeto= 'MensErrMod'");
+                    Result = Idioma.Select("Objeto= 'MensErrMod'");
                     foreach (DataRow row in Result)
                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
                     string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
@@ -1436,17 +1436,15 @@ namespace _77NeoWeb.Forms.InventariosCompras
             BtnRepa.CssClass = "btn btn-outline-primary";
             BtnInterc.CssClass = "btn btn-outline-primary";
             LblSnRepa.Visible = false; TxtSnRepa.Visible = false; GrdBusq.DataSource = null; GrdBusq.DataBind();
+            ViewState["TipoCotiza"] = Tipo.Trim();
             switch (Tipo)
             {
                 case "01":
-                    ViewState["TipoCotiza"] = "01";
                     BtnCompra.CssClass = "btn btn-primary"; break;
                 case "02":
-                    ViewState["TipoCotiza"] = "02";
                     BtnRepa.CssClass = "btn btn-primary";
                     LblSnRepa.Visible = true; TxtSnRepa.Visible = true; break;
                 default:
-                    ViewState["TipoCotiza"] = "03";
                     BtnInterc.CssClass = "btn btn-primary"; break;
             }
         }
@@ -1801,17 +1799,19 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 TextBox TxtTsIVA = (TextBox)e.Row.FindControl("TxtTsIVA");
                 ImageButton imgD = e.Row.FindControl("IbtDelete") as ImageButton;
 
-                DdlPN.DataSource = DSTDdl.Tables[8];
+                DdlPN.DataSource = DSTDdl.Tables["PN"];
                 DdlPN.DataTextField = "PN";
                 DdlPN.DataValueField = "PN";
                 DdlPN.DataBind();
                 DataRowView dr = e.Row.DataItem as DataRowView;
                 string VbPN = dr["Pn"].ToString().Trim();
                 DdlPN.SelectedValue = VbPN;
-
+                DdlPN.Enabled = false;
+                DdlUM.Enabled = false;
+               
                 string VbCodAnt = dr["CodUndMed"].ToString().Trim();
                 DataTable DT = new DataTable();
-                DataRow[] DR = DSTDdl.Tables[9].Select("ActivoUM=1 AND PN ='" + VbPN + "' OR (UndCompraPN ='" + VbCodAnt + "' AND PN ='" + VbPN + "') OR PN = ''");
+                DataRow[] DR = DSTDdl.Tables["UndMed"].Select("ActivoUM = 1 AND PN = '" + VbPN + "' OR (UndCompraPN ='" + VbCodAnt + "' AND PN ='" + VbPN + "') OR PN = ''");
                 if (IsIENumerableLleno(DR))
                 { DT = DR.CopyToDataTable(); }
                 DdlUM.DataSource = DT;
@@ -1820,7 +1820,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 DdlUM.DataBind();
                 DdlUM.Text = VbCodAnt;
 
-                DdlEstdElem.DataSource = DSTDdl.Tables[10];
+                if (ViewState["TipoCotiza"].ToString().Equals("01"))
+                {
+                    if (ViewState["DocAprobado"].ToString().Trim().Equals("N")) { DdlPN.Enabled = true; DdlUM.Enabled = true; }//Doc Aprobado                   
+                    else { DdlPN.ToolTip = ViewState["TxtAprob"].ToString(); DdlUM.ToolTip = ViewState["TxtAprob"].ToString(); }
+                }
+
+                DdlEstdElem.DataSource = DSTDdl.Tables["EstadoElem"];
                 DdlEstdElem.DataTextField = "Descripcion";
                 DdlEstdElem.DataValueField = "CodCondicionElem";
                 DdlEstdElem.DataBind();
@@ -1845,12 +1851,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
                 if (ViewState["DocAprobado"].ToString().Trim().Equals("S") || ViewState["PeriodCerrado"].ToString().Trim().Equals("S") || ViewState["ShipLiquidada"].ToString().Trim().Equals("S"))// Si esta aprobado o Periodo cerrado o liquidad el COMEX
                 {
-                    TxtCant.Enabled = false; DdlUM.Enabled = false; TxtVlor.Enabled = false; TxtTsIVA.Enabled = false;
+                    TxtCant.Enabled = false; DdlUM.Enabled = false; DdlPN.Enabled = false; TxtVlor.Enabled = false; TxtTsIVA.Enabled = false;
 
                     if (ViewState["ShipLiquidada"].ToString().Trim().Equals("S"))
                     {
                         TxtCant.ToolTip = ViewState["TxtSOLiqud"].ToString().Trim();
                         DdlUM.ToolTip = ViewState["TxtSOLiqud"].ToString().Trim();
+                        DdlPN.ToolTip = ViewState["TxtSOLiqud"].ToString().Trim();
                         TxtVlor.ToolTip = ViewState["TxtSOLiqud"].ToString().Trim();
                         TxtTsIVA.ToolTip = ViewState["TxtSOLiqud"].ToString().Trim();
                         if (imgD != null)
@@ -1878,8 +1885,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
                 if (ViewState["TieneSOMvtoAlma"].ToString().Trim().Equals("S"))
                 {
-                    TxtCant.Enabled = false; DdlUM.Enabled = false;
+                    TxtCant.Enabled = false; DdlUM.Enabled = false; DdlPN.Enabled = false;
                     TxtCant.ToolTip = ViewState["TxtTieneSOMvtAlma"].ToString().Trim();
+                    DdlPN.ToolTip = ViewState["TxtTieneSOMvtAlma"].ToString().Trim();
                     DdlUM.ToolTip = ViewState["TxtTieneSOMvtAlma"].ToString().Trim();
                     if (imgD != null) { imgD.Enabled = false; imgD.ToolTip = ViewState["TxtTieneSOMvtAlma"].ToString().Trim(); }
                 }
@@ -1890,6 +1898,45 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 e.Row.Cells[9].HorizontalAlign = HorizontalAlign.Right;
                 e.Row.Cells[10].HorizontalAlign = HorizontalAlign.Right;
             }
+        }
+        protected void DdlPN_TextChanged(object sender, EventArgs e)
+        {
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+            TblDetalle = (DataTable)ViewState["TblDetalle"];
+           
+            var ControlAct = (Control)sender;
+            GridViewRow row = (GridViewRow)ControlAct.NamingContainer;
+            int rowIndex = row.RowIndex;
+            string S_PN = ((DropDownList)row.FindControl("DdlPN")).Text.ToString().Trim();
+            DropDownList DdlUM = (DropDownList)row.FindControl("DdlUM");
+
+            DataTable DT = new DataTable();
+            DataRow[] DR = DSTDdl.Tables["UndMed"].Select("ActivoUM = 1 AND PN = '" + S_PN + "'");
+            if (IsIENumerableLleno(DR))
+            { DT = DR.CopyToDataTable(); }
+            DdlUM.DataSource = DT;
+            DdlUM.DataTextField = "Descripcion";
+            DdlUM.DataValueField = "UndCompraPN";
+            DdlUM.DataBind();
+            string S_UM = ((DropDownList)row.FindControl("DdlUM")).Text.ToString().Trim();
+
+            string S_DescPN = DSTDdl.Tables["PN"].AsEnumerable().Where(x => x.Field<string>("PN") == S_PN).Select(x => x.Field<string>("Descripcion")).FirstOrDefault();
+            //string S_DescPN = DSTDdl.Tables["PN"].Rows.Cast<DataRow>().Where(x => x.Field<string>("PN") == S_PN).Select(x => x.Field<string>("Descripcion")).ToString();
+
+            int Id = Convert.ToInt32(GrdDet.DataKeys[rowIndex].Values["IdDetCotizacion"].ToString().Trim());
+            foreach (DataRow dr in TblDetalle.Rows)
+            {
+                if (Convert.ToInt32(dr["IdDetCotizacion"]) == Id)
+                {
+                    dr["PN"] = S_PN;
+                    dr["CodUndMed"] = S_UM;
+                    dr["DESPN"] = S_DescPN;
+                    break;
+                }
+            }
+            ViewState["TblDetalle"] = TblDetalle; // Guardar cambios
+            GrdDet.DataSource = TblDetalle;
+            GrdDet.DataBind();
         }
         //****************************** MOdal **************************************
         protected void BindModalBusqCot()
@@ -2123,6 +2170,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Exportar Cotización Unidad Medida", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
-        }
+        }        
     }
 }

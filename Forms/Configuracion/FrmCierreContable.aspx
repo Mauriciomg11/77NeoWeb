@@ -53,8 +53,8 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+              <br />  <br />
             <div class="CentrarContenedor">
-
                 <div class="row">
                     <div class="col-sm-6">
                         <asp:Label ID="LblMes" runat="server" CssClass="LblEtiquet" Text=" mes" />

@@ -29,7 +29,7 @@ namespace _77NeoWeb.Forms.Comex
             {
                 if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
             }
-            ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
+            ViewState["PFileName"] = "FRMSHIPPINGORDER";//System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
@@ -190,8 +190,8 @@ namespace _77NeoWeb.Forms.Comex
                     string bT = tbl["Texto"].ToString().Trim();
                     Idioma.Rows.Add(bO, bT);
                     if (bO.Equals("Caption"))
-                    { Page.Title = bT; ViewState["PageTit"] = bT; }
-                    TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
+                    { Page.Title = bT; ViewState["PageTit"] = bT; TitForm.Text = bT; }
+                   
                     BtnIngresar.Text = bO.Equals("BotonIng") ? bT : BtnIngresar.Text;
                     BtnModificar.Text = bO.Equals("BotonMod") ? bT : BtnModificar.Text;
                     BtnConsultar.Text = bO.Equals("BtnConsultarGral") ? bT : BtnConsultar.Text;
@@ -907,7 +907,7 @@ namespace _77NeoWeb.Forms.Comex
         }
         protected void IbtCerrarBusq_Click(object sender, ImageClickEventArgs e)
         { MultVw.ActiveViewIndex = 0; }
-        //****************************** DETALLE Cotizacion **************************************
+        //****************************** DETALLE  **************************************
         protected void BindDDetTmp()
         {
             DSTPpl = (DataSet)ViewState["DSTPpl"];
@@ -1080,6 +1080,7 @@ namespace _77NeoWeb.Forms.Comex
                 TblDetalle.AcceptChanges();
                 MultVw.ActiveViewIndex = 0;
                 BindDDetTmp();
+                GrdAsignarComRep.DataSource = null; GrdAsignarComRep.DataBind();
             }
             catch (Exception Ex)
             {

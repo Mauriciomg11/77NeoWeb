@@ -98,7 +98,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     GrdDatos.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDatos.EmptyDataText;
                     GrdDatos.Columns[1].HeaderText = bO.Equals("LblAeronave") ? bT : GrdDatos.Columns[1].HeaderText;
                     GrdDatos.Columns[2].HeaderText = bO.Equals("GrdDesc") ? bT : GrdDatos.Columns[2].HeaderText;
-                    GrdDatos.Columns[3].HeaderText = bO.Equals("GrdDoc") ? bT : GrdDatos.Columns[3].HeaderText;
+                    GrdDatos.Columns[3].HeaderText = bO.Equals("DocMstr") ? bT : GrdDatos.Columns[3].HeaderText;
                     GrdDatos.Columns[6].HeaderText = bO.Equals("GrdFecUC") ? bT : GrdDatos.Columns[6].HeaderText;
                     GrdDatos.Columns[7].HeaderText = bO.Equals("GrdOT") ? bT : GrdDatos.Columns[7].HeaderText;
                     GrdDatos.Columns[9].HeaderText = bO.Equals("GrdProy") ? bT : GrdDatos.Columns[9].HeaderText;

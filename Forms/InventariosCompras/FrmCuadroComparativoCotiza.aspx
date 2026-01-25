@@ -77,7 +77,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="CentrarContenedor ScrollDet2">
                 <table>
                     <tr>

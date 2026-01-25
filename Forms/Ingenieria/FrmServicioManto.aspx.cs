@@ -211,7 +211,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     LblCumplimi.Text = bO.Equals("LblCumplimi") ? bT : LblCumplimi.Text;
                     LblGrupo.Text = bO.Equals("LblGrupo") ? bT + ":" : LblGrupo.Text;
                     //   LblActual.Text = bO.Equals("LblActual") ? bT + ":" : LblActual.Text;
-                    LblDoc.Text = bO.Equals("LblDoc") ? bT + ":" : LblDoc.Text;
+                    LblDoc.Text = bO.Equals("DocMstr") ? bT + ":" : LblDoc.Text;
                     LblEtapa.Text = bO.Equals("LblEtapa") ? bT + ":" : LblEtapa.Text;
                     LblRefOT.Text = bO.Equals("LblRefOT") ? bT + ":" : LblRefOT.Text;
                     LblRefOT.ToolTip = bO.Equals("LblRefOTTT") ? bT : LblRefOT.ToolTip;
@@ -263,7 +263,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     GrdBusq.Columns[1].HeaderText = bO.Equals("GrdId") ? bT : GrdBusq.Columns[1].HeaderText;
                     GrdBusq.Columns[2].HeaderText = bO.Equals("LblCod") ? bT : GrdBusq.Columns[2].HeaderText;
                     GrdBusq.Columns[3].HeaderText = bO.Equals("LblDescrip") ? bT : GrdBusq.Columns[3].HeaderText;
-                    GrdBusq.Columns[4].HeaderText = bO.Equals("LblDoc") ? bT : GrdBusq.Columns[4].HeaderText;
+                    GrdBusq.Columns[4].HeaderText = bO.Equals("DocMstr") ? bT : GrdBusq.Columns[4].HeaderText;
                     GrdBusq.Columns[7].HeaderText = bO.Equals("GrdDscPN") ? bT : GrdBusq.Columns[7].HeaderText;
                    
                     // ************************************** Recurso  *******************************************************       
@@ -286,7 +286,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     IbtExpExcelSvcAplAK.ToolTip = bO.Equals("IbtExpExcelSvcAplAK") ? bT : IbtExpExcelSvcAplAK.ToolTip;
                     IbtExpExcelSvcGnrl.ToolTip = bO.Equals("IbtExpExcelSvcGnrl") ? bT : IbtExpExcelSvcGnrl.ToolTip;
                     ViewState["TitInf"] = bO.Equals("TitInf") ? bT : ViewState["TitInf"];
-                    ViewState["DocInf"] = bO.Equals("LblDoc") ? bT : ViewState["DocInf"];
+                    ViewState["DocInf"] = bO.Equals("DocMstr") ? bT : ViewState["DocInf"];
                     ViewState["FrecInf"] = bO.Equals("FrecInf") ? bT : ViewState["FrecInf"];
                     ViewState["fechUCInf"] = bO.Equals("fechUCInf") ? bT : ViewState["fechUCInf"];
                     ViewState["InfOT"] = bO.Equals("InfOT") ? bT : ViewState["InfOT"];
@@ -1628,10 +1628,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     if (Row.RowIndex == GrdAeron.SelectedIndex)
                     {
-
                         Row.Style["background-color"] = "#D4DAD3";
                         Row.Attributes["onclick"] = "";
-
                         Label ext = Row.FindControl("LblExt") as Label;
                         Label extDia = Row.FindControl("LblExtDia") as Label;
                         if (ext != null)

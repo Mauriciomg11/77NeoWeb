@@ -301,6 +301,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
                         }
                         catch (Exception Ex)
                         {
+                            PMensj = Ex.Message;
                             string VbUsu, VbPantalla, VbcatVer, VbcatAct;
                             VbUsu = System.Web.HttpContext.Current.Session["C77U"].ToString();
                             VbPantalla = "Generar Cotizacion";

@@ -295,6 +295,7 @@
                 </asp:View>
                 <asp:View ID="Vw1Exportar" runat="server">
                     <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOpcExportar" runat="server" Text="Opciones de la exportación" />
                     </h6>

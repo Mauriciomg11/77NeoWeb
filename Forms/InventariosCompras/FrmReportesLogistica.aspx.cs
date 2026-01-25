@@ -14,6 +14,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
         DataSet DSTDdl = new DataSet();
+        DataSet DSRepara = new DataSet();
+        DataSet DSEstdComp = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
@@ -48,6 +50,10 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 DateTime VbFecID = Convert.ToDateTime(fecha);
                 TxtFechI.Text = string.Format("{0:yyyy-MM-dd}", VbFecID);
                 TxtFechF.Text = string.Format("{0:yyyy-MM-dd}", DateTime.UtcNow);
+                TxtFechECI.Text = string.Format("{0:yyyy-MM-dd}", VbFecID);
+                TxtFechECF.Text = string.Format("{0:yyyy-MM-dd}", DateTime.UtcNow);
+                RdbRpAll.Checked = true;
+                RdbECAll.Checked = true;
                 IdiomaControles();
                 BindDdl("UPD");
             }
@@ -63,7 +69,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
                 SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
                 SC.Parameters.AddWithValue("@F1", ViewState["PFileName"]);
-                SC.Parameters.AddWithValue("@F2", "");
+                SC.Parameters.AddWithValue("@F2", "CurExportLogstcRepa");
                 SC.Parameters.AddWithValue("@F3", "");
                 SC.Parameters.AddWithValue("@F4", "");
                 sqlCon.Open();
@@ -75,28 +81,89 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     Idioma.Rows.Add(bO, bT);
                     if (bO.Equals("Caption"))
                     { Page.Title = bT; ViewState["PageTit"] = bT; }
-
                     TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
-                    BtnReparaciones.Text = bO.Equals("BtnReparaciones") ? bT : BtnReparaciones.Text;
-                    LblTitReparaciones.Text = bO.Equals("BtnReparaciones") ? bT : LblTitReparaciones.Text;
+                    BtnReparaciones.Text = bO.Equals("BtnReparaciones") ? bT : BtnReparaciones.Text;                    
                     BtnReparaciones.ToolTip = bO.Equals("BtnReparacionesTT") ? bT : BtnReparaciones.ToolTip;
+                    BtnCompraPend.Text = bO.Equals("BtnCompraPend") ? bT : BtnCompraPend.Text;
+                    BtnCompraPend.ToolTip = bO.Equals("CkbECPend") ? bT : BtnCompraPend.ToolTip;
                     IbtCerrarImpr.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarImpr.ToolTip;
-                    LblTitReparaciones.Text = bO.Equals("BtnReparaciones") ? bT : LblTitReparaciones.Text;
+                    // ************************************************************ Reparaciones ************************************************************
+                    LblTitReparaciones.Text = bO.Equals("BtnReparaciones") ? bT : LblTitReparaciones.Text; 
                     LblFechI.Text = bO.Equals("LblFechI") ? bT : LblFechI.Text;
                     LblFechF.Text = bO.Equals("LblFechF") ? bT : LblFechF.Text;
-                    IbtExcelRepa.ToolTip = bO.Equals("BtnExportMstr") ? bT : IbtExcelRepa.ToolTip;
+                    RdbRpAll.Text = bO.Equals("RdbRpAll") ? "&nbsp" + bT : RdbRpAll.Text;
+                    RdbRpCot.Text = bO.Equals("C39") ? "&nbsp" + bT : RdbRpCot.Text;
+                    RdbRpCodRepa.Text = bO.Equals("C40") ? "&nbsp" + bT : RdbRpCodRepa.Text;
+                    RdbRpProv.Text = bO.Equals("C26") ? "&nbsp" + bT : RdbRpProv.Text;
+                    CkbRpPend.Text = bO.Equals("CkbRpPend") ? "&nbsp" + bT : CkbRpPend.Text;
+                    CkbRpPend.ToolTip = bO.Equals("CkbRpPendTT") ?  bT : CkbRpPend.ToolTip;
+                    if (bO.Equals("placeholder"))
+                    { TxtRpDocBusq.Attributes.Add("placeholder", bT); TxtECDocBusq.Attributes.Add("placeholder", bT); }
+                    IbtRpBusqueda.ToolTip = bO.Equals("BtnConsultarGral") ? bT : IbtRpBusqueda.ToolTip;
+                    IbtExcelHisAlmaRepa.ToolTip = bO.Equals("BtnReparacionesTT") ? bT : IbtExcelHisAlmaRepa.ToolTip;
+                    IbtExpRepaPend.ToolTip = bO.Equals("IbtExpRepaPend") ? bT : IbtExpRepaPend.ToolTip;
+                    GrdDetRepa.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDetRepa.EmptyDataText;
+                    GrdDetRepa.Columns[0].HeaderText = bO.Equals("C34") ? bT : GrdDetRepa.Columns[0].HeaderText;
+                    GrdDetRepa.Columns[1].HeaderText = bO.Equals("C38") ? bT : GrdDetRepa.Columns[1].HeaderText;
+                    GrdDetRepa.Columns[2].HeaderText = bO.Equals("C39") ? bT : GrdDetRepa.Columns[2].HeaderText;
+                    GrdDetRepa.Columns[3].HeaderText = bO.Equals("C40") ? bT : GrdDetRepa.Columns[3].HeaderText;
+                    GrdDetRepa.Columns[4].HeaderText = bO.Equals("C35") ? bT : GrdDetRepa.Columns[4].HeaderText;
+                    GrdDetRepa.Columns[5].HeaderText = bO.Equals("C07") ? bT : GrdDetRepa.Columns[5].HeaderText;
+                    GrdDetRepa.Columns[7].HeaderText = bO.Equals("C41") ? bT : GrdDetRepa.Columns[7].HeaderText;
+                    GrdDetRepa.Columns[9].HeaderText = bO.Equals("C13") ? bT : GrdDetRepa.Columns[9].HeaderText;
+                    GrdDetRepa.Columns[10].HeaderText = bO.Equals("C43") ? bT : GrdDetRepa.Columns[10].HeaderText;
+                    GrdDetRepa.Columns[11].HeaderText = bO.Equals("C44") ? bT : GrdDetRepa.Columns[11].HeaderText;
+                    GrdDetRepa.Columns[12].HeaderText = bO.Equals("C09") ? bT : GrdDetRepa.Columns[12].HeaderText;
+                    GrdDetRepa.Columns[13].HeaderText = bO.Equals("C45") ? bT : GrdDetRepa.Columns[13].HeaderText;
+                    GrdDetRepa.Columns[14].HeaderText = bO.Equals("C46") ? bT : GrdDetRepa.Columns[14].HeaderText;
+                    GrdDetRepa.Columns[15].HeaderText = bO.Equals("C47") ? bT : GrdDetRepa.Columns[15].HeaderText;
+                    GrdDetRepa.Columns[16].HeaderText = bO.Equals("C26") ? bT : GrdDetRepa.Columns[16].HeaderText;
                     // ************************************************************ Inventario ************************************************************
                     IbtCerrarInvetr.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarInvetr.ToolTip;
                     BtnInventario.Text = bO.Equals("BtnInventario") ? bT : BtnInventario.Text;
                     BtnInventario.ToolTip = bO.Equals("BtnInventarioTT") ? bT : BtnInventario.ToolTip;
-                    LblTitInventario.Text = bO.Equals("BtnReparaciones") ? bT : LblTitInventario.Text;
+                    LblTitInventario.Text = bO.Equals("LblTitInventario") ? bT : LblTitInventario.Text;
                     LblAlmacenInv.Text = bO.Equals("AlmacenMstr") ? bT : LblAlmacenInv.Text;
                     LblGrupoInv.Text = bO.Equals("LblGrupoInv") ? bT : LblGrupoInv.Text;
                     if (bO.Equals("RdbSrlzdInv")) { ViewState["SNm"] = bT; RdbSrlzdInv.Text = "&nbsp" + bT; }
                     if (bO.Equals("RdbNoSrlzdInv")) { ViewState["NS"] = bT; RdbNoSrlzdInv.Text = "&nbsp" + bT; }
                     LblFechCorte.Text = bO.Equals("LblFechCorte") ? bT : LblFechCorte.Text;
                     IbtExprtrInvtr.ToolTip = bO.Equals("IbtExprtrInvtr") ? bT : IbtExprtrInvtr.ToolTip;
-
+                    // ************************************************************ Estado Compra ************************************************************
+                   
+                    LblTitCompraPend.Text = bO.Equals("LblTitCompraPend") ? bT : LblTitCompraPend.Text;
+                    LblFechECI.Text = bO.Equals("LblFechI") ? bT : LblFechECI.Text;
+                    LblFechECF.Text = bO.Equals("LblFechF") ? bT : LblFechECF.Text;
+                    RdbECAll.Text = bO.Equals("RdbRpAll") ? "&nbsp" + bT : RdbECAll.Text;
+                    RdbECCot.Text = bO.Equals("C39") ? "&nbsp" + bT : RdbECCot.Text;
+                    RdbECComp.Text = bO.Equals("RdbECComp") ? "&nbsp" + bT : RdbECComp.Text;
+                    RdbECProv.Text = bO.Equals("C26") ? "&nbsp" + bT : RdbECProv.Text;
+                    CkbECPend.Text = bO.Equals("CkbRpPend") ? "&nbsp" + bT : CkbECPend.Text;
+                    CkbECPend.ToolTip = bO.Equals("CkbECPend") ? bT : CkbECPend.ToolTip;
+                    IbtExpECompPend.ToolTip = bO.Equals("IbtExpECompPend") ? bT : IbtExpECompPend.ToolTip;
+                    IbtECBusqueda.ToolTip = bO.Equals("BtnConsultarGral") ? bT : IbtECBusqueda.ToolTip;
+                    IbtCerrarCompPend.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarCompPend.ToolTip;
+                    GrdDetEstdComp.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDetEstdComp.EmptyDataText;
+                    GrdDetEstdComp.Columns[0].HeaderText = bO.Equals("C34") ? bT : GrdDetEstdComp.Columns[0].HeaderText;
+                    GrdDetEstdComp.Columns[1].HeaderText = bO.Equals("C38") ? bT : GrdDetEstdComp.Columns[1].HeaderText;
+                    GrdDetEstdComp.Columns[2].HeaderText = bO.Equals("C39") ? bT : GrdDetEstdComp.Columns[2].HeaderText;
+                    GrdDetEstdComp.Columns[3].HeaderText = bO.Equals("RdbECComp") ? bT : GrdDetEstdComp.Columns[3].HeaderText;
+                    GrdDetEstdComp.Columns[4].HeaderText = bO.Equals("FechaCompra") ? bT : GrdDetEstdComp.Columns[4].HeaderText;
+                    GrdDetEstdComp.Columns[5].HeaderText = bO.Equals("C07") ? bT : GrdDetEstdComp.Columns[5].HeaderText;
+                    GrdDetEstdComp.Columns[6].HeaderText = bO.Equals("AprobadoMstr") ? bT : GrdDetEstdComp.Columns[6].HeaderText;
+                    GrdDetEstdComp.Columns[9].HeaderText = bO.Equals("LblIdentifMstr") ? bT : GrdDetEstdComp.Columns[9].HeaderText;
+                    GrdDetEstdComp.Columns[10].HeaderText = bO.Equals("C13") ? bT : GrdDetEstdComp.Columns[10].HeaderText;
+                    GrdDetEstdComp.Columns[11].HeaderText = bO.Equals("C44") ? bT : GrdDetEstdComp.Columns[11].HeaderText;
+                    GrdDetEstdComp.Columns[12].HeaderText = bO.Equals("C43") ? bT : GrdDetEstdComp.Columns[12].HeaderText;
+                    GrdDetEstdComp.Columns[13].HeaderText = bO.Equals("CantPend") ? bT : GrdDetEstdComp.Columns[13].HeaderText;
+                    GrdDetEstdComp.Columns[14].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdDetEstdComp.Columns[14].HeaderText;
+                    GrdDetEstdComp.Columns[15].HeaderText = bO.Equals("UndDesp") ? bT : GrdDetEstdComp.Columns[15].HeaderText;
+                    GrdDetEstdComp.Columns[16].HeaderText = bO.Equals("C09") ? bT : GrdDetEstdComp.Columns[16].HeaderText;
+                    GrdDetEstdComp.Columns[17].HeaderText = bO.Equals("C46") ? bT : GrdDetEstdComp.Columns[17].HeaderText;
+                    GrdDetEstdComp.Columns[18].HeaderText = bO.Equals("C45") ? bT : GrdDetEstdComp.Columns[18].HeaderText;
+                    GrdDetEstdComp.Columns[19].HeaderText = bO.Equals("PPT") ? bT : GrdDetEstdComp.Columns[19].HeaderText;
+                    GrdDetEstdComp.Columns[20].HeaderText = bO.Equals("C47") ? bT : GrdDetEstdComp.Columns[20].HeaderText;
+                    GrdDetEstdComp.Columns[21].HeaderText = bO.Equals("C26") ? bT : GrdDetEstdComp.Columns[21].HeaderText;
                 }
                 DataRow[] Result = Idioma.Select("Objeto= 'BtnOnCl1Invt'");
                 foreach (DataRow row in Result)
@@ -105,7 +172,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 ViewState["TablaIdioma"] = Idioma;
             }
         }
-
         protected void BindDdl(string Accion)
         {
             if (Accion.Equals("UPD"))
@@ -152,11 +218,93 @@ namespace _77NeoWeb.Forms.InventariosCompras
             }
         }
         // ************************************************************ Reparaciones ************************************************************
+        protected void BindRepa()
+        {
+            try
+            {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                DataRow[] Result;
+                if (TxtFechI.Text.Equals("") || TxtFechF.Text.Equals(""))
+                {
+                    Result = Idioma.Select("Objeto= 'MensCampoReq'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }
+                    if (TxtFechF.Text.Equals("")) { TxtFechI.Focus(); }
+                    if (TxtFechI.Text.Equals("")) { TxtFechI.Focus(); }
+                    return;
+                }
+                Cnx.ValidarFechas(TxtFechI.Text.Trim(), TxtFechF.Text.Trim(), 2);
+                var MensjF = Cnx.GetMensj();
+                if (!MensjF.ToString().Trim().Equals(""))
+                {
+                    Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { MensjF = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString();
+                    return;
+                }
+                Cnx.SelecBD();
+                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+                {
+                    string VbTipoDoc = "";
+                    string S_Pend = "";
+
+                    if (RdbRpAll.Checked == true) { VbTipoDoc = ""; }
+                    if (RdbRpCot.Checked == true) { VbTipoDoc = "COT"; }
+                    if (RdbRpCodRepa.Checked == true) { VbTipoDoc = "REP"; }
+                    if (RdbRpPN.Checked == true) { VbTipoDoc = "PN"; }
+                    if (RdbRpSN.Checked == true) { VbTipoDoc = "SN"; }
+                    if (RdbRpProv.Checked == true) { VbTipoDoc = "PROV"; }
+                    if (CkbRpPend.Checked == true) { S_Pend = "PEND"; }
+                    CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
+                    CursorIdioma.Alimentar("CurExportLogstcRepa", Session["77IDM"].ToString().Trim());
+                    string VbTxtSql = "EXEC PNTLL_Reparacion 10, @TD, @Doc, @Pend, @CID,'','',0,0,0,@Idm, @ICC, @FI, @FF,'03-01-01'";
+                    sqlConB.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                    {
+                        SC.Parameters.AddWithValue("@TD", VbTipoDoc);
+                        SC.Parameters.AddWithValue("@Doc", TxtRpDocBusq.Text.Trim());
+                        SC.Parameters.AddWithValue("@Pend", S_Pend);
+                        SC.Parameters.AddWithValue("@CID", "CurExportLogstcRepa");
+                        SC.Parameters.AddWithValue("@FI", Convert.ToDateTime(TxtFechI.Text.Trim()));
+                        SC.Parameters.AddWithValue("@FF", Convert.ToDateTime(TxtFechF.Text.Trim()));
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            using (DataSet DSRepara = new DataSet())
+                            {
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DSRepara);
+                                DSRepara.Tables[0].TableName = "Consulta";
+                                DSRepara.Tables[1].TableName = "Exportar";
+                                ViewState["DSRepara"] = DSRepara;
+                            }
+                        }
+                    }
+                }
+                DSRepara = (DataSet)ViewState["DSRepara"];
+                if (DSRepara.Tables["Consulta"].Rows.Count > 0) { GrdDetRepa.DataSource = DSRepara.Tables["Consulta"]; }
+                else
+                { GrdDetRepa.DataSource = null; }
+                GrdDetRepa.DataBind();
+            }
+            catch (Exception Ex)
+            {
+                String S_Ex = Ex.Message;
+                DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+            }
+        }
         protected void BtnReparaciones_Click(object sender, EventArgs e)
         { MlVw.ActiveViewIndex = 1; TxtFechI.Focus(); }
+        protected void IbtRpBusqueda_Click(object sender, ImageClickEventArgs e)
+        { BindRepa(); }
         protected void IbtCerrarImpr_Click(object sender, ImageClickEventArgs e)
         { MlVw.ActiveViewIndex = 0; }
-        protected void IbtExcelRepa_Click(object sender, ImageClickEventArgs e)
+        protected void IbtExcelHisAlmaRepa_Click(object sender, ImageClickEventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
             DataRow[] Result;
@@ -234,6 +382,56 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         }
                     }
                 }
+            }
+        }
+        protected void IbtExpRepaPend_Click(object sender, ImageClickEventArgs e)
+        {
+            DataRow[] Result;
+            try
+            {
+                Page.Title = ViewState["PageTit"].ToString().Trim();
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                DSRepara = (DataSet)ViewState["DSRepara"];
+                if (DSRepara == null)
+                {
+                    Result = Idioma.Select("Objeto= 'Mens02RptLog'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }
+                    return;
+                }
+                /*if (DSRepara.Tables["Exportar"].Rows.Count > 0)
+                {
+                    Result = Idioma.Select("Objeto= 'Mens02RptLog'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }
+                    return;
+                }*/               
+                string VbNomArchivo = "";
+                Result = Idioma.Select("Objeto= 'NomArcRepaEstado'");
+                foreach (DataRow row in Result)
+                { VbNomArchivo = row["Texto"].ToString().Trim(); }
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    wb.Worksheets.Add(DSRepara.Tables["Exportar"]);
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.ContentType = "application/ms-excel";
+                    Response.AddHeader("content-disposition", string.Format("attachment;filename={0}.xlsx", VbNomArchivo));
+                    Response.Charset = "";
+                    using (MemoryStream MyMemoryStream = new MemoryStream())
+                    {
+                        wb.SaveAs(MyMemoryStream);
+                        MyMemoryStream.WriteTo(Response.OutputStream);
+                        Response.Flush();
+                        Response.End();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Result = Idioma.Select("Objeto= 'Mens02RptLog'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
             }
         }
         // ************************************************************ Inventario ************************************************************
@@ -343,6 +541,131 @@ namespace _77NeoWeb.Forms.InventariosCompras
             if (DdlGrupoInv.Text.Trim().Equals("01")) { RdbNoSrlzdInv.Enabled = true; RdbSrlzdInv.Checked = true; RdbSrlzdInv.Enabled = true; }
             else { RdbNoSrlzdInv.Enabled = false; RdbSrlzdInv.Enabled = false; RdbSrlzdInv.Checked = false; RdbNoSrlzdInv.Checked = false; }
         }
+        // ************************************************************ Estado de la Compra ************************************************************
+        protected void BtnCompraPend_Click(object sender, EventArgs e)
+        { MlVw.ActiveViewIndex = 3; TxtFechECI.Focus(); }
+        protected void IbtCerrarCompPend_Click(object sender, ImageClickEventArgs e)
+        { MlVw.ActiveViewIndex = 0; }
+        protected void IbtECBusqueda_Click(object sender, ImageClickEventArgs e)
+        {
+            try
+            {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                DataRow[] Result;
+                if (TxtFechECI.Text.Equals("") || TxtFechECF.Text.Equals(""))
+                {
+                    Result = Idioma.Select("Objeto= 'MensCampoReq'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }
+                    if (TxtFechECF.Text.Equals("")) { TxtFechECI.Focus(); }
+                    if (TxtFechECI.Text.Equals("")) { TxtFechECI.Focus(); }
+                    return;
+                }
+                Cnx.ValidarFechas(TxtFechECI.Text.Trim(), TxtFechECF.Text.Trim(), 2);
+                var MensjF = Cnx.GetMensj();
+                if (!MensjF.ToString().Trim().Equals(""))
+                {
+                    Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { MensjF = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString();
+                    return;
+                }
+                Cnx.SelecBD();
+                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+                {
+                    string VbTipoDoc = "", S_Pend = "";
+                    if (RdbECAll.Checked == true) { VbTipoDoc = ""; }
+                    if (RdbECCot.Checked == true) { VbTipoDoc = "COT"; }
+                    if (RdbECComp.Checked == true) { VbTipoDoc = "COM"; }
+                    if (RdbECPN.Checked == true) { VbTipoDoc = "PN"; }
+                    if (RdbECProv.Checked == true) { VbTipoDoc = "PROV"; }
+                    if (CkbECPend.Checked == true) { S_Pend = "PEND"; }
+                    CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
+                    CursorIdioma.Alimentar("CURINFTODASLASSPOC", Session["77IDM"].ToString().Trim());
+                    string VbTxtSql = "EXEC PNTLL_Reparacion 11, @TD, @Doc, @Pend, @CID,'','',0,0,0,@Idm, @ICC, @FI, @FF,'03-01-01'";
+                    sqlConB.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                    {
+                        SC.Parameters.AddWithValue("@TD", VbTipoDoc);
+                        SC.Parameters.AddWithValue("@Doc", TxtECDocBusq.Text.Trim());
+                        SC.Parameters.AddWithValue("@Pend", S_Pend);
+                        SC.Parameters.AddWithValue("@CID", "CURINFTODASLASSPOC");
+                        SC.Parameters.AddWithValue("@FI", Convert.ToDateTime(TxtFechECI.Text.Trim()));
+                        SC.Parameters.AddWithValue("@FF", Convert.ToDateTime(TxtFechECF.Text.Trim()));
+                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            using (DataSet DSEstdComp = new DataSet())
+                            {
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DSEstdComp);
+                                DSEstdComp.Tables[0].TableName = "Consulta";
+                                DSEstdComp.Tables[1].TableName = "Exportar";
+                                ViewState["DSEstdComp"] = DSEstdComp;
+                            }
+                        }
+                    }
+                }
+                DSEstdComp = (DataSet)ViewState["DSEstdComp"];
+                if (DSEstdComp.Tables["Consulta"].Rows.Count > 0) { GrdDetEstdComp.DataSource = DSEstdComp.Tables["Consulta"]; }
+                else
+                { GrdDetEstdComp.DataSource = null; }
+                GrdDetEstdComp.DataBind();
+            }
+            catch (Exception Ex)
+            {
+                String S_Ex = Ex.Message;
+                DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+            }
+        }
+        protected void IbtExpECompPend_Click(object sender, ImageClickEventArgs e)
+        {
+            DataRow[] Result;
+            try
+            {
+                Page.Title = ViewState["PageTit"].ToString().Trim();
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                DSEstdComp = (DataSet)ViewState["DSEstdComp"];
+                if (DSEstdComp == null)
+                {
+                    Result = Idioma.Select("Objeto= 'Mens03RptLog'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe realizar primero una consulta del estado de las compras.
+                    return;
+                }
+                string VbNomArchivo = "";
+                Result = Idioma.Select("Objeto= 'NomArcEstadoComp'");
+                foreach (DataRow row in Result)
+                { VbNomArchivo = row["Texto"].ToString().Trim(); }
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    wb.Worksheets.Add(DSEstdComp.Tables["Exportar"]);
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.ContentType = "application/ms-excel";
+                    Response.AddHeader("content-disposition", string.Format("attachment;filename={0}.xlsx", VbNomArchivo));
+                    Response.Charset = "";
+                    using (MemoryStream MyMemoryStream = new MemoryStream())
+                    {
+                        wb.SaveAs(MyMemoryStream);
+                        MyMemoryStream.WriteTo(Response.OutputStream);
+                        Response.Flush();
+                        Response.End();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Result = Idioma.Select("Objeto= 'Mens02RptLog'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+            }
+        }        
         // ************************************************************ xxx ************************************************************
     }
 }

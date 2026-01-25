@@ -187,6 +187,7 @@
             <asp:UpdatePanel ID="UplAsigOT" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
                      <br />
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsigOTaWS" runat="server" Text="Asignar orden de trabajo / Reporte a la Work Sheet" /></h6>
                     <div class="CentrarContenedor DivMarco">

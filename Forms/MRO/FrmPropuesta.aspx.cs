@@ -1878,8 +1878,8 @@ namespace _77NeoWeb.Forms.MRO
         }
         protected void BtnExportPPT_Click(object sender, EventArgs e)
         {
-            if (TxtNumPpt.Text.Trim().Equals("")) { return; }
             Page.Title = ViewState["PageTit"].ToString().Trim();
+            if (TxtNumPpt.Text.Trim().Equals("")) { return; }            
             Idioma = (DataTable)ViewState["TablaIdioma"];
             ViewState["Notificacion"] = "EXPORTARPPT";
             DataRow[] Result = Idioma.Select("Objeto= 'Mens66PPT'");

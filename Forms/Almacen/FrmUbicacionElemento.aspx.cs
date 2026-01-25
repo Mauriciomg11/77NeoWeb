@@ -299,6 +299,7 @@ namespace _77NeoWeb.Forms.Almacen
         {
             DtAll = (DataTable)ViewState["DtAll"];
             DataTable DTDstn = new DataTable();
+           
             DataRow[] Result;
             DTDstn = DtAll.Clone();
             switch (filtro)
@@ -334,12 +335,12 @@ namespace _77NeoWeb.Forms.Almacen
         }
         protected void BIndDFilaColumDest(string CodUbOr, string CodTerc)
         {
+            string S_CodTercero = ViewState["CodTercero"].ToString().Trim().Equals("") ? "CodTercero = ''" : "CodTercero <> ''";
             DtAll = (DataTable)ViewState["DtAll"];
             DataTable DtB = new DataTable();
             DtB = DtAll.Clone();
             GrdUbicaDes.DataSource = null; GrdUbicaDes.DataBind();
-            string borrar = "Filtro='UBICA' AND Descr='" + DdlBodDest.Text.Trim() + "' AND Cod<>'" + CodUbOr.Trim() + "' AND CodTercero='" + CodTerc.Trim() + "'";
-            DataRow[] Result = DtAll.Select("Filtro='UBICA' AND Descr='" + DdlBodDest.Text.Trim() + "' AND Cod<>'" + CodUbOr.Trim() + "' AND CodTercero='" + CodTerc.Trim() + "'");
+            DataRow[] Result = DtAll.Select("Filtro='UBICA' AND Descr='" + DdlBodDest.Text.Trim() + "' AND Cod<>'" + CodUbOr.Trim() + "' AND "+ S_CodTercero);// ' AND CodTercero='" + CodTerc.Trim() + "'
             foreach (DataRow Row in Result)
             { DtB.ImportRow(Row); }
             GrdUbicaDes.DataSource = DtB; GrdUbicaDes.DataBind();

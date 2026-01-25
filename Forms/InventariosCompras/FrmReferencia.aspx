@@ -497,7 +497,7 @@
                     <asp:ImageButton ID="IbtCerrarUMC" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarUMC_Click" ImageAlign="Right" />
                     <br />
                     <br />
-                    <div class=" DivUndCom DivContendorGrid">
+                    <div class=" DivUndCom">
                         <asp:Label ID="LblCambioPN" runat="server" CssClass="LblEtiquet" Font-Bold="true" Font-Size="16px"></asp:Label>
                         <asp:GridView ID="GrdCamUC" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdundPN"
                             CssClass="GridControl DiseñoGrid table table-sm CsGridCambUC" GridLines="Both" AllowPaging="true" PageSize="5"

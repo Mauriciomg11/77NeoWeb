@@ -665,8 +665,10 @@
                 <asp:View ID="Vw3AsignarCompraRepa" runat="server">
                     <br />
                     <br />
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
-                        <asp:Label ID="LblTitAsingar" runat="server" Text="Asignar Compras / Reparaciones." />
+                        <asp:Label ID="LblTitAsingar" runat="server" Text="asignar compras / reparaciones." />
                     </h6>
                     <asp:ImageButton ID="IbtCerrarAsignar" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarAsignar_Click" />
                     <div class="CentrarBusq DivMarco">

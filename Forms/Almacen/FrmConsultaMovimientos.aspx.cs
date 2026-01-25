@@ -455,10 +455,10 @@ namespace _77NeoWeb.Forms.Almacen
 
                     CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
                     CursorIdioma.Alimentar("CURDATOSCONSULTA1", Session["77IDM"].ToString().Trim());
-                    string VbTxtSql = "EXEC SP_TablasLogistica 5, @Rf,@Pn,@Sn,@Lt,'','','','','CURDATOSCONSULTA1',0,0,@ExpVlr,1,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'";
+                    string VbTxtSql = "EXEC SP_TablasLogistica 5, @Rf,@Pn   ,@Sn,@Lt,'','','','','CURDATOSCONSULTA1',0,0,@ExpVlr,1,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'";
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
-                    {
+                    {                       
                         SC.Parameters.AddWithValue("@Rf", ViewState["CodReferencia"]);
                         SC.Parameters.AddWithValue("@Pn", VbPn);
                         SC.Parameters.AddWithValue("@Sn", VbSn);

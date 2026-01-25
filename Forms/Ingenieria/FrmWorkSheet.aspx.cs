@@ -211,7 +211,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     ViewState["RteFirma"] = bO.Equals("RteFirma") ? bT : ViewState["RteFirma"];
                     ViewState["RtePag"] = bO.Equals("RtePag") ? bT : ViewState["RtePag"];
                     ViewState["RteDe"] = bO.Equals("RteDe") ? bT : ViewState["RteDe"];
-                    ViewState["RteDocumen"] = bO.Equals("RteDocumen") ? bT : ViewState["RteDocumen"];
+                    ViewState["RteDocumen"] = bO.Equals("DocMstr") ? bT : ViewState["RteDocumen"];
                     ViewState["RteDescr"] = bO.Equals("RteDescr") ? bT : ViewState["RteDescr"];
                     ViewState["RteNroDoc"] = bO.Equals("RteNroDoc") ? bT : ViewState["RteNroDoc"];
                     ViewState["RteCumpl"] = bO.Equals("RteCumpl") ? bT : ViewState["RteCumpl"];

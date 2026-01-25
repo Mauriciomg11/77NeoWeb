@@ -842,6 +842,7 @@
             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
                     <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOpcBusqueda" runat="server" Text="Opciones de búsqueda " />
                     </h6>
@@ -1658,6 +1659,7 @@
             </asp:UpdatePanel>
         </asp:View>
         <asp:View ID="Vw7Imprimir" runat="server">
+            <br />
             <br />
             <h6 class="TextoSuperior">
                 <asp:Label ID="LblTitImpresion" runat="server" Text="Impresión" />

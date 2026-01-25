@@ -204,7 +204,7 @@ namespace _77NeoWeb.Forms.Almacen
                     }
                 }
             }
-            DSTDdl = (DataSet)ViewState["DSTDdl"];           
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
             if (DSTDdl.Tables["Aeronave"].Rows.Count > 0)
             {
                 DdlAeronave.DataSource = DSTDdl.Tables[1];
@@ -530,23 +530,26 @@ namespace _77NeoWeb.Forms.Almacen
             Idioma = (DataTable)ViewState["TablaIdioma"];
             Page.Title = ViewState["PageTit"].ToString().Trim();
             DSDetRva = (DataSet)ViewState["DSDetRva"];
-            if (DSDetRva.Tables["Asignados"].Rows.Count > 0)
+            if (DSDetRva != null)
             {
-                if (TxtObserv.Text.Trim().Equals(""))
+                if (DSDetRva.Tables["Asignados"].Rows.Count > 0)
                 {
-                    DataRow[] Result = Idioma.Select("Objeto= 'MstrMens22'");
-                    foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//debe ingresar la observacion
-                    return;
-                }
-                DataTable DT = DSDetRva.Tables[2];
+                    if (TxtObserv.Text.Trim().Equals(""))
+                    {
+                        DataRow[] Result = Idioma.Select("Objeto= 'MstrMens22'");
+                        foreach (DataRow row in Result)
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//debe ingresar la observacion
+                        return;
+                    }
+                    DataTable DT = DSDetRva.Tables[2];
 
-                DataView DV = DT.DefaultView;
-                DV.Sort = "Pos ASC";
-                DT = DV.ToTable();
-                GrdVisualizar.DataSource = DT; GrdVisualizar.DataBind();
-                LblNumRvaVlorGuardar.Text = DdlNumRsva.Text.Trim();
-                MultVw.ActiveViewIndex = 2;
+                    DataView DV = DT.DefaultView;
+                    DV.Sort = "Pos ASC";
+                    DT = DV.ToTable();
+                    GrdVisualizar.DataSource = DT; GrdVisualizar.DataBind();
+                    LblNumRvaVlorGuardar.Text = DdlNumRsva.Text.Trim();
+                    MultVw.ActiveViewIndex = 2;
+                }
             }
         }
         protected void IbtCloseGuardar_Click(object sender, ImageClickEventArgs e)

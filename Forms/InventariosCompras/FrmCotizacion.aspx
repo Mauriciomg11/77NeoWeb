@@ -77,6 +77,8 @@
             $('#<%=DdlTipoPago.ClientID%>').chosen();
             $('#<%=DdlLugarEntrg.ClientID%>').chosen();
             $('#<%=DdlMedioCot.ClientID%>').chosen();
+            $('[id *=DdlPN]').chosen();
+           /* $('[id *=DdlUM]').chosen();*/
         }
         function ShowPopup() {
             $('#ModalBusqSP').modal('show');
@@ -366,7 +368,7 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="P/N" HeaderStyle-Width="15%" SortExpression="PN">
                                         <ItemTemplate>
-                                            <asp:DropDownList ID="DdlPN" runat="server" Width="100%" Height="20px" Enabled="false" />
+                                            <asp:DropDownList ID="DdlPN" runat="server" Width="100%" Height="20px" OnTextChanged="DdlPN_TextChanged" AutoPostBack="true" /><%--Enabled="false"--%> 
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="descripc" HeaderStyle-Width="15%" SortExpression="DESPN">

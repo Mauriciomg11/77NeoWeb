@@ -185,8 +185,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 }
             }
             TblDetalle = (DataTable)ViewState["TblDetalle"];
-            int VbNumReg = TblDetalle.Rows.Count;
-
             if (TblDetalle.Rows.Count > 0) { GrdDet.DataSource = TblDetalle; }
             else
             { GrdDet.DataSource = null; }

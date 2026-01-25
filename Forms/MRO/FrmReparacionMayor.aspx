@@ -594,6 +594,7 @@
                 </asp:View>
                 <asp:View ID="Vw2Recurso" runat="server">
                     <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitRecursoLice" runat="server" Text="Recurso Físico y Licencias" /></h6>
                     <asp:ImageButton ID="IbtCloseRecurso" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCloseRecurso_Click" />

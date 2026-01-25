@@ -85,14 +85,15 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
             <asp:MultiView ID="MultVw" runat="server">
                 <asp:View ID="Vw0Datos" runat="server">
-                    <br /><br />
+                    <br />
+                    <br />
                     <div class="CentrarContenedor DivMarco">
                         <div class="row">
                             <div class="col-sm-1">
@@ -231,10 +232,10 @@
                                                 <asp:Label ID="LblFecVen" Text='<%# Eval("FechaExp") %>' runat="server" Width="100%" />
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="TxtFecVen" Text='<%# Eval("FechaExpedicion") %>' runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />                                              
+                                                <asp:TextBox ID="TxtFecVen" Text='<%# Eval("FechaExpedicion") %>' runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />
                                             </EditItemTemplate>
                                             <FooterTemplate>
-                                                <asp:TextBox ID="TxtFecVenPP" runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />                                               
+                                                <asp:TextBox ID="TxtFecVenPP" runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />
                                             </FooterTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Modelo" HeaderStyle-Width="18%">
@@ -316,10 +317,10 @@
                                                 <asp:Label ID="LblFecVen" Text='<%# Eval("FechaVenc") %>' runat="server" Width="100%" />
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="TxtFecVen" Text='<%# Eval("FechaVencDMY") %>' runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />                                                
+                                                <asp:TextBox ID="TxtFecVen" Text='<%# Eval("FechaVencDMY") %>' runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />
                                             </EditItemTemplate>
                                             <FooterTemplate>
-                                                <asp:TextBox ID="TxtFecVenPP" runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date"/>
+                                                <asp:TextBox ID="TxtFecVenPP" runat="server" Width="100%" onkeypress="return Fecha(event);" TextMode="Date" />
                                             </FooterTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField FooterStyle-Width="15%">
@@ -347,6 +348,8 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw1NuevoUsu" runat="server">
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitCrearusu" runat="server" Text="Asignar Usuario al Grupo de Mantenimiento" /></h6>
                     <asp:ImageButton ID="IbtCerrarCrearUsu" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarCrearusu_Click" ImageAlign="Right" />

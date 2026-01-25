@@ -37,14 +37,17 @@ namespace _77NeoWeb.Forms.Seguridad
                     Session["77IDM"] = Cnx.GetIdm();
                 }
             }
-            if (!IsPostBack) { 
-                if(Session["77IDM"].ToString() == "4")
-                { 
-                TitForm.Text = "Sistema Gestión Aeronáutico"; }
+            if (!IsPostBack)
+            {
+                LblVersion.Text = "Version "+Session["77Version"];
+                if (Session["77IDM"].ToString() == "4")
+                {
+                    TitForm.Text = "Sistema Gestión Aeronáutico";
+                }
                 else { TitForm.Text = "Aeronautical Management System"; }
             }
 
         }
-        
+
     }
 }

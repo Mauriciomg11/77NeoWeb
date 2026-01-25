@@ -60,6 +60,15 @@
                         <asp:RadioButton ID="RdbCostoManto" runat="server" CssClass="LblEtiquet" Text="6. Costo de mantenimiento por hora de vuelo" GroupName="BusqSP" />&nbsp&nbsp&nbsp
                     </div>
                 </div>
+                 <div class="row">
+                    <h6 class="TextoSuperior">
+                        <asp:Label ID="Label1" runat="server" Text="Otras Consultas Temporales" />
+                    </h6>
+                    <div class="col-sm-12">
+                        <asp:RadioButton ID="RdbRepa" runat="server" CssClass="LblEtiquet" Text="1. Informes Reparación" GroupName="BusqSP" />&nbsp&nbsp&nbsp
+                        <asp:RadioButton ID="RdbCompras" runat="server" CssClass="LblEtiquet" Text="2. Informe Compras" GroupName="BusqSP" />&nbsp&nbsp&nbsp
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-sm-0">
                         <asp:ImageButton ID="IbnExcel" runat="server" ToolTip="exportar consolidado" CssClass=" BtnExpExcel" Height="50px" Width="50px" ImageUrl="~/images/ExcelV1.png" OnClick="IbnExcel_Click" />

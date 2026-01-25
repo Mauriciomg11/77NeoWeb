@@ -161,6 +161,7 @@
     <Content Include="Forms\Almacen\FrmAlertaSolicitudNuevaRepa.aspx" />
     <Content Include="Forms\Almacen\FrmAlertaVencSP.aspx" />
     <Content Include="Forms\Almacen\FrmConsultaMovimientos.aspx" />
+    <Content Include="Forms\Almacen\FrmDevolucionCompra.aspx" />
     <Content Include="Forms\Almacen\FrmEntradaCompraMat.aspx" />
     <Content Include="Forms\Almacen\FrmEntradaReparacionMat.aspx" />
     <Content Include="Forms\Almacen\FrmMovimientoActivo.aspx" />
@@ -442,6 +443,13 @@
     </Compile>
     <Compile Include="Forms\Almacen\FrmConsultaMovimientos.aspx.designer.cs">
       <DependentUpon>FrmConsultaMovimientos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmDevolucionCompra.aspx.cs">
+      <DependentUpon>FrmDevolucionCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmDevolucionCompra.aspx.designer.cs">
+      <DependentUpon>FrmDevolucionCompra.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Almacen\FrmEntradaCompraMat.aspx.cs">
       <DependentUpon>FrmEntradaCompraMat.aspx</DependentUpon>

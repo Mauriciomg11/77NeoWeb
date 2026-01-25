@@ -231,13 +231,13 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.GridView GrdDtllRsva;
 
         /// <summary>
-        /// Control Vw1Busq.
+        /// Control Vw1Asignar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.View Vw1Busq;
+        protected global::System.Web.UI.WebControls.View Vw1Asignar;
 
         /// <summary>
         /// Control LblTitAsigFis.

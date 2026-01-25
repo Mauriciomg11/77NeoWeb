@@ -158,7 +158,6 @@ namespace _77NeoWeb.Forms.Configuracion
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// Debe ingresar el año.
                 return;
             }
-
             try
             {
                 List<ClsCierreContable> ObjCC = new List<ClsCierreContable>();
@@ -180,7 +179,7 @@ namespace _77NeoWeb.Forms.Configuracion
                     return;
                 }
                 DdlMes.Text = "";
-                DdlAno.Text = DateTime.Now.Year.ToString();
+                //DdlAno.Text = DateTime.Now.Year.ToString(); // Se inactiva porque no esta trayendo el año actual cuando es año nuevo
                 BindData();
             }
             catch (Exception Ex)

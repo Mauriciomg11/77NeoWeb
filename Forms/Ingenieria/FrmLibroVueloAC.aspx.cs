@@ -561,7 +561,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnVuelos_Click(object sender, EventArgs e)
         {
-            if (!TxtNumLv.Text.Equals(""))
+            if (!TxtNumLv.Text.Equals("") && ViewState["BtnAccion"].ToString() == "")
             {
                 TblBusqRte.Visible = false;
                 TblBusqLVlo.Visible = false;

@@ -126,6 +126,7 @@
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
                     <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsiganar" runat="server" Text="servicios para asignar" />
                     </h6>

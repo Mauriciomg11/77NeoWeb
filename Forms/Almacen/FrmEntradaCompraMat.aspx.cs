@@ -104,13 +104,13 @@ namespace _77NeoWeb.Forms.Almacen
                     LblAlmacen.Text = bO.Equals("AlmacenMstr") ? bT : LblAlmacen.Text;
                     RdbNacional.Text = bO.Equals("RdbNal") ? "&nbsp" + bT : RdbNacional.Text;
                     RdbInter.Text = bO.Equals("RdbInter") ? "&nbsp" + bT : RdbInter.Text;
-                    LblNumCompra.Text = bO.Equals("LblDoc") ? bT : LblNumCompra.Text;
+                    LblNumCompra.Text = bO.Equals("DocMstr") ? bT : LblNumCompra.Text;
                     LblMoneda.Text = bO.Equals("LblMonedaMstr") ? bT : LblMoneda.Text;
                     BtnVisualizar.Text = bO.Equals("BtnVisualizar") ? bT : BtnVisualizar.Text;
 
                     // *********************************************** Detalle Compras ***********************************************
                     GrdDtlleComp.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtlleComp.EmptyDataText;
-                    GrdDtlleComp.Columns[1].HeaderText = bO.Equals("LblDoc") ? bT : GrdDtlleComp.Columns[1].HeaderText;
+                    GrdDtlleComp.Columns[1].HeaderText = bO.Equals("DocMstr") ? bT : GrdDtlleComp.Columns[1].HeaderText;
                     GrdDtlleComp.Columns[3].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdDtlleComp.Columns[3].HeaderText;
                     GrdDtlleComp.Columns[4].HeaderText = bO.Equals("Descripcion") ? bT : GrdDtlleComp.Columns[4].HeaderText;
                     GrdDtlleComp.Columns[5].HeaderText = bO.Equals("TipoMstr") ? bT : GrdDtlleComp.Columns[5].HeaderText;
@@ -136,7 +136,7 @@ namespace _77NeoWeb.Forms.Almacen
                     // *********************************************** Visualizar ***********************************************
                     LblTitVisualizaGuarda.Text = bO.Equals("LblTitVisualizaGuarda") ? bT : LblTitVisualizaGuarda.Text;
                     BtnGuardar.Text = bO.Equals("BotonIngOk") ? bT : BtnGuardar.Text;
-                    LblNumDocGuardar.Text = GrdDtlleComp.Columns[1].HeaderText + ":";                   
+                    LblNumDocGuardar.Text = GrdDtlleComp.Columns[1].HeaderText + ":";
 
                     GrdVisualizar.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdVisualizar.EmptyDataText;
                     GrdVisualizar.Columns[0].HeaderText = bO.Equals("PosMstr") ? bT : GrdVisualizar.Columns[0].HeaderText;
@@ -693,7 +693,7 @@ namespace _77NeoWeb.Forms.Almacen
                 TextBox TxtCant = e.Row.FindControl("TxtCant") as TextBox;
                 SnLote.Enabled = true;
                 if (ViewState["Identif"].ToString().Equals("PN")) { SnLote.Enabled = false; }
-                else { TxtCant.Enabled = false; TxtCant.Text = "1"; }
+                if (ViewState["Identif"].ToString().Equals("SN")) { TxtCant.Enabled = false; TxtCant.Text = "1"; }
                 TextBox TxtFechExp = e.Row.FindControl("TxtFechExp") as TextBox;
                 TxtFechExp.Enabled = true;
                 if (ViewState["FechaVencPN"].ToString().Equals("0")) { TxtFechExp.Enabled = false; }
@@ -707,31 +707,34 @@ namespace _77NeoWeb.Forms.Almacen
             DataRow[] Result;
             try
             {
-                if (DSDetalle.Tables["CurActualizar"].Rows.Count > 0)
+                if (DSDetalle != null)
                 {
-                    if (TxtObserv.Text.Trim().Equals(""))
+                    if (DSDetalle.Tables["CurActualizar"].Rows.Count > 0)
                     {
-                        Result = Idioma.Select("Objeto= 'MstrMens22'");
-                        foreach (DataRow row in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//debe ingresar la observacion
-                        return;
-                    }
-                    if (DdlAlmacen.Text.Trim().Equals("0"))
-                    {
-                        Result = Idioma.Select("Objeto= 'MstrMens19'");
-                        foreach (DataRow row in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// Debe ingresar el almacén.
-                        return;
-                    }
+                        if (TxtObserv.Text.Trim().Equals(""))
+                        {
+                            Result = Idioma.Select("Objeto= 'MstrMens22'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//debe ingresar la observacion
+                            return;
+                        }
+                        if (DdlAlmacen.Text.Trim().Equals("0"))
+                        {
+                            Result = Idioma.Select("Objeto= 'MstrMens19'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// Debe ingresar el almacén.
+                            return;
+                        }
 
-                    DataTable DT = DSDetalle.Tables["CurActualizar"];
+                        DataTable DT = DSDetalle.Tables["CurActualizar"];
 
-                    DataView DV = DT.DefaultView;
-                    DV.Sort = "CodOrdenCompra ASC, Pos ASC";
-                    DT = DV.ToTable();
-                    GrdVisualizar.DataSource = DT; GrdVisualizar.DataBind();
-                    LblNumDocVlorGuardar.Text = DdlNumCompra.Text.Trim();
-                    MultVw.ActiveViewIndex = 2;
+                        DataView DV = DT.DefaultView;
+                        DV.Sort = "CodOrdenCompra ASC, Pos ASC";
+                        DT = DV.ToTable();
+                        GrdVisualizar.DataSource = DT; GrdVisualizar.DataBind();
+                        LblNumDocVlorGuardar.Text = DdlNumCompra.Text.Trim();
+                        MultVw.ActiveViewIndex = 2;
+                    }
                 }
             }
             catch (Exception Ex)
@@ -750,92 +753,104 @@ namespace _77NeoWeb.Forms.Almacen
             Idioma = (DataTable)ViewState["TablaIdioma"];
             int VbAfectaInv = 0;
             DSDetalle = (DataSet)ViewState["DSDetalle"];
-            try
+            if (DSDetalle.Tables["CurActualizar"].Rows.Count > 0)
             {
-                List<CsInsertElementoAlmacen> ObjDetalle = new List<CsInsertElementoAlmacen>();
-                foreach (DataRow Row in DSDetalle.Tables["CurActualizar"].Rows)
+                try
                 {
-                    string VbSCodTerc = Row["CodTercero"].ToString().Trim();
-
-                    if (!VbSCodTerc.Equals("")) { VbAfectaInv = 1; }
-                    var TypDetalle = new CsInsertElementoAlmacen()
+                    List<CsInsertElementoAlmacen> ObjDetalle = new List<CsInsertElementoAlmacen>();
+                    foreach (DataRow Row in DSDetalle.Tables["CurActualizar"].Rows)
                     {
-                        IdIE = Convert.ToInt32(0),// ----------- ojo--------------
-                        CodElemento = Row["CodElemento"].ToString().Trim(),
-                        CodReferencia = Row["CodReferencia"].ToString().Trim(),
-                        PN = Row["PN"].ToString(),
-                        SN = Row["SN"].ToString(),
-                        Lote = Row["NumLote"].ToString(),
-                        CodTipoElem = Row["CodTipoElem"].ToString(),
-                        Identificador = Row["IdentificadorElem"].ToString().Trim(),
-                        Descripcion = "",
-                        Cantidad = Convert.ToDouble(Row["CantDespchr"].ToString().Trim()) * Convert.ToDouble(Row["Equivalencia"].ToString().Trim()),
-                        CantidadAnt = Convert.ToDouble(0),
-                        Valor = Convert.ToDouble(Row["VlrUnd"].ToString()),// validar el valor  **********************************
-                        CodUndMed = Row["CodUndMedR"].ToString().Trim(),
-                        IdAlmacen = Convert.ToInt32(DdlAlmacen.Text.Trim()),
-                        CodBodega = Row["CodUbicaBodega"].ToString().Trim(),
-                        CodShippingOrder = DdlNumCompra.Text.Trim(),
-                        Posicion = Row["Pos"].ToString().Trim(),
-                        CodAeronave = Convert.ToInt32(0),
-                        Matricula = "",
-                        DiaTasa = Row["DiaTasa"].ToString().Trim(),
-                        MesTasa = Row["MesTasa"].ToString().Trim(),
-                        AnoTasa = Row["AnoTasa"].ToString().Trim(),
-                        VlorTasaDM = Convert.ToDouble(Row["VlrTRM"].ToString()),
-                        CodTipoMoneda = Row["CodTipoMoneda"].ToString().Trim(),
-                        DocumentoNro = Row["DocumentoNro"].ToString().Trim(),
-                        PosicionDocumento = Convert.ToInt32(Row["PosicionDocumento"].ToString().Trim()),
-                        Cant_Compra = Convert.ToDouble(Row["Cant_Compra"].ToString().Trim()),
-                        Valor_Compra = Convert.ToDouble(Row["Valor_Compra"].ToString().Trim()),
-                        UndMed_Compra = Row["UndMed_Compra"].ToString().Trim(),
-                        FacturaNro = Row["FacturaNro"].ToString().Trim(),
-                        NumSolPed = Row["NumSolPed"].ToString().Trim(),
-                        CCosto = Row["CCosto"].ToString().Trim(),
-                        AfectaInventario = VbAfectaInv,
-                        CostoImportacion = Convert.ToDouble(Row["VlrImpor"].ToString()),
-                        CodTercero = Row["CodTercero"].ToString().Trim(),
-                        Consignacion = Convert.ToInt32(0),
-                        CodIdUbicacion = Convert.ToInt32(Row["CodIdUbicacion"].ToString().Trim()),
-                        FechaVence = Convert.ToDateTime(Row["FechaShelfLife"]),
-                        Observacion = TxtObserv.Text.Trim(),
-                        ValorOT = Convert.ToDouble(0),
-                        CodUsuarioReserva = "",
-                        Proceso = "0001",
-                        IdDetPropHk = Convert.ToInt32(0),
-                        IdPPt = Convert.ToInt32(Row["PPT"]),
-                        Accion = "ENTRADA",
-                    };
-                    ObjDetalle.Add(TypDetalle);
+                        string VbSCodTerc = Row["CodTercero"].ToString().Trim();
+
+                        if (!VbSCodTerc.Equals("")) { VbAfectaInv = 1; }
+                        var TypDetalle = new CsInsertElementoAlmacen()
+                        {
+                            IdIE = Convert.ToInt32(0),// ----------- ojo--------------
+                            CodElemento = Row["CodElemento"].ToString().Trim(),
+                            CodReferencia = Row["CodReferencia"].ToString().Trim(),
+                            PN = Row["PN"].ToString(),
+                            SN = Row["SN"].ToString(),
+                            Lote = Row["NumLote"].ToString(),
+                            CodTipoElem = Row["CodTipoElem"].ToString(),
+                            Identificador = Row["IdentificadorElem"].ToString().Trim(),
+                            Descripcion = "",
+                            Cantidad = Convert.ToDouble(Row["CantDespchr"].ToString().Trim()) * Convert.ToDouble(Row["Equivalencia"].ToString().Trim()),
+                            CantidadAnt = Convert.ToDouble(0),
+                            Valor = Convert.ToDouble(Row["VlrUnd"].ToString()),// validar el valor  **********************************
+                            CodUndMed = Row["CodUndMedR"].ToString().Trim(),
+                            IdAlmacen = Convert.ToInt32(DdlAlmacen.Text.Trim()),
+                            CodBodega = Row["CodUbicaBodega"].ToString().Trim(),
+                            CodShippingOrder = DdlNumCompra.Text.Trim(),
+                            Posicion = Row["Pos"].ToString().Trim(),
+                            CodAeronave = Convert.ToInt32(0),
+                            Matricula = "",
+                            DiaTasa = Row["DiaTasa"].ToString().Trim(),
+                            MesTasa = Row["MesTasa"].ToString().Trim(),
+                            AnoTasa = Row["AnoTasa"].ToString().Trim(),
+                            VlorTasaDM = Convert.ToDouble(Row["VlrTRM"].ToString()),
+                            CodTipoMoneda = Row["CodTipoMoneda"].ToString().Trim(),
+                            DocumentoNro = Row["DocumentoNro"].ToString().Trim(),
+                            PosicionDocumento = Convert.ToInt32(Row["PosicionDocumento"].ToString().Trim()),
+                            Cant_Compra = Convert.ToDouble(Row["Cant_Compra"].ToString().Trim()),
+                            Valor_Compra = Convert.ToDouble(Row["Valor_Compra"].ToString().Trim()),
+                            UndMed_Compra = Row["UndMed_Compra"].ToString().Trim(),
+                            FacturaNro = Row["FacturaNro"].ToString().Trim(),
+                            NumSolPed = Row["NumSolPed"].ToString().Trim(),
+                            CCosto = Row["CCosto"].ToString().Trim(),
+                            AfectaInventario = VbAfectaInv,
+                            CostoImportacion = Convert.ToDouble(Row["VlrImpor"].ToString()),
+                            CodTercero = Row["CodTercero"].ToString().Trim(),
+                            Consignacion = Convert.ToInt32(0),
+                            CodIdUbicacion = Convert.ToInt32(Row["CodIdUbicacion"].ToString().Trim()),
+                            FechaVence = Convert.ToDateTime(Row["FechaShelfLife"]),
+                            Observacion = TxtObserv.Text.Trim(),
+                            ValorOT = Convert.ToDouble(0),
+                            CodUsuarioReserva = "",
+                            Proceso = "0001",
+                            IdDetPropHk = Convert.ToInt32(0),
+                            IdPPt = Convert.ToInt32(Row["PPT"]),
+                            Accion = "ENTRADA",
+                        };
+                        ObjDetalle.Add(TypDetalle);
+                    }
+                    CsInsertElementoAlmacen ClaseIEA = new CsInsertElementoAlmacen();
+                    ClaseIEA.FormOrigen(ViewState["PFileName"].ToString());
+                    ClaseIEA.Alimentar(ObjDetalle);
+                    string Mensj = ClaseIEA.GetMensj();
+                    if (!Mensj.Equals(""))
+                    {
+                        string VblPn = ClaseIEA.GetPn().Trim().Equals("") ? "" : "  [P/N: " + ClaseIEA.GetPn().Trim() + "]  ";
+                        string VblSn = ClaseIEA.GetSn().Trim().Equals("") ? "" : " [S/N: " + ClaseIEA.GetSn().Trim() + "] ";
+                        string VbLote = ClaseIEA.GetLote().Trim().Equals("") ? "" : " [LT/N: " + ClaseIEA.GetLote().Trim() + "]";
+                        DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                        foreach (DataRow row in Result)
+                        { Mensj = row["Texto"].ToString().Trim(); }
+                        ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + VblPn + VblSn + "');", true);
+                        return;
+                    }
+                    TxtObserv.Text = "";
+                    TxtMoneda.Text = "";
+                    DdlNumCompra.Text = "";
+                    TraerDatos("UPD");
+                    //BindRva();
+                    BindDetCompra("UPD");
+                    MultVw.ActiveViewIndex = 0;
+                    GrdDtlleComp.DataSource = null;
+                    GrdDtlleComp.DataBind();
+                    GrdTemp.DataSource = null;
+                    GrdTemp.DataBind();
+                    GrdVisualizar.DataSource = null;
+                    GrdVisualizar.DataBind();
+                    DSDetalle.Tables["CurActualizar"].Clear();
                 }
-                CsInsertElementoAlmacen ClaseIEA = new CsInsertElementoAlmacen();
-                ClaseIEA.FormOrigen(ViewState["PFileName"].ToString());
-                ClaseIEA.Alimentar(ObjDetalle);
-                string Mensj = ClaseIEA.GetMensj();
-                if (!Mensj.Equals(""))
+                catch (Exception Ex)
                 {
-                    string VblPn = ClaseIEA.GetPn().Trim().Equals("") ? "" : "  [P/N: " + ClaseIEA.GetPn().Trim() + "]  ";
-                    string VblSn = ClaseIEA.GetSn().Trim().Equals("") ? "" : " [S/N: " + ClaseIEA.GetSn().Trim() + "] ";
-                    string VbLote = ClaseIEA.GetLote().Trim().Equals("") ? "" : " [LT/N: " + ClaseIEA.GetLote().Trim() + "]";
-                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                     foreach (DataRow row in Result)
-                    { Mensj = row["Texto"].ToString().Trim(); }
-                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + VblPn + VblSn + "');", true);
-                    return;
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                    string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                    Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, VbcatNArc, Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
                 }
-                TxtObserv.Text = "";
-                TraerDatos("UPD");
-                //BindRva();
-                BindDetCompra("UPD");
-                MultVw.ActiveViewIndex = 0;
-            }
-            catch (Exception Ex)
-            {
-                DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
-                foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
-                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, VbcatNArc, Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
     }

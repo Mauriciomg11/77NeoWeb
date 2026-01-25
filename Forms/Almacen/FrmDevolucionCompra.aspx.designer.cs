@@ -11,7 +11,7 @@ namespace _77NeoWeb.Forms.Almacen
 {
 
 
-    public partial class frmEntradaCompraMat
+    public partial class FrmDevolucionCompra
     {
 
         /// <summary>
@@ -114,22 +114,13 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.TextBox TxtObserv;
 
         /// <summary>
-        /// Control RdbNacional.
+        /// Control BtnVisualizar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbNacional;
-
-        /// <summary>
-        /// Control RdbInter.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdbInter;
+        protected global::System.Web.UI.WebControls.Button BtnVisualizar;
 
         /// <summary>
         /// Control LblNumCompra.
@@ -150,31 +141,22 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.DropDownList DdlNumCompra;
 
         /// <summary>
-        /// Control LblMoneda.
+        /// Control Lbltipo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblMoneda;
+        protected global::System.Web.UI.WebControls.Label Lbltipo;
 
         /// <summary>
-        /// Control TxtMoneda.
+        /// Control TxtTipo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtMoneda;
-
-        /// <summary>
-        /// Control BtnVisualizar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnVisualizar;
+        protected global::System.Web.UI.WebControls.TextBox TxtTipo;
 
         /// <summary>
         /// Control GrdDtlleComp.
@@ -222,13 +204,13 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.Button BtnAsignr;
 
         /// <summary>
-        /// Control LblPNDescripcAsig.
+        /// Control LblPoscn.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblPNDescripcAsig;
+        protected global::System.Web.UI.WebControls.Label LblPoscn;
 
         /// <summary>
         /// Control LblAsigCantSol.
@@ -267,40 +249,22 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.Label LblAsigCantRecV;
 
         /// <summary>
-        /// Control LblFactAsign.
+        /// Control GrdAsignar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblFactAsign;
+        protected global::System.Web.UI.WebControls.GridView GrdAsignar;
 
         /// <summary>
-        /// Control TxtFact.
+        /// Control Vw2Visualizar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtFact;
-
-        /// <summary>
-        /// Control GrdTemp.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GrdTemp;
-
-        /// <summary>
-        /// Control Vw2Entrega.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.View Vw2Entrega;
+        protected global::System.Web.UI.WebControls.View Vw2Visualizar;
 
         /// <summary>
         /// Control LblTitVisualizaGuarda.
@@ -339,13 +303,13 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.Label LblNumDocGuardar;
 
         /// <summary>
-        /// Control LblNumDocVlorGuardar.
+        /// Control LblDocGuardar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblNumDocVlorGuardar;
+        protected global::System.Web.UI.WebControls.Label LblDocGuardar;
 
         /// <summary>
         /// Control GrdVisualizar.

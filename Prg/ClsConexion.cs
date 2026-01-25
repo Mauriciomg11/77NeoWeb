@@ -283,7 +283,7 @@ namespace _77NeoWeb.prg
         public string ValorDecimal() { return this.VblDecimal; }
         public string GetMensj() { return PMensj; }
         public string GetProduccion() { return Produccion; }
-        //******************* cONEXION TEMPORAL ********
+        //******************* CONEXION TEMPORAL ********
         public string GetUsr() { return "00000082"; }//00000082|00000133 susi | 00000129 |
         public int GetIdCia() { return 1; }// 1 TwoGoWo |21 Demp |2 HCT PRUEBA| 12 ADA | 20 HCT | 3 Alca
         public string GetMonedLcl() { return "COP"; }//  "COP|USD"

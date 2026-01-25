@@ -103,7 +103,7 @@ namespace _77NeoWeb.Forms.Almacen
                     LblAlmacen.Text = bO.Equals("AlmacenMstr") ? bT : LblAlmacen.Text;
                     RdbNacional.Text = bO.Equals("RdbNal") ? "&nbsp" + bT : RdbNacional.Text;
                     RdbInter.Text = bO.Equals("RdbInter") ? "&nbsp" + bT : RdbInter.Text;
-                    LblNumRepa.Text = bO.Equals("LblDoc") ? bT : LblNumRepa.Text;
+                    LblNumRepa.Text = bO.Equals("DocMstr") ? bT : LblNumRepa.Text;
                     LblMoneda.Text = bO.Equals("LblMonedaMstr") ? bT : LblMoneda.Text;
                     LblTitCondManiplc.Text = bO.Equals("LblCondAlmaMstr") ? bT : LblTitCondManiplc.Text;
                     BtnCloseMdl.Text = bO.Equals("BtnCerrarMst") ? bT : BtnCloseMdl.Text;
@@ -111,7 +111,7 @@ namespace _77NeoWeb.Forms.Almacen
 
                     // *********************************************** Detalle Repa ***********************************************
                     GrdDtlleRepa.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtlleRepa.EmptyDataText;
-                    GrdDtlleRepa.Columns[1].HeaderText = bO.Equals("LblDoc") ? bT : GrdDtlleRepa.Columns[1].HeaderText;
+                    GrdDtlleRepa.Columns[1].HeaderText = bO.Equals("DocMstr") ? bT : GrdDtlleRepa.Columns[1].HeaderText;
                     GrdDtlleRepa.Columns[2].HeaderText = bO.Equals("PosMstr") ? bT : GrdDtlleRepa.Columns[2].HeaderText;
                     GrdDtlleRepa.Columns[3].HeaderText = bO.Equals("GrdRepa") ? bT : GrdDtlleRepa.Columns[3].HeaderText;
                     GrdDtlleRepa.Columns[4].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdDtlleRepa.Columns[4].HeaderText;
@@ -317,7 +317,7 @@ namespace _77NeoWeb.Forms.Almacen
                                             DSDetalle.Tables[0].TableName = "DetRepa";
                                             DSDetalle.Tables[1].TableName = "CondManip";
                                             DSDetalle.Tables[2].TableName = "CurTemporal";
-                                            DSDetalle.Tables[3].TableName = "CurCCosto";/**/
+                                            DSDetalle.Tables[3].TableName = "CurCCosto";
                                             ViewState["DSDetalle"] = DSDetalle;
                                         }
                                     }
@@ -650,6 +650,7 @@ namespace _77NeoWeb.Forms.Almacen
             Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DSDetalle = (DataSet)ViewState["DSDetalle"];
+            if (DSDetalle == null) { return; }
             try
             {
                 if (TxtObserv.Text.Trim().Equals(""))

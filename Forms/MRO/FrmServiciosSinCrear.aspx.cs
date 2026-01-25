@@ -113,7 +113,7 @@ namespace _77NeoWeb.Forms.MRO
                     GrdBusq.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdBusq.EmptyDataText;
                     GrdBusq.Columns[0].HeaderText = bO.Equals("LblAsigMstr") ? bT : GrdBusq.Columns[0].HeaderText;
                     GrdBusq.Columns[1].HeaderText = bO.Equals("GrdSrvc") ? bT : GrdBusq.Columns[1].HeaderText;
-                    GrdBusq.Columns[2].HeaderText = bO.Equals("GrdCodModl") ? bT : GrdBusq.Columns[2].HeaderText;
+                    GrdBusq.Columns[2].HeaderText = bO.Equals("GrdModl") ? bT : GrdBusq.Columns[2].HeaderText;
                 }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
@@ -216,7 +216,8 @@ namespace _77NeoWeb.Forms.MRO
             DS = (DataSet)ViewState["DS"];
             DataRow[] Result;
             DataTable DT = new DataTable();
-            if (ViewState["CodTipoPropuesta"].ToString().Trim().Equals("00002")) //aplicabilidad a PPT HK
+            string S_CodTP = ViewState["CodTipoPropuesta"].ToString().Trim(), S_CodMod = ViewState["CodModelo"].ToString().Trim();
+            if (S_CodTP.Equals("00002")) //aplicabilidad a PPT HK
             {
                 DT = DS.Tables[2].Clone();
                 Result = DS.Tables[2].Select("Descripcion LIKE '%" + TxtBusqueda.Text.Trim() + "%' AND CodModeloSM LIKE '%" + ViewState["CodModelo"] + "%'");
