@@ -163,11 +163,15 @@
     <Content Include="Forms\Almacen\FrmConsultaMovimientos.aspx" />
     <Content Include="Forms\Almacen\FrmDevolucionCompra.aspx" />
     <Content Include="Forms\Almacen\FrmEntradaCompraMat.aspx" />
+    <Content Include="Forms\Almacen\FrmEntradaIntercambio.aspx" />
+    <Content Include="Forms\Almacen\FrmEntradaRecuperacion.aspx" />
     <Content Include="Forms\Almacen\FrmEntradaReparacionMat.aspx" />
     <Content Include="Forms\Almacen\FrmMovimientoActivo.aspx" />
     <Content Include="Forms\Almacen\FrmReferenciaConReservas.aspx" />
     <Content Include="Forms\Almacen\FrmReintegroMatComp.aspx" />
     <Content Include="Forms\Almacen\FrmSalConsumoMatCoMH.aspx" />
+    <Content Include="Forms\Almacen\FrmSalidaBajaMat.aspx" />
+    <Content Include="Forms\Almacen\FrmSalidaIntercambio.aspx" />
     <Content Include="Forms\Almacen\FrmSalidaRepaMat.aspx" />
     <Content Include="Forms\Almacen\FrmSolicitudPedido.aspx" />
     <Content Include="Forms\Almacen\FrmUbicacionElemento.aspx" />
@@ -458,6 +462,20 @@
     <Compile Include="Forms\Almacen\FrmEntradaCompraMat.aspx.designer.cs">
       <DependentUpon>FrmEntradaCompraMat.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Almacen\FrmEntradaIntercambio.aspx.cs">
+      <DependentUpon>FrmEntradaIntercambio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmEntradaIntercambio.aspx.designer.cs">
+      <DependentUpon>FrmEntradaIntercambio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmEntradaRecuperacion.aspx.cs">
+      <DependentUpon>FrmEntradaRecuperacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmEntradaRecuperacion.aspx.designer.cs">
+      <DependentUpon>FrmEntradaRecuperacion.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Almacen\FrmEntradaReparacionMat.aspx.cs">
       <DependentUpon>FrmEntradaReparacionMat.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -492,6 +510,20 @@
     </Compile>
     <Compile Include="Forms\Almacen\FrmSalConsumoMatCoMH.aspx.designer.cs">
       <DependentUpon>FrmSalConsumoMatCoMH.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmSalidaBajaMat.aspx.cs">
+      <DependentUpon>FrmSalidaBajaMat.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmSalidaBajaMat.aspx.designer.cs">
+      <DependentUpon>FrmSalidaBajaMat.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmSalidaIntercambio.aspx.cs">
+      <DependentUpon>FrmSalidaIntercambio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\Almacen\FrmSalidaIntercambio.aspx.designer.cs">
+      <DependentUpon>FrmSalidaIntercambio.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\Almacen\FrmSalidaRepaMat.aspx.cs">
       <DependentUpon>FrmSalidaRepaMat.aspx</DependentUpon>

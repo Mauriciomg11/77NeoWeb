@@ -1612,6 +1612,7 @@ namespace _77NeoWeb.Forms.Almacen
         {
             try
             {
+                Page.Title = ViewState["PageTit"].ToString().Trim();
                 if (TxtCodPedd.Text.Equals(""))
                 { return; }
                 Idioma = (DataTable)ViewState["TablaIdioma"]; Page.Title = ViewState["PageTit"].ToString().Trim();

@@ -11,7 +11,7 @@ namespace _77NeoWeb.Forms.Almacen
 {
 
 
-    public partial class FrmMovimientoActivo
+    public partial class FrmSalidaBajaMat
     {
 
         /// <summary>
@@ -24,120 +24,138 @@ namespace _77NeoWeb.Forms.Almacen
         protected global::System.Web.UI.WebControls.Label TitForm;
 
         /// <summary>
-        /// Control UplMvmtsAlmcn.
+        /// Control LblTitCondManiplc.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UplMvmtsAlmcn;
+        protected global::System.Web.UI.WebControls.Label LblTitCondManiplc;
 
         /// <summary>
-        /// Control LblTitEntradas.
+        /// Control GrdMdlCondManplc.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblTitEntradas;
+        protected global::System.Web.UI.WebControls.GridView GrdMdlCondManplc;
 
         /// <summary>
-        /// Control LblTitSalidas.
+        /// Control BtnCloseMdl.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblTitSalidas;
+        protected global::System.Web.UI.WebControls.Button BtnCloseMdl;
 
         /// <summary>
-        /// Control BtnEntReintegro.
+        /// Control UplDatos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnEntReintegro;
+        protected global::System.Web.UI.UpdatePanel UplDatos;
 
         /// <summary>
-        /// Control BtnSldConsumo.
+        /// Control MultVw.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnSldConsumo;
+        protected global::System.Web.UI.WebControls.MultiView MultVw;
 
         /// <summary>
-        /// Control BtnEntCompra.
+        /// Control Vw0Datos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnEntCompra;
+        protected global::System.Web.UI.WebControls.View Vw0Datos;
 
         /// <summary>
-        /// Control BtnDevCompra.
+        /// Control LblAlmacen.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnDevCompra;
+        protected global::System.Web.UI.WebControls.Label LblAlmacen;
 
         /// <summary>
-        /// Control BtnEntReparacion.
+        /// Control DdlAlmacen.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnEntReparacion;
+        protected global::System.Web.UI.WebControls.DropDownList DdlAlmacen;
 
         /// <summary>
-        /// Control BtnSalReparacion.
+        /// Control LblObserv.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnSalReparacion;
+        protected global::System.Web.UI.WebControls.Label LblObserv;
 
         /// <summary>
-        /// Control BtnEntIntercambio.
+        /// Control TxtObserv.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnEntIntercambio;
+        protected global::System.Web.UI.WebControls.TextBox TxtObserv;
 
         /// <summary>
-        /// Control BtnSalIntercambio.
+        /// Control GrdDtlleBaja.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnSalIntercambio;
+        protected global::System.Web.UI.WebControls.GridView GrdDtlleBaja;
 
         /// <summary>
-        /// Control BtnEntRecuperacion.
+        /// Control Vw1Asignar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnEntRecuperacion;
+        protected global::System.Web.UI.WebControls.View Vw1Asignar;
 
         /// <summary>
-        /// Control BtnSalBaja.
+        /// Control LblTitAsigFis.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnSalBaja;
+        protected global::System.Web.UI.WebControls.Label LblTitAsigFis;
+
+        /// <summary>
+        /// Control GrdAsignar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GrdAsignar;
+
+        /// <summary>
+        /// Control IbtCerrarAsing.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton IbtCerrarAsing;
     }
 }

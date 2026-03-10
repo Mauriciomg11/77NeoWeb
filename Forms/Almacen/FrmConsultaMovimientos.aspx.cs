@@ -478,9 +478,9 @@ namespace _77NeoWeb.Forms.Almacen
                                 DSSM.Tables[3].TableName = "Exprtr";
                                 ViewState["DSSM"] = DSSM;
 
-                                GrdStokAlma.DataSource = DSSM.Tables[0]; GrdStokAlma.DataBind();
-                                TxtStockActual.Text = DSSM.Tables[1].Rows[0]["CantTtl"].ToString().Trim();
-                                GrdMvtos.DataSource = DSSM.Tables[2]; GrdMvtos.DataBind();
+                                GrdStokAlma.DataSource = DSSM.Tables["Stock"]; GrdStokAlma.DataBind();
+                                TxtStockActual.Text = DSSM.Tables["StockActual"].Rows[0]["CantTtl"].ToString().Trim();
+                                GrdMvtos.DataSource = DSSM.Tables["Mvtos"]; GrdMvtos.DataBind();
                             }
                         }
                     }

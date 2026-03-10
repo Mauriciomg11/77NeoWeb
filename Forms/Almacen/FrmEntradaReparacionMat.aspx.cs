@@ -131,7 +131,7 @@ namespace _77NeoWeb.Forms.Almacen
                     LblFactAsign.Text = " | " + GrdDtlleRepa.Columns[14].HeaderText + ":";
                     IbtCerrarAsing.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarAsing.ToolTip;
                     GrdAsignar.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtlleRepa.EmptyDataText;
-                    GrdAsignar.Columns[1].HeaderText = bO.Equals("GrdEstadoPN") ? bT : GrdAsignar.Columns[1].HeaderText;
+                    GrdAsignar.Columns[1].HeaderText = bO.Equals("EstdPNMst") ? bT : GrdAsignar.Columns[1].HeaderText;
                     GrdAsignar.Columns[4].HeaderText = bO.Equals("LoteMst") ? bT : GrdAsignar.Columns[4].HeaderText;
                     GrdAsignar.Columns[5].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdAsignar.Columns[5].HeaderText;
                     GrdAsignar.Columns[6].HeaderText = bO.Equals("FilaMstr") ? bT : GrdAsignar.Columns[6].HeaderText;
@@ -615,7 +615,7 @@ namespace _77NeoWeb.Forms.Almacen
                 ImageButton IbtAsignr = e.Row.FindControl("IbtAsignr") as ImageButton;
                 if (IbtAsignr != null)
                 {
-                    DataRow[] Result = Idioma.Select("Objeto='GrdRepaAsigTT'");
+                    DataRow[] Result = Idioma.Select("Objeto='LblAsigMstr'");
                     foreach (DataRow RowIdioma in Result)
                     { IbtAsignr.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
                 }
@@ -725,13 +725,13 @@ namespace _77NeoWeb.Forms.Almacen
                 {
                     string VblPn = ClaseIEA.GetPn().Trim().Equals("") ? "" : "  [P/N: " + ClaseIEA.GetPn().Trim() + "]  ";
                     string VblSn = ClaseIEA.GetSn().Trim().Equals("") ? "" : " [S/N: " + ClaseIEA.GetSn().Trim() + "] ";
-                    string VbLote = ClaseIEA.GetLote().Trim().Equals("") ? "" : " [LT/N: " + ClaseIEA.GetLote().Trim() + "]";
+                    string VbLote = ClaseIEA.GetLote().Trim().Equals("") ? "" : " [LT/N: " + ClaseIEA.GetLote().Trim() + "]";                   
                     DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                     foreach (DataRow row in Result)
                     { Mensj = row["Texto"].ToString().Trim(); }
                     ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + VblPn + VblSn + "');", true);
                     return;
-                }
+                }                
                 TxtObserv.Text = "";
                 DdlAlmacen.Text = "0";
                 RdbNacional.Checked = false;
@@ -741,6 +741,14 @@ namespace _77NeoWeb.Forms.Almacen
                 GrdDtlleRepa.DataSource = null;
                 GrdDtlleRepa.DataBind();
                 TraerDatos("UPD");
+                string S_SP = ClaseIEA.GetNumSolPed().Trim().Equals("") ? "" : " [" + ClaseIEA.GetNumSolPed().Trim() + "]";
+                if (!S_SP.Equals(""))
+                {
+                    DataRow[] Result = Idioma.Select("Objeto= 'MstrMens03'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + S_SP + "');", true);
+                }
                 MultVw.ActiveViewIndex = 0;
             }
             catch (Exception Ex)

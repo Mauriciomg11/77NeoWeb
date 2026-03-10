@@ -999,7 +999,7 @@ namespace _77NeoWeb.Forms.Comex
                 Cnx.SelecBD();
                 using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbTxtSql = "EXEC PNTLL_Comex 3,@CodProv,@TipoDoc,@Tipo,'','','',0,0,0,0,@ICC,'01-01-01','02-01-01','03-01-01'";
+                    string VbTxtSql = "EXEC PNTLL_Comex 3,@CodProv,@TipoDoc,@Tipo,'','','',0,0,0,@Idm,@ICC,'01-01-01','02-01-01','03-01-01'";
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {

@@ -16,6 +16,7 @@ namespace _77NeoWeb.Prg.PrgAlmacen
         static public string PLote;
         static public string PReferencia;
         static public string PFormOrign;
+        static public string PPNumSolPed;
 
         public int IdIE { get; set; }
         public string CodElemento { get; set; }
@@ -177,7 +178,7 @@ namespace _77NeoWeb.Prg.PrgAlmacen
                 sqlCon.Open();
                 using (SqlTransaction transaction = sqlCon.BeginTransaction())
                 {
-                    PMensj = ""; PN = "";
+                    PMensj = ""; PN = ""; PPNumSolPed = "";
                     string VBQuery = "INSERT_EntradaElemento";
                     using (SqlCommand sqlCmd = new SqlCommand(VBQuery, sqlCon, transaction))
                     {
@@ -196,6 +197,7 @@ namespace _77NeoWeb.Prg.PrgAlmacen
                                 PPN = HttpUtility.HtmlDecode(SDR["PN"].ToString().Trim());
                                 PSN = HttpUtility.HtmlDecode(SDR["SN"].ToString().Trim());
                                 PLote = HttpUtility.HtmlDecode(SDR["Lote"].ToString().Trim());
+                                PPNumSolPed = HttpUtility.HtmlDecode(SDR["NumSolPed"].ToString().Trim());
                             }
                             SDR.Close();
                             transaction.Commit();
@@ -222,5 +224,6 @@ namespace _77NeoWeb.Prg.PrgAlmacen
         public string GetPn() { return PPN; }
         public string GetSn() { return PSN; }
         public string GetLote() { return PLote; }
+        public string GetNumSolPed() { return PPNumSolPed; }
     }
 }

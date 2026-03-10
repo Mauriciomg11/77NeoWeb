@@ -109,7 +109,12 @@ namespace _77NeoWeb.Forms.Almacen
                     BtnEntReparacion.ToolTip = bO.Equals("BtnEntReparacionTT") ? bT : BtnEntReparacion.ToolTip;
                     BtnDevCompra.Text = bO.Equals("BtnDevCompra") ? bT : BtnDevCompra.Text;
                     BtnDevCompra.ToolTip = bO.Equals("BtnDevCompraTT") ? bT : BtnDevCompra.ToolTip;
-
+                    BtnSalIntercambio.Text = bO.Equals("BtnSalIntercambio") ? bT : BtnSalIntercambio.Text;
+                    BtnSalIntercambio.ToolTip = bO.Equals("BtnSalIntercambioTT") ? bT : BtnSalIntercambio.ToolTip;
+                    BtnEntRecuperacion.Text = bO.Equals("BtnEntRecuperacion") ? bT : BtnEntRecuperacion.Text;
+                    BtnEntRecuperacion.ToolTip = bO.Equals("BtnEntRecuperacionTT") ? bT : BtnEntRecuperacion.ToolTip;
+                    BtnSalBaja.Text = bO.Equals("BtnSalBaja") ? bT : BtnSalBaja.Text;
+                    BtnSalBaja.ToolTip = bO.Equals("BtnSalBajaTT") ? bT : BtnSalBaja.ToolTip;
                 }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
@@ -149,6 +154,30 @@ namespace _77NeoWeb.Forms.Almacen
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
             string CT = "window.open('/Forms/Almacen/FrmDevolucionCompra.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
+        }
+        protected void BtnSalIntercambio_Click(object sender, EventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string CT = "window.open('/Forms/Almacen/FrmSalidaIntercambio.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
+        }
+        protected void BtnEntIntercambio_Click(object sender, EventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string CT = "window.open('/Forms/Almacen/FrmEntradaIntercambio.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
+        }
+        protected void BtnEntRecuperacion_Click(object sender, EventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string CT = "window.open('/Forms/Almacen/FrmEntradaRecuperacion.aspx', '_blank');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
+        }
+        protected void BtnSalBaja_Click(object sender, EventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            string CT = "window.open('/Forms/Almacen/FrmSalidaBajaMat.aspx', '_blank');";
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), CT, true);
         }
     }

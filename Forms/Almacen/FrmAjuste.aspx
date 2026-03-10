@@ -2,7 +2,15 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
-       
+        .CentrarCntndr {
+            position: relative;
+            left: 50%;
+            width: 99%;
+            margin-left: -49%;
+            height: 85%;
+            padding: 40px;
+            top: 5px
+        }
         .heightCampo {
             height: 25px;
             width: 95%;
@@ -31,8 +39,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-            <div class="CentrarContenedor DivMarco">     
-                 <br /><br /><br /><br />
+            <div class="CentrarCntndr">                 
                 <div class="row">
                     <div class="col-sm-2">
                         <asp:Label ID="LblMvto" runat="server" CssClass="LblEtiquet" Text="movimiento" />

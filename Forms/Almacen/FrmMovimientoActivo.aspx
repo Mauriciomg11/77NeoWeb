@@ -3,12 +3,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         .CentrarCntndr {
-            position: absolute;
+            position: relative;
             left: 50%;
+            top: 210px;
             width: 98%;
             margin-left: -49%;
             height: 85%;
-            padding: 5px;
+            /*padding: 5px;*/
         }
 
         .Interna {
@@ -27,12 +28,6 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplMvmtsAlmcn" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             <div class="CentrarCntndr">
                 <div class="col-sm-6 Interna">
                     <div class="row">
@@ -65,18 +60,37 @@
                             <asp:Button ID="BtnDevCompra" runat="server" CssClass="btn btn-success" OnClick="BtnDevCompra_Click" Width="100%" Text="devolucion compra" ToolTip="devolución de la compra" Visible="true" />
                         </div>
                     </div>
-                       <div id ="Reparaciones"  class="row" >
+                    <div id="Reparaciones" class="row">
                         <div class="col-sm-6">
                             <br />
-                            <asp:Button ID="BtnEntReparacion" runat="server" CssClass="btn btn-success" OnClick="BtnEntReparacion_Click" Width="100%" Text="entrada reparación" ToolTip="Entrada por Reparación"/>
+                            <asp:Button ID="BtnEntReparacion" runat="server" CssClass="btn btn-success" OnClick="BtnEntReparacion_Click" Width="100%" Text="entrada reparación" ToolTip="Entrada por Reparación" />
                         </div>
                         <div class="col-sm-6">
                             <br />
                             <asp:Button ID="BtnSalReparacion" runat="server" CssClass="btn btn-success" OnClick="BtnSalReparacion_Click" Width="100%" Text="Salida Reparación" ToolTip="Salida por Reparación" />
                         </div>
                     </div>
+                     <div id="Intercambio" class="row">
+                        <div class="col-sm-6">
+                            <br />
+                            <asp:Button ID="BtnEntIntercambio" runat="server" CssClass="btn btn-success" OnClick="BtnEntIntercambio_Click" Width="100%" Text="entrada intercambio" ToolTip="entrada por intercambio" />
+                        </div>
+                        <div class="col-sm-6">
+                            <br />
+                            <asp:Button ID="BtnSalIntercambio" runat="server" CssClass="btn btn-success" OnClick="BtnSalIntercambio_Click" Width="100%" Text="salida interc" ToolTip="salida por interc" />
+                        </div>
+                    </div>
+                     <div id="Recuperacion_Baja" class="row">
+                        <div class="col-sm-6">
+                            <br />
+                            <asp:Button ID="BtnEntRecuperacion" runat="server" CssClass="btn btn-success" OnClick="BtnEntRecuperacion_Click" Width="100%" Text="entrada recuperacion" ToolTip="entrada por recuperacion de elementos removidos." />
+                        </div>
+                        <div class="col-sm-6">
+                            <br />
+                            <asp:Button ID="BtnSalBaja" runat="server" CssClass="btn btn-success" OnClick="BtnSalBaja_Click" Width="100%" Text="salida baja" ToolTip="salida por baja de elementos en mal estado." />
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

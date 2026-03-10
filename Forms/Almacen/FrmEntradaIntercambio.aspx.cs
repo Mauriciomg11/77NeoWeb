@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 
 namespace _77NeoWeb.Forms.Almacen
 {
-    public partial class FrmSalidaRepaMat : System.Web.UI.Page
+    public partial class FrmEntradaIntercambio : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
@@ -45,25 +45,15 @@ namespace _77NeoWeb.Forms.Almacen
             }
             if (!IsPostBack)
             {
-                TitForm.Text = "Salida Reparación";
-                Page.Title = TitForm.Text;
-                ViewState["PageTit"] = TitForm.Text;
-                ViewState["TipoRepa"] = "";
-                ViewState["CodOrdenRepa"] = "";
-                ViewState["Codigo"] = ""; // es es numero de la SO internacionales o NumRepa Nacionales
-                ViewState["Posicion"] = ""; // Posicion de la SO o Repa nal
-                ViewState["DT"] = ""; // Dia Tasa cotizac
-                ViewState["MT"] = "";// Mes Tasa cotizac
-                ViewState["AT"] = "";// Año Tasa cotizac
-                ViewState["TRM"] = "";// valor tasa acordado cotiza
-                ViewState["CodTipoElem"] = "";
-                ViewState["CCosto"] = "";
-                ViewState["CodProv"] = "";// CodProveedor de la Repa
-                ViewState["VlrCotiza"] = "";// Valor de la cotizacion de la Repa
-                ViewState["PPT"] = "";// Si afecta el campo inventario
+                ViewState["PageTit"] = "";
+                ViewState["TipoInterc"] = "";
+                ViewState["CodInterc"] = "";
+                ViewState["CodICAnt"] = "";
+                ViewState["PosicionAnt"] = "0";
+                ViewState["TtlDespacho"] = "0";
                 ModSeguridad();
                 TraerDatos("UPD");
-                TipoRepa("N");
+                TipoInterc("N");
                 MultVw.ActiveViewIndex = 0;
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
@@ -84,7 +74,6 @@ namespace _77NeoWeb.Forms.Almacen
             string VbPC = Cnx.GetIpPubl();
             ClsP.Acceder(Session["C77U"].ToString(), "FrmMovimientoActivo.aspx", VbPC);
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
-
             IdiomaControles();
         }
         protected void IdiomaControles()
@@ -97,7 +86,7 @@ namespace _77NeoWeb.Forms.Almacen
                 SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
                 SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
                 SC.Parameters.AddWithValue("@F1", ViewState["PFileName"]);
-                SC.Parameters.AddWithValue("@F2", "");
+                SC.Parameters.AddWithValue("@F2", "frmEntradaCompraMat");
                 SC.Parameters.AddWithValue("@F3", "");
                 SC.Parameters.AddWithValue("@F4", "");
                 sqlCon.Open();
@@ -107,48 +96,45 @@ namespace _77NeoWeb.Forms.Almacen
                     string bO = tbl["Objeto"].ToString().Trim();
                     string bT = tbl["Texto"].ToString().Trim();
                     Idioma.Rows.Add(bO, bT);
-                    if (bO.Equals("Caption")) { Page.Title = bT; ViewState["PageTit"] = bT; TitForm.Text = bT; }
-                    LblAlmacen.Text = bO.Equals("AlmacenMstr") ? bT : LblAlmacen.Text;
+                    if (bO.Equals("CaptionEI"))
+                    { Page.Title = bT; ViewState["PageTit"] = bT; TitForm.Text = bT; }
                     LblObserv.Text = bO.Equals("LblObsMst") ? bT : LblObserv.Text;
+                    LblAlmacen.Text = bO.Equals("AlmacenMstr") ? bT : LblAlmacen.Text;
                     RdbNacional.Text = bO.Equals("RdbNal") ? "&nbsp" + bT : RdbNacional.Text;
                     RdbInter.Text = bO.Equals("RdbInter") ? "&nbsp" + bT : RdbInter.Text;
-                    LblNumRepa.Text = bO.Equals("DocMstr") ? bT : LblNumRepa.Text;
+                    LblNumInterc.Text = bO.Equals("DocMstr") ? bT : LblNumInterc.Text;
                     LblMoneda.Text = bO.Equals("LblMonedaMstr") ? bT : LblMoneda.Text;
-                    LblTitCondManiplc.Text = bO.Equals("LblCondAlmaMstr") ? bT : LblTitCondManiplc.Text;
-                    BtnCloseMdl.Text = bO.Equals("BtnCerrarMst") ? bT : BtnCloseMdl.Text;
                     BtnGuardar.Text = bO.Equals("BotonIngOk") ? bT : BtnGuardar.Text;
-                    // *********************************************** Detalle Repa ***********************************************
-                    GrdDtlleRepa.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtlleRepa.EmptyDataText;
-                    GrdDtlleRepa.Columns[1].HeaderText = bO.Equals("DocMstr") ? bT : GrdDtlleRepa.Columns[1].HeaderText;
-                    GrdDtlleRepa.Columns[2].HeaderText = bO.Equals("PosMstr") ? bT : GrdDtlleRepa.Columns[2].HeaderText;
-                    GrdDtlleRepa.Columns[3].HeaderText = bO.Equals("GrdRepa") ? bT : GrdDtlleRepa.Columns[3].HeaderText;
-                    GrdDtlleRepa.Columns[4].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdDtlleRepa.Columns[4].HeaderText;
-                    GrdDtlleRepa.Columns[5].HeaderText = bO.Equals("Descripcion") ? bT : GrdDtlleRepa.Columns[5].HeaderText;
-                    GrdDtlleRepa.Columns[6].HeaderText = bO.Equals("TipoMstr") ? bT : GrdDtlleRepa.Columns[6].HeaderText;
-                    GrdDtlleRepa.Columns[7].HeaderText = bO.Equals("LblIdentifMstr") ? bT : GrdDtlleRepa.Columns[7].HeaderText;
-                    GrdDtlleRepa.Columns[10].HeaderText = bO.Equals("GrdCantRep") ? bT : GrdDtlleRepa.Columns[10].HeaderText;
-                    GrdDtlleRepa.Columns[11].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdDtlleRepa.Columns[11].HeaderText;
-                    GrdDtlleRepa.Columns[12].HeaderText = bO.Equals("GrdCantIngr") ? bT : GrdDtlleRepa.Columns[12].HeaderText;
-                    GrdDtlleRepa.Columns[13].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdDtlleRepa.Columns[13].HeaderText;
-                    GrdDtlleRepa.Columns[14].HeaderText = bO.Equals("LblFactMstr") ? bT : GrdDtlleRepa.Columns[14].HeaderText;
-                    GrdDtlleRepa.Columns[15].HeaderText = bO.Equals("LblFechTRMMstr") ? bT : GrdDtlleRepa.Columns[15].HeaderText;
-                    // *********************************************** Asignar Elemento ***********************************************
+                    // *********************************************** Detalle Compras ***********************************************
+                    GrdDtlleInterc.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtlleInterc.EmptyDataText;
+                    GrdDtlleInterc.Columns[1].HeaderText = bO.Equals("DocMstr") ? bT : GrdDtlleInterc.Columns[1].HeaderText;
+                    GrdDtlleInterc.Columns[3].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdDtlleInterc.Columns[3].HeaderText;
+                    GrdDtlleInterc.Columns[4].HeaderText = bO.Equals("Descripcion") ? bT : GrdDtlleInterc.Columns[4].HeaderText;
+                    GrdDtlleInterc.Columns[5].HeaderText = bO.Equals("TipoMstr") ? bT : GrdDtlleInterc.Columns[5].HeaderText;
+                    GrdDtlleInterc.Columns[6].HeaderText = bO.Equals("LblIdentifMstr") ? bT : GrdDtlleInterc.Columns[6].HeaderText;
+                    GrdDtlleInterc.Columns[9].HeaderText = bO.Equals("CantInterc") ? bT : GrdDtlleInterc.Columns[9].HeaderText;
+                    GrdDtlleInterc.Columns[10].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdDtlleInterc.Columns[10].HeaderText;
+                    GrdDtlleInterc.Columns[11].HeaderText = bO.Equals("GrdCantRec") ? bT : GrdDtlleInterc.Columns[11].HeaderText;
+                    GrdDtlleInterc.Columns[12].HeaderText = bO.Equals("GrdCantIngres") ? bT : GrdDtlleInterc.Columns[12].HeaderText;
+                    GrdDtlleInterc.Columns[13].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdDtlleInterc.Columns[13].HeaderText;
+                    GrdDtlleInterc.Columns[14].HeaderText = bO.Equals("LblFactMstr") ? bT : GrdDtlleInterc.Columns[14].HeaderText;
+                    GrdDtlleInterc.Columns[15].HeaderText = bO.Equals("LblFechTRMMstr") ? bT : GrdDtlleInterc.Columns[15].HeaderText;
+                    // *********************************************** Asignar ***********************************************
                     LblTitAsigFis.Text = bO.Equals("LblTitAsigFis") ? bT : LblTitAsigFis.Text;
+                    LblAsigCantSol.Text = GrdDtlleInterc.Columns[9].HeaderText + ":";                  
+                    LblFactAsign.Text = " | " + GrdDtlleInterc.Columns[14].HeaderText + ":";
+                    GrdAsignar.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdAsignar.EmptyDataText;
                     IbtCerrarAsing.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarAsing.ToolTip;
-                    GrdAsignar.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtlleRepa.EmptyDataText;
-                    GrdAsignar.Columns[1].HeaderText = bO.Equals("EstdPNMst") ? bT : GrdAsignar.Columns[1].HeaderText;
-                    GrdAsignar.Columns[4].HeaderText = bO.Equals("LoteMst") ? bT : GrdAsignar.Columns[4].HeaderText;
-                    GrdAsignar.Columns[5].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdAsignar.Columns[5].HeaderText;
-                    GrdAsignar.Columns[6].HeaderText = bO.Equals("FilaMstr") ? bT : GrdAsignar.Columns[6].HeaderText;
-                    GrdAsignar.Columns[7].HeaderText = bO.Equals("ColumMstr") ? bT : GrdAsignar.Columns[7].HeaderText;
-                    GrdAsignar.Columns[8].HeaderText = bO.Equals("GrdCantStockMstr") ? bT : GrdAsignar.Columns[8].HeaderText;
-                    GrdAsignar.Columns[9].HeaderText = bO.Equals("GrdCantRep") ? bT : GrdAsignar.Columns[9].HeaderText;
-                    GrdAsignar.Columns[10].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdAsignar.Columns[10].HeaderText;
-                    GrdAsignar.Columns[11].HeaderText = bO.Equals("FechVencMstr") ? bT : GrdAsignar.Columns[11].HeaderText;
+                    GrdAsignar.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdAsignar.EmptyDataText;
+                    GrdAsignar.Columns[3].HeaderText = bO.Equals("GrdCant") ? bT : GrdAsignar.Columns[3].HeaderText;
+                    GrdAsignar.Columns[4].HeaderText = bO.Equals("GrdCantDesp") ? bT : GrdAsignar.Columns[4].HeaderText;
+                    GrdAsignar.Columns[5].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdAsignar.Columns[5].HeaderText;
+                    GrdAsignar.Columns[6].HeaderText = bO.Equals("FechVencMstr") ? bT : GrdAsignar.Columns[6].HeaderText;
+                    /**/
                 }
-                DataRow[] Result = Idioma.Select("Objeto= 'BtnIngresarOnClMstr'");//¿Desea realizar el movimiento?
+                DataRow[] Result = Idioma.Select("Objeto= 'BtnIngresarOnClMstr'");
                 foreach (DataRow row in Result)
-                { BtnGuardar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                { BtnGuardar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');");/**/ }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
             }
@@ -160,7 +146,7 @@ namespace _77NeoWeb.Forms.Almacen
                 Cnx.SelecBD();
                 using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbTxtSql = "EXEC PNTLL_Reparacion 4,@U,'','','','','',0,0,0,@Idm, @ICC,'01-01-01','02-01-01','03-01-01'";
+                    string VbTxtSql = "EXEC SP_PANTALLA_Entrada_Compra 9, @U,'','','','',0,0,@Idm, @ICC,'01-01-1','02-01-01','03-01-01'";
 
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
@@ -175,10 +161,10 @@ namespace _77NeoWeb.Forms.Almacen
                                 SDA.SelectCommand = SC;
                                 SDA.Fill(DSTDdl);
                                 DSTDdl.Tables[0].TableName = "Almac";
-                                DSTDdl.Tables[1].TableName = "RepaNal";
-                                DSTDdl.Tables[2].TableName = "RepaInta";
-                                /*DSTDdl.Tables[3].TableName = "EjecCodigo";
-                                DSTDdl.Tables[4].TableName = "EjecCodComex";*/
+                                DSTDdl.Tables[1].TableName = "IntercNal";
+                                DSTDdl.Tables[2].TableName = "IntercInta";
+                                DSTDdl.Tables[3].TableName = "EjecCodigo";
+                                DSTDdl.Tables[4].TableName = "EjecCodComex";
                                 ViewState["DSTDdl"] = DSTDdl;
                             }
                         }
@@ -192,98 +178,94 @@ namespace _77NeoWeb.Forms.Almacen
                 DdlAlmacen.DataTextField = "NomAlmacen";
                 DdlAlmacen.DataValueField = "CodIdAlmacen";
                 DdlAlmacen.DataBind();
-            }
+            } /**/
         }
-        protected void TipoRepa(string Tipo)
+        protected void TipoInterc(string Tipo)
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
             DSTDdl = (DataSet)ViewState["DSTDdl"];
-            ViewState["TipoRepa"] = Tipo;
+            ViewState["TipoInterc"] = Tipo;
             if (Tipo.Equals("N"))
             {
-                if (DSTDdl.Tables["RepaNal"].Rows.Count > 0)
+                if (DSTDdl.Tables["IntercNal"].Rows.Count > 0)
                 {
-                    DdlNumRepa.DataSource = DSTDdl.Tables["RepaNal"];
-                    DdlNumRepa.DataTextField = "CodReparacion";
+                    DdlNumInterc.DataSource = DSTDdl.Tables["IntercNal"];
+                    DdlNumInterc.DataTextField = "CodOrdenCompra";
                 }
             }
             else
             {
-                if (DSTDdl.Tables["RepaInta"].Rows.Count > 0)
+                if (DSTDdl.Tables["IntercInta"].Rows.Count > 0)
                 {
-                    DdlNumRepa.DataSource = DSTDdl.Tables["RepaInta"];
-                    DdlNumRepa.DataTextField = "CodShippingOrder";
+                    DdlNumInterc.DataSource = DSTDdl.Tables["IntercInta"];
+                    DdlNumInterc.DataTextField = "CodShippingOrder";
                 }
             }
-            DdlNumRepa.DataValueField = "Codigo";
-            DdlNumRepa.DataBind();
-            DdlNumRepa.Text = "";
-            /*GrdDtlleRepa.DataSource = null;
-            GrdDtlleRepa.DataBind();*/
+            DdlNumInterc.DataValueField = "Codigo";
+            DdlNumInterc.DataBind();
+            DdlNumInterc.Text = "";
+            GrdDtlleInterc.DataSource = null;
+            GrdDtlleInterc.DataBind();/**/
         }
-        protected void RdbNacional_CheckedChanged(object sender, EventArgs e)
-        { TipoRepa("N"); }
-        protected void RdbInter_CheckedChanged(object sender, EventArgs e)
-        { TipoRepa("I"); }
-        protected void BindDetRepa(string Accion)
+        protected void BindDetInterc(string Accion)
         {
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
                 DSTDdl = (DataSet)ViewState["DSTDdl"];
-                string S_RepaNAL_INTA = "";
-                if (ViewState["TipoRepa"].ToString().Equals("N")) { S_RepaNAL_INTA = "RepaNal"; }
-                else { S_RepaNAL_INTA = "RepaInta"; }
-                if (DSTDdl.Tables[S_RepaNAL_INTA].Rows.Count > 0)
+                string S_NAL_INTA = "";
+                if (ViewState["TipoInterc"].ToString().Equals("N")) { S_NAL_INTA = "IntercNal"; }
+                else { S_NAL_INTA = "IntercInta"; }
+                //ViewState["CodInterc"] = DSTDdl.Tables[S_NAL_INTA].AsEnumerable().Where(x => x.Field<string>("Codigo") == DdlNumInterc.Text.Trim()).Select(x => x.Field<string>("CodOrdenCompra")).FirstOrDefault();
+                if (DSTDdl.Tables[S_NAL_INTA].Rows.Count > 0)
                 {
                     DataTable DT = new DataTable();
-                    DT = DSTDdl.Tables[S_RepaNAL_INTA].Clone();
-                    DataRow[] DR = DSTDdl.Tables[S_RepaNAL_INTA].Select("Codigo='" + DdlNumRepa.Text.Trim() + "'");
+                    DT = DSTDdl.Tables[S_NAL_INTA].Clone();
+                    DataRow[] DR = DSTDdl.Tables[S_NAL_INTA].Select("Codigo='" + DdlNumInterc.Text.Trim() + "'");
                     if (Cnx.ValidaDataRowVacio(DR))
                     {
                         DT = DR.CopyToDataTable();
                         TxtMoneda.Text = DT.Rows[0]["CodMoneda"].ToString().Trim();
                         DataTable DTEC = new DataTable();
-                        DataRow[] Result;
-                        // DataRow[] DREC; 
-                        //string S_AplicaComex = "S";
-                        /* if (ViewState["TipoRepa"].ToString().Equals("I")) //Si es internacional valida que este liquidada la orden de embarque
-                          {
-                              DREC = DSTDdl.Tables["EjecCodigo"].Select("Caso = 5 AND EjecutarCodigo = 'S'"); //Si aplica validacion de la liquidacion
-                              if (Cnx.ValidaDataRowVacio(DREC))
-                              {
-                                  DR = DSTDdl.Tables[S_RepaNAL_INTA].Select("EstadoLiquidacion <> 1");//Esta liquidada
-                                  if (Cnx.ValidaDataRowVacio(DR))
-                                  {
-                                      DT = DR.CopyToDataTable();
-                                      Result = Idioma.Select("Objeto= 'Msj05EntC'"); //La orden de embarque no se encuentra liquidada.
-                                      foreach (DataRow row in Result)
-                                      { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + " | " + DdlNumRepa.Text.Trim() + "');", true); }
-                                      GrdDtlleRepa.DataSource = null; GrdDtlleRepa.DataBind();
-                                      return;
-                                  }
-                              }
-                              DREC = DSTDdl.Tables["EjecCodComex"].Select("Caso = 5 AND EjecutarCodigo = 'N'"); //Aplica COMEX
-                              if (Cnx.ValidaDataRowVacio(DREC)) { S_AplicaComex = "N"; }
-                          } */
-                        DR = DSTDdl.Tables[S_RepaNAL_INTA].Select("Codigo ='" + DdlNumRepa.Text.Trim() + "' AND Aprobado = 0");
-                        if (Cnx.ValidaDataRowVacio(DR))// Si la Compra esta aprobada
+                        DataRow[] DREC; DataRow[] Result;
+                        string S_AplicaComex = "S";
+                        if (ViewState["TipoInterc"].ToString().Equals("I"))/*Si es internacional valida que este liquidada la orden de embarque*/
+                        {
+                            DREC = DSTDdl.Tables["EjecCodigo"].Select("Caso = 5 AND EjecutarCodigo = 'S'"); /*Si aplica validacion de la liquidacion*/
+                            if (Cnx.ValidaDataRowVacio(DREC))
+                            {
+                                DR = DSTDdl.Tables[S_NAL_INTA].Select("EstadoLiquidacion <> 1"); /*Esta liquidada*/
+                                if (Cnx.ValidaDataRowVacio(DR))
+                                {
+                                    DT = DR.CopyToDataTable();
+                                    Result = Idioma.Select("Objeto= 'Msj05EntC'"); /*La orden de embarque no se encuentra liquidada.	*/
+                                    foreach (DataRow row in Result)
+                                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + " | " + DdlNumInterc.Text.Trim() + "');", true); }
+                                    GrdDtlleInterc.DataSource = null; GrdDtlleInterc.DataBind();
+                                    return;
+                                }
+                            }
+                            DREC = DSTDdl.Tables["EjecCodComex"].Select("Caso = 1 AND EjecutarCodigo = 'N'"); /*Aplica COMEX*/
+                            if (Cnx.ValidaDataRowVacio(DREC)) { S_AplicaComex = "N"; }
+                        }
+                        DR = DSTDdl.Tables[S_NAL_INTA].Select("Codigo ='" + DdlNumInterc.Text.Trim() + "' AND Aprobado = 0");
+                        if (Cnx.ValidaDataRowVacio(DR))/* Si la Compra esta aprobada*/
                         {
                             DT = DR.CopyToDataTable();
-                            Result = Idioma.Select("Objeto= 'Mens03SalRepa'"); //La reparación no se encuentra aprobada.
+                            Result = Idioma.Select("Objeto= 'Msj01EntC'"); /*La orden de compra no se encuentra aprobada*/
                             foreach (DataRow row in Result)
-                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + " | " + DT.Rows[0]["CodReparacion"].ToString().Trim() + "');", true); }
-                            GrdDtlleRepa.DataSource = null; GrdDtlleRepa.DataBind();
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + " | " + DT.Rows[0]["CodOrdenCompra"].ToString().Trim() + "');", true); }
+                            GrdDtlleInterc.DataSource = null; GrdDtlleInterc.DataBind();
                             return;
                         }
-                        DR = DSTDdl.Tables[S_RepaNAL_INTA].Select("Codigo ='" + DdlNumRepa.Text.Trim() + "' AND Asentado = 1");
+                        DR = DSTDdl.Tables[S_NAL_INTA].Select("Codigo ='" + DdlNumInterc.Text.Trim() + "' AND Asentado = 1");
                         if (Cnx.ValidaDataRowVacio(DR))/* Si la Compra esta asentada*/
                         {
                             DT = DR.CopyToDataTable();
-                            Result = Idioma.Select("Objeto= 'Mens04SalRepa'");
+                            Result = Idioma.Select("Objeto= 'Msj02EntC'"); /*La orden de compra se encuentra asentada.*/
                             foreach (DataRow row in Result)
-                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + " | " + DT.Rows[0]["CodReparacion"].ToString().Trim() + "');", true); }// La reparación se encuentra asentada.
-                            GrdDtlleRepa.DataSource = null; GrdDtlleRepa.DataBind();
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + " | " + DT.Rows[0]["CodOrdenCompra"].ToString().Trim() + "');", true); }
+                            GrdDtlleInterc.DataSource = null; GrdDtlleInterc.DataBind();
                             return;
                         }
                         if (Accion.Equals("UPD"))
@@ -291,26 +273,23 @@ namespace _77NeoWeb.Forms.Almacen
                             Cnx.SelecBD();
                             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                             {
-                                string VbTxtSql = " EXEC PNTLL_Reparacion| 5, @CodOC,'','','','',@TipoOC,0,0,0,@Idm, @ICC,'01-01-01','02-01-01','03-01-01'";
+                                string VbTxtSql = "EXEC SP_PANTALLA_Entrada_Compra 10,@CodOC,@TipoOC,@ApliComex,'','',0,0,0,@ICC,'01-01-1','02-01-1','03-01-1'";
                                 sqlConB.Open();
                                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                                 {
-                                    SC.Parameters.AddWithValue("@CodOC", DdlNumRepa.Text.Trim());
-                                    SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                                    SC.Parameters.AddWithValue("@CodOC", DdlNumInterc.Text.Trim());
                                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                                    SC.Parameters.AddWithValue("@TipoOC", ViewState["TipoRepa"]);
-                                    // SC.Parameters.AddWithValue("@ApliComex", S_AplicaComex);
+                                    SC.Parameters.AddWithValue("@TipoOC", ViewState["TipoInterc"]);
+                                    SC.Parameters.AddWithValue("@ApliComex", S_AplicaComex);
                                     using (SqlDataAdapter SDA = new SqlDataAdapter())
                                     {
                                         using (DataSet DSDetalle = new DataSet())
                                         {
                                             SDA.SelectCommand = SC;
                                             SDA.Fill(DSDetalle);
-                                            DSDetalle.Tables[0].TableName = "EstadoRepa";
+                                            DSDetalle.Tables[0].TableName = "EstadoInterc";
                                             DSDetalle.Tables[1].TableName = "CondManip";
                                             DSDetalle.Tables[2].TableName = "CurTemporal";
-                                            /*DSDetalle.Tables[3].TableName = "CurActualizar";*/
-                                            DSDetalle.Tables[3].TableName = "CurCCosto";/**/
                                             ViewState["DSDetalle"] = DSDetalle;
                                         }
                                     }
@@ -318,83 +297,28 @@ namespace _77NeoWeb.Forms.Almacen
                             }
                         }
                         DSDetalle = (DataSet)ViewState["DSDetalle"];
-                        if (DSDetalle.Tables["EstadoRepa"].Rows.Count > 0)
-                        { GrdDtlleRepa.DataSource = DSDetalle.Tables["EstadoRepa"]; }
-                        GrdDtlleRepa.DataBind();
+                        if (DSDetalle.Tables["EstadoInterc"].Rows.Count > 0)
+                        { GrdDtlleInterc.DataSource = DSDetalle.Tables["EstadoInterc"]; }
+                        GrdDtlleInterc.DataBind();
                     }
                 }
             }
             catch (Exception Ex)
             {
+                String S_Ex = Ex.Message;
                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
-                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Detalle salida Repa", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
-        protected void DdlNumRepa_TextChanged(object sender, EventArgs e)
+        protected void RdbNacional_CheckedChanged(object sender, EventArgs e)
+        { TipoInterc("N"); }
+        protected void RdbInter_CheckedChanged(object sender, EventArgs e)
+        { TipoInterc("I"); }
+        protected void DdlNumInterc_TextChanged(object sender, EventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
-            //if (!DdlNumRepa.SelectedItem.Value.Equals("")) { BindDetRepa("UPD"); }
-            BindDetRepa("UPD");
-        }
-        protected void BindAsignar(string PN, string SN, string CodTipoElem, string CantRepa, string Accion)
-        {
-            if (Accion.Equals("UPD"))
-            {
-                DSDetalle = (DataSet)ViewState["DSDetalle"];
-                Cnx.SelecBD();
-                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
-                {
-                    string VbTxtSql = "EXEC PNTLL_Reparacion 6, @Alm, @CodRepa, @PN,@SN,@CodTipoE,'', @CantRepa,0,0,@Idm,@ICC,'01-01-01','02-01-01','03-01-01'";
-                    sqlConB.Open();
-                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
-                    {
-                        SC.Parameters.AddWithValue("@Alm", DdlAlmacen.Text.Trim());
-                        SC.Parameters.AddWithValue("@CodRepa", ViewState["CodOrdenRepa"]);
-                        SC.Parameters.AddWithValue("@PN", PN.Trim());
-                        SC.Parameters.AddWithValue("@SN", SN.Trim());
-                        SC.Parameters.AddWithValue("@CodTipoE", CodTipoElem.Trim());
-                        SC.Parameters.AddWithValue("@CantRepa", CantRepa.Trim());
-                        SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
-                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                        using (SqlDataAdapter SDA = new SqlDataAdapter())
-                        {
-                            using (DataSet DSAsignar = new DataSet())
-                            {
-                                SDA.SelectCommand = SC;
-                                SDA.Fill(DSAsignar);
-
-                                DSAsignar.Tables[0].TableName = "Asignar";
-                                DSAsignar.Tables[1].TableName = "ValorizarInv";
-
-                                ViewState["DSAsignar"] = DSAsignar;
-                            }
-                        }
-                    }
-                }
-            }
-            DSAsignar = (DataSet)ViewState["DSAsignar"];
-            //Actualizar la cantidad a despachar en la vista de Detalle asignar para no despachar de la misma ubica si ya no tiene estok
-            foreach (DataRow DRCur in DSDetalle.Tables["CurTemporal"].Rows)
-            {
-                foreach (DataRow DRAsig in DSAsignar.Tables["Asignar"].Rows)
-                {
-                    string CodUBCur = DRCur["CodUbicaBodega"].ToString().Trim();
-                    string CodUBAsig = DRAsig["CodUbicaBodega"].ToString().Trim();
-                    if (CodUBAsig.Equals(CodUBCur))
-                    {
-                        string CantCur = DRCur["CantIngr"].ToString().Trim();
-                        string CantRepaA = DRAsig["Cantidad"].ToString().Trim();
-                        DRAsig["Cantidad"] = Convert.ToInt32(CantRepaA) - Convert.ToInt32(CantCur);
-                        DSAsignar.Tables["Asignar"].AcceptChanges();
-                    }
-                }
-            }
-            if (DSAsignar.Tables["Asignar"].Rows.Count > 0)
-            { GrdAsignar.DataSource = DSAsignar.Tables["Asignar"]; }
-            GrdAsignar.DataBind();
+            if (!DdlNumInterc.SelectedItem.Value.Equals("")) { BindDetInterc("UPD"); }
         }
         protected void BindCondicManipulac(string CodRef)
         {
@@ -411,24 +335,59 @@ namespace _77NeoWeb.Forms.Almacen
                         ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "Popup", "ShowPopup();", true);
                     }
                 }
-
             }
         }
-        protected void IbtCerrarAsing_Click(object sender, ImageClickEventArgs e)
+        protected void BindAsignar(string PN, string CodRef, string CantInterc, string Accion)
         {
-            Page.Title = ViewState["PageTit"].ToString().Trim();
-            ViewState["PosicionAnt"] = ViewState["Posicion"];
-            ViewState["CodRCant"] = ViewState["CodOrdenRepa"];
-            MultVw.ActiveViewIndex = 0;
+            if (Accion.Equals("UPD"))
+            {
+                DSDetalle = (DataSet)ViewState["DSDetalle"];
+                Cnx.SelecBD();
+                using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
+                {
+                    string VbTxtSql = "SP_PANTALLA_Entrada_Compra 11, @CodInterc, @PN, @CodRef,'','',@CantInterc,0,0, @ICC,'01-01-1','02-01-1','03-01-1'";
+                    sqlConB.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
+                    {
+                        string borr = ViewState["CodInterc"].ToString();
+                        string borr1 = ViewState["Codigo"].ToString();
+                        SC.Parameters.AddWithValue("@CodInterc", ViewState["CodInterc"]);
+                        SC.Parameters.AddWithValue("@PN", PN.Trim());
+                        SC.Parameters.AddWithValue("@CodRef", CodRef.Trim());
+                        SC.Parameters.AddWithValue("@CantInterc", CantInterc.Trim());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        using (SqlDataAdapter SDA = new SqlDataAdapter())
+                        {
+                            using (DataSet DSAsignar = new DataSet())
+                            {
+                                SDA.SelectCommand = SC;
+                                SDA.Fill(DSAsignar);
+
+                                DSAsignar.Tables[0].TableName = "Asignar";
+                                DSAsignar.Tables[1].TableName = "PN_Alter";
+                                DSAsignar.Tables[2].TableName = "FechSvr";
+                                ViewState["DSAsignar"] = DSAsignar;
+                            }
+                        }
+                    }
+                }
+            }
+            DSAsignar = (DataSet)ViewState["DSAsignar"];
+
+            if (DSAsignar.Tables["Asignar"].Rows.Count > 0)
+            { GrdAsignar.DataSource = DSAsignar.Tables["Asignar"]; }
+            GrdAsignar.DataBind();
         }
-        protected void GrdDtlleRepa_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void GrdDtlleInterc_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
                 Page.Title = ViewState["PageTit"].ToString().Trim();
+                DSTDdl = (DataSet)ViewState["DSTDdl"];
+                DSDetalle = (DataSet)ViewState["DSDetalle"];
                 DataRow[] Result;
-
+                if (RdbNacional.Checked == false && RdbInter.Checked == false) { RdbNacional.Focus(); return; }
                 if (DdlAlmacen.Text.Trim().Equals("0"))
                 {
                     Result = Idioma.Select("Objeto= 'MstrMens19'");
@@ -436,41 +395,70 @@ namespace _77NeoWeb.Forms.Almacen
                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// Debe ingresar el almacén.
                     return;
                 }
-                LblAsigCantSol.Text = GrdDtlleRepa.Columns[10].HeaderText + ":";//Cant Repa
                 if (e.CommandName.Equals("Abrir"))
                 {
                     GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
                     GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
-
                     string VblCodRef = ((Label)row.FindControl("LblRef")).Text.ToString().Trim();
-                    string VblPn = ((Label)row.FindControl("LblPn")).Text.ToString().Trim();
+                    ViewState["Pn"] = ((Label)row.FindControl("LblPn")).Text.ToString().Trim();
                     string VblSn = ((Label)row.FindControl("LblSn")).Text.ToString().Trim();
                     string VblDescPN = ((Label)row.FindControl("LblDesc")).Text.ToString().Trim();
-                    string VbCantRepa = ((Label)row.FindControl("LblCantRepa")).Text.ToString().Trim();
+                    string VbCantIC = ((Label)row.FindControl("LblCantInterc")).Text.ToString().Trim();
+                    ViewState["CodInterc"] = ((Label)row.FindControl("LblNumIC")).Text.ToString().Trim();
                     ViewState["Identf"] = ((Label)row.FindControl("LblIdentfc")).Text.ToString().Trim();
                     ViewState["CodTipoElem"] = ((Label)row.FindControl("LblTipo")).Text.ToString().Trim();
-                    ViewState["CodOrdenRepa"] = ((Label)row.FindControl("LblNumRepa")).Text.ToString().Trim();
-                    ViewState["CCosto"] = GrdDtlleRepa.DataKeys[gvr.RowIndex].Values["CCostos"].ToString();
-                    ViewState["DT"] = GrdDtlleRepa.DataKeys[gvr.RowIndex].Values["DiaTasa"].ToString();
-                    ViewState["MT"] = GrdDtlleRepa.DataKeys[gvr.RowIndex].Values["MesTasa"].ToString();
-                    ViewState["AT"] = GrdDtlleRepa.DataKeys[gvr.RowIndex].Values["AñoTasa"].ToString();
+                    ViewState["CCosto"] = GrdDtlleInterc.DataKeys[gvr.RowIndex].Values["CCostos"].ToString();
+                    ViewState["DT"] = GrdDtlleInterc.DataKeys[gvr.RowIndex].Values["DiaTasa"].ToString();
+                    ViewState["MT"] = GrdDtlleInterc.DataKeys[gvr.RowIndex].Values["MesTasa"].ToString();
+                    ViewState["AT"] = GrdDtlleInterc.DataKeys[gvr.RowIndex].Values["AñoTasa"].ToString();
                     ViewState["TRM"] = ((Label)row.FindControl("Lbltrm")).Text.ToString().Trim();
-                    ViewState["Codigo"] = ((Label)row.FindControl("LblNumDoc")).Text.ToString().Trim();
+                    ViewState["Codigo"] = GrdDtlleInterc.DataKeys[gvr.RowIndex].Values["CodShippingOrder"].ToString();
                     ViewState["Posicion"] = ((Label)row.FindControl("LblPos")).Text.ToString().Trim();
-                    ViewState["PPT"] = GrdDtlleRepa.DataKeys[gvr.RowIndex].Values["PPT"].ToString();
-                    ViewState["CodProv"] = GrdDtlleRepa.DataKeys[gvr.RowIndex].Values["CodProveedor"].ToString();
-                    ViewState["VlrCotiza"] = GrdDtlleRepa.DataKeys[gvr.RowIndex].Values["Valor_Compra"].ToString();
-                    LblPNDescripcAsig.Text = ViewState["CodOrdenRepa"] + " | " + VblPn + " | " + VblDescPN + " | ";
-                    LblAsigCantSolV.Text = VbCantRepa;
-                    int I_Bloquear = Convert.ToInt32(GrdDtlleRepa.DataKeys[gvr.RowIndex].Values["Bloquear"].ToString());
+                    ViewState["PPT"] = GrdDtlleInterc.DataKeys[gvr.RowIndex].Values["PPT"].ToString();
+                    ViewState["CodProv"] = GrdDtlleInterc.DataKeys[gvr.RowIndex].Values["CodProveedor"].ToString();
+                    ViewState["VlrCotiza"] = GrdDtlleInterc.DataKeys[gvr.RowIndex].Values["Valor_Compra"].ToString();
+                    ViewState["VlrComex"] = GrdDtlleInterc.DataKeys[gvr.RowIndex].Values["ValorUnidadP"].ToString();
+                    TxtFact.Text = ((Label)row.FindControl("LblFact")).Text.ToString().Trim();
+                    ViewState["VlrUnd"] = GrdDtlleInterc.DataKeys[gvr.RowIndex].Values["ValorUnidad"].ToString();
+                    LblPNDescripcAsig.Text = ViewState["CodInterc"] + " | " + ViewState["Pn"] + " | " + VblDescPN + " | ";
+                    LblAsigCantCompV.Text = VbCantIC;
+                    int I_Bloquear = Convert.ToInt32(GrdDtlleInterc.DataKeys[gvr.RowIndex].Values["Bloquear"].ToString());
                     if (I_Bloquear == 1)// Si la Compra esta aprobada
                     {
                         Result = Idioma.Select("Objeto= 'MstrMens15'"); //El P/N se encuentra bloqueado.
                         foreach (DataRow DRM in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + DRM["Texto"].ToString() + " | " + ViewState["CodOrdenRepa"].ToString().Trim() + "');", true); }
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + DRM["Texto"].ToString() + " | " + ViewState["CodInterc"].ToString().Trim() + "');", true); }
                         return;
                     }
-                    BindAsignar(VblPn, VblSn, ViewState["CodTipoElem"].ToString(), VbCantRepa, "UPD");
+                    if (ViewState["TRM"].Equals("0") && ViewState["TipoInterc"].Equals("I"))
+                    {
+                        Result = Idioma.Select("Objeto= 'MstrMens36'");
+                        foreach (DataRow Row in Result)
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Row["Texto"].ToString() + "');", true); }//La TRM del día no se ha creado.
+                        return;
+                    }
+                    if (Convert.ToDouble(ViewState["VlrCotiza"].ToString()) <= 0)
+                    {
+                        Result = Idioma.Select("Objeto= 'MstrMens39'");
+                        foreach (DataRow Row in Result)
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Row["Texto"].ToString() + "');", true); }//El ítem se encuentra sin un valor ingresado.
+                        return;
+                    }
+                    DataRow[] DREC;
+                    DREC = DSTDdl.Tables["EjecCodigo"].Select("Caso = 3 AND EjecutarCodigo = 'S'"); /*Solicitar en el ingreso de la compra y Repa Verificacion de la Referencia*/
+                    if (Cnx.ValidaDataRowVacio(DREC))
+                    {
+                        DataRow[] DR = DSDetalle.Tables["EstadoInterc"].Select("Revisado = 0 AND CodReferencia = '" + VblCodRef.Trim() + "'"); /*Solicitar en el ingreso de la compra y Repa Verificacion de la Referencia*/
+                        if (Cnx.ValidaDataRowVacio(DR))
+                        {
+                            DataTable DT = DR.CopyToDataTable();
+                            Result = Idioma.Select("Objeto= 'Msj03EntC'"); /*La referencia no se encuentra verificada*/
+                            foreach (DataRow Row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Row["Texto"].ToString() + " | " + ViewState["PN"].ToString().Trim() + "');", true); }
+                            return;
+                        }
+                    }
+                    BindAsignar(ViewState["Pn"].ToString(), VblCodRef, VbCantIC, "UPD");
                     MultVw.ActiveViewIndex = 1;
                     BindCondicManipulac(VblCodRef);
                 }
@@ -482,10 +470,10 @@ namespace _77NeoWeb.Forms.Almacen
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Seleccionar REpa", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Seleccionar Salida Intercambio", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
-        protected void GrdDtlleRepa_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void GrdDtlleInterc_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -493,7 +481,7 @@ namespace _77NeoWeb.Forms.Almacen
                 ImageButton IbtAbrir = e.Row.FindControl("IbtAbrir") as ImageButton;
                 if (IbtAbrir != null)
                 {
-                    DataRow[] Result = Idioma.Select("Objeto='GrdRepaAbrirTT'");
+                    DataRow[] Result = Idioma.Select("Objeto='GrdAsigICTT'");
                     foreach (DataRow RowIdioma in Result)
                     { IbtAbrir.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
                 }
@@ -505,74 +493,79 @@ namespace _77NeoWeb.Forms.Almacen
                 }
             }
         }
+        /////////////////////////////////////// ASIGNAR /////////////////////////////////////////////////
+        protected void IbtCerrarAsing_Click(object sender, ImageClickEventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            MultVw.ActiveViewIndex = 0;
+        }
         protected void GrdAsignar_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
             {
                 Idioma = (DataTable)ViewState["TablaIdioma"];
                 Page.Title = ViewState["PageTit"].ToString().Trim();
-
                 if (e.CommandName.Equals("Asignar"))
                 {
                     double VbDCantDesp = 0;
-                    DataRow[] Result;
                     DSAsignar = (DataSet)ViewState["DSAsignar"];
                     DSDetalle = (DataSet)ViewState["DSDetalle"];
-
-                    string AplicCC = DSDetalle.Tables["CurCCosto"].Rows[0][0].ToString().Trim();
-                    if (AplicCC.Equals("S") && ViewState["CCosto"].Equals(""))
-                    {
-                        Result = Idioma.Select("Objeto= 'Mens01SalRepa'");
-                        foreach (DataRow row in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// La solicitud de pedido de la reparación debe tener asignado un centro de costo.
-                        return;
-                    }
+                    string S_FechaSvr = Cnx.ReturnFecha(DSAsignar.Tables["FechSvr"].Rows[0]["Fecha"].ToString().Trim());
                     // Almacena la vista para realizar el movimeinto de descargue
-
                     GridViewRow Row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
                     GridViewRow Gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
-
-                    int VbDCantStock = Convert.ToInt32(((Label)Row.FindControl("LblStock")).Text.ToString().Trim().Equals("") ? "0" : ((Label)Row.FindControl("LblStock")).Text.ToString().Trim());
-                    VbDCantDesp = Convert.ToInt32(((TextBox)Row.FindControl("TxtCantRepa")).Text.ToString().Trim().Equals("") ? "0" : ((TextBox)Row.FindControl("TxtCantRepa")).Text.ToString().Trim());
+                    VbDCantDesp = Convert.ToInt32(((Label)Row.FindControl("LblCantIntC")).Text.ToString().Trim());
                     DateTime VbDFech;
-                    if (VbDCantStock <= 0 && VbDCantStock < VbDCantDesp)
+                    string VbSRef = GrdAsignar.DataKeys[Gvr.RowIndex].Values["CodReferencia"].ToString();
+                    string VbSPN = ((DropDownList)Row.FindControl("DdlPN_Alter")).Text.ToString().Trim();
+                    string VbSSN = ((TextBox)Row.FindControl("TxtSN")).Text.ToString().Trim();
+                    if (((TextBox)Row.FindControl("TxtFecVen")).Text.ToString().Trim().Equals("")) { VbDFech = Convert.ToDateTime("01/01/1900"); }
+                    else { VbDFech = Convert.ToDateTime(((TextBox)Row.FindControl("TxtFecVen")).Text.ToString().Trim()); }
+                    double D_VlrInterC = Convert.ToDouble(ViewState["VlrUnd"]) * Convert.ToDouble(ViewState["TRM"]) + Convert.ToDouble(ViewState["VlrComex"].ToString());
+                    string S_CodElem = "";
+                    string S_CodUM = ((Label)Row.FindControl("LblUndMed")).Text.ToString().Trim();
+                    string S_CodUbica = "674";
+                    string S_CodUbica_N_I = "";
+                    int I_IdUbic = 0;
+                    string S_Identfc = GrdAsignar.DataKeys[Gvr.RowIndex].Values["IdentificadorElemR"].ToString().Trim();
+                    if (S_Identfc.Equals("SN") && VbSSN.Equals(""))
                     {
-                        Result = Idioma.Select("Objeto= 'Mens02SalRepa'");
+                        DataRow[] Result = Idioma.Select("Objeto= 'MstrMens27'");
                         foreach (DataRow row in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// En esta ubicación ya fue asignada una reparación.
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// El elemento es serializado, debe ingresar la serie al elemento.
                         return;
                     }
-                    string VbSRef = GrdAsignar.DataKeys[Gvr.RowIndex].Values["CodReferencia"].ToString();
-                    string VbSPN = ((Label)Row.FindControl("LblPn")).Text.ToString().Trim();
-                    string VbSSN = ((Label)Row.FindControl("LblSn")).Text.ToString().Trim();
-                    if (GrdAsignar.DataKeys[Gvr.RowIndex].Values["FechaShelfLife"].ToString().Trim().Equals("")) { VbDFech = Convert.ToDateTime("01/01/1900"); }
-                    else { VbDFech = Convert.ToDateTime(GrdAsignar.DataKeys[Gvr.RowIndex].Values["FechaShelfLife"].ToString().Trim()); }
-                    int I_AfectInv = GrdAsignar.DataKeys[Gvr.RowIndex].Values["CodTercero"].ToString().Trim().Equals("") ? 1 : 0;
-                    I_AfectInv = DSAsignar.Tables["ValorizarInv"].Rows[0][2].ToString().Trim().Equals("2") ? I_AfectInv : 0;
-                    double D_VlrRepa = Convert.ToDouble(DSAsignar.Tables["ValorizarInv"].Rows[0][0].ToString().Trim());
-                    double D_CostoComex = Convert.ToDouble(DSAsignar.Tables["ValorizarInv"].Rows[0][1].ToString().Trim());
-                    string S_CodElem = GrdAsignar.DataKeys[Gvr.RowIndex].Values["CodElemento"].ToString();
-                    string S_CodUM = ((Label)Row.FindControl("LblUndMed")).Text.ToString().Trim();
-                    string S_CodUbica = GrdAsignar.DataKeys[Gvr.RowIndex].Values["CodUbicaBodega"].ToString();
-                    string S_CodUbica_N_I = GrdAsignar.DataKeys[Gvr.RowIndex].Values["CodBogIntaNals"].ToString();
-                    int I_IdUbic = Convert.ToInt32(GrdAsignar.DataKeys[Gvr.RowIndex].Values["CodIdUbicacion"].ToString());
-
-                    DSDetalle.Tables["CurTemporal"].Rows.Add(ViewState["CodOrdenRepa"], VbSRef, VbSPN, VbSSN, VbDCantDesp, VbDFech, ViewState["CodTipoElem"],
-                        ViewState["Identf"], ViewState["DT"], ViewState["MT"], ViewState["AT"], ViewState["TRM"], I_AfectInv, D_VlrRepa, D_CostoComex,
-                        S_CodElem, ViewState["CodProv"], S_CodUM, S_CodUbica, ViewState["Codigo"], ViewState["Posicion"], ViewState["CCosto"],
-                        Convert.ToInt32(ViewState["PPT"]), S_CodUbica_N_I, I_IdUbic, ViewState["VlrCotiza"]);
-                    DSDetalle.Tables["CurTemporal"].AcceptChanges();
-
-                    //Actualizar la cantidad a despachar en la vista de Detalle Reserva          
-                    foreach (DataRow row in DSDetalle.Tables["EstadoRepa"].Rows)
+                    if (!((TextBox)Row.FindControl("TxtFecVen")).Text.ToString().Trim().Equals(""))
                     {
-                        if (row["CodReparacion"].ToString().Equals(ViewState["CodOrdenRepa"]))
+                        string VbMnsj = Cnx.ValidarFechas2(S_FechaSvr, ((TextBox)Row.FindControl("TxtFecVen")).Text.ToString().Trim(), 2);
+                        if (!VbMnsj.ToString().Trim().Equals(""))
                         {
-                            row["CantIngresar"] = VbDCantDesp;
+                            DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                            foreach (DataRow row in Result)
+                            { VbMnsj = row["Texto"].ToString().Trim(); }
+                            ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                            return;
                         }
                     }
-                    DSDetalle.Tables["EstadoRepa"].AcceptChanges();
-                    BindDetRepa("");
+                    // ***<- ACTUALIZA EL CURSOR DETALLE ->***
+                    DSDetalle.Tables["CurTemporal"].Rows.Add(ViewState["CodInterc"], VbSRef, VbSPN, VbSSN, VbDCantDesp, VbDFech, ViewState["CodTipoElem"],
+                        ViewState["Identf"], ViewState["DT"], ViewState["MT"], ViewState["AT"], ViewState["TRM"], 1, D_VlrInterC, ViewState["VlrComex"],
+                        S_CodElem, ViewState["CodProv"], S_CodUM, S_CodUbica, ViewState["Codigo"], ViewState["Posicion"], ViewState["CCosto"],
+                        Convert.ToInt32(ViewState["PPT"]), S_CodUbica_N_I, I_IdUbic, ViewState["VlrCotiza"], TxtFact.Text.Trim());
+                    DSDetalle.Tables["CurTemporal"].AcceptChanges();
+                    //Actualizar la cantidad a despachar en la vista de Detalle Reserva          
+                    foreach (DataRow row in DSDetalle.Tables["EstadoInterc"].Rows)
+                    {
+                        if (row["CodOrdenCompra"].ToString().Equals(ViewState["CodInterc"]))
+                        {
+                            row["CantIngresar"] = VbDCantDesp;
+                            row["NumFacturaOC"] = TxtFact.Text.Trim();
+                            row["PN"] = VbSPN;
+                            row["SN"] = VbSSN;
+                        }
+                    }
+                    DSDetalle.Tables["EstadoInterc"].AcceptChanges();
+                    BindDetInterc("");
                     MultVw.ActiveViewIndex = 0;
                 }
             }
@@ -582,13 +575,16 @@ namespace _77NeoWeb.Forms.Almacen
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Asignar P/N en salida Repa", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Asignar P/N en salida intercambio", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
         protected void GrdAsignar_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                DSAsignar = (DataSet)ViewState["DSAsignar"];
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                DataRowView DRV = e.Row.DataItem as DataRowView;
                 ImageButton IbtAsignr = e.Row.FindControl("IbtAsignr") as ImageButton;
                 if (IbtAsignr != null)
                 {
@@ -596,6 +592,27 @@ namespace _77NeoWeb.Forms.Almacen
                     foreach (DataRow RowIdioma in Result)
                     { IbtAsignr.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
                 }
+                string S_Identfcdr = DRV["IdentificadorElemR"].ToString().Trim();
+                TextBox TxtSN = (e.Row.FindControl("TxtSN") as TextBox);
+                if (S_Identfcdr.Equals("PN")) { TxtSN.Enabled = false; }
+                int I_SiTieneFechaV = Convert.ToInt32(DRV["FechaVencimientoR"].ToString());
+                TextBox TxtFecVen = (e.Row.FindControl("TxtFecVen") as TextBox);
+                if (TxtFecVen != null)
+                {
+                    if (I_SiTieneFechaV == 0)
+                    {
+                        TxtFecVen.Enabled = false;
+                        DataRow[] Result = Idioma.Select("Objeto= 'TT01EntRep'");
+                        foreach (DataRow row in Result)
+                        { TxtFecVen.ToolTip = row["Texto"].ToString(); }// Al P/N no aplica fecha vence.                      
+                    }
+                }
+                DropDownList DdlPN_Alter = (e.Row.FindControl("DdlPN_Alter") as DropDownList);
+                DdlPN_Alter.DataSource = DSAsignar.Tables["PN_Alter"];
+                DdlPN_Alter.DataTextField = "PN";
+                DdlPN_Alter.DataValueField = "PN";
+                DdlPN_Alter.DataBind();
+                DdlPN_Alter.Text = ViewState["Pn"].ToString();
             }
         }
         protected void BtnGuardar_Click(object sender, EventArgs e)
@@ -603,9 +620,11 @@ namespace _77NeoWeb.Forms.Almacen
             Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DSDetalle = (DataSet)ViewState["DSDetalle"];
-            if (DSDetalle == null) { return; }
             try
             {
+                if (DSDetalle == null) { return; }
+                if (DSDetalle.Tables["CurTemporal"].Rows.Count == 0) { return; }
+
                 if (TxtObserv.Text.Trim().Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'MstrMens22'");
@@ -620,7 +639,7 @@ namespace _77NeoWeb.Forms.Almacen
                     var TypDetalle = new CsInsertElementoAlmacen()
                     {
                         IdIE = Convert.ToInt32(0),
-                        CodElemento = Row["CodElem"].ToString().Trim(),
+                        CodElemento = "",
                         CodReferencia = Row["Referencia"].ToString().Trim(),
                         PN = Row["PN"].ToString(),
                         SN = Row["Identif"].ToString().Equals("SN") ? Row["SnLote"].ToString() : "",
@@ -630,7 +649,7 @@ namespace _77NeoWeb.Forms.Almacen
                         Descripcion = "",
                         Cantidad = Convert.ToDouble(Row["CantIngr"].ToString().Trim()),
                         CantidadAnt = Convert.ToDouble(0),
-                        Valor = Convert.ToDouble(Row["ValorRepa"].ToString()),
+                        Valor = Convert.ToDouble(Row["ValorInterc"].ToString()),
                         CodUndMed = Row["CodUM"].ToString(),
                         IdAlmacen = Convert.ToInt32(DdlAlmacen.Text.Trim()),
                         CodBodega = Row["CodUbicaBodega"].ToString().Trim(),
@@ -648,23 +667,23 @@ namespace _77NeoWeb.Forms.Almacen
                         Cant_Compra = Convert.ToInt32(Row["CantIngr"].ToString().Trim()),
                         Valor_Compra = Convert.ToDouble(Row["Valor_Compra"].ToString().Trim()),
                         UndMed_Compra = Row["CodUM"].ToString(),
-                        FacturaNro = "",
+                        FacturaNro = Row["FacturaNro"].ToString().Trim(),
                         NumSolPed = "",
-                        CodUbicaDest = Row["CodUbicaBodDest"].ToString(),
+                        CodUbicaDest = "",
                         CCosto = Row["CCosto"].ToString().Trim(),
                         AfectaInventario = Convert.ToInt32(Row["AfectaInventario"]),
                         CostoImportacion = Convert.ToDouble(Row["CostoComex"].ToString()),
                         CodTercero = ViewState["CodProv"].ToString().Trim(),
                         Consignacion = Convert.ToInt32(0),
-                        CodIdUbicacion = Convert.ToInt32(Row["CodIdUbicacion"].ToString().Trim()),
+                        CodIdUbicacion = 0,
                         FechaVence = Convert.ToDateTime(Row["FechaExp"].ToString().Trim()),
                         Observacion = TxtObserv.Text.Trim(),
                         ValorOT = Convert.ToDouble(0),
                         CodUsuarioReserva = "",
-                        Proceso = "0102",
+                        Proceso = "0003",
                         IdDetPropHk = 0,
                         IdPPt = Convert.ToInt32(Row["PPT"].ToString()),
-                        Accion = "SALIDA",
+                        Accion = "ENTRADA",
                     };
                     ObjDetalle.Add(TypDetalle);
                 }
@@ -688,10 +707,10 @@ namespace _77NeoWeb.Forms.Almacen
                 DdlAlmacen.Text = "0";
                 RdbNacional.Checked = false;
                 RdbInter.Checked = false;
-                DdlNumRepa.Text = "";
+                DdlNumInterc.Text = "";
                 TxtMoneda.Text = "";
-                GrdDtlleRepa.DataSource = null;
-                GrdDtlleRepa.DataBind();
+                GrdDtlleInterc.DataSource = null;
+                GrdDtlleInterc.DataBind();
                 TraerDatos("UPD");
                 MultVw.ActiveViewIndex = 0;
             }
@@ -701,7 +720,7 @@ namespace _77NeoWeb.Forms.Almacen
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
-                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Generar Salida Consumo", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Generar Entrada Intercambio", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
     }

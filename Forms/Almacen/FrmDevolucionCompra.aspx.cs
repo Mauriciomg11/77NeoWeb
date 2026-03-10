@@ -134,7 +134,7 @@ namespace _77NeoWeb.Forms.Almacen
                     LblAsigCantEntrg.Text = bO.Equals("GrdCantRec") ? bT + ":" : LblAsigCantEntrg.Text;
                     IbtCerrarAsing.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarAsing.ToolTip;
                     GrdAsignar.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtlleComp.EmptyDataText;
-                    GrdAsignar.Columns[0].HeaderText = bO.Equals("GrdEstadoPN") ? bT : GrdAsignar.Columns[0].HeaderText;
+                    GrdAsignar.Columns[0].HeaderText = bO.Equals("EstdPNMst") ? bT : GrdAsignar.Columns[0].HeaderText;
                     GrdAsignar.Columns[3].HeaderText = bO.Equals("LoteMst") ? bT : GrdAsignar.Columns[3].HeaderText;
                     GrdAsignar.Columns[4].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdAsignar.Columns[4].HeaderText;
                     GrdAsignar.Columns[5].HeaderText = bO.Equals("FilaMstr") ? bT : GrdAsignar.Columns[5].HeaderText;

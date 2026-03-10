@@ -46,7 +46,10 @@
     color: midnightblue; /*Color del texto*/
     padding: 1px;
 }
-
+.AutoColunmGV {
+    white-space: nowrap;
+    width: 1%; /* Ayuda a que se contraiga al mínimo necesario */
+}
 .GridRowStyle {
     height: 25px;
 }
