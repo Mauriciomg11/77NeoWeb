@@ -109,6 +109,8 @@ namespace _77NeoWeb.Forms.Almacen
                     BtnEntReparacion.ToolTip = bO.Equals("BtnEntReparacionTT") ? bT : BtnEntReparacion.ToolTip;
                     BtnDevCompra.Text = bO.Equals("BtnDevCompra") ? bT : BtnDevCompra.Text;
                     BtnDevCompra.ToolTip = bO.Equals("BtnDevCompraTT") ? bT : BtnDevCompra.ToolTip;
+                    BtnEntIntercambio.Text = bO.Equals("BtnEntIntercambio") ? bT : BtnEntIntercambio.Text;
+                    BtnEntIntercambio.ToolTip = bO.Equals("BtnEntIntercambioTT") ? bT : BtnEntIntercambio.ToolTip;
                     BtnSalIntercambio.Text = bO.Equals("BtnSalIntercambio") ? bT : BtnSalIntercambio.Text;
                     BtnSalIntercambio.ToolTip = bO.Equals("BtnSalIntercambioTT") ? bT : BtnSalIntercambio.ToolTip;
                     BtnEntRecuperacion.Text = bO.Equals("BtnEntRecuperacion") ? bT : BtnEntRecuperacion.Text;

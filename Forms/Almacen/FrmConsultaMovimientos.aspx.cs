@@ -329,7 +329,7 @@ namespace _77NeoWeb.Forms.Almacen
                         }
                         break;
                 }
-
+                TxtStockActual.Text = "0";
                 Cnx.SelecBD();
                 using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {

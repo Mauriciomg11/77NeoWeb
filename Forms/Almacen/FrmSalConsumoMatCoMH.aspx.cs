@@ -130,7 +130,7 @@ namespace _77NeoWeb.Forms.Almacen
 
                     // *********************************************** Visualizar y entrega ***********************************************
                     LblTitVisualizaGuarda.Text = bO.Equals("LblTitVisualizaGuarda") ? bT : LblTitVisualizaGuarda.Text;
-                    BtnVisualizar.Text = bO.Equals("BtnVisualizar") ? bT : BtnVisualizar.Text;
+                    BtnVisualizar.Text = bO.Equals("BtnVisualizarMstr") ? bT : BtnVisualizar.Text;
                     BtnVisualizar.ToolTip = bO.Equals("BtnVisualizarTT") ? bT : BtnVisualizar.ToolTip;
                     IbtCloseGuardar.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCloseGuardar.ToolTip;
                     BtnGuardar.Text = bO.Equals("IbtGuardarCargaMax") ? bT : BtnGuardar.Text;

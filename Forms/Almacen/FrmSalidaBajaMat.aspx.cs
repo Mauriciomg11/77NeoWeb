@@ -1,4 +1,5 @@
 ﻿using _77NeoWeb.prg;
+using _77NeoWeb.Prg.PrgAlmacen;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,7 +22,7 @@ namespace _77NeoWeb.Forms.Almacen
             {
                 if (Cnx.GetProduccion().Trim().Equals("Y")) { Response.Redirect("~/FrmAcceso.aspx"); }
             }
-           ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
+            ViewState["PFileName"] = System.IO.Path.GetFileNameWithoutExtension(Request.PhysicalPath); // Nombre del archivo  
             if (Session["C77U"] == null)
             {
                 Session["C77U"] = "";
@@ -90,25 +91,30 @@ namespace _77NeoWeb.Forms.Almacen
                     if (bO.Equals("Caption")) { Page.Title = bT; ViewState["PageTit"] = bT; TitForm.Text = bT; }
                     TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
                     LblObserv.Text = bO.Equals("LblObsMst") ? bT : LblObserv.Text;
-                    LblAlmacen.Text = bO.Equals("AlmacenMstr") ? bT : LblAlmacen.Text;                  
+                    LblAlmacen.Text = bO.Equals("AlmacenMstr") ? bT : LblAlmacen.Text;
                     LblTitCondManiplc.Text = bO.Equals("LblCondAlmaMstr") ? bT : LblTitCondManiplc.Text;
                     BtnCloseMdl.Text = bO.Equals("BtnCerrarMst") ? bT : BtnCloseMdl.Text;
+                    BtnVisualizar.Text = bO.Equals("BtnVisualizarMstr") ? bT : BtnVisualizar.Text;
                     // *********************************************** Detalle Repa ***********************************************
-                   /* GrdDtlleRecup.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtlleRecup.EmptyDataText;
-                    GrdDtlleRecup.Columns[1].HeaderText = bO.Equals("GrdUbTec") ? bT : GrdDtlleRecup.Columns[1].HeaderText;
-                    GrdDtlleRecup.Columns[2].HeaderText = bO.Equals("PosMstr") ? bT : GrdDtlleRecup.Columns[2].HeaderText;
-                    GrdDtlleRecup.Columns[5].HeaderText = bO.Equals("Descripcion") ? bT : GrdDtlleRecup.Columns[5].HeaderText;
-                    GrdDtlleRecup.Columns[6].HeaderText = bO.Equals("GrdFecRemc") ? bT : GrdDtlleRecup.Columns[6].HeaderText;
-                    GrdDtlleRecup.Columns[7].HeaderText = bO.Equals("GrdRzonREm") ? bT : GrdDtlleRecup.Columns[7].HeaderText;
+                    GrdDtlleBaja.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtlleBaja.EmptyDataText;
+                     GrdDtlleBaja.Columns[3].HeaderText = bO.Equals("LoteMst") ? bT : GrdDtlleBaja.Columns[3].HeaderText;
+                     GrdDtlleBaja.Columns[4].HeaderText = bO.Equals("Descripcion") ? bT : GrdDtlleBaja.Columns[4].HeaderText;
+                     GrdDtlleBaja.Columns[5].HeaderText = bO.Equals("CantMst") ? bT : GrdDtlleBaja.Columns[5].HeaderText;
+                     GrdDtlleBaja.Columns[6].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdDtlleBaja.Columns[6].HeaderText;
+                     GrdDtlleBaja.Columns[7].HeaderText = bO.Equals("FilaMstr") ? bT : GrdDtlleBaja.Columns[7].HeaderText;
+                     GrdDtlleBaja.Columns[8].HeaderText = bO.Equals("ColumMstr") ? bT : GrdDtlleBaja.Columns[8].HeaderText;
                     // *********************************************** Asignar ***********************************************
                     LblTitAsigFis.Text = bO.Equals("LblTitAsigFis") ? bT : LblTitAsigFis.Text;
+                    BtnGuardar.Text = bO.Equals("BotonIngOk") ? bT : BtnGuardar.Text;
                     IbtCerrarAsing.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarAsing.ToolTip;
                     GrdAsignar.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdAsignar.EmptyDataText;
-                    GrdAsignar.Columns[3].HeaderText = bO.Equals("Descripcion") ? bT : GrdAsignar.Columns[3].HeaderText;
-                    GrdAsignar.Columns[4].HeaderText = bO.Equals("CantMst") ? bT : GrdAsignar.Columns[4].HeaderText;
-                    GrdAsignar.Columns[5].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdAsignar.Columns[5].HeaderText;
-                    GrdAsignar.Columns[6].HeaderText = bO.Equals("GrdBodDest") ? bT : GrdAsignar.Columns[6].HeaderText;*/
+                    GrdAsignar.Columns[2].HeaderText = bO.Equals("Descripcion") ? bT : GrdAsignar.Columns[2].HeaderText;
+                    GrdAsignar.Columns[3].HeaderText = bO.Equals("CantMst") ? bT : GrdAsignar.Columns[3].HeaderText;
+                    GrdAsignar.Columns[4].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdAsignar.Columns[4].HeaderText;
                 }
+                DataRow[] Result = Idioma.Select("Objeto= 'BtnIngresarOnClMstr'");
+                foreach (DataRow row in Result)
+                { BtnGuardar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');");/**/ }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
             }
@@ -143,7 +149,7 @@ namespace _77NeoWeb.Forms.Almacen
                     }
                 }
             }
-            DSTDdl = (DataSet)ViewState["DSTDdl"];           
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
             if (DSTDdl.Tables["Almac"].Rows.Count > 0)
             {
                 DdlAlmacen.DataSource = DSTDdl.Tables["Almac"];
@@ -152,7 +158,7 @@ namespace _77NeoWeb.Forms.Almacen
                 DdlAlmacen.DataBind();
             }
         }
-        protected void DdlAlmacen_TextChanged(object sender, EventArgs e)
+        protected void DatosDet()
         {
             try
             {
@@ -162,7 +168,7 @@ namespace _77NeoWeb.Forms.Almacen
                 if (Cnx.ValidaDataRowVacio(VbQry))
                 {
                     DT = VbQry.CopyToDataTable();
-                   
+
                     IEnumerable<DataRow> QD = from A in DT.AsEnumerable() where A.Field<int>("CodIdUbicacion") != 0 select A;
                     if (Cnx.ValidaDataRowVacio(QD))
                     {
@@ -172,6 +178,25 @@ namespace _77NeoWeb.Forms.Almacen
                     else { GrdDtlleBaja.DataSource = null; }
                     GrdDtlleBaja.DataBind();
                 }
+            }
+            catch (Exception Ex)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "DatosDet S. BAJA", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
+        }
+        protected void DdlAlmacen_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                DSTDdl = (DataSet)ViewState["DSTDdl"];
+                DSTDdl.Tables["ElemDisp"].Rows.Cast<DataRow>().Where(x => Convert.ToInt32(x["ID"]) != 0).ToList().ForEach(x => x.SetField("ID", 0));
+                DatosDet();
+                DSTDdl.Tables["CurTemporal"].Rows.Clear();
+                DSTDdl.Tables["CurTemporal"].AcceptChanges();
             }
             catch (Exception Ex)
             {
@@ -199,7 +224,7 @@ namespace _77NeoWeb.Forms.Almacen
                 }
                 if (TxtObserv.Text.Trim().Equals(""))
                 {
-                   Result = Idioma.Select("Objeto= 'MstrMens22'");
+                    Result = Idioma.Select("Objeto= 'MstrMens22'");
                     foreach (DataRow DRB in Result)
                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + DRB["Texto"].ToString() + "');", true); }//debe ingresar la observacion
                     TxtObserv.Focus();
@@ -214,7 +239,9 @@ namespace _77NeoWeb.Forms.Almacen
                     string S_Sn = ((Label)row.FindControl("LblSn")).Text.ToString().Trim();
                     string S_Lot = ((Label)row.FindControl("LblLote")).Text.ToString().Trim();
                     string S_Desc = ((Label)row.FindControl("LblDesc")).Text.ToString().Trim();
-                    DateTime VbDFech =  Convert.ToDateTime(GrdDtlleBaja.DataKeys[gvr.RowIndex].Values["FechV"].ToString().Trim());
+                    double D_Cant = Convert.ToDouble(((Label)row.FindControl("LblCant")).Text.ToString().Trim());
+                    string S_Fecha = GrdDtlleBaja.DataKeys[gvr.RowIndex].Values["FechV"].ToString().Trim();
+                    DateTime VbDFech = S_Fecha.Equals("") ? Convert.ToDateTime("01/01/1900") : Convert.ToDateTime(S_Fecha);
                     string S_TipElem = GrdDtlleBaja.DataKeys[gvr.RowIndex].Values["CodTipoElemento"].ToString().Trim();
                     string S_Ident = GrdDtlleBaja.DataKeys[gvr.RowIndex].Values["IdentificadorElemR"].ToString().Trim();
                     string S_CodTerc = GrdDtlleBaja.DataKeys[gvr.RowIndex].Values["CodTercero"].ToString().Trim();
@@ -225,7 +252,7 @@ namespace _77NeoWeb.Forms.Almacen
                     string S_CC = GrdDtlleBaja.DataKeys[gvr.RowIndex].Values["CCosto"].ToString().Trim();
                     string S_BodOrig = GrdDtlleBaja.DataKeys[gvr.RowIndex].Values["CodUbicaBodega"].ToString().Trim();
                     string S_CodMond = GrdDtlleBaja.DataKeys[gvr.RowIndex].Values["CodMoneda"].ToString().Trim();
-                    int I_IdUbic = Convert.ToInt32(GrdDtlleBaja.DataKeys[gvr.RowIndex].Values["CodIdUbicacion"].ToString());                   
+                    int I_IdUbic = Convert.ToInt32(GrdDtlleBaja.DataKeys[gvr.RowIndex].Values["CodIdUbicacion"].ToString());
                     int I_Bloquear = Convert.ToInt32(GrdDtlleBaja.DataKeys[gvr.RowIndex].Values["Bloquear"].ToString());
                     if (I_Bloquear == 1)// Si la Compra esta aprobada
                     {
@@ -233,10 +260,15 @@ namespace _77NeoWeb.Forms.Almacen
                         foreach (DataRow DRM in Result)
                         { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + DRM["Texto"].ToString() + " | " + ViewState["CodOrdenRepa"].ToString().Trim() + "');", true); }
                         return;
-                    }                    
-                    DSTDdl.Tables["CurTemporal"].Rows.Add(0, "", S_Ref, S_Pn, S_Sn, S_Lot, S_Desc, 1, VbDFech, S_TipElem, S_Ident, "", "", "", 0, I_AfectInv, 0, 0, S_CodElem, "",
+                    }
+                    bool existe = DSTDdl.Tables["CurTemporal"].AsEnumerable().Any(Row => Row.Field<int>("CodIdUbicacion") == I_IdUbic);
+                    if (!existe)
+                    {
+                        DSTDdl.Tables["CurTemporal"].Rows.Add(0, "", S_Ref, S_Pn, S_Sn, S_Lot, S_Desc, D_Cant, VbDFech, S_TipElem, S_Ident, "", "", "", 0, I_AfectInv, 0, 0, S_CodElem, "",
                                                         S_CodUM, "CodBodDest", "CodStado", "", I_Pos, S_CC, 0, S_BodOrig, I_IdUbic, 0, "", 0, S_CodTerc, S_CodMond);
-                    DSTDdl.Tables["CurTemporal"].AcceptChanges();
+                        DSTDdl.Tables["CurTemporal"].AcceptChanges();
+                        DSTDdl.Tables["ElemDisp"].Rows.Cast<DataRow>().Where(x => Convert.ToInt32(x["CodIdUbicacion"]) == I_IdUbic).ToList().ForEach(x => x.SetField("ID", I_IdUbic));
+                    }
                     if (DSTDdl.Tables["CurTemporal"].Rows.Count > 0)
                     { GrdAsignar.DataSource = DSTDdl.Tables["CurTemporal"]; }
                     GrdAsignar.DataBind();
@@ -253,12 +285,32 @@ namespace _77NeoWeb.Forms.Almacen
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Seleccionar Ubicacion Ent Repa", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
-
         protected void GrdDtlleBaja_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                DataRow[] Result;
+                ImageButton IbtAbrir = e.Row.FindControl("IbtAbrir") as ImageButton;
+                if (IbtAbrir != null)
+                {
+                    Result = Idioma.Select("Objeto='LblAsigMstr'");
+                    foreach (DataRow RowIdioma in Result)
+                    { IbtAbrir.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                }
+                DataRowView DRW = e.Row.DataItem as DataRowView;
+                int I_Id = Convert.ToInt32(DRW["ID"].ToString().Trim());
+                if (I_Id != 0)
+                {
+                    IbtAbrir.Visible = false; e.Row.BackColor = System.Drawing.Color.YellowGreen;
+                }
+            }
         }
-
+        protected void BtnVisualizar_Click(object sender, EventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            MultVw.ActiveViewIndex = 1;
+        }
         protected void BindCondicManipulac(string CodRef)
         {
             DSTDdl = (DataSet)ViewState["DSTDdl"];
@@ -276,20 +328,108 @@ namespace _77NeoWeb.Forms.Almacen
                 }
             }
         }
-
-        protected void GrdAsignar_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-
-        }
-
-        protected void GrdAsignar_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-
-        }
-
         protected void IbtCerrarAsing_Click(object sender, ImageClickEventArgs e)
         {
-
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            DatosDet();
+            MultVw.ActiveViewIndex = 0;
         }
+        protected void BtnGuardar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                Page.Title = ViewState["PageTit"].ToString().Trim();
+                DSTDdl = (DataSet)ViewState["DSTDdl"];
+
+                DSTDdl.Tables["CurTemporal"].AcceptChanges();
+                if (DSTDdl.Tables["CurTemporal"].Rows.Count == 0) { return; }
+                List<CsInsertElementoAlmacen> ObjDetalle = new List<CsInsertElementoAlmacen>();
+                foreach (DataRow Row in DSTDdl.Tables["CurTemporal"].Rows)
+                {
+                    var TypDetalle = new CsInsertElementoAlmacen()
+                    {
+                        IdIE = Convert.ToInt32(Row["Id"].ToString().Trim()),
+                        CodElemento = Row["CodElem"].ToString().Trim(),
+                        CodReferencia = Row["Referencia"].ToString().Trim(),
+                        PN = Row["PN"].ToString().Trim(),
+                        SN = Row["SN"].ToString().Trim(),
+                        Lote = Row["Lote"].ToString().Trim(),
+                        CodTipoElem = Row["CodTipoElem"].ToString(),
+                        Identificador = Row["Identif"].ToString().Trim(),
+                        Descripcion = "",
+                        Cantidad = Convert.ToDouble(Row["CantIngr"].ToString().Trim()),
+                        CantidadAnt = Convert.ToDouble(0),
+                        Valor = 0,
+                        CodUndMed = Row["CodUM"].ToString(),
+                        IdAlmacen = Convert.ToInt32(DdlAlmacen.Text.Trim()),
+                        CodBodega = Row["CodBodOrig"].ToString().Trim(),
+                        CodShippingOrder = "",
+                        Posicion = Row["Pos"].ToString().Trim(),
+                        CodAeronave = 0,
+                        Matricula = "",
+                        DiaTasa = Row["Dia"].ToString().Trim(),
+                        MesTasa = Row["Mes"].ToString().Trim(),
+                        AnoTasa = Row["ano"].ToString().Trim(),
+                        VlorTasaDM = Convert.ToDouble(Row["TRM"].ToString().Trim()),
+                        CodTipoMoneda = Row["CodMoneda"].ToString().Trim(),
+                        DocumentoNro = "",
+                        PosicionDocumento = 1,
+                        Cant_Compra = 0,
+                        Valor_Compra = 0,
+                        UndMed_Compra = "",
+                        FacturaNro = "",
+                        NumSolPed = "",
+                        CodUbicaDest = "",
+                        CCosto = Row["CCosto"].ToString().Trim(),
+                        AfectaInventario = Convert.ToInt32(Row["AfectaInventario"]),
+                        CostoImportacion = 0,
+                        Costo_Export = 0,
+                        CodTercero = "",
+                        Consignacion = Convert.ToInt32(0),
+                        CodIdUbicacion = Convert.ToInt32(Row["CodIdUbicacion"].ToString().Trim()),
+                        FechaVence = Convert.ToDateTime(Row["FechaExp"].ToString().Trim()),
+                        Observacion = TxtObserv.Text.Trim(),
+                        ValorOT = Convert.ToDouble(0),
+                        CodUsuarioReserva = "",
+                        Proceso = "0104",
+                        IdDetPropHk = 0,
+                        IdPPt = Convert.ToInt32(Row["PPT"].ToString()),
+                        Accion = "SALIDA",/**/
+                    };
+                    ObjDetalle.Add(TypDetalle);
+                }
+                CsInsertElementoAlmacen ClaseIEA = new CsInsertElementoAlmacen();
+                ClaseIEA.FormOrigen(ViewState["PFileName"].ToString());
+                ClaseIEA.Alimentar(ObjDetalle);
+                string Mensj = ClaseIEA.GetMensj();
+                if (!Mensj.Equals(""))
+                {
+                    string VblPn = ClaseIEA.GetPn().Trim().Equals("") ? "" : "  [P/N: " + ClaseIEA.GetPn().Trim() + "]  ";
+                    string VblSn = ClaseIEA.GetSn().Trim().Equals("") ? "" : " [S/N: " + ClaseIEA.GetSn().Trim() + "] ";
+                    string VbLote = ClaseIEA.GetLote().Trim().Equals("") ? "" : " [LT/N: " + ClaseIEA.GetLote().Trim() + "]";
+                    DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { Mensj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + VblPn + VblSn + "');", true);
+                    return;
+                }
+                TxtObserv.Text = "";
+                DdlAlmacen.Text = "0";
+                GrdDtlleBaja.DataSource = null;
+                GrdDtlleBaja.DataBind();
+                TraerDatos("UPD");               
+                MultVw.ActiveViewIndex = 0;
+
+            }
+            catch (Exception Ex)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Generar Entrada Recuperación", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
+        }        
     }
 }

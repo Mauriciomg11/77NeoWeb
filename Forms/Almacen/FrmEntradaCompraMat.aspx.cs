@@ -106,7 +106,7 @@ namespace _77NeoWeb.Forms.Almacen
                     RdbInter.Text = bO.Equals("RdbInter") ? "&nbsp" + bT : RdbInter.Text;
                     LblNumCompra.Text = bO.Equals("DocMstr") ? bT : LblNumCompra.Text;
                     LblMoneda.Text = bO.Equals("LblMonedaMstr") ? bT : LblMoneda.Text;
-                    BtnVisualizar.Text = bO.Equals("BtnVisualizar") ? bT : BtnVisualizar.Text;
+                    BtnVisualizar.Text = bO.Equals("BtnVisualizarMstr") ? bT : BtnVisualizar.Text;
 
                     // *********************************************** Detalle Compras ***********************************************
                     GrdDtlleComp.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtlleComp.EmptyDataText;

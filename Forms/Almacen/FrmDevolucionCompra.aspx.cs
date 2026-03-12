@@ -111,7 +111,7 @@ namespace _77NeoWeb.Forms.Almacen
                     Lbltipo.Text = bO.Equals("TipoMstr") ? bT : Lbltipo.Text;
                     LblTitCondManiplc.Text = bO.Equals("LblCondAlmaMstr") ? bT : LblTitCondManiplc.Text;
                     BtnCloseMdl.Text = bO.Equals("BtnCerrarMst") ? bT : BtnCloseMdl.Text;
-                    BtnVisualizar.Text = bO.Equals("BtnVisualizar") ? bT : BtnVisualizar.Text;
+                    BtnVisualizar.Text = bO.Equals("BtnVisualizarMstr") ? bT : BtnVisualizar.Text;
                     BtnGuardar.Text = bO.Equals("BotonIngOk") ? bT : BtnGuardar.Text;
                     // *********************************************** Detalle Repa ***********************************************
                     GrdDtlleComp.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDtlleComp.EmptyDataText;

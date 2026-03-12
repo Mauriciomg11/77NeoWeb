@@ -134,6 +134,12 @@
                                 <asp:Label ID="LblObserv" runat="server" CssClass="LblEtiquet" Text="observaciones" />
                                 <asp:TextBox ID="TxtObserv" runat="server" CssClass="form-control-sm" Width="100%" MaxLength="350" TextMode="MultiLine" Text="" />
                             </div>
+                             <div id="Disponible" class="col-sm-1">
+                            </div>                           
+                            <div id="BotVisualizar" class="col-sm-2">
+                                 <br />
+                                <asp:Button ID="BtnVisualizar" runat="server" CssClass="btn btn-primary" Width="100%" OnClick="BtnVisualizar_Click" Text="visualizar" />
+                            </div>
                         </div>
                         <div class="row">
                             <div id="GridDetRecup" class="col-sm-12">
@@ -166,7 +172,7 @@
                                                     <asp:Label ID="LblSn" Text='<%# Eval("SN") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                             <asp:TemplateField HeaderText="lote">
+                                            <asp:TemplateField HeaderText="lote">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblLote" Text='<%# Eval("NumLote") %>' runat="server" />
                                                 </ItemTemplate>
@@ -176,17 +182,22 @@
                                                     <asp:Label ID="LblDesc" Text='<%# Eval("Descripcion") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="cantidad">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="LblCant" Text='<%# Eval("Cantidad") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="bodega">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblBod" Text='<%# Eval("CodBodega") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                             <asp:TemplateField HeaderText="f">
+                                            <asp:TemplateField HeaderText="f">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblF" Text='<%# Eval("Fila") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                             <asp:TemplateField HeaderText="c">
+                                            <asp:TemplateField HeaderText="c">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblC" Text='<%# Eval("Columna") %>' runat="server" />
                                                 </ItemTemplate>
@@ -201,7 +212,7 @@
                         </div>
                     </div>
                 </asp:View>
-                 <asp:View ID="Vw1Asignar" runat="server">
+                <asp:View ID="Vw1Asignar" runat="server">
                     <br />
                     <br />
                     <h6 class="TextoSuperior">
@@ -211,16 +222,15 @@
                         <br />
                         <div class="row">
                             <div class="col-sm-8 Interna">
-                                <div class="ScrollRsva pre-scrollable">                                   
+                                <div class="ScrollRsva pre-scrollable">
+                                    <br />
+                                    <asp:Button ID="BtnGuardar" runat="server" CssClass="btn btn-success Font_btnCrud" Width="120px" OnClick="BtnGuardar_Click" OnClientClick="target ='';" Text="guardar" />
+                                    <br />
+                                    <br />
                                     <asp:GridView ID="GrdAsignar" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
                                         DataKeyNames=""
-                                        CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" OnRowCommand="GrdAsignar_RowCommand" OnRowDataBound="GrdAsignar_RowDataBound">
+                                        CssClass="GridControl DiseñoGrid table-sm" GridLines="Both">
                                         <Columns>
-                                            <asp:TemplateField>
-                                                <ItemTemplate>
-                                                    <asp:ImageButton ID="IbtRecuperar" Width="30px" Height="30px" ImageUrl="~/images/FlechaIr.png" runat="server" CommandName="Recuperar" ToolTip="recuperar" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>                                           
                                             <asp:TemplateField HeaderText="P/N">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblPn" Text='<%# Eval("PN") %>' runat="server" />
@@ -230,12 +240,12 @@
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblSn" Text='<%# Eval("SN") %>' runat="server" />
                                                 </ItemTemplate>
-                                            </asp:TemplateField>                                            
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="descripc">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblDesc" Text='<%# Eval("DescrElem") %>' runat="server" />
                                                 </ItemTemplate>
-                                            </asp:TemplateField>                                           
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="cant baja">
                                                 <ItemTemplate>
                                                     <asp:Label ID="TxtCantRec" Text='<%# Eval("CantIngr") %>' runat="server" />
@@ -245,7 +255,7 @@
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblUndMed" Text='<%# Eval("CodUM") %>' runat="server" />
                                                 </ItemTemplate>
-                                            </asp:TemplateField>                                                           
+                                            </asp:TemplateField>
                                         </Columns>
                                         <HeaderStyle CssClass="GridCabecera" />
                                         <RowStyle CssClass="GridRowStyle" />
@@ -254,7 +264,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                <asp:ImageButton ID="IbtCerrarAsing" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarAsing_Click"/>
+                                <asp:ImageButton ID="IbtCerrarAsing" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarAsing_Click" />
                             </div>
                         </div>
                     </div>
