@@ -265,7 +265,7 @@ namespace _77NeoWeb.Forms.Almacen
                               }
                               DREC = DSTDdl.Tables["EjecCodComex"].Select("Caso = 5 AND EjecutarCodigo = 'N'"); //Aplica COMEX
                               if (Cnx.ValidaDataRowVacio(DREC)) { S_AplicaComex = "N"; }
-                          } */
+                          } 
                         DR = DSTDdl.Tables[S_RepaNAL_INTA].Select("Codigo ='" + DdlNumRepa.Text.Trim() + "' AND Aprobado = 0");
                         if (Cnx.ValidaDataRowVacio(DR))// Si la Compra esta aprobada
                         {
@@ -275,7 +275,7 @@ namespace _77NeoWeb.Forms.Almacen
                             { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + " | " + DT.Rows[0]["CodReparacion"].ToString().Trim() + "');", true); }
                             GrdDtlleRepa.DataSource = null; GrdDtlleRepa.DataBind();
                             return;
-                        }
+                        }*/
                         DR = DSTDdl.Tables[S_RepaNAL_INTA].Select("Codigo ='" + DdlNumRepa.Text.Trim() + "' AND Asentado = 1");
                         if (Cnx.ValidaDataRowVacio(DR))/* Si la Compra esta asentada*/
                         {

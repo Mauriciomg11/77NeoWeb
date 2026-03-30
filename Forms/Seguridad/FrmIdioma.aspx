@@ -21,11 +21,12 @@
     <script type="text/javascript">  
         function myFuncionddl() {
             $('#<%=DdlForm.ClientID%>').chosen();
+            $('#<%=DdlIdioma.ClientID%>').chosen();
         }
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-  <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
@@ -51,7 +52,7 @@
                     </tr>
                 </table>
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-10">
                         <table class="">
                             <tr>
                                 <td>
@@ -62,6 +63,10 @@
                                     <asp:ImageButton ID="IbtCambioPassCia" runat="server" ToolTip="Guardar Clave" Width="30px" Height="30px" ImageUrl="~/images/Check.png" OnClick="IbtCambioPassCia_Click" Visible="false" /></td>
                             </tr>
                         </table>
+                    </div>
+                    <div id="Idioma" class="col-sm-2">
+                        <asp:Label ID="LblIdioma" runat="server" CssClass="LblEtiquet" Text="idioma" />
+                        <asp:DropDownList ID="DdlIdioma" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="DdlIdioma_TextChanged" AutoPostBack="true" />
                     </div>
                 </div>
                 <div class="row">

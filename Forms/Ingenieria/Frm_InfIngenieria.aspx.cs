@@ -152,7 +152,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             using (DataSet ds = new DataSet())
                             {
                                 sda.Fill(ds);
-                                ds.Tables[0].TableName = "PlMaGrl";
+                                ds.Tables[0].TableName = "XOM";
                                 using (XLWorkbook wb = new XLWorkbook())
                                 {
                                     foreach (DataTable dt in ds.Tables) { wb.Worksheets.Add(dt); }

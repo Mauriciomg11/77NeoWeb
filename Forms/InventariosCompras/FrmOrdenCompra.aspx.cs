@@ -1204,16 +1204,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     int VbIdDetCot = Convert.ToInt32(GrdModalBusqCot.DataKeys[Row.RowIndex].Values["IdDetCotizacion"].ToString().Trim());
                     int VbTasaIva = Convert.ToInt32(GrdModalBusqCot.DataKeys[Row.RowIndex].Values["TasaIVA"].ToString().Trim());
                     int VbVlrIva = Convert.ToInt32(GrdModalBusqCot.DataKeys[Row.RowIndex].Values["ValorIva"].ToString().Trim());
-
                     string VbTieneReg = "N";
                     foreach (DataRow row in TblDetalle.Rows)
                     {
                         object value = row["CodProveedor"];
-                        string borr = row["CodProveedor"].ToString();
                         if (!row["CodProveedor"].ToString().Equals(""))
                         { VbTieneReg = "S"; break; }
                     }
-
                     DataRow DRPV = TblDetalle.Select("CodProveedor = '" + VbCodPrvdr + "'").FirstOrDefault(); // Verifica si el proveedor es el mismo de la compra
                     if (DRPV != null || VbTieneReg.Equals("N"))
                     {
@@ -1231,7 +1228,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     }
                 }
             }
-
             BindDDetTmp();
             Valores();
         }
@@ -1510,7 +1506,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         {
                             sda.Fill(ds);
 
-                            ds.Tables[0].TableName = "77NeoWeb";
+                            ds.Tables[0].TableName = "XOM";
                             using (XLWorkbook wb = new XLWorkbook())
                             {
                                 foreach (DataTable dt in ds.Tables)

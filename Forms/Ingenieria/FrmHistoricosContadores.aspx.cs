@@ -646,7 +646,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             using (DataSet ds = new DataSet())
                             {
                                 sda.Fill(ds);
-                                ds.Tables[0].TableName = "Historic";
+                                ds.Tables[0].TableName = "XOM";
                                 using (XLWorkbook wb = new XLWorkbook())
                                 {
                                     foreach (DataTable dt in ds.Tables)
@@ -1018,7 +1018,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             using (DataSet ds = new DataSet())
                             {
                                 sda.Fill(ds);
-                                ds.Tables[0].TableName = "Historic";
+                                ds.Tables[0].TableName = "XOM";
                                 using (XLWorkbook wb = new XLWorkbook())
                                 {
                                     foreach (DataTable dt in ds.Tables)

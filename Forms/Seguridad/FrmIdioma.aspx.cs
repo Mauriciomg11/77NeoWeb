@@ -12,6 +12,7 @@ namespace _77NeoWeb.Forms.Seguridad
     {
         ClsConexion Cnx = new ClsConexion();
         DataTable DTDet = new DataTable();
+        DataSet DSIdm = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
@@ -55,11 +56,22 @@ namespace _77NeoWeb.Forms.Seguridad
                         DdlForm.DataTextField = "Nombre";
                         DdlForm.DataValueField = "IdFormulario";
                         DdlForm.DataBind();
-                        DdlForm.Text = "0";
+                        DdlForm.Text = Session["77IDM"].ToString();
                     }
                 }
+                DataSet DSIdm = new DataSet();
+                string LtxtSql = string.Format("EXEC SP_ConfiguracionV2_ 22,'','','','','',0,0,0,0,'01-01-1','02-01-1','03-01-1'");
+                DSIdm = Cnx.DSET(LtxtSql);
+                DSIdm.Tables[0].TableName = "Idioma";
+                if (DSIdm.Tables["Idioma"].Rows.Count > 0)
+                {
+                    DdlIdioma.DataSource = DSIdm.Tables["Idioma"];
+                    DdlIdioma.DataTextField = "Descripcion";
+                    DdlIdioma.DataValueField = "Codigo";
+                    DdlIdioma.DataBind();
+                    DdlIdioma.Text = Session["77IDM"].ToString();
+                }
                 BindData("UPD");
-
                 if (Session["C77U"].ToString().Trim().Equals("00000082")) { TxtIdCia.Visible = true; TxtPassCia.Visible = true; IbtCambioPassCia.Visible = true; }
 
             }
@@ -198,7 +210,6 @@ namespace _77NeoWeb.Forms.Seguridad
                     DdlForm.Focus();
                     return;
                 }
-
                 TextBox TxtObjPP = (GrdDatos.FooterRow.FindControl("TxtObjPP") as TextBox);
                 TextBox TxtDescPP = (GrdDatos.FooterRow.FindControl("TxtDescPP") as TextBox);
                 TextBox TxtEspaPP = (GrdDatos.FooterRow.FindControl("TxtEspaPP") as TextBox);
@@ -232,6 +243,40 @@ namespace _77NeoWeb.Forms.Seguridad
                         }
                         catch (Exception)
                         { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Incovenientes con la creación');", true); }
+                    }
+                }
+            }
+        }
+        protected void DdlIdioma_TextChanged(object sender, EventArgs e)
+        {
+            if (!DdlIdioma.Text.Trim().Equals(Session["77IDM"]))
+            {
+                Cnx.SelecBD();
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+                {
+                    sqlCon.Open();
+                    using (SqlTransaction Transac = sqlCon.BeginTransaction())
+                    {
+                        string VBQuery = "EXEC SP_ConfiguracionV2_ 23,'','','','','',0,@IdmNew,@IdmAct,@IdC,'01-01-1','02-01-1','03-01-1'";
+                        using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
+                        {
+                            try
+                            {
+                                SC.Parameters.AddWithValue("@IdC", Session["!dC!@"]);
+                                SC.Parameters.AddWithValue("@IdmAct", Session["77IDM"]);
+                                SC.Parameters.AddWithValue("@IdmNew", DdlIdioma.Text.Trim());
+                                SC.ExecuteNonQuery();
+                                Transac.Commit();
+                                Session["77IDM"] = Cnx.GetIdm();
+                               string borr = Session["77IDM"].ToString();
+                                DdlIdioma.Text = Session["77IDM"].ToString();
+
+                            }
+                            catch (Exception)
+                            {
+                                Transac.Rollback();
+                            }
+                        }
                     }
                 }
             }

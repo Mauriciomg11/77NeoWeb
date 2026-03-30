@@ -16,6 +16,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
         DataSet DSTDdl = new DataSet();
         DataSet DSRepara = new DataSet();
         DataSet DSEstdComp = new DataSet();
+        DataTable DTCncl = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Login77"] == null)
@@ -82,13 +83,25 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     if (bO.Equals("Caption"))
                     { Page.Title = bT; ViewState["PageTit"] = bT; }
                     TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
-                    BtnReparaciones.Text = bO.Equals("BtnReparaciones") ? bT : BtnReparaciones.Text;                    
+                    BtnReparaciones.Text = bO.Equals("BtnReparaciones") ? bT : BtnReparaciones.Text;
                     BtnReparaciones.ToolTip = bO.Equals("BtnReparacionesTT") ? bT : BtnReparaciones.ToolTip;
                     BtnCompraPend.Text = bO.Equals("BtnCompraPend") ? bT : BtnCompraPend.Text;
                     BtnCompraPend.ToolTip = bO.Equals("CkbECPend") ? bT : BtnCompraPend.ToolTip;
                     IbtCerrarImpr.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarImpr.ToolTip;
+                    // ************************************************************ Conciliacion ************************************************************
+                    BtnConciliacion.Text = bO.Equals("BtnConciliacion") ? bT : BtnConciliacion.Text;
+                    BtnConciliacion.ToolTip = bO.Equals("BtnConciliacionTT") ? bT : BtnConciliacion.ToolTip;
+                    LblTitConciliacion.Text = bO.Equals("LblTitConciliacion") ? bT : LblTitConciliacion.Text;
+                    LblAlmacenCnc.Text = bO.Equals("AlmacenMstr") ? bT : LblAlmacenCnc.Text;
+                    LblFechCorteCnc.Text = bO.Equals("LblFechCorte") ? bT : LblFechCorteCnc.Text;
+                    IbtEjecutar.ToolTip = bO.Equals("IbtEjecutar") ? bT : IbtEjecutar.ToolTip;
+                    GrdConciliacion.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdConciliacion.EmptyDataText;
+                    GrdConciliacion.Columns[0].HeaderText = bO.Equals("Asignac") ? bT : GrdConciliacion.Columns[0].HeaderText;
+                    GrdConciliacion.Columns[1].HeaderText = bO.Equals("Descripcion") ? bT : GrdConciliacion.Columns[1].HeaderText;
+                    GrdConciliacion.Columns[2].HeaderText = bO.Equals("Vlres") ? bT : GrdConciliacion.Columns[2].HeaderText;
+                    IbtCerrarConcil.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarConcil.ToolTip;
                     // ************************************************************ Reparaciones ************************************************************
-                    LblTitReparaciones.Text = bO.Equals("BtnReparaciones") ? bT : LblTitReparaciones.Text; 
+                    LblTitReparaciones.Text = bO.Equals("BtnReparaciones") ? bT : LblTitReparaciones.Text;
                     LblFechI.Text = bO.Equals("LblFechI") ? bT : LblFechI.Text;
                     LblFechF.Text = bO.Equals("LblFechF") ? bT : LblFechF.Text;
                     RdbRpAll.Text = bO.Equals("RdbRpAll") ? "&nbsp" + bT : RdbRpAll.Text;
@@ -96,7 +109,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     RdbRpCodRepa.Text = bO.Equals("C40") ? "&nbsp" + bT : RdbRpCodRepa.Text;
                     RdbRpProv.Text = bO.Equals("C26") ? "&nbsp" + bT : RdbRpProv.Text;
                     CkbRpPend.Text = bO.Equals("CkbRpPend") ? "&nbsp" + bT : CkbRpPend.Text;
-                    CkbRpPend.ToolTip = bO.Equals("CkbRpPendTT") ?  bT : CkbRpPend.ToolTip;
+                    CkbRpPend.ToolTip = bO.Equals("CkbRpPendTT") ? bT : CkbRpPend.ToolTip;
                     if (bO.Equals("placeholder"))
                     { TxtRpDocBusq.Attributes.Add("placeholder", bT); TxtECDocBusq.Attributes.Add("placeholder", bT); }
                     IbtRpBusqueda.ToolTip = bO.Equals("BtnConsultarGral") ? bT : IbtRpBusqueda.ToolTip;
@@ -130,7 +143,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     LblFechCorte.Text = bO.Equals("LblFechCorte") ? bT : LblFechCorte.Text;
                     IbtExprtrInvtr.ToolTip = bO.Equals("IbtExprtrInvtr") ? bT : IbtExprtrInvtr.ToolTip;
                     // ************************************************************ Estado Compra ************************************************************
-                   
                     LblTitCompraPend.Text = bO.Equals("LblTitCompraPend") ? bT : LblTitCompraPend.Text;
                     LblFechECI.Text = bO.Equals("LblFechI") ? bT : LblFechECI.Text;
                     LblFechECF.Text = bO.Equals("LblFechF") ? bT : LblFechECF.Text;
@@ -164,6 +176,15 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     GrdDetEstdComp.Columns[19].HeaderText = bO.Equals("PPT") ? bT : GrdDetEstdComp.Columns[19].HeaderText;
                     GrdDetEstdComp.Columns[20].HeaderText = bO.Equals("C47") ? bT : GrdDetEstdComp.Columns[20].HeaderText;
                     GrdDetEstdComp.Columns[21].HeaderText = bO.Equals("C26") ? bT : GrdDetEstdComp.Columns[21].HeaderText;
+                    // ************************************************************ Entrada y salida ************************************************************
+                    LblTitEyS.Text = bO.Equals("BtnEYS") ? bT : LblTitEyS.Text;
+                    BtnEYS.Text = bO.Equals("BtnEYS") ? bT : BtnEYS.Text;
+                    BtnEYS.ToolTip = bO.Equals("BtnEYSTT") ? bT : BtnEYS.ToolTip;
+                    LblAlmacenEyS.Text = bO.Equals("AlmacenMstr") ? bT : LblAlmacenEyS.Text;
+                    LblFechIEyS.Text = bO.Equals("LblFechI") ? bT : LblFechIEyS.Text;
+                    LblFechFEyS.Text = bO.Equals("LblFechF") ? bT : LblFechFEyS.Text;
+                    IbtExpEyS.ToolTip = bO.Equals("BtnExportMstr") ? bT : IbtExpEyS.ToolTip;
+                    IbtCerrarEyS.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarEyS.ToolTip;
                 }
                 DataRow[] Result = Idioma.Select("Objeto= 'BtnOnCl1Invt'");
                 foreach (DataRow row in Result)
@@ -208,6 +229,19 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 DdlAlmacenInv.DataTextField = "NomAlmacen";
                 DdlAlmacenInv.DataValueField = "CodIdAlmacen";
                 DdlAlmacenInv.DataBind();
+                DdlAlmacenCnc.DataSource = DSTDdl.Tables[0];
+                DdlAlmacenCnc.DataTextField = "NomAlmacen";
+                DdlAlmacenCnc.DataValueField = "CodIdAlmacen";
+                DdlAlmacenCnc.DataBind();
+                DataTable DT = DSTDdl.Tables[0].Copy();
+                DT.Rows.Add(" - ",0);
+                DataView DV = DT.DefaultView;
+                DV.Sort = "CodIdAlmacen";
+                DT = DV.ToTable();
+                DdlAlmacenEyS.DataSource = DT;
+                DdlAlmacenEyS.DataTextField = "NomAlmacen";
+                DdlAlmacenEyS.DataValueField = "CodIdAlmacen";
+                DdlAlmacenEyS.DataBind();
             }
             if (DSTDdl.Tables["Tipo"].Rows.Count > 0)
             {
@@ -359,7 +393,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         using (DataSet ds = new DataSet())
                         {
                             sda.Fill(ds);
-                            ds.Tables[0].TableName = "Historic";
+                            ds.Tables[0].TableName = "XOM";
                             using (XLWorkbook wb = new XLWorkbook())
                             {
                                 foreach (DataTable dt in ds.Tables)
@@ -405,7 +439,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     foreach (DataRow row in Result)
                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }
                     return;
-                }*/               
+                }*/
                 string VbNomArchivo = "";
                 Result = Idioma.Select("Objeto= 'NomArcRepaEstado'");
                 foreach (DataRow row in Result)
@@ -665,7 +699,192 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
             }
-        }        
-        // ************************************************************ xxx ************************************************************
+        }
+        // ************************************************************ Conciliacion ************************************************************
+        protected void BtnConciliacion_Click(object sender, EventArgs e)
+        {
+            MlVw.ActiveViewIndex = 4; TxtFechCorte.Focus();
+        }
+        protected void IbtCerrarConcil_Click(object sender, ImageClickEventArgs e)
+        {
+            MlVw.ActiveViewIndex = 0;
+        }
+        protected void IbtEjecutar_Click(object sender, ImageClickEventArgs e)
+        {
+            try
+            {
+                Page.Title = ViewState["PageTit"].ToString().Trim();
+                DataRow[] Result;
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                if (TxtFechCorteCnc.Text.Equals(""))
+                {
+                    Result = Idioma.Select("Objeto= 'Mens01RptLog'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }
+                    TxtFechCorteCnc.Focus(); return;
+                }
+                string VbMnsj = Cnx.ValidarFechas2(TxtFechCorteCnc.Text.Trim(), "", 1);
+                if (!VbMnsj.ToString().Trim().Equals(""))
+                {
+                    Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");
+                    foreach (DataRow row in Result)
+                    { VbMnsj = row["Texto"].ToString().Trim(); }
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMnsj + "');", true);
+                    Page.Title = ViewState["PageTit"].ToString(); TxtFechCorteCnc.Focus();
+                    return;
+                }
+                Cnx.SelecBD();
+                using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
+                {
+                    string VbTxtSql = "EXEC SP_Conciliacion @FC,@IdAlm,'01',@ICC,@IDM";
+                    sqlCon.Open();
+                    using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlCon))
+                    {
+                        SC.Parameters.AddWithValue("@FC", Convert.ToDateTime(TxtFechCorteCnc.Text.Trim()));
+                        SC.Parameters.AddWithValue("@IdAlm", DdlAlmacenCnc.Text.Trim());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        SC.Parameters.AddWithValue("@IDM", Session["77IDM"]);
+                        SqlDataAdapter SDA = new SqlDataAdapter();
+                        SDA.SelectCommand = SC;
+                        SDA.Fill(DTCncl);
+                        ViewState["DTCncl"] = DTCncl;
+                    }
+                    DTCncl = (DataTable)ViewState["DTCncl"];
+                    string S_MesT = DTCncl.Rows[0]["Asignacion"].ToString().Trim();
+                    string S_MultLen = "", S_Entr = "", S_Sal = "", S_InvFinal="";
+                    Result = Idioma.Select("Objeto= '" + S_MesT + "'");
+                    foreach (DataRow row in Result)
+                    { S_MultLen = row["Texto"].ToString(); }
+                    Result = Idioma.Select("Objeto= 'Entr'");
+                    foreach (DataRow row in Result)
+                    { S_Entr = row["Texto"].ToString(); }
+                    Result = Idioma.Select("Objeto= 'Slda'");
+                    foreach (DataRow row in Result)
+                    { S_Sal = row["Texto"].ToString(); }
+                    Result = Idioma.Select("Objeto= 'InvFinal'");
+                    foreach (DataRow row in Result)
+                    { S_InvFinal = row["Texto"].ToString(); }
+                    foreach (DataRow row in DTCncl.Rows)
+                    {
+                        if (row["Asignacion"].ToString().Equals(S_MesT))
+                        {
+                            row["Asignacion"] = S_MultLen;
+                        }
+                        if (row["Asignacion"].ToString().Equals("ENTRADA"))
+                        {
+                            row["Asignacion"] = S_Entr;
+                        }
+                        if (row["Asignacion"].ToString().Equals("SALIDA"))
+                        {
+                            row["Asignacion"] = S_Sal;
+                        }
+                        if (row["Asignacion"].ToString().Equals("IF"))
+                        {
+                            row["Asignacion"] = S_InvFinal;
+                        }
+                    }
+                    GrdConciliacion.DataSource = DTCncl;
+                    GrdConciliacion.DataBind();
+                }
+            }
+            catch (Exception Ex)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Conciliacion Ejecutar", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
+            }
+        }
+        // ************************************************************ Entradas y Salidas ************************************************************
+        protected void BtnEYS_Click(object sender, EventArgs e)
+        {
+            MlVw.ActiveViewIndex = 5; TxtFechCorte.Focus();
+        }
+        protected void IbtCerrarEyS_Click(object sender, ImageClickEventArgs e)
+        {
+            MlVw.ActiveViewIndex = 0;
+        }
+        protected void IbtExpEyS_Click(object sender, ImageClickEventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            DataRow[] Result;
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            if (TxtFechIEyS.Text.Equals("") || TxtFechFEyS.Text.Equals(""))
+            {
+                Result = Idioma.Select("Objeto= 'MensCampoReq'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }
+                if (TxtFechFEyS.Text.Equals("")) { TxtFechFEyS.Focus(); }
+                if (TxtFechIEyS.Text.Equals("")) { TxtFechIEyS.Focus(); }
+                return;
+            }
+            Cnx.ValidarFechas(TxtFechIEyS.Text.Trim(), TxtFechFEyS.Text.Trim(), 2);
+            var MensjF = Cnx.GetMensj();
+            if (!MensjF.ToString().Trim().Equals(""))
+            {
+                Result = Idioma.Select("Objeto= '" + MensjF.ToString().Trim() + "'");
+                foreach (DataRow row in Result)
+                { MensjF = row["Texto"].ToString().Trim(); }
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + MensjF + "');", true);
+                Page.Title = ViewState["PageTit"].ToString();
+                return;
+            }
+
+            string VbNomArchivo = "";
+            Result = Idioma.Select("Objeto= 'NomArcEyS'");
+            foreach (DataRow row in Result)
+            { VbNomArchivo = row["Texto"].ToString().Trim(); }
+
+            CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
+            CursorIdioma.Alimentar("CurExptrEyS", Session["77IDM"].ToString().Trim());
+
+            string Query = " EXEC SP_Mvto_Entrada_Salida @FI, @FF,'',@Alm,'01', @ICC,  @Idm, @NA";
+
+            Cnx.SelecBD();
+            using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
+            {
+                using (SqlCommand cmd = new SqlCommand(Query, con))
+                {
+                    cmd.CommandTimeout = 90000000;
+                    cmd.Parameters.AddWithValue("@FI", Convert.ToDateTime(TxtFechIEyS.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@FF", Convert.ToDateTime(TxtFechFEyS.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@Alm",DdlAlmacenEyS.Text.Trim());
+                    cmd.Parameters.AddWithValue("@NA", "CurExptrEyS");
+                    cmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);
+                    cmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        cmd.Connection = con;
+                        sda.SelectCommand = cmd;
+                        using (DataSet ds = new DataSet())
+                        {
+                            sda.Fill(ds);
+                            ds.Tables[0].TableName = "XOM";
+                            using (XLWorkbook wb = new XLWorkbook())
+                            {
+                                foreach (DataTable dt in ds.Tables)
+                                {
+                                    wb.Worksheets.Add(dt);
+                                }
+                                Response.Clear();
+                                Response.Buffer = true;
+                                Response.ContentType = "application/ms-excel";
+                                Response.AddHeader("content-disposition", string.Format("attachment;filename={0}.xlsx", VbNomArchivo));
+                                Response.Charset = "";
+                                using (MemoryStream MyMemoryStream = new MemoryStream())
+                                {
+                                    wb.SaveAs(MyMemoryStream);
+                                    MyMemoryStream.WriteTo(Response.OutputStream);
+                                    Response.Flush();
+                                    Response.End();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

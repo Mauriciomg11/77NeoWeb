@@ -131,7 +131,7 @@ namespace _77NeoWeb.prg
             if (Produccion.Equals("Y"))
             {
                 /*return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, @"77NEO01", "DbConfigWeb", "sa", "admindemp");*/
-               // string Vb1S = "23.102.100.143";//@"aircraft\SQLEXPRESS";
+                // string Vb1S = "23.102.100.143";//@"aircraft\SQLEXPRESS";
                 return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
             }
             else
@@ -236,11 +236,11 @@ namespace _77NeoWeb.prg
             {
                 if (ip.AddressFamily.ToString() == "InterNetwork")
                 {
-                    S_HN =ip.ToString();// esta es nuestra ip
-                }                
+                    S_HN = ip.ToString();// esta es nuestra ip
+                }
             }
             return S_HN;
-        }      
+        }
         public string ValidarFechas2(string VbF1, string VbF2, int NumPrmts)
         {
             DateTime FI, FF;
@@ -293,6 +293,13 @@ namespace _77NeoWeb.prg
         public string GetSvr() { return @"77NEO01"; }//  "77NEO01\MSSQLSERVER2016"; ||| 23.102.100.143 || 77NEO01
         public string GetUsSvr() { return "sa"; }//  "sa"
         public string GetPas() { return "admindemp"; }// admindemp|| Medellin2021**
-        public string GetIdm() { return "4"; }//  4 español | 5 ingles/**/
+        public string GetIdm()
+        {
+            DataSet DSIdm = new DataSet();
+            string LtxtSql = string.Format("EXEC SP_ConfiguracionV2_ 21,'','','','','',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", GetIdCia());
+            DSIdm = DSET(LtxtSql);
+            DSIdm.Tables[0].TableName = "Idioma";
+            return DSIdm.Tables["Idioma"].Rows[0]["Idioma"].ToString().Trim();
+        }//  4 español | 5 ingles/**/
     }
 }

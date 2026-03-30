@@ -123,6 +123,24 @@ namespace _77NeoWeb.Forms.Seguridad
         protected global::System.Web.UI.WebControls.ImageButton IbtCambioPassCia;
 
         /// <summary>
+        /// Control LblIdioma.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblIdioma;
+
+        /// <summary>
+        /// Control DdlIdioma.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DdlIdioma;
+
+        /// <summary>
         /// Control DdlForm.
         /// </summary>
         /// <remarks>

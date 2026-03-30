@@ -68,6 +68,9 @@
         function myFuncionddl() {
             $('#<%=DdlAlmacenInv.ClientID%>').chosen();
             $('#<%=DdlGrupoInv.ClientID%>').chosen();
+            $('#<%=DdlAlmacenCnc.ClientID%>').chosen();
+            $('#<%=DdlAlmacenEyS.ClientID%>').chosen();
+
         }
     </script>
 </asp:Content>
@@ -93,13 +96,27 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <br />
-                                    <asp:Button ID="BtnReparaciones" runat="server" CssClass="btn btn-primary heightBtns" OnClick="BtnReparaciones_Click" OnClientClick="target ='_blank';" Text="Reparaciones" ToolTip="Informe de reparaciones en un rango de fecha." />
+                                    <asp:Button ID="BtnConciliacion" runat="server" CssClass="btn btn-primary heightBtns" OnClick="BtnConciliacion_Click" OnClientClick="target ='_blank';" Text="conciliacion" ToolTip="informe de la conciliacion del inventario con sus respectivas entradas y salidas." />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <br />
                                     <asp:Button ID="BtnCompraPend" runat="server" CssClass="btn btn-primary heightBtns" OnClick="BtnCompraPend_Click" OnClientClick="target ='_blank';" Text="compras" ToolTip="estado de las compras." />
+                                </div>
+                                <div class="col-sm-6">
+                                    <br />
+                                    <asp:Button ID="BtnReparaciones" runat="server" CssClass="btn btn-primary heightBtns" OnClick="BtnReparaciones_Click" OnClientClick="target ='_blank';" Text="Reparaciones" ToolTip="Informe de reparaciones en un rango de fecha." />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <br />
+                                    <asp:Button ID="BtnEYS" runat="server" CssClass="btn btn-primary heightBtns" OnClick="BtnEYS_Click" OnClientClick="target ='_blank';" Text="Entradas y Salidas" ToolTip="Informe de entradas y salidas en un rango de fecha." />
+                                </div>
+                                <div class="col-sm-6">
+                                    <br />
+                                    <%--<asp:Button ID="Button2" runat="server" CssClass="btn btn-primary heightBtns" OnClick="" OnClientClick="target ='_blank';" Text="" ToolTip="Informe" />--%>
                                 </div>
                             </div>
                         </div>
@@ -274,7 +291,7 @@
                                 <asp:RadioButton ID="RdbNoSrlzdInv" runat="server" CssClass="LblEtiquet" GroupName="Grp" Checked="false" Text="no serializado &nbsp" Enabled="false" />&nbsp&nbsp&nbsp
                             </div>
                             <div class="col-sm-2">
-                                <asp:Label ID="LblFechCorte" runat="server" CssClass="LblEtiquet" Text="Fecha corte" />
+                                <asp:Label ID="LblFechCorte" runat="server" CssClass="LblEtiquet" Text="fecha corte" />
                                 <asp:TextBox ID="TxtFechCorte" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
                             </div>
                         </div>
@@ -452,6 +469,87 @@
                         </div>
                     </div>
                 </asp:View>
+                <asp:View ID="Vw4Conciliacion" runat="server">
+                    <br />
+                    <br />
+                    <h6 class="TextoSuperior">
+                        <asp:Label ID="LblTitConciliacion" runat="server" Text="conciliacion entras y salidas" />
+                    </h6>
+                    <div class="CentrarContndr">
+                        <asp:ImageButton ID="IbtCerrarConcil" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarConcil_Click" />
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <asp:Label ID="LblAlmacenCnc" runat="server" CssClass="LblEtiquet" Text="almacen" />
+                                <asp:DropDownList ID="DdlAlmacenCnc" runat="server" CssClass="heightCampo" Width="100%" />
+                            </div>
+                            <div class="col-sm-2">
+                                <asp:Label ID="LblFechCorteCnc" runat="server" CssClass="LblEtiquet" Text="fecha corte" />
+                                <asp:TextBox ID="TxtFechCorteCnc" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
+                            </div>
+                            <div class="col-sm-1">
+                            </div>
+                            <div class="col-sm-1">
+                                <br />
+                                <asp:ImageButton ID="IbtEjecutar" runat="server" ToolTip="ejecutar" Height="38px" Width="40px" ImageUrl="~/images/ReportsV2.png" OnClick="IbtEjecutar_Click" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <asp:GridView ID="GrdConciliacion" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
+                                    DataKeyNames=""
+                                    CssClass="GridControl DiseñoGrid table-sm" GridLines="Both">
+                                    <Columns>
+                                        <asp:TemplateField HeaderText="asignacion">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblAsign" Text='<%# Eval("Asignacion") %>' runat="server" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="descripc">
+                                            <ItemTemplate>
+                                                <asp:Label ID="LblDesc" Text='<%# Eval("Descripcion") %>' runat="server" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="valores">
+                                            <ItemTemplate>
+                                                <asp:Label ID="Lblvalor" Text='<%# Eval("Valores") %>' runat="server" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                    <HeaderStyle CssClass="GridCabecera" />
+                                    <RowStyle CssClass="GridRowStyle" />
+                                    <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                                </asp:GridView>
+                            </div>
+                        </div>
+                    </div>
+                </asp:View>
+                <asp:View ID="Vw5EyS" runat="server">
+                    <br />
+                    <br />
+                    <h6 class="TextoSuperior">
+                        <asp:Label ID="LblTitEyS" runat="server" Text="entradas y salidas" />
+                    </h6>
+                    <div class="CentrarContenedor DivMarco">
+                        <asp:ImageButton ID="IbtCerrarEyS" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarEyS_Click" />
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <asp:Label ID="LblFechIEyS" runat="server" CssClass="LblEtiquet" Text="Fecha Inicial" />
+                                <asp:TextBox ID="TxtFechIEyS" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
+                            </div>
+                            <div class="col-sm-2">
+                                <asp:Label ID="LblFechFEyS" runat="server" CssClass="LblEtiquet" Text="Fecha Final" />
+                                <asp:TextBox ID="TxtFechFEyS" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
+                            </div>
+                              <div class="col-sm-4">
+                                <asp:Label ID="LblAlmacenEyS" runat="server" CssClass="LblEtiquet" Text="almacen" />
+                                <asp:DropDownList ID="DdlAlmacenEyS" runat="server" CssClass="heightCampo" Width="100%" />
+                            </div>
+                            <div class="col-sm-2">
+                                <asp:ImageButton ID="IbtExpEyS" runat="server" ToolTip="exportar" CssClass=" BtnExpExcel" Height="38px" Width="40px" ImageUrl="~/images/ExcelV1.png" OnClick="IbtExpEyS_Click" />
+                            </div>
+                        </div>
+                    </div>
+                </asp:View>
             </asp:MultiView>
         </ContentTemplate>
         <Triggers>
@@ -459,6 +557,7 @@
             <asp:PostBackTrigger ControlID="IbtExpRepaPend" />
             <asp:PostBackTrigger ControlID="IbtExprtrInvtr" />
             <asp:PostBackTrigger ControlID="IbtExpECompPend" />
+            <asp:PostBackTrigger ControlID="IbtExpEyS" />
         </Triggers>
     </asp:UpdatePanel>
 </asp:Content>
