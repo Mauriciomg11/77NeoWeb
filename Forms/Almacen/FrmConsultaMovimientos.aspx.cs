@@ -452,7 +452,6 @@ namespace _77NeoWeb.Forms.Almacen
                     string VbSn = DdlSN.Text.Trim();
                     string VbLot = DdlLote.Text.Trim();
                     if (CkbAlterno.Checked == true) { VbPn = ""; VbSn = ""; VbLot = ""; }
-
                     CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
                     CursorIdioma.Alimentar("CURDATOSCONSULTA1", Session["77IDM"].ToString().Trim());
                     string VbTxtSql = "EXEC SP_TablasLogistica 5, @Rf,@Pn   ,@Sn,@Lt,'','','','','CURDATOSCONSULTA1',0,0,@ExpVlr,1,@Idm,@ICC,'01-01-1','02-01-1','03-01-1'";
@@ -477,7 +476,6 @@ namespace _77NeoWeb.Forms.Almacen
                                 DSSM.Tables[2].TableName = "Mvtos";
                                 DSSM.Tables[3].TableName = "Exprtr";
                                 ViewState["DSSM"] = DSSM;
-
                                 GrdStokAlma.DataSource = DSSM.Tables["Stock"]; GrdStokAlma.DataBind();
                                 TxtStockActual.Text = DSSM.Tables["StockActual"].Rows[0]["CantTtl"].ToString().Trim();
                                 GrdMvtos.DataSource = DSSM.Tables["Mvtos"]; GrdMvtos.DataBind();
@@ -503,7 +501,7 @@ namespace _77NeoWeb.Forms.Almacen
             {
                 DataRowView dr = e.Row.DataItem as DataRowView;
                 string VbTercero = dr["CodTercero"].ToString().Trim();
-                if (VbTercero.Equals("Tercero"))
+                if (!VbTercero.Equals(""))
                 {
                     e.Row.BackColor = System.Drawing.Color.LightSalmon;
                     e.Row.ForeColor = System.Drawing.Color.White;

@@ -205,7 +205,25 @@ namespace _77NeoWeb.Forms.Ingenieria
                     GrdOrderGrup.Columns[0].HeaderText = b1.Trim().Equals("GrdOrderGrup0") ? b2.Trim() : GrdOrderGrup.Columns[0].HeaderText;
                     GrdOrderGrup.Columns[1].HeaderText = b1.Trim().Equals("GrdOrderGrup1") ? b2.Trim() : GrdOrderGrup.Columns[1].HeaderText;
                     GrdOrderGrup.Columns[2].HeaderText = b1.Trim().Equals("GrdOrderGrup2") ? b2.Trim() : GrdOrderGrup.Columns[2].HeaderText;
-
+                    //********************* Status Report *************************
+                    GrdStatusReport.EmptyDataText = b1.Equals("SinRegistros") ? b2 : GrdStatusReport.EmptyDataText;
+                    GrdStatusReport.Columns[0].HeaderText = b1.Trim().Equals("C01") ? b2.Trim() : GrdStatusReport.Columns[0].HeaderText;
+                    GrdStatusReport.Columns[1].HeaderText = b1.Equals("Descripcion") ? b2 : GrdStatusReport.Columns[1].HeaderText;
+                    GrdStatusReport.Columns[2].HeaderText = b1.Equals("C03") ? b2 : GrdStatusReport.Columns[2].HeaderText;
+                    GrdStatusReport.Columns[5].HeaderText = b1.Equals("RteFechCum") ? b2 : GrdStatusReport.Columns[5].HeaderText;
+                    GrdStatusReport.Columns[6].HeaderText = b1.Equals("FechInst") ? b2 : GrdStatusReport.Columns[6].HeaderText;
+                    GrdStatusReport.Columns[9].HeaderText = b1.Equals("C08") ? b2 : GrdStatusReport.Columns[9].HeaderText;
+                    GrdStatusReport.Columns[10].HeaderText = b1.Equals("RteUnM") ? b2 : GrdStatusReport.Columns[10].HeaderText;
+                    GrdStatusReport.Columns[11].HeaderText = b1.Equals("FrecDia") ? b2 : GrdStatusReport.Columns[11].HeaderText;
+                    GrdStatusReport.Columns[12].HeaderText = b1.Equals("RteTipS") ? b2 : GrdStatusReport.Columns[12].HeaderText;
+                    GrdStatusReport.Columns[13].HeaderText = b1.Equals("C12") ? b2 : GrdStatusReport.Columns[13].HeaderText;
+                    GrdStatusReport.Columns[14].HeaderText = b1.Equals("C13") ? b2 : GrdStatusReport.Columns[14].HeaderText;
+                    GrdStatusReport.Columns[15].HeaderText = b1.Equals("C14") ? b2 : GrdStatusReport.Columns[15].HeaderText;
+                    GrdStatusReport.Columns[16].HeaderText = b1.Equals("CumplFec") ? b2 : GrdStatusReport.Columns[16].HeaderText;
+                    GrdStatusReport.Columns[17].HeaderText = b1.Equals("C16") ? b2 : GrdStatusReport.Columns[17].HeaderText;
+                    GrdStatusReport.Columns[18].HeaderText = b1.Equals("RteRmnD") ? b2 : GrdStatusReport.Columns[18].HeaderText;
+                    GrdStatusReport.Columns[19].HeaderText = b1.Equals("GrdAsigOTPPT1") ? b2 : GrdStatusReport.Columns[19].HeaderText;
+                    GrdStatusReport.Columns[20].HeaderText = b1.Equals("RdbStsProy") ? b2 : GrdStatusReport.Columns[20].HeaderText;
                     //********************* Asignar *************************
                     LblTitAsigOTPPT.Text = b1.Trim().Equals("LblTitAsigOTPPT") ? b2.Trim() : LblTitAsigOTPPT.Text;
                     IbtCerrarAsigOtPPT.ToolTip = b1.Trim().Equals("CerrarVentana") ? b2.Trim() : IbtCerrarAsigOtPPT.ToolTip;
@@ -309,7 +327,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
                 DateTime VbDate = Convert.ToDateTime(TxtStsFecCarga.Text.Trim().Equals("") ? "01/01/1900" : TxtStsFecCarga.Text.Trim());
                 CursorIdioma.Alimentar("CurStatus", Session["77IDM"].ToString().Trim());
-                string VbTxtSql = "EXEC SP_StatusReport_WEB @CodHk,@UltFech,'NO',@PromUtlH,@PromUtlC,@PromUtlAPU,@Usu,'CurStatus',@Grupo,@Order,'',@ICC";
+                string VbTxtSql = "EXEC SP_StatusReport_WEB @CodHk,@UltFech,'NO',@PromUtlH,@PromUtlC,@PromUtlAPU,@Usu,'',@Grupo,@Order,'',@ICC"; //CurStatus nombre del cursor
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
@@ -329,11 +347,21 @@ namespace _77NeoWeb.Forms.Ingenieria
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
-                        DAB.SelectCommand = SC; DAB.Fill(DtB);
+                        try
+                        {
+                            DAB.SelectCommand = SC; DAB.Fill(DtB);
 
-                        if (DtB.Rows.Count > 0) { GrdStatusReport.DataSource = DtB; }
-                        else { GrdStatusReport.DataSource = null; }
-                        GrdStatusReport.DataBind();
+                            if (DtB.Rows.Count > 0) { GrdStatusReport.DataSource = DtB; }
+                            else { GrdStatusReport.DataSource = null; }
+                            GrdStatusReport.DataBind();
+                        }
+                        catch (Exception Ex)
+                        {
+                            DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
+                            Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "Traer datos ConsulStatus", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
+                        }
                     }
                     ViewState["CONSULTA"] = "S";
                 }

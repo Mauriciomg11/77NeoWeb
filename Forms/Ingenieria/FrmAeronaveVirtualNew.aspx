@@ -541,7 +541,7 @@
                     <asp:ImageButton ID="IbtCerrarOTcierre" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarOTcierre_Click" ImageAlign="Right" />
                     <br />
                     <div class="DivContendorGrid">
-                        <asp:GridView ID="GrdOtCerrar" runat="server" AutoGenerateColumns="False" DataKeyNames="CentroCosto,FechaInicio,EjecPasos"
+                        <asp:GridView ID="GrdOtCerrar" runat="server" AutoGenerateColumns="False" DataKeyNames="CentroCosto,FechaInicio,EjecPasos,CodNumOrdenTrab"
                             EmptyDataText="Sin OT para cerrar..!" CssClass="DiseñoGrid table-sm" GridLines="Both">
                             <Columns>
                                 <asp:TemplateField HeaderText="Ck" HeaderStyle-Width="1%">
@@ -551,7 +551,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="O.T." HeaderStyle-Width="5%">
                                     <ItemTemplate>
-                                        <asp:Label ID="LblCodOT" Text='<%# Eval("CodNumOrdenTrab") %>' runat="server" />
+                                        <asp:Label ID="LblCodOT" Text='<%# Eval("CodOT") %>' runat="server" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Fecha" HeaderStyle-Width="4%">

@@ -1002,7 +1002,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     string VBQuery = "EXEC SP_PANTALLA_AeronaveVirtual 24,@UBR,'','','',@CodA,0,0,@ICC,@FE,'01-01-1900','01-01-1900'";
                     SqlCommand SC = new SqlCommand(VBQuery, sqlCon);
                     SC.Parameters.AddWithValue("@CodA", DdlAeroInsElem.Text);
-                    SC.Parameters.AddWithValue("@FE", Convert.ToDateTime (TxtFechaInsElem.Text));
+                    SC.Parameters.AddWithValue("@FE", Convert.ToDateTime(TxtFechaInsElem.Text));
                     SC.Parameters.AddWithValue("@UBR", TxtUbiTecInsElem.Text);
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataReader SDR = SC.ExecuteReader();
@@ -1077,7 +1077,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 }
                 foreach (GridViewRow Row in GrdSvcInsElem.Rows)
                 {
-
                     string VbFechaAnt = GrdSvcInsElem.DataKeys[Row.RowIndex].Values[0].ToString().Trim(); // obtener indice
                     string TxtFecUltCumpl = (Row.FindControl("TxtFecUltCumpl") as TextBox).Text.Trim();
                     string VbReporte = (Row.FindControl("TxtReporte") as TextBox).Text.Trim();
@@ -1131,8 +1130,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { VbFechaVenceAnt = null; }
                     else
                     { VbFechaVenceAnt = Convert.ToDateTime(VbFecha); }
-                    string borr = GrdSvcInsElem.DataKeys[Row.RowIndex].Values[2].ToString().Trim();
-                    int borrar = Convert.ToInt32(GrdSvcInsElem.DataKeys[Row.RowIndex].Values[2].ToString().Trim());
                     var TypServcManto = new ClsTypAeronaveVirtual()
                     {
                         CodIdContadorElem = Convert.ToInt32(GrdSvcInsElem.DataKeys[Row.RowIndex].Values[1].ToString().Trim()),
@@ -1156,21 +1153,15 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DateTime VbFechaDespeg = Convert.ToDateTime(GrdCompensLv.DataKeys[Row.RowIndex].Values[2].ToString().Trim());
                     string StrHAcum, StrCAcum, StrHRemain, StrCRemain;
                     double VbHAcum, VbCAcum, VbHRemain, VbCRemain;
-
                     CultureInfo Culture = new CultureInfo("en-US");
                     StrHAcum = (Row.FindControl("HoraAcum") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("HoraAcum") as Label).Text.Trim();
                     VbHAcum = StrHAcum.Length == 0 ? 0 : Convert.ToDouble(StrHAcum, Culture);
-
                     StrCAcum = (Row.FindControl("CicloAcum") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("CicloAcum") as Label).Text.Trim();
-                    VbCAcum = StrCAcum.Length == 0 ? 0 : Convert.ToDouble(StrCAcum, Culture);
-                    Boolean borrarb = (Row.FindControl("CkbOK") as CheckBox).Checked;
-                    int borrar = (Row.FindControl("CkbOK") as CheckBox).Checked == true ? 1 : 0;
+                    VbCAcum = StrCAcum.Length == 0 ? 0 : Convert.ToDouble(StrCAcum, Culture);                   
                     StrHRemain = (Row.FindControl("HoraRemain") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("HoraRemain") as Label).Text.Trim();
                     VbHRemain = StrHRemain.Length == 0 ? 0 : Convert.ToDouble(StrHRemain, Culture);
-
                     StrCRemain = (Row.FindControl("CicloRemain") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("CicloRemain") as Label).Text.Trim();
                     VbCRemain = StrCRemain.Length == 0 ? 0 : Convert.ToDouble(StrCRemain, Culture);
-
                     var TypCompensac = new ClsTypAeronaveVirtual()
                     {
                         ID = Convert.ToInt32(GrdCompensLv.DataKeys[Row.RowIndex].Values[0].ToString().Trim()),
@@ -1197,11 +1188,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                 {
                     DataRow[] Result1 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                     foreach (DataRow row in Result1)
-                    { 
+                    {
                         ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true);
                     }
-
-                    
                     return;
                 }
                 BIndDHisElemInsElem(ViewState["CodElemento"].ToString().Trim());
@@ -1213,11 +1202,9 @@ namespace _77NeoWeb.Forms.Ingenieria
                 GrdCompensLv.DataSource = null;
                 GrdCompensLv.DataBind();
                 Idioma = (DataTable)ViewState["TablaIdioma"];
-
                 Result = Idioma.Select("Objeto= 'Mens18HkVrt'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.UplInstElem, UplInstElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }// Proceso exitoso
-
             }
             catch (Exception Ex)
             {
@@ -1670,7 +1657,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { ScriptManager.RegisterClientScriptBlock(this.UplRemElem, UplRemElem.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
                     return;
                 }
-
                 List<ClsTypAeronaveVirtual> ObjRemElemento = new List<ClsTypAeronaveVirtual>();
                 var TypRemElemento = new ClsTypAeronaveVirtual()
                 {
@@ -1690,9 +1676,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     MotivoRemocion = TxtMotivRemElem.Text.Trim(),
                 };
                 ObjRemElemento.Add(TypRemElemento);
-
                 List<ClsTypAeronaveVirtual> ObjServcManto = new List<ClsTypAeronaveVirtual>();
-
                 List<ClsTypAeronaveVirtual> ObjCompensacion = new List<ClsTypAeronaveVirtual>();
                 foreach (GridViewRow Row in GrdCompensLv.Rows)
                 {
@@ -1701,24 +1685,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DateTime VbFechaDespeg = Convert.ToDateTime(GrdCompensLv.DataKeys[Row.RowIndex].Values[2].ToString().Trim());
                     string StrHAcum, StrCAcum, StrHRemain, StrCRemain;
                     double VbHAcum, VbCAcum, VbHRemain, VbCRemain;
-
                     CultureInfo Culture = new CultureInfo("en-US");
                     StrHAcum = (Row.FindControl("HoraAcum") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("HoraAcum") as Label).Text.Trim();
                     VbHAcum = StrHAcum.Length == 0 ? 0 : Convert.ToDouble(StrHAcum, Culture);
-
                     StrCAcum = (Row.FindControl("CicloAcum") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("CicloAcum") as Label).Text.Trim();
                     VbCAcum = StrCAcum.Length == 0 ? 0 : Convert.ToDouble(StrCAcum, Culture);
-                    Boolean borrarb = (Row.FindControl("CkbOK") as CheckBox).Checked;
-                    int borrar = (Row.FindControl("CkbOK") as CheckBox).Checked == true ? 1 : 0;
                     StrHRemain = (Row.FindControl("HoraRemain") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("HoraRemain") as Label).Text.Trim();
                     VbHRemain = StrHRemain.Length == 0 ? 0 : Convert.ToDouble(StrHRemain, Culture);
-
                     StrCRemain = (Row.FindControl("CicloRemain") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("CicloRemain") as Label).Text.Trim();
                     VbCRemain = StrCRemain.Length == 0 ? 0 : Convert.ToDouble(StrCRemain, Culture);
-
                     var TypCompensac = new ClsTypAeronaveVirtual()
                     {
-
                         ID = Convert.ToInt32(GrdCompensLv.DataKeys[Row.RowIndex].Values[0].ToString().Trim()),
                         OK = (Row.FindControl("CkbOK") as CheckBox).Checked == true ? 1 : 0,
                         CodlibroVuelo = (Row.FindControl("LblCodLV") as Label).Text.Trim(),
@@ -1735,19 +1712,18 @@ namespace _77NeoWeb.Forms.Ingenieria
                     };
                     ObjCompensacion.Add(TypCompensac);
                 }
-
                 List<ClsTypAeronaveVirtual> ObjOT = new List<ClsTypAeronaveVirtual>();
                 foreach (GridViewRow Row in GrdOtCerrar.Rows)
                 {
                     DateTime? VbFechaI;
                     string VbCcosto = GrdOtCerrar.DataKeys[Row.RowIndex].Values[0].ToString().Trim();
                     string VbFIText = GrdOtCerrar.DataKeys[Row.RowIndex].Values[1].ToString().Trim();
+                    string S_CodOT = GrdOtCerrar.DataKeys[Row.RowIndex].Values["CodNumOrdenTrab"].ToString().Trim();
                     if (VbFIText.Equals("")) { VbFechaI = Convert.ToDateTime(TxtFechaRemElem.Text); }
                     else { VbFechaI = Convert.ToDateTime(VbFIText); }
-
                     var TypOT = new ClsTypAeronaveVirtual()
                     {
-                        CodNumOrdenTrab = Convert.ToInt32((Row.FindControl("LblCodOT") as Label).Text.Trim()),
+                        CodNumOrdenTrab = S_CodOT.Equals("") ? 0 : Convert.ToInt32(S_CodOT),
                         Descripcion = "",
                         CodEstOrdTrab1 = "0002",
                         CodEstOrdTrab2 = "",
@@ -2235,7 +2211,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 }
                 foreach (GridViewRow Row in GrdSvcInsMay.Rows)
                 {
-
                     string VbFechaAnt = GrdSvcInsMay.DataKeys[Row.RowIndex].Values[0].ToString().Trim(); // obtener indice
                     string TxtFecUltCumplMay = (Row.FindControl("TxtFecUltCumplMay") as TextBox).Text.Trim();
                     string VbReporte = (Row.FindControl("TxtReporte") as TextBox).Text.Trim();
@@ -2248,7 +2223,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                         return;
                     }
                 }
-
                 List<ClsTypAeronaveVirtual> ObjInsElemento = new List<ClsTypAeronaveVirtual>();
                 var TypInsElemento = new ClsTypAeronaveVirtual()
                 {
@@ -2268,7 +2242,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     MotivoRemocion = TxtMotivInsMay.Text.Trim(),
                 };
                 ObjInsElemento.Add(TypInsElemento);
-
                 List<ClsTypAeronaveVirtual> ObjServcManto = new List<ClsTypAeronaveVirtual>();
                 foreach (GridViewRow Row in GrdSvcInsMay.Rows)
                 {
@@ -2277,20 +2250,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                     CultureInfo Culture = new CultureInfo("en-US");
                     StrUC = (Row.FindControl("TxtCumpHist") as TextBox).Text.Trim().Equals("") ? "0" : (Row.FindControl("TxtCumpHist") as TextBox).Text.Trim();
                     VbUC = StrUC.Length == 0 ? 0 : Convert.ToDouble(StrUC, Culture);
-
                     DateTime? VbFechaVence, VbFechaVenceAnt;
                     string VbFecha = (Row.FindControl("TxtFecUltCumplMay") as TextBox).Text.Trim().Equals("") ? null : (Row.FindControl("TxtFecUltCumplMay") as TextBox).Text.Trim();
                     if (VbFecha == null)
                     { VbFechaVence = null; }
                     else
                     { VbFechaVence = Convert.ToDateTime(VbFecha); }
-
                     VbFecha = GrdSvcInsMay.DataKeys[Row.RowIndex].Values[0].ToString().Trim().Equals("") ? null : GrdSvcInsMay.DataKeys[Row.RowIndex].Values[0].ToString().Trim();
                     if (VbFecha == null)
                     { VbFechaVenceAnt = null; }
                     else
                     { VbFechaVenceAnt = Convert.ToDateTime(VbFecha); }
-                    string borr = GrdSvcInsMay.DataKeys[Row.RowIndex].Values[2].ToString().Trim();
                     int borrar = Convert.ToInt32(GrdSvcInsMay.DataKeys[Row.RowIndex].Values[2].ToString().Trim());
                     var TypServcManto = new ClsTypAeronaveVirtual()
                     {
@@ -2307,7 +2277,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     };
                     ObjServcManto.Add(TypServcManto);
                 }
-
                 List<ClsTypAeronaveVirtual> ObjCompensacion = new List<ClsTypAeronaveVirtual>();
                 foreach (GridViewRow Row in GrdCompensLv.Rows)
                 {
@@ -2316,24 +2285,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DateTime VbFechaDespeg = Convert.ToDateTime(GrdCompensLv.DataKeys[Row.RowIndex].Values[2].ToString().Trim());
                     string StrHAcum, StrCAcum, StrHRemain, StrCRemain;
                     double VbHAcum, VbCAcum, VbHRemain, VbCRemain;
-
                     CultureInfo Culture = new CultureInfo("en-US");
                     StrHAcum = (Row.FindControl("HoraAcum") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("HoraAcum") as Label).Text.Trim();
                     VbHAcum = StrHAcum.Length == 0 ? 0 : Convert.ToDouble(StrHAcum, Culture);
-
                     StrCAcum = (Row.FindControl("CicloAcum") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("CicloAcum") as Label).Text.Trim();
                     VbCAcum = StrCAcum.Length == 0 ? 0 : Convert.ToDouble(StrCAcum, Culture);
-                    Boolean borrarb = (Row.FindControl("CkbOK") as CheckBox).Checked;
-                    int borrar = (Row.FindControl("CkbOK") as CheckBox).Checked == true ? 1 : 0;
                     StrHRemain = (Row.FindControl("HoraRemain") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("HoraRemain") as Label).Text.Trim();
                     VbHRemain = StrHRemain.Length == 0 ? 0 : Convert.ToDouble(StrHRemain, Culture);
-
                     StrCRemain = (Row.FindControl("CicloRemain") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("CicloRemain") as Label).Text.Trim();
                     VbCRemain = StrCRemain.Length == 0 ? 0 : Convert.ToDouble(StrCRemain, Culture);
-
                     var TypCompensac = new ClsTypAeronaveVirtual()
                     {
-
                         ID = Convert.ToInt32(GrdCompensLv.DataKeys[Row.RowIndex].Values[0].ToString().Trim()),
                         OK = (Row.FindControl("CkbOK") as CheckBox).Checked == true ? 1 : 0,
                         CodlibroVuelo = (Row.FindControl("LblCodLV") as Label).Text.Trim(),
@@ -2900,9 +2862,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     MotivoRemocion = TxtMotivRemMay.Text.Trim(),
                 };
                 ObjRemMayor.Add(TypRemMayor);
-
                 List<ClsTypAeronaveVirtual> ObjServcMantoMay = new List<ClsTypAeronaveVirtual>();
-
                 List<ClsTypAeronaveVirtual> ObjCompensacionMay = new List<ClsTypAeronaveVirtual>();
                 foreach (GridViewRow Row in GrdCompensLv.Rows)
                 {
@@ -2911,24 +2871,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DateTime VbFechaDespeg = Convert.ToDateTime(GrdCompensLv.DataKeys[Row.RowIndex].Values[2].ToString().Trim());
                     string StrHAcum, StrCAcum, StrHRemain, StrCRemain;
                     double VbHAcum, VbCAcum, VbHRemain, VbCRemain;
-
                     CultureInfo Culture = new CultureInfo("en-US");
                     StrHAcum = (Row.FindControl("HoraAcum") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("HoraAcum") as Label).Text.Trim();
                     VbHAcum = StrHAcum.Length == 0 ? 0 : Convert.ToDouble(StrHAcum, Culture);
-
                     StrCAcum = (Row.FindControl("CicloAcum") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("CicloAcum") as Label).Text.Trim();
-                    VbCAcum = StrCAcum.Length == 0 ? 0 : Convert.ToDouble(StrCAcum, Culture);
-                    Boolean borrarb = (Row.FindControl("CkbOK") as CheckBox).Checked;
-                    int borrar = (Row.FindControl("CkbOK") as CheckBox).Checked == true ? 1 : 0;
+                    VbCAcum = StrCAcum.Length == 0 ? 0 : Convert.ToDouble(StrCAcum, Culture);              
                     StrHRemain = (Row.FindControl("HoraRemain") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("HoraRemain") as Label).Text.Trim();
                     VbHRemain = StrHRemain.Length == 0 ? 0 : Convert.ToDouble(StrHRemain, Culture);
-
                     StrCRemain = (Row.FindControl("CicloRemain") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("CicloRemain") as Label).Text.Trim();
                     VbCRemain = StrCRemain.Length == 0 ? 0 : Convert.ToDouble(StrCRemain, Culture);
-
                     var TypCompensacMay = new ClsTypAeronaveVirtual()
                     {
-
                         ID = Convert.ToInt32(GrdCompensLv.DataKeys[Row.RowIndex].Values[0].ToString().Trim()),
                         OK = (Row.FindControl("CkbOK") as CheckBox).Checked == true ? 1 : 0,
                         CodlibroVuelo = (Row.FindControl("LblCodLV") as Label).Text.Trim(),
@@ -2945,19 +2898,18 @@ namespace _77NeoWeb.Forms.Ingenieria
                     };
                     ObjCompensacionMay.Add(TypCompensacMay);
                 }
-
                 List<ClsTypAeronaveVirtual> ObjOTMay = new List<ClsTypAeronaveVirtual>();
                 foreach (GridViewRow Row in GrdOtCerrar.Rows)
                 {
                     DateTime? VbFechaI;
                     string VbCcosto = GrdOtCerrar.DataKeys[Row.RowIndex].Values[0].ToString().Trim();
+                    string S_CodOT = GrdOtCerrar.DataKeys[Row.RowIndex].Values["CodNumOrdenTrab"].ToString().Trim();
                     string VbFIText = GrdOtCerrar.DataKeys[Row.RowIndex].Values[1].ToString().Trim();
                     if (VbFIText.Equals("")) { VbFechaI = Convert.ToDateTime(TxtFechaRemMay.Text); }
                     else { VbFechaI = Convert.ToDateTime(VbFIText); }
-
                     var TypOTMay = new ClsTypAeronaveVirtual()
                     {
-                        CodNumOrdenTrab = Convert.ToInt32((Row.FindControl("LblCodOT") as Label).Text.Trim()),
+                        CodNumOrdenTrab = S_CodOT.Equals("") ? 0 : Convert.ToInt32(S_CodOT),
                         Descripcion = "",
                         CodEstOrdTrab1 = "0002",
                         CodEstOrdTrab2 = "",
@@ -3375,7 +3327,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { ScriptManager.RegisterClientScriptBlock(this.UplInstSubC, UplInstSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
                     return;
                 }
-
                 Cnx.ValidarFechas(TxtFechaInsSubC.Text.Trim(), "", 1);
                 var MensjF = Cnx.GetMensj();
                 if (!MensjF.ToString().Trim().Equals(""))
@@ -3389,7 +3340,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 }
                 foreach (GridViewRow Row in GrdSvcInsSubC.Rows)
                 {
-
                     string VbFechaAnt = GrdSvcInsSubC.DataKeys[Row.RowIndex].Values[0].ToString().Trim(); // obtener indice
                     string TxtFecUltCumplInsSubC = (Row.FindControl("TxtFecUltCumplInsSubC") as TextBox).Text.Trim();
                     string VbReporte = (Row.FindControl("TxtReporte") as TextBox).Text.Trim();
@@ -3402,7 +3352,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                         return;
                     }
                 }
-
                 List<ClsTypAeronaveVirtual> ObjInsSubC = new List<ClsTypAeronaveVirtual>();
                 var TypInsSubC = new ClsTypAeronaveVirtual()
                 {
@@ -3422,7 +3371,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     MotivoRemocion = TxtMotivInsSubC.Text.Trim(),
                 };
                 ObjInsSubC.Add(TypInsSubC);
-
                 List<ClsTypAeronaveVirtual> ObjServcMantoSC = new List<ClsTypAeronaveVirtual>();
                 foreach (GridViewRow Row in GrdSvcInsSubC.Rows)
                 {
@@ -3431,14 +3379,12 @@ namespace _77NeoWeb.Forms.Ingenieria
                     CultureInfo Culture = new CultureInfo("en-US");
                     StrUC = (Row.FindControl("TxtCumpHist") as TextBox).Text.Trim().Equals("") ? "0" : (Row.FindControl("TxtCumpHist") as TextBox).Text.Trim();
                     VbUC = StrUC.Length == 0 ? 0 : Convert.ToDouble(StrUC, Culture);
-
                     DateTime? VbFechaVence, VbFechaVenceAnt;
                     string VbFecha = (Row.FindControl("TxtFecUltCumplInsSubC") as TextBox).Text.Trim().Equals("") ? null : (Row.FindControl("TxtFecUltCumplInsSubC") as TextBox).Text.Trim();
                     if (VbFecha == null)
                     { VbFechaVence = null; }
                     else
                     { VbFechaVence = Convert.ToDateTime(VbFecha); }
-
                     VbFecha = GrdSvcInsSubC.DataKeys[Row.RowIndex].Values[0].ToString().Trim().Equals("") ? null : GrdSvcInsSubC.DataKeys[Row.RowIndex].Values[0].ToString().Trim();
                     if (VbFecha == null)
                     { VbFechaVenceAnt = null; }
@@ -3461,9 +3407,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     };
                     ObjServcMantoSC.Add(TypServcMantoSC);
                 }
-
                 List<ClsTypAeronaveVirtual> ObjCompensacionSC = new List<ClsTypAeronaveVirtual>();
-
                 List<ClsTypAeronaveVirtual> ObjOTSC = new List<ClsTypAeronaveVirtual>();
                 ClsTypAeronaveVirtual AeronaveVirtualSC = new ClsTypAeronaveVirtual();
                 AeronaveVirtualSC.Alimentar(ObjInsSubC, ObjServcMantoSC, ObjCompensacionSC, ObjOTSC);
@@ -3781,7 +3725,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Page.Title = ViewState["PageTit"].ToString(); TxtFechaRemSubC.Focus();
                     return;
                 }
-
                 if (TxtMotivRemSubC.Text.Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'Mens06HkVrt'");
@@ -3789,7 +3732,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Debe seleccionar un motivo')", true);
                     return;
                 }
-
                 List<ClsTypAeronaveVirtual> ObjRemSubC = new List<ClsTypAeronaveVirtual>();
                 var TypRemSubC = new ClsTypAeronaveVirtual()
                 {
@@ -3809,9 +3751,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     MotivoRemocion = TxtMotivRemSubC.Text.Trim(),
                 };
                 ObjRemSubC.Add(TypRemSubC);
-
                 List<ClsTypAeronaveVirtual> ObjServcMantoSubC = new List<ClsTypAeronaveVirtual>();
-
                 List<ClsTypAeronaveVirtual> ObjCompensacionSubC = new List<ClsTypAeronaveVirtual>();
                 foreach (GridViewRow Row in GrdCompensLv.Rows)
                 {
@@ -3820,24 +3760,17 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DateTime VbFechaDespeg = Convert.ToDateTime(GrdCompensLv.DataKeys[Row.RowIndex].Values[2].ToString().Trim());
                     string StrHAcum, StrCAcum, StrHRemain, StrCRemain;
                     double VbHAcum, VbCAcum, VbHRemain, VbCRemain;
-
                     CultureInfo Culture = new CultureInfo("en-US");
                     StrHAcum = (Row.FindControl("HoraAcum") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("HoraAcum") as Label).Text.Trim();
                     VbHAcum = StrHAcum.Length == 0 ? 0 : Convert.ToDouble(StrHAcum, Culture);
-
                     StrCAcum = (Row.FindControl("CicloAcum") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("CicloAcum") as Label).Text.Trim();
-                    VbCAcum = StrCAcum.Length == 0 ? 0 : Convert.ToDouble(StrCAcum, Culture);
-                    Boolean borrarb = (Row.FindControl("CkbOK") as CheckBox).Checked;
-                    int borrar = (Row.FindControl("CkbOK") as CheckBox).Checked == true ? 1 : 0;
+                    VbCAcum = StrCAcum.Length == 0 ? 0 : Convert.ToDouble(StrCAcum, Culture);         
                     StrHRemain = (Row.FindControl("HoraRemain") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("HoraRemain") as Label).Text.Trim();
                     VbHRemain = StrHRemain.Length == 0 ? 0 : Convert.ToDouble(StrHRemain, Culture);
-
                     StrCRemain = (Row.FindControl("CicloRemain") as Label).Text.Trim().Equals("") ? "0" : (Row.FindControl("CicloRemain") as Label).Text.Trim();
                     VbCRemain = StrCRemain.Length == 0 ? 0 : Convert.ToDouble(StrCRemain, Culture);
-
                     var TypCompensacSubC = new ClsTypAeronaveVirtual()
                     {
-
                         ID = Convert.ToInt32(GrdCompensLv.DataKeys[Row.RowIndex].Values[0].ToString().Trim()),
                         OK = (Row.FindControl("CkbOK") as CheckBox).Checked == true ? 1 : 0,
                         CodlibroVuelo = (Row.FindControl("LblCodLV") as Label).Text.Trim(),
@@ -3854,19 +3787,18 @@ namespace _77NeoWeb.Forms.Ingenieria
                     };
                     ObjCompensacionSubC.Add(TypCompensacSubC);
                 }
-
                 List<ClsTypAeronaveVirtual> ObjOTSubC = new List<ClsTypAeronaveVirtual>();
                 foreach (GridViewRow Row in GrdOtCerrar.Rows)
                 {
                     DateTime? VbFechaI;
                     string VbCcosto = GrdOtCerrar.DataKeys[Row.RowIndex].Values[0].ToString().Trim();
+                    string S_CodOT = GrdOtCerrar.DataKeys[Row.RowIndex].Values["CodNumOrdenTrab"].ToString().Trim();
                     string VbFIText = GrdOtCerrar.DataKeys[Row.RowIndex].Values[1].ToString().Trim();
                     if (VbFIText.Equals("")) { VbFechaI = Convert.ToDateTime(TxtFechaRemSubC.Text); }
                     else { VbFechaI = Convert.ToDateTime(VbFIText); }
-
                     var TypOTSubC = new ClsTypAeronaveVirtual()
                     {
-                        CodNumOrdenTrab = Convert.ToInt32((Row.FindControl("LblCodOT") as Label).Text.Trim()),
+                        CodNumOrdenTrab = S_CodOT.Equals("") ? 0 : Convert.ToInt32(S_CodOT),
                         Descripcion = "",
                         CodEstOrdTrab1 = "0002",
                         CodEstOrdTrab2 = "",
@@ -3928,7 +3860,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 BtnAbrirOTCerrarRemSubC.Visible = false;
                 GrdCompensLv.DataSource = null;
                 GrdCompensLv.DataBind();
-
                 DataRow[] Result1 = Idioma.Select("Objeto= 'Mens18HkVrt'");
                 foreach (DataRow row in Result1)
                 { ScriptManager.RegisterClientScriptBlock(this.UplRemtSubC, UplRemtSubC.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }//Proceso exitoso
@@ -4144,7 +4075,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     Page.Title = ViewState["PageTit"].ToString(); TxtCrearElemFechRec.Focus();
                     return;
                 }
-                 VbMnsj = Cnx.ValidarFechas2(TxtCrearElemFechFabr.Text.Trim(), TxtCrearElemFechRec.Text.Trim(), 2);
+                VbMnsj = Cnx.ValidarFechas2(TxtCrearElemFechFabr.Text.Trim(), TxtCrearElemFechRec.Text.Trim(), 2);
                 if (!VbMnsj.ToString().Trim().Equals(""))
                 {
                     DataRow[] Result = Idioma.Select("Objeto= '" + VbMnsj.ToString().Trim() + "'");

@@ -191,33 +191,62 @@ namespace _77NeoWeb.Forms.Comex
                     Idioma.Rows.Add(bO, bT);
                     if (bO.Equals("Caption"))
                     { Page.Title = bT; ViewState["PageTit"] = bT; TitForm.Text = bT; }
-                   
                     BtnIngresar.Text = bO.Equals("BotonIng") ? bT : BtnIngresar.Text;
                     BtnModificar.Text = bO.Equals("BotonMod") ? bT : BtnModificar.Text;
                     BtnConsultar.Text = bO.Equals("BtnConsultarGral") ? bT : BtnConsultar.Text;
                     BtnEliminar.Text = bO.Equals("BtnEliminar") ? bT : BtnEliminar.Text;
                     //*************************************************Campos *************************************************
                     LblNroEmbq.Text = bO.Equals("LblNroEmbq") ? bT : LblNroEmbq.Text;
-
+                    LblFecha.Text = bO.Equals("FechaMstr") ? bT : LblFecha.Text;
+                    LblGuia.Text = bO.Equals("LblGuia") ? bT : LblGuia.Text;
+                    LblPeso.Text = bO.Equals("LblPeso") ? bT : LblPeso.Text;
+                    LblNrPaq.Text = bO.Equals("LblNrPaq") ? bT : LblNrPaq.Text;
+                    LblObsrv.Text = bO.Equals("LblObsMst") ? bT : LblObsrv.Text;
+                    RdbRepa.Text = bO.Equals("RdbRepa") ? "&nbsp" + bT : RdbRepa.Text;
+                    RdbCompra.Text = bO.Equals("RdbCompra") ? "&nbsp" + bT : RdbCompra.Text;
+                    RdbIntercambio.Text = bO.Equals("RdbIntercambio") ? "&nbsp" + bT : RdbIntercambio.Text;
+                    RdbImportar.Text = bO.Equals("RdbImportar") ? "&nbsp" + bT : RdbImportar.Text;
+                    RdbExporar.Text = bO.Equals("BtnExportMstr") ? "&nbsp" + bT : RdbExporar.Text;
                     // *************************************************Grid detalle *************************************************
-
-
+                    GrdDet.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdDet.EmptyDataText;
+                    GrdDet.Columns[1].HeaderText = bO.Equals("DocMstr") ? bT : GrdDet.Columns[1].HeaderText;
+                    GrdDet.Columns[2].HeaderText = bO.Equals("GrdProv") ? bT : GrdDet.Columns[2].HeaderText;
+                    GrdDet.Columns[5].HeaderText = bO.Equals("Descripcion") ? bT : GrdDet.Columns[5].HeaderText;
+                    GrdDet.Columns[6].HeaderText = bO.Equals("CantDoc") ? bT : GrdDet.Columns[6].HeaderText;
+                    GrdDet.Columns[7].HeaderText = bO.Equals("CantOE") ? bT : GrdDet.Columns[7].HeaderText;
+                    GrdDet.Columns[8].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdDet.Columns[8].HeaderText;
+                    GrdDet.Columns[9].HeaderText = bO.Equals("VlrUndME") ? bT : GrdDet.Columns[9].HeaderText;
+                    GrdDet.Columns[10].HeaderText = bO.Equals("VlrUndML") ? bT : GrdDet.Columns[10].HeaderText;
+                    GrdDet.Columns[11].HeaderText = bO.Equals("TtalML") ? bT : GrdDet.Columns[11].HeaderText;
+                    GrdDet.Columns[12].HeaderText = bO.Equals("LblFactMstr") ? bT : GrdDet.Columns[12].HeaderText;
                     // *************************************************opcion de busqueda *************************************************
-                    // RdbBqCompra.Text = bO.Equals("LblNumCotiza") ? "&nbsp" + bT : RdbBqCompra.Text;
+                    RdbBusqOrden.Text = bO.Equals("LblNroEmbq") ? "&nbsp" + bT : RdbBusqOrden.Text;
+                    RdbBusqGuia.Text = bO.Equals("LblGuia") ? "&nbsp" + bT : RdbBusqGuia.Text;
+                    RdbBusqDoc.Text = bO.Equals("DocMstr") ? "&nbsp" + bT : RdbBusqDoc.Text;
                     if (bO.Equals("placeholder"))
                     { TxtBusqueda.Attributes.Add("placeholder", bT); }
-
                     IbtBusqueda.ToolTip = bO.Equals("BtnConsultar") ? bT : IbtBusqueda.ToolTip;
                     IbtCerrarBusq.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarBusq.ToolTip;
                     LblBusqueda.Text = bO.Equals("MstrLblBusq") ? bT + ":" : LblBusqueda.Text;
                     LblTitOpcBusq.Text = bO.Equals("LblTitOTOpcBusqueda") ? bT : LblTitOpcBusq.Text;
-                    //GrdBusq.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdBusq.EmptyDataText;
-                    //GrdBusq.Columns[1].HeaderText = bO.Equals("BtnOpenSolPed") ? bT : GrdBusq.Columns[1].HeaderText;
-                    //GrdBusq.Columns[2].HeaderText = bO.Equals("TipoMstr") ? bT : GrdBusq.Columns[2].HeaderText;
-                    //GrdBusq.Columns[3].HeaderText = bO.Equals("LblFechCot") ? bT : GrdBusq.Columns[3].HeaderText;
-                    //GrdBusq.Columns[4].HeaderText = bO.Equals("LblProvee") ? bT : GrdBusq.Columns[4].HeaderText;
-                    //GrdBusq.Columns[7].HeaderText = bO.Equals("Descripcion") ? bT : GrdBusq.Columns[7].HeaderText;                    
-
+                    GrdBusq.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdBusq.EmptyDataText;
+                    GrdBusq.Columns[1].HeaderText = bO.Equals("Caption") ? bT : GrdBusq.Columns[1].HeaderText;
+                    GrdBusq.Columns[2].HeaderText = bO.Equals("LblGuia") ? bT : GrdBusq.Columns[2].HeaderText;
+                    GrdBusq.Columns[3].HeaderText = bO.Equals("DocMstr") ? bT : GrdBusq.Columns[3].HeaderText;
+                    GrdBusq.Columns[4].HeaderText = bO.Equals("TipoMstr") ? bT : GrdBusq.Columns[4].HeaderText;
+                    GrdBusq.Columns[5].HeaderText = bO.Equals("FechaMstr") ? bT : GrdBusq.Columns[5].HeaderText;
+                    // *************************************************Asignar documentos *************************************************
+                    LblTitAsingar.Text = bO.Equals("IbtBusqSP") ? bT : LblTitAsingar.Text;
+                    IbtCerrarAsignar.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarAsignar.ToolTip;
+                    LblAsigProv.Text = bO.Equals("GrdProv") ? bT : LblAsigProv.Text;
+                    IbtAprDetAll.ToolTip = bO.Equals("IbtAprDetAll") ? bT : IbtAprDetAll.ToolTip;
+                    BtnAsignar.Text = bO.Equals("LblAsigMstr") ? bT : BtnAsignar.Text;
+                    GrdAsignarComRep.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdAsignarComRep.EmptyDataText;
+                    GrdAsignarComRep.Columns[1].HeaderText = bO.Equals("PedidoMstr") ? bT : GrdAsignarComRep.Columns[1].HeaderText;
+                    GrdAsignarComRep.Columns[4].HeaderText = bO.Equals("Descripcion") ? bT : GrdAsignarComRep.Columns[4].HeaderText;
+                    GrdAsignarComRep.Columns[5].HeaderText = bO.Equals("CantDoc") ? bT : GrdAsignarComRep.Columns[5].HeaderText;
+                    GrdAsignarComRep.Columns[6].HeaderText = bO.Equals("CantPend") ? bT : GrdAsignarComRep.Columns[6].HeaderText;
+                    GrdAsignarComRep.Columns[7].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdAsignarComRep.Columns[7].HeaderText;
                 }
                 DataRow[] Result = Idioma.Select("Objeto= 'MensConfEli'");
                 foreach (DataRow row in Result) { BtnEliminar.OnClientClick = "return confirm('" + row["Texto"].ToString().Trim() + "');"; }
@@ -296,20 +325,27 @@ namespace _77NeoWeb.Forms.Comex
         protected void ValidarCampos(string Accion)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
+            DataRow[] Result;
             ViewState["Validar"] = "S";
             if (TxtGuia.Text.Trim().Equals(""))
             {
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Debe ingresar la Guia');", true);
+                Result = Idioma.Select("Objeto= 'Mens08OE'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar la Guia.
                 ViewState["Validar"] = "N"; TxtGuia.Focus(); return;
             }
             if (RdbCompra.Checked == false && RdbRepa.Checked == false && RdbIntercambio.Checked == false)
             {
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Debe seleccionar si es compra, reparación o intercambio');", true);
+                Result = Idioma.Select("Objeto= 'Mens01OE'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe seleccionar si es compra, reparación o intercambio.
                 ViewState["Validar"] = "N"; return;
             }
             if (RdbImportar.Checked == false && RdbExporar.Checked == false)
             {
-                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Debe seleccionar si es una importación o exportación');", true);
+                Result = Idioma.Select("Objeto= 'Mens02OE'");
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//	Debe seleccionar si es una importación o exportación.
                 ViewState["Validar"] = "N"; return;
             }
         }
@@ -494,9 +530,9 @@ namespace _77NeoWeb.Forms.Comex
                     string CodUndMedida = "KG";
                     string NroGuia = TxtGuia.Text.Trim();
                     string ShipVia = S_ShipVia.Trim();
-                    double Peso = Convert.ToDouble(TxtPeso.Text.Trim());
+                    double Peso = TxtPeso.Text.Trim().Equals("") ? 0 : TxtPeso.Text.Trim().Equals("") ? 0 : Convert.ToDouble( TxtPeso.Text.Trim());
                     string UsuCrea = RdbImportar.Checked == true ? "Importacion" : "Exportacion";
-                    int NroPaquete = Convert.ToInt32(TxtNrPaq.Text.Trim());
+                    int NroPaquete = TxtNrPaq.Text.Trim().Equals("") ? 0 : Convert.ToInt32(TxtNrPaq.Text.Trim());
                     string Observaciones = TxtObsrv.Text.Trim();
 
                     TblEncShipping.Rows.Add(IdShippingOrder, CodShippingOrder, Fecha, ShippedTo, IdSucursalTo, ShippedFrom, IdSucursalFrom, CodUndMedida,
@@ -504,7 +540,6 @@ namespace _77NeoWeb.Forms.Comex
                     string S_Fac = "";
                     foreach (GridViewRow Row in GrdDet.Rows)
                     {
-
                         S_Fac = (Row.FindControl("TxtFact") as TextBox).Text.Trim();
                         string S_NuDoc = (Row.FindControl("LblNumDoc") as Label).Text.Trim();
                         if (!S_Fac.Equals(""))
@@ -517,7 +552,6 @@ namespace _77NeoWeb.Forms.Comex
                     int I_Pos = 0;
                     foreach (DataRow DR in TblDetalle.Rows)
                     {
-
                         int IdDetShippingOrder = 0;
                         I_Pos += 1;
                         double IddetOrdenCompra = Convert.ToDouble(DR["IdDetOrdenCompra"].ToString().Trim());
@@ -593,6 +627,9 @@ namespace _77NeoWeb.Forms.Comex
                     }
                     if (!PMensj.Equals(""))
                     {
+                        DataRow[] Result2 = Idioma.Select("Objeto= '" + PMensj.ToString().Trim() + "'");
+                        foreach (DataRow row in Result2)
+                        { PMensj = row["Texto"].ToString().Trim(); }
                         ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + PMensj + "');", true);
                         TblEncShipping.Rows.Clear();
                         TblDetShipping.Rows.Clear();
@@ -842,7 +879,6 @@ namespace _77NeoWeb.Forms.Comex
         {
 
         }
-
         //****************************** Busqueda **************************************
         protected void BIndDBusqSP()
         {
@@ -903,7 +939,17 @@ namespace _77NeoWeb.Forms.Comex
         }
         protected void GrdBusq_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                DataRow[] Result = Idioma.Select("Objeto='IbtIrMstr'");
+                ImageButton IbtIr = (e.Row.FindControl("IbtIr") as ImageButton);
+                if (IbtIr != null)
+                {
+                    foreach (DataRow RowIdioma in Result)
+                    { IbtIr.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                }
+            }
         }
         protected void IbtCerrarBusq_Click(object sender, ImageClickEventArgs e)
         { MultVw.ActiveViewIndex = 0; }
@@ -941,11 +987,28 @@ namespace _77NeoWeb.Forms.Comex
         }
         protected void GrdDet_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            DataRow[] Result;
             if (e.CommandName.Equals("AddNew"))
             {
-                if (RdbCompra.Checked == true && RdbExporar.Checked == true) { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('La compra solo permite importar');", true); return; }
-                if (RdbCompra.Checked == false && RdbRepa.Checked == false && RdbIntercambio.Checked == false) { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Debe seleccionar si es compra, reparación o intercambio');", true); return; }
-                if (RdbImportar.Checked == false && RdbExporar.Checked == false) { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('Debe seleccionar si es una importación o exportación');", true); return; }
+                if (RdbCompra.Checked == true && RdbExporar.Checked == true)
+                {
+                    Result = Idioma.Select("Objeto= 'Mens03OE'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); return; }//La compra solo permite importar
+                }
+                if (RdbCompra.Checked == false && RdbRepa.Checked == false && RdbIntercambio.Checked == false)
+                {
+                    Result = Idioma.Select("Objeto= 'Mens01OE'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); return; }//Debe seleccionar si es compra, reparación o intercambio
+                }
+                if (RdbImportar.Checked == false && RdbExporar.Checked == false)
+                {
+                    Result = Idioma.Select("Objeto= 'Mens02OE'");
+                    foreach (DataRow row in Result)
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); return; }//Debe seleccionar si es una importación o exportación
+                }
                 RdbCompra.Enabled = false;
                 RdbRepa.Enabled = false;
                 RdbIntercambio.Enabled = false;
@@ -967,9 +1030,29 @@ namespace _77NeoWeb.Forms.Comex
         }
         protected void GrdDet_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            DataRow[] Result;
+            if (e.Row.RowType == DataControlRowType.DataRow)  // registros
+            {
+                ImageButton imgD = e.Row.FindControl("IbtDelete") as ImageButton;
+                if (imgD != null)
+                {
+                    Result = Idioma.Select("Objeto='IbtDelete'");
+                    foreach (DataRow RowIdioma in Result)
+                    { imgD.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+                    Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
+                    foreach (DataRow row in Result)
+                    { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
+                }
+            }
+            if (e.Row.RowType == DataControlRowType.Footer)
+            {
+                ImageButton IbtBusqSP = (e.Row.FindControl("IbtBusqSP") as ImageButton);
+                Result = Idioma.Select("Objeto='IbtBusqSP'");
+                foreach (DataRow RowIdioma in Result)
+                { IbtBusqSP.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
+            }
         }
-
         //****************************** Concpetos **************************************
         protected void IbtCerrarCnptos_Click(object sender, ImageClickEventArgs e)
         { MultVw.ActiveViewIndex = 0; }
@@ -1026,7 +1109,9 @@ namespace _77NeoWeb.Forms.Comex
             Page.Title = ViewState["PageTit"].ToString().Trim();
             try
             {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
                 TblDetalle = (DataTable)ViewState["TblDetalle"];
+                DataRow[] Result;
                 TblDetalle.AcceptChanges();
                 foreach (GridViewRow Row in GrdAsignarComRep.Rows)
                 {
@@ -1061,13 +1146,29 @@ namespace _77NeoWeb.Forms.Comex
                         int I_Aprov = Convert.ToInt32(GrdAsignarComRep.DataKeys[Row.RowIndex].Values["Aprobado"].ToString().Trim());
 
                         if (S_Tdc == "R" && RdbImportar.Checked == true && I_TtlDoc == 0)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('P/N: [" + S_Pn + "] Debe realizar primero la exportación');", true); return; }
+                        {
+                            Result = Idioma.Select("Objeto= 'Mens04OE'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('P/N: [" + S_Pn + "] " + row["Texto"].ToString() + "');", true); return; }//Debe realizar primero la exportación
+                        }
                         if (D_CSO <= 0)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('P/N: [" + S_Pn + "] La cantidad debe ser superior a 0');", true); return; }
+                        {
+                            Result = Idioma.Select("Objeto= 'Mens05OE'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('P/N: [" + S_Pn + "] " + row["Texto"].ToString() + "');", true); return; }//La cantidad debe ser superior a 0.
+                        }
                         if (D_CSO > D_CPF)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('P/N: [" + S_Pn + "] La cantidad supera la pendiente por registrar');", true); return; }
+                        {
+                            Result = Idioma.Select("Objeto= 'Mens06OE'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('P/N: [" + S_Pn + "] " + row["Texto"].ToString() + "');", true); return; }//La cantidad supera la pendiente por registrar.
+                        }
                         if (I_Aprov == 0)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('P/N: [" + S_Pn + "] El documento no se encuentra aprobado');", true); return; }
+                        {
+                            Result = Idioma.Select("Objeto= 'Mens07OE'");
+                            foreach (DataRow row in Result)
+                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('P/N: [" + S_Pn + "] " + row["Texto"].ToString() + "');", true); return; }//El documento no se encuentra aprobado.
+                        }
 
                         DataRow dr = TblDetalle.Select("IdDetOrdenCompra = " + Convert.ToString(D_IdDC)).FirstOrDefault(); // finds all rows with id==2 and selects first or null if haven't found any
                         if (dr == null)

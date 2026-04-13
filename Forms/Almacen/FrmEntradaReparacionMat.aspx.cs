@@ -507,10 +507,8 @@ namespace _77NeoWeb.Forms.Almacen
                     foreach (DataRow RowIdioma in Result)
                     { IbtAbrir.ToolTip = RowIdioma["Texto"].ToString().Trim(); }
                 }
-
                 DataRowView DRW = e.Row.DataItem as DataRowView;
                 double VbDCanEnt = Convert.ToDouble(DRW["CantIngresar"].ToString().Trim());
-
                 if (VbDCanEnt > 0)
                 {
                     IbtAbrir.Visible = false; e.Row.BackColor = System.Drawing.Color.PaleGreen;
@@ -650,6 +648,7 @@ namespace _77NeoWeb.Forms.Almacen
             Page.Title = ViewState["PageTit"].ToString().Trim();
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DSDetalle = (DataSet)ViewState["DSDetalle"];
+            DSAsignar = (DataSet)ViewState["DSAsignar"];
             if (DSDetalle == null) { return; }
             try
             {
@@ -664,6 +663,10 @@ namespace _77NeoWeb.Forms.Almacen
                 List<CsInsertElementoAlmacen> ObjDetalle = new List<CsInsertElementoAlmacen>();
                 foreach (DataRow Row in DSDetalle.Tables["CurTemporal"].Rows)
                 {
+                    //Buscar  el estado dela bodega destino
+                    string S_BodDest = Row["CodUbicaBodega"].ToString();
+                    string S_Codstd = DSAsignar.Tables["Bodegas"].AsEnumerable().Where(x => x.Field<string>("CodUbicaBodega") == S_BodDest)
+                   .Select(x => x.Field<string>("CodEstadoBodega")).FirstOrDefault();
                     var TypDetalle = new CsInsertElementoAlmacen()
                     {
                         IdIE = Convert.ToInt32(0),
@@ -680,7 +683,7 @@ namespace _77NeoWeb.Forms.Almacen
                         Valor = Convert.ToDouble(Row["ValorRepa"].ToString()),
                         CodUndMed = Row["CodUM"].ToString(),
                         IdAlmacen = Convert.ToInt32(DdlAlmacen.Text.Trim()),
-                        CodBodega = Row["CodUbicaBodega"].ToString().Trim(),
+                        CodBodega = Row["CodUbicaBodega"].ToString().Trim(),// Bodega seleccionada en el detalle de la asignacion
                         CodShippingOrder = Row["CodSO"].ToString().Trim(),
                         Posicion = Row["Pos"].ToString().Trim(),
                         CodAeronave = 0,
@@ -696,8 +699,8 @@ namespace _77NeoWeb.Forms.Almacen
                         Valor_Compra = Convert.ToDouble(Row["Valor_Compra"].ToString().Trim()),
                         UndMed_Compra = Row["CodUM"].ToString(),
                         FacturaNro = Row["FacturaNro"].ToString().Trim(),
-                        NumSolPed = "",
-                        CodUbicaDest = Row["CodUbicaBodDest"].ToString(),
+                        NumSolPed = S_Codstd,
+                        CodUbicaDest = Row["CodUbicaBodDest"].ToString(),// Bodega INTA o NALS
                         CCosto = Row["CCosto"].ToString().Trim(),
                         AfectaInventario = Convert.ToInt32(Row["AfectaInventario"]),
                         CostoImportacion = Convert.ToDouble(Row["CostoComex"].ToString()),
@@ -725,13 +728,13 @@ namespace _77NeoWeb.Forms.Almacen
                 {
                     string VblPn = ClaseIEA.GetPn().Trim().Equals("") ? "" : "  [P/N: " + ClaseIEA.GetPn().Trim() + "]  ";
                     string VblSn = ClaseIEA.GetSn().Trim().Equals("") ? "" : " [S/N: " + ClaseIEA.GetSn().Trim() + "] ";
-                    string VbLote = ClaseIEA.GetLote().Trim().Equals("") ? "" : " [LT/N: " + ClaseIEA.GetLote().Trim() + "]";                   
+                    string VbLote = ClaseIEA.GetLote().Trim().Equals("") ? "" : " [LT/N: " + ClaseIEA.GetLote().Trim() + "]";
                     DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                     foreach (DataRow row in Result)
                     { Mensj = row["Texto"].ToString().Trim(); }
                     ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + VblPn + VblSn + "');", true);
                     return;
-                }                
+                }
                 TxtObserv.Text = "";
                 DdlAlmacen.Text = "0";
                 RdbNacional.Checked = false;

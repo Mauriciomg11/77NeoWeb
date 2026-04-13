@@ -135,7 +135,7 @@ namespace _77NeoWeb.Forms.Almacen
 
             DataTable HK = new DataTable();
             DataTable Tipo = new DataTable();
-            string VbTxtSql = "EXEC SP_PANTALLA_Incoming 3,@U,'','','ALL',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+            string VbTxtSql = "EXEC SP_PANTALLA_Incoming 3,@U,'','','ALL',0,0,@Idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
@@ -144,6 +144,7 @@ namespace _77NeoWeb.Forms.Almacen
                 {
                     SC.Parameters.AddWithValue("@U", Session["C77U"]);
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                    SC.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                     using (SqlDataAdapter SDA = new SqlDataAdapter())
                     {
                         SDA.SelectCommand = SC;
@@ -343,6 +344,9 @@ namespace _77NeoWeb.Forms.Almacen
             DataRow[] Result = DtAll.Select("Filtro='UBICA' AND Descr='" + DdlBodDest.Text.Trim() + "' AND Cod<>'" + CodUbOr.Trim() + "' AND "+ S_CodTercero);// ' AND CodTercero='" + CodTerc.Trim() + "'
             foreach (DataRow Row in Result)
             { DtB.ImportRow(Row); }
+            DataView DV = DtB.DefaultView;
+            DV.Sort = "Descr,Columna,Fila";
+            DtB = DV.ToTable();
             GrdUbicaDes.DataSource = DtB; GrdUbicaDes.DataBind();
         }
         protected void IbtCerrarCambioBod_Click(object sender, ImageClickEventArgs e)

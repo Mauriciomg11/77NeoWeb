@@ -162,13 +162,17 @@
                 </asp:View>
                 <asp:View ID="Vw1SinConfigurar" runat="server">
                     <asp:ImageButton ID="IbtCloseSinConfg" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCloseSinConfg_Click" />
-                    <div class="CentrarSinConfg DivMarco">
-                        <h6 class="TextoSuperior">
-                            <asp:Label ID="LblTitSinConf" runat="server" Text="Elementos sin asingar fecha vencimiento" />
-                        </h6>
+                    <div class="CentrarContenedor DivMarco">
+                        <div class="row">
+                            <div class="col-sm-11">
+                                <h6 class="TextoSuperior">
+                                    <asp:Label ID="LblTitSinConf" runat="server" Text="Elementos sin asingar fecha vencimiento" />
+                                </h6>
+                            </div>
+                        </div>
                         <div class="GridDis">
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-11">
                                     <asp:GridView ID="GrdSinConfg" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false"
                                         CssClass="DiseñoGrid table table-sm" GridLines="Both">
                                         <Columns>

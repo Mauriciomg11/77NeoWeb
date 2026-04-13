@@ -91,7 +91,8 @@
         <asp:View ID="Vw0St" runat="server">
             <asp:UpdatePanel ID="UplPpal" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                     <br /> <br />
+                    <br />
+                    <br />
                     <div class="row">
                         <div class="col-sm-2">
                             <asp:Label ID="LblStsHK" runat="server" CssClass="LblEtiquet" Text="Aeronave" />
@@ -107,7 +108,7 @@
                         </div>
                         <div class="col-sm-2">
                             <asp:Label ID="LblStsFecCarga" runat="server" CssClass="LblEtiquet" Text="Ultima Fecha Carga" Width="100%" />
-                            <asp:TextBox ID="TxtStsFecCarga" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="100%" TextMode ="Date" />
+                            <asp:TextBox ID="TxtStsFecCarga" runat="server" CssClass="form-control heightCampo" Enabled="false" Width="100%" TextMode="Date" />
                         </div>
                         <div class="col-sm-1">
                             <asp:Label ID="LblStsTSN" runat="server" CssClass="LblEtiquet" Text="Horas" />
@@ -123,7 +124,7 @@
                         </div>
                         <div class="col-sm-1">
                             <asp:Label ID="LblModifDiaProy" runat="server" CssClass="LblEtiquet" Text="Actualizar" /><br />
-                            <asp:Button ID="BtnModifDiaProy" runat="server" CssClass="btn btn-success heightCampo" OnClick="BtnModifDiaProy_Click" ToolTip="Modificar dias proyección"/>
+                            <asp:Button ID="BtnModifDiaProy" runat="server" CssClass="btn btn-success heightCampo" OnClick="BtnModifDiaProy_Click" ToolTip="Modificar dias proyección" />
                         </div>
                     </div>
                     <div class="row">
@@ -198,8 +199,121 @@
                         </div>
                     </div>
                     <div class="table-responsive Scroll-table2">
-                        <asp:GridView ID="GrdStatusReport" runat="server" EmptyDataText="No existen registros ..!"
+                        <asp:GridView ID="GrdStatusReport" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
                             CssClass="GridControl DiseñoGrid table-sm" GridLines="Both">
+                            <Columns>
+                                <asp:TemplateField HeaderText="ata" ItemStyle-CssClass="AutoColunmGV">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblATA" Text='<%# Eval("CodCapitulo") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="descr">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblDesc" Text='<%# Eval("Descripcion") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="doc">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblDoc" Text='<%# Eval("NumdoCumento") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Pn" ItemStyle-CssClass="AutoColunmGV">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblPn" Text='<%# Eval("Pn") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="SN" ItemStyle-CssClass="AutoColunmGV">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblSn" Text='<%# Eval("Sn") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Fecha cumplido">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblFecCu" Text='<%# Eval("fechaUltiSvc") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Fecha Instalación">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblFecInst" Text='<%# Eval("FechaInst") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="C">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblC" Text='<%# Eval("Contador") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Total">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblTtl" Text='<%# Eval("Total") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Frecuencia">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblFrec" Text='<%# Eval("Frecuencia") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="UndMed">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblUndMed" Text='<%# Eval("UndMed") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Frecuencia Días">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblFrecD" Text='<%# Eval("FrecuenciaDia") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Tipo">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblTipo" Text='<%# Eval("TipoSrv") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Cumplido">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblCump" Text='<%# Eval("ValorCumpl") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Acumulado">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblAcum" Text='<%# Eval("Acum") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Cumplir">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblCumpl" Text='<%# Eval("ProxSrv") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Cumplir Fecha">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblCumplFec" Text='<%# Eval("ProxSrvFech") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Remanente">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblRemain" Text='<%# Eval("Remanente") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                               <asp:TemplateField HeaderText="Remanente Día">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblRmainD" Text='<%# Eval("RemanenteDia") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField> 
+                                <asp:TemplateField HeaderText="OT" ItemStyle-CssClass="AutoColunmGV">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblOT" Text='<%# Eval("OT") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Proyección">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblProy" Text='<%# Eval("Proyec") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="WorkSheet">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblWS" Text='<%# Eval("WorkSheet") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                 <%----%>
+                            </Columns>
                             <FooterStyle CssClass="GridFooterStyle" />
                             <HeaderStyle CssClass="GridCabecera" />
                             <RowStyle CssClass="GridRowStyle" />
@@ -220,7 +334,8 @@
         <asp:View ID="Vw1Imprimir" runat="server">
             <asp:UpdatePanel ID="UplPrint" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                     <br /><br />
+                    <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitImpresion" runat="server" Text="Opciones de Informes" /></h6>
                     <asp:ImageButton ID="IbtCerrarPrint" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarPrint_Click" ImageAlign="Right" />
@@ -248,7 +363,7 @@
         <asp:View ID="Vw2Order" runat="server">
             <asp:UpdatePanel ID="UplOrder" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                     <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitOrdenarGrupImpr" runat="server" Text="Orden de impresión de grupos" /></h6>
                     <asp:ImageButton ID="IbtCerrarOrder" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarOrder_Click" ImageAlign="Right" />
@@ -306,7 +421,7 @@
         <asp:View ID="Vw3AsignarOTPPT" runat="server">
             <asp:UpdatePanel ID="UplAsigOTPPT" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                     <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitAsigOTPPT" runat="server" Text="Órdenes sin asignación de propuesta" /></h6>
                     <asp:ImageButton ID="IbtCerrarAsigOtPPT" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarAsigOtPPT_Click" ImageAlign="Right" />
@@ -486,7 +601,7 @@
         <asp:View ID="Vw4LiberarOTPPT" runat="server">
             <asp:UpdatePanel ID="UplLiberarOT" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                     <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitLiberarOT" runat="server" Text="Liberar orden de trabajo de una propuesta a todo costo" /></h6>
                     <asp:ImageButton ID="IbtCerrarLiberarOT" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarLiberarOT_Click" ImageAlign="Right" />
@@ -515,7 +630,7 @@
         <asp:View ID="Vw5StatusAnterior" runat="server">
             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                     <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="TitStsAnterior" runat="server" Text="Consultar estatus en fecha anteriores" /></h6>
                     <asp:ImageButton ID="IbtCerrarLStsAnterior" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarLStsAnterior_Click" ImageAlign="Right" />

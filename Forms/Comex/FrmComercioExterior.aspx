@@ -673,7 +673,7 @@
                     <asp:ImageButton ID="IbtCerrarAsignar" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarAsignar_Click" />
                     <div class="CentrarBusq DivMarco">
                         <div class="CentrarGrid pre-scrollable">
-                            <asp:Label ID="Label1" runat="server" CssClass="LblEtiquet" Text="Proveedor" />
+                            <asp:Label ID="LblAsigProv" runat="server" CssClass="LblEtiquet" Text="Proveedor" />
                             <asp:DropDownList ID="DdlProv" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="DdlProv_TextChanged" AutoPostBack="true" />
                             <br />
                             <br />

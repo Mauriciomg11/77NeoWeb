@@ -79,7 +79,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 if (CodOTRepa > 0) // OT
                 { TraerDatosBusqOT(CodOTRepa, "UPD"); Session["PCodOT"] = "0"; }
                 else { TraerDatosBusqOT(0, "UPD"); }
-                BindDdlOTCondicional("");
+                BindDdlOTCondicional("",0);
                 PerfilesGrid();
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
@@ -906,16 +906,13 @@ namespace _77NeoWeb.Forms.Ingenieria
                     }
                 }
                 DSTOTGrl = (DataSet)ViewState["DSTOTGrl"];
-
                 string VbCodAnt = "";
-
                 VbCodAnt = DdlBusqOT.Text.Trim().Equals("") ? "0" : DdlBusqOT.Text.Trim();
                 DdlBusqOT.DataSource = DSTOTGrl.Tables[1];
                 DdlBusqOT.DataTextField = "Descripcion";
                 DdlBusqOT.DataValueField = "Codigo";
                 DdlBusqOT.DataBind();
                 DdlBusqOT.Text = VbCodAnt;
-
                 DdlOTAero.DataSource = DSTOTGrl.Tables[2];
                 DdlOTAero.DataTextField = "Matricula";
                 DdlOTAero.DataValueField = "CodAeronave";
@@ -924,17 +921,14 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DdlAeroRte.DataTextField = "Matricula";
                 DdlAeroRte.DataValueField = "CodAeronave";
                 DdlAeroRte.DataBind();
-
                 DdlOtEstado.DataSource = DSTOTGrl.Tables[3];
                 DdlOtEstado.DataTextField = "Descripcion";
                 DdlOtEstado.DataValueField = "Codigo";
                 DdlOtEstado.DataBind();
-
                 DdlOtEstaSec.DataSource = DSTOTGrl.Tables[4];
                 DdlOtEstaSec.DataTextField = "Descripcion";
                 DdlOtEstaSec.DataValueField = "Codigo";
                 DdlOtEstaSec.DataBind();
-
                 if (DSTOTGrl.Tables[0].Rows.Count > 0)
                 {
                     TxtOt.Text = HttpUtility.HtmlDecode(DSTOTGrl.Tables[0].Rows[0]["CodNumOrdenTrab"].ToString().Trim());
@@ -987,8 +981,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DdlLicInsp(ViewState["InsptAnt"].ToString().Trim(), VbLInsp);
                     string VbResp = DSTOTGrl.Tables[0].Rows[0]["CodResponsable"].ToString().Trim();
                     ViewState["CCstAnt"] = DSTOTGrl.Tables[0].Rows[0]["CentroCosto"].ToString().Trim();
-                    BindDdlOTCondicional(VbResp);
-
+                    BindDdlOTCondicional(VbResp, NumOT);
                     DdlOtLicInsp.Text = VbLInsp;
                     DdlOtRespons.Text = VbResp;
                     TxtAplicab.Text = HttpUtility.HtmlDecode(DSTOTGrl.Tables[0].Rows[0]["Aplicabilidad"].ToString().Trim());
@@ -1001,10 +994,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     { BtnOtModificar.Enabled = true; BtnOTEliminar.Enabled = true; }
                     else
                     { BtnOTEliminar.Enabled = false; }
-
                     string VbFecSt;
                     DateTime? VbFecDT;
-
                     VbFecSt = DSTOTGrl.Tables[0].Rows[0]["FechaReg"].ToString().Trim().Equals("") ? "01/01/1900" : DSTOTGrl.Tables[0].Rows[0]["FechaReg"].ToString().Trim();
                     VbFecDT = Convert.ToDateTime(VbFecSt);
                     TxtOTFechReg.Text = VbFecSt.Equals("01/01/1900") ? "" : string.Format("{0:yyyy-MM-dd}", VbFecDT);
@@ -1058,7 +1049,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     EstadoPasos();
                 }
             }
-            catch (Exception)
+            catch (Exception EX)
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
                 foreach (DataRow row in Result)
@@ -1082,7 +1073,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             { isFull = true; break; }
             return isFull;
         }
-        protected void BindDdlOTCondicional(string RSP)
+        protected void BindDdlOTCondicional(string RSP, int NumOT)
         {
             DSTOTGrl = (DataSet)ViewState["DSTOTGrl"];
             DataRow[] Result;
@@ -1135,7 +1126,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DdlOtInsp.Text = ViewState["InsptAnt"].ToString().Trim();
             }
 
-            LtxtSql = string.Format("EXEC SP_PANTALLA_OrdenTrabajo2 5,'{0}','','','','RESP',0,0,0,0,'01-01-01','01-01-01','01-01-01'", RSP);
+            LtxtSql = string.Format("EXEC SP_PANTALLA_OrdenTrabajo2 5,'{0}','','{1}','','RESP',0,0,0,0,'01-01-01','01-01-01','01-01-01'", RSP, NumOT);
             DdlOtRespons.DataSource = Cnx.DSET(LtxtSql);
             DdlOtRespons.DataMember = "Datos";
             DdlOtRespons.DataTextField = "Tecnico";
@@ -1256,7 +1247,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     DdlLicInsp(ViewState["InsptAnt"].ToString().Trim(), VbLInsp);
                     string VbResp = DdlOtRespons.Text.Trim();
                     ViewState["CCstAnt"] = DdlOtCCosto.Text.Trim();
-                    BindDdlOTCondicional(VbResp);
+                    BindDdlOTCondicional(VbResp,0);
                     DdlOtLicInsp.Text = VbLInsp;
                     DdlOtRespons.Text = VbResp;
                     ActivarBtnOT(false, true, false, false, false);

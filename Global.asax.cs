@@ -26,6 +26,7 @@ namespace _77NeoWeb
         protected void Session_Start(object sender, EventArgs e)
         {
             /*
+            10.02.05.30 | 13/04/2026 | Ajustes Orden de Embarque|Categoría Maestro de Artículo|Herramientas Próximos Vencimientos|Asignaciones|Referencias|Aeronave Virtual|Orden de Trabajo|Movimientos de Almacén|Status Report|Consulta Movimientos de Almacén.   
             10.02.05.29 | 30/03/2026 | Creacion del informe de logistica de entradas y salidas.   
             10.02.05.28 | 23/03/2026 | Creacion de conciliacion en informe de logistica y pasar de idioma el sistema.       
             10.02.05.27 | 12/03/2026 | Se crea el formulario de Salida Baja
@@ -38,7 +39,7 @@ namespace _77NeoWeb
             10.02.05.21 | 04/02/2025 | corrección formularios Incoming y Movimientos Almacen, no se visualizaba el detalle
             10.02.05.21 | 28/01/2025 | implementacion Menu
              */
-            Session["77Version"] = "10.02.05.28";
+            Session["77Version"] = "10.02.05.30";
             Session["77Act"] = "1";
             Session["$VR"] = "";
             Session["Nit77Cia"] = ""; // Nita cia 811035879-1

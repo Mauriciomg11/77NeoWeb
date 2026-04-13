@@ -1152,7 +1152,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 string VblReparable = GrdDatos.SelectedRow.Cells[17].Text;
                 if (VblReparable.Equals("N/A"))
                 { RdbSi.Checked = false; RdbNo.Checked = false; }
-                else if (VblReparable.Equals("S"))
+                else if (VblReparable.Equals("Y"))
                 { RdbSi.Checked = true; RdbNo.Checked = false; }
                 else
                 { RdbSi.Checked = false; RdbNo.Checked = true; }
