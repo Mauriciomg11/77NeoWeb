@@ -31,5 +31,19 @@ namespace _77NeoWeb.Forms.Seguridad
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblVersion;
+
+        /// <summary>
+        /// Propiedad Master.
+        /// </summary>
+        /// <remarks>
+        /// Propiedad generada automáticamente.
+        /// </remarks>
+        public new _77NeoWeb.MasterTransac Master
+        {
+            get
+            {
+                return ((_77NeoWeb.MasterTransac)(base.Master));
+            }
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmModelo.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.MaestIngPrg.FrmModelo" %>
-
+<%@ MasterType VirtualPath="~/MasterTransac.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Modelos</title>
     <script type="text/javascript">

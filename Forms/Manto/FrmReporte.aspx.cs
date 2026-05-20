@@ -1057,7 +1057,7 @@ namespace _77NeoWeb.Forms.Manto
                         { VbMnsjIdm = row["Texto"].ToString().Trim(); }
                         DdlPnRte.ToolTip = VbMnsjIdm; TxtSnRte.ToolTip = VbMnsjIdm;
                     }
-                    if (DdlPnRte.Text.Trim().Equals("") && !DdlOtRte.Text.Trim().Equals("0")  && ViewState["ESTAPPT"].ToString().Equals("N"))
+                    if (DdlPnRte.Text.Trim().Equals("") && !DdlOtRte.Text.Trim().Equals("0") && ViewState["ESTAPPT"].ToString().Equals("N"))
                     { DdlAeroRte.Enabled = DdlAeroRte.Text.Equals("0") ? Edi : false; }
                 }
                 else

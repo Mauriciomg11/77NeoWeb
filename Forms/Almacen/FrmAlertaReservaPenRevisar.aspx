@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmAlertaReservaPenRevisar.aspx.cs" Inherits="_77NeoWeb.Forms.Almacen.FrmAlertaReservaPenRevisar" %>
 
+<%@ MasterType VirtualPath="~/MasterTransac.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         .GridDivScroll {
@@ -138,4 +139,32 @@
 
         </div>
     </div>
+    <script type="text/javascript">
+        var originalTitle;
+        var timer;
+
+        // Función para iniciar el parpadeo
+        function StartBlink(newTitle) {
+            if (!timer) {
+                originalTitle = document.title;
+                timer = setInterval(function () {
+                    document.title = (document.title === originalTitle) ? newTitle : originalTitle;
+                }, 1000); // Cambia cada 1 segundo
+            }
+        }
+
+        // Función para detener el parpadeo
+        function StopBlink() {
+            if (timer) {
+                clearInterval(timer);
+                document.title = originalTitle;
+                timer = null;
+            }
+        }
+
+        // Detener el parpadeo cuando el usuario vuelve a la pestaña
+        window.onfocus = function () {
+            StopBlink();
+        };
+</script>
 </asp:Content>

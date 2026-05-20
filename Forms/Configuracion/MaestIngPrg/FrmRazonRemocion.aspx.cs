@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -14,6 +15,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
     public partial class FrmRazonRemocion : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
+        DataTable IdiomaAll = new DataTable();
         DataTable Idioma = new DataTable();
         DataTable DTDet = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
@@ -90,39 +92,19 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         }
         protected void IdiomaControles()
         {
-            Idioma.Columns.Add("Objeto", typeof(string));
-            Idioma.Columns.Add("Texto", typeof(string));
-            using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
-            {
-                string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
-                SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
-                SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
-                SC.Parameters.AddWithValue("@F1", ViewState["PFileName"]);
-                SC.Parameters.AddWithValue("@F2", "");
-                SC.Parameters.AddWithValue("@F3", "");
-                SC.Parameters.AddWithValue("@F4", "");
-                sqlCon.Open();
-                SqlDataReader tbl = SC.ExecuteReader();
-                while (tbl.Read())  //Todos los objetos
-                {
-                    string bO = tbl["Objeto"].ToString().Trim();
-                    string bT = tbl["Texto"].ToString().Trim();
-                    Idioma.Rows.Add(bO, bT);
-                    if (bO.Equals("Caption"))
-                    { Page.Title = bT; ViewState["PageTit"] = bT; }
-
-                    TitForm.Text = bO.Equals("TituloRaz") ? bT : TitForm.Text;
-                    LblBusqueda.Text = bO.Equals("LblBusqueda") ? bT + ":" : LblBusqueda.Text;
-                    if (bO.Equals("placeholder"))
-                    { TxtBusqueda.Attributes.Add("placeholder", bT); }
-                    IbtConsultar.ToolTip = bO.Equals("IbtConsultar") ? bT : IbtConsultar.ToolTip;
-                    IbtExpExcel.ToolTip = bO.Equals("IbtExpExcel") ? bT : IbtExpExcel.ToolTip;
-                    GrdDatos.Columns[0].HeaderText = bO.Equals("GrdDesc") ? bT : GrdDatos.Columns[0].HeaderText;
-                    GrdDatos.Columns[1].HeaderText = bO.Equals("GrdAct") ? bT : GrdDatos.Columns[1].HeaderText;
-                }
-                sqlCon.Close();
-                ViewState["TablaIdioma"] = Idioma;
-            }
+            IdiomaAll = (DataTable)Session["TblIdmGrl"];
+            DataRow[] DR = IdiomaAll.Select("CodF IN('0','" + ViewState["PFileName"] + "')");
+            if (Cnx.ValidaDataRowVacio(DR))
+            { Idioma = DR.CopyToDataTable(); ViewState["TablaIdioma"] = Idioma; }
+            Page.Title = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "Caption").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            ViewState["PageTit"] = Page.Title;
+            TitForm.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "TituloRaz").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblBusqueda.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblBusqueda").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            TxtBusqueda.Attributes.Add("placeholder", Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "placeholder").Select(x => x.Field<string>("Texto")).FirstOrDefault());
+            IbtConsultar.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "IbtConsultar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            IbtExpExcel.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "IbtExpExcel").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[0].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdDesc").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[1].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdAct").Select(x => x.Field<string>("Texto")).FirstOrDefault();
         }
         protected void BindData(string VbConsultar, string Accion)
         {

@@ -45,6 +45,11 @@ namespace _77NeoWeb.Forms.Almacen
                 IdiomaControles();
                 BindModalRvNew();
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "ModalAlerta", "$('#ModalAlerta').modal();", true);
+                string mensaje = "¡Nueva Alerta!";
+                // Llama a la función JavaScript "StartBlink"
+                string script = $"StartBlink('{mensaje}');";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "blinkScript", script, true);
             }
         }
         protected void IdiomaControles()

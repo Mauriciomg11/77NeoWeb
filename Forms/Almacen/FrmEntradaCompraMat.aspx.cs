@@ -74,7 +74,6 @@ namespace _77NeoWeb.Forms.Almacen
             string VbPC = Cnx.GetIpPubl();
             ClsP.Acceder(Session["C77U"].ToString(), "FrmMovimientoActivo.aspx", VbPC);
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
-
             IdiomaControles();
         }
         protected void IdiomaControles()

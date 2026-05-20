@@ -44,6 +44,14 @@ namespace _77NeoWeb.Forms.Almacen
                 IdiomaControles();
                 BindModal();
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "ModalAlerta", "$('#ModalAlerta').modal();", true);
+                // Llama a la función JS que inicia el parpadeo
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                string S_Mensj ="";
+                DataRow[] Result = Idioma.Select("Objeto= 'MensjAlert'");
+                foreach (DataRow row in Result)
+                { S_Mensj =row["Texto"].ToString().Trim(); }//NUEVA ALERTA.
+                string script = string.Format("startFlash('{0}');", S_Mensj);
+                ClientScript.RegisterStartupScript(this.GetType(), "BlinkAlert", script, true);
             }
         }
         protected void IdiomaControles()

@@ -1,9 +1,11 @@
 ﻿using _77NeoWeb.prg;
+using _77NeoWeb.Prg;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -13,7 +15,8 @@ namespace _77NeoWeb.Forms.Seguridad
     public partial class FrmInicio : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
-        DataTable Idioma = new DataTable();
+        AlertRvaNew Alrt = new AlertRvaNew();
+        DataTable Idioma = new DataTable();      
         protected void Page_Load(object sender, EventArgs e)
         {
             Page.Title = string.Format("Inicio");
@@ -39,15 +42,14 @@ namespace _77NeoWeb.Forms.Seguridad
             }
             if (!IsPostBack)
             {
-                LblVersion.Text = "Version "+Session["77Version"];
+                LblVersion.Text = "Version " + Session["77Version"];
                 if (Session["77IDM"].ToString() == "4")
                 {
                     TitForm.Text = "Sistema Gestión Aeronáutico";
                 }
                 else { TitForm.Text = "Aeronautical Management System"; }
+                 this.Master.AlrtNewRva();               
             }
-
         }
-
     }
 }

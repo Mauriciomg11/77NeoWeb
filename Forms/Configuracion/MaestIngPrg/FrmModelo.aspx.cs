@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -11,6 +12,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
     public partial class FrmModelo : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
+        DataTable IdiomaAll = new DataTable();
         DataTable Idioma = new DataTable();
         DataTable DTDet = new DataTable();
         string VbCod, VbNom, VbDes;
@@ -112,7 +114,50 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         }
         protected void IdiomaControles()
         {
-            Idioma.Columns.Add("Objeto", typeof(string));
+            IdiomaAll = (DataTable)Session["TblIdmGrl"];
+            DataRow[] DR = IdiomaAll.Select("CodF IN('0','" + ViewState["PFileName"] + "')");
+            if (Cnx.ValidaDataRowVacio(DR))
+            { Idioma = DR.CopyToDataTable(); ViewState["TablaIdioma"] = Idioma; }
+            Page.Title = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "Caption").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            ViewState["PageTit"] = Page.Title;
+            TitForm.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "TituloMod").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblBusq.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblBusq").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            TxtBusqueda.Attributes.Add("placeholder", Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "placeholder").Select(x => x.Field<string>("Texto")).FirstOrDefault());
+            TxtFormL.Attributes.Add("placeholder", Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "placeholderSinFrm").Select(x => x.Field<string>("Texto")).FirstOrDefault());
+            BtIConsultar.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BtIConsultar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblCodigo.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblCodigo").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblMod.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblMod").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblDesc.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblDesc").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblNumMot.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblNumMot").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblNumTr.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblNumTr").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblPasj.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblPasj").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblFormL.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblFormL").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtIFormL.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BtIFormL").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblAlaF.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblAlaF").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblAlaR.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblAlaR").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtnIngresar.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BotonIng").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtnModificar.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BotonMod").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtnEliminar.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BtnEliminar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblFormula.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblFormula").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtnLimp.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BtnLimp").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtnCiclo.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BtnCiclo").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtnLevant.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BtnLevant").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtiAceptar.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BtiAceptar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtiCancelar.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BtiCancelar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[1].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdCodMod").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[2].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblMod").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[3].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblDesc").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[4].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblNumMot").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[5].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblNumTr").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[6].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblPasj").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[7].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblFormL").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[8].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblAlaF").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[9].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblAlaR").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.EmptyDataText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "SinRegistros").Select(x => x.Field<string>("Texto")).FirstOrDefault();      
+            DataRow[] Result = Idioma.Select("Objeto= 'MensConfEli'");
+            foreach (DataRow row in Result)
+            { BtnEliminar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }//¿Desea eliminar el registro?  
+            /*Idioma.Columns.Add("Objeto", typeof(string));
             Idioma.Columns.Add("Texto", typeof(string));
             using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
             {
@@ -175,7 +220,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 { BtnEliminar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }//¿Desea eliminar el registro?  
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
-            }
+            }*/
         }
         protected void BindData(string VbConsultar, string Accion)
         {
@@ -267,7 +312,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens01Mdl'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar un código')", true);
+                { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//Debe ingresar un código')", true);
                 Session["ValdrMdl"] = "N";
                 TxtCod.Focus(); return;
             }
@@ -275,7 +320,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens02Mdl'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar un modelo')", true);
+                { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//Debe ingresar un modelo')", true);
                 Session["ValdrMdl"] = "N";
                 TxtMod.Focus(); return;
             }
@@ -392,8 +437,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                                     DataRow[] Result1 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                     foreach (DataRow row in Result1)
                                     { Mensj = row["Texto"].ToString().Trim(); }
-
-                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                                    this.Master.SetObjMensj(Convert.ToString(Mensj));
                                     Transac.Rollback();
                                     return;
                                 }
@@ -413,7 +457,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                                 Transac.Rollback();
                                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                                 foreach (DataRow row in Result)
-                                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso de los dato')", true);
+                                { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//Error en el ingreso de los dato')", true);
                                 Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmModelo", "INSERT", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                             }
                         }
@@ -474,7 +518,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                                     Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                     foreach (DataRow row in Result)
                                     { Mensj = row["Texto"].ToString().Trim(); }
-                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                                    this.Master.SetObjMensj(Convert.ToString(Mensj));
                                     Transac.Rollback();
                                     return;
                                 }
@@ -494,7 +538,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                                 Transac.Rollback();
                                 Result = Idioma.Select("Objeto= 'MensErrMod'");
                                 foreach (DataRow row in Result)
-                                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en la edición de los datos')", true);
+                                { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//Error en la edición de los datos')", true);
                                 Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmModelo", "Editar", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                             }
                         }
@@ -533,7 +577,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                             Transac.Rollback();
                             DataRow[] Result = Idioma.Select("Objeto= 'MensErrEli'");
                             foreach (DataRow row in Result)
-                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en la eliminación de los datos')", true);
+                            { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//Error en la eliminación de los datos')", true);
                             Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmModelo", "DELETE", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                         }
                     }

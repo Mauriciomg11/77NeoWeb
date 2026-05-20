@@ -18,7 +18,8 @@
         .TamanAlert {
             height: 400px;
             width: 95%;
-        }  
+        }
+
         @keyframes blink {
             50% {
                 opacity: 0.4;
@@ -36,6 +37,7 @@
     <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
+     <h2 id="alertText">Estado: <span id="statusSpan">Esperando...</span></h2>
     <div id="ModalAlerta" class="modal fade " tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -115,4 +117,39 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        var originalTitle = document.title;
+        var timer = null;
+
+        // Función para iniciar el parpadeo
+        function startFlash(TxtMensRecibo, color) {
+            if (timer) return; // Ya está parpadeando
+
+            timer = setInterval(function () {
+                // Alternar título
+                document.title = (document.title == originalTitle) ? TxtMensRecibo : originalTitle;
+
+                // Cambiar color del texto (ej. en un elemento con ID 'alertText')
+                var element = document.getElementById('alertText');
+                if (element) {
+                    element.style.color = (element.style.color == color) ? '' : color;
+                }
+            }, 1000); // Velocidad: 1 segundo
+        }
+
+        // Función para detener el parpadeo
+        function stopFlash() {
+            clearInterval(timer);
+            document.title = originalTitle;
+            timer = null;
+            // Restaurar color original
+            var element = document.getElementById('alertText');
+            if (element) element.style.color = '';
+        }
+
+        // Detener parpadeo cuando el usuario vuelve a la pestaña
+        window.onfocus = function () {
+            stopFlash();
+        };
+    </script>
 </asp:Content>

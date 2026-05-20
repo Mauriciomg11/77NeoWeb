@@ -115,4 +115,47 @@
             </div>
         </div>
     </div>
+    <asp:Label ID="lblAlert" runat="server" Text="Estado: Normal" Style="font-weight:bold;"></asp:Label>
+    <script type="text/javascript">
+    var originalTitle;
+    //var notificationTitle = "¡ALERTA! Nuevo Mensaje";
+    var intervalId;
+
+    // Iniciar el parpadeo
+        function startFlash(TxtMensRecibo) {
+        if (!intervalId) {
+            originalTitle = document.title;
+            // Alternar título cada 1 segundo
+            intervalId = setInterval(function () {
+                document.title = (document.title === originalTitle) ? TxtMensRecibo : originalTitle;
+                
+                // Cambiar color de la pestaña es difícil, 
+                // pero cambiar el color de un elemento dentro de la página es fácil
+                var alertElement = document.getElementById('<%= lblAlert.ClientID %>');
+                if (alertElement) {
+                    alertElement.style.color = (alertElement.style.color === 'red') ? 'blue' : 'red';
+                }
+            }, 1000);
+        }
+    }
+
+    // Detener el parpadeo
+    function stopBlinking() {
+        if (intervalId) {
+            clearInterval(intervalId);
+            document.title = originalTitle;
+            intervalId = null;
+            
+            var alertElement = document.getElementById('<%= lblAlert.ClientID %>');
+            if (alertElement) {
+                alertElement.style.color = 'black'; // Color original
+            }
+        }
+    }
+
+    // Detectar si el usuario volvió a la pestaña para detener la alerta
+    window.onfocus = function () {
+        stopBlinking();
+    };
+    </script>
 </asp:Content>

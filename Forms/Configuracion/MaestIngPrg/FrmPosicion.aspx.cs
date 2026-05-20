@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.UI;
@@ -12,6 +13,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
     public partial class FrmPosicion : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
+        DataTable IdiomaAll = new DataTable();
         DataTable Idioma = new DataTable();
         DataTable DTDet = new DataTable();
         DataSet DSTDdl = new DataSet();
@@ -84,39 +86,19 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         }
         protected void IdiomaControles()
         {
-            Idioma.Columns.Add("Objeto", typeof(string));
-            Idioma.Columns.Add("Texto", typeof(string));
-            using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
-            {
-                string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
-                SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
-                SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
-                SC.Parameters.AddWithValue("@F1", ViewState["PFileName"]);
-                SC.Parameters.AddWithValue("@F2", "");
-                SC.Parameters.AddWithValue("@F3", "");
-                SC.Parameters.AddWithValue("@F4", "");
-                sqlCon.Open();
-                SqlDataReader tbl = SC.ExecuteReader();
-                while (tbl.Read())  //Todos los objetos
-                {
-                    string bO = tbl["Objeto"].ToString().Trim();
-                    string bT = tbl["Texto"].ToString().Trim();
-                    Idioma.Rows.Add(bO, bT);
-                    if (bO.Equals("Caption"))
-                    { Page.Title = bT; ViewState["PageTit"] = bT; }
-
-                    TitForm.Text = bO.Equals("TituloPos") ? bT : TitForm.Text;
-                    LblBusqueda.Text = bO.Equals("LblBusqueda") ? bT + ":" : LblBusqueda.Text;
-                    if (bO.Equals("placeholder"))
-                    { TxtBusqueda.Attributes.Add("placeholder", bT); }
-                    IbtConsultar.ToolTip = bO.Equals("IbtConsultar") ? bT : IbtConsultar.ToolTip;
-                    GrdDatos.Columns[0].HeaderText = bO.Equals("GrdCod") ? bT : GrdDatos.Columns[0].HeaderText;
-                    GrdDatos.Columns[1].HeaderText = bO.Equals("GrdDesc") ? bT : GrdDatos.Columns[1].HeaderText;
-                    GrdDatos.Columns[2].HeaderText = bO.Equals("GrdAct") ? bT : GrdDatos.Columns[2].HeaderText;
-                }
-                sqlCon.Close();
-                ViewState["TablaIdioma"] = Idioma;
-            }
+            IdiomaAll = (DataTable)Session["TblIdmGrl"];
+            DataRow[] DR = IdiomaAll.Select("CodF IN('0','" + ViewState["PFileName"] + "')");
+            if (Cnx.ValidaDataRowVacio(DR))
+            { Idioma = DR.CopyToDataTable(); ViewState["TablaIdioma"] = Idioma; }
+            Page.Title = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "Caption").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            ViewState["PageTit"] = Page.Title;
+            TitForm.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "TituloPos").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblBusqueda.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblBusqueda").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            TxtBusqueda.Attributes.Add("placeholder", Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "placeholder").Select(x => x.Field<string>("Texto")).FirstOrDefault());
+            IbtConsultar.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "IbtConsultar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[0].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdCod").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[1].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdDesc").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[2].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdAct").Select(x => x.Field<string>("Texto")).FirstOrDefault();
         }
         protected void BindData(string VbConsultar, string Accion)
         {
@@ -269,7 +251,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                     {
                         DataRow[] Result = Idioma.Select("Objeto= 'Mens02Pos'");
                         foreach (DataRow row in Result)
-                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una posición')", true);
+                        { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//Debe ingresar una posición')", true);
                         return;
                     }
                     sqlCon.Open();
@@ -295,14 +277,12 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                                     Mensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 }
                                 SDR.Close();
-
                                 if (!Mensj.ToString().Trim().Equals(""))
                                 {
                                     DataRow[] Result1 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                     foreach (DataRow row in Result1)
                                     { Mensj = row["Texto"].ToString().Trim(); }
-
-                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                                    this.Master.SetObjMensj(Convert.ToString(Mensj));
                                     Transac.Rollback();
                                     return;
                                 }
@@ -314,7 +294,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                                 Transac.Rollback();
                                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                                 foreach (DataRow row in Result)
-                                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//rror en el ingreso')", true);
+                                { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//rror en el ingreso')", true);
                                 Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmPosicion", "INSERT", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                             }
                         }
@@ -329,7 +309,6 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         }
         protected void GrdDatos_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-
             Idioma = (DataTable)ViewState["TablaIdioma"];
             string VblCodPpal, VblCodAnt, VbQuery;
             Cnx.SelecBD();
@@ -362,14 +341,12 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                                 Mensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                             }
                             SDR.Close();
-
                             if (!Mensj.ToString().Trim().Equals(""))
                             {
                                 DataRow[] Result1 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                 foreach (DataRow row in Result1)
                                 { Mensj = row["Texto"].ToString().Trim(); }
-
-                                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                                this.Master.SetObjMensj(Convert.ToString(Mensj));
                                 Transac.Rollback();
                                 return;
                             }
@@ -382,7 +359,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                             Transac.Rollback();
                             DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
                             foreach (DataRow row in Result)
-                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el proceso de edición')", true);
+                            { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//Error en el proceso de edición')", true);
                             Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmPosicion", "Update", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                         }
                     }
@@ -396,7 +373,6 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         }
         protected void GrdDatos_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-
             Idioma = (DataTable)ViewState["TablaIdioma"];
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
@@ -421,7 +397,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                             Transac.Rollback();
                             DataRow[] Result = Idioma.Select("Objeto= 'MensErrEli'");
                             foreach (DataRow row in Result)
-                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el proceso de eliminación')", true);
+                            { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//Error en el proceso de eliminación')", true);
                             Cnx.UpdateErrorV2(Session["C77U"].ToString(), "FrmPosicion", "DELETE", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                         }
                     }

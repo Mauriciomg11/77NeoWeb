@@ -1,22 +1,23 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmInicio.aspx.cs" Inherits="_77NeoWeb.Forms.Seguridad.FrmInicio" %>
 
+<%@ MasterType VirtualPath="~/MasterTransac.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Inicio</title>
     <style type="text/css">
         .posicionVersion {
-            position:absolute;
-           top: 144px;
-             left: 86%;
-            width: 255px;/**/
+            position: absolute;
+            top: 144px;
+            left: 86%;
+            width: 255px; /**/
             /*height: 600px;*/
-            padding: 5px;/**/
-            text-align: left;/**/
+            padding: 5px; /**/
+            text-align: left; /**/
             color: antiquewhite;
         }
     </style>
     <script type="text/jscript">
         function myFuncionddl() { }
-    </script>
+    </script> 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
 </asp:Content>

@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="FrmReserva.aspx.cs" Inherits="_77NeoWeb.Forms.Almacen.FrmReserva" %>
 
+<%@ MasterType VirtualPath="~/MasterTransac.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         .heightCampo {
@@ -21,7 +22,6 @@
             font-size: 12px;
             font-stretch: condensed;
         }
-                
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
@@ -60,7 +60,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UplDatos" runat="server" UpdateMode="Conditional">
@@ -105,7 +105,7 @@
                             </div>
                             <div class="col-sm-1">
                                 <br />
-                                <asp:Button ID="BtnAlerta" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnAlerta_Click" OnClientClick="target ='_blank';" Text="alerta" />
+                                <asp:Button ID="BtnAlerta" runat="server" CssClass="btn btn-primary Font_btnCrud" Width="100%" OnClick="BtnAlerta_Click" OnClientClick="target ='';" Text="alerta" />
                             </div>
                             <div class="col-sm-2">
                                 <asp:Label ID="LblMatr" runat="server" CssClass="LblEtiquet" Text="Hk" />
@@ -277,27 +277,29 @@
                         <asp:Label ID="LblTitOpcBusq" runat="server" Text="Opciones de búsq." />
                     </h6>
                     <asp:ImageButton ID="IbtCerrarBusq" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarBusq_Click" />
-                   <table class="TablaBusqueda">
-                            <tr>
-                                <td colspan="3">
-                                    <asp:RadioButton ID="RdbBusqNumRsva" runat="server" CssClass="LblEtiquet" Text="&nbsp reserva" Checked="true" GroupName="Busq" />&nbsp&nbsp&nbsp
+                    <table class="TablaBusqueda">
+                        <tr>
+                            <td colspan="3">
+                                <asp:RadioButton ID="RdbBusqNumRsva" runat="server" CssClass="LblEtiquet" Text="&nbsp reserva" Checked="true" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqNumOT" runat="server" CssClass="LblEtiquet" Text="&nbsp ot" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqNumRte" runat="server" CssClass="LblEtiquet" Text="&nbsp reporte" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqSN" runat="server" CssClass="LblEtiquet" Text="&nbsp S/N:" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqPN" runat="server" CssClass="LblEtiquet" Text="&nbsp P/N:" GroupName="Busq" />&nbsp&nbsp&nbsp
                                     <asp:RadioButton ID="RdbBusqHK" runat="server" CssClass="LblEtiquet" Text="&nbsp hk" GroupName="Busq" />
-                                &nbsp&nbsp&nbsp                                   
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
-                                <td>
-                                    <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
-                                <td>
-                                    <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
-                            </tr>
-                        </table>
-                    <br /><br /><br />
+                            &nbsp&nbsp&nbsp                                   
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
+                            <td>
+                                <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
+                            <td>
+                                <asp:ImageButton ID="IbtBusqueda" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtBusqueda_Click" /></td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+                    <br />
                     <div class="CentrarBusq DivMarco">
                         <div class="CentrarGrid pre-scrollable">
                             <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" DataKeyNames="CodNumOrdenTrab"

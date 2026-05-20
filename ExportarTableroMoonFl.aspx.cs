@@ -49,7 +49,7 @@ namespace _77NeoWeb
                 string VbY = Convert.ToString(DateTime.UtcNow.Year);
                 string fecha = string.Format("{0}-{1}-{2}", VbY, VbM, "01");
                 DateTime VbFecID = Convert.ToDateTime(fecha);
-              
+
             }
         }
 
@@ -58,14 +58,14 @@ namespace _77NeoWeb
             Idioma = (DataTable)ViewState["TablaIdioma"];
             try
             {// 1 Aeronaves | 2 Componentes_Controlados |
-                string query = "", VbNomArchivo = "", VConsec ="0", S_Grupo ="LUISFER";
+                string query = "", VbNomArchivo = "", VConsec = "0", S_Grupo = "LUISFER";
 
                 if (RdbHK.Checked == true) { VbNomArchivo = RdbHK.Text.Trim(); VConsec = "1"; }
                 if (RdbCompContr.Checked == true) { VbNomArchivo = RdbCompContr.Text.Trim(); VConsec = "2"; }
-                if (RdbOTHH.Checked == true) { VbNomArchivo = RdbOTHH.Text.Trim(); VConsec = "4"; }              
-                if (RdbOTRecur.Checked == true) { VbNomArchivo = RdbOTRecur.Text.Trim(); VConsec = "5"; }              
-                if (RdbRpte.Checked == true) { VbNomArchivo = RdbRpte.Text.Trim(); VConsec = "6"; }              
-                if (RdbStatus.Checked == true) { VbNomArchivo = RdbStatus.Text.Trim(); VConsec = "7"; }              
+                if (RdbOTHH.Checked == true) { VbNomArchivo = RdbOTHH.Text.Trim(); VConsec = "4"; }
+                if (RdbOTRecur.Checked == true) { VbNomArchivo = RdbOTRecur.Text.Trim(); VConsec = "5"; }
+                if (RdbRpte.Checked == true) { VbNomArchivo = RdbRpte.Text.Trim(); VConsec = "6"; }
+                if (RdbStatus.Checked == true) { VbNomArchivo = RdbStatus.Text.Trim(); VConsec = "7"; }
                 if (RdbInventario.Checked == true) { VbNomArchivo = RdbInventario.Text.Trim(); VConsec = "8"; }
                 if (RdbCumpMtoPrev.Checked == true) { VbNomArchivo = RdbCumpMtoPrev.Text.Trim(); VConsec = "9"; }
                 if (RdbTimCiclMto.Checked == true) { VbNomArchivo = RdbTimCiclMto.Text.Trim(); VConsec = "10"; }
@@ -124,6 +124,10 @@ namespace _77NeoWeb
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Exportar Informe Ingeniería Próximos Cumplimientos", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
+        }
+        protected void ClientButton_Click(object sender, EventArgs e)
+        {
+            this.Master.SetObjMensj("Error the print");
         }
     }
 }

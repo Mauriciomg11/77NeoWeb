@@ -4,6 +4,9 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace _77NeoWeb.prg
 {
@@ -17,7 +20,7 @@ namespace _77NeoWeb.prg
         public ClsConexion()
         {
             this.VblConexion = "";
-            Produccion = "N";//N = para trabajar en el desarrollo | Y  =aplica para PRoduccion            
+            Produccion = "Y";//N = para trabajar en el desarrollo | Y  =aplica para Producción            
         }
         public void SelecBD()
         {
@@ -50,6 +53,30 @@ namespace _77NeoWeb.prg
                     return null;
                 }
                 return ds;
+            }
+        }
+        public DataTable DTIdioma(string TxtSql)
+        {
+            DataTable DTIdm = new DataTable();
+            SelecBD();
+            using (SqlConnection SqlCnc = new SqlConnection(BaseDatosPrmtr()))
+            {
+                using (SqlCommand SC = new SqlCommand(TxtSql, SqlCnc))
+                {
+                    using (SqlDataAdapter SqlDA = new SqlDataAdapter())
+                    {
+                        try
+                        {
+                            SqlDA.SelectCommand = SC;
+                            SqlDA.Fill(DTIdm);
+                        }
+                        catch (SqlException)
+                        {
+                            return null;
+                        }
+                        return DTIdm;
+                    }
+                }
             }
         }
         public void UpdateError(string VbUsu, string VbPantalla, string VbAccion, string VbNumLinea, string VbMensErr, string VbVersion, string VbAct)
@@ -283,8 +310,21 @@ namespace _77NeoWeb.prg
         public string ValorDecimal() { return this.VblDecimal; }
         public string GetMensj() { return PMensj; }
         public string GetProduccion() { return Produccion; }
+        public void AlrtNewRva()
+        {  // 1. Obtener el contexto actual
+            var handler = HttpContext.Current.Handler as Page;
+
+            if (handler != null && handler.Master is MasterTransac)
+            {
+                // 2. Castear (convertir) a la Master Page específica
+                MasterTransac master = (MasterTransac)handler.Master;
+
+                // 3. Llamar al método público
+                master.SetObjMensj("Nueva Reserva");
+            }
+        }
         //******************* CONEXION TEMPORAL ********
-        public string GetUsr() { return "00000082"; }//00000082|00000133 susi | 00000129 |
+        public string GetUsr() { return "00000082"; }//00000082|00000133 susi | 00000129 | 00000110
         public int GetIdCia() { return 1; }// 1 TwoGoWo |21 Demp |2 HCT PRUEBA| 12 ADA | 20 HCT | 3 Alca
         public string GetMonedLcl() { return "COP"; }//  "COP|USD"
         public int GetFormatFecha() { return 103; }// 103 formato europeo dd/MM/yyyy | 101 formato EEUU MM/dd/yyyyy
@@ -299,7 +339,17 @@ namespace _77NeoWeb.prg
             string LtxtSql = string.Format("EXEC SP_ConfiguracionV2_ 21,'','','','','',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", GetIdCia());
             DSIdm = DSET(LtxtSql);
             DSIdm.Tables[0].TableName = "Idioma";
-            return DSIdm.Tables["Idioma"].Rows[0]["Idioma"].ToString().Trim();
+            // Guarda la estructura y datos de la tabla idioma general
+            //string boor = System.Web.HttpContext.Current.Session["TblIdmGrl"].ToString().Trim();
+            if (System.Web.HttpContext.Current.Session["TblIdmGrl"]==null || System.Web.HttpContext.Current.Session["TblIdmGrl"].ToString().Trim().Equals("") )
+            {
+                DataTable IdiomaAll = new DataTable();
+                LtxtSql = string.Format("EXEC IdiomaALL {0}", DSIdm.Tables["Idioma"].Rows[0]["Idioma"].ToString().Trim());
+                IdiomaAll = DTIdioma(LtxtSql);
+                System.Web.HttpContext.Current.Session["TblIdmGrl"] = IdiomaAll;
+            }           
+            //Envia el idioma
+            return DSIdm.Tables["Idioma"].Rows[0]["Idioma"].ToString().Trim();            
         }//  4 español | 5 ingles/**/
     }
 }

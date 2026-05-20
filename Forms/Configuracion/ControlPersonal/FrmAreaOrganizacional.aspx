@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmAreaOrganizacional.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.ControlPersonal.FrmAreaOrganizacional" %>
-
+<%@ MasterType VirtualPath="~/MasterTransac.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>TA</title>
     <style type="text/css">       

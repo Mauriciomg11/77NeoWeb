@@ -35,7 +35,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     Session["!dC!@"] = Cnx.GetIdCia();
                     Session["77IDM"] = Cnx.GetIdm();
                 }
-            }
+            }/**/
             if (!IsPostBack)
             {
                 TitForm.Text = "Configuración Areas Oroganizacionales";
@@ -102,6 +102,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     IbtConsultar.ToolTip = bO.Equals("IbtConsultarTTMst") ? bT : IbtConsultar.ToolTip;
                     GrdDatos.Columns[0].HeaderText = bO.Equals("GrdCod") ? bT : GrdDatos.Columns[0].HeaderText;
                     GrdDatos.Columns[1].HeaderText = bO.Equals("GrdDesc") ? bT : GrdDatos.Columns[1].HeaderText;
+
                 }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
@@ -186,7 +187,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 {
                     DataRow[] Result = Idioma.Select("Objeto= 'MstrMens06'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una descripción')", true);
+                    { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//Debe ingresar una descripción
                     return;
                 }
                 Cnx.SelecBD();
@@ -209,7 +210,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                                     DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                     foreach (DataRow row in Result)
                                     { Mensj = row["Texto"].ToString().Trim(); }
-                                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                                    this.Master.SetObjMensj(Convert.ToString(Mensj));//
                                     Transac.Rollback();
                                     return;
                                 }
@@ -221,7 +222,8 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                                 Transac.Rollback();
                                 DataRow[] Result = Idioma.Select("Objeto= 'MensErrIng'");
                                 foreach (DataRow row in Result)
-                                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
+                                { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//Error en el ingreso
+
                                 Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "INSERT", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                             }
                         }
@@ -240,7 +242,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'MstrMens06'");
                 foreach (DataRow row in Result)
-                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar una descripción')", true);
+                { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//Debe ingresar una descripción')", true);
                 return;
             }
             Cnx.SelecBD();
@@ -264,7 +266,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                                 DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                 foreach (DataRow row in Result)
                                 { Mensj = row["Texto"].ToString().Trim(); }
-                                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                                this.Master.SetObjMensj(Convert.ToString(Mensj));
                                 Transac.Rollback();
                                 return;
                             }
@@ -277,7 +279,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                             Transac.Rollback();
                             DataRow[] Result = Idioma.Select("Objeto= 'MensErrMod'");
                             foreach (DataRow row in Result)
-                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
+                            { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//Error en el ingreso')", true);
                             Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "UPDATE", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                         }
                     }
@@ -313,7 +315,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                                 DataRow[] Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
                                 foreach (DataRow row in Result)
                                 { Mensj = row["Texto"].ToString().Trim(); }
-                                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
+                                this.Master.SetObjMensj(Convert.ToString(Mensj));
                                 Transac.Rollback();
                                 return;
                             }
@@ -325,7 +327,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                             Transac.Rollback();
                             DataRow[] Result = Idioma.Select("Objeto= 'MensErrEli'");
                             foreach (DataRow row in Result)
-                            { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
+                            { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//Error en el ingreso')", true);
                             Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "DELETE", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
                         }
                     }

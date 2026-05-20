@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Web.UI;
 
 namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
@@ -12,6 +13,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
     public partial class FrmContador : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
+        DataTable IdiomaAll = new DataTable();
         DataTable Idioma = new DataTable();
         DataSet DSTDdl = new DataSet();
         string VbCont, VbDescCn, VbUMCnt, VbIdenCnt;
@@ -113,46 +115,26 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         }
         protected void IdiomaControles()
         {
-            Idioma.Columns.Add("Objeto", typeof(string));
-            Idioma.Columns.Add("Texto", typeof(string));
-            using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
-            {
-                string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
-                SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
-                SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
-                SC.Parameters.AddWithValue("@F1", "FRMCONTADORELEM");
-                SC.Parameters.AddWithValue("@F2", "");
-                SC.Parameters.AddWithValue("@F3", "");
-                SC.Parameters.AddWithValue("@F4", "");
-                sqlCon.Open();
-                SqlDataReader tbl = SC.ExecuteReader();
-                while (tbl.Read())  //Todos los objetos
-                {
-                    string bO = tbl["Objeto"].ToString().Trim();
-                    string bT = tbl["Texto"].ToString().Trim();
-                    Idioma.Rows.Add(bO, bT);
-                    if (bO.Equals("Caption"))
-                    { Page.Title = bT; ViewState["PageTit"] = bT; }
-
-                    TitForm.Text = bO.Equals("TituloConfCont") ? bT : TitForm.Text;
-                    LblConsultar.Text = bO.Equals("LblConsultar") ? bT + ":" : LblConsultar.Text;
-                    IbtExpExcel.ToolTip = bO.Equals("IbtExpExcel") ? bT : IbtExpExcel.ToolTip;
-                    LblCodigo.Text = bO.Equals("lblCodigo") ? bT + ":" : LblCodigo.Text;
-                    LblDescrip.Text = bO.Equals("LblDescrip") ? bT + ":" : LblDescrip.Text;
-                    LblUndMed.Text = bO.Equals("LblUndMed") ? bT + ":" : LblUndMed.Text;
-                    LblIdentif.Text = bO.Equals("LblIdentif") ? bT + ":" : LblIdentif.Text;
-                    CkReset.Text = bO.Equals("CkReset") ? "&nbsp" + bT : CkReset.Text;
-                    BtnIngresar.Text = bO.Equals("BotonIng") ? bT : BtnIngresar.Text;
-                    BtnModificar.Text = bO.Equals("BotonMod") ? bT : BtnModificar.Text;
-                    BtnEliminar.Text = bO.Equals("BtnEliminar") ? bT : BtnEliminar.Text;
-                }
-                DataRow[] Result = Idioma.Select("Objeto= 'MensConfEli'");
-                foreach (DataRow row in Result)
-                { BtnEliminar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }//¿Desea eliminar el registro?  
-
-                sqlCon.Close();
-                ViewState["TablaIdioma"] = Idioma;
-            }
+            IdiomaAll = (DataTable)Session["TblIdmGrl"];
+            DataRow[] DR = IdiomaAll.Select("CodF IN('0','FRMCONTADORELEM')");
+            if (Cnx.ValidaDataRowVacio(DR))
+            { Idioma = DR.CopyToDataTable(); ViewState["TablaIdioma"] = Idioma; }
+            Page.Title = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "Caption").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            ViewState["PageTit"] = Page.Title;
+            TitForm.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "TituloConfCont").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblConsultar.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblConsultar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            IbtExpExcel.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "IbtExpExcel").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblCodigo.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "lblCodigo").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblDescrip.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblDescrip").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblUndMed.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblUndMed").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblIdentif.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblIdentif").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            CkReset.Text = "&nbsp"+Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "CkReset").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtnIngresar.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BotonIng").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtnModificar.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BotonMod").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtnEliminar.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BtnEliminar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            DataRow[] Result = Idioma.Select("Objeto= 'MensConfEli'");
+            foreach (DataRow row in Result)
+            { BtnEliminar.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }//¿Desea eliminar el registro?  
         }
         protected void BindDataDdlCntr(string Accion)
         {

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -14,8 +15,8 @@ namespace _77NeoWeb.Forms.Almacen
     public partial class FrmReserva : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
+        DataTable IdiomaAll = new DataTable();
         DataTable Idioma = new DataTable();
-        DataTable DtRva = new DataTable();
         DataSet DS = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -71,85 +72,69 @@ namespace _77NeoWeb.Forms.Almacen
         }
         protected void IdiomaControles()
         {
-            Idioma.Columns.Add("Objeto", typeof(string));
-            Idioma.Columns.Add("Texto", typeof(string));
-            using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
-            {
-                string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
-                SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
-                SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
-                SC.Parameters.AddWithValue("@F1", ViewState["PFileName"]);
-                SC.Parameters.AddWithValue("@F2", "");
-                SC.Parameters.AddWithValue("@F3", "");
-                SC.Parameters.AddWithValue("@F4", "");
-                sqlCon.Open();
-                SqlDataReader tbl = SC.ExecuteReader();
-                while (tbl.Read())  //Todos los objetos
-                {
-                    string bO = tbl["Objeto"].ToString().Trim();
-                    string bT = tbl["Texto"].ToString().Trim();
-                    Idioma.Rows.Add(bO, bT);
-                    if (bO.Equals("Caption"))
-                    { Page.Title = bT; ViewState["PageTit"] = bT; }
-                    TitForm.Text = bO.Equals("Titulo") ? bT : TitForm.Text;
-                    BtnConsultar.Text = bO.Equals("IbtConsultar") ? bT : BtnConsultar.Text;
-                    LblNumRva.Text = bO.Equals("LblNumRv") ? bT : LblNumRva.Text;
-                    LblNumOT.Text = bO.Equals("LblOTMstr") ? bT : LblNumOT.Text;
-                    LblNumRTE.Text = bO.Equals("RdbBusqNumRte") ? bT : LblNumRTE.Text;
-                    LblEstado.Text = bO.Equals("LblEstadoMst") ? bT : LblEstado.Text;
-                    LblFechaRv.Text = bO.Equals("GrdFecRva") ? bT : LblFechaRv.Text;
-                    LblMatr.Text = bO.Equals("LblAeronaveMstr") ? bT : LblMatr.Text;
-                    BtnConsultar.Text = bO.Equals("BtnConsultar") ? bT : BtnConsultar.Text;
-                    BtnExprt.Text = bO.Equals("BtnExportMstr") ? bT : BtnExprt.Text;
-                    BtnAlerta.Text = bO.Equals("BtnAlerta") ? bT : BtnAlerta.Text;
-                    BtnAlerta.ToolTip = bO.Equals("BtnAlertaTT") ? bT : BtnAlerta.ToolTip;
-                    IbtConsltPn.ToolTip = bO.Equals("BtnConsultar") ? bT : IbtConsltPn.ToolTip;
-                    // *************************************************Detalle Reserva *************************************************
-                    LblTitDetRv.Text = bO.Equals("LblTitDetRv") ? bT : LblTitDetRv.Text;
-                    GrdReserva.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdReserva.EmptyDataText;
-                    GrdReserva.Columns[0].HeaderText = bO.Equals("GrdPos") ? bT : GrdReserva.Columns[0].HeaderText;
-                    GrdReserva.Columns[1].HeaderText = bO.Equals("ReferenciaMst") ? bT : GrdReserva.Columns[1].HeaderText;
-                    GrdReserva.Columns[3].HeaderText = bO.Equals("Descripcion") ? bT : GrdReserva.Columns[3].HeaderText;
-                    GrdReserva.Columns[4].HeaderText = bO.Equals("GrdCantSol") ? bT : GrdReserva.Columns[4].HeaderText;
-                    GrdReserva.Columns[5].HeaderText = bO.Equals("GrdUndMstr") ? bT : GrdReserva.Columns[5].HeaderText;
-                    GrdReserva.Columns[6].HeaderText = bO.Equals("GrdCantEntr") ? bT : GrdReserva.Columns[6].HeaderText;
-                    // *************************************************Recibo usuario la reserva *************************************************
-                    LblTitUsuario.Text = bO.Equals("TitRecibRv") ? bT : LblTitUsuario.Text;
-                    GrdUsuario.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdUsuario.EmptyDataText;
-                    GrdUsuario.Columns[0].HeaderText = bO.Equals("GrdRecibe") ? bT : GrdUsuario.Columns[0].HeaderText;
-                    GrdUsuario.Columns[1].HeaderText = bO.Equals("GrdFecDsp") ? bT : GrdUsuario.Columns[1].HeaderText;
-                    GrdUsuario.Columns[2].HeaderText = bO.Equals("GrdFecRcb") ? bT : GrdUsuario.Columns[2].HeaderText;
-                    // *************************************************Stock *************************************************
-                    LblTitStock.Text = bO.Equals("LblTitStock") ? bT : LblTitStock.Text;
-                    GrdStok.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdStok.EmptyDataText;
-                    GrdStok.Columns[0].HeaderText = bO.Equals("AlmacenMstr") ? bT : GrdStok.Columns[0].HeaderText;
-                    GrdStok.Columns[3].HeaderText = bO.Equals("LoteMst") ? bT : GrdStok.Columns[3].HeaderText;
-                    GrdStok.Columns[4].HeaderText = bO.Equals("CantMst") ? bT : GrdStok.Columns[4].HeaderText;
-                    GrdStok.Columns[5].HeaderText = bO.Equals("BodegaMstr") ? bT : GrdStok.Columns[5].HeaderText;
-                    // *************************************************opcion de busqueda *************************************************
-                    if (bO.Equals("placeholder"))
-                    { TxtBusqueda.Attributes.Add("placeholder", bT); TxtConsltPN.Attributes.Add("placeholder", bT); }
-                    IbtBusqueda.ToolTip = bO.Equals("BtnConsultar") ? bT : IbtBusqueda.ToolTip;
-                    IbtCerrarBusq.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarBusq.ToolTip;
-                    LblBusqueda.Text = bO.Equals("MstrLblBusq") ? bT + ":" : LblBusqueda.Text;
-                    LblTitOpcBusq.Text = bO.Equals("LblTitOTOpcBusqueda") ? bT : LblTitOpcBusq.Text;
-                    RdbBusqNumRsva.Text = bO.Equals("LblNumRv") ? "&nbsp" + bT + ":" : RdbBusqNumRsva.Text;
-                    RdbBusqNumOT.Text = bO.Equals("LblOTMstr") ? "&nbsp" + bT + ":" : RdbBusqNumOT.Text;
-                    RdbBusqNumRte.Text = bO.Equals("RdbBusqNumRte") ? "&nbsp" + bT + ":" : RdbBusqNumRte.Text;
-                    RdbBusqHK.Text = bO.Equals("LblAeronaveMstr") ? "&nbsp" + bT + ":" : RdbBusqHK.Text;
-                    GrdBusq.EmptyDataText = bO.Equals("SinRegistros") ? bT : GrdBusq.EmptyDataText;
-                    GrdBusq.Columns[1].HeaderText = bO.Equals("LblNumRv") ? bT : GrdBusq.Columns[1].HeaderText;
-                    GrdBusq.Columns[2].HeaderText = bO.Equals("LblOTMstr") ? bT : GrdBusq.Columns[2].HeaderText;
-                    GrdBusq.Columns[3].HeaderText = bO.Equals("RdbBusqNumRte") ? bT : GrdBusq.Columns[3].HeaderText;
-                    GrdBusq.Columns[4].HeaderText = bO.Equals("GrdAplicab") ? bT : GrdBusq.Columns[4].HeaderText;
-                    GrdBusq.Columns[7].HeaderText = bO.Equals("GrdCodHk") ? bT : GrdBusq.Columns[7].HeaderText;
-                    GrdBusq.Columns[8].HeaderText = bO.Equals("LblAeronaveMstr") ? bT : GrdBusq.Columns[8].HeaderText;
-                    GrdBusq.Columns[9].HeaderText = bO.Equals("GrdFecRv") ? bT : GrdBusq.Columns[9].HeaderText;
-                    GrdBusq.Columns[10].HeaderText = bO.Equals("LblEstadoMst") ? bT : GrdBusq.Columns[10].HeaderText;
-                }
-                sqlCon.Close();
-                ViewState["TablaIdioma"] = Idioma;
-            }
+            IdiomaAll = (DataTable)Session["TblIdmGrl"];
+            DataRow[] DR = IdiomaAll.Select("CodF IN('0','" + ViewState["PFileName"] + "')");
+            if (Cnx.ValidaDataRowVacio(DR))
+            { Idioma = DR.CopyToDataTable(); ViewState["TablaIdioma"] = Idioma; }
+
+            ViewState["PageTit"] = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "Titulo").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            Page.Title = ViewState["PageTit"].ToString();
+            TitForm.Text = ViewState["PageTit"].ToString();
+            BtnConsultar.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "IbtConsultar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblNumRva.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblNumRv").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblNumOT.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblOTMstr").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblNumRTE.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "RdbBusqNumRte").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblEstado.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblEstadoMst").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblFechaRv.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdFecRva").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblMatr.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblAeronaveMstr").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtnConsultar.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BtnConsultar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtnExprt.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BtnExportMstr").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtnAlerta.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BtnAlerta").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            BtnAlerta.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BtnAlertaTT").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblTitDetRv.ToolTip = BtnConsultar.Text;
+            // *************************************************Detalle Reserva *************************************************
+            BtnAlerta.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblTitDetRv").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            IbtConsltPn.ToolTip = BtnConsultar.Text;
+            GrdReserva.EmptyDataText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "SinRegistros").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdReserva.Columns[0].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdPos").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdReserva.Columns[1].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "ReferenciaMst").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdReserva.Columns[3].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "Descripcion").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdReserva.Columns[4].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdCantSol").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdReserva.Columns[5].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdUndMstr").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdReserva.Columns[6].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdCantEntr").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            // *************************************************Recibo usuario la reserva *************************************************
+            LblTitUsuario.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "TitRecibRv").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdUsuario.EmptyDataText = GrdReserva.EmptyDataText;
+            GrdUsuario.Columns[0].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdRecibe").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdUsuario.Columns[1].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdFecDsp").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdUsuario.Columns[2].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdFecRcb").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            // *************************************************Stock *************************************************
+            LblTitStock.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblTitStock").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdStok.EmptyDataText = GrdReserva.EmptyDataText;
+            GrdStok.Columns[0].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "AlmacenMstr").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdStok.Columns[3].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LoteMst").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdStok.Columns[4].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "CantMst").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdStok.Columns[5].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BodegaMstr").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            // *************************************************opcion de busqueda *************************************************
+            TxtBusqueda.Attributes.Add("placeholder", Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "placeholder").Select(x => x.Field<string>("Texto")).FirstOrDefault());
+            TxtConsltPN.Attributes.Add("placeholder", Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "placeholder").Select(x => x.Field<string>("Texto")).FirstOrDefault());
+            IbtBusqueda.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "BtnConsultar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            IbtCerrarBusq.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "CerrarVentana").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblBusqueda.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "MstrLblBusq").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblTitOpcBusq.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblTitOTOpcBusqueda").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            RdbBusqNumRsva.Text = "&nbsp" + LblNumRva.Text;
+            RdbBusqNumOT.Text = "&nbsp" + Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblOTMstr").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            RdbBusqNumRte.Text = "&nbsp" + Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "RdbBusqNumRte").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            RdbBusqHK.Text = "&nbsp" + Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblAeronaveMstr").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdBusq.EmptyDataText = GrdReserva.EmptyDataText;
+            GrdBusq.Columns[1].HeaderText = LblNumRva.Text;
+            GrdBusq.Columns[2].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblOTMstr").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdBusq.Columns[3].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "RdbBusqNumRte").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdBusq.Columns[4].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdAplicab").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdBusq.Columns[7].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdCodHk").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdBusq.Columns[8].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblAeronaveMstr").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdBusq.Columns[9].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdFecRv").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdBusq.Columns[10].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblEstadoMst").Select(x => x.Field<string>("Texto")).FirstOrDefault();
         }
         public bool IsIENumerableLleno(IEnumerable<DataRow> ieNumerable)
         {
@@ -224,7 +209,11 @@ namespace _77NeoWeb.Forms.Almacen
         }
         //*************************************** Alerta ***************************************
         protected void BtnAlerta_Click(object sender, EventArgs e)
-        { Page.Title = ViewState["PageTit"].ToString().Trim(); Response.Redirect("~/Forms/Almacen/FrmAlertaReservaPenRevisar.aspx"); }
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            //Response.Redirect("~/Forms/Almacen/FrmAlertaReservaPenRevisar.aspx"); // como se crea la alerta en el modal se debe eliminar este formulario
+            this.Master.AlrtNewRva();
+        }
         //*************************************** BUSQUEDA ***************************************
         protected void BtnConsultar_Click(object sender, EventArgs e)
         { MlVw.ActiveViewIndex = 1; Page.Title = ViewState["PageTit"].ToString().Trim(); TxtBusqueda.Text = ""; TxtBusqueda.Focus(); }

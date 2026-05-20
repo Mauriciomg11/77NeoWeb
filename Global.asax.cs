@@ -1,4 +1,8 @@
-﻿using System;
+﻿using _77NeoWeb.prg;
+using _77NeoWeb.Prg;
+using Microsoft.Extensions.Hosting;
+using System;
+using System.Threading;
 using System.Web.Security;
 using System.Web.UI;
 
@@ -6,12 +10,13 @@ namespace _77NeoWeb
 {
     public class Global : System.Web.HttpApplication
     {
-
+        private IntervTaHSvc _myService;
         protected void Application_Start(object sender, EventArgs e)
         {
+           //_myService = new IntervTaHSvc();
+           //_myService.StartAsync(CancellationToken.None);// Prueba para ejecutar un timer en determinado tiempo
             string JQueryVer = "1.11.3";
-
-           // BundleConfig.RegisterBundles(BundleTable.Bundles);
+            // BundleConfig.RegisterBundles(BundleTable.Bundles);
             ScriptManager.ScriptResourceMapping.AddDefinition("jquery", new ScriptResourceDefinition
             {
                 Path = "~/js/jquery-" + JQueryVer + ".min.js",
@@ -22,10 +27,11 @@ namespace _77NeoWeb
                 LoadSuccessExpression = "window.jQuery"
             });
         }
-
         protected void Session_Start(object sender, EventArgs e)
         {
             /*
+            10.02.05.32 | 20/05/2026 | Se ajusta la MasterPage para que el modal del mensaje del sistema no se cierre al presionar la tecla  Esc| FrmAcceso Mejora acceso a Idioma | Creación de la Orden de Despacho.
+            10.02.05.31 | 16/04/2026 | En el MasterPage se crea el modal para enviar los mensajes del sistema.
             10.02.05.30 | 13/04/2026 | Ajustes Orden de Embarque|Categoría Maestro de Artículo|Herramientas Próximos Vencimientos|Asignaciones|Referencias|Aeronave Virtual|Orden de Trabajo|Movimientos de Almacén|Status Report|Consulta Movimientos de Almacén.   
             10.02.05.29 | 30/03/2026 | Creacion del informe de logistica de entradas y salidas.   
             10.02.05.28 | 23/03/2026 | Creacion de conciliacion en informe de logistica y pasar de idioma el sistema.       
@@ -39,7 +45,7 @@ namespace _77NeoWeb
             10.02.05.21 | 04/02/2025 | corrección formularios Incoming y Movimientos Almacen, no se visualizaba el detalle
             10.02.05.21 | 28/01/2025 | implementacion Menu
              */
-            Session["77Version"] = "10.02.05.30";
+            Session["77Version"] = "10.02.05.32";
             Session["77Act"] = "1";
             Session["$VR"] = "";
             Session["Nit77Cia"] = ""; // Nita cia 811035879-1
@@ -70,9 +76,9 @@ namespace _77NeoWeb
             Session["MonLcl"] = "COP"; // Moneda
             Session["PCodOT"] = "0"; // Para llamar el numero desde la reparación
             Session["FormatFecha"] = "103"; // 103 formato europeo dd/MM/yyyy | 101 formato EEUU M/dd/yyyyy
-
+            Session["AlrtNewRva"] = "N";// prueba para llamar un metodo desde una clase para las alertas
+            Session["TblIdmGrl"] = "";//Guarda la estructura y datos de la tabla idioma general
         }
-
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
 
@@ -90,12 +96,16 @@ namespace _77NeoWeb
 
         protected void Session_End(object sender, EventArgs e)
         {
+            // _myService?.StopAsync(CancellationToken.None);
+            // _myService?.Dispose();
+
             FormsAuthentication.SignOut();
             Session.Abandon();
         }
         protected void Application_End(object sender, EventArgs e)
         {
-
+           _myService?.StopAsync(CancellationToken.None);
+           _myService?.Dispose();
         }
     }
 }

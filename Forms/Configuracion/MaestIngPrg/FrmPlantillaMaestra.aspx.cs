@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -14,6 +15,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
     public partial class FrmPlantillaMaestra : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
+        DataTable IdiomaAll = new DataTable();
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -221,7 +223,24 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
         }
         protected void IdiomaControles()
         {
-            Idioma.Columns.Add("Objeto", typeof(string));
+            IdiomaAll = (DataTable)Session["TblIdmGrl"];
+            DataRow[] DR = IdiomaAll.Select("CodF IN('0','FRMCAPITULONEW')");
+            if (Cnx.ValidaDataRowVacio(DR))
+            { Idioma = DR.CopyToDataTable(); ViewState["TablaIdioma"] = Idioma; }
+            Page.Title = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "CaptionPlanMaesra").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            ViewState["PageTit"] = Page.Title;
+            TitForm.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "TituloPlanMaestra").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblFlota.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblFlota").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            IbtExpExcel.ToolTip = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "IbtExpExcelTT").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdDatos.Columns[1].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdDescrip").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdUltNvl.Columns[0].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdUbicTnc").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdUltNvl.Columns[1].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdDescrip").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdUltNvl.Columns[2].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdNumElem").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdPosicion.Columns[0].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdUbca").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdPosicion.Columns[1].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdPscn").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdPn.Columns[0].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdPNPpl").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            GrdPn.Columns[1].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdDescrip").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+           /* Idioma.Columns.Add("Objeto", typeof(string));
             Idioma.Columns.Add("Texto", typeof(string));
             using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
             {
@@ -255,7 +274,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
-            }
+            }*/
         }
         protected void BindData()// trae los Los Datos del Nivel 2
         {

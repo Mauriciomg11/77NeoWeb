@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="ExportarTableroMoonFl.aspx.cs" Inherits="_77NeoWeb.ExportarTableroMoonFl" %>
-
+<%@ MasterType VirtualPath="~/MasterTransac.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         .heightCampo {
@@ -60,7 +60,7 @@
                         <asp:RadioButton ID="RdbCostoManto" runat="server" CssClass="LblEtiquet" Text="6. Costo de mantenimiento por hora de vuelo" GroupName="BusqSP" />&nbsp&nbsp&nbsp
                     </div>
                 </div>
-                 <div class="row">
+                <div class="row">
                     <h6 class="TextoSuperior">
                         <asp:Label ID="Label1" runat="server" Text="Otras Consultas Temporales" />
                     </h6>
@@ -79,6 +79,9 @@
                 <div class="col-sm-4">
                     <asp:Label ID="LblOT" runat="server" CssClass="LblEtiquet" Text="Oden de trabajo" Visible="false" />
                     <asp:TextBox ID="TxtOT" runat="server" CssClass="form-control-sm heightCampo" Width="80%" TextMode="Number" step="0.01" onkeypress="return solonumeros(event);" Text="0" Visible="false" />
+                </div>
+                <div class="col-sm-4">
+                    <asp:Button ID="ClientButton" runat="server" Text="Launch Modal Popup (Client)" OnClick="ClientButton_Click" />
                 </div>
             </div>
         </ContentTemplate>

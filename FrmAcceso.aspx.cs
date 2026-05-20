@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Web.UI;
 
 namespace _77NeoWeb
@@ -9,6 +10,7 @@ namespace _77NeoWeb
     public partial class FrmAcceso : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
+        DataTable IdiomaAll = new DataTable();
         DataTable Idioma = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -37,37 +39,57 @@ namespace _77NeoWeb
         }
         protected void IdiomaControles()
         {
-            Idioma.Columns.Add("Objeto", typeof(string));
-            Idioma.Columns.Add("Texto", typeof(string));
-            using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
-            {
-                string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
-                SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
-                SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
-                SC.Parameters.AddWithValue("@F1", "FrmAcceso");
-                SC.Parameters.AddWithValue("@F2", "");
-                SC.Parameters.AddWithValue("@F3", "");
-                SC.Parameters.AddWithValue("@F4", "");
-                sqlCon.Open();
-                SqlDataReader tbl = SC.ExecuteReader();
-                while (tbl.Read())  //Todos los objetos
-                {
-                    string b1 = tbl["Objeto"].ToString();
-                    string b2 = tbl["Texto"].ToString();
-                    Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());
-                    //TitForm.Text = b1.Trim().Equals("TitForm") ? b2.Trim() : TitForm.Text;
-                    LblText1.Text = b1.Trim().Equals("LblText1") ? b2.Trim() : LblText1.Text;
-                    LblText2.Text = b1.Trim().Equals("LblText2") ? b2.Trim() : LblText2.Text;
-                    LblText3.Text = b1.Trim().Equals("LblText3") ? b2.Trim() : LblText3.Text;
-                    LblInicio.Text = b1.Trim().Equals("LblInicio") ? b2.Trim() : LblInicio.Text;
-                    TbnIngresar.Text = b1.Trim().Equals("TbnIngresar") ? b2.Trim() : TbnIngresar.Text;
-                    if (b1.Trim().Equals("placeholder"))
-                    { TxtPassEmsa.Attributes.Add("placeholder", b2.Trim()); }
-                    if (b1.Trim().Equals("placeholderUsu"))
-                    { TxtUsuario.Attributes.Add("placeholder", b2.Trim()); }
-                }
-                ViewState["TablaIdioma"] = Idioma;
-            }
+            string LtxtSql = string.Format("EXEC IdiomaALL {0}", Session["77IDM"].ToString().Trim());
+            IdiomaAll = Cnx.DTIdioma(LtxtSql);
+            Session["TblIdmGrl"] = IdiomaAll;
+            DataRow[] DR = IdiomaAll.Select("CodF='FrmAcceso'");
+            if (Cnx.ValidaDataRowVacio(DR))
+            { Idioma = DR.CopyToDataTable(); ViewState["TablaIdioma"] = Idioma; }
+           // Idioma = (DataTable)ViewState["TablaIdioma"];
+            LblText1.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblText1").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblText2.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblText2").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblText3.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblText3").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            LblInicio.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblInicio").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            TbnIngresar.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "TbnIngresar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            TbnIngresar.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "TbnIngresar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            TxtPassEmsa.Attributes.Add("placeholder", Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "placeholder").Select(x => x.Field<string>("Texto")).FirstOrDefault());
+            TxtUsuario.Attributes.Add("placeholder", Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "placeholderUsu").Select(x => x.Field<string>("Texto")).FirstOrDefault());
+
+
+
+
+            /* Idioma.Columns.Add("Objeto", typeof(string));
+             Idioma.Columns.Add("Texto", typeof(string));
+             using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
+             {
+                 string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
+                 SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
+                 SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
+                 SC.Parameters.AddWithValue("@F1", "FrmAcceso");
+                 SC.Parameters.AddWithValue("@F2", "");
+                 SC.Parameters.AddWithValue("@F3", "");
+                 SC.Parameters.AddWithValue("@F4", "");
+                 sqlCon.Open();
+                 SqlDataReader tbl = SC.ExecuteReader();
+                 while (tbl.Read())  //Todos los objetos
+                 {
+                     string b1 = tbl["Objeto"].ToString();
+                     string b2 = tbl["Texto"].ToString();
+                     Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());
+                     //TitForm.Text = b1.Trim().Equals("TitForm") ? b2.Trim() : TitForm.Text;
+                     LblText1.Text = b1.Trim().Equals("LblText1") ? b2.Trim() : LblText1.Text;
+                     LblText2.Text = b1.Trim().Equals("LblText2") ? b2.Trim() : LblText2.Text;
+                     LblText3.Text = b1.Trim().Equals("LblText3") ? b2.Trim() : LblText3.Text;
+                     LblInicio.Text = b1.Trim().Equals("LblInicio") ? b2.Trim() : LblInicio.Text;
+                     TbnIngresar.Text = b1.Trim().Equals("TbnIngresar") ? b2.Trim() : TbnIngresar.Text;
+                     if (b1.Trim().Equals("placeholder"))
+                     { TxtPassEmsa.Attributes.Add("placeholder", b2.Trim()); }
+                     if (b1.Trim().Equals("placeholderUsu"))
+                     { TxtUsuario.Attributes.Add("placeholder", b2.Trim()); }
+                 }
+                 ViewState["TablaIdioma"] = Idioma;
+
+             }*/
         }
         protected void TbnIngresar_Click(object sender, EventArgs e)
         {
@@ -161,7 +183,7 @@ namespace _77NeoWeb
                     SqlDataReader tbl = SC.ExecuteReader();
                     if (tbl.Read())
                     {
-                        string Lmoned= tbl["CodMoneda"].ToString();
+                        string Lmoned = tbl["CodMoneda"].ToString();
                         string S_CiaPpl = tbl["SiglaCiaPpal"].ToString();
                         Session["SigCiaPpal"] = tbl["SiglaCiaPpal"].ToString();
                         Session["77IDM"] = tbl["Idioma"].ToString(); //Idiioma
