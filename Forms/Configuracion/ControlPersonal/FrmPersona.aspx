@@ -281,7 +281,7 @@
                                     <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                 </asp:GridView>
                             </div>
-                            <div class="col-sm-5">
+                           <%-- <div class="col-sm-5">
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="LblTitCurso" runat="server" Text="Cursos" /></h6>
                                 <asp:GridView ID="GrdCursos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdOperacionCursoXPer"
@@ -343,7 +343,7 @@
                                     <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                                     <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                 </asp:GridView>
-                            </div>
+                            </div>--%>
                         </div>
                     </div>
                 </asp:View>

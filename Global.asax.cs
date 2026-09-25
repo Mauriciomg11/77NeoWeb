@@ -10,7 +10,7 @@ namespace _77NeoWeb
 {
     public class Global : System.Web.HttpApplication
     {
-        private IntervTaHSvc _myService;
+        ///private IntervTaHSvc _myService;
         protected void Application_Start(object sender, EventArgs e)
         {
            //_myService = new IntervTaHSvc();
@@ -30,6 +30,7 @@ namespace _77NeoWeb
         protected void Session_Start(object sender, EventArgs e)
         {
             /*
+            10.02.05.33 | 22/09/2026 | FrmAcceso y MasterTransac se realiza cambio del texto XOM por 77NEO se mejora el centrado de las gridView con la class CentrarGridV2 con parametros Width y top
             10.02.05.32 | 20/05/2026 | Se ajusta la MasterPage para que el modal del mensaje del sistema no se cierre al presionar la tecla  Esc| FrmAcceso Mejora acceso a Idioma | Creación de la Orden de Despacho.
             10.02.05.31 | 16/04/2026 | En el MasterPage se crea el modal para enviar los mensajes del sistema.
             10.02.05.30 | 13/04/2026 | Ajustes Orden de Embarque|Categoría Maestro de Artículo|Herramientas Próximos Vencimientos|Asignaciones|Referencias|Aeronave Virtual|Orden de Trabajo|Movimientos de Almacén|Status Report|Consulta Movimientos de Almacén.   
@@ -45,7 +46,7 @@ namespace _77NeoWeb
             10.02.05.21 | 04/02/2025 | corrección formularios Incoming y Movimientos Almacen, no se visualizaba el detalle
             10.02.05.21 | 28/01/2025 | implementacion Menu
              */
-            Session["77Version"] = "10.02.05.32";
+            Session["77Version"] = "10.02.05.33";
             Session["77Act"] = "1";
             Session["$VR"] = "";
             Session["Nit77Cia"] = ""; // Nita cia 811035879-1
@@ -104,8 +105,8 @@ namespace _77NeoWeb
         }
         protected void Application_End(object sender, EventArgs e)
         {
-           _myService?.StopAsync(CancellationToken.None);
-           _myService?.Dispose();
+           /*_myService?.StopAsync(CancellationToken.None);
+           _myService?.Dispose();*/
         }
     }
 }

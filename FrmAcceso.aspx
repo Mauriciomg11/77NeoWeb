@@ -37,12 +37,12 @@
         }
 
         .contenedor-imagen {
-            background-image: url("../images/XOM_Blanco.jpg");
+            background-image: url("../images/Logo_Login_Acceso.jpg");
             background-size: cover; /* Cubre todo el div sin distorsionar, cortando partes si es necesario */
-            background-repeat: no-repeat;/**/ /* Evita que la imagen se repita */
-            background-position: center;/**/ /* Centra la imagen */
-            width: 400px;/**/ /* Ejemplo: ajusta el tamaño del div */
-           height: auto; /*/**/
+            background-repeat: no-repeat; /**/ /* Evita que la imagen se repita */
+            background-position: center; /**/ /* Centra la imagen */
+            width: 400px; /**/ /* Ejemplo: ajusta el tamaño del div */
+            height: auto;
         }
 
         .ddl-fondo {
@@ -51,7 +51,7 @@
         }
 
         .placeholder-color::placeholder {
-            color:black; /* O el color que prefieras */
+            color: black; /* O el color que prefieras */
             opacity: 1; /* Para asegurar que el color se vea completo */
         }
     </style>
@@ -66,12 +66,12 @@
 
     <div class="TextoSuperior">
         <h1>
-            <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" Text="XOM Access" /></h1>
+            <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" Text="77NEO Access" /></h1>
     </div>
     <div class="text">
         <div class="centrarCuadroSCV">
             <div style="color: black">
-                <h2>XOM System</h2>
+                <h2>77NEO System</h2>
                 <h5>
                     <asp:Label ID="LblText1" runat="server" Text="Aeronautical management system" /></h5>
                 <h5>

@@ -48,13 +48,13 @@
         }
     </style>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">    
-        <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+<asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
-        <ContentTemplate>           
-           <table class="TablaBusqueda">
+        <ContentTemplate>
+            <table class="TablaBusqueda">
                 <tr>
                     <td>
                         <asp:Label ID="LblBusqueda" runat="server" Text="Busqueda: " CssClass="LblTextoBusq" /></td>
@@ -62,12 +62,11 @@
                         <asp:TextBox ID="TxtBusqueda" runat="server" Width="550px" Height="28px" CssClass="form-control" placeholder="Ingrese el dato a consultar" /></td>
                     <td>
                         <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
-                      <td>
+                    <td>
                         <asp:ImageButton ID="IbtAbrirIdioma" runat="server" Visible="false" ToolTip="Abrir Idioma" ImageUrl="~/images/IrV2.png" Width="30px" Height="30px" OnClick="IbtAbrirIdioma_Click" /></td>
                 </tr>
             </table>
-             <br /><br /><br />
-            <div class="ScrollDet">
+            <div class="CentrarGridV2" style="--grid-width: <%= AnchoGrid %>;">
                 <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodIdFormulario,RutaFormulario"
                     CellPadding="3" CssClass="DiseñoGrid table-sm" GridLines="Both"
                     OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit"
@@ -77,7 +76,7 @@
                     <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
                     <RowStyle CssClass="GridRowStyle" />
                     <Columns>
-                        <asp:TemplateField HeaderText="Ir">
+                        <asp:TemplateField HeaderText="Ir" ItemStyle-CssClass="AutoColunmGV">
                             <ItemTemplate>
                                 <asp:UpdatePanel ID="UplAbrir2" runat="server" UpdateMode="Conditional">
                                     <ContentTemplate>
@@ -90,7 +89,7 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:BoundField DataField="NomFormWeb" HeaderText="NomFrmInv" Visible="false" />
-                        <asp:TemplateField HeaderText="Posición">
+                        <asp:TemplateField HeaderText="Posición" ItemStyle-CssClass="AutoColunmGV">
                             <ItemTemplate>
                                 <asp:Label Text='<%# Eval("PosicionVble") %>' runat="server" />
                             </ItemTemplate>
@@ -101,7 +100,7 @@
                                 <asp:TextBox ID="TxtPosPP" runat="server" Width="100px" />
                             </FooterTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Descripción" ItemStyle-HorizontalAlign="Left" >
+                        <asp:TemplateField HeaderText="Descripción" ItemStyle-HorizontalAlign="Left" ItemStyle-CssClass="AutoColunmGV">
                             <ItemTemplate>
                                 <asp:TextBox ID="TxtIdDescrP" Text='<%# Eval("DescSangria") %>' runat="server" Width="300px" ReadOnly="true" TextMode="MultiLine" Height="35px" />
                             </ItemTemplate>
@@ -112,7 +111,7 @@
                                 <asp:TextBox ID="TxtIdDescrPP" runat="server" Width="300px" TextMode="MultiLine" Height="35px" />
                             </FooterTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Posición Superior">
+                        <asp:TemplateField HeaderText="Posición Superior" ItemStyle-CssClass="AutoColunmGV">
                             <ItemTemplate>
                                 <asp:Label Text='<%# Eval("PerteneceMenu") %>' runat="server" />
                             </ItemTemplate>
@@ -123,7 +122,7 @@
                                 <asp:TextBox ID="TxtPosSupPP" runat="server" Width="100px" />
                             </FooterTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Posición Principal">
+                        <asp:TemplateField HeaderText="Posición Principal" ItemStyle-CssClass="AutoColunmGV">
                             <ItemTemplate>
                                 <asp:Label Text='<%# Eval("PerteneceMenuPpal") %>' runat="server" />
                             </ItemTemplate>
@@ -134,7 +133,7 @@
                                 <asp:TextBox ID="TxtPosMasterPP" runat="server" Width="100px" />
                             </FooterTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Nivel">
+                        <asp:TemplateField HeaderText="Nivel" ItemStyle-CssClass="AutoColunmGV">
                             <ItemTemplate>
                                 <asp:Label Text='<%# Eval("Sangria") %>' runat="server" />
                             </ItemTemplate>
@@ -145,7 +144,7 @@
                                 <asp:TextBox ID="TxtNivelPP" runat="server" Width="30px" />
                             </FooterTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Ruta">
+                        <asp:TemplateField HeaderText="Ruta" ItemStyle-CssClass="AutoColunmGV">
                             <ItemTemplate>
                                 <asp:Label Text='<%# Eval("RutaFormulario") %>' runat="server" />
                             </ItemTemplate>
@@ -156,7 +155,7 @@
                                 <asp:TextBox ID="TxtRutaPP" runat="server" Width="100%" />
                             </FooterTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Nombre">
+                        <asp:TemplateField HeaderText="Nombre" ItemStyle-CssClass="AutoColunmGV">
                             <ItemTemplate>
                                 <asp:Label ID="LblNomForm" Text='<%# Eval("NomFormWeb") %>' runat="server" Width="100%" />
                             </ItemTemplate>
@@ -175,7 +174,7 @@
                                 <asp:Label Text='<%# Eval("CodIdFormulario") %>' runat="server" />
                             </EditItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField>
+                        <asp:TemplateField ItemStyle-CssClass="AutoColunmGV">
                             <ItemTemplate>
                                 <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />
                                 <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />

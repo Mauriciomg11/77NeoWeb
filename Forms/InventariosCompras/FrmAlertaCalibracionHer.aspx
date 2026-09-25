@@ -162,74 +162,64 @@
                 </asp:View>
                 <asp:View ID="Vw1SinConfigurar" runat="server">
                     <asp:ImageButton ID="IbtCloseSinConfg" runat="server" ToolTip="Cerrar" CssClass="BtnCerrar" ImageAlign="Right" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCloseSinConfg_Click" />
-                    <div class="CentrarContenedor DivMarco">
-                        <div class="row">
-                            <div class="col-sm-11">
-                                <h6 class="TextoSuperior">
-                                    <asp:Label ID="LblTitSinConf" runat="server" Text="Elementos sin asingar fecha vencimiento" />
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="GridDis">
-                            <div class="row">
-                                <div class="col-sm-11">
-                                    <asp:GridView ID="GrdSinConfg" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false"
-                                        CssClass="DiseñoGrid table table-sm" GridLines="Both">
-                                        <Columns>
-                                            <asp:TemplateField HeaderText="tipo" HeaderStyle-Width="10%">
-                                                <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("Tipo") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="P/N">
-                                                <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("Parte") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="S/N">
-                                                <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("Serie") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="referencia">
-                                                <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("Referencia") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Descripcion" HeaderStyle-Width="15%">
-                                                <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Fecha Vencimiento">
-                                                <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("Fecha_Vencimiento") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Almacen">
-                                                <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("Almacen") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Bodega">
-                                                <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("Bodega") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="cantidad">
-                                                <ItemTemplate>
-                                                    <asp:Label Text='<%# Eval("Cantidad") %>' runat="server" Width="100%" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                        </Columns>
-                                        <FooterStyle CssClass="GridFooterStyle" />
-                                        <HeaderStyle CssClass="GridCabecera" />
-                                        <RowStyle CssClass="GridRowStyle" />
-                                        <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                    </asp:GridView>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="CentrarGridV2" style="--grid-top: <%= TopGrid %>; --grid-width: <%= AnchoGrid %>;">
+                        <h6 class="TextoSuperior">
+                            <asp:Label ID="LblTitSinConf" runat="server" Text="Elementos sin asingar fecha vencimiento" />
+                        </h6>
+                        <asp:GridView ID="GrdSinConfg" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false"
+                            CssClass="DiseñoGrid table table-sm" GridLines="Both">
+                            <Columns>
+                                <asp:TemplateField HeaderText="tipo" HeaderStyle-Width="10%">
+                                    <ItemTemplate>
+                                        <asp:Label Text='<%# Eval("Tipo") %>' runat="server" Width="100%" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="P/N">
+                                    <ItemTemplate>
+                                        <asp:Label Text='<%# Eval("Parte") %>' runat="server" Width="100%" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="S/N">
+                                    <ItemTemplate>
+                                        <asp:Label Text='<%# Eval("Serie") %>' runat="server" Width="100%" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="referencia">
+                                    <ItemTemplate>
+                                        <asp:Label Text='<%# Eval("Referencia") %>' runat="server" Width="100%" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Descripcion" HeaderStyle-Width="15%">
+                                    <ItemTemplate>
+                                        <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Fecha Vencimiento">
+                                    <ItemTemplate>
+                                        <asp:Label Text='<%# Eval("Fecha_Vencimiento") %>' runat="server" Width="100%" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Almacen">
+                                    <ItemTemplate>
+                                        <asp:Label Text='<%# Eval("Almacen") %>' runat="server" Width="100%" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Bodega">
+                                    <ItemTemplate>
+                                        <asp:Label Text='<%# Eval("Bodega") %>' runat="server" Width="100%" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="cantidad">
+                                    <ItemTemplate>
+                                        <asp:Label Text='<%# Eval("Cantidad") %>' runat="server" Width="100%" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <FooterStyle CssClass="GridFooterStyle" />
+                            <HeaderStyle CssClass="GridCabecera" />
+                            <RowStyle CssClass="GridRowStyle" />
+                            <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                        </asp:GridView>
                     </div>
                 </asp:View>
             </asp:MultiView>

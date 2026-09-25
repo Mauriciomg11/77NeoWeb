@@ -365,8 +365,11 @@
     <Content Include="images\IrV1.png" />
     <Content Include="images\IrV2.png" />
     <Content Include="images\Logo77Neo.png" />
+    <Content Include="images\Logo_Login_Acceso.jpg" />
     <Content Include="images\ManoObraV1.png" />
     <Content Include="images\ManoObraV2.png" />
+    <Content Include="images\MoonFl_OMA.png" />
+    <Content Include="images\MoonFl_Operador.png" />
     <Content Include="images\PrintV1.png" />
     <Content Include="images\RegresarV1.png" />
     <Content Include="images\RegresarV6.png" />

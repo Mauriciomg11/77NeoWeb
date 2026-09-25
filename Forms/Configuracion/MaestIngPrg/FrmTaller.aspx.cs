@@ -50,6 +50,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
+        protected string AnchoGrid = "50%"; // Asignas valor  dinámicamente al estilo CentrarGridV2
         protected void ModSeguridad()
         {
             ViewState["VblIngMS"] = 1;

@@ -25,7 +25,36 @@
     /*text-align: right;*/
 }
 
+.CentrarGridV2 {
+    position: relative;
+    /*top: 70px;*/
+    top: var(--grid-top, 70px); /* 70px es el valor por defecto */
+    left: auto;
+    width: var(--grid-width, 20%); /* 20% es el valor por defecto */
+    height: 400px; /* Altura específica */
+    min-height: 400px;
+    /* Opcional: Si el contenido del Grid supera los 400px, añade barra de desplazamiento */
+    margin: 0 auto;
+    overflow: auto;
+    /* Estilos estéticos opcionales */
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
 
+.DivGrid {
+    position: relative;
+    top: 100px;
+    left: auto;
+    width: 55%;
+    height: 400px; /* Altura específica */
+    min-height: 400px;
+    /* Opcional: Si el contenido del Grid supera los 400px, añade barra de desplazamiento */
+    margin: 0 auto;
+    overflow: auto;
+    /* Estilos estéticos opcionales */
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
 
 .CsTitulo {
     position: relative;
@@ -33,8 +62,9 @@
     text-align: center;
     color: aliceblue;
     font-size: 2em;
-    font-weight:700;
+    font-weight: 700;
 }
+
 .TextoSuperior {
     position: relative;
     background-color: cadetblue; /*bg-info text-center*/
@@ -45,38 +75,24 @@
 
 
 .Passw {
-    
     text-align: right;
     width: 100%;
 }
 
-
-
-
-
-
-
 .ImagenFondoLoging {
-    background: url("/images/ImagenLoginV2.jpg") no-repeat fixed center ;
+    background: url("/images/ImagenLoginV2.jpg") no-repeat fixed center;
     background-size: cover;
     width: 100%;
-    height: 100vh;  /* Asegura que cubra toda la altura de la pantalla */
-    display: flex;  /* Si es necesario, utiliza flexbox para centrar el contenido */
-    justify-content: center;  /* Centra el contenido horizontalmente */
-    align-items: center;  /* Centra el contenido verticalmente */
+    height: 100vh; /* Asegura que cubra toda la altura de la pantalla */
+    display: flex; /* Si es necesario, utiliza flexbox para centrar el contenido */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
     box-sizing: border-box;
 }
 
 
 
-.DivGrid {
-    position: relative;
-    width: 45%;
-    height: auto;
-    top: 100px;
-    left: 30%;
-    margin-top: 0px;
-}
+
 
 .navbar {
     position: absolute;
@@ -84,6 +100,7 @@
     top: 95px;
     margin-top: 0px;
 }
+
     .navbar .container {
         padding: 0;
         margin: 0;
@@ -94,7 +111,7 @@
     text-align: center;
     color: white;
 }
-    
+
 /* Estilo del sidebar */
 .sidebar {
     position: fixed; /*siempre se posiciona al inicio*/

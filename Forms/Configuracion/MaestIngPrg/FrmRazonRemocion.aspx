@@ -18,8 +18,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPanel" runat="server">
-        <ContentTemplate>
-            <div class="CentrarTable">
+        <ContentTemplate>            
                 <table class="TablaBusqueda">
                     <tr>
                         <td>
@@ -32,14 +31,14 @@
                             <asp:ImageButton ID="IbtExpExcel" runat="server" ToolTip="Exportar" CssClass=" BtnExpExcel" ImageUrl="~/images/ExcelV1.png" OnClick="IbtExpExcel_Click" /></td>
                     </tr>
                 </table>
-                <div class="DivGrid DivContendorGrid">
+                <div class="CentrarGridV2" style="--grid-width: <%= AnchoGrid %>;">
                     <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdRazonRemocion, CodRemocion"
                         CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                         OnRowCommand="GrdDatos_RowCommand" OnSelectedIndexChanged="GrdDatos_SelectedIndexChanged" OnRowEditing="GrdDatos_RowEditing"
                         OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit"
                         OnRowDeleting="GrdDatos_RowDeleting" OnRowDataBound="GrdDatos_RowDataBound" OnPageIndexChanging="GrdDatos_PageIndexChanging">
                         <Columns>
-                            <asp:TemplateField HeaderText="Descripción">
+                            <asp:TemplateField HeaderText="Descripción"  ItemStyle-CssClass="90%">
                                 <ItemTemplate>
                                     <asp:Label ID="LblDesc" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%"/>
                                 </ItemTemplate>
@@ -50,7 +49,7 @@
                                     <asp:TextBox ID="TxtDesPP" runat="server" MaxLength="200" Width="100%" />
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Activo">
+                            <asp:TemplateField HeaderText="Activo"  ItemStyle-CssClass="AutoColunmGV">
                                 <ItemTemplate>
                                     <asp:CheckBox ID="CkbActivoP" Checked='<%# Eval("Activo").ToString()=="1" ? true : false %>' runat="server" Enabled="false" />
                                 </ItemTemplate>
@@ -61,7 +60,7 @@
                                     <asp:CheckBox ID="CkbActivoPP" runat="server" Checked="true" />
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField FooterStyle-Width="5%">
+                            <asp:TemplateField  ItemStyle-CssClass="AutoColunmGV">
                                 <ItemTemplate>
                                     <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />
                                     <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
@@ -82,7 +81,7 @@
                         <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
                     </asp:GridView>
                 </div>
-            </div>
+
         </ContentTemplate>
         <Triggers>
             <asp:PostBackTrigger ControlID="IbtExpExcel" />

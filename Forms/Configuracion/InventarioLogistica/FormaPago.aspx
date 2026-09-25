@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FormaPago.aspx.cs" Inherits="_77NeoWeb.Forms.Configuracion.InventarioLogistica.FormaPago" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-   
+    <style type="text/css">       
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="EncScriptDdl" runat="server">
     <script type="text/javascript">
@@ -23,13 +24,12 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
 
     <asp:UpdatePanel ID="UpPanel" runat="server">
-        <ContentTemplate>
-            <div class="CentrarTable">
+        <ContentTemplate>            
                 <table class="TablaBusqueda">
                     <tr>
                         <td>
@@ -40,21 +40,21 @@
                             <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                     </tr>
                 </table>
-                <div class="DivGrid DivContendorGrid">
+                <div class="CentrarGridV2" style="--grid-width: <%= AnchoGrid %>;">
                     <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodTipoPago"
-                        CssClass="DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
+                        CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                         OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating"
                         OnRowCancelingEdit="GrdDatos_RowCancelingEdit" OnRowDeleting="GrdDatos_RowDeleting" OnRowDataBound="GrdDatos_RowDataBound"
                         OnPageIndexChanging="GrdDatos_PageIndexChanging">
                         <Columns>
-                            <asp:TemplateField HeaderText="Cód" HeaderStyle-Width="10%">
+                            <asp:TemplateField HeaderText="Cód" ItemStyle-CssClass="AutoColunmGV">
                                 <ItemTemplate>
-                                    <asp:Label Text='<%# Eval("CodTipoPago") %>' runat="server" Width="50px" />
+                                    <asp:Label Text='<%# Eval("CodTipoPago") %>' runat="server" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Descripc" HeaderStyle-Width="70%">
+                            <asp:TemplateField HeaderText="Descripc" ItemStyle-CssClass="90%">
                                 <ItemTemplate>
-                                    <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" />
+                                    <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" />
                                 </ItemTemplate>
                                 <EditItemTemplate>
                                     <asp:TextBox ID="TxtDesc" Text='<%# Eval("Descripcion") %>' runat="server" MaxLength="200" Width="100%" />
@@ -63,9 +63,9 @@
                                     <asp:TextBox ID="TxtDescPP" runat="server" MaxLength="200" Width="100%" />
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Di" HeaderStyle-Width="5%">
+                            <asp:TemplateField HeaderText="Di" ItemStyle-CssClass="AutoColunmGV">
                                 <ItemTemplate>
-                                    <asp:Label ID="LblDiaP" Text='<%# Eval("Dias") %>' runat="server" Width="100%" TextMode="Number" />
+                                    <asp:Label ID="LblDiaP" Text='<%# Eval("Dias") %>' runat="server" TextMode="Number" />
                                 </ItemTemplate>
                                 <EditItemTemplate>
                                     <asp:TextBox ID="TxtDia" Text='<%# Eval("Dias") %>' runat="server" Width="100%" TextMode="Number" onkeypress="return solonumeros(event);" />
@@ -74,7 +74,7 @@
                                     <asp:TextBox ID="TxtDiaPP" runat="server" Width="100%" TextMode="Number" onkeypress="return solonumeros(event);" Text="0" />
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Acti" HeaderStyle-Width="5%">
+                            <asp:TemplateField HeaderText="Acti" ItemStyle-CssClass="AutoColunmGV">
                                 <ItemTemplate>
                                     <asp:CheckBox ID="CkbActP" Checked='<%# Eval("Activo").ToString()=="1" ? true : false %>' runat="server" Enabled="false" />
                                 </ItemTemplate>
@@ -85,7 +85,7 @@
                                     <asp:CheckBox ID="CkbActPP" runat="server" Checked="true" Enabled="false" />
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField FooterStyle-Width="10%">
+                            <asp:TemplateField ItemStyle-CssClass="AutoColunmGV">
                                 <ItemTemplate>
                                     <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />
                                     <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
@@ -106,7 +106,6 @@
                         <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                     </asp:GridView>
                 </div>
-            </div>
         </ContentTemplate>
         <Triggers>
         </Triggers>

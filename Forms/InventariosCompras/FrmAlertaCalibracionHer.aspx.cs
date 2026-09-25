@@ -56,6 +56,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
+        protected string AnchoGrid = "90%"; // Asignas width  dinámicamente al estilo CentrarGridV2
+        protected string TopGrid = "10px"; // Asigna top  dinámicamente al estilo CentrarGridV2
         protected void ModSeguridad()
         {
             ClsPermisos ClsP = new ClsPermisos();

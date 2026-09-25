@@ -44,6 +44,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 BindData(TxtBusqueda.Text, "UPD");
             }
         }
+        protected string AnchoGrid = "60%"; // // Asignas valor  dinámicamente al estilo CentrarGridV2
         protected void ModSeguridad()
         {
             ViewState["VblIngMS"] = 1;

@@ -12,6 +12,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
 {
     public partial class FrmPosicion : System.Web.UI.Page
     {
+
         ClsConexion Cnx = new ClsConexion();
         DataTable IdiomaAll = new DataTable();
         DataTable Idioma = new DataTable();
@@ -43,11 +44,14 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             }
             if (!IsPostBack)
             {
-                TitForm.Text = "Configuración de Posiciones";
+                
+      
+        TitForm.Text = "Configuración de Posiciones";
                 ModSeguridad();
                 BindData(TxtBusqueda.Text, "UPD");
             }
         }
+        protected string AnchoGrid = "40%"; // // Asignas valor  dinámicamente al estilo CentrarGridV2
         protected void ModSeguridad()
         {
             ViewState["VblIngMS"] = 1;

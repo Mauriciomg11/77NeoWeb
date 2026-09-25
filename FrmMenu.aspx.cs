@@ -42,6 +42,7 @@ namespace _77NeoWeb
                 if (Session["C77U"].ToString().Trim().Equals("00000082") || (Session["C77U"].ToString().Trim().Equals("00000083") && Session["!dC!@"].ToString().Trim().Equals("1"))) { IbtAbrirIdioma.Visible = true; }
             }
         }
+        protected string AnchoGrid = "100%"; // Asignas valor  dinámicamente al estilo CentrarGridV2
         protected void ModSeguridad()
         {
             ViewState["VblIngMS"] = 1;
@@ -142,8 +143,7 @@ namespace _77NeoWeb
                 string VbTxtSql = "EXEC SP_ConfiguracionV2_ 3, @Dsc, @Us,'','','', @Ing,0, @Idm, @ICC,'01-01-1','02-01-1','03-01-1'";
                 sqlCon.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlCon))
-                {
-                    string borr = ViewState["VblIngMS"].ToString();
+                {                 
                     SC.Parameters.AddWithValue("@Dsc", VbDesmenu);
                     SC.Parameters.AddWithValue("@Us", Session["C77U"]);
                     SC.Parameters.AddWithValue("@Ing", ViewState["VblIngMS"]);
@@ -249,8 +249,9 @@ namespace _77NeoWeb
                 Cnx.BaseDatos(Session["D[BX"].ToString(), Session["$VR"].ToString(), Session["V$U@"].ToString(), Session["P@$"].ToString());
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
                 {
+                    string prr = GrdDatos.DataKeys[e.RowIndex].Value.ToString();
                     sqlCon.Open();
-                    string query = "EXEC SP_ConfiguracionV2_ 5,@Posiciones,@Descr,@Ruta,@NomForm,'',@Nivel,@id,0,0,'01-01-01','02-01-01','03-01-01'";
+                    string query = "EXEC SP_ConfiguracionV2_ 5,@Posiciones,@Descr,@Ruta,@NomForm,'',@Nivel,@id,@Idm,0,'01-01-01','02-01-01','03-01-01'";
                     SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
                     sqlCmd.Parameters.AddWithValue("@Posiciones", VbPosisicones);
                     sqlCmd.Parameters.AddWithValue("@Descr", (GrdDatos.Rows[e.RowIndex].FindControl("TxtIdDescr") as TextBox).Text.Trim());
@@ -258,6 +259,7 @@ namespace _77NeoWeb
                     sqlCmd.Parameters.AddWithValue("@Ruta", (GrdDatos.Rows[e.RowIndex].FindControl("TxtRuta") as TextBox).Text.Trim());
                     sqlCmd.Parameters.AddWithValue("@NomForm", (GrdDatos.Rows[e.RowIndex].FindControl("TxtNomForm") as TextBox).Text.Trim());
                     sqlCmd.Parameters.AddWithValue("@id", Convert.ToInt32(GrdDatos.DataKeys[e.RowIndex].Value.ToString()));
+                    sqlCmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                     sqlCmd.ExecuteNonQuery();
                     GrdDatos.EditIndex = -1;
                     BindData(TxtBusqueda.Text);

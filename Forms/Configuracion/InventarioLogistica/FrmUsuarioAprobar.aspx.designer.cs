@@ -141,51 +141,6 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
         protected global::System.Web.UI.WebControls.DropDownList DdlUsuMnrAlt1;
 
         /// <summary>
-        /// Control lblTitUsuTRM.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTitUsuTRM;
-
-        /// <summary>
-        /// Control LblUsuTrmPpl.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblUsuTrmPpl;
-
-        /// <summary>
-        /// Control DdlUsuTrmPpl.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DdlUsuTrmPpl;
-
-        /// <summary>
-        /// Control LblUsuTrmAlt1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblUsuTrmAlt1;
-
-        /// <summary>
-        /// Control DdlUsuTrmAlt1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DdlUsuTrmAlt1;
-
-        /// <summary>
         /// Control LblTitValores.
         /// </summary>
         /// <remarks>

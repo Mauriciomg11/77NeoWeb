@@ -94,9 +94,9 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                     lblTitUsuAprMnr.Text = bO.Equals("lblTitUsuAprMnr") ? bT : lblTitUsuAprMnr.Text;
                     LblUsuMnrPpl.Text = bO.Equals("LblUsuPpl") ? bT : LblUsuMnrPpl.Text;
                     LblUsuMnrAlt1.Text = bO.Equals("LblUsuMyrAlt1") ? bT : LblUsuMnrAlt1.Text;
-                    lblTitUsuTRM.Text = bO.Equals("lblTitUsuTRM") ? bT : lblTitUsuTRM.Text;
-                    LblUsuTrmPpl.Text = bO.Equals("LblUsuPpl") ? bT : LblUsuTrmPpl.Text;
-                    LblUsuTrmAlt1.Text = bO.Equals("LblUsuMyrAlt1") ? bT : LblUsuTrmAlt1.Text;
+                   // lblTitUsuTRM.Text = bO.Equals("lblTitUsuTRM") ? bT : lblTitUsuTRM.Text;
+                   // LblUsuTrmPpl.Text = bO.Equals("LblUsuPpl") ? bT : LblUsuTrmPpl.Text;
+                   // LblUsuTrmAlt1.Text = bO.Equals("LblUsuMyrAlt1") ? bT : LblUsuTrmAlt1.Text;
                     LblTitValores.Text = bO.Equals("LblTitValores") ? bT : LblTitValores.Text;
                     LblMonedaLocal.Text = bO.Equals("LblMonedaLocal") ? bT : LblMonedaLocal.Text;
                     LblDolar.Text = bO.Equals("LblDolar") ? bT : LblDolar.Text;
@@ -166,7 +166,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             DdlUsuMnrAlt1.DataValueField = "CodUsuario";
             DdlUsuMnrAlt1.DataBind();
 
-            DdlUsuTrmPpl.DataSource = DSTDdl.Tables[0];
+           /* DdlUsuTrmPpl.DataSource = DSTDdl.Tables[0];
             DdlUsuTrmPpl.DataTextField = "Usuario";
             DdlUsuTrmPpl.DataValueField = "CodUsuario";
             DdlUsuTrmPpl.DataBind();
@@ -174,7 +174,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
             DdlUsuTrmAlt1.DataSource = DSTDdl.Tables[0];
             DdlUsuTrmAlt1.DataTextField = "Usuario";
             DdlUsuTrmAlt1.DataValueField = "CodUsuario";
-            DdlUsuTrmAlt1.DataBind();
+            DdlUsuTrmAlt1.DataBind();*/
 
             ViewState["IDUsAp"] = "0";
 
@@ -186,8 +186,8 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                 DdlUsuMyrAlt2.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuAlter2"].ToString().Trim());
                 DdlUsuMnrPpl.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuarioAprobMenor"].ToString().Trim());
                 DdlUsuMnrAlt1.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["CodUsuAprobMenorAlter"].ToString().Trim());
-                DdlUsuTrmPpl.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["Usr1CrearTrm"].ToString().Trim());
-                DdlUsuTrmAlt1.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["Usr2CrearTrm"].ToString().Trim());
+               // DdlUsuTrmPpl.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["Usr1CrearTrm"].ToString().Trim());
+               // DdlUsuTrmAlt1.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["Usr2CrearTrm"].ToString().Trim());
                 MonLocal.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["MonLocal"].ToString().Trim());
                 MonUSD.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["MonUSD"].ToString().Trim());
                 MonEUR.Text = HttpUtility.HtmlDecode(DSTDdl.Tables[1].Rows[0]["MonEUR"].ToString().Trim());
@@ -235,7 +235,7 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
         protected void ActivarCampos(bool Ing, bool Edi, bool Vble, bool VbCurrent, string accion)
         {
             DdllUsuPpl.Enabled = Edi; DdlUsuMyrAlt1.Enabled = Edi; DdlUsuMyrAlt2.Enabled = Edi; DdlUsuMnrPpl.Enabled = Edi; DdlUsuMnrAlt1.Enabled = Edi;
-            DdlUsuTrmPpl.Enabled = Edi; DdlUsuTrmAlt1.Enabled = Edi;
+           // DdlUsuTrmPpl.Enabled = Edi; DdlUsuTrmAlt1.Enabled = Edi;
             TxtMonedaLocal.Enabled = Edi; TxtDolar.Enabled = Edi; TxtEuro.Enabled = Edi;
             TxtMonedaLocal.Visible = Vble; TxtDolar.Visible = Vble; TxtEuro.Visible = Vble;
             MonLocal.Visible = VbCurrent; MonUSD.Visible = VbCurrent; MonEUR.Visible = VbCurrent;
@@ -276,8 +276,8 @@ namespace _77NeoWeb.Forms.Configuracion.InventarioLogistica
                                 SC.Parameters.AddWithValue("@My2", DdlUsuMyrAlt2.Text.Trim());
                                 SC.Parameters.AddWithValue("@MnP", DdlUsuMnrPpl.Text.Trim());
                                 SC.Parameters.AddWithValue("@Mn1", DdlUsuMnrAlt1.Text.Trim());
-                                SC.Parameters.AddWithValue("@TrP", DdlUsuTrmPpl.Text.Trim());
-                                SC.Parameters.AddWithValue("@Tr1", DdlUsuTrmAlt1.Text.Trim());
+                                SC.Parameters.AddWithValue("@TrP", "");//DdlUsuTrmPpl.Text.Trim()); ;
+                                SC.Parameters.AddWithValue("@Tr1", "");//DdlUsuTrmAlt1.Text.Trim());
                                 SC.Parameters.AddWithValue("@Us", Session["C77U"]);
                                 SC.Parameters.AddWithValue("@ML", TxtMonedaLocal.Text.Trim());
                                 SC.Parameters.AddWithValue("@MD", TxtDolar.Text.Trim());

@@ -66,7 +66,11 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             string VbPC = Cnx.GetIpPubl();
             ClsP.Acceder(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim() + ".aspx", VbPC);
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
-            if (ClsP.GetIngresar() == 0) { ViewState["VblIngMS"] = 0; BtnIngresar.Visible = false; GrdLicencias.ShowFooter = false; GrdCursos.ShowFooter = false; }
+            if (ClsP.GetIngresar() == 0)
+            {
+                ViewState["VblIngMS"] = 0; BtnIngresar.Visible = false; GrdLicencias.ShowFooter = false;
+                //GrdCursos.ShowFooter = false;
+            }
             if (ClsP.GetModificar() == 0) { ViewState["VblModMS"] = 0; BtnModificar.Visible = false; }
             if (ClsP.GetConsultar() == 0) { }
             if (ClsP.GetImprimir() == 0) { ViewState["VblImpMS"] = 0; BtnExportar.Visible = false; }
@@ -129,10 +133,10 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     GrdLicencias.Columns[3].HeaderText = bO.Equals("GrdFechVen") ? bT : GrdLicencias.Columns[3].HeaderText;
                     GrdLicencias.Columns[4].HeaderText = bO.Equals("GrdMdl") ? bT : GrdLicencias.Columns[4].HeaderText;
                     GrdLicencias.Columns[5].HeaderText = bO.Equals("GrdEspcl") ? bT : GrdLicencias.Columns[5].HeaderText;
-                    LblTitCurso.Text = bO.Equals("BtnCursos") ? bT : LblTitCurso.Text;
+                    /*LblTitCurso.Text = bO.Equals("BtnCursos") ? bT : LblTitCurso.Text;
                     GrdCursos.Columns[0].HeaderText = bO.Equals("CkbActivo") ? bT : GrdCursos.Columns[0].HeaderText;
                     GrdCursos.Columns[1].HeaderText = bO.Equals("GrdNombr") ? bT : GrdCursos.Columns[1].HeaderText;
-                    GrdCursos.Columns[2].HeaderText = bO.Equals("GrdFechVen") ? bT : GrdCursos.Columns[2].HeaderText;
+                    GrdCursos.Columns[2].HeaderText = bO.Equals("GrdFechVen") ? bT : GrdCursos.Columns[2].HeaderText;*/
                     LblUsuario.Text = bO.Equals("LblUsuario") ? bT : LblUsuario.Text;
                     LblTitCrearusu.Text = bO.Equals("LblTitCrearusu") ? bT : LblTitCrearusu.Text;
                     LblNomUsu.Text = bO.Equals("LblUsuario") ? bT + ":" : LblNomUsu.Text;
@@ -164,7 +168,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                     }
                 }
             }
-            foreach (GridViewRow Row in GrdCursos.Rows)
+            /*foreach (GridViewRow Row in GrdCursos.Rows)
             {
                 if ((int)ViewState["VblModMS"] == 0)
                 {
@@ -182,7 +186,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                         Row.Cells[3].Controls.Remove(imgD);
                     }
                 }
-            }
+            }*/
         }
         public bool IsIENumerableLleno(IEnumerable<DataRow> ieNumerable)
         {
@@ -408,7 +412,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 ViewState["EmpAnt"] = HttpUtility.HtmlDecode(SDR["CodEmpresa"].ToString().Trim());
 
                 BindDLicen(TxtCodUsu.Text.Trim());
-                BindDCurso(TxtCodUsu.Text.Trim());
+               // BindDCurso(TxtCodUsu.Text.Trim());
             }
         }
         protected void DdlBusqPers_TextChanged(object sender, EventArgs e)
@@ -719,11 +723,11 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 try
                 {
                     string VbLic = "", VbModel = "", VbEspec = "", VBQuery = "";
-                    string  VbNNum = "0";
+                    string VbNNum = "0";
                     TextBox TxtFecVenPP = (GrdLicencias.FooterRow.FindControl("TxtFecVenPP") as TextBox);
                     DateTime VbFechaVenc;
                     VbLic = (GrdLicencias.FooterRow.FindControl("DdlLicenRFPP") as DropDownList).Text.Trim();
-                    VbNNum = (GrdLicencias.FooterRow.FindControl("TxtNumPP") as TextBox).Text.Trim().Equals("")?"0": (GrdLicencias.FooterRow.FindControl("TxtNumPP") as TextBox).Text.Trim();
+                    VbNNum = (GrdLicencias.FooterRow.FindControl("TxtNumPP") as TextBox).Text.Trim().Equals("") ? "0" : (GrdLicencias.FooterRow.FindControl("TxtNumPP") as TextBox).Text.Trim();
                     if (!TxtFecVenPP.Text.Trim().Equals("")) { VbFechaVenc = Convert.ToDateTime(TxtFecVenPP.Text.Trim()); }
                     else
                     {
@@ -824,7 +828,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             DateTime VbFechaVenc;
             int VblId = Convert.ToInt32(GrdLicencias.DataKeys[e.RowIndex].Value.ToString());
 
-            string VbNNum =(GrdLicencias.Rows[e.RowIndex].FindControl("TxtNum") as TextBox).Text.Trim().Equals("")?"0": (GrdLicencias.Rows[e.RowIndex].FindControl("TxtNum") as TextBox).Text.Trim();
+            string VbNNum = (GrdLicencias.Rows[e.RowIndex].FindControl("TxtNum") as TextBox).Text.Trim().Equals("") ? "0" : (GrdLicencias.Rows[e.RowIndex].FindControl("TxtNum") as TextBox).Text.Trim();
             if (Convert.ToDouble(VbNNum) <= 0)
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens11Persn'");
@@ -1011,7 +1015,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
         }
         protected void GrdLicencias_PageIndexChanging(object sender, GridViewPageEventArgs e)
         { GrdLicencias.PageIndex = e.NewPageIndex; BindDLicen(TxtCodUsu.Text.Trim()); }
-        protected void BindDCurso(string VbConsultar)
+        /*protected void BindDCurso(string VbConsultar)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
             DSTDdl = (DataSet)ViewState["DSTDdl"];
@@ -1120,7 +1124,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                                 foreach (DataRow row in Result)
                                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el ingreso')", true);
                                 Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString().Trim(), "INSERT", ex.StackTrace.Substring(ex.StackTrace.Length > 300 ? ex.StackTrace.Length - 300 : 0, 300), ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
-                            }/**/
+                            }
                         }
                     }
                 }
@@ -1306,7 +1310,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                 foreach (DataRow row in Result)
                 { IbtAddNew.ToolTip = row["Texto"].ToString().Trim(); }
             }
-        }
+        }*/
         //***********************ASIGNAR USUARIO A MANTO        
         protected void IbtCerrarCrearusu_Click(object sender, ImageClickEventArgs e)
         { MultVw.ActiveViewIndex = 0; }

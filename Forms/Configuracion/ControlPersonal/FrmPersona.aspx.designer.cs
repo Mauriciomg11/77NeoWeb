@@ -384,24 +384,6 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
         protected global::System.Web.UI.WebControls.GridView GrdLicencias;
 
         /// <summary>
-        /// Control LblTitCurso.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblTitCurso;
-
-        /// <summary>
-        /// Control GrdCursos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GrdCursos;
-
-        /// <summary>
         /// Control Vw1NuevoUsu.
         /// </summary>
         /// <remarks>

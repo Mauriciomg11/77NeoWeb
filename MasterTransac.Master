@@ -11,7 +11,7 @@
     <link href="Css/CssPagTrans.css" rel="stylesheet" />
     <link href="Css/CssConsultar.css" rel="stylesheet" />
     <link href="Css/bootstrap.min.css" rel="stylesheet" />
-    <link href="Css/CssSystem/MenuInicio.css" rel="stylesheet" />
+   <link href="Css/CssSystem/MenuInicio.css" rel="stylesheet"/>
     <link href="Css/CssDisenoFrm.css" rel="stylesheet" />
     <%--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" /> --%>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -58,7 +58,7 @@
     <form id="form1" runat="server">
         <div class="TextoSuperior">
             <div class="Passw">
-                <h1 class="classh2">XOM SYSTEM</h1>
+                <h1 class="classh2">77NEO SYSTEM</h1>
                 <asp:Label ID="LblCia" runat="server" Text="" CssClass="LblCiaTrans"></asp:Label>
                 <asp:LinkButton ID="LkbMenu" runat="server" CssClass="Menu" CausesValidation="False" Text="Menú" ForeColor="#ffffff" OnClick="LkbMenu_Click" />&nbsp&nbsp&nbsp&nbsp   
              <asp:LinkButton ID="LkbCambPass" runat="server" CssClass="Passw" CausesValidation="False" Text="Cambio contraseña..." ForeColor="#ffffff" OnClick="LkbCambPass_Click" OnClientClick="return confirm('¿Desea ralizar el cambio de contraseña?');" />

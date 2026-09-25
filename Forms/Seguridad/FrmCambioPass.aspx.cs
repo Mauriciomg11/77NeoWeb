@@ -36,6 +36,7 @@ namespace _77NeoWeb.Forms.Seguridad
             if (!IsPostBack)
             {
                 Page.Title = "Password";
+                string borr = Session["Login77"].ToString().Trim();
                 TxtUsuario.Text = Session["Login77"].ToString().Trim();
                 IdiomaControles();
             }

@@ -42,8 +42,8 @@
             $('#<%=DdlUsuMyrAlt2.ClientID%>').chosen();
             $('#<%=DdlUsuMnrPpl.ClientID%>').chosen();
             $('#<%=DdlUsuMnrAlt1.ClientID%>').chosen();
-            $('#<%=DdlUsuTrmPpl.ClientID%>').chosen();
-            $('#<%=DdlUsuTrmAlt1.ClientID%>').chosen();
+           <%-- $('#<%=DdlUsuTrmPpl.ClientID%>').chosen();
+            $('#<%=DdlUsuTrmAlt1.ClientID%>').chosen();--%>
         }
     </script>
 </asp:Content>
@@ -95,7 +95,7 @@
                             <asp:DropDownList ID="DdlUsuMnrAlt1" runat="server" CssClass="heightCampo" Width="100%" Enabled="false" />
                         </div>
                     </div>
-                    <br />
+                    <%--<br />
                     <div class="col-sm-9">
                         <h6 class="TextoSuperior">
                             <asp:Label ID="lblTitUsuTRM" runat="server" Text="Usuarios ingreso TRM" /></h6>
@@ -111,7 +111,7 @@
                             <asp:Label ID="LblUsuTrmAlt1" runat="server" CssClass="LblEtiquet" Text=" Usuario Alterno 1" />
                             <asp:DropDownList ID="DdlUsuTrmAlt1" runat="server" CssClass="heightCampo" Width="100%" Enabled="false" />
                         </div>
-                    </div>
+                    </div>--%>
                 </div>
                 <div class="col-sm-4">
                     <h6 class="TextoSuperior">

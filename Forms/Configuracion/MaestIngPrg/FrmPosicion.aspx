@@ -2,6 +2,9 @@
 <%@ MasterType VirtualPath="~/MasterTransac.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Pantalla</title> 
+     <style type="text/css">
+      
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="TituloPagina" runat="server">    
         <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
@@ -19,35 +22,35 @@
                         <asp:ImageButton ID="IbtConsultar" runat="server" ToolTip="Consultar" CssClass="BtnImagenBusqueda" ImageUrl="~/images/FindV2.png" OnClick="IbtConsultar_Click" /></td>
                 </tr>
             </table>
-            <div class="DivGrid DivContendorGrid">
+            <div class="CentrarGridV2" style="--grid-width: <%= AnchoGrid %>;">
                 <asp:GridView ID="GrdDatos" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdPosicion,CodAnt"
-                    CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
+                    CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" AllowPaging="true" PageSize="8"
                     OnRowCommand="GrdDatos_RowCommand" OnRowEditing="GrdDatos_RowEditing" OnRowUpdating="GrdDatos_RowUpdating" OnRowCancelingEdit="GrdDatos_RowCancelingEdit"
                     OnRowDeleting="GrdDatos_RowDeleting" OnRowDataBound="GrdDatos_RowDataBound" OnPageIndexChanging="GrdDatos_PageIndexChanging">
                     <Columns>
-                        <asp:TemplateField HeaderText="Código">
+                        <asp:TemplateField HeaderText="Código" ItemStyle-CssClass="AutoColunmGV">
                             <ItemTemplate>
                                 <asp:Label Text='<%# Eval("Codigo") %>' runat="server" />
                             </ItemTemplate>
                             <EditItemTemplate>
-                                <asp:TextBox ID="TxtCodPos" Text='<%# Eval("Codigo") %>' runat="server" />
+                                <asp:TextBox ID="TxtCodPos" Text='<%# Eval("Codigo") %>' runat="server" Width =""/>
                             </EditItemTemplate>
                             <FooterTemplate>
                                 <asp:TextBox ID="TxtCodPosPP" runat="server" />
                             </FooterTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Descripción">
+                        <asp:TemplateField HeaderText="Descripción" ItemStyle-CssClass="90%">
                             <ItemTemplate>
                                 <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" />
                             </ItemTemplate>
                             <EditItemTemplate>
-                                <asp:TextBox ID="TxtDesc" Text='<%# Eval("Descripcion") %>' runat="server" />
+                                <asp:TextBox ID="TxtDesc" Text='<%# Eval("Descripcion") %>' runat="server" Width ="100%" />
                             </EditItemTemplate>
                             <FooterTemplate>
                                 <asp:TextBox ID="TxtDescPP" runat="server" />
                             </FooterTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Activo">
+                        <asp:TemplateField HeaderText="Activo" ItemStyle-CssClass="AutoColunmGV">
                             <ItemTemplate>
                                 <asp:CheckBox ID="CkbActivoP" Checked='<%# Eval("Activo").ToString()=="1" ? true : false %>' runat="server" Enabled="false" />
                             </ItemTemplate>
@@ -58,7 +61,7 @@
                                 <asp:CheckBox ID="CkbActivoPP" runat="server" Checked="true" />
                             </FooterTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField FooterStyle-Width="10%">
+                        <asp:TemplateField ItemStyle-CssClass="AutoColunmGV">
                             <ItemTemplate>
                                 <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />
                                 <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />

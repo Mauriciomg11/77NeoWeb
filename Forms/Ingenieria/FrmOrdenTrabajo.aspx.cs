@@ -1049,7 +1049,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     EstadoPasos();
                 }
             }
-            catch (Exception EX)
+            catch (Exception)
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
                 foreach (DataRow row in Result)

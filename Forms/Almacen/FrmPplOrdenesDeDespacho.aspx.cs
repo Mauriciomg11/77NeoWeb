@@ -487,7 +487,7 @@ namespace _77NeoWeb.Forms.Almacen
                                 DSTDdl.Tables["Detalle"].Rows.Clear();
                                 TraerDatos();
                             }
-                            catch (Exception ex) { transaction.Rollback(); }
+                            catch (Exception) { transaction.Rollback(); }
                         }
                     }
                 }

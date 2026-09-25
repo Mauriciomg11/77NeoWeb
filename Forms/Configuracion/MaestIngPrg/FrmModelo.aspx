@@ -83,7 +83,7 @@
             background-color: blue;
         }
 
-        .PneleditarPerfil {
+ /*        .PneleditarPerfil {
             position: absolute;
             width: 50%;
             height: 33%;
@@ -91,12 +91,12 @@
             top: 37%;
         }
 
-        .TabBtiEditFrml {
+       .TabBtiEditFrml {
             position: absolute;
             top: 78%;
             left: 45%;
             width: 15%;
-        }
+        }*/
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="TituloPagina" runat="server">
@@ -169,7 +169,6 @@
                             </td>
                         </tr>
                     </table>
-
                     <table class="TabBtnEdicion">
                         <tr>
                             <td>
@@ -241,7 +240,7 @@
                 </div>
             </asp:Panel>
             <asp:Panel ID="PnlFrml" runat="server" Visible="false">
-                <asp:Panel ID="PnlEditarPerfil" runat="server" CssClass="PneleditarPerfil" BorderStyle="Solid" BorderColor="#3399ff" BackColor="#66ccff">
+                <asp:Panel ID="PnlEditarPerfil" runat="server" BorderStyle="Solid" BorderColor="#3399ff" BackColor="#66ccff" CssClass="DivGrid"> <%--CssClass="PneleditarPerfil"--%>
                     <asp:Label ID="LblFormula" runat="server" Text="Formula" CssClass="LblTextoBusq" Font-Size="X-Large"></asp:Label>
                     <asp:TextBox ID="TxtNewFml" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
                     <table>
@@ -290,7 +289,7 @@
                                 <asp:Button ID="BtnLimp" runat="server" CssClass=" btn-dark BtnSignosFrml" OnClick="BtnLimp_Click" Text="Limpiar" Width="80px" /></td>
                         </tr>
                     </table>
-                    <table class="TabBtiEditFrml">
+                    <table> <%--class="TabBtiEditFrml"--%>
                         <tr>
                             <td>
                                 <asp:ImageButton ID="BtiAceptar" runat="server" CssClass="BtnAceptar" ImageUrl="~/images/Save.png" ToolTip="Editar" OnClick="BtiAceptar_Click" /></td>
