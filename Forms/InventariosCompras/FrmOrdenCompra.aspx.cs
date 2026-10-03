@@ -848,10 +848,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         CompraIntercambio = ViewState["EsCompra_Intercb"].ToString(),
                     };
                     ObjEncCom.Add(TypEncCom);
-
                     GrdDet.DataSource = TblDetalle;
                     GrdDet.DataBind();
-
                     List<ClsTypCompra> ObjDetCom = new List<ClsTypCompra>();
                     foreach (DataRow DR in TblDetalle.Rows)
                     {

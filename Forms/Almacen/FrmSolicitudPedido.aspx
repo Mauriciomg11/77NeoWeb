@@ -421,7 +421,7 @@
                     </div>
                 </asp:View>
                 <asp:View ID="Vw2CargaMasiva" runat="server">
-                    <br />
+                    <br /><br />
                     <asp:Label ID="LblCargaMasvNumPed" runat="server" CssClass="LblEtiquet" Text="pedido:"></asp:Label>
                     <asp:TextBox ID="TxtCargaMasvNumPed" runat="server" CssClass="Form-control-sm heightCampo" Width="7%" Enabled="false" />
                     <asp:ImageButton ID="IbtCerrarSubMaxivo" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarSubMaxivo_Click" ImageAlign="Right" />

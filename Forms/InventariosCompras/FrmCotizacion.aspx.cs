@@ -65,6 +65,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 ViewState["CarpetaCargaMasiva"] = "";// para mostrar en el boton de carga masiva la ruta por defecto donde se debe guardar el archivo para subir
                 ViewState["Monto"] = "0";
                 ViewState["ValorIva"] = "0";
+                ViewState["TasaIva"] = "0";
                 ViewState["DocAprobado"] = "N";
                 ViewState["PeriodCerrado"] = "N";
                 ViewState["ShipLiquidada"] = "N";
@@ -267,6 +268,10 @@ namespace _77NeoWeb.Forms.InventariosCompras
         {
             if (Accion.Equals("INS"))// Nuevo los campos como se llaman en la grid
             {
+                if (TblDetalle.Columns.Contains("Vista"))// si el campo existe
+                {
+                    return;
+                }
                 TblDetalle.Columns.Add("Vista", typeof(string));//0
                 TblDetalle.Columns.Add("IdDetCotizacion", typeof(int));//
                 TblDetalle.Columns.Add("IdCotizacion", typeof(int));//2
@@ -582,7 +587,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             }
             catch (Exception Ex)
             {
-                string VbMEns = Ex.ToString().Trim().Substring(1, 50);
+                string VbMEns = Ex.ToString().Trim().Substring(1, 500);
                 DataRow[] Result = Idioma.Select("Objeto= 'MensIncovCons'");
                 foreach (DataRow row in Result)
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//
@@ -1100,9 +1105,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         FechaRespuesta = VbFecRsp,
                         FechaVigenciaCot = VbFecVig,
                         CodTipoPeticion = ViewState["TipoCotiza"].ToString().Trim(),
-                        ValorTotalCot = Convert.ToDouble(ViewState["ValorTotal"]),
+                        ValorTotalCot = Convert.ToDouble(ViewState["ValorTotal"].Equals("") ? "0" : ViewState["ValorTotal"]),
                         CodMoneda = DdlMoned.Text.Trim(),
-                        Monto = Convert.ToDouble(ViewState["Monto"]),
+                        Monto = Convert.ToDouble(ViewState["Monto"].Equals("") ? "0" : ViewState["Monto"]),
                         ValorBruto = Convert.ToDouble(0),
                         DiaTasa = VbDiaT,
                         MesTasa = VbMesT,
@@ -1110,7 +1115,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         TrmAcordado = Convert.ToDouble(TxtTRM.Text.Trim().Equals("") ? "0" : TxtTRM.Text.Trim()),
                         TrmAcordado_Ant = Convert.ToDouble(ViewState["TRM_ANT"]),
                         CodTipoPago = DdlTipoPago.Text.Trim(),
-                        ValorIva = Convert.ToDouble(ViewState["ValorIva"]),
+                        ValorIva = Convert.ToDouble(ViewState["ValorIva"].Equals("") ? "0" : ViewState["ValorIva"]),
                         TasaIva = Convert.ToDouble(0),
                         ValorIca = Convert.ToDouble(0),
                         TasaIca = Convert.ToDouble(0),
@@ -1478,13 +1483,10 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     if (Convert.ToInt32(row["FPActivo"].ToString()) == 1) { DdlTipoPago.Text = row["CodTipoPago"].ToString().Trim(); }
                     else { DdlTipoPago.Text = ""; }
                     DdlMoned.Text = row["CodMoneda"].ToString().Trim();
-
                     if (DdlMoned.Text.Trim().Equals(Session["MonLcl"])) { DdlTipoCot.Text = "N"; TxtFechTRM.Enabled = false; TxtFechTRM.Text = ""; TxtTRM.Enabled = false; TxtTRM.Text = "0"; }
                     else { DdlTipoCot.Text = DdlMoned.Text.Trim().Equals("") ? "" : "I"; TxtFechTRM.Enabled = true; TxtFechTRM.Text = ""; TxtTRM.Enabled = true; }
-
                     VbContacto = row["Contacto"].ToString().Trim();
                 }
-
                 DataTable DTC = new DataTable();
                 DataRow[] DRC = DSTDdl.Tables[1].Select("Codigo= '" + VbContacto.Trim() + "' AND CodTercero= '" + DdlProvee.Text.Trim() + "'");
                 foreach (DataRow RowC in DRC)
@@ -1808,7 +1810,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 DdlPN.SelectedValue = VbPN;
                 DdlPN.Enabled = false;
                 DdlUM.Enabled = false;
-               
+
                 string VbCodAnt = dr["CodUndMed"].ToString().Trim();
                 DataTable DT = new DataTable();
                 DataRow[] DR = DSTDdl.Tables["UndMed"].Select("ActivoUM = 1 AND PN = '" + VbPN + "' OR (UndCompraPN ='" + VbCodAnt + "' AND PN ='" + VbPN + "') OR PN = ''");
@@ -1903,7 +1905,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
         {
             DSTDdl = (DataSet)ViewState["DSTDdl"];
             TblDetalle = (DataTable)ViewState["TblDetalle"];
-           
+
             var ControlAct = (Control)sender;
             GridViewRow row = (GridViewRow)ControlAct.NamingContainer;
             int rowIndex = row.RowIndex;
@@ -2019,9 +2021,12 @@ namespace _77NeoWeb.Forms.InventariosCompras
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
             DTSolPed = (DataTable)ViewState["DTSolPed"];
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
             TblDetalle = (DataTable)ViewState["TblDetalle"];
             Valores();
-
+            double I_IVA = Convert.ToInt32(DSTDdl.Tables["Tercero"].AsEnumerable().Where(x => x.Field<string>("CodTercero") == DdlProvee.Text.Trim())
+                      .Select(x => x.Field<double>("IVA")).FirstOrDefault());
+            ViewState["TasaIva"] = I_IVA.ToString();
             TblDetalle.AcceptChanges();
             foreach (GridViewRow Row in GrdModalBusqCot.Rows)
             {
@@ -2034,12 +2039,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     string VbCant = (Row.FindControl("LblCant") as Label).Text.Trim();
                     string VbUndMed = (Row.FindControl("LblUndM") as Label).Text.Trim();
                     string VbSN = GrdModalBusqCot.DataKeys[Row.RowIndex].Values["SN"].ToString().Trim();
+                    double D_TIVA = Convert.ToDouble(ViewState["TasaIva"]);
 
                     DataRow dr = TblDetalle.Select("IdDetPedido = " + VbIdDetPd).FirstOrDefault(); // finds all rows with id==2 and selects first or null if haven't found any
                     if (dr == null)
                     {
                         TblDetalle.Rows.Add("1 DetCotiza", 0, 0, Convert.ToInt32(VbIdDetPd), 0, 0, VbCodPd.Trim(), 0, VbPn.Trim(), VbDescPn.Trim(),
-                             Convert.ToDouble(VbCant), VbUndMed.Trim(), 0, 0, 0, 0, "", 0, 0, "", VbSN.Trim(), "", "N", "INS", "");
+                             Convert.ToDouble(VbCant), VbUndMed.Trim(), 0, D_TIVA, 0, 0, "", 0, 0, "", VbSN.Trim(), "", "N", "INS", "");
                     }
                 }
             }
@@ -2170,6 +2176,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
                 Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Exportar Cotización Unidad Medida", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, VbcatVer, VbcatAct);
             }
-        }        
+        }
     }
 }

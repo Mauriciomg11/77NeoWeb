@@ -70,7 +70,7 @@
                                             <asp:TextBox ID="TxtNomPP" runat="server" MaxLength="40" Width="100%" />
                                         </FooterTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Salida CC">
+                                 <%--   <asp:TemplateField HeaderText="Salida CC">
                                         <ItemTemplate>
                                             <asp:CheckBox ID="CkSalidaCCP" Checked='<%# Eval("Salida_CC").ToString()=="1" ? true : false %>' runat="server" Enabled="false" />
                                         </ItemTemplate>
@@ -80,7 +80,7 @@
                                         <FooterTemplate>
                                             <asp:CheckBox ID="CkSalidaCCPP" runat="server" />
                                         </FooterTemplate>
-                                    </asp:TemplateField>
+                                    </asp:TemplateField>--%>
                                     <asp:TemplateField HeaderText="StockAlma">
                                         <ItemTemplate>
                                             <asp:CheckBox ID="CkStockAlmaP" Checked='<%# Eval("StockAlma").ToString()=="1" ? true : false %>' runat="server" Enabled="false" />

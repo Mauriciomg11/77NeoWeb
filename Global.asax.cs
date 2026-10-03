@@ -30,6 +30,8 @@ namespace _77NeoWeb
         protected void Session_Start(object sender, EventArgs e)
         {
             /*
+            10.02.05.35 | 30/09/2026 | FrmSolicitudPedido genera el consecutivo desde TblFconsecutivo y no del ID de la tabla TblEncPedido| se organiza panel carga masiva | FrmAcceso logo marca de agua |
+            10.02.05.34 | 22/09/2026 | FormaPago mostrar el campo dias a un ancho 10%
             10.02.05.33 | 22/09/2026 | FrmAcceso y MasterTransac se realiza cambio del texto XOM por 77NEO se mejora el centrado de las gridView con la class CentrarGridV2 con parametros Width y top
             10.02.05.32 | 20/05/2026 | Se ajusta la MasterPage para que el modal del mensaje del sistema no se cierre al presionar la tecla  Esc| FrmAcceso Mejora acceso a Idioma | Creación de la Orden de Despacho.
             10.02.05.31 | 16/04/2026 | En el MasterPage se crea el modal para enviar los mensajes del sistema.
@@ -46,7 +48,7 @@ namespace _77NeoWeb
             10.02.05.21 | 04/02/2025 | corrección formularios Incoming y Movimientos Almacen, no se visualizaba el detalle
             10.02.05.21 | 28/01/2025 | implementacion Menu
              */
-            Session["77Version"] = "10.02.05.33";
+            Session["77Version"] = "10.02.05.35";
             Session["77Act"] = "1";
             Session["$VR"] = "";
             Session["Nit77Cia"] = ""; // Nita cia 811035879-1

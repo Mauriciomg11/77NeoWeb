@@ -169,7 +169,7 @@
                         <asp:GridView ID="GrdSinConfg" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="false"
                             CssClass="DiseñoGrid table table-sm" GridLines="Both">
                             <Columns>
-                                <asp:TemplateField HeaderText="tipo" HeaderStyle-Width="10%">
+                                <asp:TemplateField HeaderText="tipo" ItemStyle-CssClass="AutoColunmGV">
                                     <ItemTemplate>
                                         <asp:Label Text='<%# Eval("Tipo") %>' runat="server" Width="100%" />
                                     </ItemTemplate>
@@ -184,32 +184,32 @@
                                         <asp:Label Text='<%# Eval("Serie") %>' runat="server" Width="100%" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="referencia">
+                                <asp:TemplateField HeaderText="referencia" ItemStyle-CssClass="AutoColunmGV">
                                     <ItemTemplate>
                                         <asp:Label Text='<%# Eval("Referencia") %>' runat="server" Width="100%" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Descripcion" HeaderStyle-Width="15%">
+                                <asp:TemplateField HeaderText="Descripcion" HeaderStyle-Width="30%">
                                     <ItemTemplate>
                                         <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Fecha Vencimiento">
+                                <asp:TemplateField HeaderText="Fecha Vencimiento" ItemStyle-CssClass="AutoColunmGV">
                                     <ItemTemplate>
                                         <asp:Label Text='<%# Eval("Fecha_Vencimiento") %>' runat="server" Width="100%" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Almacen">
+                                <asp:TemplateField HeaderText="Almacen" ItemStyle-CssClass="AutoColunmGV">
                                     <ItemTemplate>
                                         <asp:Label Text='<%# Eval("Almacen") %>' runat="server" Width="100%" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Bodega">
+                                <asp:TemplateField HeaderText="Bodega" ItemStyle-CssClass="AutoColunmGV">
                                     <ItemTemplate>
                                         <asp:Label Text='<%# Eval("Bodega") %>' runat="server" Width="100%" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="cantidad">
+                                <asp:TemplateField HeaderText="cantidad" ItemStyle-CssClass="AutoColunmGV">
                                     <ItemTemplate>
                                         <asp:Label Text='<%# Eval("Cantidad") %>' runat="server" Width="100%" />
                                     </ItemTemplate>

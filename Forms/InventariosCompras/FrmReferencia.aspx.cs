@@ -2444,7 +2444,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 VbTxtSql = "";
                 if (RdbRefCRef.Checked == true)
                 {
-                    VbTxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 17,'{0}','{1}',{2},'RF','CurCambioRef',0,0,0,{3},'01-01-01','02-01-01','03-01-01'", DdlGrupo.SelectedValue, TxtCod.Text, TxtCambRef.Text, Session["!dC!@"]);
+                    VbTxtSql = string.Format("EXEC SP_PANTALLA_ReferenciaV2 17,'{0}','{1}','{2}','RF','CurCambioRef',0,0,0,{3},'01-01-01','02-01-01','03-01-01'", DdlGrupo.SelectedValue, TxtCod.Text, TxtCambRef.Text, Session["!dC!@"]);
                 }
                 if (RdbPnCRef.Checked == true)
                 {
@@ -2526,6 +2526,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                             sqlCmd.Parameters.AddWithValue("@IdCia", Session["!dC!@"].ToString().Trim());
                             sqlCmd.ExecuteNonQuery();
                             Transac.Commit();
+                            BindDataPN(TxtCod.Text.ToString(),"UPD");
                             ViewState["VbPNSI"] = "";
                             BindDataAll(TxtCod.Text, ViewState["VbPNSI"].ToString());
                             LblRefCambRef.Text = "";
@@ -2569,7 +2570,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             if (RdbRefCRef.Checked == true)
             {
                 LblRefCambRef.Text = VbText + ": " + HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[2].Text);
-                ViewState["NewRef"] = HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[2].Text);
+                ViewState["NewRef"] = HttpUtility.HtmlDecode(GrdCambioRef.SelectedRow.Cells[1].Text);
             }
             if (RdbPnCRef.Checked == true)
             {

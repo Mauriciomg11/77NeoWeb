@@ -97,11 +97,11 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     IbtConsultar.ToolTip = bO.Equals("IbtConsultarTTMst") ? bT : IbtConsultar.ToolTip;
                     GrdDatos.Columns[0].HeaderText = bO.Equals("GrdCod") ? bT : GrdDatos.Columns[0].HeaderText;
                     GrdDatos.Columns[1].HeaderText = bO.Equals("GrdNbre") ? bT : GrdDatos.Columns[1].HeaderText;
-                    GrdDatos.Columns[2].HeaderText = bO.Equals("GrdSCC") ? bT : GrdDatos.Columns[2].HeaderText;
-                    GrdDatos.Columns[3].HeaderText = bO.Equals("GrdStAlm") ? bT : GrdDatos.Columns[3].HeaderText;
-                    GrdDatos.Columns[4].HeaderText = bO.Equals("GrdStkRp") ? bT : GrdDatos.Columns[4].HeaderText;
-                    GrdDatos.Columns[5].HeaderText = bO.Equals("GrdStkHrta") ? bT : GrdDatos.Columns[5].HeaderText;
-                    GrdDatos.Columns[6].HeaderText = bO.Equals("ActivoMstr") ? bT : GrdDatos.Columns[6].HeaderText;
+                    //GrdDatos.Columns[2].HeaderText = bO.Equals("GrdSCC") ? bT : GrdDatos.Columns[2].HeaderText;
+                    GrdDatos.Columns[2].HeaderText = bO.Equals("GrdStAlm") ? bT : GrdDatos.Columns[2].HeaderText;
+                    GrdDatos.Columns[3].HeaderText = bO.Equals("GrdStkRp") ? bT : GrdDatos.Columns[3].HeaderText;
+                    GrdDatos.Columns[4].HeaderText = bO.Equals("GrdStkHrta") ? bT : GrdDatos.Columns[4].HeaderText;
+                    GrdDatos.Columns[5].HeaderText = bO.Equals("ActivoMstr") ? bT : GrdDatos.Columns[5].HeaderText;
                 }
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
@@ -215,7 +215,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
                             SC.Parameters.AddWithValue("@Desc", VbDesc);
                             SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                             SC.Parameters.AddWithValue("@Cod", VbCod);
-                            SC.Parameters.AddWithValue("@SCC", (GrdDatos.FooterRow.FindControl("CkSalidaCCPP") as CheckBox).Checked == false ? 0 : 1);
+                            SC.Parameters.AddWithValue("@SCC", 0);
+                            //SC.Parameters.AddWithValue("@SCC", (GrdDatos.FooterRow.FindControl("CkSalidaCCPP") as CheckBox).Checked == false ? 0 : 1);
                             SC.Parameters.AddWithValue("@StAlm", (GrdDatos.FooterRow.FindControl("CkStockAlmaPP") as CheckBox).Checked == false ? 0 : 1);
                             SC.Parameters.AddWithValue("@StRp", (GrdDatos.FooterRow.FindControl("CkStockRepaPP") as CheckBox).Checked == false ? 0 : 1);
                             SC.Parameters.AddWithValue("@StHrt", (GrdDatos.FooterRow.FindControl("CkbStockHerrtaPP") as CheckBox).Checked == false ? 0 : 1);
@@ -284,7 +285,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         SC.Parameters.AddWithValue("@Desc", VbDesc);
                         SC.Parameters.AddWithValue("@US", Session["C77U"].ToString());
                         SC.Parameters.AddWithValue("@Cd", VbCod);
-                        SC.Parameters.AddWithValue("@SCC", (GrdDatos.Rows[e.RowIndex].FindControl("CkSalidaCC") as CheckBox).Checked == false ? 0 : 1);
+                        //SC.Parameters.AddWithValue("@SCC", (GrdDatos.Rows[e.RowIndex].FindControl("CkSalidaCC") as CheckBox).Checked == false ? 0 : 1);
+                        SC.Parameters.AddWithValue("@SCC",0);
                         SC.Parameters.AddWithValue("@CdAnt", GrdDatos.DataKeys[e.RowIndex].Values["CodCc"].ToString());
                         SC.Parameters.AddWithValue("@Id", GrdDatos.DataKeys[e.RowIndex].Values["IdCCostos"].ToString());
                         SC.Parameters.AddWithValue("@Act", (GrdDatos.Rows[e.RowIndex].FindControl("CkbAct") as CheckBox).Checked == false ? 0 : 1);

@@ -5,19 +5,6 @@
     <title>Acceso</title>
 
     <style type="text/css">
-        .ContenedorLogin {
-            position: absolute;
-            text-align: center;
-            top: 40%;
-            left: 50%;
-            width: 400px;
-            margin-left: -200px;
-            height: 325px;
-            margin-top: -150px;
-            border: 1px solid #808080;
-            padding: 5px;
-        }
-
         .form-control {
             justify-content: center;
             width: 100%; /* Asegura que los controles ocupen el 100% del ancho disponible */
@@ -36,13 +23,59 @@
             color: antiquewhite;
         }
 
+        /*.ContenedorLogin {
+            position: absolute;
+            text-align: center;
+            top: 40%;
+            left: 50%;
+            width: 400px;
+            margin-left: -200px;
+            height: 325px;
+            margin-top: -150px;
+            border: 1px solid #808080;
+            padding: 5px;
+        }
+
         .contenedor-imagen {
             background-image: url("../images/Logo_Login_Acceso.jpg");
-            background-size: cover; /* Cubre todo el div sin distorsionar, cortando partes si es necesario */
-            background-repeat: no-repeat; /**/ /* Evita que la imagen se repita */
-            background-position: center; /**/ /* Centra la imagen */
-            width: 400px; /**/ /* Ejemplo: ajusta el tamaño del div */
+            background-size: cover;*/ /* Cubre todo el div sin distorsionar, cortando partes si es necesario */
+        /*background-repeat: no-repeat;
+            background-position: center;
+            width: 400px;
             height: auto;
+        }*/
+        .ContenedorLogin {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* centra sin márgenes negativos */
+            width: 400px;
+            height: 280px;
+            text-align: center;
+            border: 1px solid #808080;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Solo la marca de agua: sin position, width ni height */
+        .contenedor-imagen::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("../images/Logo_Login_Acceso.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.08;
+            z-index: 0;
+        }
+
+        .contenedor-imagen > * {
+            position: relative;
+            z-index: 1;
         }
 
         .ddl-fondo {
@@ -54,6 +87,30 @@
             color: black; /* O el color que prefieras */
             opacity: 1; /* Para asegurar que el color se vea completo */
         }
+
+        .zona-campos {
+            height: 100%; /* o una altura fija, ej. 250px, si hay más cosas en el contenedor */
+            display: flex;
+            align-items: center; /* centrado vertical */
+            justify-content: center; /* centrado horizontal */
+        }
+
+            /* El div que genera el UpdatePanel */
+            .zona-campos > div {
+                width: 100%;
+            }
+
+            .zona-campos .form-group {
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+                .zona-campos .form-group .form-control {
+                    width: 80%;
+                }
     </style>
     <script type="text/javascript">
         function myFuncionddlP() {
@@ -88,19 +145,19 @@
                     <asp:Label ID="LblInicio" runat="server" CssClass="CsTitulo" Text="Login" /></h2>
             </div>
         </div>
-        <asp:UpdatePanel ID="UpPnlCampos" runat="server" UpdateMode="Conditional">
-            <ContentTemplate>
-                <div class="form-group">
-                    <asp:DropDownList ID="DdlNit" runat="server" CssClass="form-control ddl-fondo" Height="30px" BackColor="Transparent" Font-Size="Smaller" OnTextChanged="DdlNit_TextChanged" />
-                    <asp:TextBox ID="TxtPassEmsa" runat="server" TextMode="Password" CssClass="form-control ddl-fondo placeholder-color" BackColor="Transparent" placeholder="Company password" Height="30px" /><br />
-                    <asp:DropDownList ID="DdlBD" runat="server" CssClass="form-control ddl-fondo" Height="30px" BackColor="Transparent" Font-Size="Smaller" Visible="false" />
-                    <asp:TextBox ID="TxtUsuario" runat="server" CssClass="form-control ddl-fondo placeholder-color" placeholder="Usuario" BackColor="Transparent" ForeColor="Black" Height="30px" Visible="false" />
-                    <asp:TextBox ID="TxtClave" runat="server" TextMode="Password" CssClass="form-control ddl-fondo placeholder-color" BackColor="Transparent" ForeColor="Black" placeholder="Password" Height="30px" Visible="false" />
-                </div>
-            </ContentTemplate>
-        </asp:UpdatePanel>
-        <div class="form-group">
-            <asp:Button ID="TbnIngresar" runat="server" Text="Confirm Company" CssClass="form-control btn btn-primary active" OnClick="TbnIngresar_Click" />
-        </div>
+        <div class="zona-campos">
+            <asp:UpdatePanel ID="UpPnlCampos" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
+                    <div class="form-group">
+                        <asp:DropDownList ID="DdlNit" runat="server" CssClass="form-control ddl-fondo" Height="30px" BackColor="Transparent" Font-Size="Smaller" OnTextChanged="DdlNit_TextChanged" Width="100%" />
+                        <asp:TextBox ID="TxtPassEmsa" runat="server" TextMode="Password" CssClass="form-control ddl-fondo placeholder-color" BackColor="Transparent" placeholder="Company password" Height="30px" Width="100%" /><%--<br />--%>
+                        <asp:DropDownList ID="DdlBD" runat="server" CssClass="form-control ddl-fondo" Height="30px" BackColor="Transparent" Font-Size="Smaller" Visible="false" Width="100%" />
+                        <asp:TextBox ID="TxtUsuario" runat="server" CssClass="form-control ddl-fondo placeholder-color" placeholder="Usuario" BackColor="Transparent" ForeColor="Black" Height="30px" Visible="false" Width="100%" />
+                        <asp:TextBox ID="TxtClave" runat="server" TextMode="Password" CssClass="form-control ddl-fondo placeholder-color" BackColor="Transparent" ForeColor="Black" placeholder="Password" Height="30px" Visible="false" Width="100%" />
+                         <asp:Button ID="TbnIngresar" runat="server" Text="Confirm Company" CssClass="form-control btn btn-primary active" OnClick="TbnIngresar_Click" Width="100%" />
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>      
     </div>
 </asp:Content>

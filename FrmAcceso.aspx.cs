@@ -54,42 +54,6 @@ namespace _77NeoWeb
             TbnIngresar.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "TbnIngresar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
             TxtPassEmsa.Attributes.Add("placeholder", Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "placeholder").Select(x => x.Field<string>("Texto")).FirstOrDefault());
             TxtUsuario.Attributes.Add("placeholder", Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "placeholderUsu").Select(x => x.Field<string>("Texto")).FirstOrDefault());
-
-
-
-
-            /* Idioma.Columns.Add("Objeto", typeof(string));
-             Idioma.Columns.Add("Texto", typeof(string));
-             using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
-             {
-                 string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
-                 SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
-                 SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
-                 SC.Parameters.AddWithValue("@F1", "FrmAcceso");
-                 SC.Parameters.AddWithValue("@F2", "");
-                 SC.Parameters.AddWithValue("@F3", "");
-                 SC.Parameters.AddWithValue("@F4", "");
-                 sqlCon.Open();
-                 SqlDataReader tbl = SC.ExecuteReader();
-                 while (tbl.Read())  //Todos los objetos
-                 {
-                     string b1 = tbl["Objeto"].ToString();
-                     string b2 = tbl["Texto"].ToString();
-                     Idioma.Rows.Add(tbl["Objeto"].ToString(), tbl["Texto"].ToString());
-                     //TitForm.Text = b1.Trim().Equals("TitForm") ? b2.Trim() : TitForm.Text;
-                     LblText1.Text = b1.Trim().Equals("LblText1") ? b2.Trim() : LblText1.Text;
-                     LblText2.Text = b1.Trim().Equals("LblText2") ? b2.Trim() : LblText2.Text;
-                     LblText3.Text = b1.Trim().Equals("LblText3") ? b2.Trim() : LblText3.Text;
-                     LblInicio.Text = b1.Trim().Equals("LblInicio") ? b2.Trim() : LblInicio.Text;
-                     TbnIngresar.Text = b1.Trim().Equals("TbnIngresar") ? b2.Trim() : TbnIngresar.Text;
-                     if (b1.Trim().Equals("placeholder"))
-                     { TxtPassEmsa.Attributes.Add("placeholder", b2.Trim()); }
-                     if (b1.Trim().Equals("placeholderUsu"))
-                     { TxtUsuario.Attributes.Add("placeholder", b2.Trim()); }
-                 }
-                 ViewState["TablaIdioma"] = Idioma;
-
-             }*/
         }
         protected void TbnIngresar_Click(object sender, EventArgs e)
         {
@@ -97,14 +61,13 @@ namespace _77NeoWeb
             Idioma = (DataTable)ViewState["TablaIdioma"];
             if (ViewState["IniSes"].Equals("USU"))
             {
-                // Valida Usuario
+                // Valida Usuario y contraseña 
                 VbUsu = TxtUsuario.Text;
                 while (VbUsu.Contains(" "))
                 {
                     VbUsu = VbUsu.Replace(" ", "");
                 }
-                TxtUsuario.Text = VbUsu;
-                //  using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
+                TxtUsuario.Text = VbUsu;               
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
                 {
                     LtxtSql = "EXEC SP_Configuracion  1,@P1,@P3,'','','',0,0,0,0,'01-01-1','02-01-1','03-01-1'";
@@ -172,7 +135,6 @@ namespace _77NeoWeb
                     VbPassCia = VbPassCia.Replace(" ", "");
                 }
                 TxtPassEmsa.Text = VbPassCia;
-                // using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
                 using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
                 {
                     LtxtSql = "EXEC SP_ACCESO_WEB 2,@E71,@E59,'','','',0, 0,0,0,'01-01-1','01-01-1'";//Valida idcia y Contraseña Ensa | DbConfigWeb
@@ -204,7 +166,8 @@ namespace _77NeoWeb
                         DdlNit.Enabled = false;
                         TxtUsuario.Visible = true;
                         TxtClave.Visible = true;
-                        TxtPassEmsa.Enabled = false;
+                        TxtPassEmsa.Visible = false;
+                        DdlNit.Visible = false;
                     }
                     else
                     {
