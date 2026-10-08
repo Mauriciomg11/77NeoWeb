@@ -46,9 +46,9 @@ namespace _77NeoWeb
             if (Cnx.ValidaDataRowVacio(DR))
             { Idioma = DR.CopyToDataTable(); ViewState["TablaIdioma"] = Idioma; }
            // Idioma = (DataTable)ViewState["TablaIdioma"];
-            LblText1.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblText1").Select(x => x.Field<string>("Texto")).FirstOrDefault();
-            LblText2.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblText2").Select(x => x.Field<string>("Texto")).FirstOrDefault();
-            LblText3.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblText3").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            //LblText1.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblText1").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            //LblText2.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblText2").Select(x => x.Field<string>("Texto")).FirstOrDefault();
+            //LblText3.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblText3").Select(x => x.Field<string>("Texto")).FirstOrDefault();
             LblInicio.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "LblInicio").Select(x => x.Field<string>("Texto")).FirstOrDefault();
             TbnIngresar.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "TbnIngresar").Select(x => x.Field<string>("Texto")).FirstOrDefault();
             TbnIngresar.Text = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "TbnIngresar").Select(x => x.Field<string>("Texto")).FirstOrDefault();

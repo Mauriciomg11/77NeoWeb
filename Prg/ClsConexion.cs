@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -162,9 +163,9 @@ namespace _77NeoWeb.prg
                 return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
             }
             else
-            {
-                 return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, @"77NEO01", "DbConfigWeb", "sa", "admindemp");
-                //return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
+            {//Configuracion web en diseño
+                 // return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, @"77NEO01", "DbConfigWeb", "sa", "admindemp");
+               return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
             }
         }
         public string GetConex() { return this.VblConexion; }
@@ -323,12 +324,73 @@ namespace _77NeoWeb.prg
                 master.SetObjMensj("Nueva Reserva");
             }
         }
+        /*public bool EnviarCorreo(string S_From, string S_To, string S_Subject, string S_Body)
+        {
+            MailMessage mail = new MailMessage();
+            try
+            {
+                mail.From = new MailAddress(S_From);
+                mail.To.Add(new MailAddress(S_To));
+                mail.Subject = S_Subject;
+                mail.Body = S_Body;
+                mail.IsBodyHtml = false;
+                using (SmtpClient client = new SmtpClient("smtp.gmail.com"))
+                {
+                    client.Port = 587;
+                    client.Credentials = new NetworkCredential("soporteneosystem@gmail.com", "hxrzyzcdsojrtguh");
+                    client.EnableSsl = true;
+                    client.Send(mail);
+                }
+                return true;
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+                return false;
+            }
+        }*/
+        public bool EnviarCorreo(string S_From, string S_To, string S_Subject, string S_Body)
+        {
+            try
+            {
+                using (MailMessage mail = new MailMessage())
+                {
+                    mail.From = new MailAddress(S_From);
+
+                    // Separar por ; o , y agregar cada correo
+                    var destinatarios = S_To.Split(new[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var correo in destinatarios)
+                    {
+                        mail.To.Add(new MailAddress(correo.Trim()));
+                    }
+
+                    mail.Subject = S_Subject;
+                    mail.Body = S_Body;
+                    mail.IsBodyHtml = false;
+
+                    using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        client.Credentials = new NetworkCredential(
+                            ConfigurationManager.AppSettings["SmtpUser"],
+                            ConfigurationManager.AppSettings["SmtpPass"]);
+                        client.EnableSsl = true;
+                        client.Send(mail);
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         //******************* CONEXION TEMPORAL ********
-        public string GetUsr() { return "00000082"; }//00000082|00000133 susi | 00000129 | 00000110
-        public int GetIdCia() { return 24; }// 1 TwoGoWo |21 Demp |2 HCT PRUEBA| 12 ADA | 20 HCT | 3 Alca
+        public string GetUsr() { return "00000157"; }//00000082|00000157 AdmonOMAP | 00000129 | 00000110
+        public int GetIdCia() { return 25; }// 1 TwoGoWo |21 Demp |2 HCT PRUEBA| 12 ADA | 20 HCT | 3 Alca
         public string GetMonedLcl() { return "COP"; }//  "COP|USD"
         public int GetFormatFecha() { return 103; }// 103 formato europeo dd/MM/yyyy | 101 formato EEUU MM/dd/yyyyy
-        public string GetNit() { return "242424242-7"; } // 901338233-1 TwoGoWo |811035879-1 Demp |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT |P93000086218 - ALCA
+        public string GetNit() { return "2525252525-5"; } // 901338233-1 TwoGoWo |811035879-1 Demp |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT |P93000086218 - ALCA || 242424242-7  Opera  || 2525252525-5 OMA
         public string GetBD() { return "DbNeoDempV2"; }// DbNeoDemp2016||DbNeoDempV2 |DbNeoAda | DbNeoHCT ||| BDNeoW  ||
         public string GetSvr() { return @"23.102.100.143"; }// 77NEO01|| 23.102.100.143 ||
         public string GetUsSvr() { return "sa"; }//  "sa"

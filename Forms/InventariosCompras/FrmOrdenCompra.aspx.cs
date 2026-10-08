@@ -362,7 +362,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 Cnx.SelecBD();
                 using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbTxtSql = "EXEC SP_PANTALLA_OrdenCompra 24,'2500000005','','','DDL',0,0,@Idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                    string VbTxtSql = "EXEC SP_PANTALLA_OrdenCompra 24,'','','','DDL',0,0,@Idm,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
@@ -1563,7 +1563,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                             VbQuery = "Rango = 'Menor' AND CodUsuario = '" + Session["C77U"].ToString().Trim() + "' AND ValorEURO >" + ViewState["Total"].ToString();
                             break;
                     }
-                    DR = DSTDdl.Tables[2].Select(VbQuery);
+                    DR = DSTDdl.Tables["Autorizado"].Select(VbQuery);
                     if (IsIENumerableLleno(DR))
                     { DT = DR.CopyToDataTable(); }
                     else

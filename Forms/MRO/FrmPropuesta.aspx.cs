@@ -1084,10 +1084,24 @@ namespace _77NeoWeb.Forms.MRO
                         {
                             try
                             {
+                                string Mensj = "", S_Correo = "", S_Asunto = "", S_Cuerpo = "";
                                 SC.Parameters.AddWithValue("@Us", Session["C77U"].ToString());
                                 SC.Parameters.AddWithValue("@PP", TxtNumPpt.Text.Trim());
                                 SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                                var Mensj = SC.ExecuteScalar();
+                                SqlDataReader SDR = SC.ExecuteReader();
+                                if (SDR.Read())
+                                {
+                                    Mensj = SDR["Mensj"].ToString().Trim();
+                                    S_Correo = SDR["Correo"].ToString().Trim();
+                                    S_Asunto = SDR["Asunto"].ToString().Trim();
+                                    S_Cuerpo = SDR["Cuerpo"].ToString().Trim();
+                                    if (Mensj.ToString().Trim().Equals(""))// Se envia correo
+                                    {
+                                        string S_From = "Notificación 77NEO <" + "soporteneosystem@gmail.com" + ">";
+                                        Cnx.EnviarCorreo(S_From, S_Correo, S_Asunto, S_Cuerpo);
+                                    }
+                                }
+                                SDR.Close();
                                 if (!Mensj.ToString().Trim().Equals(""))
                                 {
                                     Result = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
@@ -1101,7 +1115,7 @@ namespace _77NeoWeb.Forms.MRO
                                 Transac.Commit();
                                 Traerdatos(TxtNumPpt.Text.Trim());
                             }
-                            catch (Exception) { Transac.Rollback(); }
+                            catch (Exception Ex) { Transac.Rollback(); }
                         }
                     }
                 }
@@ -1879,7 +1893,7 @@ namespace _77NeoWeb.Forms.MRO
         protected void BtnExportPPT_Click(object sender, EventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
-            if (TxtNumPpt.Text.Trim().Equals("")) { return; }            
+            if (TxtNumPpt.Text.Trim().Equals("")) { return; }
             Idioma = (DataTable)ViewState["TablaIdioma"];
             ViewState["Notificacion"] = "EXPORTARPPT";
             DataRow[] Result = Idioma.Select("Objeto= 'Mens66PPT'");

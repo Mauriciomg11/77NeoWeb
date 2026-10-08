@@ -425,7 +425,7 @@
         <asp:View ID="Vw2Informe" runat="server">
             <asp:UpdatePanel ID="UplInforme" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                     <br />
+                     <br /><br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitImpresion" runat="server" Text="Impresión del reporte" /></h6>
                     <asp:ImageButton ID="IbtCerrarImpresion" runat="server" ToolTip="regresar" CssClass="BtnCerrar" ImageUrl="~/images/CerrarV1.png" OnClick="IbtCerrarImpresion_Click" ImageAlign="Right" />

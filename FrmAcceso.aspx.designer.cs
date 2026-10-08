@@ -24,31 +24,13 @@ namespace _77NeoWeb
         protected global::System.Web.UI.WebControls.Label TitForm;
 
         /// <summary>
-        /// Control LblText1.
+        /// Control UpPnlCampos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblText1;
-
-        /// <summary>
-        /// Control LblText2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblText2;
-
-        /// <summary>
-        /// Control LblText3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblText3;
+        protected global::System.Web.UI.UpdatePanel UpPnlCampos;
 
         /// <summary>
         /// Control LblInicio.
@@ -58,15 +40,6 @@ namespace _77NeoWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblInicio;
-
-        /// <summary>
-        /// Control UpPnlCampos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpPnlCampos;
 
         /// <summary>
         /// Control DdlNit.
