@@ -21,7 +21,7 @@ namespace _77NeoWeb.prg
         public ClsConexion()
         {
             this.VblConexion = "";
-            Produccion = "Y";//N = para trabajar en el desarrollo | Y  =aplica para Producción            
+            Produccion = "N";//N = para trabajar en el desarrollo | Y  =aplica para Producción            
         }
         public void SelecBD()
         {
@@ -386,11 +386,11 @@ namespace _77NeoWeb.prg
             }
         }
         //******************* CONEXION TEMPORAL ********
-        public string GetUsr() { return "00000157"; }//00000082|00000157 AdmonOMAP | 00000129 | 00000110
-        public int GetIdCia() { return 25; }// 1 TwoGoWo |21 Demp |2 HCT PRUEBA| 12 ADA | 20 HCT | 3 Alca
+        public string GetUsr() { return "00000082"; }//00000082 Cirrus| 00000154 OPE | 00000158 Marc Bolt | 00000129 | 00000110
+        public int GetIdCia() { return 24; }// 1 TwoGoWo |21 Demp |2 HCT PRUEBA| 12 ADA | 20 HCT | 3 Alca
         public string GetMonedLcl() { return "COP"; }//  "COP|USD"
         public int GetFormatFecha() { return 103; }// 103 formato europeo dd/MM/yyyy | 101 formato EEUU MM/dd/yyyyy
-        public string GetNit() { return "2525252525-5"; } // 901338233-1 TwoGoWo |811035879-1 Demp |800019344-4  DbNeoAda | 860064038-4 DbNeoHCT |P93000086218 - ALCA || 242424242-7  Opera  || 2525252525-5 OMA
+        public string GetNit() { return "242424242-7"; } // 901338233-1 TwoGoWo-cirrus |811035879-1 Demp |P93000086218 - ALCA || 242424242-7  Opera  || 2525252525-5 OMA
         public string GetBD() { return "DbNeoDempV2"; }// DbNeoDemp2016||DbNeoDempV2 |DbNeoAda | DbNeoHCT ||| BDNeoW  ||
         public string GetSvr() { return @"23.102.100.143"; }// 77NEO01|| 23.102.100.143 ||
         public string GetUsSvr() { return "sa"; }//  "sa"

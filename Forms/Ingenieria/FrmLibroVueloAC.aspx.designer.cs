@@ -60,6 +60,15 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Button BtnVuelos;
 
         /// <summary>
+        /// Control BtnTripulacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnTripulacion;
+
+        /// <summary>
         /// Control BtnManto.
         /// </summary>
         /// <remarks>
@@ -1482,13 +1491,13 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected global::System.Web.UI.WebControls.Button BtnNotificar;
 
         /// <summary>
-        /// Control LblTitAdju.
+        /// Control LblTitAdjMstr.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblTitAdju;
+        protected global::System.Web.UI.WebControls.Label LblTitAdjMstr;
 
         /// <summary>
         /// Control GrdAdj.
@@ -2209,5 +2218,46 @@ namespace _77NeoWeb.Forms.Ingenieria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Microsoft.Reporting.WebForms.ReportViewer RvwInfLV;
+
+        /// <summary>
+        /// Control Vw9Tripulac.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.View Vw9Tripulac;
+
+        /// <summary>
+        /// Control LblTitTripulac.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblTitTripulac;
+
+        /// <summary>
+        /// Control GrdTripu.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GrdTripu;
+
+        /// <summary>
+        /// Propiedad Master.
+        /// </summary>
+        /// <remarks>
+        /// Propiedad generada automáticamente.
+        /// </remarks>
+        public new _77NeoWeb.MasterTransac Master
+        {
+            get
+            {
+                return ((_77NeoWeb.MasterTransac)(base.Master));
+            }
+        }
     }
 }

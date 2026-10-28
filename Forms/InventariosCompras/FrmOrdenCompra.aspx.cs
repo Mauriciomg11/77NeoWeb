@@ -73,9 +73,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 BindBDdl("UPD");
                 AddCamposDataTable("INS");
                 EnablGridDet("Visible", false); /**/
-
                 BotonesCompr_Intercb("C");
-
             }
             ScriptManager.RegisterClientScriptBlock(this, GetType(), "none", "<script>myFuncionddl();</script>", false);
         }
@@ -1601,7 +1599,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
-                            //var Mensj = SC.ExecuteScalar();
+                            string S_From = "", S_Correo = "", S_Asunto = "", S_Cuerpo = "";
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())
                             {
@@ -1620,6 +1618,11 @@ namespace _77NeoWeb.Forms.InventariosCompras
                                     Transac.Rollback();
                                     return;
                                 }
+                                S_Correo = SDR["Correo"].ToString().Trim();
+                                S_Asunto = SDR["Asunto"].ToString().Trim();
+                                S_Cuerpo = SDR["Cuerpo"].ToString().Trim();
+                                S_From = "Notificación 77NEO <" + "soporteneosystem@gmail.com" + ">";
+                                Cnx.EnviarCorreo(S_From, S_Correo, S_Asunto, S_Cuerpo);
                             }
                             SDR.Close();
                             Transac.Commit();
@@ -1681,6 +1684,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
+                            string S_From = "", S_Correo = "", S_Asunto = "", S_Cuerpo = "";
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())
                             {
@@ -1696,6 +1700,11 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
                                     return;
                                 }
+                                S_Correo = SDR["Correo"].ToString().Trim();
+                                S_Asunto = SDR["Asunto"].ToString().Trim();
+                                S_Cuerpo = SDR["Cuerpo"].ToString().Trim();
+                                S_From = "Notificación 77NEO <" + "soporteneosystem@gmail.com" + ">";
+                                Cnx.EnviarCorreo(S_From, S_Correo, S_Asunto, S_Cuerpo);
                             }
                             SDR.Close();
                             Transac.Commit();

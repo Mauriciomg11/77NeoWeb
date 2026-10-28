@@ -12,6 +12,9 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         static public string PMensj;
         static public string PMensjAlterno;
         static public string PCodigoOT;
+        static public string PCorreo;
+        static public string PAsunto;
+        static public string PCuerpo;
         //-------------  Trabajo --------------------
         public int CodNumOrdenTrab { get; set; }
         public string Descripcion { get; set; }
@@ -159,7 +162,7 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                     string VBQuery = "UPD_OrdenTrabajo";
                     using (SqlCommand SC = new SqlCommand(VBQuery, SCX, transaction))
                     {
-                        PMensj = ""; PCodigoOT = "";
+                        PMensj = ""; PCodigoOT = ""; PCorreo = ""; PAsunto = ""; PCuerpo = "";
                         try
                         {
                             SC.CommandType = CommandType.StoredProcedure;
@@ -172,6 +175,10 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                                 PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 PMensjAlterno = SDR["MensAlterno"].ToString().Trim();
                                 PCodigoOT = SDR["CodigoOT"].ToString().Trim();
+                                PCorreo = SDR["Correo"].ToString().Trim();
+                                PAsunto = SDR["Asunto"].ToString().Trim();
+                                PCuerpo = SDR["Cuerpo"].ToString().Trim();
+
                             }
                             SDR.Close();
                             transaction.Commit();
@@ -202,6 +209,18 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         public string GetCodigoOT()
         {
             return PCodigoOT;
+        }
+        public string GetCorreo()
+        {
+            return PCorreo;
+        }
+        public string GetAsunto()
+        {
+            return PAsunto;
+        }
+        public string GetCuerpo()
+        {
+            return PCuerpo;
         }
     }
 }

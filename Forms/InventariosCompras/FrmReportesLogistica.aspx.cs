@@ -200,7 +200,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 Cnx.SelecBD();
                 using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
                 {
-                    string VbTxtSql = "EXEC SP_PANTALLA_Informe_Logistica 11,'','','','',0,0,@Idm, @ICC,'01-1-2009','01-01-1900','01-01-1900'";
+                    string VbTxtSql = "EXEC SP_PANTALLA_Informe_Logistica 11, @U,'','','',0,0,@Idm, @ICC,'01-1-2009','01-01-1900','01-01-1900'";
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {
@@ -225,16 +225,16 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
             if (DSTDdl.Tables["Almac"].Rows.Count > 0)
             {
-                DdlAlmacenInv.DataSource = DSTDdl.Tables[0];
+                DdlAlmacenInv.DataSource = DSTDdl.Tables["Almac"];
                 DdlAlmacenInv.DataTextField = "NomAlmacen";
                 DdlAlmacenInv.DataValueField = "CodIdAlmacen";
                 DdlAlmacenInv.DataBind();
-                DdlAlmacenCnc.DataSource = DSTDdl.Tables[0];
+                DdlAlmacenCnc.DataSource = DSTDdl.Tables["Almac"];
                 DdlAlmacenCnc.DataTextField = "NomAlmacen";
                 DdlAlmacenCnc.DataValueField = "CodIdAlmacen";
                 DdlAlmacenCnc.DataBind();
-                DataTable DT = DSTDdl.Tables[0].Copy();
-                DT.Rows.Add(" - ",0);
+                DataTable DT = DSTDdl.Tables["Almac"].Copy();
+                DT.Rows.Add(" - ", 0);
                 DataView DV = DT.DefaultView;
                 DV.Sort = "CodIdAlmacen";
                 DT = DV.ToTable();
@@ -505,27 +505,35 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     if (RdbNoSrlzdInv.Checked == true)
                     {
                         VbNomArchivo = VbNomArchivo + "_" + ViewState["NS"];
-                        string borr = ViewState["NS"].ToString().Trim().Substring(0, 6);
-                        VbNomDT = DdlAlmacenInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + ViewState["NS"].ToString().Trim().Substring(0, 6);
+                        if (!DdlAlmacenInv.Text.Equals( "0"))
+                        { VbNomDT = DdlAlmacenInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + ViewState["NS"].ToString().Trim().Substring(0, 6); }
+                        else { VbNomDT = "ALL_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + ViewState["NS"].ToString().Trim().Substring(0, 6); }
                     }
                     else
                     {
                         VbNomArchivo = VbNomArchivo + "_" + ViewState["SNm"];
-                        VbNomDT = DdlAlmacenInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + ViewState["SNm"].ToString().Trim().Substring(0, 6);
+                        if (!DdlAlmacenInv.Text.Equals("0"))
+                        { VbNomDT = DdlAlmacenInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + ViewState["SNm"].ToString().Trim().Substring(0, 6); }
+                        else { VbNomDT = "ALL_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + ViewState["SNm"].ToString().Trim().Substring(0, 6); }
+
                     }
 
                     break;
                 case "02"://Comp
-                    VbNomDT = DdlAlmacenInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3);
+                    if (!DdlAlmacenInv.Text.Equals("0")) { VbNomDT = DdlAlmacenInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3); }
+                    else { VbNomDT = "ALL_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3); }
+                   
                     break;
                 default:// Hta
-                    VbNomDT = DdlAlmacenInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3);
+                    if (!DdlAlmacenInv.Text.Equals("0")) { VbNomDT = DdlAlmacenInv.SelectedItem.Text.Trim().Substring(0, 3) + "_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3); }
+                    else { VbNomDT = "ALL_" + DdlGrupoInv.SelectedItem.Text.Trim().Substring(0, 3); }
+                   
                     break;
             }
             CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
             CursorIdioma.Alimentar("CurExportInventarioNoSrlzd", Session["77IDM"].ToString().Trim());
-            if (RdbNoSrlzdInv.Checked == true) { Query = "EXEC Sp_Inventarios @FC,@IdAlm, @Grp,'NO','01', @ICC,'CurExportInventarioNoSrlzd'"; }
-            else { Query = "EXEC SP_Inventario_Componentes @FC, @Grp,'NO', @IdAlm,'01', @ICC,'CurExportInventarioNoSrlzd'"; }
+            if (RdbNoSrlzdInv.Checked == true) { Query = "EXEC Sp_Inventarios @FC,@IdAlm, @Grp,'NO','01', @ICC,'CurExportInventarioNoSrlzd', @Idm"; }
+            else { Query = "EXEC SP_Inventario_Componentes @FC, @Grp,'NO', @IdAlm,'01', @ICC,'CurExportInventarioNoSrlzd', @Idm"; }
 
             Cnx.SelecBD();
             using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
@@ -540,7 +548,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     cmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                     cmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     cmd.Parameters.AddWithValue("@U", Session["C77U"]);
-
                     using (SqlDataAdapter sda = new SqlDataAdapter())
                     {
                         cmd.Connection = con;
@@ -751,7 +758,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     }
                     DTCncl = (DataTable)ViewState["DTCncl"];
                     string S_MesT = DTCncl.Rows[0]["Asignacion"].ToString().Trim();
-                    string S_MultLen = "", S_Entr = "", S_Sal = "", S_InvFinal="";
+                    string S_MultLen = "", S_Entr = "", S_Sal = "", S_InvFinal = "";
                     Result = Idioma.Select("Objeto= '" + S_MesT + "'");
                     foreach (DataRow row in Result)
                     { S_MultLen = row["Texto"].ToString(); }
@@ -849,7 +856,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     cmd.CommandTimeout = 90000000;
                     cmd.Parameters.AddWithValue("@FI", Convert.ToDateTime(TxtFechIEyS.Text.Trim()));
                     cmd.Parameters.AddWithValue("@FF", Convert.ToDateTime(TxtFechFEyS.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@Alm",DdlAlmacenEyS.Text.Trim());
+                    cmd.Parameters.AddWithValue("@Alm", DdlAlmacenEyS.Text.Trim());
                     cmd.Parameters.AddWithValue("@NA", "CurExptrEyS");
                     cmd.Parameters.AddWithValue("@Idm", Session["77IDM"]);
                     cmd.Parameters.AddWithValue("@ICC", Session["!dC!@"]);

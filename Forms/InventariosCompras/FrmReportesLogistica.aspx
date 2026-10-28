@@ -157,7 +157,7 @@
                                             <asp:RadioButton ID="RdbRpPN" runat="server" CssClass="LblEtiquet" Text="&nbsp P/N" GroupName="Repa" />&nbsp&nbsp&nbsp
                                             <asp:RadioButton ID="RdbRpSN" runat="server" CssClass="LblEtiquet" Text="&nbsp S/N" GroupName="Repa" />&nbsp&nbsp&nbsp
                                             <asp:RadioButton ID="RdbRpProv" runat="server" CssClass="LblEtiquet" Text="&nbsp proveedor" GroupName="Repa" />&nbsp&nbsp&nbsp
-                                            <asp:CheckBox ID="CkbRpPend" runat="server" CssClass="LblEtiquet" Text="&nbsp pendientes" Checked="true" />
+                                            <asp:CheckBox ID="CkbRpPend" runat="server" CssClass="LblEtiquet" Text="&nbsp pendientes" Checked="true" Visible="false" />
                                         </td>
                                         <td>
                                             <asp:TextBox ID="TxtRpDocBusq" runat="server" Width="250px" Height="28px" CssClass=" heightCampo" placeholder="Ingrese el dato a consultar" />
@@ -281,11 +281,11 @@
                                 <asp:Label ID="LblAlmacenInv" runat="server" CssClass="LblEtiquet" Text="almacen" />
                                 <asp:DropDownList ID="DdlAlmacenInv" runat="server" CssClass="heightCampo" Width="100%" />
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <asp:Label ID="LblGrupoInv" runat="server" CssClass="LblEtiquet" Text="grupo" />
                                 <asp:DropDownList ID="DdlGrupoInv" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="DdlGrupoInv_TextChanged" AutoPostBack="true" />
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <br />
                                 <asp:RadioButton ID="RdbSrlzdInv" runat="server" CssClass="LblEtiquet" GroupName="Grp" Checked="false" Text="serializado &nbsp" Enabled="false" />&nbsp&nbsp&nbsp
                                 <asp:RadioButton ID="RdbNoSrlzdInv" runat="server" CssClass="LblEtiquet" GroupName="Grp" Checked="false" Text="no serializado &nbsp" Enabled="false" />&nbsp&nbsp&nbsp

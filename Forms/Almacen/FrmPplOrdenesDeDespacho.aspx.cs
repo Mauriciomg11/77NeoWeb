@@ -18,7 +18,7 @@ namespace _77NeoWeb.Forms.Almacen
         ClsConexion Cnx = new ClsConexion();
         DataTable Idioma = new DataTable();
         DataTable IdiomaAll = new DataTable();
-        DataTable DTEncbzd = new DataTable("Encabezado");
+        //DataTable DTEncbzd = new DataTable("Encabezado");
         DataTable DTDet = new DataTable("Detalle");
         DataSet DsStockO = new DataSet();
         DataSet DSTDdl = new DataSet();
@@ -75,7 +75,7 @@ namespace _77NeoWeb.Forms.Almacen
             if (ClsP.GetIngresar() == 0) { BtnGuardar.Visible = false; BtnNewDet.Visible = false; }
             IdiomaControles();
         }
-        protected void IdiomaControles()
+       protected void IdiomaControles()
         {
             IdiomaAll = (DataTable)Session["TblIdmGrl"];
             DataRow[] DR = IdiomaAll.Select("CodF IN('0','FrmMovimientoActivo')");
@@ -113,18 +113,19 @@ namespace _77NeoWeb.Forms.Almacen
             GrdDet.Columns[5].HeaderText = GrdStock.Columns[7].HeaderText;
             GrdDet.Columns[6].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdBodOrig").Select(x => x.Field<string>("Texto")).FirstOrDefault();
             GrdDet.Columns[7].HeaderText = GrdStock.Columns[9].HeaderText;                     
-        }
+        }/* */
         protected void TraerDatos()
         {
             string LtxtSql = string.Format("EXEC SP_Pantalla_Orden_Despacho 8, '{0}','','','',0,0, {1}, {2},'01-1-2009','01-01-1900','01-01-1900'", Session["C77U"], Session["77IDM"], Session["!dC!@"]);
             DSTDdl = Cnx.DSET(LtxtSql);
-            DSTDdl.Tables[0].TableName = "Almac";
+            DSTDdl.Tables[0].TableName = "AlmacOri";
             DSTDdl.Tables[1].TableName = "Users";
             DSTDdl.Tables[2].TableName = "Detalle";
             DSTDdl.Tables[3].TableName = "NumOD";
-            if (DSTDdl.Tables["Almac"].Rows.Count > 0)
+            DSTDdl.Tables[4].TableName = "AlmacDes";
+            if (DSTDdl.Tables["AlmacOri"].Rows.Count > 0)
             {
-                DdlAlmacenO.DataSource = DSTDdl.Tables["Almac"];
+                DdlAlmacenO.DataSource = DSTDdl.Tables["AlmacOri"];
                 DdlAlmacenO.DataTextField = "NomAlmacen";
                 DdlAlmacenO.DataValueField = "CodIdAlmacen";
                 DdlAlmacenO.DataBind();
@@ -176,7 +177,7 @@ namespace _77NeoWeb.Forms.Almacen
             if (DdlAlmacenO.Text.Equals("0")) { DdlAlmacenD.Items.Clear(); DdlUsuR.Items.Clear(); }
             else
             {
-                IEnumerable<DataRow> VbQry = from A in DSTDdl.Tables["Almac"].AsEnumerable() where A.Field<int>("CodidAlmacen") != Convert.ToInt32(DdlAlmacenO.Text) select A;
+                IEnumerable<DataRow> VbQry = from A in DSTDdl.Tables["AlmacDes"].AsEnumerable() where A.Field<int>("CodidAlmacen") != Convert.ToInt32(DdlAlmacenO.Text) select A;
                 DataTable DT = VbQry.CopyToDataTable();
                 DdlAlmacenD.DataSource = DT;
                 DdlAlmacenD.DataTextField = "NomAlmacen";

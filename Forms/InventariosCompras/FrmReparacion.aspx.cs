@@ -631,7 +631,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             ViewState["RepaExtLocal"] = Tipo;
             if (Tipo.Equals("E"))
             {
-                BtnRepaExterna.CssClass = "btn btn-primary"; BtnSolPedInter.Visible = false; CkbAprobad.Visible = true; CkbAsentada.Visible = true; BtnImprimir.Visible = true; 
+                BtnRepaExterna.CssClass = "btn btn-primary"; BtnSolPedInter.Visible = false; CkbAprobad.Visible = true; CkbAsentada.Visible = true; BtnImprimir.Visible = true;
                 LblFactura.Visible = true; TxtFactura.Visible = true;
                 if ((int)ViewState["VblCE2"] == 1)
                 { BtnAsentar.Visible = true; }
@@ -806,13 +806,25 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 if (ViewState["Accion"].ToString().Equals(""))
                 {
                     if (ViewState["RepaExtLocal"].ToString().Equals("E")) { ActivarBtn(true, false, true, false, false, false, "INS"); }
-                    else { ActivarBtn(false, true, false, false, false, false, "INS"); }
+                    else { ActivarBtn(true, false, false, false, false, false, "INS"); Traerdatos("", "UPD"); }
 
                     ViewState["Accion"] = "Aceptar";
                     DataRow[] Result = Idioma.Select("Objeto= 'BotonIngOk'");
                     foreach (DataRow row in Result)
                     { BtnIngresar.Text = row["Texto"].ToString().Trim(); }//
                     LimpiarCampos("INS");
+                    if (ViewState["RepaExtLocal"].ToString().Equals("L"))
+                    {
+                        string S_Nit = Session["Nit77Cia"].ToString();
+                        int pos = S_Nit.IndexOf('-');
+                        if (pos >= 0)
+                        {
+                            // Quita el "-" y todo lo que sigue
+                            S_Nit = S_Nit.Substring(0, pos);
+                        }
+                        DdlProvee.Text = S_Nit.ToString(); DdlTipo.Text = "E";
+                    }
+
                     ViewState["BloqueoGarantia"] = "N";
                     ActivarCampos(true, true, "INS");
                     string VbD = Convert.ToString(DateTime.UtcNow.Day);
@@ -887,7 +899,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         NumFactura = TxtFactura.Text.Trim(),
                         PNRepa = TxtlPN.Text.Trim(),
                         CodAeronaveRO = Convert.ToInt32(ViewState["CodHK"].ToString()),
-                        PPT = Convert.ToInt32(TxtPpt.Text.Trim()),
+                        PPT = Convert.ToInt32(TxtPpt.Text.Trim().Equals("")?"0": TxtPpt.Text.Trim()),
                     };
                     ObjRepa.Add(TypRepa);
 
@@ -1270,7 +1282,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
         //****************************** Pedido Repa Local **************************************       
         protected void BtnSolPedInter_Click(object sender, EventArgs e)
         {
-            if (TxtNumRepa.Text.Equals("")) { return; }
+            // if (TxtNumRepa.Text.Equals("")) { return; }
             BindSolPedInter(); PerfilesGrid();
             ViewState["CCostoSP"] = ""; ViewState["PosicionSP"] = "0"; ViewState["IdPedidoRL"] = "0"; ViewState["IdDetPedidoRL"] = "0";
             MultVw.ActiveViewIndex = 1;
@@ -1296,6 +1308,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             {
                 TblDetalle.Rows.Add(TblDetalle.NewRow());
                 GrdSolPedInter.DataSource = TblDetalle;
+                GrdSolPedInter.DataBind();
                 GrdSolPedInter.Rows[0].Cells.Clear();
                 GrdSolPedInter.Rows[0].Cells.Add(new TableCell());
                 GrdSolPedInter.Rows[0].Cells[0].Text = "Empty..!";
@@ -1364,9 +1377,9 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
                 if (ViewState["CCostoSP"].ToString().Trim().Equals(""))
                 {
-                    Result = Idioma.Select("Objeto= 'Mens17Repa'");
+                    Result = Idioma.Select("Objeto= 'Mens15Repa'");
                     foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// La Solicitud ya se encuentra registrada.
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }// La solicitud de pedido debe tener centro de costo
                     return;
                 }
 
@@ -1433,7 +1446,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             if (e.Row.RowType == DataControlRowType.Footer)
             {
                 DropDownList DdlSolPed = (DropDownList)e.Row.FindControl("DdlSolPed");
-                DdlSolPed.DataSource = DSTPpl.Tables[2];
+                DdlSolPed.DataSource = DSTPpl.Tables["SolPedRepaLocal"];
                 DdlSolPed.DataTextField = "CodPedido";
                 DdlSolPed.DataValueField = "CodPedido";
                 DdlSolPed.DataBind();
@@ -1596,7 +1609,11 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
                         return;
                     }
-
+                    string S_From = "Notificación 77NEO <" + "soporteneosystem@gmail.com" + ">";
+                    string S_Correo = ClsOrdenTrabajo.GetCorreo();
+                    string S_Asunto = ClsOrdenTrabajo.GetAsunto();
+                    string S_Cuerpo = ClsOrdenTrabajo.GetCuerpo();
+                    Cnx.EnviarCorreo(S_From, S_Correo, S_Asunto, S_Cuerpo);
                     ActivarBtnOT(false, true, true, "INS");
                     ViewState["Accion"] = "";
                     DataRow[] Result = Idioma.Select("Objeto= 'IbtAddNew'");
@@ -1790,8 +1807,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
             DR["MltlC36"] = CkbOtros.Text + ":";
 
-           if (Session["FormatFecha"].ToString().Equals("101")) { DR["MltlC37"] = "MM/dd/yyyy HH:mm"; }
-           else { { DR["MltlC37"] = "dd/MM/yyyy HH:mm"; } }
+            if (Session["FormatFecha"].ToString().Equals("101")) { DR["MltlC37"] = "MM/dd/yyyy HH:mm"; }
+            else { { DR["MltlC37"] = "dd/MM/yyyy HH:mm"; } }
 
             DTMultL.AcceptChanges();
             string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
@@ -1808,7 +1825,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
 
                 RpVwAll.LocalReport.ReportPath = "Report/Logistica/Inf_ReparacionStdr.rdlc";
                 RpVwAll.LocalReport.DataSources.Clear();
-                RpVwAll.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", DSTPpl.Tables[3]));
+                RpVwAll.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", DSTPpl.Tables["Impresion"]));
                 RpVwAll.LocalReport.DataSources.Add(new ReportDataSource("DataSet2", DTMultL));
                 RpVwAll.LocalReport.SetParameters(parameters);
                 RpVwAll.LocalReport.Refresh();
@@ -1883,6 +1900,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
+                            string S_From = "", S_Correo = "", S_Asunto = "", S_Cuerpo = "";
                             //var Mensj = SC.ExecuteScalar();
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())
@@ -1902,6 +1920,11 @@ namespace _77NeoWeb.Forms.InventariosCompras
                                     Transac.Rollback();
                                     return;
                                 }
+                                S_Correo = SDR["Correo"].ToString().Trim();
+                                S_Asunto = SDR["Asunto"].ToString().Trim();
+                                S_Cuerpo = SDR["Cuerpo"].ToString().Trim();
+                                S_From = "Notificación 77NEO <" + "soporteneosystem@gmail.com" + ">";
+                                Cnx.EnviarCorreo(S_From, S_Correo, S_Asunto, S_Cuerpo);
                             }
                             SDR.Close();
                             Transac.Commit();
@@ -1963,6 +1986,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                         SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                         try
                         {
+                            string S_From = "", S_Correo = "", S_Asunto = "", S_Cuerpo = "";
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())
                             {
@@ -1975,9 +1999,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
                                     { VbMensj = row["Texto"].ToString().Trim(); }
                                     ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + VbMensj + "');", true);
                                     Transac.Rollback();
-
                                     return;
                                 }
+                                S_From = "Notificación 77NEO <" + "soporteneosystem@gmail.com" + ">";
+                                S_Correo = SDR["Correo"].ToString().Trim();
+                                S_Asunto = SDR["Asunto"].ToString().Trim();
+                                S_Cuerpo = SDR["Cuerpo"].ToString().Trim();
+                                Cnx.EnviarCorreo(S_From, S_Correo, S_Asunto, S_Cuerpo);
                             }
                             SDR.Close();
                             Transac.Commit();
@@ -2112,6 +2140,6 @@ namespace _77NeoWeb.Forms.InventariosCompras
                     }
                 }
             }
-        }       
+        }
     }
 }

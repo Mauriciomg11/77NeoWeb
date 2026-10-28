@@ -11,6 +11,9 @@ namespace _77NeoWeb.Prg.PrgIngenieria
     {
         static public string PMensj;
         static public int PCodIdRte;
+        static public string S_Correo;
+        static public string S_Asunto;
+        static public string S_Cuerpo;
         public DateTime FechaProyectada { get; set; }
         public DateTime? FechaCumplimiento { get; set; }
         public DateTime FechaReporte { get; set; }
@@ -207,9 +210,14 @@ namespace _77NeoWeb.Prg.PrgIngenieria
                             SqlDataReader SDR = SC.ExecuteReader();
                             if (SDR.Read())
                             {
-                                string borr1= HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
+                                /* DataTable dt = new DataTable();
+                                dt.Load(SDR);*/
+                                string borr1 = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 PCodIdRte = Convert.ToInt32(SDR["CodIdRte"].ToString().Trim());
+                                S_Correo = HttpUtility.HtmlDecode(SDR["Correo"].ToString().Trim());
+                                S_Asunto = HttpUtility.HtmlDecode(SDR["Asunto"].ToString().Trim());
+                                S_Cuerpo = HttpUtility.HtmlDecode(SDR["Cuerpo"].ToString().Trim());
                             }
                             SDR.Close();
                             transaction.Commit();
@@ -236,6 +244,18 @@ namespace _77NeoWeb.Prg.PrgIngenieria
         public int GetCodIdRte()
         {
             return PCodIdRte;
+        }
+        public string GetCorreo()
+        {
+            return S_Correo;
+        }
+        public string GetAsunto()
+        {
+            return S_Asunto;
+        }
+        public string GetCuerpo()
+        {
+            return S_Cuerpo;
         }
     }
 }

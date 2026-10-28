@@ -294,22 +294,22 @@
                                                     <asp:Label ID="LblEstado" Text='<%# Eval("EstadoPN") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="P/N">
+                                            <asp:TemplateField HeaderText="P/N" ItemStyle-CssClass="AutoColunmGV">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblPn" Text='<%# Eval("PN") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="S/N">
+                                            <asp:TemplateField HeaderText="S/N" ItemStyle-CssClass="AutoColunmGV">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblSn" Text='<%# Eval("SN") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="lote">
+                                            <asp:TemplateField HeaderText="lote" ItemStyle-CssClass="AutoColunmGV">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblLot" Text='<%# Eval("NumLote") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="bodega">
+                                            <asp:TemplateField HeaderText="bodega" ItemStyle-CssClass="AutoColunmGV">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblBodg" Text='<%# Eval("CodBodega") %>' runat="server" />
                                                 </ItemTemplate>
@@ -324,12 +324,12 @@
                                                     <asp:Label ID="LblColumn" Text='<%# Eval("Columna") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="stock">
+                                            <asp:TemplateField HeaderText="stock" ItemStyle-CssClass="AutoColunmGV">
                                                 <ItemTemplate>
                                                     <asp:Label ID="LblStock" Text='<%# Eval("Cantidad") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="cant despacho">
+                                            <asp:TemplateField HeaderText="cant despacho" ItemStyle-CssClass="AutoColunmGV">
                                                 <ItemTemplate>
                                                     <asp:TextBox ID="TxtCantDespa" Text='<%# Eval("CantDespchr") %>' runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" />
                                                 </ItemTemplate>

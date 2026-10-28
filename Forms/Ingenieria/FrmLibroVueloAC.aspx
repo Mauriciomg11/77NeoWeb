@@ -1,5 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmLibroVueloAC.aspx.cs" Inherits="_77NeoWeb.Forms.Ingenieria.FrmLibroVueloAC" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="FrmLibroVueloAC.aspx.cs" Inherits="_77NeoWeb.Forms.Ingenieria.FrmLibroVueloAC" %>
+<%@ MasterType VirtualPath="~/MasterTransac.master" %>
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -113,9 +113,12 @@
             $('[id *=DdlPNOn]').chosen();
             $('[id *=DdlPNOff]').chosen();
             $('[id *=DdlPNHta]').chosen();
-            //$('[id *=DdlPNOff]').chosen();
-
-
+            $('[id *=DdlTrayPP]').chosen();
+            $('[id *=DdlTripPP]').chosen();
+            $('[id *=DdlLicTPP]').chosen();
+            $('[id *=DdlCargoPP]').chosen();
+            $('[id *=DdlClient]').chosen();
+           $('[id *=DdlClntPP]').chosen();
         }
         $(':text').on("focus", function () {
             //here set in localStorage id of the textbox
@@ -125,18 +128,20 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="TituloPagina" runat="server">
-   <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
+    <asp:Label ID="TitForm" runat="server" CssClass="CsTitulo" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="CuerpoPagina" runat="server">
     <asp:UpdatePanel ID="UpPnlBtnPpl" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-             <br /> <br />
+            <br />
+            <br />
             <asp:Table ID="TblBtnPpal" runat="server">
                 <asp:TableRow>
                     <asp:TableCell Width="2%">
-                        <asp:Button ID="BtnDatos" CssClass="btn btn-primary" runat="server" Text="Datos Generales" OnClick="BtnDatos_Click" />
-                        <asp:Button ID="BtnVuelos" CssClass="btn btn-primary" runat="server" Text="Trayectos" OnClick="BtnVuelos_Click" />
-                        <asp:Button ID="BtnManto" CssClass="btn btn-primary" runat="server" Text="Mantenimiento" OnClick="BtnManto_Click" />
+                        <asp:Button ID="BtnDatos" CssClass="btn btn-primary Font_btnCrud" runat="server" Text="Datos Generales" OnClick="BtnDatos_Click" />
+                        <asp:Button ID="BtnVuelos" CssClass="btn btn-primary Font_btnCrud" runat="server" Text="Trayectos" OnClick="BtnVuelos_Click" />
+                        <asp:Button ID="BtnTripulacion" CssClass="btn btn-primary Font_btnCrud" runat="server" Text="tripulac" OnClick="BtnTripulacion_Click" />
+                        <asp:Button ID="BtnManto" CssClass="btn btn-primary Font_btnCrud" runat="server" Text="Mantenimiento" OnClick="BtnManto_Click" />
                     </asp:TableCell>
                     <asp:TableCell Width="1%">
                         <asp:CheckBox ID="CkbProcesado" runat="server" Text="Procesado" CssClass="LblEtiquet" Enabled="false" />
@@ -153,6 +158,7 @@
             <asp:PostBackTrigger ControlID="BtnDatos" />
             <asp:PostBackTrigger ControlID="BtnVuelos" />
             <asp:PostBackTrigger ControlID="BtnManto" />
+            <asp:PostBackTrigger ControlID="BtnTripulacion" />
         </Triggers>
     </asp:UpdatePanel>
     <asp:UpdatePanel ID="UpPnlCampos" runat="server" UpdateMode="Conditional">
@@ -193,7 +199,7 @@
                                             <asp:LinkButton ID="LkbDescargarLV" runat="server" OnClick="LkbDescargarLV_Click" Font-Size="10px" />
                                         </td>
                                         <td></div>                                            
-                                            <asp:Button ID="cargarLV" runat="server" Text="Cargar LV" CssClass=" btn btn-success botones BtnEdicion" OnClick="cargarLV_Click" Height="25px" Font-Size="10px" Enabled="false" />
+                                            <asp:Button ID="cargarLV" runat="server" Text="Cargar LV" CssClass=" btn btn-success botones BtnEdicion" OnClick="CargarLV_Click" Height="25px" Font-Size="10px" Enabled="false" />
                                             <asp:FileUpload ID="FileUpCLV" runat="server" Font-Size="9px" Enabled="false" />
                                             </div>
                                         </td>
@@ -397,27 +403,27 @@
                                                 <asp:TextBox ID="TxtNIIP" runat="server" Width="100%" Text='<%# Eval("NII") %>' TextMode="Number" step="0.01" onkeypress="return solonumeros(event);" Enabled="false" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Pres. Aceite" HeaderStyle-Width="6%">
+                                        <asp:TemplateField AccessibleHeaderText ="Pres_Aceite" HeaderText="Pres. Aceite" HeaderStyle-Width="6%">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="TxtPresAcP" runat="server" Width="100%" Text='<%# Eval("PresionAceite") %>' TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Temp. Aceite" HeaderStyle-Width="6%">
+                                        <asp:TemplateField AccessibleHeaderText ="Temp_Aceite" HeaderText="Temp. Aceite" HeaderStyle-Width="6%">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="TxtTempAcP" runat="server" Width="100%" Text='<%# Eval("TempAceite") %>' TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Pres. Comb" HeaderStyle-Width="6%">
+                                        <asp:TemplateField AccessibleHeaderText ="Pres_Fuel" HeaderText="Pres. Comb" HeaderStyle-Width="6%">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="TxtPresCombP" runat="server" Width="100%" Text='<%# Eval("PresComb") %>' TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Pres. HYD" HeaderStyle-Width="6%">
+                                        <asp:TemplateField AccessibleHeaderText ="HYD" HeaderText="Pres. HYD" HeaderStyle-Width="6%">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="TxtPresHYDP" runat="server" Width="100%" Text='<%# Eval("PresHyd") %>' TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Nivel Comb" HeaderStyle-Width="6%">
+                                        <asp:TemplateField AccessibleHeaderText ="Nvl_Fuel" HeaderText="Nivel Comb" HeaderStyle-Width="6%">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="TxtNivCombP" runat="server" Width="100%" Text='<%# Eval("CombVuelo") %>' TextMode="Number" step="0.01" onkeypress="return Decimal(event);" Enabled="false" />
                                             </ItemTemplate>
@@ -453,168 +459,180 @@
                         <asp:Label ID="LblTrayectos" runat="server" Text="Trayectos" />
                     </h6>
                     <br />
-                    <asp:GridView ID="GrdTray" runat="server" EmptyDataText="Sin trayectos ..!" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="CodIdDetLibroVuelo"
-                        CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="12"
-                        OnRowCommand="GrdTray_RowCommand" OnRowEditing="GrdTray_RowEditing"
-                        OnRowUpdating="GrdTray_RowUpdating" OnRowCancelingEdit="GrdTray_RowCancelingEdit" OnRowDeleting="GrdTray_RowDeleting"
-                        OnRowDataBound="GrdTray_RowDataBound" OnPageIndexChanging="GrdTray_PageIndexChanging">
-                        <Columns>
-                            <asp:TemplateField HeaderText="Origen" HeaderStyle-Width="15%">
-                                <ItemTemplate>
-                                    <asp:Label ID="LblOrigP" Text='<%# Eval("Origen") %>' runat="server" />
-                                </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:DropDownList ID="DdlOrig" runat="server" Width="100%" Height="28px" />
-                                </EditItemTemplate>
-                                <FooterTemplate>
-                                    <asp:DropDownList ID="DdlOrigPP" runat="server" Width="100%" Height="28px" />
-                                </FooterTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Destino" HeaderStyle-Width="15%">
-                                <ItemTemplate>
-                                    <asp:Label ID="LblDestP" Text='<%# Eval("Destino") %>' runat="server" />
-                                </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:DropDownList ID="DdlDest" runat="server" Width="100%" Height="28px" />
-                                </EditItemTemplate>
-                                <FooterTemplate>
-                                    <asp:DropDownList ID="DdlDestPP" runat="server" Width="100%" Height="28px" />
-                                </FooterTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Fecha Salida" HeaderStyle-Width="15%">
-                                <ItemTemplate>
-                                    <asp:Label ID="LblFecSal" Text='<%# Eval("FechaDespegue") %>' runat="server" Width="100%" />
-                                </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="TxtFecSal" Text='<%# Eval("FechaDespegue") %>' runat="server" Width="75%" onKeyDown="return false" TextMode="Date" />
-                                    <%--  <asp:ImageButton ID="IbtFechaS" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
+                    <div class="CentrarGridV2" style="--grid-top: <%= TopGridTray %>; --grid-width: <%= AnchoGridTray %>;">
+                        <asp:GridView ID="GrdTray" runat="server" EmptyDataText="Sin trayectos ..!" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true"
+                            DataKeyNames="CodIdDetLibroVuelo,CodCliente" CssClass="DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="12"
+                            OnRowCommand="GrdTray_RowCommand" OnRowEditing="GrdTray_RowEditing" OnRowUpdating="GrdTray_RowUpdating" OnRowCancelingEdit="GrdTray_RowCancelingEdit"
+                            OnRowDeleting="GrdTray_RowDeleting" OnRowDataBound="GrdTray_RowDataBound" OnPageIndexChanging="GrdTray_PageIndexChanging">
+                            <Columns>
+                                <asp:TemplateField AccessibleHeaderText ="Orig" HeaderText="Origen" HeaderStyle-Width="15%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblOrigP" Text='<%# Eval("Origen") %>' runat="server" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:DropDownList ID="DdlOrig" runat="server" Width="100%" Height="28px" />
+                                    </EditItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:DropDownList ID="DdlOrigPP" runat="server" Width="100%" Height="28px" />
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField AccessibleHeaderText ="Dest" HeaderText="Destino" HeaderStyle-Width="15%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblDestP" Text='<%# Eval("Destino") %>' runat="server" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:DropDownList ID="DdlDest" runat="server" Width="100%" Height="28px" />
+                                    </EditItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:DropDownList ID="DdlDestPP" runat="server" Width="100%" Height="28px" />
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField AccessibleHeaderText ="FchS" HeaderText="Fecha Salida" ItemStyle-CssClass="AutoColunmGV">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblFecSal" Text='<%# Eval("FechaDespegue") %>' runat="server" Width="100%" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="TxtFecSal" Text='<%# Eval("FechaDespegue") %>' runat="server" Width="75%" onKeyDown="return false" TextMode="Date" />
+                                        <%--  <asp:ImageButton ID="IbtFechaS" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
                                     <ajaxToolkit:CalendarExtender ID="CalFechS" runat="server" PopupButtonID="IbtFechaS" TargetControlID="TxtFecSal" Format="dd/MM/yyyy" CssClass="MyCalendar" />--%>
-                                </EditItemTemplate>
-                                <FooterTemplate>
-                                    <asp:TextBox ID="TxtFecSalPP" runat="server" Width="75%" onKeyDown="return false" TextMode="Date" />
-                                    <%--   <asp:ImageButton ID="IbtFechaSPP" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
+                                    </EditItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:TextBox ID="TxtFecSalPP" runat="server" Width="75%" onKeyDown="return false" TextMode="Date" />
+                                        <%--   <asp:ImageButton ID="IbtFechaSPP" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
                                     <ajaxToolkit:CalendarExtender ID="CalFechSPP" runat="server" PopupButtonID="IbtFechaSPP" TargetControlID="TxtFecSalPP" Format="dd/MM/yyyy" CssClass="MyCalendar" />--%>
-                                </FooterTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Hora:Min" HeaderStyle-Width="8%">
-                                <ItemTemplate>
-                                    <asp:Label ID="LblHMS" Text='<%# Eval("HD") %>' runat="server" Width="100%" TextMode="Number" />
-                                </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="TxtHMS" Text='<%# Eval("HD") %>' runat="server" Width="100%" MaxLength="5" OnTextChanged="TxtHMS_TextChanged" AutoPostBack="true" />
-                                    <ajaxToolkit:MaskedEditExtender ID="MEEHMS" runat="server" AcceptAMPM="true" MaskType="Time" Mask="99:99" ErrorTooltipEnabled="true"
-                                        InputDirection="RightToLeft" CultureName="es-ES" TargetControlID="TxtHMS" MessageValidatorTip="true" />
-                                    <ajaxToolkit:MaskedEditValidator ID="MEVHMS"
-                                        runat="server"
-                                        ToolTip="ERROR FORMATO HORA"
-                                        ErrorMessage="*"
-                                        ControlExtender="MEEHMS"
-                                        ControlToValidate="TxtHMS"
-                                        InvalidValueMessage="REGISTRE HORA"
-                                        TooltipMessage="Hora 00:00 hasta 23:59" />
-                                </EditItemTemplate>
-                                <FooterTemplate>
-                                    <asp:TextBox ID="TxtHMSPP" runat="server" Width="100%" MaxLength="5" OnTextChanged="TxtHMSPP_TextChanged" AutoPostBack="true" />
-                                    <ajaxToolkit:MaskedEditExtender ID="MEEHMSPP" runat="server" AcceptAMPM="true" MaskType="Time" Mask="99:99" ErrorTooltipEnabled="true"
-                                        InputDirection="RightToLeft" CultureName="es-ES" TargetControlID="TxtHMSPP" MessageValidatorTip="true" />
-                                    <ajaxToolkit:MaskedEditValidator ID="MEVHMSPP"
-                                        runat="server"
-                                        ToolTip="ERROR FORMATO HORA"
-                                        ErrorMessage="*"
-                                        ControlExtender="MEEHMSPP"
-                                        ControlToValidate="TxtHMSPP"
-                                        InvalidValueMessage="REGISTRE HORA"
-                                        TooltipMessage="Hora 00:00 hasta 23:59" />
-                                </FooterTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Fecha Llegada" HeaderStyle-Width="15%">
-                                <ItemTemplate>
-                                    <asp:Label ID="LblFecLle" Text='<%# Eval("FechaAterrizaje") %>' runat="server" Width="100%" />
-                                </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="TxtFecLle" Text='<%# Eval("FechaAterrizaje") %>' runat="server" Width="75%" onKeyDown="return false" TextMode="Date" />
-                                    <%-- <asp:ImageButton ID="IbtFechaL" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField AccessibleHeaderText ="HMS" HeaderText="Hora:Min" ItemStyle-CssClass="AutoColunmGV">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblHMS" Text='<%# Eval("HD") %>' runat="server" Width="100%" TextMode="Number" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="TxtHMS" Text='<%# Eval("HD") %>' runat="server" Width="100%" MaxLength="5" OnTextChanged="TxtHMS_TextChanged" AutoPostBack="true" />
+                                        <ajaxToolkit:MaskedEditExtender ID="MEEHMS" runat="server" AcceptAMPM="true" MaskType="Time" Mask="99:99" ErrorTooltipEnabled="true"
+                                            InputDirection="RightToLeft" CultureName="es-ES" TargetControlID="TxtHMS" MessageValidatorTip="true" />
+                                        <ajaxToolkit:MaskedEditValidator ID="MEVHMS"
+                                            runat="server"
+                                            ToolTip="ERROR FORMATO HORA"
+                                            ErrorMessage="*"
+                                            ControlExtender="MEEHMS"
+                                            ControlToValidate="TxtHMS"
+                                            InvalidValueMessage="REGISTRE HORA"
+                                            TooltipMessage="Hora 00:00 hasta 23:59" />
+                                    </EditItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:TextBox ID="TxtHMSPP" runat="server" Width="100%" MaxLength="5" OnTextChanged="TxtHMSPP_TextChanged" AutoPostBack="true" />
+                                        <ajaxToolkit:MaskedEditExtender ID="MEEHMSPP" runat="server" AcceptAMPM="true" MaskType="Time" Mask="99:99" ErrorTooltipEnabled="true"
+                                            InputDirection="RightToLeft" CultureName="es-ES" TargetControlID="TxtHMSPP" MessageValidatorTip="true" />
+                                        <ajaxToolkit:MaskedEditValidator ID="MEVHMSPP"
+                                            runat="server"
+                                            ToolTip="ERROR FORMATO HORA"
+                                            ErrorMessage="*"
+                                            ControlExtender="MEEHMSPP"
+                                            ControlToValidate="TxtHMSPP"
+                                            InvalidValueMessage="REGISTRE HORA"
+                                            TooltipMessage="Hora 00:00 hasta 23:59" />
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField AccessibleHeaderText ="FchLl" HeaderText="Fecha Llegada" ItemStyle-CssClass="AutoColunmGV">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblFecLle" Text='<%# Eval("FechaAterrizaje") %>' runat="server" Width="100%" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="TxtFecLle" Text='<%# Eval("FechaAterrizaje") %>' runat="server" Width="75%" onKeyDown="return false" TextMode="Date" />
+                                        <%-- <asp:ImageButton ID="IbtFechaL" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
                                     <ajaxToolkit:CalendarExtender ID="CalFechL" runat="server" PopupButtonID="IbtFechaL" TargetControlID="TxtFecLle" Format="dd/MM/yyyy" />--%>
-                                </EditItemTemplate>
-                                <FooterTemplate>
-                                    <asp:TextBox ID="TxtFecLlePP" runat="server" Width="75%" onKeyDown="return false" TextMode="Date" />
-                                    <%-- <asp:ImageButton ID="IbtFechaLPP" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
+                                    </EditItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:TextBox ID="TxtFecLlePP" runat="server" Width="75%" onKeyDown="return false" TextMode="Date" />
+                                        <%-- <asp:ImageButton ID="IbtFechaLPP" runat="server" CssClass="BtnImagenCalender" ImageUrl="~/images/calendar.png" ImageAlign="AbsBottom" Height="18px" Width="15px" />
                                     <ajaxToolkit:CalendarExtender ID="CalFechLPP" runat="server" PopupButtonID="IbtFechaLPP" TargetControlID="TxtFecLlePP" Format="dd/MM/yyyy" CssClass="MyCalendar" />--%>
-                                </FooterTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Hora:Min" HeaderStyle-Width="8%">
-                                <ItemTemplate>
-                                    <asp:Label ID="LblHML" Text='<%# Eval("HL") %>' runat="server" Width="100%" TextMode="Number" />
-                                </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="TxtHML" Text='<%# Eval("HL") %>' runat="server" Width="100%" MaxLength="5" OnTextChanged="TxtHML_TextChanged" AutoPostBack="true" />
-                                    <ajaxToolkit:MaskedEditExtender ID="MEEHML" runat="server" AcceptAMPM="true" MaskType="Time" Mask="99:99" ErrorTooltipEnabled="true"
-                                        InputDirection="RightToLeft" CultureName="es-ES" TargetControlID="TxtHML" MessageValidatorTip="true" />
-                                    <ajaxToolkit:MaskedEditValidator ID="MEVHML"
-                                        runat="server"
-                                        ToolTip="ERROR FORMATO HORA"
-                                        ErrorMessage="*"
-                                        ControlExtender="MEEHML"
-                                        ControlToValidate="TxtHML"
-                                        InvalidValueMessage="REGISTRE HORA"
-                                        TooltipMessage="Hora 00:00 hasta 23:59" />
-                                </EditItemTemplate>
-                                <FooterTemplate>
-                                    <asp:TextBox ID="TxtHMLPP" runat="server" Width="100%" MaxLength="5" OnTextChanged="TxtHMLPP_TextChanged" AutoPostBack="true" />
-                                    <ajaxToolkit:MaskedEditExtender ID="MEEHMLPP" runat="server" AcceptAMPM="true" MaskType="Time" Mask="99:99" ErrorTooltipEnabled="true"
-                                        InputDirection="RightToLeft" CultureName="es-ES" TargetControlID="TxtHMLPP" MessageValidatorTip="true" />
-                                    <ajaxToolkit:MaskedEditValidator ID="MEVHMLPP"
-                                        runat="server"
-                                        ToolTip="ERROR FORMATO HORA"
-                                        ErrorMessage="*"
-                                        ControlExtender="MEEHMLPP"
-                                        ControlToValidate="TxtHMLPP"
-                                        InvalidValueMessage="REGISTRE HORA"
-                                        TooltipMessage="Hora 00:00 hasta 23:59" />
-                                </FooterTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Tiempo vuelo" HeaderStyle-Width="8%">
-                                <ItemTemplate>
-                                    <asp:Label ID="LblTimeV" Text='<%# Eval("TiempoT") %>' runat="server" Width="100%" TextMode="Number" />
-                                </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="TxtTimeV" Text='<%# Eval("TiempoT") %>' runat="server" Width="100%" MaxLength="5" Enabled="false" />
-                                </EditItemTemplate>
-                                <FooterTemplate>
-                                    <asp:TextBox ID="TxtTimeVPP" runat="server" Width="100%" MaxLength="5" Enabled="false" />
-                                </FooterTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Num. Pas." HeaderStyle-Width="8%">
-                                <ItemTemplate>
-                                    <asp:Label ID="LblNumPas" Text='<%# Eval("NumPersTransp") %>' runat="server" Width="100%" TextMode="Number" />
-                                </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="TxtNumPas" Text='<%# Eval("NumPersTransp") %>' runat="server" Width="100%" TextMode="Number" onkeypress="return solonumeros(event);" />
-                                </EditItemTemplate>
-                                <FooterTemplate>
-                                    <asp:TextBox ID="TxtNumPasPP" runat="server" Width="100%" TextMode="Number" onkeypress="return solonumeros(event);" Text="0" />
-                                </FooterTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField FooterStyle-Width="15%">
-                                <ItemTemplate>
-                                    <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />
-                                    <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
-                                </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:ImageButton ID="IbtUpdate" CssClass="BotonUpdateGrid" ImageUrl="~/images/Save.png" runat="server" CommandName="Update" ToolTip="Actualizar" />
-                                    <asp:ImageButton ID="IbtCancel" CssClass="BotonCancelGrid" ImageUrl="~/images/Cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancelar" />
-                                </EditItemTemplate>
-                                <FooterTemplate>
-                                    <asp:ImageButton ID="IbtAddNew" CssClass="BotonNewGrid" ImageUrl="~/images/AddNew.png" runat="server" CommandName="AddNew" ToolTip="Nuevo" />
-                                </FooterTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                        <FooterStyle CssClass="GridFooterStyle" />
-                        <HeaderStyle CssClass="GridCabecera" />
-                        <RowStyle CssClass="GridRowStyle" />
-                        <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
-                    </asp:GridView>
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField AccessibleHeaderText ="HMLl" HeaderText="Hora:Min" ItemStyle-CssClass="AutoColunmGV">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblHML" Text='<%# Eval("HL") %>' runat="server" Width="100%" TextMode="Number" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="TxtHML" Text='<%# Eval("HL") %>' runat="server" Width="100%" MaxLength="5" OnTextChanged="TxtHML_TextChanged" AutoPostBack="true" />
+                                        <ajaxToolkit:MaskedEditExtender ID="MEEHML" runat="server" AcceptAMPM="true" MaskType="Time" Mask="99:99" ErrorTooltipEnabled="true"
+                                            InputDirection="RightToLeft" CultureName="es-ES" TargetControlID="TxtHML" MessageValidatorTip="true" />
+                                        <ajaxToolkit:MaskedEditValidator ID="MEVHML"
+                                            runat="server"
+                                            ToolTip="ERROR FORMATO HORA"
+                                            ErrorMessage="*"
+                                            ControlExtender="MEEHML"
+                                            ControlToValidate="TxtHML"
+                                            InvalidValueMessage="REGISTRE HORA"
+                                            TooltipMessage="Hora 00:00 hasta 23:59" />
+                                    </EditItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:TextBox ID="TxtHMLPP" runat="server" Width="100%" MaxLength="5" OnTextChanged="TxtHMLPP_TextChanged" AutoPostBack="true" />
+                                        <ajaxToolkit:MaskedEditExtender ID="MEEHMLPP" runat="server" AcceptAMPM="true" MaskType="Time" Mask="99:99" ErrorTooltipEnabled="true"
+                                            InputDirection="RightToLeft" CultureName="es-ES" TargetControlID="TxtHMLPP" MessageValidatorTip="true" />
+                                        <ajaxToolkit:MaskedEditValidator ID="MEVHMLPP"
+                                            runat="server"
+                                            ToolTip="ERROR FORMATO HORA"
+                                            ErrorMessage="*"
+                                            ControlExtender="MEEHMLPP"
+                                            ControlToValidate="TxtHMLPP"
+                                            InvalidValueMessage="REGISTRE HORA"
+                                            TooltipMessage="Hora 00:00 hasta 23:59" />
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField AccessibleHeaderText ="TiemV" HeaderText="Tiempo vuelo" ItemStyle-CssClass="AutoColunmGV">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblTimeV" Text='<%# Eval("TiempoT") %>' runat="server" Width="100%" TextMode="Number" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="TxtTimeV" Text='<%# Eval("TiempoT") %>' runat="server" Width="100%" MaxLength="5" Enabled="false" />
+                                    </EditItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:TextBox ID="TxtTimeVPP" runat="server" Width="100%" MaxLength="5" Enabled="false" />
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField AccessibleHeaderText ="NumPas" HeaderText="Num. Pas." HeaderStyle-Width="4%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblNumPas" Text='<%# Eval("NumPersTransp") %>' runat="server" Width="100%" TextMode="Number" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="TxtNumPas" Text='<%# Eval("NumPersTransp") %>' runat="server" Width="100%" TextMode="Number" onkeypress="return solonumeros(event);" />
+                                    </EditItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:TextBox ID="TxtNumPasPP" runat="server" Width="100%" TextMode="Number" onkeypress="return solonumeros(event);" Text="0" />
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField AccessibleHeaderText ="Client" HeaderText="cliente" HeaderStyle-Width="15%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblClientP" Text='<%# Eval("RazonSocial") %>' runat="server" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:DropDownList ID="DdlClient" runat="server" Width="100%" Height="28px" />
+                                    </EditItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:DropDownList ID="DdlClntPP" runat="server" Width="100%" Height="28px" />
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField ItemStyle-CssClass="AutoColunmGV">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="IbtEdit" CssClass="BotonEditGrid" ImageUrl="~/images/Edit.png" runat="server" CommandName="Edit" ToolTip="Editar" />
+                                        <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:ImageButton ID="IbtUpdate" CssClass="BotonUpdateGrid" ImageUrl="~/images/Save.png" runat="server" CommandName="Update" ToolTip="Actualizar" />
+                                        <asp:ImageButton ID="IbtCancel" CssClass="BotonCancelGrid" ImageUrl="~/images/Cancel.png" runat="server" CommandName="Cancel" ToolTip="Cancelar" />
+                                    </EditItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:ImageButton ID="IbtAddNew" CssClass="BotonNewGrid" ImageUrl="~/images/AddNew.png" runat="server" CommandName="AddNew" ToolTip="Nuevo" />
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <FooterStyle CssClass="GridFooterStyle" />
+                            <HeaderStyle CssClass="GridCabecera" />
+                            <RowStyle CssClass="GridRowStyle" />
+                            <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                            <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
+                        </asp:GridView>
+                    </div>
                 </asp:View>
                 <asp:View ID="Vw2Manto" runat="server">
                     <asp:DropDownList ID="DdlBusqRte" runat="server" CssClass="Campos" OnTextChanged="DdlBusqRte_TextChanged" AutoPostBack="true" Width="20%" />
@@ -875,18 +893,17 @@
                             <asp:Button ID="BtnConsultar" runat="server" CssClass="btn btn-primary Font_btnCrud" OnClick="BtnConsultar_Click" Text="Consultar" />
                             <asp:Button ID="BtnImprimir" runat="server" CssClass="btn btn-primary Font_btnCrud" OnClick="BtnImprimir_Click" Text="Imprimir" />
                             <asp:Button ID="BtnNotificar" runat="server" CssClass="btn btn-success Font_btnCrud" OnClick="BtnNotificar_Click" Text="Notificar" ToolTip="Notificar el reporte" OnClientClick="return confirm('¿Desea notificar el reporte?');" />
-
                         </div>
                         <div class="col-sm-6">
                             <h6 class="TextoSuperior">
-                                <asp:Label ID="LblTitAdju" runat="server" Text="Adjuntos" /></h6>
+                                <asp:Label ID="LblTitAdjMstr" runat="server" Text="Adjuntos" /></h6>
                             <asp:GridView ID="GrdAdj" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="False" ShowFooter="true" DataKeyNames="IdAdjuntos,Ruta"
                                 CssClass="GridControl DiseñoGrid TablaAdj table-sm" GridLines="Both" AllowPaging="true" PageSize="3"
                                 OnRowCommand="GrdAdj_RowCommand" OnRowEditing="GrdAdj_RowEditing"
                                 OnRowUpdating="GrdAdj_RowUpdating" OnRowCancelingEdit="GrdAdj_RowCancelingEdit"
                                 OnRowDeleting="GrdAdj_RowDeleting" OnRowDataBound="GrdAdj_RowDataBound" OnPageIndexChanging="GrdAdj_PageIndexChanging">
                                 <Columns>
-                                    <asp:TemplateField HeaderText="Descripción" HeaderStyle-Width="30%">
+                                    <asp:TemplateField AccessibleHeaderText ="Descr" HeaderText="Descripción" HeaderStyle-Width="30%">
                                         <ItemTemplate>
                                             <asp:Label ID="LblDesc" Text='<%# Eval("Descripcion") %>' runat="server" />
                                         </ItemTemplate>
@@ -897,7 +914,7 @@
                                             <asp:TextBox ID="TxtDescPP" runat="server" Width="100%" />
                                         </FooterTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Nombre del archivo" HeaderStyle-Width="30%">
+                                    <asp:TemplateField AccessibleHeaderText ="NomArc" HeaderText="Nombre del archivo" HeaderStyle-Width="30%">
                                         <ItemTemplate>
                                             <asp:UpdatePanel runat="server" UpdateMode="Conditional" ID="updDown">
                                                 <ContentTemplate>
@@ -952,7 +969,7 @@
                                 <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" FirstPageText="Primero" LastPageText="Último" />
                             </asp:GridView>
                         </div>
-                    </div>                  
+                    </div>
                 </asp:View>
                 <asp:View ID="Vw3Busq" runat="server">
                     <h6 class="TextoSuperior">
@@ -1093,7 +1110,7 @@
                                                 <asp:TextBox ID="TxtPNRFPP" runat="server" MaxLength="80" Width="100%" Enabled="false" Visible="false" />
                                             </FooterTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Descripción" HeaderStyle-Width="25%">
+                                        <asp:TemplateField AccessibleHeaderText ="Descr" HeaderText="Descripción" HeaderStyle-Width="25%">
                                             <ItemTemplate>
                                                 <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" Enabled="false" />
                                             </ItemTemplate>
@@ -1104,7 +1121,7 @@
                                                 <asp:TextBox ID="TxtDesRFPP" runat="server" MaxLength="240" Width="100%" Enabled="false" />
                                             </FooterTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Cant" HeaderStyle-Width="8%">
+                                        <asp:TemplateField AccessibleHeaderText ="Cant" HeaderText="Cant" HeaderStyle-Width="8%">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblCantRF" Text='<%# Eval("CantidadSolicitada") %>' runat="server" Width="100%" TextMode="Number" step="0.01" />
                                             </ItemTemplate>
@@ -1115,7 +1132,7 @@
                                                 <asp:TextBox ID="TxtCantRFPP" runat="server" Width="100%" Text="1" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" />
                                             </FooterTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Unidad Medida" HeaderStyle-Width="5%">
+                                        <asp:TemplateField AccessibleHeaderText ="UndM" HeaderText="Unidad Medida" HeaderStyle-Width="5%">
                                             <ItemTemplate>
                                                 <asp:Label Text='<%# Eval("CodUnidadMed") %>' runat="server" Width="100%" Enabled="false" />
                                             </ItemTemplate>
@@ -1123,12 +1140,12 @@
                                                 <asp:TextBox ID="TxtUMRF" Text='<%# Eval("CodUnidadMed") %>' runat="server" Width="100%" Enabled="false" />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Cant. Entreg." HeaderStyle-Width="5%">
+                                        <asp:TemplateField AccessibleHeaderText ="CantE" HeaderText="Cant. Entreg." HeaderStyle-Width="5%">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblCantEntrRF" Text='<%# Eval("CantidadEntregada") %>' runat="server" Width="100%" TextMode="Number" step="0.01" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="IPC - FIG - ITEM" HeaderStyle-Width="20%">
+                                        <asp:TemplateField AccessibleHeaderText ="IPC" HeaderText="IPC - FIG - ITEM" HeaderStyle-Width="20%">
                                             <ItemTemplate>
                                                 <asp:Label Text='<%# Eval("IPC") %>' runat="server" Width="100%" Enabled="false" />
                                             </ItemTemplate>
@@ -1167,7 +1184,7 @@
                                     OnRowCommand="GrdLicen_RowCommand" OnRowEditing="GrdLicen_RowEditing" OnRowUpdating="GrdLicen_RowUpdating" OnRowCancelingEdit="GrdLicen_RowCancelingEdit"
                                     OnRowDeleting="GrdLicen_RowDeleting" OnRowDataBound="GrdLicen_RowDataBound" OnPageIndexChanging="GrdLicen_PageIndexChanging">
                                     <Columns>
-                                        <asp:TemplateField HeaderText="Licencia" HeaderStyle-Width="18%">
+                                        <asp:TemplateField AccessibleHeaderText ="Lic" HeaderText="Licencia" HeaderStyle-Width="18%">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblLicenRF" Text='<%# Eval("CodLicencia") %>' runat="server" />
                                             </ItemTemplate>
@@ -1178,7 +1195,7 @@
                                                 <asp:DropDownList ID="DdlLicenRFPP" runat="server" Width="100%" Height="28px" AutoPostBack="true" OnTextChanged="DdlLicenRFPP_TextChanged"></asp:DropDownList>
                                             </FooterTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Descripción" HeaderStyle-Width="45%">
+                                        <asp:TemplateField AccessibleHeaderText ="Descr" HeaderText="Descripción" HeaderStyle-Width="45%">
                                             <ItemTemplate>
                                                 <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" Enabled="false" />
                                             </ItemTemplate>
@@ -1189,7 +1206,7 @@
                                                 <asp:TextBox ID="TxtDesLiRFPP" runat="server" MaxLength="240" Width="100%" Enabled="false" />
                                             </FooterTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Tiempo Estimado" HeaderStyle-Width="5%">
+                                        <asp:TemplateField AccessibleHeaderText ="TiemEs" HeaderText="Tiempo Estimado" HeaderStyle-Width="5%">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblTieEstRF" Text='<%# Eval("TiempoEstimado") %>' runat="server" Width="100%" TextMode="Number" step="0.01" />
                                             </ItemTemplate>
@@ -1252,27 +1269,27 @@
                                     <asp:TextBox ID="TxtPNRF" Text='<%# Eval("PN") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Descripción" HeaderStyle-Width="25%">
+                            <asp:TemplateField AccessibleHeaderText ="Descr" HeaderText="Descripción" HeaderStyle-Width="25%">
                                 <ItemTemplate>
                                     <asp:TextBox ID="TxtDesRF" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Cant" HeaderStyle-Width="8%">
+                            <asp:TemplateField AccessibleHeaderText ="Cant" HeaderText="Cant" HeaderStyle-Width="8%">
                                 <ItemTemplate>
                                     <asp:TextBox ID="TxtCantRF" Text='<%# Eval("Cantidad") %>' runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Unidad Medida" HeaderStyle-Width="5%">
+                            <asp:TemplateField  AccessibleHeaderText ="UndM" HeaderText="Unidad Medida" HeaderStyle-Width="5%">
                                 <ItemTemplate>
                                     <asp:TextBox ID="TxtUMRF" Text='<%# Eval("UndDespacho") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Unidad Sistema" HeaderStyle-Width="5%">
+                            <asp:TemplateField  AccessibleHeaderText ="UndS" HeaderText="Unidad Sistema" HeaderStyle-Width="5%">
                                 <ItemTemplate>
                                     <asp:TextBox ID="TxtUMSysRF" Text='<%# Eval("UndSistema") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="IPC - FIG - ITEM" HeaderStyle-Width="20%">
+                            <asp:TemplateField AccessibleHeaderText ="IPC" HeaderText="IPC - FIG - ITEM" HeaderStyle-Width="20%">
                                 <ItemTemplate>
                                     <asp:TextBox ID="TxtIPCRF" Text='<%# Eval("IPC") %>' runat="server" Width="100%" />
                                 </ItemTemplate>
@@ -1302,7 +1319,7 @@
                         OnRowCommand="GrdSnOnOff_RowCommand" OnRowEditing="GrdSnOnOff_RowEditing" OnRowUpdating="GrdSnOnOff_RowUpdating" OnRowCancelingEdit="GrdSnOnOff_RowCancelingEdit"
                         OnRowDeleting="GrdSnOnOff_RowDeleting" OnRowDataBound="GrdSnOnOff_RowDataBound" OnPageIndexChanging="GrdSnOnOff_PageIndexChanging">
                         <Columns>
-                            <asp:TemplateField HeaderText="Fecha" HeaderStyle-Width="8%">
+                            <asp:TemplateField AccessibleHeaderText ="Fec" HeaderText="Fecha" HeaderStyle-Width="8%">
                                 <ItemTemplate>
                                     <asp:Label ID="LblFec" Text='<%# Eval("FechaRemocion") %>' runat="server" Width="100%" />
                                 </ItemTemplate>
@@ -1313,7 +1330,7 @@
                                     <asp:TextBox ID="TxtFecPP" runat="server" Width="100%" TextMode="Date" MaxLength="10" />
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Razón del evento" HeaderStyle-Width="14%">
+                            <asp:TemplateField AccessibleHeaderText ="RzRem" HeaderText="Razón del evento" HeaderStyle-Width="14%">
                                 <ItemTemplate>
                                     <asp:Label ID="LblRazonR" Text='<%# Eval("Descripcion") %>' runat="server" />
                                 </ItemTemplate>
@@ -1324,7 +1341,7 @@
                                     <asp:DropDownList ID="DdlRazonRPP" runat="server" Width="100%" Height="28px" />
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Posición" HeaderStyle-Width="8%">
+                            <asp:TemplateField AccessibleHeaderText ="Posc" HeaderText="Posición" HeaderStyle-Width="8%">
                                 <ItemTemplate>
                                     <asp:Label ID="LblPosic" Text='<%# Eval("Posicion") %>' runat="server" />
                                 </ItemTemplate>
@@ -1359,7 +1376,7 @@
                                     <asp:TextBox ID="TxtSNOnPP" runat="server" MaxLength="240" Width="100%" />
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Descripción" HeaderStyle-Width="15%">
+                            <asp:TemplateField AccessibleHeaderText ="Descr" HeaderText="Descripción" HeaderStyle-Width="15%">
                                 <ItemTemplate>
                                     <asp:Label Text='<%# Eval("DesElemento") %>' runat="server" Width="100%" Font-Size="8px" Enabled="false" />
                                 </ItemTemplate>
@@ -1394,7 +1411,7 @@
                                     <asp:TextBox ID="TxtSNOffPP" runat="server" MaxLength="240" Width="100%" />
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Cant" HeaderStyle-Width="5%">
+                            <asp:TemplateField AccessibleHeaderText ="Cant" HeaderText="Cant" HeaderStyle-Width="5%">
                                 <ItemTemplate>
                                     <asp:Label ID="LblCant" Text='<%# Eval("CantDDLV") %>' runat="server" Width="100%" TextMode="Number" />
                                 </ItemTemplate>
@@ -1456,7 +1473,7 @@
                                     <asp:TextBox ID="TxtSNHtaPP" runat="server" MaxLength="240" Width="100%" />
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Descripción" HeaderStyle-Width="30%">
+                            <asp:TemplateField AccessibleHeaderText ="Descr" HeaderText="Descripción" HeaderStyle-Width="30%">
                                 <ItemTemplate>
                                     <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" Font-Size="8px" Enabled="false" />
                                 </ItemTemplate>
@@ -1467,7 +1484,7 @@
                                     <asp:TextBox ID="TxtDescHtaPP" runat="server" MaxLength="240" Width="100%" Enabled="false" />
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Fecha" HeaderStyle-Width="10%">
+                            <asp:TemplateField AccessibleHeaderText ="Fec" HeaderText="Fecha" HeaderStyle-Width="10%">
                                 <ItemTemplate>
                                     <asp:Label ID="LblFecVce" Text='<%# Eval("FechaVence") %>' runat="server" Width="100%" />
                                 </ItemTemplate>
@@ -1514,6 +1531,65 @@
                     <asp:Button ID="BtnInfLibroVuelos" runat="server" CssClass="btn btn-success botones BtnEdicion" OnClick="BtnInfLibroVuelos_Click" Text="Libros de Vuelo" Width="10%" />
                     <asp:Button ID="BtnInfDetLV" runat="server" CssClass="btn btn-success botones BtnEdicion" OnClick="BtnInfDetLV_Click" Text="Trayectos" Width="10%" />
                     <rsweb:ReportViewer ID="RvwInfLV" runat="server" Width="98%" />
+                </asp:View>
+                <asp:View ID="Vw9Tripulac" runat="server">
+                    <h6 class="TextoSuperior">
+                        <asp:Label ID="LblTitTripulac" runat="server" Text="tripulacion" />
+                    </h6>
+                    <br />
+                    <div class="CentrarGridV2" style="--grid-top: <%= TopGrid %>; --grid-width: <%= AnchoGrid %>;">
+                        <asp:GridView ID="GrdTripu" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false" ShowFooter="true"
+                            DataKeyNames="IdDet, CodIdDetLibroVuelo, CodPersona, IdLicenciaxPer, CodCargo"
+                            CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" OnRowDeleting="GrdTripu_RowDeleting" OnRowDataBound="GrdTripu_RowDataBound"
+                            OnRowCommand="GrdTripu_RowCommand">
+                            <Columns>
+                                <asp:TemplateField AccessibleHeaderText ="Trayec" HeaderText="trayecto" HeaderStyle-Width="35%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblTrayP" Text='<%# Eval("Trayecto") %>' runat="server" />
+                                    </ItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:DropDownList ID="DdlTrayPP" runat="server" Width="100%" Height="28px" />
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField AccessibleHeaderText ="Trip" HeaderText="tripulante" HeaderStyle-Width="25%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblTripP" Text='<%# Eval("Tripulante") %>' runat="server" />
+                                    </ItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:DropDownList ID="DdlTripPP" runat="server" Width="100%" Height="28px" OnTextChanged="DdlTripPP_TextChanged" AutoPostBack="true" />
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField AccessibleHeaderText ="Lic" HeaderText="licencia" HeaderStyle-Width="15%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblLicTP" Text='<%# Eval("Licencia") %>' runat="server" />
+                                    </ItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:DropDownList ID="DdlLicTPP" runat="server" Width="100%" Height="28px" />
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField AccessibleHeaderText ="Carg" HeaderText="cargo" HeaderStyle-Width="20%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblCargoP" Text='<%# Eval("Cargo") %>' runat="server" />
+                                    </ItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:DropDownList ID="DdlCargoPP" runat="server" Width="100%" Height="28px" />
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField ItemStyle-CssClass="AutoColunmGV">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="IbtDelete" CssClass="BotonDeleteGrid" ImageUrl="~/images/deleteV3.png" runat="server" CommandName="Delete" ToolTip="Eliminar" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
+                                    </ItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:ImageButton ID="IbtAddNew" CssClass="BotonNewGrid" ImageUrl="~/images/AddNew.png" runat="server" CommandName="AddNew" ToolTip="Nuevo" />
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <FooterStyle CssClass="GridFooterStyle" />
+                            <HeaderStyle CssClass="GridCabecera" />
+                            <RowStyle CssClass="GridRowStyle" />
+                            <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                        </asp:GridView>
+                    </div>
                 </asp:View>
             </asp:MultiView>
         </ContentTemplate>

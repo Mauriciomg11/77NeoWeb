@@ -897,7 +897,7 @@ namespace _77NeoWeb.Forms.Comex
                     if (RdbBusqDoc.Checked == true)
                     { VbDoc = TxtBusqueda.Text.Trim(); }
 
-                    string VbTxtSql = "EXEC PNTLL_Comex 1,@VbSO,@VbGuia,@VbDoc,'','','',0,0,0,5,1,'01-01-01','02-01-01','03-01-01'";
+                    string VbTxtSql = "EXEC PNTLL_Comex 1,@VbSO,@VbGuia,@VbDoc,'','','',0,0,0,@Idm,@ICC,'01-01-01','02-01-01','03-01-01'";
                     sqlConB.Open();
                     using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                     {

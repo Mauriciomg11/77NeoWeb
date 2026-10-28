@@ -630,7 +630,7 @@
                                                 <asp:TextBox ID="TxtPNRFPP" runat="server" MaxLength="80" Width="100%" Enabled="false" Visible="false" />
                                             </FooterTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Descripción" HeaderStyle-Width="25%">
+                                        <asp:TemplateField AccessibleHeaderText ="Descr" HeaderText="Descripción" HeaderStyle-Width="25%">
                                             <ItemTemplate>
                                                 <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" Enabled="false" />
                                             </ItemTemplate>
@@ -641,7 +641,7 @@
                                                 <asp:TextBox ID="TxtDesRFPP" runat="server" MaxLength="240" Width="100%" Enabled="false" />
                                             </FooterTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Cant" HeaderStyle-Width="8%">
+                                        <asp:TemplateField AccessibleHeaderText ="Cant" HeaderText="Cant" HeaderStyle-Width="8%">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblCantRF" Text='<%# Eval("CantidadSolicitada") %>' runat="server" Width="100%" TextMode="Number" step="0.01" />
                                             </ItemTemplate>
@@ -652,7 +652,7 @@
                                                 <asp:TextBox ID="TxtCantRFPP" runat="server" Width="100%" Text="1" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" />
                                             </FooterTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Unidad Medida" HeaderStyle-Width="5%">
+                                        <asp:TemplateField AccessibleHeaderText ="UndM" HeaderText="Unidad Medida" HeaderStyle-Width="5%">
                                             <ItemTemplate>
                                                 <asp:Label Text='<%# Eval("CodUnidadMed") %>' runat="server" Width="100%" Enabled="false" />
                                             </ItemTemplate>
@@ -660,7 +660,7 @@
                                                 <asp:TextBox ID="TxtUMRF" Text='<%# Eval("CodUnidadMed") %>' runat="server" Width="100%" Enabled="false" />
                                             </EditItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Cant. Entreg." HeaderStyle-Width="5%">
+                                        <asp:TemplateField AccessibleHeaderText ="CantE" HeaderText="Cant. Entreg." HeaderStyle-Width="5%">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblCantEntrRF" Text='<%# Eval("CantidadEntregada") %>' runat="server" Width="100%" TextMode="Number" step="0.01" />
                                             </ItemTemplate>
@@ -707,7 +707,7 @@
                                     OnRowCommand="GrdLicen_RowCommand" OnRowEditing="GrdLicen_RowEditing" OnRowUpdating="GrdLicen_RowUpdating" OnRowCancelingEdit="GrdLicen_RowCancelingEdit"
                                     OnRowDeleting="GrdLicen_RowDeleting" OnRowDataBound="GrdLicen_RowDataBound" OnPageIndexChanging="GrdLicen_PageIndexChanging">
                                     <Columns>
-                                        <asp:TemplateField HeaderText="Licencia" HeaderStyle-Width="18%">
+                                        <asp:TemplateField AccessibleHeaderText ="Lic" HeaderText="Licencia" HeaderStyle-Width="18%">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblLicenRF" Text='<%# Eval("CodLicencia") %>' runat="server" />
                                             </ItemTemplate>
@@ -718,7 +718,7 @@
                                                 <asp:DropDownList ID="DdlLicenRFPP" runat="server" Width="100%" Height="28px" AutoPostBack="true" OnTextChanged="DdlLicenRFPP_TextChanged"></asp:DropDownList>
                                             </FooterTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Descripción" HeaderStyle-Width="45%">
+                                        <asp:TemplateField  AccessibleHeaderText ="Descr" HeaderText="Descripción" HeaderStyle-Width="45%">
                                             <ItemTemplate>
                                                 <asp:Label Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" Enabled="false" />
                                             </ItemTemplate>
@@ -729,7 +729,7 @@
                                                 <asp:TextBox ID="TxtDesLiRFPP" runat="server" MaxLength="240" Width="100%" Enabled="false" />
                                             </FooterTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Tiempo Estimado" HeaderStyle-Width="5%">
+                                        <asp:TemplateField AccessibleHeaderText ="TiemEs" HeaderText="Tiempo Estimado" HeaderStyle-Width="5%">
                                             <ItemTemplate>
                                                 <asp:Label ID="LblTieEstRF" Text='<%# Eval("TiempoEstimado") %>' runat="server" Width="100%" TextMode="Number" step="0.01" />
                                             </ItemTemplate>
@@ -791,27 +791,27 @@
                                     <asp:TextBox ID="TxtPNRF" Text='<%# Eval("PN") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Descripción" HeaderStyle-Width="25%">
+                            <asp:TemplateField AccessibleHeaderText ="Descr" HeaderText="Descripción" HeaderStyle-Width="25%">
                                 <ItemTemplate>
                                     <asp:TextBox ID="TxtDesRF" Text='<%# Eval("Descripcion") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Cant" HeaderStyle-Width="8%">
+                            <asp:TemplateField AccessibleHeaderText ="Cant" HeaderText="Cant" HeaderStyle-Width="8%">
                                 <ItemTemplate>
                                     <asp:TextBox ID="TxtCantRF" Text='<%# Eval("Cantidad") %>' runat="server" Width="100%" TextMode="Number" step="0.01" onkeypress="return Decimal(event);" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Unidad Medida" HeaderStyle-Width="5%">
+                            <asp:TemplateField  AccessibleHeaderText ="UndM" HeaderText="Unidad Medida" HeaderStyle-Width="5%">
                                 <ItemTemplate>
                                     <asp:TextBox ID="TxtUMRF" Text='<%# Eval("UndDespacho") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Unidad Sistema" HeaderStyle-Width="5%">
+                            <asp:TemplateField AccessibleHeaderText ="UndS" HeaderText="Unidad Sistema" HeaderStyle-Width="5%">
                                 <ItemTemplate>
                                     <asp:TextBox ID="TxtUMSysRF" Text='<%# Eval("UndSistema") %>' runat="server" Width="100%" Enabled="false" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="IPC - FIG - ITEM" HeaderStyle-Width="20%">
+                            <asp:TemplateField AccessibleHeaderText ="IPC" HeaderText="IPC - FIG - ITEM" HeaderStyle-Width="20%">
                                 <ItemTemplate>
                                     <asp:TextBox ID="TxtIPCRF" Text='<%# Eval("IPC") %>' runat="server" Width="100%" />
                                 </ItemTemplate>

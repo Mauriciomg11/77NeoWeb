@@ -27,7 +27,7 @@ namespace _77NeoWeb.Forms.Almacen
                 Session["C77U"] = "";
                 if (Cnx.GetProduccion().Trim().Equals("N"))
                 {
-                    Session["C77U"] = "00000133"; //00000082|00000133
+                    Session["C77U"] = Cnx.GetUsr(); //00000082|00000133
                     Session["D[BX"] = Cnx.GetBD();//|DbNeoDempV2  |DbNeoAda | DbNeoHCT
                     Session["$VR"] = Cnx.GetSvr();
                     Session["V$U@"] = Cnx.GetUsSvr();

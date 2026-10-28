@@ -372,7 +372,7 @@ namespace _77NeoWeb.Forms.Almacen
                             SqlParameter Prmtrs5 = SC.Parameters.AddWithValue("@NomMaquina", VbPC.Trim() + "-" + Session["C77U"].ToString().Trim());
                             SqlParameter Prmtrs6 = SC.Parameters.AddWithValue("@FecAjuste", Convert.ToDateTime(TxtFech.Text));
                             SqlParameter Prmtrs7 = SC.Parameters.AddWithValue("@CodMvto", DdlMvto.Text.Trim());
-                            SqlParameter Prmtrs8 = SC.Parameters.AddWithValue("@CodAlma", DdlAlmac.SelectedItem.Text.Trim());
+                            SqlParameter Prmtrs8 = SC.Parameters.AddWithValue("@IdAlma", DdlAlmac.Text.Trim());
                             SqlParameter Prmtrs9 = SC.Parameters.AddWithValue("@CCost", DdlCcost.Text.Trim());
                             SqlParameter Prmtrs10 = SC.Parameters.AddWithValue("@Mtv", TxtMotvo.Text.Trim());
                             Prmtrs1.SqlDbType = SqlDbType.Structured;
@@ -380,7 +380,9 @@ namespace _77NeoWeb.Forms.Almacen
                             {
                                 using (DataSet DST = new DataSet())
                                 {
-                                    SDA.SelectCommand = SC; SDA.Fill(DST); ViewState["DST"] = DST;
+                                    SDA.SelectCommand = SC; 
+                                    SDA.Fill(DST); 
+                                    ViewState["DST"] = DST;
                                     PMensj = DST.Tables[1].Rows[0]["Estado"].ToString().Trim();
                                     if (!PMensj.Trim().Equals(""))
                                     {

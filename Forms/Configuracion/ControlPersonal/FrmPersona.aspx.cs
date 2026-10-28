@@ -770,7 +770,7 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
                         sqlCon.Open();
                         using (SqlTransaction Transac = sqlCon.BeginTransaction())
                         {
-                            VBQuery = "EXEC SP_TablasGeneral 1,@CP,@Lc,@Md,@Ep,@US,'','','','INSERT',@Ac,@Nm,0,0,0,@ICC,@FV,'02-01-1','03-01-1'";
+                            VBQuery = "EXEC SP_TablasGeneral 1,@CP,@Lc,@Md,@Ep,@US, @Nm,'','','INSERT',@Ac,0,0,0,0,@ICC,@FV,'02-01-1','03-01-1'";
                             using (SqlCommand SC = new SqlCommand(VBQuery, sqlCon, Transac))
                             {
                                 SC.Parameters.AddWithValue("@CP", TxtCodUsu.Text.Trim());

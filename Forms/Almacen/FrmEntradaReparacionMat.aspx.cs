@@ -183,7 +183,6 @@ namespace _77NeoWeb.Forms.Almacen
                 }
             }
             DSTDdl = (DataSet)ViewState["DSTDdl"];
-            DSTDdl = (DataSet)ViewState["DSTDdl"];
             if (DSTDdl.Tables["Almac"].Rows.Count > 0)
             {
                 DdlAlmacen.DataSource = DSTDdl.Tables["Almac"];

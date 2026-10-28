@@ -50,16 +50,18 @@ namespace _77NeoWeb
             DataRow[] DR = IdiomaAll.Select("CodF='0'");
             if (Cnx.ValidaDataRowVacio(DR))
             { Idioma = DR.CopyToDataTable(); ViewState["TablaIdioma"] = Idioma; }
+        }     
+        protected void Page_PreRender(object sender, EventArgs e)
+        {
+           // Trdctr.Traducir(this, Trdctr.ListaCodF()); // si se activa afecta a todos los formulario llevando un valor 1 a todos los objetos
         }
         protected void IbnRegresar_Click(object sender, ImageClickEventArgs e)
         {
             Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx");
-        }
-        /// <summary>
+        }        
         /// Metodo para traer el menu desde la base de datos
         ///    /// <param name="Us">codigo del usuario</param>
         /// <param name="ICC">Codigo de la empresa</param>
-        /// </summary>
         private void LoadMenu()
         {
             Cnx.SelecBD();

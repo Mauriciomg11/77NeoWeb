@@ -216,7 +216,7 @@ namespace _77NeoWeb.Forms.Almacen
             DSTDdl = (DataSet)ViewState["DSTDdl"];
             if (DSTDdl.Tables["Rsva"].Rows.Count > 0)
             {
-                DdlNumRsva.DataSource = DSTDdl.Tables[2];
+                DdlNumRsva.DataSource = DSTDdl.Tables["Rsva"];
                 if (RdbNumRsva.Checked == true) { DdlNumRsva.DataTextField = "CodNumReserva"; }
                 if (RdbRvaOT.Checked == true) { DdlNumRsva.DataTextField = "CodigoOT"; }
                 if (RdbRvaRte.Checked == true) { DdlNumRsva.DataTextField = "CodigoRTE"; }

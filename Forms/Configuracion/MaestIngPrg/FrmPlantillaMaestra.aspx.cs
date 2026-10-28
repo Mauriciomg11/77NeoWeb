@@ -239,42 +239,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
             GrdPosicion.Columns[0].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdUbca").Select(x => x.Field<string>("Texto")).FirstOrDefault();
             GrdPosicion.Columns[1].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdPscn").Select(x => x.Field<string>("Texto")).FirstOrDefault();
             GrdPn.Columns[0].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdPNPpl").Select(x => x.Field<string>("Texto")).FirstOrDefault();
-            GrdPn.Columns[1].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdDescrip").Select(x => x.Field<string>("Texto")).FirstOrDefault();
-           /* Idioma.Columns.Add("Objeto", typeof(string));
-            Idioma.Columns.Add("Texto", typeof(string));
-            using (SqlConnection sqlCon = new SqlConnection(Cnx.BaseDatosPrmtr()))
-            {
-                string LtxtSql = "EXEC Idioma @I,@F1,@F2,@F3,@F4";
-                SqlCommand SC = new SqlCommand(LtxtSql, sqlCon);
-                SC.Parameters.AddWithValue("@I", Session["77IDM"].ToString().Trim());
-                SC.Parameters.AddWithValue("@F1", "FRMCAPITULONEW");
-                SC.Parameters.AddWithValue("@F2", "");
-                SC.Parameters.AddWithValue("@F3", "");
-                SC.Parameters.AddWithValue("@F4", "");
-                sqlCon.Open();
-                SqlDataReader tbl = SC.ExecuteReader();
-                while (tbl.Read())  //Todos los objetos
-                {
-                    string bO = tbl["Objeto"].ToString().Trim();
-                    string bT = tbl["Texto"].ToString().Trim();
-                    Idioma.Rows.Add(bO, bT);
-                    if (bO.Equals("CaptionPlanMaesra"))
-                    { Page.Title = bT; ViewState["PageTit"] = bT; }
-                    TitForm.Text = bO.Equals("TituloPlanMaestra") ? bT : TitForm.Text;
-                    LblFlota.Text = bO.Equals("LblFlota") ? bT : LblFlota.Text;
-                    IbtExpExcel.ToolTip = bO.Equals("IbtExpExcelTT") ? bT : IbtExpExcel.ToolTip;
-                    GrdDatos.Columns[1].HeaderText = bO.Equals("GrdDescrip") ? bT : GrdDatos.Columns[1].HeaderText;
-                    GrdUltNvl.Columns[0].HeaderText = bO.Equals("GrdUbicTnc") ? bT : GrdUltNvl.Columns[0].HeaderText;
-                    GrdUltNvl.Columns[1].HeaderText = bO.Equals("GrdDescrip") ? bT : GrdUltNvl.Columns[1].HeaderText;
-                    GrdUltNvl.Columns[2].HeaderText = bO.Equals("GrdNumElem") ? bT : GrdUltNvl.Columns[2].HeaderText;
-                    GrdPosicion.Columns[0].HeaderText = bO.Equals("GrdUbca") ? bT : GrdPosicion.Columns[0].HeaderText;
-                    GrdPosicion.Columns[1].HeaderText = bO.Equals("GrdPscn") ? bT : GrdPosicion.Columns[1].HeaderText;
-                    GrdPn.Columns[0].HeaderText = bO.Equals("GrdPNPpl") ? bT : GrdPn.Columns[0].HeaderText;
-                    GrdPn.Columns[1].HeaderText = bO.Equals("GrdDescrip") ? bT : GrdPn.Columns[1].HeaderText;
-                }
-                sqlCon.Close();
-                ViewState["TablaIdioma"] = Idioma;
-            }*/
+            GrdPn.Columns[1].HeaderText = Idioma.AsEnumerable().Where(x => x.Field<string>("Objeto") == "GrdDescrip").Select(x => x.Field<string>("Texto")).FirstOrDefault();           
         }
         protected void BindData()// trae los Los Datos del Nivel 2
         {
