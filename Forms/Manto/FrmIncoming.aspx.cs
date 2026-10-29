@@ -463,7 +463,7 @@ namespace _77NeoWeb.Forms.Manto
                     foreach (DataRow RowIdioma in Result)
                     {
                         IbtAsig.ToolTip = RowIdioma["Texto"].ToString().Trim();
-                        Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
+                        Result = Idioma.Select("Objeto= 'Mens05Icmg'");//¿Desea transferir el elemento a esta ubicación? - Do you want to transfer the element to this location?	
                         foreach (DataRow row in Result)
                         { IbtAsig.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
                     }

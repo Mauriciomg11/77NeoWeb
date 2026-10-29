@@ -455,7 +455,7 @@ namespace _77NeoWeb.Forms.Almacen
                     foreach (DataRow RowIdioma in Result)
                     {
                         IbtAsig.ToolTip = RowIdioma["Texto"].ToString().Trim();
-                        Result = Idioma.Select("Objeto= 'IbtDeleteOnClick'");
+                        Result = Idioma.Select("Objeto= 'Mens06Asg'");
                         foreach (DataRow row in Result)
                         { IbtAsig.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
                     }

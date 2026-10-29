@@ -89,17 +89,7 @@
                     <br />
                     <div class="CentrarContndr DivMarco">
                         <div class="col-sm-6 Interna">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <br />
-                                    <asp:Button ID="BtnInventario" runat="server" CssClass="btn btn-primary heightBtns" OnClick="BtnInventario_Click" OnClientClick="target ='_blank';" Text="inventario" ToolTip="Inventario por grupo." />
-                                </div>
-                                <div class="col-sm-6">
-                                    <br />
-                                    <asp:Button ID="BtnConciliacion" runat="server" CssClass="btn btn-primary heightBtns" OnClick="BtnConciliacion_Click" OnClientClick="target ='_blank';" Text="conciliacion" ToolTip="informe de la conciliacion del inventario con sus respectivas entradas y salidas." />
-                                </div>
-                            </div>
-                            <div class="row">
+                            <div id="Compras/Repa" class="row">
                                 <div class="col-sm-6">
                                     <br />
                                     <asp:Button ID="BtnCompraPend" runat="server" CssClass="btn btn-primary heightBtns" OnClick="BtnCompraPend_Click" OnClientClick="target ='_blank';" Text="compras" ToolTip="estado de las compras." />
@@ -109,16 +99,28 @@
                                     <asp:Button ID="BtnReparaciones" runat="server" CssClass="btn btn-primary heightBtns" OnClick="BtnReparaciones_Click" OnClientClick="target ='_blank';" Text="Reparaciones" ToolTip="Informe de reparaciones en un rango de fecha." />
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6">
+                            <div id="Ent-Sal/Inventario" class="row">
+                                <div id="EYS" class="col-sm-6">
                                     <br />
                                     <asp:Button ID="BtnEYS" runat="server" CssClass="btn btn-primary heightBtns" OnClick="BtnEYS_Click" OnClientClick="target ='_blank';" Text="Entradas y Salidas" ToolTip="Informe de entradas y salidas en un rango de fecha." />
+                                </div>
+                                <div id="Inventario" class="col-sm-6">
+                                    <br />
+                                    <asp:Button ID="BtnInventario" runat="server" CssClass="btn btn-primary heightBtns" OnClick="BtnInventario_Click" OnClientClick="target ='_blank';" Text="inventario" ToolTip="Inventario por grupo." />
+                                </div>
+                            </div>
+                            <div id="Conciliacion/" class="row">
+                                <div id="Conciliacion" class="col-sm-6">
+                                    <br />
+                                    <asp:Button ID="BtnConciliacion" runat="server" CssClass="btn btn-primary heightBtns" OnClick="BtnConciliacion_Click" OnClientClick="target ='_blank';" Text="conciliacion" ToolTip="informe de la conciliacion del inventario con sus respectivas entradas y salidas." />
                                 </div>
                                 <div class="col-sm-6">
                                     <br />
                                     <%--<asp:Button ID="Button2" runat="server" CssClass="btn btn-primary heightBtns" OnClick="" OnClientClick="target ='_blank';" Text="" ToolTip="Informe" />--%>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </asp:View>
@@ -157,7 +159,7 @@
                                             <asp:RadioButton ID="RdbRpPN" runat="server" CssClass="LblEtiquet" Text="&nbsp P/N" GroupName="Repa" />&nbsp&nbsp&nbsp
                                             <asp:RadioButton ID="RdbRpSN" runat="server" CssClass="LblEtiquet" Text="&nbsp S/N" GroupName="Repa" />&nbsp&nbsp&nbsp
                                             <asp:RadioButton ID="RdbRpProv" runat="server" CssClass="LblEtiquet" Text="&nbsp proveedor" GroupName="Repa" />&nbsp&nbsp&nbsp
-                                            <asp:CheckBox ID="CkbRpPend" runat="server" CssClass="LblEtiquet" Text="&nbsp pendientes" Checked="true" Visible="false" />
+                                            <asp:CheckBox ID="CkbRpPend" runat="server" CssClass="LblEtiquet" Text="&nbsp pendientes" Checked="false" Visible="false" />
                                         </td>
                                         <td>
                                             <asp:TextBox ID="TxtRpDocBusq" runat="server" Width="250px" Height="28px" CssClass=" heightCampo" placeholder="Ingrese el dato a consultar" />
@@ -540,7 +542,7 @@
                                 <asp:Label ID="LblFechFEyS" runat="server" CssClass="LblEtiquet" Text="Fecha Final" />
                                 <asp:TextBox ID="TxtFechFEyS" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Date" MaxLength="10" />
                             </div>
-                              <div class="col-sm-4">
+                            <div class="col-sm-4">
                                 <asp:Label ID="LblAlmacenEyS" runat="server" CssClass="LblEtiquet" Text="almacen" />
                                 <asp:DropDownList ID="DdlAlmacenEyS" runat="server" CssClass="heightCampo" Width="100%" />
                             </div>

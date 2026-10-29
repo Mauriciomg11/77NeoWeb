@@ -126,7 +126,7 @@
                             <td>
                                 <asp:Label ID="LblMod" runat="server" Text="Modelo: " CssClass="LblTextoBusq" /></td>
                             <td>
-                                <asp:TextBox ID="TxtMod" runat="server" CssClass="form-control Campos" MaxLength="4" Enabled="false" /></td>
+                                <asp:TextBox ID="TxtMod" runat="server" CssClass="form-control Campos" MaxLength="4" Enabled="false" ToolTip="Para la generación del codigo de la referencia." /></td>
                             <td>
                                 <asp:Label ID="LblDesc" runat="server" Text="Descripción: " CssClass="LblTextoBusq" /></td>
                             <td>

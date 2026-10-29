@@ -324,6 +324,15 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                 Session["ValdrMdl"] = "N";
                 TxtMod.Focus(); return;
             }
+            int I_NumCrcter = TxtMod.Text.Trim().Length;
+            if (I_NumCrcter<3)
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens04Mdl'");
+                foreach (DataRow row in Result)
+                { this.Master.SetObjMensj(row["Texto"].ToString().Trim()); }//Debe ingresar un modelo de 3 caracteres como mínimo.
+                Session["ValdrMdl"] = "N";
+                TxtMod.Focus(); return;
+            }
             VbCod = TxtCod.Text.Trim();
             VbNom = TxtMod.Text.Trim();
             VbDes = TxtDesc.Text.Trim();

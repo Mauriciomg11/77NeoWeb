@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -296,35 +297,35 @@ namespace _77NeoWeb.Forms.InventariosCompras
             string VbCodAnt = "";
 
             VbCodAnt = DdlGrupo.Text.Trim();
-            DdlGrupo.DataSource = DSTDdl.Tables[0];
+            DdlGrupo.DataSource = DSTDdl.Tables["GRUP"];
             DdlGrupo.DataTextField = "Descripcion";
             DdlGrupo.DataValueField = "CodTipoElemento";
             DdlGrupo.DataBind();
             DdlGrupo.Text = VbCodAnt;
 
             VbCodAnt = DdlAta.Text.Trim();
-            DdlAta.DataSource = DSTDdl.Tables[1];
+            DdlAta.DataSource = DSTDdl.Tables["Ata"];
             DdlAta.DataTextField = "Descripcion";
             DdlAta.DataValueField = "CodCapitulo";
             DdlAta.DataBind();
             DdlAta.Text = VbCodAnt;
 
             VbCodAnt = DdlIdent.Text.Trim();
-            DdlIdent.DataSource = DSTDdl.Tables[2];
+            DdlIdent.DataSource = DSTDdl.Tables["Identific"];
             DdlIdent.DataTextField = "Identificador";
             DdlIdent.DataValueField = "Codigo";
             DdlIdent.DataBind();
             DdlIdent.Text = VbCodAnt;
 
             VbCodAnt = DdlTipo.Text.Trim();
-            DdlTipo.DataSource = DSTDdl.Tables[3];
+            DdlTipo.DataSource = DSTDdl.Tables["TIPO"];
             DdlTipo.DataTextField = "Descripcion";
             DdlTipo.DataValueField = "CodTipoCodigo";
             DdlTipo.DataBind();
             DdlTipo.Text = VbCodAnt;
 
             VbCodAnt = DdlMod.Text.Trim();
-            DdlMod.DataSource = DSTDdl.Tables[4];
+            DdlMod.DataSource = DSTDdl.Tables["Modelo"];
             DdlMod.DataTextField = "Descripcion";
             DdlMod.DataValueField = "CodModelo";
             DdlMod.DataBind();
@@ -450,9 +451,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
         }
         protected void GenerarCodigo(string Grup, string Model, string ata)
         {
-            string VbCodModelo = Model;
+            DSTDdl = (DataSet)ViewState["DSTDdl"];
+              
             string VblGrupo = Grup.Trim();
             string VbCapit = ata.Trim();
+
+            string VbCodModelo = DSTDdl.Tables["Modelo"].AsEnumerable().Where(x => x.Field<string>("CodModelo") == Model).Select(x => x.Field<string>("NomModelo")).FirstOrDefault();
+            
             if (VbCapit.Equals(""))
             {
                 VbCapit = "";
@@ -478,7 +483,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
             {
                 VbCodModelo = "STD";
             }
-            if (TxtCod.Text.Length < 8)
+            if (TxtCod.Text.Length <= 8)
             { TxtCod.Text = VblGrupo + VbCodModelo + VbCapit; }
 
         }
@@ -487,7 +492,8 @@ namespace _77NeoWeb.Forms.InventariosCompras
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
-                string LtxtSql = String.Format("SELECT TOP 1 CodReferencia FROM TblReferencia WHERE SUBSTRing(RTRIM(CodReferencia),1,7)='{0}' AND IdConfigCia = @ICC ORDER BY IdReferencia desc ", Ref);
+                string S_NucCrter=TxtCod.Text.Trim().Length.ToString();
+                string LtxtSql = String.Format("SELECT TOP 1 CodReferencia FROM TblReferencia WHERE SUBSTRing(RTRIM(CodReferencia),1,{0})='{1}' AND IdConfigCia = @ICC ORDER BY IdReferencia desc ", S_NucCrter,Ref);
                 SqlCommand Comando = new SqlCommand(LtxtSql, sqlCon);
                 Comando.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                 sqlCon.Open();
@@ -762,7 +768,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
         }
         protected void DdlMod_TextChanged(object sender, EventArgs e)
         {           
-            GenerarCodigo(DdlGrupo.SelectedValue, DdlMod.SelectedItem.Text.Trim(), DdlAta.SelectedValue);
+            GenerarCodigo(DdlGrupo.SelectedValue, DdlMod.Text.Trim(), DdlAta.SelectedValue);
             BindDataAll("", "");
         }
         protected void BtnIngresar_Click(object sender, EventArgs e)

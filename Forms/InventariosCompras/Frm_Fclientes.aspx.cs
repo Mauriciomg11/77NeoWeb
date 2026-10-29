@@ -601,6 +601,13 @@ namespace _77NeoWeb.Forms.InventariosCompras
                 { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe ingresar el tipo proveedor/ cliente.
                 ViewState["Validar"] = "N"; return;
             }
+            if (DdllMoned.Text.Trim().Equals(""))
+            {
+                DataRow[] Result = Idioma.Select("Objeto= 'Mens18Tercro'");// Debe ingresar una moneda.
+                foreach (DataRow row in Result)
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); } 
+                ViewState["Validar"] = "N"; return;
+            }            
             if (DdlPais.Text.Trim().Equals(""))
             {
                 DataRow[] Result = Idioma.Select("Objeto= 'Mens12Tercro'");

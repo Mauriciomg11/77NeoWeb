@@ -74,12 +74,12 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
 
                                 LstCapitulo.Items.Clear();
 
-                                foreach (DataRow DR in DST.Tables[0].Rows)
+                                foreach (DataRow DR in DST.Tables["ATA"].Rows)
                                 {
                                     LstCapitulo.Items.Add(DR[0].ToString().Trim());
                                 }
 
-                                DdlFlota.DataSource = DST.Tables[1];
+                                DdlFlota.DataSource = DST.Tables["FLOTA"];
                                 DdlFlota.DataTextField = "Descripcion";
                                 DdlFlota.DataValueField = "CodModelo";
                                 DdlFlota.DataBind();

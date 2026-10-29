@@ -145,7 +145,7 @@ namespace _77NeoWeb.Prg.PrgLogistica
                             sqlCmd.ExecuteNonQuery();
                             transaction.Commit();
                         }
-                        catch (Exception)
+                        catch (Exception Ex)
                         {
                             transaction.Rollback();
                         }
