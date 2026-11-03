@@ -164,8 +164,8 @@ namespace _77NeoWeb.prg
             }
             else
             {//Configuracion web en diseño
-                 // return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, @"77NEO01", "DbConfigWeb", "sa", "admindemp");
-               return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
+             // return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, @"77NEO01", "DbConfigWeb", "sa", "admindemp");
+                return this.VblConexion = string.Format(ConfigurationManager.ConnectionStrings["PConexDBPpalPrmtr"].ConnectionString, "23.102.100.143", "DbConfigWeb", "sa", "Medellin2021**");
             }
         }
         public string GetConex() { return this.VblConexion; }
@@ -385,33 +385,31 @@ namespace _77NeoWeb.prg
                 return false;
             }
         }
-        //******************* CONEXION TEMPORAL ********
-        public string GetUsr() { return "00000082"; }//00000082 Cirrus| 00000154 OPE | 00000158 Marc Bolt | 00000129 | 00000110
-        public int GetIdCia() { return 24; }// 1 TwoGoWo |21 Demp |2 HCT PRUEBA| 12 ADA | 20 HCT | 3 Alca
-        public string GetMonedLcl() { return "COP"; }//  "COP|USD"
-        public int GetFormatFecha() { return 103; }// 103 formato europeo dd/MM/yyyy | 101 formato EEUU MM/dd/yyyyy
-        public string GetNit() { return "242424242-7"; } // 901338233-1 TwoGoWo-cirrus |811035879-1 Demp |P93000086218 - ALCA || 242424242-7  Opera  || 2525252525-5 OMA
-        public string GetBD() { return "DbNeoDempV2"; }// DbNeoDemp2016||DbNeoDempV2 |DbNeoAda | DbNeoHCT ||| BDNeoW  ||
-        public string GetSvr() { return @"23.102.100.143"; }// 77NEO01|| 23.102.100.143 ||
-        public string GetUsSvr() { return "sa"; }//  "sa"
-        public string GetPas() { return "Medellin2021**"; }// admindemp|| Medellin2021**
+        //************************************** CONEXION Produccion **************************************
+        public string GetUsr() { return ""; }
+        public int GetIdCia() { return 0; }
+        public string GetMonedLcl() { return ""; }
+        public int GetFormatFecha() { return 0; }
+        public string GetNit() { return ""; }
+        public string GetBD() { return ""; }
+        public string GetSvr() { return @""; }
+        public string GetUsSvr() { return ""; }
+        public string GetPas() { return ""; }
         public string GetIdm()
         {
             DataSet DSIdm = new DataSet();
-            string LtxtSql = string.Format("EXEC SP_ConfiguracionV2_ 21,'','','','','',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", GetIdCia());
+            string LtxtSql = string.Format("", GetIdCia());
             DSIdm = DSET(LtxtSql);
             DSIdm.Tables[0].TableName = "Idioma";
-            // Guarda la estructura y datos de la tabla idioma general
-            //string boor = System.Web.HttpContext.Current.Session["TblIdmGrl"].ToString().Trim();
-            if (System.Web.HttpContext.Current.Session["TblIdmGrl"]==null || System.Web.HttpContext.Current.Session["TblIdmGrl"].ToString().Trim().Equals("") )
+            if (System.Web.HttpContext.Current.Session["TblIdmGrl"] == null || System.Web.HttpContext.Current.Session["TblIdmGrl"].ToString().Trim().Equals(""))
             {
                 DataTable IdiomaAll = new DataTable();
                 LtxtSql = string.Format("EXEC IdiomaALL {0}", DSIdm.Tables["Idioma"].Rows[0]["Idioma"].ToString().Trim());
                 IdiomaAll = DTIdioma(LtxtSql);
                 System.Web.HttpContext.Current.Session["TblIdmGrl"] = IdiomaAll;
-            }           
-            //Envia el idioma
-            return DSIdm.Tables["Idioma"].Rows[0]["Idioma"].ToString().Trim();            
-        }//  4 español | 5 ingles/**/
+            }
+            return DSIdm.Tables["Idioma"].Rows[0]["Idioma"].ToString().Trim();
+        }
     }
+}
 }

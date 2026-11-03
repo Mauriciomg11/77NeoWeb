@@ -230,6 +230,8 @@
                                                 <asp:Button ID="BtnSN" runat="server" CssClass="btn btn-outline-primary" OnClick="BtnSN_Click" Font-Size="14px" Font-Bold="true" Text="S/N" /></td>
                                             <td width="15%">
                                                 <asp:CheckBox ID="CkbVisuStat" runat="server" CssClass="LblEtiquet" Text="Visualizar en Status" Enabled="false" /></td>
+                                             <td>
+                                                <asp:Button ID="BtnExprt" runat="server" CssClass="btn btn-outline-primary" OnClick="BtnExprt_Click" Font-Size="14px" Font-Bold="true" Text="Exportar" ToolTip="Exportar todos los servicios registrados en el sistema." /></td>
                                         </tr>
                                     </table>
                                 </ContentTemplate>
@@ -239,6 +241,7 @@
                                     <asp:PostBackTrigger ControlID="IbtPrint" />
                                     <asp:PostBackTrigger ControlID="IbtRecurso" />
                                     <asp:PostBackTrigger ControlID="IbtGenerOT" />
+                                    <asp:PostBackTrigger ControlID="BtnExprt" />
                                 </Triggers>
                             </asp:UpdatePanel>
                         </td>

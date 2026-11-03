@@ -665,7 +665,7 @@ namespace _77NeoWeb.Forms.Ingenieria
 
                 VbCodAnt = DdlModel.Text.Trim();
                 DdlModel.DataSource = DSTDet.Tables[2];
-                DdlModel.DataTextField = "NomModelo";
+                DdlModel.DataTextField = "Descripcion";
                 DdlModel.DataValueField = "CodModelo";
                 DdlModel.DataBind();
                 DdlModel.Text = VbCodAnt;
@@ -4348,7 +4348,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                             {
                                 sda.Fill(ds);
 
-                                ds.Tables[0].TableName = "XOM";
+                                ds.Tables[0].TableName = Session["NomExprt"].ToString();
                                 using (XLWorkbook wb = new XLWorkbook())
                                 {
                                     foreach (DataTable dt in ds.Tables)
@@ -4660,6 +4660,59 @@ namespace _77NeoWeb.Forms.Ingenieria
                     foreach (DataRow row in Result)
                     { imgD.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
                 }
+            }
+        }
+         // **************** Configurar contador inicial HK  ***********************
+        protected void BtnExprt_Click(object sender, EventArgs e)
+        {
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+            Idioma = (DataTable)ViewState["TablaIdioma"];
+            try
+            {
+                string VbNomArchivo = "Servicios_Mantenimiento";
+                CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
+                CursorIdioma.Alimentar("CurExportarSvcManto", Session["77IDM"].ToString().Trim());
+
+                string query = "EXEC SP_PANTALLA_Servicio_Manto 22,'','','','CurExportarSvcManto',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";     
+                Cnx.SelecBD();
+                using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
+                {
+                    using (SqlCommand SC = new SqlCommand(query, con))
+                    {
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            SC.Connection = con;
+                            sda.SelectCommand = SC;
+                            using (DataSet ds = new DataSet())
+                            {
+                                sda.Fill(ds);
+                                ds.Tables[0].TableName = Session["NomExprt"].ToString();
+                                using (XLWorkbook wb = new XLWorkbook())
+                                {
+                                    foreach (DataTable dt in ds.Tables) { wb.Worksheets.Add(dt); }
+                                    Response.Clear();
+                                    Response.Buffer = true;
+                                    Response.ContentType = "application/ms-excel";
+                                    Response.AddHeader("content-disposition", string.Format("attachment;filename={0}.xlsx", VbNomArchivo));
+                                    Response.Charset = "";
+                                    using (MemoryStream MyMemoryStream = new MemoryStream())
+                                    {
+                                        wb.SaveAs(MyMemoryStream);
+                                        MyMemoryStream.WriteTo(Response.OutputStream);
+                                        Response.Flush();
+                                        Response.End();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                string VbcatUs = Session["C77U"].ToString(), VbcatNArc = ViewState["PFileName"].ToString(), VbcatVer = Session["77Version"].ToString(), VbcatAct = Session["77Act"].ToString();
+                Cnx.UpdateErrorV2(VbcatUs, VbcatNArc, "Exportar ServiciosManto", Ex.StackTrace.Substring(Ex.StackTrace.Length - 300, 300), Ex.Message, VbcatVer, VbcatAct);
             }
         }
     }

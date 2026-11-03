@@ -30,6 +30,7 @@ namespace _77NeoWeb
         protected void Session_Start(object sender, EventArgs e)
         {
             /*
+            10.02.05.39 | 01/11/2026 | Se crea la opcion de exportar todos los servicios en Servicio Mantenimiento| Se organiza el exportar para que el nombre de la pestaña no se XOM se crea Variable Session["NomExprt"] Global.
             10.02.05.38 | 29/10/2026 | Asignaciones y Incoming se cambia le mensaje de confirmacion al realizar el traslado.
             10.02.05.37 | 28/10/2026 | FrmLibroVueloAC Se agrega la tripulacion y cliente
             10.02.05.36 | 05/10/2026 | FrmWorkSheet se corrige el panel de los informes que no se veía el boton cerrar.
@@ -51,7 +52,7 @@ namespace _77NeoWeb
             10.02.05.21 | 04/02/2025 | corrección formularios Incoming y Movimientos Almacen, no se visualizaba el detalle
             10.02.05.21 | 28/01/2025 | implementacion Menu
              */
-            Session["77Version"] = "10.02.05.38";
+            Session["77Version"] = "10.02.05.39";
             Session["77Act"] = "1";
             Session["$VR"] = "";
             Session["Nit77Cia"] = ""; // Nita cia 811035879-1
@@ -84,6 +85,7 @@ namespace _77NeoWeb
             Session["FormatFecha"] = "103"; // 103 formato europeo dd/MM/yyyy | 101 formato EEUU M/dd/yyyyy
             Session["AlrtNewRva"] = "N";// prueba para llamar un metodo desde una clase para las alertas
             Session["TblIdmGrl"] = "";//Guarda la estructura y datos de la tabla idioma general
+            Session["NomExprt"] = "77NEO";//Nombre que toma la pestaña del exportar
         }
         protected void Application_BeginRequest(object sender, EventArgs e)
         {

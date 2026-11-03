@@ -235,7 +235,7 @@ namespace _77NeoWeb.Forms.InventariosCompras
                             SDA.SelectCommand = SC;
                             SDA.Fill(TbExportar);
 
-                            TbExportar.TableName = "XOM";
+                            TbExportar.TableName = Session["NomExprt"].ToString();
                             using (XLWorkbook wb = new XLWorkbook())
                             {
                                 wb.Worksheets.Add(TbExportar);

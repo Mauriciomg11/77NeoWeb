@@ -207,20 +207,20 @@
                             <asp:TableCell Width="80%" VerticalAlign="Top">
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="TxtTitServicios" runat="server" Text="Elementos Disponibles" /></h6>
-                                <div class="DivGrid DivContendorGrid">
-                                    <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" DataKeyNames="CodElemento"
-                                        CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="11"
-                                        OnSelectedIndexChanged="GrdBusq_SelectedIndexChanged" OnPageIndexChanging="GrdBusq_PageIndexChanging" OnRowDataBound="GrdBusq_RowDataBound">
-                                        <FooterStyle CssClass="GridFooterStyle" />
-                                        <HeaderStyle CssClass="GridCabecera" />
-                                        <RowStyle CssClass="GridRowStyle" />
-                                        <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                        <Columns>
-                                            <asp:CommandField HeaderText="Select" SelectText="Install" ShowSelectButton="True" HeaderStyle-Width="33px" />
-                                        </Columns>
-                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
-                                    </asp:GridView>
-                                </div>
+                                <%--<div class="DivGrid DivContendorGrid">--%>
+                                <asp:GridView ID="GrdBusq" runat="server" EmptyDataText="No existen registros ..!" DataKeyNames="CodElemento"
+                                    CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="11"
+                                    OnSelectedIndexChanged="GrdBusq_SelectedIndexChanged" OnPageIndexChanging="GrdBusq_PageIndexChanging" OnRowDataBound="GrdBusq_RowDataBound">
+                                    <FooterStyle CssClass="GridFooterStyle" />
+                                    <HeaderStyle CssClass="GridCabecera" />
+                                    <RowStyle CssClass="GridRowStyle" />
+                                    <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                                    <Columns>
+                                        <asp:CommandField HeaderText="Select" SelectText="Install" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                                    </Columns>
+                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
+                                </asp:GridView>
+                                <%--</div>--%>
                                 <div class="DivContendorGrid">
                                     <asp:GridView ID="GrdSvcInsElem" runat="server" AutoGenerateColumns="False" DataKeyNames="FVAnt,CodIdContadorElem,CodIdContaSrvManto,CodElemento"
                                         EmptyDataText="Sin servicios asignados..!" Visible="false" CssClass="DiseñoGrid table-sm" GridLines="Both"
@@ -506,20 +506,20 @@
                             <asp:TableCell Width="80%" VerticalAlign="Top">
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="TxtTitRemServicios" runat="server" Text="Elementos a Remover" /></h6>
-                                <div class="DivGrid DivContendorGrid">
-                                    <asp:GridView ID="GrdRemBusqElem" runat="server" EmptyDataText="No existen elementos con el dato seleccionado ..!" DataKeyNames="CodElemento,CodUbicacionSuperior"
-                                        CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="11"
-                                        OnSelectedIndexChanged="GrdRemBusqElem_SelectedIndexChanged" OnPageIndexChanging="GrdRemBusqElem_PageIndexChanging" OnRowDataBound="GrdRemBusqElem_RowDataBound">
-                                        <FooterStyle CssClass="GridFooterStyle" />
-                                        <HeaderStyle CssClass="GridCabecera" />
-                                        <RowStyle CssClass="GridRowStyle" />
-                                        <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                        <Columns>
-                                            <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
-                                        </Columns>
-                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
-                                    </asp:GridView>
-                                </div>
+                                <%--  <div class="DivGrid DivContendorGrid">--%>
+                                <asp:GridView ID="GrdRemBusqElem" runat="server" EmptyDataText="No existen elementos con el dato seleccionado ..!" DataKeyNames="CodElemento,CodUbicacionSuperior"
+                                    CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="11"
+                                    OnSelectedIndexChanged="GrdRemBusqElem_SelectedIndexChanged" OnPageIndexChanging="GrdRemBusqElem_PageIndexChanging" OnRowDataBound="GrdRemBusqElem_RowDataBound">
+                                    <FooterStyle CssClass="GridFooterStyle" />
+                                    <HeaderStyle CssClass="GridCabecera" />
+                                    <RowStyle CssClass="GridRowStyle" />
+                                    <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                                    <Columns>
+                                        <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                                    </Columns>
+                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
+                                </asp:GridView>
+                                <%--    </div>--%>
                             </asp:TableCell>
                         </asp:TableRow>
                     </asp:Table>
@@ -662,20 +662,20 @@
                             <asp:TableCell Width="80%" VerticalAlign="Top">
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="TxtTitSvcInsMay" runat="server" Text="Mayores Disponibles" /></h6>
-                                <div class="DivGrid DivContendorGrid">
-                                    <asp:GridView ID="GrdBusqMayDisp" runat="server" EmptyDataText="No existen registros ..!" DataKeyNames="CodElemento,Motor"
-                                        CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="11"
-                                        OnSelectedIndexChanged="GrdBusqMayDisp_SelectedIndexChanged" OnPageIndexChanging="GrdBusqMayDisp_PageIndexChanging" OnRowDataBound="GrdBusqMayDisp_RowDataBound">
-                                        <FooterStyle CssClass="GridFooterStyle" />
-                                        <HeaderStyle CssClass="GridCabecera" />
-                                        <RowStyle CssClass="GridRowStyle" />
-                                        <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                        <Columns>
-                                            <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
-                                        </Columns>
-                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
-                                    </asp:GridView>
-                                </div>
+                                <%-- <div class="DivGrid DivContendorGrid">--%>
+                                <asp:GridView ID="GrdBusqMayDisp" runat="server" EmptyDataText="No existen registros ..!" DataKeyNames="CodElemento,Motor"
+                                    CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="11"
+                                    OnSelectedIndexChanged="GrdBusqMayDisp_SelectedIndexChanged" OnPageIndexChanging="GrdBusqMayDisp_PageIndexChanging" OnRowDataBound="GrdBusqMayDisp_RowDataBound">
+                                    <FooterStyle CssClass="GridFooterStyle" />
+                                    <HeaderStyle CssClass="GridCabecera" />
+                                    <RowStyle CssClass="GridRowStyle" />
+                                    <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                                    <Columns>
+                                        <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                                    </Columns>
+                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
+                                </asp:GridView>
+                                <%--  </div>--%>
                                 <div class="DivContendorGrid">
                                     <asp:GridView ID="GrdSvcInsMay" runat="server" AutoGenerateColumns="False" DataKeyNames="FVAnt,CodIdContadorElem,CodIdContaSrvManto,CodElemento"
                                         EmptyDataText="Sin servicios asignados al mayor..!" Visible="false" CssClass="DiseñoGrid table-sm" GridLines="Both"
@@ -885,20 +885,20 @@
                             <asp:TableCell Width="80%" VerticalAlign="Top">
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="LblTitRemoMayor" runat="server" Text="Mayores a Remover" /></h6>
-                                <div class="DivGrid DivContendorGrid">
-                                    <asp:GridView ID="GrdBusqRemMay" runat="server" EmptyDataText="No existen mayores con el dato seleccionado ..!" DataKeyNames="CodElemento,CodUbicacionSuperior"
-                                        CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="11"
-                                        OnSelectedIndexChanged="GrdBusqRemMay_SelectedIndexChanged" OnPageIndexChanging="GrdBusqRemMay_PageIndexChanging" OnRowDataBound="GrdBusqRemMay_RowDataBound">
-                                        <FooterStyle CssClass="GridFooterStyle" />
-                                        <HeaderStyle CssClass="GridCabecera" />
-                                        <RowStyle CssClass="GridRowStyle" />
-                                        <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
-                                        <Columns>
-                                            <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
-                                        </Columns>
-                                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
-                                    </asp:GridView>
-                                </div>
+                                <%--<div class="DivGrid DivContendorGrid">--%>
+                                <asp:GridView ID="GrdBusqRemMay" runat="server" EmptyDataText="No existen mayores con el dato seleccionado ..!" DataKeyNames="CodElemento,CodUbicacionSuperior"
+                                    CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="11"
+                                    OnSelectedIndexChanged="GrdBusqRemMay_SelectedIndexChanged" OnPageIndexChanging="GrdBusqRemMay_PageIndexChanging" OnRowDataBound="GrdBusqRemMay_RowDataBound">
+                                    <FooterStyle CssClass="GridFooterStyle" />
+                                    <HeaderStyle CssClass="GridCabecera" />
+                                    <RowStyle CssClass="GridRowStyle" />
+                                    <AlternatingRowStyle CssClass="GridFilasIntercaladas" />
+                                    <Columns>
+                                        <asp:CommandField HeaderText="Select" SelectText="Select" ShowSelectButton="True" HeaderStyle-Width="33px" />
+                                    </Columns>
+                                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
+                                </asp:GridView>
+                                <%--   </div>--%>
                             </asp:TableCell>
                         </asp:TableRow>
                     </asp:Table>
@@ -982,7 +982,7 @@
                             <asp:TableCell Width="80%" VerticalAlign="Top">
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="TxtTitServcInsSubC" runat="server" Text="Sub-Componentes Disponibles" /></h6>
-                                <div class="DivGrid DivContendorGrid">
+                               <%-- <div class="DivGrid DivContendorGrid">--%>
                                     <asp:GridView ID="GrdBusqInsSubC" runat="server" EmptyDataText="No existen registros ..!" DataKeyNames="CodElemento"
                                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="11"
                                         OnSelectedIndexChanged="GrdBusqInsSubC_SelectedIndexChanged" OnPageIndexChanging="GrdBusqInsSubC_PageIndexChanging" OnRowDataBound="GrdBusqInsSubC_RowDataBound">
@@ -995,7 +995,7 @@
                                         </Columns>
                                         <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                     </asp:GridView>
-                                </div>
+                           <%--     </div>--%>
                                 <div class="DivContendorGrid">
                                     <asp:GridView ID="GrdSvcInsSubC" runat="server" AutoGenerateColumns="False" DataKeyNames="FVAnt,CodIdContadorElem,CodIdContaSrvManto,CodElemento"
                                         EmptyDataText="Sin servicios asignados..!" Visible="false" CssClass="DiseñoGrid table-sm" GridLines="Both"
@@ -1150,7 +1150,7 @@
                             <asp:TableCell Width="80%" VerticalAlign="Top">
                                 <h6 class="TextoSuperior">
                                     <asp:Label ID="TxtTitSrvcRemSubC" runat="server" Text="Sub-Componente a Remover" /></h6>
-                                <div class="DivGrid DivContendorGrid">
+                               <%-- <div class="DivGrid DivContendorGrid">--%>
                                     <asp:GridView ID="GrdBusqRemSubC" runat="server" EmptyDataText="No existen Sub-Componentes con el dato seleccionado ..!" DataKeyNames="CodElemento,CodUbicacionSuperior,CodAeronave"
                                         CssClass="GridControl DiseñoGrid table table-sm" GridLines="Both" AllowPaging="true" PageSize="11"
                                         OnSelectedIndexChanged="GrdBusqRemSubC_SelectedIndexChanged" OnPageIndexChanging="GrdBusqRemSubC_PageIndexChanging" OnRowDataBound="GrdBusqRemSubC_RowDataBound">
@@ -1163,7 +1163,7 @@
                                         </Columns>
                                         <PagerSettings Mode="NumericFirstLast" PageButtonCount="8" />
                                     </asp:GridView>
-                                </div>
+                               <%-- </div>--%>
                             </asp:TableCell>
                         </asp:TableRow>
                     </asp:Table>

@@ -319,7 +319,7 @@ namespace _77NeoWeb.Forms.Configuracion.MaestIngPrg
                         {
                             sda.Fill(ds);
 
-                            ds.Tables[0].TableName = "XOM";
+                            ds.Tables[0].TableName = Session["NomExprt"].ToString();
                             using (XLWorkbook wb = new XLWorkbook())
                             {
                                 foreach (DataTable dt in ds.Tables)

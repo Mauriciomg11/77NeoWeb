@@ -98,7 +98,6 @@
                     <asp:PostBackTrigger ControlID="BtnPnPlanti" />
                     <asp:PostBackTrigger ControlID="BtnHistCont" />
                     <asp:PostBackTrigger ControlID="BtnProcIngeni" />
-                    <asp:PostBackTrigger ControlID="BtnPnPlanti" />
                     <asp:PostBackTrigger ControlID="BtnProxCump" />
                     <asp:PostBackTrigger ControlID="BtnCostoOT" />
                 </Triggers>

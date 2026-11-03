@@ -56,6 +56,7 @@ namespace _77NeoWeb
             if (ClsP.GetAccesoFrm() == 0) { Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx"); }
             if (ClsP.GetIngresar() == 0)
             {
+                AnchoGrid = "40%";
                 ViewState["VblIngMS"] = 0;
             }
             if (ClsP.GetModificar() == 0)
