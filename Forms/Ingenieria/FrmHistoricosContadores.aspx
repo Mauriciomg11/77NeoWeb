@@ -83,11 +83,11 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <asp:Label ID="LblHisVlrIndiv1" runat="server" CssClass="LblEtiquet" Text="Individual" />
-                                        <asp:TextBox ID="TxtHisVlrIndiv1" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Number" Enabled="false" />
+                                        <asp:TextBox ID="TxtHisVlrIndiv1" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Number" Enabled="false" Font-Size ="X-Small"/>
                                     </div>
                                     <div class="col-sm-2">
                                         <asp:Label ID="LblHisVlrAcumv1" runat="server" CssClass="LblEtiquet" Text="Acumulado" />
-                                        <asp:TextBox ID="TxtHisVlrAcumv1" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Number" Enabled="false" />
+                                        <asp:TextBox ID="TxtHisVlrAcumv1" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Number" Enabled="false" Font-Size ="X-Small" />
                                     </div>
                                 </div>
                                 <div class="row">
@@ -176,11 +176,11 @@
                                 </div>--%>
                                     <div class="col-sm-2">
                                         <asp:Label ID="LblHisVlrIndiv2" runat="server" CssClass="LblEtiquet" Text="Individual" />
-                                        <asp:TextBox ID="TxtHisVlrIndiv2" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Number" Enabled="false" />
+                                        <asp:TextBox ID="TxtHisVlrIndiv2" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Number" Enabled="false" Font-Size ="X-Small"/>
                                     </div>
                                     <div class="col-sm-2">
                                         <asp:Label ID="LblHisVlrAcumv2" runat="server" CssClass="LblEtiquet" Text="Acumulado" />
-                                        <asp:TextBox ID="TxtHisVlrAcumv2" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Number" Enabled="false" />
+                                        <asp:TextBox ID="TxtHisVlrAcumv2" runat="server" CssClass="form-control-sm heightCampo" Width="100%" TextMode="Number" Enabled="false" Font-Size ="X-Small"/>
                                     </div>
                                 </div>
                                 <div class="row">

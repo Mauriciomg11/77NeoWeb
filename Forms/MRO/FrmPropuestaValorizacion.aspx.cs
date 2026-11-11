@@ -415,6 +415,7 @@ namespace _77NeoWeb.Forms.MRO
                 CsTypPropuestaValorizada ClsTypPropuestaValorizada = new CsTypPropuestaValorizada();
                 ClsTypPropuestaValorizada.Alimentar(ObjPropuestaValorizada);
                 string Mensj = ClsTypPropuestaValorizada.GetMensj();
+                string S_Correo = "", S_Asunto = "", S_Cuerpo = "";
                 if (!Mensj.Equals(""))
                 {
                     DataRow[] Result2 = Idioma.Select("Objeto= '" + Mensj.ToString().Trim() + "'");
@@ -422,6 +423,14 @@ namespace _77NeoWeb.Forms.MRO
                     { Mensj = row["Texto"].ToString().Trim(); }
                     ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + Mensj + "');", true);
                     return;
+                }
+                S_Correo = ClsTypPropuestaValorizada.GetCorreo();
+                S_Asunto = ClsTypPropuestaValorizada.GetAsunto();
+                S_Cuerpo = ClsTypPropuestaValorizada.GetCuerpo();
+                if (Mensj.ToString().Trim().Equals(""))// Se envia correo
+                {
+                    string S_From = "Notificación 77NEO <" + "soporteneosystem@gmail.com" + ">";
+                    Cnx.EnviarCorreo(S_From, S_Correo, S_Asunto, S_Cuerpo);
                 }
                 BindDetalle("UPDATE");
                 BIndDPnSinValorizar();

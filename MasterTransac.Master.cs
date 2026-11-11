@@ -51,10 +51,10 @@ namespace _77NeoWeb
             if (Cnx.ValidaDataRowVacio(DR))
             { Idioma = DR.CopyToDataTable(); ViewState["TablaIdioma"] = Idioma; }
         }     
-        protected void Page_PreRender(object sender, EventArgs e)
+       /* protected void Page_PreRender(object sender, EventArgs e)
         {
            // Trdctr.Traducir(this, Trdctr.ListaCodF()); // si se activa afecta a todos los formulario llevando un valor 1 a todos los objetos
-        }
+        }*/
         protected void IbnRegresar_Click(object sender, ImageClickEventArgs e)
         {
             Response.Redirect("~/Forms/Seguridad/FrmInicio.aspx");

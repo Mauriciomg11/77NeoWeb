@@ -408,7 +408,6 @@
     <Content Include="Css\bootstrap.rtl.css.map" />
     <Content Include="Css\bootstrap.rtl.min.css.map" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
-    <None Include="Properties\PublishProfiles\Default Settings1.pubxml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

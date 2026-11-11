@@ -335,8 +335,8 @@
                                                 <asp:Label ID="LblDoc" runat="server" CssClass="LblEtiquet" Text="Documento:" />
                                                 <asp:TextBox ID="TxtDoc" runat="server" CssClass=" form-control Campos" MaxLength="300" Enabled="false" /></td>
                                             <td>
-                                                <asp:Label ID="LblRefOT" runat="server" CssClass="LblEtiquet" Text="Refer. OT:" ToolTip="Referencia Orden de Trabajo" />
-                                                <asp:TextBox ID="TxtRefOT" runat="server" CssClass=" form-control Campos" MaxLength="60" Enabled="false" />
+                                                <%--<asp:Label ID="LblRefOT" runat="server" CssClass="LblEtiquet" Text="Refer. OT:" ToolTip="Referencia Orden de Trabajo" />
+                                                <asp:TextBox ID="TxtRefOT" runat="server" CssClass=" form-control Campos" MaxLength="60" Enabled="false" />--%>
                                             </td>
                                             <td></td>
                                         </tr>

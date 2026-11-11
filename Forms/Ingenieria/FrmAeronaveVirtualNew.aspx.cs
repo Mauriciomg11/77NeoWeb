@@ -3980,7 +3980,8 @@ namespace _77NeoWeb.Forms.Ingenieria
             DdlCrearElemPn.Text = "";
             TxtCrearElemSn.Text = "";
             TxtCrearElemFechRec.Text = "";
-            TxtCrearElemFechFabr.Text = "";
+            DateTime VbFecID = Convert.ToDateTime("01/01/1900");
+            TxtCrearElemFechFabr.Text = String.Format("{0:yyyy-MM-dd}", VbFecID);
             ViewState["CodElemento"] = "";
             ViewState["CodAeronave"] = 0;
             ViewState["CodModelo"] = "";
@@ -4001,6 +4002,8 @@ namespace _77NeoWeb.Forms.Ingenieria
             BtnCliente.CssClass = "btn btn-outline-primary";
             ViewState["Propiedad"] = 2;
             LblTitCrearEDatosE.Text = "Datos del elemento";
+            DateTime VbFecID = Convert.ToDateTime("01/01/1900");
+            TxtCrearElemFechFabr.Text = String.Format("{0:yyyy-MM-dd}", VbFecID);
             Page.Title = ViewState["PageTit"].ToString();
         }
         protected void BtnPropiedad_Click(object sender, EventArgs e)

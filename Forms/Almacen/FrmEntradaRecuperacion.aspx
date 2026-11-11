@@ -146,8 +146,8 @@
                                 <asp:DropDownList ID="DdlAeronave" runat="server" CssClass="heightCampo" Width="100%" OnTextChanged="DdlAeronave_TextChanged" AutoPostBack="true" />
                             </div>
                             <div id="Observaciones" class="col-sm-6">
-                                <asp:Label ID="LblObserv" runat="server" CssClass="LblEtiquet" Text="observaciones" />
-                                <asp:TextBox ID="TxtObserv" runat="server" CssClass="form-control-sm" Width="100%" MaxLength="350" TextMode="MultiLine" Text="" />
+                                <asp:Label ID="LblObserv" runat="server" CssClass="LblEtiquet" Text="observaciones" Visible ="false" />
+                                <asp:TextBox ID="TxtObserv" runat="server" CssClass="form-control-sm" Width="100%" MaxLength="350" TextMode="MultiLine" Text="" Visible ="false" />
                             </div>
                         </div>
                         <div id="PN-SN" class="row">
@@ -166,7 +166,7 @@
                                 <div class="ScrollGrid pre-scrollable">
                                     <asp:GridView ID="GrdDtlleRecup" runat="server" EmptyDataText="No existen registros ..!" AutoGenerateColumns="false"
                                         DataKeyNames="CodElemHAV, CodReferencia, CCosto, CodUbicaBodega, CodTercero,PorcentajeRecup,CodTipoElemento, IdentificadorElemR,CodUndMedR,
-                                                        Bloquear,CodIdUbicacion, CodMoneda"
+                                                        Bloquear,CodIdUbicacion, CodMoneda,FechaShelfLife"
                                         CssClass="GridControl DiseñoGrid table-sm" GridLines="Both" OnRowCommand="GrdDtlleRecup_RowCommand" OnRowDataBound="GrdDtlleRecup_RowDataBound">
                                         <Columns>
                                             <asp:TemplateField HeaderText="Select">

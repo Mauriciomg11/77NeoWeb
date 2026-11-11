@@ -99,8 +99,8 @@ namespace _77NeoWeb.Forms.Almacen
                 SC.Parameters.AddWithValue("@F4", "");
                 sqlCon.Open();
                 SqlDataReader tbl = SC.ExecuteReader();
-                Page.Title = "Consulta movimientos almacén";
-                TitForm.Text = "Consulta Movimientos Almacén";
+                Page.Title = "";
+                TitForm.Text = "";
                 while (tbl.Read())  //Todos los objetos
                 {
                     string bO = tbl["Objeto"].ToString().Trim();
@@ -358,7 +358,9 @@ namespace _77NeoWeb.Forms.Almacen
         { BindBusPn(DdlPN.Text.Trim()); }
         //**************** Modal ***********************************
         protected void BtnConsultar_Click(object sender, EventArgs e)
-        { ScriptManager.RegisterStartupScript((sender as Control), this.GetType(), "Popup", "ShowPopup();", true); }
+        { ScriptManager.RegisterStartupScript((sender as Control), this.GetType(), "Popup", "ShowPopup();", true);
+            Page.Title = ViewState["PageTit"].ToString().Trim();
+        }
         protected void BindMdlBusq()
         {
             string VbPN = "", VbSn = "", VbLot = "", VbDesc = "";
@@ -494,7 +496,7 @@ namespace _77NeoWeb.Forms.Almacen
             }
         }
         protected void BtnEjecutar_Click(object sender, EventArgs e)
-        { BindEjecutar(); }
+        { BindEjecutar(); Page.Title = ViewState["PageTit"].ToString().Trim(); }
         protected void GrdStokAlma_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)  // registros
@@ -613,6 +615,7 @@ namespace _77NeoWeb.Forms.Almacen
                         Response.End();
                     }
                 }
+                Page.Title = ViewState["PageTit"].ToString();
             }
             catch (Exception Ex)
             {

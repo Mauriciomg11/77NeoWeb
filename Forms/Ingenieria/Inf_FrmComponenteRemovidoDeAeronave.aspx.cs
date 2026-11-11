@@ -330,7 +330,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     string LtxtSql = "EXEC SP_PANTALLA_Formulario_Historico 8, @S,'','','',0,0,0,@ICC,@F,'01-01-1900','01-01-1900'";
                     SqlCommand SC = new SqlCommand(LtxtSql, SCnx);
                     SC.Parameters.AddWithValue("@S", DdlSN.Text.Trim());
-                    SC.Parameters.AddWithValue("@F", VbFecI);
+                    SC.Parameters.AddWithValue("@F", VbFecID);
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     SqlDataReader SDR = SC.ExecuteReader();
                     if (SDR.Read()) { VbFecF = SDR["FechaMontaje"].ToString(); }

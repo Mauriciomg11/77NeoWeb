@@ -46,6 +46,7 @@ namespace _77NeoWeb.Forms.MRO
         }
         protected void ModSeguridad()
         {
+            /*
             ViewState["VblIngMS"] = 1;
             ViewState["VblModMS"] = 1;
             ViewState["VblImpMS"] = 1;
@@ -67,7 +68,7 @@ namespace _77NeoWeb.Forms.MRO
             if (ClsP.GetCE2() == 0) { ViewState["VblCE2"] = 0; }//
             if (ClsP.GetCE3() == 0) { ViewState["VblCE3"] = 0; }//
             if (ClsP.GetCE4() == 0) { ViewState["VblCE4"] = 0; }//                                      
-
+*/
             IdiomaControles();
         }
         protected void IdiomaControles()
@@ -118,7 +119,7 @@ namespace _77NeoWeb.Forms.MRO
         }
         protected void BindConsultar()
         {
-            TxtBusqueda.Text = TxtBusqueda.Text.Trim().Equals("") ? "1" : TxtBusqueda.Text.Trim();
+            //TxtBusqueda.Text = TxtBusqueda.Text.Trim().Equals("") ? "" : TxtBusqueda.Text.Trim();
             DataTable DtB = new DataTable();
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))

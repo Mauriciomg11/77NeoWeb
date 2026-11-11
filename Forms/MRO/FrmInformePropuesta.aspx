@@ -69,6 +69,7 @@
                 </asp:View>
                 <asp:View ID="Vw1Busq" runat="server">
                      <br />
+                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitSegumient" runat="server" Text="seguimiento" />
                     </h6>

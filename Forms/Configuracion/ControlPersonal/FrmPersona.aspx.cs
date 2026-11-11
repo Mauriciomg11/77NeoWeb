@@ -260,7 +260,8 @@ namespace _77NeoWeb.Forms.Configuracion.ControlPersonal
             TxtNombr.Text = "";
             TxtApell.Text = "";
             CkbActivo.Checked = false;
-            TxtFechNac.Text = "";
+            DateTime VbFecID = Convert.ToDateTime("01/01/1900");
+            TxtFechNac.Text = string.Format("{0:yyyy-MM-dd}", VbFecID);
             TxtTelef.Text = "";
             TxtDirec.Text = "";
             TxtCorreoP.Text = "";

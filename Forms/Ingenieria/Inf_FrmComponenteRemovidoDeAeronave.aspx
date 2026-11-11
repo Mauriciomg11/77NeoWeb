@@ -211,7 +211,7 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <asp:Label ID="LblFechMyr" runat="server" CssClass="LblEtiquet" Text="Mayor a" />
-                                <asp:TextBox ID="TxtFechMyr" runat="server" CssClass="heightCampo" Width="100%" TextMode="Date" MaxLength="10" Enabled="false" />
+                                <asp:TextBox ID="TxtFechMyr" runat="server" CssClass="heightCampo" Width="100%" TextMode="Date" MaxLength="10" Enabled="true" />
                             </div>
                             <div class="col-sm-3">
                                 <asp:Label ID="LblFechHast" runat="server" CssClass="LblEtiquet" Text="Hasta" />

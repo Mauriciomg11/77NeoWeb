@@ -30,6 +30,8 @@ namespace _77NeoWeb
         protected void Session_Start(object sender, EventArgs e)
         {
             /*
+            10.02.05.41 | 11/11/2026 | FrmPropuesta alerta por correo ASP.NET a logistica | Valorizacion exportar plantilla y correo
+            10.02.05.40 | 04/11/2026 | FrmAeronaveVirtualNew llevar fecha de fabricacion 01/01/1900 por defecto en la creacion del elemnto| FrmMenu busqueda se corrige daña formato gridView | FrmEntradaRecuperacion se envia fechaShelfLife.
             10.02.05.39 | 01/11/2026 | Se crea la opcion de exportar todos los servicios en Servicio Mantenimiento| Se organiza el exportar para que el nombre de la pestaña no se XOM se crea Variable Session["NomExprt"] Global.
             10.02.05.38 | 29/10/2026 | Asignaciones y Incoming se cambia le mensaje de confirmacion al realizar el traslado.
             10.02.05.37 | 28/10/2026 | FrmLibroVueloAC Se agrega la tripulacion y cliente
@@ -52,7 +54,7 @@ namespace _77NeoWeb
             10.02.05.21 | 04/02/2025 | corrección formularios Incoming y Movimientos Almacen, no se visualizaba el detalle
             10.02.05.21 | 28/01/2025 | implementacion Menu
              */
-            Session["77Version"] = "10.02.05.39";
+            Session["77Version"] = "10.02.05.41";
             Session["77Act"] = "1";
             Session["$VR"] = "";
             Session["Nit77Cia"] = ""; // Nita cia 811035879-1

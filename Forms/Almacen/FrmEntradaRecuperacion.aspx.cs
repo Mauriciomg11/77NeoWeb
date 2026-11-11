@@ -289,7 +289,10 @@ namespace _77NeoWeb.Forms.Almacen
                     string S_Pn = ((Label)row.FindControl("LblPn")).Text.ToString().Trim();
                     string S_Sn = ((Label)row.FindControl("LblSn")).Text.ToString().Trim();
                     string S_Desc = ((Label)row.FindControl("LblDesc")).Text.ToString().Trim();
-                    DateTime VbDFech = Convert.ToDateTime(((Label)row.FindControl("LblfecRem")).Text.ToString().Trim());
+                    //DateTime VbDFech = Convert.ToDateTime(((Label)row.FindControl("LblfecRem")).Text.ToString().Trim());
+                    string S_FecSL = GrdDtlleRecup.DataKeys[gvr.RowIndex].Values["FechaShelfLife"].ToString().Trim();
+                    S_FecSL = string.IsNullOrWhiteSpace(S_FecSL) ? "01/01/1900" : S_FecSL;
+                    DateTime VbDFech = Convert.ToDateTime(S_FecSL);
                     string S_TipElem = GrdDtlleRecup.DataKeys[gvr.RowIndex].Values["CodTipoElemento"].ToString().Trim();
                     string S_Ident = GrdDtlleRecup.DataKeys[gvr.RowIndex].Values["IdentificadorElemR"].ToString().Trim();
                     string S_CodTerc = GrdDtlleRecup.DataKeys[gvr.RowIndex].Values["CodTercero"].ToString().Trim();
@@ -399,7 +402,7 @@ namespace _77NeoWeb.Forms.Almacen
                             CodBodega = Row["CodBodOrig"].ToString().Trim(),
                             CodShippingOrder = "",
                             Posicion = Row["Pos"].ToString().Trim(),
-                            CodAeronave = Convert.ToInt32(DdlAlmacen.Text.Trim()),
+                            CodAeronave = Convert.ToInt32(DdlAeronave.Text.Trim()),
                             Matricula = DdlAeronave.SelectedItem.Text.Trim(),
                             DiaTasa = Row["Dia"].ToString().Trim(),
                             MesTasa = Row["Mes"].ToString().Trim(),

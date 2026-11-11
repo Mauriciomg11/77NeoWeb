@@ -22,8 +22,8 @@ namespace _77NeoWeb.Forms.Ingenieria
     public partial class FrmLibroVueloAC : System.Web.UI.Page
     {
         ClsConexion Cnx = new ClsConexion();
-        DataTable Idioma = new DataTable();
-        DataTable IdiomaAll = new DataTable();
+        //DataTable Idioma = new DataTable();
+        //DataTable IdiomaAll = new DataTable();
         DataSet DSTGrl = new DataSet();
         DataSet DSTGrDtsRpt = new DataSet();
         DataSet DSTRTE = new DataSet();
@@ -223,9 +223,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             TitForm.Text = Trdctr.Mensaje("TituloLV").Trim();
             BtnDatos.Text = Trdctr.Mensaje("LblDatosGrales").Trim();
             IbtAdd.ToolTip = Trdctr.Mensaje("BotonIng").Trim(); BtnIngresar.Text = IbtAdd.ToolTip;//Ingresar
-
             IbtUpdate.ToolTip = Trdctr.Mensaje("BotonMod").Trim(); BtnModificar.Text = IbtUpdate.ToolTip;//Ingresar
-
             TxtBusqueda.Attributes.Add("placeholder", Trdctr.Mensaje("placeholderDC").Trim());
             TxtConsulPnRecurRte.Attributes.Add("placeholder", Trdctr.Mensaje("placeholderDC").Trim());
             IbtExpConsulRte.ToolTip = Trdctr.Mensaje("IbtExpConsulRte").Trim();
@@ -789,7 +787,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void CargarLV_Click(object sender, EventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+           // Idioma = (DataTable)ViewState["TablaIdioma"];
             //DataRow[] Result;
             if (FileUpCLV != null && !TxtNumLv.Text.Equals(""))
             {
@@ -895,7 +893,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 ViewState["Validar"] = "S";
                 TxtHrAPU.Text = TxtHrAPU.Text.Trim().Equals("") ? "00:00" : TxtHrAPU.Text;
                 if (TxtFecha.Text.Trim().Equals(""))
@@ -981,7 +979,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void Traerdatos(string Prmtr, string Accion, string S_All)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             try
             {
                 if (Accion.Equals("UPD"))
@@ -1205,7 +1203,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         { Traerdatos(DdlBusq.SelectedValue, "UPD", "All"); PerfilesGrid(); }
         protected void IbtAdd_Click(object sender, ImageClickEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             if (ViewState["BtnAccion"].ToString() == "")
             {
                 ViewState["CodAntHKLV"] = "-1";
@@ -1374,7 +1372,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void IbtUpdate_Click(object sender, ImageClickEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             if (TxtNumLv.Text.Trim().Equals(""))
             { return; }
             if (ViewState["BtnAccion"].ToString() == "")
@@ -1582,7 +1580,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void ValidaDatosAeronave()
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             Cnx.SelecBD();
             using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
             {
@@ -1659,7 +1657,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             if (TxtFecha.Text.Equals(""))
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 //DataRow[] Result = Idioma.Select("Objeto= 'Mens20LV'");
                 //foreach (DataRow row in Result)
                 //{ ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "alert", "alert('" + row["Texto"].ToString().Trim() + "');", true); }   //Debe ingresar la fecha del libro de  vuelo
@@ -1692,7 +1690,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 Page.Title = ViewState["PageTit"].ToString();
                 if (TxtFIInfLV.Text.Equals(""))
                 {
@@ -1779,7 +1777,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 Page.Title = ViewState["PageTit"].ToString();
                 string VbFormatFecha;
                 if (TxtFIInfLV.Text.Equals(""))
@@ -1881,7 +1879,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void TraerHorasTray(string NumLV, string Horas)
         {
-            //Idioma = (DataTable)ViewState["TablaIdioma"];
+            ////Idioma = (DataTable)ViewState["TablaIdioma"];
             string VbTrayec = "", VblTTH = "";
             //DataRow[] Result = Idioma.Select("Objeto= 'BtnVuelos'");
             //foreach (DataRow row in Result)
@@ -1935,7 +1933,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 if (!HS.Equals("") && !HLL.Equals(""))
                 {
                     ViewState["Validar"] = "S";
@@ -2023,7 +2021,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 if (e.CommandName.Equals("AddNew"))
                 {
                     PerfilesGrid();
@@ -2165,7 +2163,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 PerfilesGrid();
                 string VbOri = (GrdTray.Rows[(int)ViewState["Index"]].FindControl("DdlOrig") as DropDownList).SelectedValue;
                 if (VbOri.Trim().Equals(""))
@@ -2290,10 +2288,10 @@ namespace _77NeoWeb.Forms.Ingenieria
         { GrdTray.EditIndex = -1; BindDTrayectos(); }
         protected void GrdTray_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 DSTGrDtsRpt = (DataSet)ViewState["DSTGrDtsRpt"];
                 PerfilesGrid();
                 string VBQuery;
@@ -2362,7 +2360,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 DSTGrDtsRpt = (DataSet)ViewState["DSTGrDtsRpt"];
                 string LtxtSql = "";
                 if (e.Row.RowType == DataControlRowType.Footer)
@@ -2550,7 +2548,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GridTripDatos()
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             CargarDSTGrDtsRpt(TxtNumLv.Text.Trim(), "All");
             DataTable DT = new DataTable();
             DSTGrDtsRpt = (DataSet)ViewState["DSTGrDtsRpt"];
@@ -2576,7 +2574,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void DdlTripPP_TextChanged(object sender, EventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             DSTGrDtsRpt = (DataSet)ViewState["DSTGrDtsRpt"];
             DropDownList DdlTripPP = (GrdTripu.FooterRow.FindControl("DdlTripPP") as DropDownList);
             DropDownList DdlCargoPP = (GrdTripu.FooterRow.FindControl("DdlCargoPP") as DropDownList);
@@ -2612,7 +2610,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 if (e.Row.RowType == DataControlRowType.Footer)
                 {
                     DSTGrDtsRpt = (DataSet)ViewState["DSTGrDtsRpt"];
@@ -2668,7 +2666,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 //DataRow[] Result;
                 if (e.CommandName.Equals("AddNew"))
                 {
@@ -2758,10 +2756,10 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GrdTripu_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 DSTGrDtsRpt = (DataSet)ViewState["DSTGrDtsRpt"];
                 //DataRow[] Result;
                 int I_Id = Convert.ToInt32(GrdTripu.DataKeys[e.RowIndex].Values["IdDet"].ToString());
@@ -3182,7 +3180,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void TraerDatosRtes(int NumRte, string Accion)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             try
             {
                 if (Accion.Equals("UPD"))
@@ -3345,7 +3343,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void ActivarCampRte(bool Ing, bool Edi, string accion)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             if (DdlEstad.SelectedValue.Equals("C") && DdlTipRte.Enabled == false)
             {
                 if (Convert.ToInt32(ViewState["VblCE6Rte"]) == 1)
@@ -3488,7 +3486,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 ViewState["Validar"] = "S";
                 if (DdlAeroRte.Text.Equals("0") && DdlPnRte.Text.Equals(""))
                 {
@@ -3951,7 +3949,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnIngresar_Click(object sender, EventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             try
             {
                 if (ViewState["BtnAccion"].ToString() == "")
@@ -4107,7 +4105,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 if (TxtNroRte.Text.Equals("0"))
                 { return; }
                 if (ViewState["BtnAccion"].ToString() == "")
@@ -4279,7 +4277,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnEliminar_Click(object sender, EventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             if (TxtNroRte.Text.Equals("0"))
             { return; }
             Cnx.SelecBD();
@@ -4335,7 +4333,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnNotificar_Click(object sender, EventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             if (TxtNroRte.Text.Equals("0"))
             { return; }
             if (DdlEstad.Text.Equals("A"))
@@ -4388,7 +4386,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void IbtFind_Click(object sender, ImageClickEventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString();
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             ViewState["ViewOrigen"] = "LVLO";
 
             //DataRow[] Result = Idioma.Select("Objeto= 'LblTitOpcBusqueda'");
@@ -4403,7 +4401,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void BtnConsultar_Click(object sender, EventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             // DataRow[] Result = Idioma.Select("Objeto= 'LblOpbusRTE'");
             //foreach (DataRow row in Result)
             //{ LblTitOpcBusqueda.Text = row["Texto"].ToString(); }
@@ -4522,7 +4520,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         //******************************************  Recurso y Licencia Reporte de mantenimiento *********************************************************
         protected void BtnReserva_Click(object sender, EventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             if (!TxtNroRte.Text.Equals("0"))
             {
                 TxtRecurNumRte.Text = TxtNroRte.Text;
@@ -4552,7 +4550,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 DSTRTE = (DataSet)ViewState["DSTRTE"];
                 DataRow[] Result;
                 DataTable DT = new DataTable();
@@ -4627,7 +4625,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 PerfilesGrid();
                 if (e.CommandName.Equals("AddNew"))
                 {
@@ -4768,7 +4766,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 PerfilesGrid();
                 if (DdlPrioridadOT.Text.Trim().Equals(""))
                 {
@@ -4869,7 +4867,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 PerfilesGrid();
                 string VBQuery;
                 int Idx = e.RowIndex;
@@ -4951,7 +4949,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GrdRecursoF_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
             DSTRTE = (DataSet)ViewState["DSTRTE"];
             if (e.Row.RowType == DataControlRowType.Footer)
@@ -5054,7 +5052,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 DSTRTE = (DataSet)ViewState["DSTRTE"];
 
                 if (DSTRTE.Tables[4].Rows.Count > 0) { GrdLicen.DataSource = DSTRTE.Tables[4]; GrdLicen.DataBind(); }
@@ -5093,7 +5091,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 PerfilesGrid();
                 if (e.CommandName.Equals("AddNew"))
                 {
@@ -5271,7 +5269,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GrdLicen_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             DSTRTE = (DataSet)ViewState["DSTRTE"];
             PerfilesGrid();
             if (e.Row.RowType == DataControlRowType.Footer)
@@ -5374,7 +5372,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             Page.Title = ViewState["PageTit"].ToString();
             if ((int)ViewState["TtlRegDet"] > 0)
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 //DataRow[] Result = Idioma.Select("Objeto= 'Mens12'");
                 //foreach (DataRow row in Result)
                 //{ ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Para realizar la carga masiva la reserva debe estar vacía')", true);
@@ -5392,7 +5390,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 Page.Title = ViewState["PageTit"].ToString().Trim();
                 // DataRow[] Result;
                 if (TxtCargaMasiOT.Text.Equals("0"))
@@ -5527,7 +5525,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void IbtGuardarCargaMax_Click(object sender, ImageClickEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             List<CsTypSubirReserva> ObjSubirRsva = new List<CsTypSubirReserva>();
             foreach (GridViewRow Row in GrdCargaMax.Rows)
             {
@@ -5624,7 +5622,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 DSTRTE = (DataSet)ViewState["DSTRTE"];
                 if (DSTRTE.Tables[7].Rows.Count > 0)
                 {
@@ -5803,7 +5801,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GrdSnOnOff_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
             if (e.CommandName.Equals("AddNew"))
             {
@@ -5921,7 +5919,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         { GrdSnOnOff.EditIndex = e.NewEditIndex; ViewState["Index"] = e.NewEditIndex; BindDSnOnOff(); }
         protected void GrdSnOnOff_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
             int Idx = e.RowIndex;
             int VblId = Convert.ToInt32(GrdSnOnOff.DataKeys[Idx].Value.ToString());
@@ -6036,7 +6034,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         { GrdSnOnOff.EditIndex = -1; BindDSnOnOff(); }
         protected void GrdSnOnOff_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
             string VBQuery;
             int Idx = e.RowIndex;
@@ -6077,7 +6075,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GrdSnOnOff_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             DSTRTE = (DataSet)ViewState["DSTRTE"];
 
             IEnumerable<DataRow> VbQry = from A in DSTRTE.Tables[3].AsEnumerable()
@@ -6250,7 +6248,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 DSTRTE = (DataSet)ViewState["DSTRTE"];
 
                 if (DSTRTE.Tables[10].Rows.Count > 0)
@@ -6353,7 +6351,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GrdHta_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
             if (e.CommandName.Equals("AddNew"))
             {
@@ -6467,7 +6465,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         { GrdHta.EditIndex = e.NewEditIndex; ViewState["Index"] = e.NewEditIndex; BindDHta(); }
         protected void GrdHta_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
             int Idx = e.RowIndex;
             int VblId = Convert.ToInt32(GrdHta.DataKeys[Idx].Value.ToString());
@@ -6573,7 +6571,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         { GrdHta.EditIndex = -1; BindDHta(); }
         protected void GrdHta_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             PerfilesGrid();
             string VBQuery;
             int Idx = e.RowIndex;
@@ -6614,7 +6612,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GrdHta_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             DSTRTE = (DataSet)ViewState["DSTRTE"];
 
             IEnumerable<DataRow> VbQry = from A in DSTRTE.Tables[3].AsEnumerable()
@@ -6739,7 +6737,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             try
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
+                //Idioma = (DataTable)ViewState["TablaIdioma"];
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
                 string StSql, VbNomRpt = "", VbOpcion = "";
 
@@ -6837,7 +6835,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void BindDAdjunto()
         {
             DSTRTE = (DataSet)ViewState["DSTRTE"];
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
 
             if (DSTRTE.Tables["Adjnt"].Rows.Count > 0) { GrdAdj.DataSource = DSTRTE.Tables[11]; GrdAdj.DataBind(); }
             else
@@ -6856,7 +6854,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         }
         protected void GrdAdj_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             Page.Title = ViewState["PageTit"].ToString().Trim();
             string Vbl4Ruta = "", Vbl8Type = "", Vbl6Ext = "", VBQuery;
             //byte[] imagen;
@@ -6990,7 +6988,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         { GrdAdj.EditIndex = e.NewEditIndex; BindDAdjunto(); }
         protected void GrdAdj_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             Page.Title = ViewState["PageTit"].ToString().Trim();
             string Vbl4Ruta = "", Vbl8Type = "", Vbl6Ext = "", VBQuery;
             string Vbl3Desc = (GrdAdj.Rows[e.RowIndex].FindControl("TxtDesc") as TextBox).Text.Trim();
@@ -7059,7 +7057,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         { GrdAdj.EditIndex = -1; BindDAdjunto(); }
         protected void GrdAdj_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             Cnx.SelecBD();
             using (SqlConnection sqlCon = new SqlConnection(Cnx.GetConex()))
             {
@@ -7096,7 +7094,7 @@ namespace _77NeoWeb.Forms.Ingenieria
         protected void GrdAdj_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             PerfilesGrid();
-            Idioma = (DataTable)ViewState["TablaIdioma"];
+            //Idioma = (DataTable)ViewState["TablaIdioma"];
             if (e.Row.RowType == DataControlRowType.Footer)
             {
                 ImageButton IbtAddNew = (e.Row.FindControl("IbtAddNew") as ImageButton);

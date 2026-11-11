@@ -244,12 +244,13 @@ namespace _77NeoWeb.Forms.Ingenieria
             Cnx.SelecBD();
             using (SqlConnection sqlConB = new SqlConnection(Cnx.GetConex()))
             {
-                string VbTxtSql = " EXEC SP_PANTALLA_Formulario_Historico 10,@E,@T,'','',0,0,0,@ICC,'01-01-01','01-01-01','01-01-01'";
+                string VbTxtSql = " EXEC SP_PANTALLA_Formulario_Historico 10,@E,@T,@PN,'',0,0,0,@ICC,'01-01-01','01-01-01','01-01-01'";
                 sqlConB.Open();
                 using (SqlCommand SC = new SqlCommand(VbTxtSql, sqlConB))
                 {
-                    SC.Parameters.AddWithValue("@T", ViewState["Tipo"]);
                     SC.Parameters.AddWithValue("@E", DdlSN.Text.Trim());
+                    SC.Parameters.AddWithValue("@T", ViewState["Tipo"]);
+                    SC.Parameters.AddWithValue("@PN", DdlPN.Text.Trim());
                     SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
                     using (SqlDataAdapter DAB = new SqlDataAdapter())
                     {
@@ -289,51 +290,55 @@ namespace _77NeoWeb.Forms.Ingenieria
         {
             if (e.CommandName.Equals("Procesar"))
             {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
-                string VbFecF = "";
-                if (DdlSN.Text.Trim().Equals(""))
+                try
                 {
-                    DataRow[] Result = Idioma.Select("Objeto= 'XX'");
-                    foreach (DataRow row in Result)
-                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe seleccionar una serie.
-                    return;
-                }
-                TxtPrcsPn.Text = DdlPN.Text.Trim();
-                TxtPrcsSn.Text = DdlSN.SelectedItem.Text.Trim();
-                GridViewRow row2 = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
-                ViewState["CEMYR"] = GrdHistor.DataKeys[row2.RowIndex].Values["CodElemMayor"].ToString().Trim();
-                TxtPrcsSnMy.Text = ((Label)row2.FindControl("LblSNMyP")).Text.ToString().Trim();
-                string VbFecI = ((Label)row2.FindControl("LblFecEvP")).Text.ToString().Trim();
-                DateTime VbFecID = Convert.ToDateTime(VbFecI);
-                TxtPrcsFecMyr.Text = String.Format("{0:yyyy-MM-dd}", VbFecID);
+                    Idioma = (DataTable)ViewState["TablaIdioma"];
+                    string VbFecF = "";
+                    if (DdlSN.Text.Trim().Equals(""))
+                    {
+                        DataRow[] Result = Idioma.Select("Objeto= 'XX'");
+                        foreach (DataRow row in Result)
+                        { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Debe seleccionar una serie.
+                        return;
+                    }
+                    TxtPrcsPn.Text = DdlPN.Text.Trim();
+                    TxtPrcsSn.Text = DdlSN.SelectedItem.Text.Trim();
+                    GridViewRow row2 = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
+                    ViewState["CEMYR"] = GrdHistor.DataKeys[row2.RowIndex].Values["CodElemMayor"].ToString().Trim();
+                    TxtPrcsSnMy.Text = ((Label)row2.FindControl("LblSNMyP")).Text.ToString().Trim();
+                    string VbFecI = ((Label)row2.FindControl("LblFecEvP")).Text.ToString().Trim();
+                    DateTime VbFecID = Convert.ToDateTime(VbFecI);
+                    TxtPrcsFecMyr.Text = String.Format("{0:yyyy-MM-dd}", VbFecID);
 
-                Cnx.SelecBD();
-                using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
-                {
-                    SCnx.Open();
-                    string LtxtSql = "EXEC SP_PANTALLA_Formulario_Historico 8, @S,'','','SubComp',0,0,0,@ICC,@F,'01-01-1900','01-01-1900'";
-                    SqlCommand SC = new SqlCommand(LtxtSql, SCnx);
-                    SC.Parameters.AddWithValue("@S", DdlSN.Text.Trim());
-                    SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
-                    SC.Parameters.AddWithValue("@F", VbFecI);
-                    SqlDataReader SDR = SC.ExecuteReader();
-                    if (SDR.Read()) { VbFecF = SDR["FechaEvento"].ToString(); }
-                    if (VbFecF.Equals(""))
+                    Cnx.SelecBD();
+                    using (SqlConnection SCnx = new SqlConnection(Cnx.GetConex()))
                     {
-                        //TxtFechHast.Text = VbFecF;
-                        DateTime VbFecFD = DateTime.Now;
-                        TxtPrcsFecHast.Text = String.Format("{0:yyyy-MM-dd}", VbFecFD);
+                        SCnx.Open();
+                        string LtxtSql = "EXEC SP_PANTALLA_Formulario_Historico 8, @S,'','','SubComp',0,0,0,@ICC,@F,'01-01-1900','01-01-1900'";
+                        SqlCommand SC = new SqlCommand(LtxtSql, SCnx);
+                        SC.Parameters.AddWithValue("@S", DdlSN.Text.Trim());
+                        SC.Parameters.AddWithValue("@ICC", Session["!dC!@"]);
+                        SC.Parameters.AddWithValue("@F", VbFecID);
+                        SqlDataReader SDR = SC.ExecuteReader();
+                        if (SDR.Read()) { VbFecF = SDR["FechaEvento"].ToString(); }
+                        if (VbFecF.Equals(""))
+                        {
+                            //TxtFechHast.Text = VbFecF;
+                            DateTime VbFecFD = DateTime.Now;
+                            TxtPrcsFecHast.Text = String.Format("{0:yyyy-MM-dd}", VbFecFD);
+                        }
+                        else
+                        {
+                            DateTime VbFecFD = Convert.ToDateTime(VbFecF);
+                            TxtPrcsFecHast.Text = String.Format("{0:yyyy-MM-dd}", VbFecFD);
+                        }
                     }
-                    else
-                    {
-                        DateTime VbFecFD = Convert.ToDateTime(VbFecF);
-                        TxtPrcsFecHast.Text = String.Format("{0:yyyy-MM-dd}", VbFecFD);
-                    }
+                    BindCont();
+                    BIndProcesar();
+                    BtnPrcsCont.Enabled = true;
+                    MultVw.ActiveViewIndex = 1;
                 }
-                BindCont();
-                BIndProcesar();
-                BtnPrcsCont.Enabled = true;
-                MultVw.ActiveViewIndex = 1;
+                catch (Exception ex) { string S_E = ex.Message; }
             }
         }
         protected void GrdHistor_RowEditing(object sender, GridViewEditEventArgs e)

@@ -213,8 +213,8 @@ namespace _77NeoWeb.Forms.Ingenieria
                     //   LblActual.Text = bO.Equals("LblActual") ? bT + ":" : LblActual.Text;
                     LblDoc.Text = bO.Equals("DocMstr") ? bT + ":" : LblDoc.Text;
                     LblEtapa.Text = bO.Equals("LblEtapa") ? bT + ":" : LblEtapa.Text;
-                    LblRefOT.Text = bO.Equals("LblRefOT") ? bT + ":" : LblRefOT.Text;
-                    LblRefOT.ToolTip = bO.Equals("LblRefOTTT") ? bT : LblRefOT.ToolTip;
+                    //LblRefOT.Text = bO.Equals("LblRefOT") ? bT + ":" : LblRefOT.Text;
+                    //LblRefOT.ToolTip = bO.Equals("LblRefOTTT") ? bT : LblRefOT.ToolTip;
                     LblModel.Text = bO.Equals("GrdMod") ? bT + ":" : LblModel.Text;
                     LblTaller.Text = bO.Equals("LblTaller") ? bT + ":" : LblTaller.Text;
                     CkbAplSub.Text = bO.Equals("CkbAplSub") ? bT : CkbAplSub.Text;
@@ -265,7 +265,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     GrdBusq.Columns[3].HeaderText = bO.Equals("LblDescrip") ? bT : GrdBusq.Columns[3].HeaderText;
                     GrdBusq.Columns[4].HeaderText = bO.Equals("DocMstr") ? bT : GrdBusq.Columns[4].HeaderText;
                     GrdBusq.Columns[7].HeaderText = bO.Equals("GrdDscPN") ? bT : GrdBusq.Columns[7].HeaderText;
-                   
+
                     // ************************************** Recurso  *******************************************************       
                     LblTitRecursoLice.Text = bO.Equals("LblTitRecursoLice") ? bT : LblTitRecursoLice.Text;
                     IbtCerrarRec.ToolTip = bO.Equals("CerrarVentana") ? bT : IbtCerrarRec.ToolTip;
@@ -310,7 +310,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DataRow[] Result = Idioma.Select("Objeto= 'IbtDeleteOnCl'");
                 foreach (DataRow row in Result)
                 { IbtDelete.OnClientClick = string.Format("return confirm('" + row["Texto"].ToString().Trim() + "');"); }
-               
+
                 sqlCon.Close();
                 ViewState["TablaIdioma"] = Idioma;
             }
@@ -565,7 +565,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                     TxtSubAta.Visible = false;
                     TxtConsAta.Visible = false;
                     DdlTipo.Visible = false;
-                    TxtRefOT.Visible = false;
+                    //TxtRefOT.Visible = false;
                 }
             }
             catch (Exception Ex)
@@ -648,7 +648,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 DTBusq = DSTDet.Tables[0].Clone();
                 Result = DSTDet.Tables[0].Select("BadPlan='" + Tipo.Trim() + "' AND Catalogo='" + VbCatalogo + "'");
                 if (Cnx.ValidaDataRowVacio(Result))
-                { DTBusq = Result.CopyToDataTable(); }                
+                { DTBusq = Result.CopyToDataTable(); }
 
                 DdlBusq.DataSource = DTBusq;
                 DdlBusq.DataTextField = "Servicio";
@@ -716,7 +716,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         TxtEtapa.Text = SDR["NroEtapas"].ToString();
                         TxtActual.Text = SDR["EtapaActual"].ToString();
                         TxtDoc.Text = HttpUtility.HtmlDecode(SDR["Nrodocumento"].ToString().Trim());
-                        TxtRefOT.Text = HttpUtility.HtmlDecode(SDR["Referencia"].ToString().Trim());
+                        // TxtRefOT.Text = HttpUtility.HtmlDecode(SDR["Referencia"].ToString().Trim());
                         DdlModel.Text = HttpUtility.HtmlDecode(SDR["CodModeloSM"].ToString().Trim());
                         Ddltaller.Text = HttpUtility.HtmlDecode(SDR["CodTaller"].ToString().Trim());
                         CkbAD.Checked = HttpUtility.HtmlDecode(SDR["AD"].ToString().Trim()) == "S" ? true : false;
@@ -783,7 +783,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 CkbVisuStat.Enabled = Edi;
                 TxtHoriz.Enabled = Edi;
-                TxtRefOT.Enabled = Edi;
+                //TxtRefOT.Enabled = Edi;
                 CkbAD.Enabled = Edi;
                 CkbSB.Enabled = Edi;
                 if (!ViewState["TIPO"].ToString().Equals("A"))
@@ -818,7 +818,7 @@ namespace _77NeoWeb.Forms.Ingenieria
             TxtActual.Text = "";
             TxtDoc.Text = "";
             DdlAta.Text = "";
-            TxtRefOT.Text = "";
+            //TxtRefOT.Text = "";
             DdlModel.Text = "";
             Ddltaller.Text = "";
             CkbAD.Checked = false;
@@ -954,7 +954,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         AD = CkbAD.Checked == true ? 1 : 0,
                         SB = CkbSB.Checked == true ? 1 : 0,
                         HorizonteApertura = TxtHoriz.Text.Trim().Equals("") ? 0 : Convert.ToDouble(TxtHoriz.Text),
-                        Referencia = TxtRefOT.Text.Trim(),
+                        Referencia = "",//TxtRefOT.Text.Trim(),
                         CodModeloSM = DdlModel.SelectedValue.Trim(),
                         PnMayor = "",
                         SubComponenteSM = CkbAplSub.Checked == true ? 1 : 0,
@@ -1076,7 +1076,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                         AD = CkbAD.Checked == true ? 1 : 0,
                         SB = CkbSB.Checked == true ? 1 : 0,
                         HorizonteApertura = TxtHoriz.Text.Trim().Equals("") ? 0 : Convert.ToDouble(TxtHoriz.Text),
-                        Referencia = TxtRefOT.Text.Trim(),
+                        Referencia = "",// TxtRefOT.Text.Trim(),
                         CodModeloSM = DdlModel.SelectedValue.Trim(),
                         PnMayor = "",
                         SubComponenteSM = CkbAplSub.Checked == true ? 1 : 0,
@@ -1232,25 +1232,6 @@ namespace _77NeoWeb.Forms.Ingenieria
                 { ScriptManager.RegisterClientScriptBlock(this.UpPnlCampos, UpPnlCampos.GetType(), "alert", "alert('" + row["Texto"].ToString() + "');", true); }//Error en el proceso de eliminación')", true);
                 Cnx.UpdateErrorV2(Session["C77U"].ToString(), ViewState["PFileName"].ToString(), "VALIDACIÓN ELIMINAR  SRV MANTO", Ex.StackTrace.Substring(Ex.StackTrace.Length > 300 ? Ex.StackTrace.Length - 300 : 0, 300), Ex.Message, Session["77Version"].ToString(), Session["77Act"].ToString());
             }
-        }
-        protected void IbtRecurso_Click(object sender, ImageClickEventArgs e)
-        {
-            if (!TxtId.Text.Trim().Equals(""))
-            {
-                Idioma = (DataTable)ViewState["TablaIdioma"];
-                BindDRecursoF("UPD");
-                BindDLicencia();
-                PnlCampos.Visible = false;
-                PnlRecursos.Visible = true;
-                if (CkbBloqRec.Checked == true)
-                {
-                    GrdRecursoF.FooterRow.Enabled = false;
-                    DataRow[] Result = Idioma.Select("Objeto= 'Mens18SM'");
-                    foreach (DataRow row in Result)
-                    { GrdRecursoF.FooterRow.ToolTip = row["Texto"].ToString().Trim(); }// "El recurso se encuentra bloqueado";
-                }
-            }
-            Page.Title = ViewState["PageTit"].ToString();
         }
         protected void IbtGenerOT_Click(object sender, ImageClickEventArgs e)
         {
@@ -3580,11 +3561,30 @@ namespace _77NeoWeb.Forms.Ingenieria
             BindDataAll();
             UpPnlPN.Update();
             PnlBusq.Visible = false;
-            PnlCampos.Visible = true;            
+            PnlCampos.Visible = true;
         }
         protected void GrdBusq_PageIndexChanging(object sender, GridViewPageEventArgs e)
         { GrdBusq.PageIndex = e.NewPageIndex; BIndDataBusq(TxtBusqueda.Text); }
         // ****************Controles de Recurso fisico Reserva ***********************
+        protected void IbtRecurso_Click(object sender, ImageClickEventArgs e)
+        {
+            if (!TxtId.Text.Trim().Equals(""))
+            {
+                Idioma = (DataTable)ViewState["TablaIdioma"];
+                BindDRecursoF("UPD");
+                BindDLicencia();
+                PnlCampos.Visible = false;
+                PnlRecursos.Visible = true;
+                if (CkbBloqRec.Checked == true)
+                {
+                    GrdRecursoF.FooterRow.Enabled = false;
+                    DataRow[] Result = Idioma.Select("Objeto= 'Mens18SM'");
+                    foreach (DataRow row in Result)
+                    { GrdRecursoF.FooterRow.ToolTip = row["Texto"].ToString().Trim(); }// "El recurso se encuentra bloqueado";
+                }
+            }
+            Page.Title = ViewState["PageTit"].ToString();
+        }
         protected void BindDRecursoF(string Accion)
         {
             Idioma = (DataTable)ViewState["TablaIdioma"];
@@ -4272,11 +4272,11 @@ namespace _77NeoWeb.Forms.Ingenieria
             {
                 if (ViewState["TIPO"].ToString().Equals("A"))
                 {
-                    StSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 19,'{0}','{1}','','','',0,0,0,0,'01-01-01','01-01-01','01-01-01'", TxtMatric.Text.Trim(), TxtCod.Text);
+                    StSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 19,'{0}','{1}','','','',0,0,0,{2},'01-01-01','01-01-01','01-01-01'", TxtMatric.Text.Trim(), TxtCod.Text, Session["!dC!@"]);
                 }
                 else
                 {
-                    StSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 20,'{0}','{1}','','','',0,0,0,0,'01-01-01','01-01-01','01-01-01'", ViewState["CodElem"], TxtCod.Text);
+                    StSql = string.Format("EXEC SP_PANTALLA__Servicio_Manto2 20,'{0}','{1}','','','',0,0,0,{2},'01-01-01','01-01-01','01-01-01'", ViewState["CodElem"], TxtCod.Text, Session["!dC!@"]);
                 }
                 string VbLogo = @"file:///" + Server.MapPath("~/images/" + Session["LogoPpal"].ToString().Trim());
                 DataSet ds = new DataSet();
@@ -4662,7 +4662,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 }
             }
         }
-         // **************** Configurar contador inicial HK  ***********************
+        // **************** Configurar contador inicial HK  ***********************
         protected void BtnExprt_Click(object sender, EventArgs e)
         {
             Page.Title = ViewState["PageTit"].ToString().Trim();
@@ -4673,7 +4673,7 @@ namespace _77NeoWeb.Forms.Ingenieria
                 CsTypExportarIdioma CursorIdioma = new CsTypExportarIdioma();
                 CursorIdioma.Alimentar("CurExportarSvcManto", Session["77IDM"].ToString().Trim());
 
-                string query = "EXEC SP_PANTALLA_Servicio_Manto 22,'','','','CurExportarSvcManto',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";     
+                string query = "EXEC SP_PANTALLA_Servicio_Manto 22,'','','','CurExportarSvcManto',0,0,0,@ICC,'01-1-2009','01-01-1900','01-01-1900'";
                 Cnx.SelecBD();
                 using (SqlConnection con = new SqlConnection(Cnx.GetConex()))
                 {

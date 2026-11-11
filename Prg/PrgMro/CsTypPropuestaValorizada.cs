@@ -12,6 +12,9 @@ namespace _77NeoWeb.Prg.prgMro
         ClsConexion Cnx = new ClsConexion();
         static public string PMensj;
         static public string PId;
+        static public string S_Correo;
+        static public string S_Asunto;
+        static public string S_Cuerpo;
         public int IdValorizacion { get; set; }
         public int IdPropuesta { get; set; }
         public int IdServicio { get; set; }
@@ -182,6 +185,9 @@ namespace _77NeoWeb.Prg.prgMro
                             {
                                 PMensj = HttpUtility.HtmlDecode(SDR["Mensj"].ToString().Trim());
                                 PId = HttpUtility.HtmlDecode(SDR["IdNew"].ToString().Trim());
+                                S_Correo = HttpUtility.HtmlDecode(SDR["Correo"].ToString().Trim());
+                                S_Asunto = HttpUtility.HtmlDecode(SDR["Asunto"].ToString().Trim());
+                                S_Cuerpo = HttpUtility.HtmlDecode(SDR["Cuerpo"].ToString().Trim());
                             }
                             SDR.Close();
                             transaction.Commit();
@@ -205,5 +211,8 @@ namespace _77NeoWeb.Prg.prgMro
         }
         public string GetMensj() { return PMensj; }
         public string GetCodPPT() { return PId; }
+        public string GetCorreo() { return S_Correo; }
+        public string GetAsunto() { return S_Asunto; }
+        public string GetCuerpo() { return S_Cuerpo; }
     }
 }

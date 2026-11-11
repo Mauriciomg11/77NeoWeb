@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterTransac.Master" AutoEventWireup="true" CodeBehind="FrmPropuesta.aspx.cs" Inherits="_77NeoWeb.Forms.MRO.FrmPropuesta" %>
-
+<%@ MasterType VirtualPath="~/MasterTransac.master" %>
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms" Namespace="Microsoft.Reporting.WebForms" TagPrefix="RpVw" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
@@ -473,7 +473,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <br />
-                                <asp:RadioButton ID="RdbSinDanOcul" runat="server" CssClass="LblEtiquet" Text="&nbsp Sin daño " GroupName="DO" Enabled="false" />
+                                <asp:RadioButton ID="RdbSinDanOcul" runat="server" CssClass="LblEtiquet" Text="&nbsp sin daño " GroupName="DO" Enabled="false" />
                                 <asp:RadioButton ID="RdbDanOcul" runat="server" CssClass="LblEtiquet" Text="&nbsp daño oculto" GroupName="DO" Enabled="false" />
                             </div>
                         </div>
@@ -601,8 +601,8 @@
                                             <asp:RadioButton ID="RdbDet1BuqAll" runat="server" CssClass="LblEtiquet" Text="&nbsp Todos" GroupName="Det1" />
                                             <asp:RadioButton ID="RdbDet1BuqPN" runat="server" CssClass="LblEtiquet" Text="&nbsp P/N" GroupName="Det1" />
                                             <asp:RadioButton ID="RdbDet1BuqOT" runat="server" CssClass="LblEtiquet" Text="&nbsp OT" GroupName="Det1" />
-                                            <asp:RadioButton ID="RdbDet1BuqRte" runat="server" CssClass="LblEtiquet" Text="&nbsp Reporte" GroupName="Det1" />
-                                            <asp:RadioButton ID="RdbDet1BuqSvc" runat="server" CssClass="LblEtiquet" Text="&nbsp Trabajo" GroupName="Det1" />
+                                            <asp:RadioButton ID="RdbDet1BuqRte" runat="server" CssClass="LblEtiquet" Text="&nbsp reporte" GroupName="Det1" />
+                                            <asp:RadioButton ID="RdbDet1BuqSvc" runat="server" CssClass="LblEtiquet" Text="&nbsp trabajo" GroupName="Det1" />
                                         </td>
                                         <td>&nbsp&nbsp&nbsp</td>
                                         <td>
@@ -945,6 +945,7 @@
             <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
                     <br />
+                    <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitCondiciones" runat="server" Text="parametrizacion condiciones de la propuesta " />
                     </h6>
@@ -980,7 +981,7 @@
                                     </div>
                                 </div>
                                 <br />
-                                <div class="row CentrarBoton ">
+                                <div class="row">
                                     <div class="col-sm-12">
                                         <asp:Button ID="BtnUpdateCondPpt" runat="server" CssClass="btn btn-success botones" Width="100%" OnClick="BtnUpdateCondPpt_Click" Text="actualizar propuesta" />
                                     </div>
@@ -1015,7 +1016,7 @@
                                     </div>
                                 </div>
                                 <br />
-                                <div class="row CentrarBoton ">
+                                <div class="row">
                                     <div class="col-sm-12">
                                         <asp:Button ID="BtnUpdateCond" runat="server" CssClass="btn btn-success botones" Width="100%" OnClick="BtnUpdateCond_Click" Text="actualizar Condiciones" />
                                     </div>
@@ -1493,6 +1494,7 @@
         <asp:View ID="Vw6CargaMasiva" runat="server">
             <asp:UpdatePanel ID="UpPnlCargaMasiva" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+                    <br />
                     <br />
                     <h6 class="TextoSuperior">
                         <asp:Label ID="LblTitPlntllMasiv" runat="server" Text="Subir plantilla" /></h6>

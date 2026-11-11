@@ -46,10 +46,10 @@ namespace _77NeoWeb.Forms.Ingenieria
                 RdbHisC2AplicAK.Checked = true;
                 BindBDdlAK("1"); BindBDdlAK("2");
                 ViewState["Validar"] = "S";
-                string VbM = Convert.ToString(DateTime.UtcNow.Month);
-                string VbY = Convert.ToString(DateTime.UtcNow.Year);
-                string fecha = string.Format("{0}-{1}-{2}", VbY, VbM, "01");
-                DateTime VbFecID = Convert.ToDateTime(fecha);
+               // string VbM = Convert.ToString(DateTime.UtcNow.Month);
+                //string VbY = Convert.ToString(DateTime.UtcNow.Year);
+                //string fecha = string.Format("{0}-{1}-{2}", VbY, VbM, "01");
+                DateTime VbFecID = Convert.ToDateTime("01/01/1900");
                 TxtFechIPpl.Text = string.Format("{0:yyyy-MM-dd}", VbFecID);
                 TxtFechFPpl.Text = string.Format("{0:yyyy-MM-dd}", DateTime.UtcNow);
             }

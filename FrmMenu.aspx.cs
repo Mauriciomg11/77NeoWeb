@@ -164,7 +164,8 @@ namespace _77NeoWeb
                         GrdDatos.Rows[0].Cells.Add(new TableCell());
                         GrdDatos.Rows[0].Cells[0].Text = "No existen registros ..!";
                         GrdDatos.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-                    }
+                    }                    
+                    if((int)ViewState["VblIngMS"] == 0) { AnchoGrid = "40%"; }
                 }
             }
         }

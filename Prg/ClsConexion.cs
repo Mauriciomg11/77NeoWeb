@@ -103,7 +103,6 @@ namespace _77NeoWeb.prg
                 sqlCmd.Parameters.AddWithValue("@NIT", VbNitErr);
                 sqlCmd.Parameters.AddWithValue("@NomCia", VbCiaErr);
                 sqlCmd.Parameters.AddWithValue("@NomBD", VblNomBDErr);
-
                 sqlCmd.ExecuteNonQuery();
             }
         }
@@ -385,20 +384,20 @@ namespace _77NeoWeb.prg
                 return false;
             }
         }
-        //************************************** CONEXION Produccion **************************************
-        public string GetUsr() { return ""; }
-        public int GetIdCia() { return 0; }
-        public string GetMonedLcl() { return ""; }
-        public int GetFormatFecha() { return 0; }
-        public string GetNit() { return ""; }
-        public string GetBD() { return ""; }
-        public string GetSvr() { return @""; }
-        public string GetUsSvr() { return ""; }
-        public string GetPas() { return ""; }
+        //************************************** CONEXION TEMPORAL **************************************
+        public string GetUsr() { return "00000157"; }//00000082 Cirrus| 00000154 OPE | 00000157 -158 Mauro Admon | 00000129 | 00000110
+        public int GetIdCia() { return 25; }// 1 TwoGoWo |21 Demp | 12 ADA | 20 HCT | 3 Alca
+        public string GetMonedLcl() { return "COP"; }//  "COP|USD"
+        public int GetFormatFecha() { return 103; }// 103 formato europeo dd/MM/yyyy | 101 formato EEUU MM/dd/yyyyy
+        public string GetNit() { return "2525252525-5"; } // 901338233-1 TwoGoWo-cirrus | P93000086218 - ALCA || 242424242-7  Opera  || 2525252525-5 OMA
+        public string GetBD() { return "DbNeoDempV2"; }// DbNeoDemp2016||DbNeoDempV2 |DbNeoAda | DbNeoHCT ||| BDNeoW  ||
+        public string GetSvr() { return @"23.102.100.143"; }// 77NEO01|| 23.102.100.143 ||
+        public string GetUsSvr() { return "sa"; }//  "sa"
+        public string GetPas() { return "Medellin2021**"; }// admindemp|| Medellin2021**
         public string GetIdm()
         {
             DataSet DSIdm = new DataSet();
-            string LtxtSql = string.Format("", GetIdCia());
+            string LtxtSql = string.Format("EXEC SP_ConfiguracionV2_ 21,'','','','','',0,0,0,{0},'01-01-1','02-01-1','03-01-1'", GetIdCia());
             DSIdm = DSET(LtxtSql);
             DSIdm.Tables[0].TableName = "Idioma";
             if (System.Web.HttpContext.Current.Session["TblIdmGrl"] == null || System.Web.HttpContext.Current.Session["TblIdmGrl"].ToString().Trim().Equals(""))
@@ -411,5 +410,4 @@ namespace _77NeoWeb.prg
             return DSIdm.Tables["Idioma"].Rows[0]["Idioma"].ToString().Trim();
         }
     }
-}
 }
